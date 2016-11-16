@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.31-dev/42, created on 2016-11-13 21:30:51
+/* Smarty version 3.1.31-dev/44, created on 2016-11-16 16:10:00
   from "/Volumes/Macintosh HD 2/www/bb/home/betterlife/view/bootstrap/core/blog/display.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.31-dev/42',
-  'unifunc' => 'content_58286b0be07c43_83736999',
+  'version' => '3.1.31-dev/44',
+  'unifunc' => 'content_582c1458efcd86_69736372',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,23 +20,23 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_58286b0be07c43_83736999 (Smarty_Internal_Template $_smarty_tpl) {
-if (!is_callable('smarty_modifier_date_format')) require_once '/Volumes/Macintosh HD 2/www/bb/vendor/smarty/smarty/libs/plugins/modifier.date_format.php';
+function content_582c1458efcd86_69736372 (Smarty_Internal_Template $_smarty_tpl) {
+if (!is_callable('smarty_modifier_date_format')) require_once '/Volumes/Macintosh HD 2/www/bb/install/vendor/smarty/smarty/libs/plugins/modifier.date_format.php';
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_18983855958286b0bc75509_24085199', 'body');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_700125547582c1458dc89e4_22034390', 'body');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, ((string)$_smarty_tpl->tpl_vars['templateDir']->value)."/layout/normal/layout.tpl");
 }
 /* {block 'body'} */
-class Block_18983855958286b0bc75509_24085199 extends Smarty_Internal_Block
+class Block_700125547582c1458dc89e4_22034390 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_18983855958286b0bc75509_24085199',
+    0 => 'Block_700125547582c1458dc89e4_22034390',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {

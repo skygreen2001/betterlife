@@ -68,12 +68,13 @@ betterlife core with minimize project size
     * http://codemirror.net/
 
 ## 第二部分:框架目录定义
-    * core:框架核心支持文件
-    * db:框架数据库测试数据
-    * library:通用功能模块
-    * module:通用应用模块，如搜索引擎，百度地图等
-    * taglib:自定义标签，您也可以在自己的应用中定义自定义标签
-    * tools:开发中通常用到的小工具【需发布在应用中访问url路径使用】
+    * core    : 框架核心支持文件
+    * install : 安装目录
+    * taglib  : 自定义标签，您也可以在自己的应用中定义自定义标签
+    * tools   : 开发中通常用到的小工具【需发布在应用中访问url路径使用】
+    * home    : 基于MVC模式网站开发实际工作目录
+    * document: 框架帮助说明文档
+    * misc    : 引用第三方Js、Css、Image、Fonts资源目录
 
 ## 第三部分:FAQ
 * 一般来讲：中文字符集都采用UTF-8，但在Ajax发送Json中文数据发现Firefox正常，IE为乱码;

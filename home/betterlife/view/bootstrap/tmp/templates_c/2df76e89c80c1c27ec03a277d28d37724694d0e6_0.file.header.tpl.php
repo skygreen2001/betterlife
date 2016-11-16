@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.31-dev/42, created on 2016-11-13 21:09:38
+/* Smarty version 3.1.31-dev/44, created on 2016-11-16 16:10:01
   from "/Volumes/Macintosh HD 2/www/bb/home/betterlife/view/bootstrap/layout/normal/header.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
-  'version' => '3.1.31-dev/42',
-  'unifunc' => 'content_58286612e5df99_97844153',
+  'version' => '3.1.31-dev/44',
+  'unifunc' => 'content_582c14590cb2d2_93497915',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_58286612e5df99_97844153 (Smarty_Internal_Template $_smarty_tpl) {
+function content_582c14590cb2d2_93497915 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

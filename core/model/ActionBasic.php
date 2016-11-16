@@ -128,7 +128,7 @@ class ActionBasic extends Object
      */
     public function loadCss($defaultCssFile="resources/css/index.css")
     {
-        if (contain($defaultCssFile,"common/js/ajax/")){
+        if (contain($defaultCssFile,"misc/js/ajax/")){
             $defaultCssFile=Gc::$url_base.$defaultCssFile;
         }else{
             $defaultCssFile=$this->view->template_url.$defaultCssFile;
@@ -153,7 +153,7 @@ class ActionBasic extends Object
      */
     public function loadJs($defaultJsFile="js/index.js")
     {
-        if (startWith($defaultJsFile,"common/js/ajax/")){
+        if (startWith($defaultJsFile,"misc/js/ajax/")){
             $defaultJsFile=Gc::$url_base.$defaultJsFile;
         }else{
             $defaultJsFile=$this->view->template_url.$defaultJsFile;

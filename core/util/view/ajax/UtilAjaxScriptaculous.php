@@ -19,7 +19,7 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
     {
         self::loadAjaxJs(EnumJsFramework::JS_FW_SCRIPTACULOUS,$version,$viewObject);
     }
-    
+
     /**
      * 发送Ajax请求的语句
      * @todo 暂未实现。
@@ -31,16 +31,16 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      * @return 发送Ajax请求的语句
      */
     public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null)
-    {        
-        $result="";  
-        $result.= "<script type='text/javascript'>"; 
-        //<editor-fold defaultstate="collapsed" desc="Scriptaculous">   
-        $result.="";                
-        //</editor-fold>  
-        $result.= "</script>";           
+    {
+        $result="";
+        $result.= "<script type='text/javascript'>";
+        //<editor-fold defaultstate="collapsed" desc="Scriptaculous">
+        $result.="";
+        //</editor-fold>
+        $result.= "</script>";
         return $result;
-    }    
-    
+    }
+
     /**
      * 生成Javascript的回调函数
      * @todo
@@ -50,15 +50,15 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      * @return string 回调函数
      */
     public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML)
-    {   
+    {
         $class_name=str_replace("RO","",$local_service_flag);
-        
+
         if (!self::$IsHtmlBody){
-            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";  
+            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
             self::$IsHtmlBody=true;
         }
         return $result;
-    }    
+    }
 }
 
 ?>
