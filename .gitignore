@@ -1,0 +1,11 @@
+/home/model/view/default/tmp
+/home/betterlife/view/default/tmp
+/stressdata
+/model
+/upload
+/log
+/install/vendor
+/install/bower_components
+/install/node_modules
+bb.*
+.DS_Store
