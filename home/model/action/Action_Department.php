@@ -64,7 +64,7 @@ class Action_Department extends ActionModel
      */
     public function delete()
     {
-        $departmentId=$this->data["id"];
+        $departmentId = $this->data["id"];
         $isDelete = Department::deleteByID($departmentId);
         $this->redirect("department", "lists", $this->data);
     }

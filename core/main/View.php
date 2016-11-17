@@ -7,7 +7,7 @@
  * 以便在显示层页面里任意访问使用变量varname<br/>
  +--------------------------------------------------<br/>
  * @category betterlife
- * @package core . main
+ * @package core.main
  * @author skygreen
  */
 class View {

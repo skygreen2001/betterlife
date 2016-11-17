@@ -348,7 +348,7 @@ ACTION;
                          "     */\r\n".
                          "    public function delete()\r\n".
                          "    {\r\n".
-                         "        \${$instancename}Id=\$this->data[\"id\"];\r\n".
+                         "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                          "        \$isDelete = {$classname}::deleteByID(\${$instancename}Id);\r\n".
                          "        \$this->redirect(\"{$instancename}\", \"lists\", \$this->data);\r\n".
                          "    }\r\n".
@@ -485,19 +485,19 @@ ACTION;
                             $i_name=$key;
                             $i_name{0}=strtolower($i_name{0});
                             if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                $result.=$blank_pre."        \${$i_name}_instance=null;\r\n";
-                                $result.=$blank_pre."        if (\${$instance_name}->$fieldname){\r\n";
-                                $result.=$blank_pre."            \${$i_name}_instance=$key::get_by_id(\${$instance_name}->$fieldname);\r\n";
-                                $result.=$blank_pre."            \$".$instance_name."['$show_fieldname']=\${$i_name}_instance->$value;\r\n";
+                                $result.=$blank_pre."        \${$i_name}_instance = null;\r\n";
+                                $result.=$blank_pre."        if (\${$instance_name}->$fieldname) {\r\n";
+                                $result.=$blank_pre."            \${$i_name}_instance = $key::get_by_id(\${$instance_name}->$fieldname);\r\n";
+                                $result.=$blank_pre."            \$".$instance_name."['$show_fieldname'] = \${$i_name}_instance->$value;\r\n";
                                 $result.=$blank_pre."        }\r\n";
                             }
                             $fieldInfo=self::$fieldInfos[self::getTablename($key)];
                             if (!$isTreeLevelHad){
                                 if (array_key_exists("parent_id",$fieldInfo)&&array_key_exists("level",$fieldInfo)){
                                     $classNameField=self::getShowFieldNameByClassname($key);
-                                    $result.=$blank_pre."        if (\${$i_name}_instance){\r\n".
-                                             $blank_pre."            \$level=\${$i_name}_instance->level;\r\n".
-                                             $blank_pre."            \${$instance_name}[\"{$i_name}ShowAll\"]=\$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".
+                                    $result.=$blank_pre."        if (\${$i_name}_instance) {\r\n".
+                                             $blank_pre."            \$level = \${$i_name}_instance->level;\r\n".
+                                             $blank_pre."            \${$instance_name}[\"{$i_name}ShowAll\"] = \$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".
                                              $blank_pre."        }\r\n";
                                     $isTreeLevelHad=true;
                                 }

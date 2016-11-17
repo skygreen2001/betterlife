@@ -10,6 +10,13 @@ html,body {
     padding:0;
 }
 
+.contentBox{
+    width:80%;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100%;
+}
+
 .en-head {
     font:bold .8em Geneva,Arial,Helvetica,sans-serif;
 }
@@ -121,6 +128,7 @@ br {
     border:1px solid #cfcfcf;
     padding:10px;
 }
+
 .viewdoblock {
     width          : 98%;
     border-collapse: collapse;
@@ -130,11 +138,14 @@ br {
     border-top     : 5px solid #ccc;
     border-bottom  : 5px solid #ccc;
 }
+
 .viewdoblock .entry{
     font-size:14px;
 }
+
 .viewdoblock span{
 }
+
 .viewdoblock .head{
     width      :32%;
     text-align :right;
@@ -145,6 +156,7 @@ br {
     border-bottom-width: 0px;
     border-left-width  : 0px;
 }
+
 .viewdoblock .header{
     text-align :center;
     font-weight:bold;
@@ -154,6 +166,7 @@ br {
     border-bottom-width: 0px;
     border-left-width  : 0px;
 }
+
 .viewdoblock .content{
     line-height :1.5em;
     padding-left:20px;
@@ -161,6 +174,7 @@ br {
     border-bottom-width: 0px;
     border-right-width : 0px;
 }
+
 .viewdoblock .btnCol{
     width:100px;
     text-align :center;
@@ -169,6 +183,7 @@ br {
     border-bottom-width: 0px;
     border-right-width : 0px;
 }
+
 .viewdoblock .edit{
     width: 800px;
 }

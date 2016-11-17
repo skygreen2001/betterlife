@@ -25,10 +25,10 @@ class Action_Admin extends ActionModel
             $bb_page = TagPageService::init($nowpage,$count);
             $admins = Admin::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($admins as $admin) {
-                $department_instance=null;
-                if ($admin->department_id){
-                    $department_instance=Department::get_by_id($admin->department_id);
-                    $admin['department_name']=$department_instance->department_name;
+                $department_instance = null;
+                if ($admin->department_id) {
+                    $department_instance = Department::get_by_id($admin->department_id);
+                    $admin['department_name'] = $department_instance->department_name;
                 }
             }
             $this->view->set("admins", $admins);
@@ -41,10 +41,10 @@ class Action_Admin extends ActionModel
     {
         $adminId = $this->data["id"];
         $admin = Admin::get_by_id($adminId);
-        $department_instance=null;
-        if ($admin->department_id){
-            $department_instance=Department::get_by_id($admin->department_id);
-            $admin['department_name']=$department_instance->department_name;
+        $department_instance = null;
+        if ($admin->department_id) {
+            $department_instance = Department::get_by_id($admin->department_id);
+            $admin['department_name'] = $department_instance->department_name;
         }
         $this->view->set("admin", $admin);
     }
@@ -76,7 +76,7 @@ class Action_Admin extends ActionModel
      */
     public function delete()
     {
-        $adminId=$this->data["id"];
+        $adminId = $this->data["id"];
         $isDelete = Admin::deleteByID($adminId);
         $this->redirect("admin", "lists", $this->data);
     }

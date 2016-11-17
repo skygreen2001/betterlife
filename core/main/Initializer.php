@@ -208,9 +208,9 @@ class Initializer
     */
     public static function loadCommonFunctionLibrarys()
     {
-        $dir_include_function=self::$NAV_CORE_PATH.Config_F::ROOT_INCLUDE_FUNCTION.DS;
-        $files=UtilFileSystem::getAllFilesInDirectory($dir_include_function);
-        if (!class_exists("PEAR")){
+        $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
+        $files = UtilFileSystem::getAllFilesInDirectory($dir_include_function);
+        if (!class_exists("PEAR")) {
             require_once("helper/PEAR.php");
         }
         if (ini_get('allow_call_time_pass_reference') === 1) require_once("helper/PEAR5.php");

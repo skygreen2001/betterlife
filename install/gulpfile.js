@@ -8,10 +8,14 @@
 // Please use config.js to override these selectively:
 
 var config = {
-  dest: 'bin',
+  dest: '../bin',
   server: {
     host: '0.0.0.0',
     port: '8000'
+  },
+  clean: {
+    template_cache_dir: "../home/**/tmp/templates_c/**",
+    mac_ignore_file: "../**/.DS_Store"
   }
 };
 
@@ -69,7 +73,7 @@ gulp.on('error', function(e) {
 gulp.task('composer', function (cb) {
   return composer({
     'self-install': false,
-    'no-ansi'     : false,
+    'no-ansi'     : true,
     'working-dir' : '../install'
   });
 });
@@ -90,12 +94,13 @@ gulp.task('bower', function (cb) {
 /*=========================================
 =            Clean dest folder            =
 =========================================*/
-
 gulp.task('clean', function (cb) {
   return gulp.src([
+        config.clean.template_cache_dir,
+        config.clean.mac_ignore_file,
         config.dest
       ], { read: false })
-     .pipe(rimraf());
+     .pipe(rimraf({ force: true }));
 });
 
 
@@ -149,13 +154,13 @@ gulp.task('watch', function () {
 ======================================*/
 
 gulp.task('build', function(done) {
-  var tasks = [];
+  var tasks = [''];
   seq('clean', tasks, done);
 });
 
 
 /*======================================
-=            Install Sequence            =
+=            Install Sequence          =
 ======================================*/
 
 gulp.task('install', function(done) {
@@ -169,6 +174,6 @@ gulp.task('install', function(done) {
 ====================================*/
 gulp.task('default', function(done){
   var tasks = [];
-  tasks.push('watch');
-  seq('install', tasks, done);
+  tasks.push('install');
+  seq('clean', tasks, done);
 });

@@ -64,7 +64,7 @@ class Action_Functions extends ActionModel
      */
     public function delete()
     {
-        $functionsId=$this->data["id"];
+        $functionsId = $this->data["id"];
         $isDelete = Functions::deleteByID($functionsId);
         $this->redirect("functions", "lists", $this->data);
     }

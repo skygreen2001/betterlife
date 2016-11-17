@@ -64,7 +64,7 @@ class Action_Logsystem extends ActionModel
      */
     public function delete()
     {
-        $logsystemId=$this->data["id"];
+        $logsystemId = $this->data["id"];
         $isDelete = Logsystem::deleteByID($logsystemId);
         $this->redirect("logsystem", "lists", $this->data);
     }

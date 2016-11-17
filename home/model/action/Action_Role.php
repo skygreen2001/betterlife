@@ -64,7 +64,7 @@ class Action_Role extends ActionModel
      */
     public function delete()
     {
-        $roleId=$this->data["id"];
+        $roleId = $this->data["id"];
         $isDelete = Role::deleteByID($roleId);
         $this->redirect("role", "lists", $this->data);
     }

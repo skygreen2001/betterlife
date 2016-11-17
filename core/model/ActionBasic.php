@@ -39,8 +39,8 @@ class ActionBasic extends Object
     public $description;
     /**
      * 在线编辑器,参考:EnumOnlineEditorType
-     * 1.CKEditor
-     * 4.Ueditor
+     * 1.CKEDITOR
+     * 4.UEDITOR
      * @var mixed
      */
     public $online_editor=EnumOnlineEditorType::UEDITOR;//CKEDITOR

@@ -25,15 +25,15 @@ class Action_Rolefunctions extends ActionModel
             $bb_page = TagPageService::init($nowpage,$count);
             $rolefunctionss = Rolefunctions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($rolefunctionss as $rolefunctions) {
-                $role_instance=null;
-                if ($rolefunctions->role_id){
-                    $role_instance=Role::get_by_id($rolefunctions->role_id);
-                    $rolefunctions['role_name']=$role_instance->role_name;
+                $role_instance = null;
+                if ($rolefunctions->role_id) {
+                    $role_instance = Role::get_by_id($rolefunctions->role_id);
+                    $rolefunctions['role_name'] = $role_instance->role_name;
                 }
-                $functions_instance=null;
-                if ($rolefunctions->functions_id){
-                    $functions_instance=Functions::get_by_id($rolefunctions->functions_id);
-                    $rolefunctions['functions_name']=$functions_instance->name;
+                $functions_instance = null;
+                if ($rolefunctions->functions_id) {
+                    $functions_instance = Functions::get_by_id($rolefunctions->functions_id);
+                    $rolefunctions['functions_name'] = $functions_instance->name;
                 }
             }
             $this->view->set("rolefunctionss", $rolefunctionss);
@@ -46,15 +46,15 @@ class Action_Rolefunctions extends ActionModel
     {
         $rolefunctionsId = $this->data["id"];
         $rolefunctions = Rolefunctions::get_by_id($rolefunctionsId);
-        $role_instance=null;
-        if ($rolefunctions->role_id){
-            $role_instance=Role::get_by_id($rolefunctions->role_id);
-            $rolefunctions['role_name']=$role_instance->role_name;
+        $role_instance = null;
+        if ($rolefunctions->role_id) {
+            $role_instance = Role::get_by_id($rolefunctions->role_id);
+            $rolefunctions['role_name'] = $role_instance->role_name;
         }
-        $functions_instance=null;
-        if ($rolefunctions->functions_id){
-            $functions_instance=Functions::get_by_id($rolefunctions->functions_id);
-            $rolefunctions['functions_name']=$functions_instance->name;
+        $functions_instance = null;
+        if ($rolefunctions->functions_id) {
+            $functions_instance = Functions::get_by_id($rolefunctions->functions_id);
+            $rolefunctions['functions_name'] = $functions_instance->name;
         }
         $this->view->set("rolefunctions", $rolefunctions);
     }
@@ -86,7 +86,7 @@ class Action_Rolefunctions extends ActionModel
      */
     public function delete()
     {
-        $rolefunctionsId=$this->data["id"];
+        $rolefunctionsId = $this->data["id"];
         $isDelete = Rolefunctions::deleteByID($rolefunctionsId);
         $this->redirect("rolefunctions", "lists", $this->data);
     }

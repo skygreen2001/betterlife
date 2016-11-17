@@ -147,23 +147,23 @@ class AutoCodeViewDefault extends AutoCode
 
         foreach ($fieldNameAndComments as $key=>$value) {
             if (self::isNotColumnKeywork($key)){
-                $isImage =self::columnIsImage($key,$value);
+                $isImage = self::columnIsImage($key,$value);
                 if ($isImage)continue;
 
-                $is_no_relation=true;
+                $is_no_relation = true;
                 //关系列的显示
-                if (is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0))
+                if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield)>0))
                 {
-                    if (array_key_exists($classname,self::$relation_viewfield))
+                    if (array_key_exists($classname, self::$relation_viewfield))
                     {
-                        $relationSpecs=self::$relation_viewfield[$classname];
-                        if (array_key_exists($key,$relationSpecs))
+                        $relationSpecs = self::$relation_viewfield[$classname];
+                        if (array_key_exists($key, $relationSpecs))
                         {
-                            $relationShow=$relationSpecs[$key];
-                            foreach ($relationShow as $key_r=>$value_r) {
-                                $realId=DataObjectSpec::getRealIDColumnName($key_r);
-                                if (empty($realId))$realId=$key;
-                                if ((!array_key_exists($value_r,$fieldInfo))||($classname==$key_r)){
+                            $relationShow = $relationSpecs[$key];
+                            foreach ($relationShow as $key_r => $value_r) {
+                                $realId = DataObjectSpec::getRealIDColumnName($key_r);
+                                if (empty($realId)) $realId = $key;
+                                if ((!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r)) {
                                     $show_fieldname=$value_r;
                                     if ($realId!=$key){
                                         if (contain($key,"_id")){
@@ -207,16 +207,16 @@ class AutoCodeViewDefault extends AutoCode
                 }
                 if($is_no_relation){
                     $headers.="            <th class=\"header\">$value</th>\r\n";
-                    if((count($enumColumns)>0)&&(in_array($key, $enumColumns))){
-                        $contents.="            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
+                    if((count($enumColumns)>0) && (in_array($key, $enumColumns))) {
+                        $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
                     }else{
-                        $contents.="            <td class=\"content\">{\${$instancename}.$key}</td>\r\n";
+                        $contents .= "            <td class=\"content\">{\${$instancename}.$key}</td>\r\n";
                     }
                 }
             }
         }
 
-        if (!empty($headers)&&(strlen($headers)>2)){
+        if (!empty($headers) && (strlen($headers)>2)) {
             $headers=substr($headers,0,strlen($headers)-2);
             $contents=substr($contents,0,strlen($contents)-2);
         }
@@ -232,12 +232,15 @@ $headers
         {foreach item={$instancename} from=\${$instancename}s}
         <tr class="entry">
 $contents
-            <td class="btnCol"><my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.view&id={\${$instancename}.$realId}&pageNo={\$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.edit&id={\${$instancename}.$realId}&pageNo={\$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.delete&id={\${$instancename}.$realId}&pageNo={\$smarty.get.pageNo|default:"1"}">删除</my:a></td>
+            <td class="btnCol"><my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.view&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{\$url_base}index.php?go={$appname}.{$instancename}.delete&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-    &nbsp;&nbsp;<my:page src='{\$url_base}index.php?go={$appname}.{$instancename}.lists' /><br/>
-    <div align="center"><my:a href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&pageNo={\$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a></div>
+
+    <div class="footer" align="center">
+        <div><my:page src='{\$url_base}index.php?go={$appname}.{$instancename}.lists' /></div>
+        <my:a href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a>
+    </div>
 </div>
 LISTS;
         $result=self::tableToViewTplDefine($result);
@@ -296,54 +299,56 @@ LISTS;
         }
 
         if (count($text_area_fieldname)>=1){
-            $kindEditor_prepare="    ";
-            $ckeditor_prepare="    ";
-            $xhEditor_prepare="    ";
-            $ueEditor_prepare="";
-            foreach ($text_area_fieldname as $key=>$value) {
-                $headerscontents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">\r\n".
-                                  "        <textarea id=\"$key\" name=\"$key\" style=\"width:720px;height:300px;\">{\${$instancename}.$key}</textarea>\r\n".
-                                  "        </td></tr>\r\n";
-                $kindEditor_prepare.="showHtmlEditor(\"$key\");";
-                $ckeditor_prepare.="ckeditor_replace_$key();";
-                $xhEditor_prepare.="pageInit_$key();";
-                $ueEditor_prepare.="pageInit_ue_$key();";
+            $ckeditor_prepare = "    ";
+            $ueEditor_prepare = "";
+            foreach ($text_area_fieldname as $key => $value) {
+                $headerscontents .= "        <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
+                                    "            <td class=\"content\">\r\n".
+                                    "                <textarea id=\"$key\" name=\"$key\" style=\"width:90%;height:300px;\">{\${$instancename}.$key}</textarea>\r\n".
+                                    "            </td>\r\n".
+                                    "        </tr>\r\n";
+                $ckeditor_prepare .= "ckeditor_replace_$key();";
+                $ueEditor_prepare .= "pageInit_ue_$key();";
             }
 
             $textareapreparesentence = <<<EDIT
- {if (\$online_editor=='KindEditor')}<script>
- $kindEditor_prepare</script>{/if}
- {if (\$online_editor=='CKEditor')}
- {\$editorHtml}
- <script>$(function(){
-$ckeditor_prepare});</script>
- {/if}
- {if (\$online_editor=='xhEditor')}<script>\$(function(){
-$xhEditor_prepare});</script>
- {/if}
+    {if (\$online_editor=='CKEditor')}
+        {\$editorHtml}
+        <script>
+        $(function(){
+            $ckeditor_prepare
+        });
+        </script>
+    {/if}
 EDIT;
             $ueTextareacontents=<<<UETC
-    {if (\$online_editor=='UEditor')}
-    <script>$ueEditor_prepare</script>
+    {if (\$online_editor == 'UEditor')}
+        <script>$ueEditor_prepare</script>
     {/if}
 UETC;
         }
-        if (!empty($headerscontents)&&(strlen($headerscontents)>2)){
+        if (!empty($headerscontents) && (strlen($headerscontents)>2)) {
             $headerscontents=substr($headerscontents,0,strlen($headerscontents)-2);
         }
         $result = <<<EDIT
- <div class="block">
-    <div><h1>{if \${$instancename}}编辑{else}新增{/if}{$table_comment}</h1><p><font color="red">{\$message|default:''}</font></p></div>
-    <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>
-    <table class="viewdoblock">
+     <div class="block">
+        <div><h1>{if \${$instancename}}编辑{else}新增{/if}{$table_comment}</h1><p><font color="red">{\$message|default:''}</font></p></div>
+        <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>
+        <table class="viewdoblock">
 $headerscontents
-        <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
-    </table>
-    </form>
-    <div align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>{if \${$instancename}}|<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.view&id={\${$instancename}.id}&pageNo={\$smarty.get.pageNo|default:"1"}'>查看{$table_comment}</my:a>{/if}</div>
-</div>$ueTextareacontents
+            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+        </table>
+        </form>
+        <div class="footer" align="center">
+            <my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
+            {if \${$instancename}}
+            |<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.view&amp;id={\${$instancename}.id}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>查看{$table_comment}</my:a>
+            {/if}
+        </div>
+    </div>
+$ueTextareacontents
 EDIT;
-        if (count($text_area_fieldname)>=1){
+        if (count($text_area_fieldname)>=1) {
             $result=$textareapreparesentence."\r\n".$result;
         }
         $result=self::tableToViewTplDefine($result);
@@ -460,7 +465,7 @@ EDIT;
     <table class="viewdoblock">
 $headerscontents
     </table>
-    <div align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.edit&id={\${$instancename}.$realId}&pageNo={\$smarty.get.pageNo|default:"1"}'>修改{$table_comment}</my:a></div>
+    <div class="footer" align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.edit&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>修改{$table_comment}</my:a></div>
 </div>
 VIEW;
         $result=self::tableToViewTplDefine($result);
@@ -507,7 +512,7 @@ VIEW;
         $tpl_content="    <div><h1>这是首页列表(共计数据对象".count($tableInfos)."个)</h1></div>\r\n";
         $result="";
         $appname=self::$appName;
-        if ($tableInfos!=null&&count($tableInfos)>0){
+        if ($tableInfos!=null && ($tableInfos)>0) {
             foreach ($tableInfos as $tablename=>$tableInfo){
                 $table_comment=$tableInfos[$tablename]["Comment"];
                 if (contain($table_comment,"\r")||contain($table_comment,"\n")){

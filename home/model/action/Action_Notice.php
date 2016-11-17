@@ -66,7 +66,7 @@ class Action_Notice extends ActionModel
      */
     public function delete()
     {
-        $noticeId=$this->data["id"];
+        $noticeId = $this->data["id"];
         $isDelete = Notice::deleteByID($noticeId);
         $this->redirect("notice", "lists", $this->data);
     }

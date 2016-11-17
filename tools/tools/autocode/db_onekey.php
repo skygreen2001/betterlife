@@ -79,10 +79,10 @@ if(Config_AutoCode::AFTER_MODEL_CONVERT_ADMIN){
         if(Config_AutoCode::SHOW_PREVIEW_REPORT){
             echo "<div style='width: 1000px; margin-left: 110px;'>";
             echo "<span>&nbsp;&nbsp;&nbsp;&nbsp;</span><a href='javascript:' style='margin-left: 5%;cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
-            echo"<div id='showPrepareWork' style='display: none;'>";
+            echo "<div id='showPrepareWork' style='display: none;'>";
             echo AutoCodeModel::$showPreviewReport;
             echo "</div>";
-            echo "<p style='margin-left: 6%;padding-left: 5px;height:20px;text-align:right;'><span style='float:left'>&nbsp;&nbsp;<a style='margin-left:15px;' href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showReport').style.display=(document.getElementById('showReport').style.display=='none')?'':'none')\">显示报告</a></span></p>";
+            echo "<p style='margin-left: 6%;padding-left:5px;height:20px;text-align:right;'><span style='float:left'>&nbsp;&nbsp;<a style='margin-left:15px;' href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showReport').style.display=(document.getElementById('showReport').style.display=='none')?'':'none')\">显示报告</a></span></p>";
             echo "<div id='showReport' style='display: none;margin-left: 11%;'>";
             echo AutoCodeModel::$showReport;
             echo "</div>";

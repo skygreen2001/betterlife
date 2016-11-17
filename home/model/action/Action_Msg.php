@@ -66,7 +66,7 @@ class Action_Msg extends ActionModel
      */
     public function delete()
     {
-        $msgId=$this->data["id"];
+        $msgId = $this->data["id"];
         $isDelete = Msg::deleteByID($msgId);
         $this->redirect("msg", "lists", $this->data);
     }

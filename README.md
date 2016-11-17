@@ -1,73 +1,26 @@
-# betterlife.core
+# Betterlife.Core
 betterlife core with minimize project size
 
-## 第一部分:参考资料
-### 入门级网站：
-    * 网站建设教程:http://www.w3school.com.cn/
-    * 新手开发手册:http://www.tizag.com/
+## 安装说明
+### 推荐方式
+    * **安装NodeJs**
+        下载地址: https://nodejs.org/en/download/
+    * **通过Github官网下载**
+        官网地址: https://github.com/skygreen2001/betterlife.core
+        * git clone https://github.com/skygreen2001/betterlife.core.git
+        * git clone git@github.com:skygreen2001/betterlife.core.git
+    * **安装Gulp**
+      npm install --global gulp
+    * **安装目录下运行**
+      npm install
+      [说明]:安装目录是根目录下的install目录, 即本说明文件目录下
+    * **安装目录下运行**
+      gulp
 
-### 参考框架：
-* **English**
-    * SilverStripe:http://doc.silverstripe.org/
-    * Drupal：http://drupal.org/handbook
-    * Lavaral: http://laravel.com/
-    * CodeIgniter：http://codeigniter.com/user_guide/index.html
-    * Symfony:http://symphony-cms.com/
-    * Joomla：http://docs.joomla.org/
+### 手动方式
+    * 参考安装目录install目录下的<a href='install/README.md'>README.md</a>文档
 
-* **国内**
-    * ThinkPHP:http://www.thinkphp.cn/Manual
-    * QEE:http://qeephp.com/，原为FleaPHP
-    * 康盛创想产品:http://faq.comsenz.com/development【comsenz】
-    * MyOA:http://www.tongda2000.com/download/document.php#oa
-
-* **MVC框架**
-    * Magento:使用Zend Framwork框架,一套专业开源的电子商务系统
-    * CakePHP:重构Mambo
-    * Zend Framework:IBM用于开发开源ecommerce解决方案
-    * Mambo:a full-featured, award-winning content management system
-
-* **CMS**
-    * 织梦CMS: http://help.dedecms.com/
-    * PHPWind: http://faq.phpwind.net/
-    * 帝国CMS:http://bbs.phome.net/ShowThread/?threadid=18902&forumid=13
-
-* **数据库DAO-DAL框架**
-    * Metabase
-    * PEAR:DB
-    * ADODB:http://phplens.com/lens/adodb/docs-adodb.htm
-    * PDO
-    * ActiveRecord:
-        - Doctrine:http://www.doctrine-project.org/
-        - Php ActiveRecord:http://www.phpactiverecord.org/
-        - Propel:http://www.propelorm.org
-
-* **包管理工具**
-    * composer:http://www.phpcomposer.com/
-    * packagist:https://packagist.org/
-    * PEAR:http://pear.php.net/
-    * PECL:http://pecl.php.net/
-    * ?ezComponents:http://ezcomponents.org/
-
-### Book
-    * Object-oriented programming with php5 [author:Hasin Hayder]
-
-### 代码规范[Code Guide]
-    * PHP-fig:http://www.php-fig.org/
-    * PHP The right way:http://www.phptherightway.com/#code_style_guide
-    * Drupal Code Standard:https://www.drupal.org/docs/develop/standards
-    * PHP Coding Guidelines & Best Practices:http://flowframework.readthedocs.io/en/stable/TheDefinitiveGuide/PartV/CodingGuideLines/PHP.html
-    * Tencent AlloyTeam:http://alloyteam.github.io/CodeGuide/
-
-### 推荐工具
-    * 部署：XAMMP(Wamp/Lamp/Mamp) | XAMPP
-    * IDE：Atom | Sublime | Brackets
-
-### 在线资源
-    * Github Tools:https://github.com/integrations
-    * http://codemirror.net/
-
-## 第二部分:框架目录定义
+## 框架目录定义
     * core    : 框架核心支持文件
     * install : 安装目录
     * taglib  : 自定义标签，您也可以在自己的应用中定义自定义标签
@@ -75,24 +28,3 @@ betterlife core with minimize project size
     * home    : 基于MVC模式网站开发实际工作目录
     * document: 框架帮助说明文档
     * misc    : 引用第三方Js、Css、Image、Fonts资源目录
-
-## 第三部分:FAQ
-* 一般来讲：中文字符集都采用UTF-8，但在Ajax发送Json中文数据发现Firefox正常，IE为乱码;
-  需要标明：contentType: "application/x-www-form-urlencoded; charset=utf-8",
-  解决方法参考：http://91jquery.com/jQuery/1769.html
-      jQuery(form).ajaxSubmit({
-        url: "ajax.aspx?a=memberlogin",
-        type: "post",
-        dataType: "json",
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        success: showLoginResponse
-      });
-
-* 网站框架访问样式不正常，发现无法正常加载Css或者Gzip；
-    提示：
-      内容编码错误
-      无法显示您尝试查看的页面，因为它使用了无效或者不支持的压缩格式。
-    回答：
-      1.清除所有文件带有的BOM.
-      2.反置PHP.ini里的zlib output compression设置。
-      3.mysql数据库列字段名不能为desc关键字。
