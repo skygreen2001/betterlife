@@ -12,8 +12,6 @@ Betterlife Core with minimize project size from betterlife cms framework.
     * git clone git@github.com:skygreen2001/betterlife.core.git
 * **安装NodeJs**
     下载地址: https://nodejs.org/en/download/
-* **安装Gulp**
-  npm install --global gulp
 * **安装目录下运行**
   npm install
   [说明]:安装目录是根目录下的install目录, 即本说明文件目录下

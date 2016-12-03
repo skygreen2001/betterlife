@@ -12,35 +12,4 @@ module.exports = function(config) {
    */
   config.dest = 'bin';
 
-  //
-  // Development web server
-  //
-
-  /**
-   * Development server config.
-   *
-   * @type {Boolean}
-   * @property config.server
-   *
-   * @example Disable development server
-   *   config.server = false;
-   */
-  config.server = false;
-
-  /**
-   * The host name where to bind development server.
-   *
-   * @property config.server.host
-   * @type {String}
-   */
-  // config.server.host = '0.0.0.0';
-
-  /**
-   * The port where development server will to listen.
-   *
-   * @property config.server.port
-   * @type {String}
-   */
-  // config.server.port = '8000';
-
 };
