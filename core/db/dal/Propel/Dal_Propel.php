@@ -9,9 +9,10 @@
  * @package core.db.dal
  * @subpackage propel
  * @author skygreen
+ * @todo
  */
-class Dal_Propel extends IDal implements IDal 
+class Dal_Propel extends IDal implements IDal
 {
- 
+
 }
 ?>

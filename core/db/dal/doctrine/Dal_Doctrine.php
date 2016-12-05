@@ -1,14 +1,13 @@
 <?php
 /**
  +---------------------------------<br/>
- * @todo 实现dbFacile通用的DAL访问方式
- * @see https://github.com/alanszlosek/dbFacile
+ * @todo 实现doctrine通用的DAL访问方式
+ * @see http://www.doctrine-project.org/
  +---------------------------------<br/>
  * @category betterlife
  * @package core.db.dal
  * @subpackage dbfacile
  * @author skygreen
- * @todo
  */
 class Dal_DbFacile extends Dal implements IDal
 {

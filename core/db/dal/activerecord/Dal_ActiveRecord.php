@@ -9,8 +9,9 @@
  * @package core.db.dal
  * @subpackage activerecord
  * @author skygreen
+ * @todo
  */
-class Dal_ActiveRecord extends Dal implements IDal 
+class Dal_ActiveRecord extends Dal implements IDal
 {
 
 }
