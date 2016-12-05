@@ -9,10 +9,6 @@
 
 var config = {
   dest: '../bin',
-  server: {
-    host: '0.0.0.0',
-    port: '8000'
-  },
   clean: {
     template_cache_dir: "../home/**/tmp/templates_c/**",
     mac_ignore_file: "../**/.DS_Store"
@@ -102,62 +98,6 @@ gulp.task('clean', function (cb) {
       ], { read: false })
      .pipe(rimraf({ force: true }));
 });
-
-
-/*==========================================
-=            Start a web server            =
-==========================================*/
-
-gulp.task('connect', function() {
-  if (typeof config.server === 'object') {
-    connect.server({
-      root: config.dest,
-      host: config.server.host,
-      port: config.server.port,
-      livereload: true
-    });
-  } else {
-    throw new Error('Connect is not configured');
-  }
-});
-
-
-/*==============================================================
-=            Setup live reloading on source changes            =
-==============================================================*/
-
-gulp.task('livereload', function () {
-  gulp.src(
-      path.join(config.dest, '*.html'),
-      path.join(config.dest, '*.php'),
-      path.join(config.dest, '*.tpl')
-    )
-    .pipe(connect.reload());
-});
-
-
-/*===================================================================
-=            Watch for source changes and rebuild/reload            =
-===================================================================*/
-
-gulp.task('watch', function () {
-  if (typeof config.server === 'object') {
-    gulp.watch([config.dest + '/**/*'], ['livereload']);
-  }
-  gulp.watch(['./core/**/*'], ['php']);
-  gulp.watch(['./home/**/*'], ['php','tpl']);
-});
-
-
-/*======================================
-=            Build Sequence            =
-======================================*/
-
-gulp.task('build', function(done) {
-  var tasks = [''];
-  seq('clean', tasks, done);
-});
-
 
 /*======================================
 =            Install Sequence          =
