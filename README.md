@@ -17,6 +17,7 @@ Betterlife Core with minimize project size from betterlife cms framework.
   [说明]:安装目录是根目录下的install目录, 即本说明文件目录下
 * **安装目录下运行**
   gulp
+  [说明]:Window操作系统下需先运行:npm install --global gulp
 
 ### 手动方式
 
