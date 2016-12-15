@@ -40,7 +40,7 @@ var gulp           = require('gulp'),
     order          = require('gulp-order'),
     concat         = require('gulp-concat'),
     ignore         = require('gulp-ignore'),
-    rimraf         = require('gulp-rimraf'),
+    clean         = require('gulp-clean'),
     mobilizer      = require('gulp-mobilizer'),
     replace        = require('gulp-replace'),
     streamqueue    = require('streamqueue'),
@@ -54,6 +54,14 @@ var gulp           = require('gulp'),
 
 gulp.on('error', function(e) {
   throw(e);
+});
+
+/*=========================================
+=          Build            =
+=========================================*/
+
+gulp.task('build', function (cb) {
+
 });
 
 
@@ -96,7 +104,7 @@ gulp.task('clean', function (cb) {
         config.clean.mac_ignore_file,
         config.dest
       ], { read: false })
-     .pipe(rimraf({ force: true }));
+     .pipe(clean({ force: true }));
 });
 
 /*======================================
@@ -112,8 +120,8 @@ gulp.task('install', function(done) {
 /*====================================
 =            Default Task            =
 ====================================*/
-gulp.task('default', function(done){
+gulp.task('default', ['clean'], function(done){
   var tasks = [];
-  tasks.push('install');
-  seq('clean', tasks, done);
+  tasks.push('build');
+  seq('install', tasks, done);
 });
