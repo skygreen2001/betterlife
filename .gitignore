@@ -9,5 +9,4 @@
 /install/vendor
 /install/bower_components
 /install/node_modules
-bb.*
 .DS_Store
