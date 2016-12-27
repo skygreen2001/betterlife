@@ -28,7 +28,10 @@ Betterlife Core with minimize project size from betterlife cms framework.
 
   gulp
 
-  [说明]:Window操作系统下需先运行:npm install --global gulp
+      [说明]:
+          Windows操作系统下推荐安装Cmder[http://cmder.net/]
+          Window操作系统下需先运行: npm install --global gulp
+          然后运行gulp
 
 ### 手动方式
 
