@@ -5,10 +5,9 @@
 设计图到静态页面 : Dreamweaver[Firework]
 
 中间件服务器：Apache
-部署工具 :Wamp
+部署工具 :Xampp|Wamp
 开发语言 :Php
-数据库   : Mysql
-
+数据库   :Mysql|Postgresql
 
 流程：
 1.数据层：MysqlWorkBench->Mysql->Betterlife框架的代码生成工具->生成前端和后端代码
