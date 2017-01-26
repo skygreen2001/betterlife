@@ -8,6 +8,7 @@
 * 腾讯 AlloyTeam: https://github.com/AlloyTeam/
 * 阿里巴巴-国际UED前端: https://github.com/sdc-alibaba
 * Taobao, Inc. : https://github.com/taobao
+* 京东凹凸实验室 :https://github.com/o2team
 
 ## MIRACLE
 

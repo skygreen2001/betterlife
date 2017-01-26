@@ -1,8 +1,14 @@
 <?php
 require_once ("init.php");
 
-$response=Manager_Service::blogService()->exportBlog();
-echo "<script>window.open('".$response["data"]."');</script>";
+
+
+
+
+
+// $response=Manager_Service::blogService()->exportBlog();
+// echo "<script>window.open('".$response["data"]."');</script>";
+
 //调用一对一
 // $user=User::get_by_id(1);
 // $userdetail=$user->userdetail;

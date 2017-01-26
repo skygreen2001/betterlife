@@ -38,14 +38,15 @@
     }
   ],
   "require": {
-      "php": ">=5.2.0",
-      "smarty/smarty": "dev-master",
+      "php"               : ">=5.2.0",
+      "smarty/smarty"     : "dev-master",
       "phpoffice/phpexcel": "dev-master",
-      "symfony/yaml": ">=2.0.4",
+      "phpoffice/phpword" : "v0.13.*",
+      "symfony/yaml"      : ">=2.0.4",
       "mustangostang/spyc": "dev-master",
-      "fusonic/linq": "@dev",
-      "adodb/adodb-php": ">=5.19",
-      "pear/MDB2": ">=2.0.0"
+      "fusonic/linq"      : "@dev",
+      "adodb/adodb-php"   : ">=5.19",
+      "pear/MDB2"         : ">=2.0.0"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"

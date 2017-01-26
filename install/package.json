@@ -3,19 +3,15 @@
   "version": "1.0.0",
   "private": false,
   "license": "Apache-2.0",
-
   "repository": {
     "type": "git",
     "url": "git@github.com:skygreen2001/betterlife.core.git"
   },
-
   "devDependencies": {
     "gulp": "^3.8.1",
-
     "gulp-bower": "^0.0.13",
     "gulp-connect-php": "0.0.8",
     "gulp-composer": "^0.4.0",
-
     "gulp-connect": "^2.0.5",
     "gulp-ignore": "^1.2.0",
     "gulp-clean": "^0.3.2",
@@ -30,5 +26,8 @@
     "gulp-replace": "^0.4.0",
     "streamqueue": "^0.1.1",
     "gulp-rename": "^1.2.0"
+  },
+  "dependencies": {
+    "composer": "^0.14.0"
   }
 }
