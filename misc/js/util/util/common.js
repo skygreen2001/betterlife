@@ -13,7 +13,7 @@ function print_r(arr,level) {
 
       if(typeof(value) == 'object') { //If it is an array,
         dumped_text += level_padding + "'" + item + "' ...\n";
-        dumped_text += dump(value,level+1);
+        dumped_text += print_r(value,level+1);
       } else {
         dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
       }
@@ -25,11 +25,24 @@ function print_r(arr,level) {
 }
 
 //如果只是希望在IE中不出现Firebug调试函数的错误信息，那么可以在页面中加入以下代码
-// if (!window.console ||!console.firebug){
-//   var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml",
-//   "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile",
-// "profileEnd"];
-//   window.console = {};
-//   for (var i = 0; i < names.length; ++i)
-//     window.console[names[i]] = function() {}
-// }
+if (!window.console){
+  var method;
+  var noop = function () {};
+  var methods = [
+      'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+      'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+      'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+      'timeStamp', 'trace', 'warn'
+  ];
+  var length = methods.length;
+  var console = (window.console = window.console || {});
+
+  while (length--) {
+      method = methods[length];
+
+      // Only stub undefined methods.
+      if (!console[method]) {
+          console[method] = noop;
+      }
+  }
+}
