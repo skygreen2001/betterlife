@@ -70,10 +70,12 @@ td,#setting th{padding:0 0 0 15px;}
             $tablename_cn=preg_split("/[\s,]+/", $tablename_cn);
             $tablename_cn=$tablename_cn[0];
         }
+        if (empty($tablename_cn))$tablename_cn = $tablename;
         $tableInfoList[$tablename]["Comment_Table"]=$tablename_cn;
         $table_comment=str_replace("\r\n","<br/>",$table_comment);
         $table_comment=str_replace("\r","<br/>",$table_comment);
         $table_comment=str_replace("\n","<br/>",$table_comment);
+        if (empty($table_comment))$table_comment = $tablename;
         echo "    <tr>".
              "        <td><a href=\"#$tablename\">$tablename</a></td>".
              "        <td>$tablename_cn</td>".
@@ -103,6 +105,7 @@ td,#setting th{padding:0 0 0 15px;}
             $column_comment=str_replace("\r\n","<br/>",$column_comment);
             $column_comment=str_replace("\r","<br/>",$column_comment);
             $column_comment=str_replace("\n","<br/>",$column_comment);
+            if (empty($column_comment))$column_comment = $fieldname;
             echo "      <tr>".
                  "          <td>$fieldname</td>".
                  "          <td>{$field['Type']}</td>".

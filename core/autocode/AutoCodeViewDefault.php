@@ -520,6 +520,7 @@ VIEW;
                     $table_comment=$table_comment[0];
                 }
                 $instancename=self::getInstancename($tablename);
+                if (empty($table_comment))$table_comment = $tablename;
                 $result.="        <tr class=\"entry\"><td class=\"content\"><a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.lists\">{$table_comment}</a></td></tr>\r\n";
             }
         }
