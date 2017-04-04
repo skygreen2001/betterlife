@@ -163,6 +163,25 @@ class UtilFileSystem extends Util
     }
 
     /**
+     * 手机接口上传文件Base64数据
+     * @param sting $base64_string 上传文件Base64数据
+     * @param string $uploadPath 文件路径或者文件名
+     * @return array 返回信息数组
+     */
+    public static function base64_to_image($base64_string, $uploadPath) {
+        $ifp = fopen($uploadPath, "wb");
+
+        $data = explode(',', $base64_string);
+
+        fwrite($ifp, base64_decode($data[0]));
+        fclose($ifp);
+
+        // LogMe::log($data);
+        // LogMe::log($uploadPath);
+        return $uploadPath;
+    }
+
+    /**
      * 服务器上传文件
      * 需要调整php.ini的配置项:post_max_size|upload_max_filesize
      * @param mixed $files 上传的文件对象
