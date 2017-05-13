@@ -1,5 +1,3 @@
-
-
 # 推荐方式
 
 ## 安装步骤
@@ -15,6 +13,7 @@
   ```
   [说明]
   > 安装目录是根目录下的install目录, 即本说明文件目录下
+
 * **安装目录下运行**
 
   ```
@@ -42,6 +41,15 @@
     - 运行: php composer.phar install
     - 运行gulp
 
+* **放置 在线编辑器: ueditor**
+  - 在install/bower_components/ueditor 目录下命令行执行
+    - npm install
+    - npm install -g grunt
+    - grunt default
+  - 先备份misc/js/onlineditor/ueditor 目录下的文件 到 misc/js/onlineditor/ueditor_bak 下
+  - 复制粘贴 install/bower_components/ueditor/dist -> misc/js/onlineditor/ueditor 目录下
+  - 复制粘贴 misc/js/onlineditor/ueditor_bak -> misc/js/onlineditor/ueditor 即可.
+
 # 手动方式
 
 * 下载Github库
@@ -50,9 +58,12 @@
   - 放置 Smarty 库 -> install/vendor/smarty/smarty/ 目录下
   - 放置 PHPExcel 库 -> install/vendor/phpoffice/phpexcel/ 目录下autoload
 
-* 放置 在线编辑器: ueditor -> misc/js/onlineditor 目录下
-
-  先备份该目录下的文件, 等放置好下载的ueditor,再覆盖备份的文件即可.
+* 下载 在线编辑器: [UEditor](http://ueditor.baidu.com/website/download.html)
+  - 下载 在线编辑器: [UEditor] [1.4.3.3 PHP 版本] UTF-8版
+  - 解压 下载文件 到目录 utf8-php
+  - 先备份misc/js/onlineditor/ueditor 目录下的文件 到 misc/js/onlineditor/ueditor_bak 下
+  - 复制粘贴 utf8-php/ -> misc/js/onlineditor/ueditor 目录下
+  - 复制粘贴 misc/js/onlineditor/ueditor_bak -> misc/js/onlineditor/ueditor 即可.
 
   [说明]
   > UEditor下载版本为:[1.4.3.3 PHP 版本] UTF-8版

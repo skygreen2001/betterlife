@@ -64,10 +64,10 @@ APACHECONFIG;
     }
     $destination = Gc::$log_config["logpath"];
     echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
-    echo "sudo chmod -R 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
+    echo "sudo chmod -R 0777 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     $destination = Gc::$upload_path;
     echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
-    echo "sudo chmod -R 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",12);
+    echo "sudo chmod -R 0777 " . $destination . "<br/>" . str_repeat("&nbsp;",12);
     echo "* . 重启apache : sudo apachectl restart";
 } else if (contain($os,"ubuntu")) {
     echo "您使用的是Ubuntu系统<br/>";

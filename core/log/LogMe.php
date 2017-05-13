@@ -102,11 +102,9 @@ class LogMe extends Object
             $info = "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建框架日志存放的目录:" . dirname($destination) . "<br/>" .
                     "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
                     "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",40);
-            if (!isMac){
-                $info .=
-                    "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",40) .
-                    "sudo chmod -R 0755 " . $destination . "</p>";
-            }
+            $info .=
+                "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",40) .
+                "sudo chmod -R 0755 " . $destination . "</p>";
             die($info);
         }
         return $destination;
