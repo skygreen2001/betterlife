@@ -10,3 +10,4 @@
 /install/bower_components
 /install/node_modules
 .DS_Store
+/misc/js/onlineditor
