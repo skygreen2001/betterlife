@@ -4,14 +4,23 @@ require_once ("../../init.php");
 
 $draw         = $_GET["draw"];
 $page         = $_GET["page"];
-$where_clause = "";
 $page_size    = $_GET["pageSize"];
-$orderDes     = "id desc";
 $search       = $_GET["query"];
 $columns      = $_GET["columns"];
-// echo json_encode(array("param"=>$columns));
-// die();
+$where_clause = "";
+$orderDes     = "id desc";
 
+if (!empty($query)){
+  $where_clause  = "(";
+  $search_atom = explode(" ", trim($query));
+  array_walk($search_atom,function(&$value, $key){
+    $value = " ( blog_name LIKE '%" . $value . "%' ) ";
+  });
+  $where_clause .= implode(" and ", $search_atom);
+  $where_clause .= ")";
+}
+
+blog_content
 foreach ($columns as $key => $column) {
   $column_search_value = $column["search"]["value"];
   if ($column_search_value!=""){
