@@ -14,14 +14,15 @@ class Gc {
      * 数据库配置
      */
     public static $database_config = array(
-        'db_type' => 0,//默认使用mysql数据库. EnumDbSource::DB_MYSQL=0, 具体定义参见Config_Db.php里EnumDbSource的定义
-        'driver'  => 1,//数据库使用调用引擎. EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI, 具体定义参见Config_Db.php里EnumDbEngine的定义
-        'host' => '127.0.0.1',//数据库主机[默认本地 localhost]
-        'port' => '',//数据库端口
+        'db_type'  => 0,//默认使用mysql数据库. EnumDbSource::DB_MYSQL=0, 具体定义参见Config_Db.php里EnumDbSource的定义
+        'driver'   => 1,//数据库使用调用引擎. EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI, 具体定义参见Config_Db.php里EnumDbEngine的定义
+        'host'     => '127.0.0.1',//数据库主机[默认本地 localhost]
+        'port'     => '',//数据库端口
         'database' => 'betterlife',//数据库名称
         'username' => 'root',//数据库用户名
-        'password' => 'itaskTour2006',//数据库密码
+        'password' => '',//数据库密码
         'prefix'   => 'bb_',//数据库表名前缀
+        'debug'    => true//显示数据库sql查询语句
     );
     /**
      * 是否打开Debug模式
