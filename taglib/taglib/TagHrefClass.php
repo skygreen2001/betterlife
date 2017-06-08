@@ -12,6 +12,11 @@ class TagHrefClass extends TagClass
      */
     public static $isMcrypt=false;
     /**
+     * 标识
+     * @var string
+     */
+    private $id;
+    /**
      * 链接地址
      * @var string
      */
@@ -38,6 +43,11 @@ class TagHrefClass extends TagClass
      */
     private $title;
     /**
+     * 页数
+     * @var string
+     */
+    private $pageNo;
+    /**
     * 点击事件
     * @var string
     */
@@ -59,6 +69,9 @@ class TagHrefClass extends TagClass
         if (array_key_exists("href",$attributes)){
             $this->href=$attributes["href"];
         }
+        if (array_key_exists("id",$attributes)){
+            $this->id=$attributes["id"];
+        }
         if (array_key_exists("target",$attributes)){
             $this->target=$attributes["target"];
         }
@@ -70,6 +83,9 @@ class TagHrefClass extends TagClass
         }
         if (array_key_exists("title",$attributes)){
             $this->title=$attributes["title"];
+        }
+        if (array_key_exists("pageNo",$attributes)){
+            $this->pageNo=$attributes["pageNo"];
         }
         if (array_key_exists("onclick",$attributes)){
             $this->onclick=$attributes["onclick"];
@@ -92,6 +108,9 @@ class TagHrefClass extends TagClass
             }
             $this->html.="href=\"".$href."\" ";
         }
+        if ($this->id){
+            $this->html.="id=\"".$this->id."\" ";
+        }
         if ($this->target){
             $this->html.="target=\"".$this->target."\" ";
         }
@@ -104,6 +123,9 @@ class TagHrefClass extends TagClass
         }
         if ($this->title){
             $this->html.="title=\"".$this->title."\" ";
+        }
+        if ($this->pageNo){
+            $this->html.="pageNo=\"".$this->pageNo."\" ";
         }
         if ($this->onclick){
             $this->html.="onclick=\"".$this->onclick."\" ";
