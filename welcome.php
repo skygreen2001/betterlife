@@ -19,80 +19,108 @@ if(!contains($_SERVER['HTTP_HOST'],array("127.0.0.1","localhost"))){
 <meta name="creation-date" content="12/01/2010">
 <meta name="revisit-after" content="15 days">
 <title><?php echo Gc::$site_name ?></title>
+
 <style type="text/css">
 body {
-    font-size: 13px;
-    font-family:'Microsoft YaHei',"微软雅黑",Arial, sans-serif,'Open Sans';
-    margin:0;
-    padding:0;
-    border:0 none;
+  font-size: 13px;
+  font-family:'Microsoft YaHei',"微软雅黑",Arial, sans-serif,'Open Sans';
+  margin:0;
+  padding:0;
+  border:0 none;
 }
 p {
-    margin:5px;
+  margin:5px;
 }
 .en{
-    font-family:Arial,verdana,Geneva,Helvetica,sans-serif;
-}
-a {
-    color: #1E4176;
-}
-a:link {
-    color: #1E4176;
-    text-decoration: none;
-}
-a:visited {
-    color: #555;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-    color: #15428b;
+  font-family:Arial,verdana,Geneva,Helvetica,sans-serif;
 }
 h1{
-    margin: 150px 0 0 0;
+  margin: 120px auto 20px auto;
+  font-size: 40px;
+  font-weight: lighter;
 }
-#main {
-    width: 100%;
-    height: 100%;
-    align: center;
+a {
+  cursor: pointer;
 }
-#inbox {
-    width: 480px;
-    margin: 0 auto;
+a:link {
+  text-decoration: none;
 }
-#footnav {
-    width: 300px;
-    text-align: center;
-    margin: 10px auto 0px auto;
+a:visited {
+  text-decoration: none;
 }
-div#content{
-    border-style:outset;
-    border-color: black;
-    border-width: thin;
-    font-size: 16px;
-    width: 480px;
-    height: 150px;
-    padding-top:80px;
-    margin-top: 20px;
+a:hover {
+  text-decoration: none;
+}
+.main {
+  width : 100%;
+  height: 100%;
+  align : center;
+}
+.inbox {
+  width: 360px;
+  margin: 0 auto;
+}
+div.content-container{
+  border: 2px solid #eee;
+  font-size: 24px;
+  width: 360px;
+  height: 360px;
+  border-radius: 100%;
+}
+div.content{
+  position: absolute;
+  top:42%;
+  left:46%;
+}
+div.content a{
+  color: #666;
+}
+div.content a:hover{
+  color: #77cc6d;
+}
+.content-down{
+  color: #999;
+  width: 300px;
+  text-align: center;
+  margin: 10px auto 0px auto;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  margin: 10px auto 0px auto;
+  color: #888;
+}
+footer a{
+  color: #888;
+}
+footer a:hover{
+  color: #77cc6d;
 }
 </style>
 <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div id="main">
+    <div class="main">
         <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> 框架</h1>
-        <div id="inbox">
-            <div align="center">
-                <div id="content" align="center">
+        <div class="inbox">
+            <div class="content-container">
+                <div class="content" align="center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
-                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">手机模版</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
+                    <p><a target="_blank" href="#">手机模版</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模板</a></p>
                 </div>
             </div>
         </div>
-        <div id="footnav"><?php $help_url="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html" ?>
-            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
+        <div class="content-down">
+          <p><?php echo UtilDateTime::now() ?></p>
         </div>
+        <footer><?php $help_url="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html" ?>
+            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
+        </footer>
     </div>
 </body>
 </html>

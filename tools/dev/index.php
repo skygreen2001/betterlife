@@ -10,21 +10,13 @@ class EnumReusePjType extends Enum
      */
     const FULL    = 1;
     /**
-     * 通用版【后台使用Jquery框架】
-     */
-    const LIKE    = 2;
-    /**
-     * 高级版【后台使用Extjs框架】
-     */
-    const HIGH    = 3;
-    /**
      * 精简版【只包括框架核心-包括MVC,前后台】
      */
-    const SIMPLE    = 4;
+    const SIMPLE    = 2;
     /**
      * MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
      */
-    const MINI    = 5;
+    const MINI    = 3;
 }
 
 /**
@@ -37,29 +29,23 @@ class EnumReusePjType extends Enum
  *        项目路径|项目名称【中文-英文】|项目别名
  *        重用类型
  *            1.完整版【同现有版本一样】
- *            2.通用版【后台使用Jquery框架】
- *            3.高级版【后台使用Extjs框架】
- *            4.精简版【只包括框架核心-包括MVC,前后台】
- *            5.MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
+ *            2.精简版【只包括框架核心-包括MVC,前后台】
+ *            3.MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
  * 处理流程操作:
  *        1.复制整个项目到新的路径
  *        2.修改Gc.php相关配置
  *        3.修改Config_Db.php[数据库名称|数据库表名前缀]
  *        4.修改帮助地址
  *        5.修改应用文件夹名称
- *          6.重命名后台Action_Betterlife为新应用类
- *          7.替换Extjs的js文件里的命名空间
+ *        6.重命名后台Action_Betterlife为新应用类
  *      精简版还执行了以下操作
  *            1.清除在大部分项目中不需要的目录
  *            2.清除在大部分项目中不需要的文件
- *            3.清除library下的不常用的库:
- *                adodb5|linq|mdb2|PHPUnit|yaml|template[EaseTemplate|SmartTemplate|TemplateLite]
  *            4.清除缓存相关的文件
- *              5.清除mysql|sqlite|postgres以外的其他数据库引擎
- *            6.清除module大部分工程无需的文件
+ *            5.清除mysql|sqlite|postgres以外的其他数据库引擎
  *            7.清除tools大部分工程无需的文件
  *            8.清除common大部分工程无需的文件
- *              9.清除util大部分工程无需的文件
+ *            9.清除util大部分工程无需的文件
  * @author skygreen2001@gmail.com
  */
 class Project_Refactor
@@ -685,10 +671,6 @@ AUTHCONTENT;
             //修改Initializer.php初始化文件
             $init_file=self::$save_dir."core".DS."main".DS."Initializer.php";
             $content=file_get_contents($init_file);
-            $content=str_replace("Library_Loader::load_phpexcel_autoload(\$class_name);","",$content);
-            $content=str_replace("self::loadLibrary();", "//self::loadLibrary();", $content);
-            $content=str_replace("self::loadModule();", "//self::loadModule();", $content);
-            //$content=str_replace("self::recordModuleClasses();", "//self::recordModuleClasses();", $content);
             file_put_contents($init_file, $content);
 
             $include_files=array(
@@ -848,48 +830,6 @@ AUTHCONTENT;
                     self::IgnoreCommons();
                     self::IgnoreUtils();
                     break;
-                case EnumReusePjType::LIKE:
-                    self::IgnoreInCommon();
-                    self::IgnoreCommons();
-                    self::IgnoreUtils();
-
-                    //修改model文件夹名称为后台文件夹admin
-                    $old_model_name=self::$save_dir.Gc::$module_root.DS."model".DS;
-                    $new_model_name=self::$save_dir.Gc::$module_root.DS."admin".DS;
-                    if(is_dir($old_model_name)){
-                        rename($old_model_name,$new_model_name);
-                        //替换model的tpl文件里的链接地址
-                        $modelTplDir=self::$save_dir.Gc::$module_root.DS."admin".DS."view".DS."default".DS."core".DS;
-                        $tplFiles=UtilFileSystem::getAllFilesInDirectory($modelTplDir,array("tpl"));
-
-                        foreach ($tplFiles as $tplFile) {
-                            $content=file_get_contents($tplFile);
-                            $content=str_replace("go=model.", "go=admin.", $content);
-                            file_put_contents($tplFile, $content);
-                        }
-
-                        //修改Action控制器类的注释:* @category 应用名称
-                        $modelActionDir=self::$save_dir.Gc::$module_root.DS."admin".DS."action".DS;
-                        $actionFiles=UtilFileSystem::getAllFilesInDirectory($modelActionDir,array("php"));
-
-                        foreach ($actionFiles as $actionFile) {
-                            $content=file_get_contents($actionFile);
-                            $content=str_replace("* @category ".Gc::$appName, "* @category ".self::$pj_name_en, $content);
-                            file_put_contents($actionFile, $content);
-                        }
-                    }
-
-                    //修改Config_AutoCode.php配置文件
-                    $config_autocode_file=self::$save_dir."config".DS."config".DS."Config_AutoCode.php";
-                    $content=file_get_contents($config_autocode_file);
-                    $content=str_replace("const AFTER_MODEL_CONVERT_ADMIN=false;", "const AFTER_MODEL_CONVERT_ADMIN=true;", $content);
-                    file_put_contents($config_autocode_file, $content);
-                    break;
-                case EnumReusePjType::HIGH:
-                    self::IgnoreInCommon();
-                    $old_model_name=self::$save_dir.Gc::$module_root.DS."model".DS;
-                    if(is_dir($old_model_name))UtilFileSystem::deleteDir($old_model_name);
-                    break;
                 default:
                     //修改Action控制器类的注释:* @category 应用名称
                     $modelActionDir=self::$save_dir.Gc::$module_root.DS."model".DS."action".DS;
@@ -961,11 +901,9 @@ AUTHCONTENT;
             $git_name=self::$git_name;
         }
         $inputArr=array(
-            "4"=>"精简版",
-            "5"=>"MINI版",
-            "2"=>"通用版",
-            "3"=>"高级版",
-            "1"=>"完整版"
+            "1"=>"完整版",
+            "2"=>"精简版",
+            "3"=>"MINI版"
         );
 
         echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\r\n

@@ -71,9 +71,6 @@ class Initializer
                 }
             }
         }
-
-        //PHPExcel需要自动加载类；如不加载PHPExcel，以下这行可注释
-        if(class_exists("Library_Loader")) Library_Loader::load_phpexcel_autoload($class_name);
     }
 
     /**

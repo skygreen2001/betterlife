@@ -36,7 +36,7 @@ class Gc {
      * @var string
      * @static
      */
-    public static $site_name = 'Betterlife Core';
+    public static $site_name = 'Betterlife';
     /**
      * 网站应用的版本
      */

@@ -39,12 +39,6 @@ class Config_AutoCode extends ConfigBB
      */
     const SHOW_REPORT_FRONT=true;
     /**
-     * Model转换成后台Admin
-     *         工程重用选择类型:通用版后
-     *         代码生成会转向AutoCodePreviewReportLike
-     */
-    const AFTER_MODEL_CONVERT_ADMIN=false;
-    /**
      * 工程重用为MINI后,只需要生成实体类
      */
     const ONLY_DOMAIN=false;
