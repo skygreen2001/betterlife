@@ -175,6 +175,15 @@ abstract class Dao
     }
 
     /**
+     * 设置Mysql数据库字符集
+     * @param string $character_code 字符集
+     */
+    public function change_character_set($character_code = "utf8mb4") {
+        $sql = "SET NAMES ".$character_code;
+        $this->connection->query($sql);
+    }
+
+    /**
      * 获取插入或者更新的数据的类型。
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对

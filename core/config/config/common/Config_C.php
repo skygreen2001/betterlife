@@ -14,5 +14,6 @@ class Config_C extends ConfigBB
     const CHARACTER_LATIN1="latin1";
     const CHARACTER_UTF8="UTF8";
     const CHARACTER_UTF_8="UTF-8";
+    const CHARACTER_UTF8_MB4="utf8mb4";
 }
 ?>

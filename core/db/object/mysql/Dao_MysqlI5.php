@@ -43,7 +43,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         }
 
         if (strpos($this->character_set(),Config_C::CHARACTER_LATIN1)!==false||strpos($this->character_set(),Config_C::CHARACTER_GBK)!==false) {
-            $this->change_character_set($character_code=Config_C::CHARACTER_UTF8);
+            $this->change_character_set($character_code=Config_Db::$character);
         }
     }
 
@@ -657,16 +657,6 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             }
         }
         return $sRetval;
-    }
-
-    /**
-     * 设置数据库字符集
-     * @param string $character_code 字符集
-     */
-    public function change_character_set($character_code=Config_C::CHARACTER_UTF8)
-    {
-        $sql = "set names ".$character_code;
-        $this->connection->query($sql);
     }
 
     /**

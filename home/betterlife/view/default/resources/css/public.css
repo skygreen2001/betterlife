@@ -2,199 +2,324 @@
  * 说明：图片路径在gzip情况下相对于misc/js/gzip.php文件路径而设定。
 */
 html,body {
-    font:normal 15px SimSun,sans-serif;
-    border:0 none;
-    overflow:auto;
-    line-height:1.5em;
-    margin:2px 0 0;
-    padding:0;
+  font:normal 15px SimSun,sans-serif;
+  font-family:'Microsoft YaHei',"微软雅黑",Arial, sans-serif,'Open Sans';
+  border:0 none;
+  overflow:auto;
+  line-height:1.5em;
+  margin:2px 0 0;
+  padding:0;
 }
 
 .contentBox{
-    width:80%;
-    margin: 0 auto;
-    padding: 20px;
-    height: 100%;
+  width:80%;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100%;
 }
 
 .en-head {
-    font:bold .8em Geneva,Arial,Helvetica,sans-serif;
+  font:bold .8em Geneva,Arial,Helvetica,sans-serif;
 }
 
 .en {
-    font-family:verdana,Geneva,Helvetica,Arial,sans-serif;
+  font-family:verdana,Geneva,Helvetica,Arial,sans-serif;
 }
 
 table {
-    width:100%;
+  width:100%;
 }
 
 p {
-    margin:5px;
+  margin:5px;
 }
 
 label{
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 div .block {
-    margin-top:10px;
-    border:1px solid #cfcfcf;
-    /*width:600px;*/
-    padding:10px;
+  margin-top:10px;
+  border:1px solid #cfcfcf;
+  /*width:600px;*/
+  padding:10px;
 }
 
 a {
-    color:#1E4176;
+  color:#1E4176;
 }
 
 a:link {
-    color:#1E4176;
-    text-decoration:none;
+  color:#1E4176;
+  text-decoration:none;
 }
 
 a:visited {
-    color:#555;
-    text-decoration:none;
+  color:#555;
+  text-decoration:none;
 }
 
 a:hover {
-    text-decoration:underline;
-    color:#15428b;
+  text-decoration:underline;
+  color:#15428b;
 }
 
 h3 {
-    font-weight:bold;
+  font-weight:bold;
 }
 
-
 p#indexPage {
-    font:120%;
-    line-height:2em;
-    padding-left:30px;
-    text-align:left;
-    border-color:#000;
-    border-style:solid;
-    border-width:thin;
+  font:120%;
+  line-height:2em;
+  padding-left:30px;
+  text-align:left;
+  border-color:#000;
+  border-style:solid;
+  border-width:thin;
 }
 
 blockquote {
-    width:600px;
-    border:1px solid #cfcfcf;
-    margin:2px;
-    padding:5px;
-    font-size:14px;
+  width:600px;
+  border:1px solid #cfcfcf;
+  margin:2px;
+  padding:5px;
+  font-size:14px;
 }
 
 form {
-    margin: 0;
+  margin: 0;
 }
 
 textarea {
-    display: block;
+  display: block;
+  outline: none;
 }
-
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+input{
+  outline: none;
+}
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .inputNormal{
-        -webkit-border-radius: 6px;
-        -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-    }
+  .inputNormal{
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+  }
 
-    .inputLogin {
-        margin-left:22px;
-    }
+  .inputLogin {
+    margin-left:22px;
+  }
 
-    .btnSubmit{
-        -webkit-border-radius: 6px;
-        -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-    }
+  .btnSubmit{
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+  }
+}
+.login-container{
+  position: relative;
+  width:500px;
+  height:300px;
+  margin:200px auto;
+  padding:0px 15px;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+.login-container .modal {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  z-index: 1;
+  display: block;
+}
+.login-container .modal-dialog {
+  width: 90%;
+}
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #999;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+.modal-header {
+  min-height: 16.43px;
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal-title {
+  text-align: center;
+  margin: 0;
+  line-height: 1.42857143;
+}
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.login-info{
+  width:80%;
+  text-align: center;
+  margin:0 auto;
+}
+@media (min-width: 768px){
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
 }
 
+.login-label{
+  width:45px;
+  margin-left: 10px;
+}
+input[type=submit] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
 .inputNormal {
-    border-radius: 6px;
-    padding-left: 10px;
-    height:36px;
-    line-height:36px;
-    background:gray;
-    color:#fff;
-    background-color:gray;
-    width:160px;
-    border:1px solid gray;
+  border-radius: 6px;
+  padding-left: 10px;
+  height:36px;
+  line-height:36px;
+  background:gray;
+  color:#fff;
+  background-color:gray;
+  width:160px;
+  border:1px solid gray;
 }
-.inputLogin {
-    margin-left: 12px;
-    width: 80%;
+.inputLogin, .inputRegister {
+  margin-left: 12px;
+  width: 72%;
 }
 .btnSubmit{
-    margin-top:5px;
-    width:126px;
-    height:38px;
-    color:#FFF;
-    cursor:pointer;
-    font:bold 84% SimSun,helvetica,sans-serif;
-    background-color:#000;
-    border:1px solid;
-    border-color:#696 #363 #363 #696;
-    border-radius: 6px 6px 6px 6px;
+  margin-top:5px;
+  width:126px;
+  height:38px;
+  color:#FFF;
+  cursor:pointer;
+
+  font-size: 15px;
+  font-weight: lighter;
+  background-color:#77cc6d;
+  border:1px solid;
+  border-color:#fff;
+  border-radius: 6px;
+}
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: lighter;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.btn-register,.btn-login{
+  color: #fff;
+  background-color:gray;
+  border:1px solid;
+  border-color:#fff;
+  border-radius: 6px;
+  width:100px;
+  margin-right: 20px;
 }
 br {
-    clear:left;
+  clear:left;
 }
 /** 数据对象模板显示样式 */
 .block {
-    margin-top:10px;
-    border:1px solid #cfcfcf;
-    padding:10px;
+  margin-top:10px;
+  border:1px solid #cfcfcf;
+  padding:10px;
 }
 .viewdoblock {
-    width          : 98%;
-    border-collapse: collapse;
-    margin         : 10px;
-    border-left    : 1px solid #99BBE8;
-    border-right   : 1px solid #99BBE8;
-    border-top     : 5px solid #ccc;
-    border-bottom  : 5px solid #ccc;
+  width      : 98%;
+  border-collapse: collapse;
+  margin     : 10px;
+  border-left  : 1px solid #99BBE8;
+  border-right   : 1px solid #99BBE8;
+  border-top   : 5px solid #ccc;
+  border-bottom  : 5px solid #ccc;
 }
 .viewdoblock .entry{
-    font-size:14px;
+  font-size:14px;
 }
 .viewdoblock span{
 }
 .viewdoblock .head{
-    width      :32%;
-    text-align :right;
-    font-weight:bold;
-    line-height        : 1.5em;
-    padding-right      : 5px;
-    border             : 1px solid #ccc ;
-    border-bottom-width: 0px;
-    border-left-width  : 0px;
+  width    :32%;
+  text-align :right;
+  font-weight:bold;
+  line-height    : 1.5em;
+  padding-right    : 5px;
+  border       : 1px solid #ccc ;
+  border-bottom-width: 0px;
+  border-left-width  : 0px;
 }
 .viewdoblock .header{
-    text-align :center;
-    font-weight:bold;
-    line-height        : 1.5em;
-    padding-right      : 5px;
-    border             : 1px solid #ccc ;
-    border-bottom-width: 0px;
-    border-left-width  : 0px;
+  text-align :center;
+  font-weight:bold;
+  line-height    : 1.5em;
+  padding-right    : 5px;
+  border       : 1px solid #ccc ;
+  border-bottom-width: 0px;
+  border-left-width  : 0px;
 }
 .viewdoblock .content{
-    line-height :1.5em;
-    padding-left:20px;
-    border      : 1px solid #ccc ;
-    border-bottom-width: 0px;
-    border-right-width : 0px;
+  line-height :1.5em;
+  padding-left:20px;
+  border    : 1px solid #ccc ;
+  border-bottom-width: 0px;
+  border-right-width : 0px;
 }
 .viewdoblock .btnCol{
-    width:100px;
-    text-align :center;
-    line-height :1.5em;
-    border      : 1px solid #ccc ;
-    border-bottom-width: 0px;
-    border-right-width : 0px;
+  width:100px;
+  text-align :center;
+  line-height :1.5em;
+  border    : 1px solid #ccc ;
+  border-bottom-width: 0px;
+  border-right-width : 0px;
 }
 .viewdoblock .edit{
-    width: 800px;
+  width: 800px;
 }
 /* END */

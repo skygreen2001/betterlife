@@ -21,7 +21,7 @@
         <my:a href='{$url_base}?go={$appName}.auth.logout'><b>退出</b></my:a><br/>
         <my:a href='{$url_base}?go={$appName}.blog.display&pageNo={$smarty.get.pageNo|default:"1"}'><b>博客列表</b></my:a>
         <div id='blog{$blog.blog_id}' >
-            <h1>{$blog.blog_name}</h1>
+            <h3>{$blog.blog_name}</h3>
             <p>{$blog.blog_content|nl2br}</p>
             评论数:{$blog.count_comments}
         </div>
@@ -45,7 +45,7 @@
             <form name="commentForm" method="post">
                 我要发言: <br/><input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
                 <textarea name="comment" id="comment" style="width:710px;height:300px;">{if isset($comment_content)}{$comment_content}{/if}</textarea><br/>
-                <input type="submit" value="提交" class="btnSubmit" /> | <input class="btnSubmit" onclick="location.href='{$url_base}index.php?go={$appName}.comment.comment&blog_id={$smarty.get.blog_id}&pageNo={$smarty.get.pageNo|default:"1"}'" type="button" value="返回" />
+                <input type="submit" value="提交" class="btnSubmit" /> <input class="btnSubmit" onclick="location.href='{$url_base}index.php?go={$appName}.comment.comment&blog_id={$smarty.get.blog_id}&pageNo={$smarty.get.pageNo|default:"1"}'" type="button" value="返回" />
             </form>
         </div>
         {if ($online_editor=='UEditor')}

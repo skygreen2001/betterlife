@@ -11,11 +11,12 @@ $(function() {
     var inputUnHover = function() {
         $(this).css("color","#FFF");
         if (this.type=="submit"){
-            $(this).css("background-color","#000");
+            $(this).css("background-color","#77cc6d");
+            $(this).css("border","1px solid #fff");
         }else{
             $(this).css("background-color","gray");
+            $(this).css("border","1px solid gray");
         }
-        $(this).css("border","1px solid gray");
     };
     $(".inputNormal,.btnSubmit").focusin(inputHover);
     $(".inputNormal,.btnSubmit").focusout(inputUnHover);

@@ -35,7 +35,7 @@ abstract class Dal {
      * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
      */
@@ -49,7 +49,7 @@ abstract class Dal {
      * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
      * @return mixed 数据库连接
@@ -62,10 +62,10 @@ abstract class Dal {
      * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
-     * @return mixed 数据库连接 
+     * @return mixed 数据库连接
      */
     public function getConnection($host=null,$port=null,$username=null,$password=null,$dbname=null,$dbtype=null,$engine=null) {
         if ($this->connection==null) {
@@ -90,13 +90,13 @@ abstract class Dal {
         }
         e(Wl::ERROR_INFO_EXTENDS_CLASS);
     }
-    
+
     /**
      * 将数据对象里的显示属性进行清除
      * 规范：数据对象里的显示属性以v_开始
      * @param array $saParams 预编译准备SQL参数
      */
-    protected function filterViewProperties($saParams) 
+    protected function filterViewProperties($saParams)
     {
         if (isset($saParams)&&is_array($saParams)) {
             $keys=array_keys($saParams);
@@ -149,16 +149,16 @@ abstract class Dal {
         }
         return true;
     }
-    
+
     /**
      * 设置Mysql数据库字符集
      * @param string $character_code 字符集
      */
-    public function change_character_set($character_code=Config_C::CHARACTER_UTF8) {
+    public function change_character_set($character_code="utf8mb4") {
         $sql = "SET NAMES ".$character_code;
         $this->connection->exec($sql);
     }
-    
+
     /**
      * 获取插入或者更新的数据的类型。
      * @param string|class $object 需要生成注入的对象实体|类名称
@@ -177,15 +177,15 @@ abstract class Dal {
             }
         }
         return $type;
-    } 
-    
+    }
+
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
      * @param stdClass $result 结果集
      * @return 值
      */
     protected function getValueIfOneValue($result){
-        if (($result!=null)&&(count($result)==1)){                   
+        if (($result!=null)&&(count($result)==1)){
             if($result[0] instanceof stdClass){
                 $tmp=UtilObject::object_to_array($result[0]);
                 if (count($tmp)==1){

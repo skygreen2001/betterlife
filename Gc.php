@@ -190,7 +190,7 @@ class Gc {
      * @var mixed
      */
     public static $self_theme_dir_every = array(
-        'betterlife'=>'bootstrap',
+        // 'betterlife'=>'bootstrap',
         // 'model'=>'bootstrap'
     );
     /**

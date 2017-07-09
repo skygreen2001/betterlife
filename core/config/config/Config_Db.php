@@ -206,6 +206,11 @@ class Config_Db extends ConfigBB
      */
     public static $dbname = "betterlife";
     /**
+     * @var string 数据库表字段字符集
+     * @static
+     */
+    public static $character = Config_C::CHARACTER_UTF8_MB4;
+    /**
     * 协助调试：打印SQL语句
     * @var bool
     * @static
@@ -230,7 +235,6 @@ class Config_Db extends ConfigBB
      * @static
      */
     public static $is_persistent = false;
-
     /**
      * @var string 数据库表名前缀
      * @static

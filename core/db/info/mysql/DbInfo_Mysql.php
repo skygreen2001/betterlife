@@ -140,7 +140,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * 设置数据库字符集
      * @param string $character_code 字符集
      */
-    public function change_character_set($character_code='UTF8')
+    public function change_character_set($character_code="utf8mb4")
     {
         $sql = "set names ".$character_code;
         $result =  mysql_query($sql,$this->connection);

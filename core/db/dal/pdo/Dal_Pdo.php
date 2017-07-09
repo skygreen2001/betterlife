@@ -47,7 +47,7 @@ class Dal_Pdo extends Dal  implements IDal
                 $this->connection = new PDO(Config_Pdo::dsn($host,$port,$username,$password,$dbname,$dbtype,$engine),$username,$password);
             }
             if ($dbtype==EnumDbSource::DB_MYSQL) {
-                $this->change_character_set($character_code=Config_C::CHARACTER_UTF8);
+                $this->change_character_set($character_code=Config_Db::$character);
             }
         }catch (PDOException $e) {
             Exception_Db::log($e->getMessage());

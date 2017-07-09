@@ -44,7 +44,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
         }
         mysql_select_db($dbname,$this->connection);
         if (strpos($this->character_set(),Config_C::CHARACTER_LATIN1)!==false||strpos($this->character_set(),Config_C::CHARACTER_GBK)!==false) {
-            $this->change_character_set($character_code=Config_C::CHARACTER_UTF8);
+            $this->change_character_set($character_code=Config_Db::$character);
         }
     }
 
@@ -507,7 +507,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
      * 设置数据库字符集
      * @param string $character_code 字符集
      */
-    public function change_character_set($character_code=Config_C::CHARACTER_UTF8)
+    public function change_character_set($character_code = "utf8mb4")
     {
         mysql_set_charset($character_code, $this->connection);
     }

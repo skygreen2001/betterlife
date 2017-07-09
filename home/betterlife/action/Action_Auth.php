@@ -45,6 +45,7 @@ class Action_Auth extends Action
      */
     public function register()
     {
+        $this->view->set("message","");
         if(!empty($_POST)) {
             $user = $this->model->User;
             $userdata=User::get(array("username"=>$user->username));

@@ -18,7 +18,6 @@
 
   ```
   > npm install -g gulp
-  > gulp
   ```
 
   - Linux | Mac 操作系统下
@@ -33,6 +32,9 @@
     > composer config -g repo.packagist composer https://packagist.phpcomposer.com
     ```
     - 运行gulp
+      ```
+      > gulp
+      ```
 
   - Windows操作系统下
     - 推荐安装Cmder[http://cmder.net/]
@@ -40,6 +42,9 @@
     - 安装composer:php -r "readfile('https://getcomposer.org/installer');" | php
     - 运行: php composer.phar install
     - 运行gulp
+      ```
+      > gulp
+      ```
 
 * **放置 在线编辑器: ueditor**
   - 在install/bower_components/ueditor 目录下命令行执行

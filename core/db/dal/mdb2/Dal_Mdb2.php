@@ -49,7 +49,7 @@ class Dal_Mdb2 extends Dal implements IDal
             }
 
             if ($dbtype==EnumDbSource::DB_MYSQL) {
-               $this->change_character_set($character_code=Config_C::CHARACTER_UTF8);
+               $this->change_character_set($character_code=Config_Db::$character);
             }
             if (!$this->connection) {
                 Exception_Db::log(Wl::ERROR_INFO_CONNECT_FAIL);
