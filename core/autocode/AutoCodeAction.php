@@ -224,7 +224,7 @@ ACTION;
      * 用户输入需求
      * @param $default_value 默认值
      */
-    public static function UserInput($default_value="")
+    public static function UserInput($default_value="", $title="", $inputArr=null, $more_content="")
     {
         $inputArr=array(
             "0"=>"前端Action,继承基本Action",

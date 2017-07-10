@@ -92,7 +92,7 @@ class AutoCode extends Object
             $info = "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建目录:" . self::$save_dir . "<br/>" .
                     "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",8) .
                     "sudo mkdir -p " . self::$save_dir . "<br/>" . str_repeat("&nbsp;",8);
-            if (isMac){
+            if ($isMac){
                 $info .=
                     "sudo chmod -R 0777 " . self::$save_dir . "</p>";
             }else{
@@ -332,7 +332,7 @@ class AutoCode extends Object
      * @param $default_value 默认值
      * @param $more_content 更多个性化内容
      */
-    protected static function UserInput($title,$inputArr=null,$default_value="",$more_content="")
+    protected static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
     {
         ob_clean();
         echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

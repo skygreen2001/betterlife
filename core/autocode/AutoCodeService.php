@@ -154,7 +154,7 @@ class AutoCodeService extends AutoCode
      * 用户输入需求
      * @param $default_value 默认值
      */
-    public static function UserInput($default_value)
+    public static function UserInput($default_value="", $title="", $inputArr=null, $more_content="" )
     {
         $inputArr=array(
             "2" => "生成标准方法的Service",
