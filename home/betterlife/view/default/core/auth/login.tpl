@@ -10,10 +10,10 @@
                         <div class="modal-header">
                             <h3 class="modal-title"><span style="font-family: Arial">{$site_name}</span> 框架前台</h3>
                         </div>
-                        <div class="modal-body" style="height:120px;"><nobr>
+                        <div class="modal-body">
                            <label class="login-label">用户名</label><input class="inputNormal inputLogin" type="text" name="username" /><br/><br/>
-                           <label class="login-label">密&nbsp;码</label><input class="inputNormal inputLogin" type="password" name="password" /><br/>
-                           <br/><br/><font style="margin-left:80px;" color="red">{$message}</font></nobr>
+                           <label class="login-label">密&nbsp;码</label><input class="inputNormal inputLogin" type="password" name="password" />
+                           <p class="message">{$message}</p>
                         </div>
                         <div class="modal-footer">
                             <input type="submit" name="Submit" value="登录" class="btnSubmit" />
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div><div style="" class="login-info">[测试帐户]用户名:admin,密码:admin<br/>[测试帐户]用户名:china,密码:iloveu</div></div>
+        <div><div class="login-info">[测试帐户]用户名:admin,密码:admin<br/>[测试帐户]用户名:china,密码:iloveu</div></div>
     </div>
     </form>
 {/block}

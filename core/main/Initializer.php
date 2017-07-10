@@ -175,8 +175,8 @@ class Initializer
         self::is_can_run();
         //定义异常报错信息
         if (Gc::$dev_debug_on){
-            if(defined('E_DEPRECATED')) error_reporting(E_ALL ^ E_DEPRECATED);
-            else error_reporting(E_ALL);
+            if(defined('E_DEPRECATED')) error_reporting(E_ALL ^ E_DEPRECATED ^ E_WARNING);
+            else error_reporting(E_ALL ^ E_WARNING);
         }else{
             error_reporting(0);
         }

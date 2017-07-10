@@ -35,7 +35,6 @@ p {
   font-family:Arial,verdana,Geneva,Helvetica,sans-serif;
 }
 h1{
-  margin: 120px auto 20px auto;
   font-size: 40px;
   font-weight: lighter;
 }
@@ -52,6 +51,7 @@ a:hover {
   text-decoration: none;
 }
 .main {
+  padding-top: 5%;
   width : 100%;
   height: 100%;
   align : center;
@@ -68,50 +68,77 @@ div.content-container{
   border-radius: 100%;
 }
 div.content{
-  position: absolute;
-  top:42%;
-  left:46%;
+  display: inline-block;
+  margin-top: 28%;
+  margin-left: 33%;
 }
 div.content a{
   color: #666;
+  letter-spacing: 2px;
+  height: 36px;
+  line-height: 36px;
 }
 div.content a:hover{
   color: #77cc6d;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
 .content-down{
   color: #999;
-  width: 300px;
   text-align: center;
   margin: 10px auto 0px auto;
 }
 
 footer {
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
   text-align: center;
-  margin: 10px auto 0px auto;
+  height: 40px;
+  line-height: 40px;
   color: #888;
+  background-color: #fefefe;
+  letter-spacing: 2px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
+
+footer:hover {
+  background-color: #e8e8e8;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
 footer a{
   color: #888;
 }
 footer a:hover{
   color: #77cc6d;
+  font-size: 16px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
 </style>
 <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="main">
-        <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> 框架</h1>
+        <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> </h1>
         <div class="inbox">
             <div class="content-container">
                 <div class="content" align="center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
                     <p><a target="_blank" href="#">手机模版</a></p>
-                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模板</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模版</a></p>
                 </div>
             </div>
         </div>

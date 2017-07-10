@@ -108,10 +108,10 @@ abstract class ExceptionMe extends Exception {
     private static function showMessageByTable() {
         if (!empty (self::$messages)) {
             UtilCss::report_info();
-            $errorInfo= '<table class="'.UtilCss::CSS_REPORT_TABLE.'">';
+            $errorInfo= '<table class="'.UtilCss::CSS_REPORT_TABLE.'" style="width:80%;">';
             foreach (self::$messages as $key=>$value) {
                 $errorInfo.= '<tr>';
-                $errorInfo.= '  <td>';
+                $errorInfo.= '  <td style="border-bottom:0px;">';
                 $errorInfo.= '    <table class="'.UtilCss::CSS_REPORT_TABLE.'">';
                 $errorInfo.= '      <tr>';
                 $errorInfo.= '          <th>&nbsp; &nbsp;</td>';
@@ -192,6 +192,7 @@ abstract class ExceptionMe extends Exception {
                 $errorInfo.= '</tr>';
             }
             $errorInfo.= '</table>';
+            $errorInfo.= '<br><br><br><br><br><br><br><br><br><br>';
             return $errorInfo;
         }
     }

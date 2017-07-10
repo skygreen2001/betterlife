@@ -211,30 +211,29 @@ class UtilCss extends Util
     {
         echo '<style type="text/css">
             table.'.self::CSS_REPORT_TABLE.' {
-                    border-width: 0px;
-                    border-spacing: ;
-                    border-style: groove;
-                    border-color: ;
-                    border-collapse: separate;
-                    background-color: white;
+                border: 1px solid #77cc6d;
+                background-color: #fff;
+                margin:0 auto;
             }
             table.'.self::CSS_REPORT_TABLE.' th {
-                    border-width: 1px;
-                    padding: 1px;
-                    border-style: solid;
-                    border-color: green;
-                    background-color: #fff5ee;
-                    -moz-border-radius: ;
+                padding: 5px;
+                border-right:1px solid #77cc6d;
+                border-bottom:1px solid #77cc6d;
             }
             table.'.self::CSS_REPORT_TABLE.' td {
-                    border-width: 1px;
-                    padding: 1px;
-                    border-style: solid;
-                    border-color: green;
-                    background-color: #fff5ee;
-                    -moz-border-radius: ;
+                padding: 5px;
+                border-right:1px solid #77cc6d;
+                border-bottom:1px solid #77cc6d;
+            }
+            table.'.self::CSS_REPORT_TABLE.' th:last-child, table.'.self::CSS_REPORT_TABLE.' td:last-child {
+                border-right: 0px;
+            }
+            tbody table.'.self::CSS_REPORT_TABLE.' tr:last-child td {
+                border-bottom: 0px;
             }
             </style>';
+            // border-style: groove;
+            // border-collapse: separate;
     }
 
     /**

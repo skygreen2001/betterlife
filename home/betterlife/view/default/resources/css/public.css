@@ -64,10 +64,6 @@ a:hover {
   color:#15428b;
 }
 
-h3 {
-  font-weight:bold;
-}
-
 p#indexPage {
   font:120%;
   line-height:2em;
@@ -99,7 +95,7 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
 }
-input{
+input,button{
   outline: none;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -174,6 +170,11 @@ input{
   position: relative;
   padding: 15px;
 }
+.modal-body .message{
+  text-align: center;
+  color: #cc5854;
+  margin-top: 12px;
+}
 .modal-footer {
   padding: 15px;
   text-align: right;
@@ -216,7 +217,7 @@ input[type=submit] {
 }
 .inputLogin, .inputRegister {
   margin-left: 12px;
-  width: 72%;
+  width: 76%;
 }
 .btnSubmit{
   margin-top:5px;
