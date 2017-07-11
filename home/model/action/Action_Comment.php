@@ -21,6 +21,7 @@ class Action_Comment extends ActionModel
         }
         $count = Comment::count();
         $this->view->countComments = $count;
+        $this->view->set("comments", NULL);
         if ($count>0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $comments = Comment::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
@@ -93,4 +94,3 @@ class Action_Comment extends ActionModel
         $this->redirect("comment", "lists", $this->data);
     }
 }
-

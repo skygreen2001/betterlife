@@ -21,6 +21,7 @@ class Action_Department extends ActionModel
         }
         $count = Department::count();
         $this->view->countDepartments = $count;
+        $this->view->set("departments", NULL);
         if ($count>0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $departments = Department::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
@@ -69,4 +70,3 @@ class Action_Department extends ActionModel
         $this->redirect("department", "lists", $this->data);
     }
 }
-

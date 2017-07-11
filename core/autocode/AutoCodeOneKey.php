@@ -58,10 +58,10 @@ class AutoCodeOneKey extends AutoCode
 
         if(Config_AutoCode::SHOW_PREVIEW_REPORT){
             echo "<div style='width: 1000px; margin-left: 24px;'>";
-            echo "<a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
-            echo "<div id='showPrepareWork' style='display: none;'>";
+            echo "  <a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
+            echo "  <div id='showPrepareWork' style='display: none;'>";
             echo self::$showPreviewReport;
-            echo "</div>";
+            echo "  </div>";
             echo "</div>";
         }
         echo self::$showReport;

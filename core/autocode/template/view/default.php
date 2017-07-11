@@ -21,3 +21,5 @@ $contents
     </div>
 </div>
 LISTS;
+
+?>

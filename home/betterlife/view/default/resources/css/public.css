@@ -95,7 +95,7 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
 }
-input,button{
+input,button,select{
   outline: none;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -223,7 +223,7 @@ input[type=submit] {
   margin-top:5px;
   width:126px;
   height:38px;
-  color:#FFF;
+  color:#fff;
   cursor:pointer;
 
   font-size: 15px;
@@ -232,6 +232,11 @@ input[type=submit] {
   border:1px solid;
   border-color:#fff;
   border-radius: 6px;
+}
+.btnSubmit:hover, .btnSubmit:focus, .inputNormal:hover, .inputNormal:focus{
+  color:#000;
+  background-color: #fff;
+  border:1px solid #fff;
 }
 .btn {
   display: inline-block;

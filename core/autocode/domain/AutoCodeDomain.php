@@ -88,7 +88,7 @@ class AutoCodeDomain extends AutoCode
             "2"=>"所有的列定义的对象属性都是public",
             "1"=>"对象属性都是private,定义setter和getter方法",
         );
-        $more_content="<br/><br/><a href='$db_domian_java' target='_blank'>生成Java实体类</a>";
+        $more_content="<br/><br/><a class='more_java' href='$db_domian_java' target='_blank'>生成Java实体类</a>";
         parent::UserInput("一键生成数据对象定义实体类层",$inputArr,$default_value,$more_content);
 
     }

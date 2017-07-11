@@ -221,7 +221,7 @@ class AutoCodeViewDefault extends AutoCode
             $contents=substr($contents,0,strlen($contents)-2);
         }
         $realId=DataObjectSpec::getRealIDColumnName($classname);
-        include("view".DS."default.php");
+        include("template".DS."view".DS."default.php");
         $result = $list;
         $result=self::tableToViewTplDefine($result);
         return $result;

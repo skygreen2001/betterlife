@@ -17,7 +17,7 @@ abstract class Dao
     /**
      * @var string 数据库连接
      */
-    protected $connection;
+    public $connection;
     /**
      * @var string SQL语句
      */
@@ -56,6 +56,18 @@ abstract class Dao
             $this->setdbType($dbtype);
         }
         $this->connect($host,$port,$username,$password,$dbname);
+    }
+
+    /**
+     * 是否能连接上数据库
+     */
+    public function isCanConnect()
+    {
+        if($this->connection && ($this->connection->connect_errno==0)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

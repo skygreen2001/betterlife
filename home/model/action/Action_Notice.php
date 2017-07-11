@@ -21,6 +21,7 @@ class Action_Notice extends ActionModel
         }
         $count = Notice::count();
         $this->view->countNotices = $count;
+        $this->view->set("notices", NULL);
         if ($count>0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $notices = Notice::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
@@ -71,4 +72,3 @@ class Action_Notice extends ActionModel
         $this->redirect("notice", "lists", $this->data);
     }
 }
-

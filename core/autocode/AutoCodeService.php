@@ -558,9 +558,10 @@ class AutoCodeService extends AutoCode
             foreach (self::$relation_viewfield as $relation_viewfield) {
                 foreach ($relation_viewfield as $key=>$showClasses) {
                     foreach ($showClasses as $key=>$value) {
-                        $key_i = $key;
-                        $key_i{0} = strtolower($key_i{0});
+                        $key_i     = $key;
+                        $key_i{0}  = strtolower($key_i{0});
                         $classname = $key;
+                        $tablename = self::getTablename($key);
                         $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                         if (array_key_exists("parent_id",$fieldInfo)){
                             $filename = $key_i."Tree".Config_F::SUFFIX_FILE_PHP;
