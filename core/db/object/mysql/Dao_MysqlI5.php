@@ -664,7 +664,8 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      */
     public function character_set()
     {
-        $charset = $this->connection->character_set_name();
+        $charset = Config_C::CHARACTER_UTF8_MB4;
+        if ($this->connection) $charset = $this->connection->character_set_name();
         return $charset;
 //        echo Wl::INFO_DB_CHARACTER." {$charset}<br/>";
     }

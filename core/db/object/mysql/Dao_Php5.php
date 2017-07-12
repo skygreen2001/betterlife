@@ -42,7 +42,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
             $this->connection = mysql_connect($connecturl,
                     $username,$password);
         }
-        mysql_select_db($dbname,$this->connection);
+        if ($this->connection) mysql_select_db($dbname,$this->connection);
         if (strpos($this->character_set(),Config_C::CHARACTER_LATIN1)!==false||strpos($this->character_set(),Config_C::CHARACTER_GBK)!==false) {
             $this->change_character_set($character_code=Config_Db::$character);
         }
@@ -517,7 +517,8 @@ class Dao_Php5 extends Dao implements IDaoNormal
      */
     public function character_set()
     {
-        $charset = mysql_client_encoding($this->connection);
+        $charset = Config_C::CHARACTER_UTF8_MB4;
+        if($this->connection) $charset = mysql_client_encoding($this->connection);
         return $charset;
     }
 }

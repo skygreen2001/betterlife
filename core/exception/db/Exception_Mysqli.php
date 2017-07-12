@@ -25,7 +25,7 @@ class Exception_Mysqli extends Exception_Db
                 $link=Manager_Db::newInstance()->currentdao()->getConnection();
             }
         }
-        if (mysqli_error($link)) {
+        if ($link && mysqli_error($link)) {
             if (!isset ($category)) {
                 $category=  Exception_Db::CATEGORY_MYSQL;
             }

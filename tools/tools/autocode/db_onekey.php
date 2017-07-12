@@ -23,9 +23,9 @@ if (isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"]))
 
     if(!array_key_exists("table_names", $_GET)){
         if (!Manager_Db::newInstance()->dao()->isCanConnect()){
-          die("<div align='center'><font color='red'>无法连接上数据库，请确认Gc.php文件里数据库配置是否正确！</font></div>");
+          die("<br><br><div align='center'><font color='red'>无法连接上数据库，请确认Gc.php文件里数据库配置是否正确！</font></div>");
         }
-        die("<div align='center'><font color='red'>至少选择一张表,请确认！</font></div>");
+        die("<br><br><div align='center'><font color='red'>至少选择一张表,请确认！</font></div>");
     }else{
         $table_names=$_GET["table_names"];
         AutoCodeConfig::Decode();

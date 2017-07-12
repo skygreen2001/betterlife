@@ -104,9 +104,9 @@ class AutoCode extends Object
         }
         if (empty(self::$tableList)){
             self::$tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
-            self::$tableList=array_keys(self::$tableInfoList);//Manager_Db::newInstance()->dbinfo()->tableList();
+            if(self::$tableInfoList)self::$tableList=array_keys(self::$tableInfoList);//Manager_Db::newInstance()->dbinfo()->tableList();
         }
-        if (empty(self::$fieldInfos)){
+        if (empty(self::$fieldInfos)&&(!empty(self::$tableList))){
             $ignoreTables=array();
             foreach (self::$tableList as $tablename){
                 $classname=self::getClassname($tablename);

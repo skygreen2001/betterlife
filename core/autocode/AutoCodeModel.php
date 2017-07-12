@@ -87,8 +87,10 @@ class AutoCodeModel extends AutoCode
 
         self::init();
         $inputArr = array();
-        foreach (self::$tableList as $tablename) {
-            $inputArr[$tablename]=$tablename;
+        if (self::$tableList){
+            foreach (self::$tableList as $tablename) {
+                $inputArr[$tablename]=$tablename;
+            }
         }
         include("template" . DS . "form" . DS . "model.php");
         echo $userinput_model;

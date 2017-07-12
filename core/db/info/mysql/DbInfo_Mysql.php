@@ -212,9 +212,10 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     public function tableInfoList()
     {
         $tableInfos = $this->query("show table status");
-
-        foreach($tableInfos as $tableInfo) {
-            $tableInfoList[$tableInfo['Name']] = $tableInfo;
+        if ($tableInfos){
+            foreach($tableInfos as $tableInfo) {
+                $tableInfoList[$tableInfo['Name']] = $tableInfo;
+            }
         }
         if(isset ($tableInfoList)) return $tableInfoList;
         return null;
@@ -376,18 +377,19 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     private function query($sql, $errorLevel = E_USER_ERROR,$showqueries=false)
     {
+        $handle = NULL;
         if(isset($_REQUEST['showqueries'])) {
             $starttime = microtime(true);
         }
-        $handle = mysql_query($sql,$this->connection);
+        if($this->connection) $handle = mysql_query($sql,$this->connection);
 
         if(isset($_REQUEST['showqueries'])) {
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }
-
-        if(!$handle && $errorLevel) e("无法运行查询语句: $sql | " . mysql_error($this->connection),$this);
-        return new Query_Mysql($handle);
+        if(!$handle && $errorLevel && $this->connection) e("无法运行查询语句: $sql | " . mysql_error($this->connection),$this);
+        if($handle) return new Query_Mysql($handle);
+        return null;
     }
 
 }
