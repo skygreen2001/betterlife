@@ -178,12 +178,11 @@ class UtilImage
      * @static
      * @access public
      +----------------------------------------------------------
-     * @param string $image  原图文件名
-     * @param string $thumbname 缩略图文件名 example d://abc.jpg 则指向d盘下面
+     * @param string $image 原图文件名 示例: http://www.skygreen2001.com/upload/images/123.jpg
+     * @param string $thumbname 缩略图文件名 示例: d://abc.jpg 则指向d盘下面
      * @param string $type 图像格式.如:jpg,png,gif
      * @param string $maxWidth 宽度 若带"%"  则表示比例
      * @param string $maxHeight 高度
-     * @param string $position 缩略图保存目录 //该参数为空
      * @param boolean $interlace 启用隔行扫描,默认true
      * @param boolean $isStrict 是否严格按尺寸来缩放，默认false是取宽高中的最小值成比例缩放
      +----------------------------------------------------------
