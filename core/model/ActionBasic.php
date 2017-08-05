@@ -229,23 +229,28 @@ class ActionBasic extends Object
         }
         if (!empty($this->extras)) {
             foreach ($this->extras as $key=>$value) {
-                $extraUrlInfo.=$key.$CONNECTOR.$value.$CONNECTOR_VAR;
+                $extraUrlInfo.=$key.$CONNECTOR.$value;
             }
         }
+
         if (!empty($querystring)){
             if (is_array($querystring)||is_a($querystring,"DataObjectArray")){
                 $querystring_tmp="";
                 foreach ($querystring as $key=>$value){
                     if ($key==Router::VAR_DISPATCH){
-                         $querystring_tmp.=Router::URL_CONNECTOR.$key."=".$this->modulename.".".$action.".".$method;
+                         $querystring_tmp.=$key."=".$this->modulename.".".$action.".".$method.Router::URL_CONNECTOR;
                     }else{
-                        $querystring_tmp.=Router::URL_CONNECTOR.$key."=".$value;
+                        if ($value=="undefined") $value = 0;
+                        if (!(is_array($value))){
+                            $querystring_tmp.=$key."=".$value.Router::URL_CONNECTOR;
+                        }
                     }
                 }
-                $querystring=$querystring_tmp;
+                $querystring = $querystring_tmp;
             }
-            $querystring= Router::URL_CONNECTOR.$querystring;
+            $querystring = substr($querystring, 0, strlen($querystring)-1);
         }
+
         $Header_Location="Location:";
         $moreinfo=$extraUrlInfo.$querystring;
         if (empty($moreinfo)){
