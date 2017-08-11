@@ -30,6 +30,7 @@ class Gc {
      * @static
      */
     public static $dev_debug_on = true;
+    public static $dev_php_debug_on = false;//是否开放php提供的debug信息
     /**
      * 网站应用的名称<br/>
      * 展示给网站用户
@@ -118,6 +119,7 @@ class Gc {
     public static $module_names=array(
             'betterlife',
             'model',
+            'admin',
     );
     /**
      * 所有无需预加载的 业务应用所在的根目录路径下的子目录<br/>

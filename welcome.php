@@ -16,8 +16,9 @@ if(!contains($_SERVER['HTTP_HOST'],array("127.0.0.1","localhost"))){
 <?php require_once ("Gc.php");?>
 <meta name="description" content="<?php echo Gc::$site_name?>">
 <meta name="keywords" content="<?php echo Gc::$site_name?>">
-<meta name="creation-date" content="12/01/2010">
+<meta name="creation-date" content="08/08/2017">
 <meta name="revisit-after" content="15 days">
+<link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
 <title><?php echo Gc::$site_name ?></title>
 
 <style type="text/css">
@@ -54,7 +55,6 @@ a:hover {
   padding-top: 5%;
   width : 100%;
   height: 100%;
-  align : center;
 }
 .inbox {
   width: 360px;
@@ -114,24 +114,26 @@ footer:hover {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
 }
-
+footer div {
+  width: 320px;
+  margin: 0 auto;
+}
 footer a{
   color: #888;
 }
 footer a:hover{
   color: #77cc6d;
-  font-size: 16px;
+  /*font-size: 14px;*/
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
 }
 </style>
-<link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="main">
-        <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> </h1>
+        <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> 技术玩家乐园 </h1>
         <div class="inbox">
             <div class="content-container">
                 <div class="content" align="center">
@@ -143,11 +145,46 @@ footer a:hover{
             </div>
         </div>
         <div class="content-down">
-          <p><?php echo UtilDateTime::now() ?></p>
+          <p id="current-time"></p>
         </div>
-        <footer><?php $help_url="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html" ?>
-            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
-        </footer>
     </div>
+    <footer><?php $help_url="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html" ?>
+        <div>
+            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+    /*******************************Date Prototype Shim**************************************/
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.format = function(fmt)
+    {
+      fmt = fmt || "yyyy-MM-dd";
+      var o = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
+      };
+      if(/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+      for(var k in o)
+        if(new RegExp("("+ k +")").test(fmt))
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+      return fmt;
+    };
+    document.getElementById("current-time").innerHTML = new Date().format('yyyy-MM-dd hh:mm:ss');
+    setInterval(function(){
+      document.getElementById("current-time").innerHTML = new Date().format('yyyy-MM-dd hh:mm:ss');
+    },1000)
+    </script>
 </body>
 </html>

@@ -166,7 +166,7 @@ class Initializer
         //初始化PHP版本校验
         if(version_compare(phpversion(), 5, '<')) {
             header("HTTP/1.1 500 Server Error");
-            echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife MINI框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>".phpversion()."</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
+            echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>".phpversion()."</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
             die();
         }
         /**
@@ -175,7 +175,13 @@ class Initializer
         self::is_can_run();
         //定义异常报错信息
         if (Gc::$dev_debug_on){
-            if(defined('E_DEPRECATED')) error_reporting( E_ALL ^ E_DEPRECATED  );// ^ E_WARNING ^ E_NOTICE
+            if(defined('E_DEPRECATED')) {
+                if (Gc::$dev_php_debug_on){
+                    error_reporting( E_ALL ^ E_DEPRECATED);
+                }else{
+                    error_reporting( E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
+                }
+            }
             else error_reporting(E_ALL ^ E_WARNING);
         }else{
             error_reporting(0);
