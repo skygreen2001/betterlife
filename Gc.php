@@ -117,20 +117,26 @@ class Gc {
      * @static
      */
     public static $module_names=array(
-            'betterlife',
-            'model',
-            'admin',
+        'betterlife',
+        'model',
+        'admin',
     );
     /**
-     * 所有无需预加载的 业务应用所在的根目录路径下的子目录<br/>
-     * 举例：<br/>
-     *      view在module目录下<br/>
-     *      主要为html,javascript,css文件；不是类对象文件，因此无需预加载
-     * @var array
+     * 开发者自定义当前使用模板目录名<br/>
+     * 示例：D:\wamp\www\betterlife\home\betterlife\view\default<br/>
+     *       default即自定义当前使用模板目录名
+     * @var string
      * @static
      */
-    public static $module_exclude_subpackage=array(
-            'view',
+    public static $self_theme_dir = 'default';
+    /**
+     * 每个模块可以定义自己显示的模板名
+     * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
+     * @var mixed
+     */
+    public static $self_theme_dir_every = array(
+        'betterlife'=>'bootstrap',
+        // 'model'=>'bootstrap'
     );
     /**
      * URL访问模式,可选参数0、1、2、3,代表以下四种模式：<br/>
@@ -176,24 +182,7 @@ class Gc {
      * @var mixed
      */
     public static $template_mode_every = array(
-        //'betterlife'=>2
-    );
-    /**
-     * 开发者自定义当前使用模板目录名<br/>
-     * 示例：D:\wamp\www\betterlife\home\betterlife\view\default<br/>
-     *       default即自定义当前使用模板目录名
-     * @var string
-     * @static
-     */
-    public static $self_theme_dir = 'default';
-    /**
-     * 每个模块可以定义自己显示的模板名
-     * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
-     * @var mixed
-     */
-    public static $self_theme_dir_every = array(
-        // 'betterlife'=>'bootstrap',
-        // 'model'=>'bootstrap'
+        //'betterlife'=>1
     );
     /**
     * 模板文件后缀名称<br/>
@@ -204,6 +193,17 @@ class Gc {
     * @static
     */
     public static $template_file_suffix = '.tpl';
+    /**
+     * 所有无需预加载的 业务应用所在的根目录路径下的子目录<br/>
+     * 举例：<br/>
+     *      view在module目录下<br/>
+     *      主要为html,javascript,css文件；不是类对象文件，因此无需预加载
+     * @var array
+     * @static
+     */
+    public static $module_exclude_subpackage=array(
+        'view',
+    );
     /**
      * 是否在线性能优化
      * @var mixed

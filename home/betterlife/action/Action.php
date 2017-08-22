@@ -15,10 +15,17 @@ class Action extends ActionBasic
     public function beforeAction()
     {
         parent::beforeAction();
+        $globalPage = array(
+            Gc::$appName.".auth.register",
+            Gc::$appName.".auth.login",
+            Gc::$appName.".index.index"
+        );
         if (contain($this->data["go"],Gc::$appName)){
-            if(($this->data["go"]!=Gc::$appName.".auth.register")&&($this->data["go"]!=Gc::$appName.".auth.login")&&!HttpSession::isHave('user_id')) {
+            if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
                 $this->redirect("auth","login");
             }
+        }else{
+          die("Need Valid App Url!");
         }
     }
 

@@ -97,7 +97,7 @@ footer {
   width: 100%;
   text-align: center;
   height: 40px;
-  line-height: 40px;
+  line-height: 44px;
   color: #888;
   background-color: #fefefe;
   letter-spacing: 2px;
@@ -139,7 +139,7 @@ footer a:hover{
                 <div class="content" align="center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
-                    <p><a target="_blank" href="#">手机模版</a></p>
+                    <p><a target="_blank" href="#">手机应用</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模版</a></p>
                 </div>
             </div>

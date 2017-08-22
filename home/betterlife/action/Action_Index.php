@@ -15,8 +15,6 @@ class Action_Index extends Action
      */
     public function index()
     {
-        //$this->redirect_url(Gc::$url_base."welcome.php");
-        $this->redirect("auth","login");
     }
 }
 ?>

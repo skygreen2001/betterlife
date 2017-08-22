@@ -16,7 +16,7 @@ class Action_Auth extends Action
     public function logout()
     {
         HttpSession::remove("user_id");
-        $this->redirect("auth","login");
+        $this->redirect("index", "index");
     }
 
     /**
