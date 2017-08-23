@@ -305,7 +305,7 @@ MODEL;
             }
 
             // 生成控制器Index和模板父类:ActionModel
-            $arr_action_models=array("Action_Index","ActionModel");
+            $arr_action_models=array("Action_Index");
             foreach ($arr_action_models as $action_model) {
                 $file="model".DS."action".DS.$action_model.".php";
                 $file_content=str_replace("[file]", self::$save_dir.$file, $model);

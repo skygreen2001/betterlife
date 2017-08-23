@@ -29,6 +29,12 @@ class Blog extends DataObject
      */
     public $blog_name;
     /**
+     * 博客头像
+     * @var string
+     * @access public
+     */
+    public $icon_url;
+    /**
      * 博客内容
      * @var string
      * @access public
