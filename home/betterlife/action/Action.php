@@ -20,12 +20,8 @@ class Action extends ActionBasic
             Gc::$appName.".auth.login",
             Gc::$appName.".index.index"
         );
-        if (contain($this->data["go"],Gc::$appName)){
-            if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
-                $this->redirect("auth","login");
-            }
-        }else{
-          die("Need Valid App Url!");
+        if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
+            $this->redirect("auth","login");
         }
     }
 

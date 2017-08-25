@@ -16,7 +16,12 @@ class ActionAdmin extends ActionBasic
     {
         parent::beforeAction();
 
-        if(($this->data["go"]!="admin.auth.register")&&($this->data["go"]!="admin.auth.login")&&!HttpSession::isHave('user_id')) {
+        $globalPage = array(
+            "admin.auth.register",
+            "admin.auth.login"
+        );
+
+        if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
             $this->redirect("auth","login");
         }
     }

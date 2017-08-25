@@ -25,7 +25,7 @@ class Action_Auth extends ActionAdmin
     {
         $this->view->set("message","");
         if(HttpSession::isHave('user_id')) {
-            $this->redirect("blog","display");
+            $this->redirect("index","index");
         }else if (!empty($_POST)) {
             $user = $this->model->Admin;
             $userdata = Admin::get_one(array("username"=>$user->username,
@@ -34,7 +34,7 @@ class Action_Auth extends ActionAdmin
                 $this->view->set("message","用户名或者密码错误");
             }else {
                 HttpSession::set('user_id',$userdata->user_id);
-                $this->redirect("blog","display");
+                $this->redirect("index","index");
             }
         }
     }
@@ -54,7 +54,7 @@ class Action_Auth extends ActionAdmin
                 $user->loginTimes=0;
                 $user->save();
                 HttpSession::set('user_id',$user->id);
-                $this->redirect("blog","display");
+                $this->redirect("index","index");
             }else{
                 $this->view->color="red";
                 $this->view->set("message","该用户名已有用户注册！");

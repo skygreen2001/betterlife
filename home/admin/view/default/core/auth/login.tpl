@@ -6,7 +6,7 @@
       <main>
         <div class="content-wrapper">
           <div class="content">
-            <form action="index.html">
+            <form method="POST">
               <div class="panel panel-body login-form">
                 <div class="bb-icon">B</div>
 
@@ -16,17 +16,18 @@
                 </div>
 
                 <div class="form-group has-feedback has-feedback-left">
-                  <input type="text" class="form-control" placeholder="用户名">
+                  <input name="username" type="text" class="form-control" placeholder="用户名">
                   <div class="form-control-feedback">
                     <i class="icon-user text-muted"></i>
                   </div>
                 </div>
 
                 <div class="form-group has-feedback has-feedback-left">
-                  <input type="password" class="form-control" placeholder="密码">
+                  <input name="password" type="password" class="form-control" placeholder="密码">
                   <div class="form-control-feedback">
                     <i class="icon-lock2 text-muted"></i>
                   </div>
+                  <p class="message">{$message}</p>
                 </div>
 
                 <div class="form-group login-options">
