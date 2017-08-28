@@ -20,7 +20,6 @@
      flush();
   {/php}
   <body>
-    {include file="$templateDir/layout/normal/navbar.tpl"}
     {block name=body}{/block}
   </body>
 </html>
