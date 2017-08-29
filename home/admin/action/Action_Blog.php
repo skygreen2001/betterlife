@@ -93,4 +93,3 @@ class Action_Blog extends ActionModel
         $this->redirect("blog", "lists", $this->data);
     }
 }
-

@@ -9,31 +9,17 @@ $(function(){
             "serverSide": true,
             "retrieve"  : true,
             "ajax": {
-                "url" : "../../data/list.json",
+                "url" : "api/web/blog.php",
                 "data": function ( d ) {
                     d.query    = $("#input-search").val();
                     d.pageSize = d.length;
                     d.page     = d.start / d.length + 1;
                     d.limit    = d.start + d.length;
                     return d;
-                    // return JSON.stringify( d );
                 },
                 //可以对返回的结果进行改写
                 "dataFilter": function(data){
-                    // //可以对返回的结果进行改写
-                    // var json = jQuery.parseJSON( data );
-                    // return JSON.stringify( json );
-
-                    // 示例:静态代码修改返回结果如下
-                    var json = jQuery.parseJSON( data );
-                    var p = infoTable.ajax.params();
-                    json.draw = p.draw;
-                    if ((p.start + p.length) <= json.recordsFiltered){
-                        json.data = json.data.slice(p.start, p.length);
-                    }else{
-                        json.data = json.data.slice(p.start);
-                    }
-                    return JSON.stringify( json );
+                    return data;
                 }
             },
             "responsive"   : true,
@@ -45,22 +31,20 @@ $(function(){
             "bLengthChange": true,
             "aLengthMenu"  : [[10, 25, 50, 100,-1],[10, 25, 50, 100,'全部']],
             "columns": [
-                { data:"sequenceNo" },
-                { data:"title" },
-                { data:"code" },
-                { data:"contactName" },
-                { data:"phone" },
-                { data:"imgUrl" },
-                { data:"status"},
+                { data:"blog_name" },
+                { data:"user_name" },
+                { data:"icon_url" },
+                { data:"status" },
+                { data:"updateTime"},
                 { data:"id" }
             ],
             "columnDefs": [
-                {"orderable": false, "targets": 5,
+                {"orderable": false, "targets": 2,
                  "render"   : function(data, type, row) {
                     var data = {
                         "img_id"  : "imgUrl"+row.id,
                         "img_src" : data,
-                        "img_name": row.imgName
+                        "img_name": row.blog_name
                     };
                     var result = $.templates("#imgTmpl").render(data);
 
@@ -73,18 +57,18 @@ $(function(){
                     return result;
                  }
                 },
-                {"orderable": false, "targets": 6,
+                {"orderable": false, "targets": 3,
                  "render"   : function(data,type,row){
                     if ( data == 0 ){
-                        return '<span class="status-fail">审核失败</span>';
+                        return '<span class="status-fail">待审核</span>';
                     } else if ( data == 1 ) {
-                        return '<span class="status-pass">审核通过</span>';
+                        return '<span class="status-pass">正常</span>';
                     } else {
-                        return '<span class="status-wait">待审核</span>';
+                        return '<span class="status-wait">已结束</span>';
                     }
                  }
                 },
-                {"orderable": false, "targets": 7,
+                {"orderable": false, "targets": 5,
                  "render"   : function(data, type, row){
                     var result = $.templates("#actionTmpl").render({ "id"  : data });
 

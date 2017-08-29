@@ -183,7 +183,7 @@
 
     <script src="{$template_url}js/common/bower/bower.min.js"></script>
     <script src="{$template_url}js/common/common.jquery.min.js"></script>
-    <script src="{$template_url}js/betterlife/index.bower.min.js"></script>
+    <script src="{$template_url}js/common/bower/index.bower.min.js"></script>
     <script src="{$template_url}js/index.js"></script>
 </body>
 {/block}

@@ -40,6 +40,17 @@ class Blog extends DataObject
      * @access public
      */
     public $blog_content;
+    /**
+     * 状态<br/>
+     * 0  :待审核-new<br/>
+     * 1   :进行中-run<br/>
+     * 100:已结束-end<br/>
+     * 400:已删除-del<br/>
+     *
+     * @var enum
+     * @access public
+     */
+    public $status;
     //</editor-fold>
 
     /**
@@ -57,4 +68,3 @@ class Blog extends DataObject
     );
 
 }
-

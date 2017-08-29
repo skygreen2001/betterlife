@@ -8,7 +8,7 @@ $page_size    = $_GET["pageSize"];
 $search       = $_GET["query"];
 $columns      = $_GET["columns"];
 $where_clause = "";
-$orderDes     = "id desc";
+$orderDes     = "blog_id desc";
 
 if (!empty($query)){
   $where_clause  = "(";
@@ -20,7 +20,6 @@ if (!empty($query)){
   $where_clause .= ")";
 }
 
-blog_content
 foreach ($columns as $key => $column) {
   $column_search_value = $column["search"]["value"];
   if ($column_search_value!=""){
@@ -33,6 +32,14 @@ foreach ($columns as $key => $column) {
 
 $pageBlogs = Blog::queryPageByPageNo($page,$where_clause,$page_size,$orderDes);
 $data      = $pageBlogs["data"];
+if ($data){
+  foreach ($data as $key => $blog) {
+    if (!empty($blog->user_id)){
+      $user = User::get_by_id($blog->user_id);
+      if ($user) $blog->user_name = $user->username;
+    }
+  }
+}
 $recordsFiltered = $pageBlogs["count"];
 $recordsTotal    = $recordsFiltered;
 $result = array(
