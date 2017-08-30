@@ -1,6 +1,5 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-
     <div class="page-container">
         <div class="page-content">
             {include file="$templateDir/layout/normal/sidebar.tpl"}
@@ -75,7 +74,7 @@
     </script>
     <script id="actionTmpl" type="text/x-jsrender">
     <a id="info-view{{:id}}" href="#" class="btn-view" data-toggle="modal" data-target="#infoModal">查看</a>
-    <a id="info-edit{{:id}}" href="edit.html" class="btn-edit">修改</a>
+    <a id="info-edit{{:id}}" href="#" class="btn-edit">修改</a>
     <a id="info-dele{{:id}}" href="#" class="btn-dele" data-toggle="modal" data-target="#infoModal">删除</a>
     </script>
     {/literal}

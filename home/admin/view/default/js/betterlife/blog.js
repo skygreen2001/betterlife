@@ -80,6 +80,11 @@ $(function(){
                             }
                         });
                     });
+                    $("a#info-edit"+data).click(function(){
+                        location.href = 'index.php?go=model.blog.edit&id='+data+'&pageNo={$smarty.get.pageNo|default:"1"}';
+                    });
+
+
                     $("body").off('click', 'a#info-dele'+data);
                     $("body").on('click', 'a#info-dele'+data, function(){//删除
                         bootbox.confirm("确定要删除该博客:" + data + "?",function(result){
