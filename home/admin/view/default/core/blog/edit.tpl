@@ -5,69 +5,7 @@
     <div class="page-container">
         <!-- page content begin -->
         <div class="page-content">
-            <!-- main sidebar begin -->
-
-            <div class="sidebar page-sidebar">
-              <div class="sidebar-content">
-                <ul class="navigation-header">
-                  <li ><a href="#"><i class="icon-th-list" title="功能导航"></i></a></li>
-                </ul>
-                <ul class="sidebar-nav">
-                  <!-- main -->
-                  <li><a href="#"><i class="icon-dashboard"></i> <span>控制台</span></a></li>
-                  <li data-role="dropdown">
-                    <a class="has-ul" href="#collapse-it" aria-expanded="false" aria-controls="collapse-it"><i class="icon-book"></i> <span>科技类</span><i class="glyphicon glyphicon-menu-right menu-right"></i></a>
-                    <ul class="sub-menu" id="collapse-it">
-                      <li><a href="#">微信</a></li>
-                      <li><a href="#">百度</a></li>
-                      <li><a href="#">阿里巴巴</a></li>
-                      <li><a href="#">华为</a></li>
-                      <li><a href="#">vivo</a></li>
-                      <li><a href="#">小米</a></li>
-                      <li role="separator" class="nav-splitter"></li>
-                      <li><a href="#">宇航</a></li>
-                      <li><a href="#">移动</a></li>
-                      <li><a href="#">交通</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a class="has-ul" href="#collapse-philosophy" aria-expanded="false" aria-controls="collapse-philosophy"><i class="icon-user"></i> <span>哲学类</span><i class="glyphicon glyphicon-menu-right menu-right"></i></a>
-                    <ul class="sub-menu" id="collapse-philosophy">
-                      <li><a href="#">老子</a></li>
-                      <li><a href="#">基督</a></li>
-                      <li><a href="#">佛教</a></li>
-                      <li><a href="#">唯心主义</a></li>
-                      <li><a href="#">唯物主义</a></li>
-                    </ul>
-                  </li>
-                  <li data-role="dropdown">
-                    <a class="has-ul" href="#collapse-art" aria-expanded="false" aria-controls="collapse-art"><i class="icon-music"></i> <span>艺术类</span><i class="glyphicon glyphicon-menu-right menu-right"></i></a>
-                    <ul class="sub-menu" id="collapse-art">
-                      <li><a href="#">音乐</a></li>
-                      <li><a href="#">电影</a></li>
-                      <li><a href="#">文学</a></li>
-                      <li><a href="#">舞蹈</a></li>
-                      <li><a href="#">绘画</a></li>
-                      <li><a href="#">雕塑</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                      <a href="#"><i class="icon-life-ring"></i> <span>生活类</span></a>
-                  </li>
-                  <li>
-                      <a href="#"><i class="icon-arrow-circle-o-right"></i> <span>军事类</span></a>
-                  </li>
-                  <li>
-                      <a href="#"><i class="icon-film"></i> <span>综合类</span></a>
-                  </li>
-                  <li>
-                      <a href="#"><i class="icon-opera"></i> <span>其它</span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- /main sidebar end -->
+            {include file="$templateDir/layout/normal/sidebar.tpl"}
 
             <!-- main content begin -->
             <div class="content-wrapper">
@@ -92,9 +30,9 @@
                           <label for="iconImage" class="col-sm-3 control-label">封面</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9">
-                                  <input type="text" id="iconImageTxt" name="iconImageTxt" readonly="readonly" class="form-control" />
+                                  <input type="text" id="iconImageTxt" readonly="readonly" class="form-control" />
                                   <span class="btn-file-browser btn-success input-group-addon" id="iconImageDiv">浏览 ...</span>
-                                  <input type="file" id="iconImage" name="iconImage" style="display:none;" accept="image/*" />
+                                  <input type="file" id="iconImage" name="icon_url" style="display:none;" accept="image/*" />
                               </div>
                           </div>
                       </div>
@@ -102,7 +40,7 @@
                           <label for="title" class="col-sm-3 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="title" name="title" placeholder="标题" class="form-control" type="text" value=""/>
+                              <input id="title" name="blog_name" placeholder="标题" class="form-control" type="text" value=""/>
                             </div>
                           </div>
                       </div>
@@ -142,12 +80,6 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="keyword_id" class="col-sm-3 control-label">关键词</label>
-                          <div class="col-sm-9">
-                              <select id="keyword_id" name="keyword_id" class="form-control"></select>
-                          </div>
-                      </div>
-                      <div class="form-group">
                           <label for="authorName" class="col-sm-3 control-label">作者</label>
                           <div class="col-sm-9">
                               <div>
@@ -156,34 +88,10 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="authorUrl" class="col-sm-3 control-label"></label>
-                          <div class="col-sm-9">
-                              <div>
-                                  <input id="authorUrl" name="authorUrl" placeholder="作者百科链接地址" class="form-control" style="margin-top: -2px;" type="text" value=""/>
-                              </div>
-                              <div class="input-group col-sm-9" style="padding-top: 3px;">
-                                  <input type="text" id="authorImageTxt" name="authorImageTxt" readonly="readonly" class="form-control" />
-                                  <span class="btn-file-browser btn-success input-group-addon" id="authorImageDiv">浏览 ...</span>
-                                  <input type="file" id="authorImage" name="authorImage" style="display:none;" accept="image/*" />
-                              </div>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="creationTimeStr" class="col-sm-3 control-label">发起日期</label>
+                          <label for="creationTimeStr" class="col-sm-3 control-label">发布日期</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="creationTime">
-                                  <input id="creationTimeStr" name="creationTime" class="form-control date-picker" type="text" value=""/>
-                                  <span class="input-group-addon">
-                                      <i class="icon-calendar bigger-110"></i>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="deadTimeStr" class="col-sm-3 control-label">结束日期</label>
-                          <div class="col-sm-9">
-                              <div class="input-group col-sm-9 datetimeStyle" id="deadTime">
-                                  <input id="deadTimeStr" name="deadTime" class="form-control date-picker" type="text" value=""/>
+                                  <input id="creationTimeStr" name="updateTime" class="form-control date-picker" type="text" value=""/>
                                   <span class="input-group-addon">
                                       <i class="icon-calendar bigger-110"></i>
                                   </span>
@@ -192,7 +100,7 @@
                       </div>
 
                       <div class="space-4"></div>
-                      <input id="id" name="id" type="hidden" value=""/>
+                      <input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div  class="btn-group" role="group">

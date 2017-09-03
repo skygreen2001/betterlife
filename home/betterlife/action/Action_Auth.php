@@ -54,7 +54,7 @@ class Action_Auth extends Action
                 $user->setPassword(md5($user->getPassword()));
                 $user->loginTimes=0;
                 $user->save();
-                HttpSession::set('user_id',$user->id);
+                HttpSession::set('user_id',$user->user_id);
                 $this->redirect("blog","display");
             }else{
                 $this->view->color="red";

@@ -36,7 +36,7 @@ $(function(){
                 { data:"icon_url" },
                 { data:"status" },
                 { data:"updateTime"},
-                { data:"id" }
+                { data:"user_id" }
             ],
             "columnDefs": [
                 {"orderable": false, "targets": 2,
@@ -81,7 +81,9 @@ $(function(){
                         });
                     });
                     $("a#info-edit"+data).click(function(){
-                        location.href = 'index.php?go=model.blog.edit&id='+data+'&pageNo={$smarty.get.pageNo|default:"1"}';
+                        var pageNo = $_.params("pageNo");
+                        if (!pageNo ) pageNo = 1;
+                        location.href = 'index.php?go=admin.blog.edit&id='+data+'&pageNo='+pageNo;
                     });
 
 
@@ -109,20 +111,8 @@ $(function(){
     }
 
     if( $(".content-wrapper form").length ){
-        $.edit.datetimePicker('#creationTime, #deadTime');
-        $("#creationTime").on("dp.change", function (e) {
-            if(e.date){
-                $('#deadTime').data("DateTimePicker").minDate(e.date);
-            }
-        });
-
-        $("#deadTime").on("dp.change", function (e) {
-            if(e.date){
-                $('#creationTime').data("DateTimePicker").maxDate(e.date);
-            }
-        });
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
-        $.edit.fileBrowser("#authorImage", "#authorImageTxt", "#authorImageDiv");
+        $.edit.datetimePicker('#creationTime');
         $.edit.multiselect('#categoryIds');
 
         $("input[name='isPublic']").bootstrapSwitch();

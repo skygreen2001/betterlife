@@ -29,11 +29,12 @@ class Action_Auth extends ActionAdmin
         }else if (!empty($_POST)) {
             $user = $this->model->Admin;
             $userdata = Admin::get_one(array("username"=>$user->username,
-                    "password"=>md5($user->getPassword())));
+                    "password"=>$user->getPassword()));
+                    LogMe::log($userdata);
             if (empty($userdata)) {
                 $this->view->set("message","用户名或者密码错误");
             }else {
-                HttpSession::set('user_id',$userdata->user_id);
+                HttpSession::set('user_id',$userdata->admin_id);
                 $this->redirect("index","index");
             }
         }
@@ -53,7 +54,7 @@ class Action_Auth extends ActionAdmin
                 $user->setPassword(md5($user->getPassword()));
                 $user->loginTimes=0;
                 $user->save();
-                HttpSession::set('user_id',$user->id);
+                HttpSession::set('user_id',$user->admin_id);
                 $this->redirect("index","index");
             }else{
                 $this->view->color="red";
