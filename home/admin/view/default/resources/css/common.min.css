@@ -13447,7 +13447,7 @@ a:hover {
 .navbar .navbar-container .navbar-header {
   margin: 0px;
   height: 50px;
-  min-width: 295px;
+  min-width: 220px;
 }
 
 .navbar .navbar-container .navbar-header button {
@@ -13759,7 +13759,7 @@ footer #footer-inner a:hover {
 .sidebar .sidebar-nav li a i.menu-right {
   float: right;
   margin-right: 20px;
-  margin-top: 12px;
+  margin-top: 16px;
   font-size: 0.6em;
   vertical-align: middle;
   -webkit-transition: all 0.15s;
@@ -13807,9 +13807,9 @@ footer #footer-inner a:hover {
 
 .sidebar.page-sidebar.pin .sidebar-nav span i {
   z-index: 1200;
-  margin-left: -28px;
+  margin-left: -30px;
   margin-top: 13px;
-  font-size: 3px;
+  font-size: 15px;
   color: #4caf50;
 }
 
