@@ -29,11 +29,29 @@ class Blog extends DataObject
      */
     public $blog_name;
     /**
-     * 博客头像
+     * 排序
+     * @var int
+     * @access public
+     */
+    public $sequenceNo;
+    /**
+     * 封面
      * @var string
      * @access public
      */
     public $icon_url;
+    /**
+     * 是否公开
+     * @var string
+     * @access public
+     */
+    public $isPublic;
+    /**
+     * 博客类型
+     * @var int
+     * @access public
+     */
+    public $category_id;
     /**
      * 博客内容
      * @var string
@@ -42,11 +60,11 @@ class Blog extends DataObject
     public $blog_content;
     /**
      * 状态<br/>
-     * 0  :待审核-new<br/>
-     * 1   :进行中-run<br/>
+     * 0:待审核-pend<br/>
+     * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     *
+     * 
      * @var enum
      * @access public
      */
@@ -67,4 +85,31 @@ class Blog extends DataObject
         "comments"=>"Comment"
     );
 
+    /**
+     * 显示状态<br/>
+     * 0:待审核-pend<br/>
+     * 1:进行中-run<br/>
+     * 100:已结束-end<br/>
+     * 400:已删除-del<br/>
+     * <br/>
+     */
+    public function getStatusShow()
+    {
+        return self::statusShow($this->status);
+    }
+
+    /**
+     * 显示状态<br/>
+     * 0:待审核-pend<br/>
+     * 1:进行中-run<br/>
+     * 100:已结束-end<br/>
+     * 400:已删除-del<br/>
+     * <br/>
+     */
+    public static function statusShow($status)
+    {
+        return EnumBlogStatus::statusShow($status);
+    }
+
 }
+

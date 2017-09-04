@@ -11,13 +11,13 @@
 class EnumBlogStatus extends Enum
 {
     /**
-     * 状态:待审核-new
+     * 状态:待审核
      */
-    const 0  ='0  ';
+    const PEND='0';
     /**
-     * 状态:进行中-run
+     * 状态:进行中
      */
-    const 1   ='1   ';
+    const RUN='1';
     /**
      * 状态:已结束
      */
@@ -29,8 +29,8 @@ class EnumBlogStatus extends Enum
 
     /**
      * 显示状态<br/>
-     * 0  :待审核-new<br/>
-     * 1   :进行中-run<br/>
+     * 0:待审核-pend<br/>
+     * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
      * <br/>
@@ -38,10 +38,10 @@ class EnumBlogStatus extends Enum
     public static function statusShow($status)
     {
         switch($status){
-            case self::0  :
-                return "待审核-new";
-            case self::1   :
-                return "进行中-run";
+            case self::PEND:
+                return "待审核";
+            case self::RUN:
+                return "进行中";
             case self::END:
                 return "已结束";
             case self::DEL:
@@ -57,16 +57,16 @@ class EnumBlogStatus extends Enum
     public static function statusByShow($statusShow)
     {
         switch($statusShow){
-            case "待审核-new":
-                return self::0  ;
-            case "进行中-run":
-                return self::1   ;
+            case "待审核":
+                return self::PEND;
+            case "进行中":
+                return self::RUN;
             case "已结束":
                 return self::END;
             case "已删除":
                 return self::DEL;
         }
-        return self::0  ;
+        return self::PEND;
     }
 
     /**
@@ -75,16 +75,16 @@ class EnumBlogStatus extends Enum
     public static function statusEnumKey($status)
     {
         switch($status){
-            case '0  ':
-                return "0  ";
-            case '1   ':
-                return "1   ";
+            case '0':
+                return "PEND";
+            case '1':
+                return "RUN";
             case '100':
                 return "END";
             case '400':
                 return "DEL";
         }
-        return "0  ";
+        return "PEND";
     }
 
 }

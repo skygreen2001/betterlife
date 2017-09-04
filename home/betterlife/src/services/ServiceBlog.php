@@ -254,6 +254,9 @@ class ServiceBlog extends Service implements IServiceBasic
                             if ($user_r) $blog["user_id"]=$user_r->user_id;
                         }
                         $blog = new Blog($blog);
+                if (!EnumBlogStatus::isEnumValue($blog->status)){
+                    $blog->status=EnumBlogStatus::statusByShow($blog->status);
+                }
                         $blog_id = $blog->getId();
                         if (!empty($blog_id)) {
                             $hadBlog = Blog::existByID($blog->getId());
@@ -287,8 +290,15 @@ class ServiceBlog extends Service implements IServiceBasic
     {
         if ($filter) $filter = $this->filtertoCondition($filter);
         $data = Blog::get($filter);
+        if ((!empty($data)) && (count($data) > 0))
+        {
+            Blog::propertyShow($data, array('status'));
+        }
         $arr_output_header= self::fieldsMean(Blog::tablename()); 
         foreach ($data as $blog) {
+            if ($blog->statusShow) {
+                $blog['status'] = $blog->statusShow;
+            }
             $user_instance=null;
             if ($blog->user_id){
                 $user_instance=User::get_by_id($blog->user_id);

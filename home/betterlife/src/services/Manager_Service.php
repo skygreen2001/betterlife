@@ -11,7 +11,6 @@ class Manager_Service extends Manager
 {
     private static $userService;
     private static $blogService;
-
     /**
      * 提供服务:用户
      */

@@ -28,7 +28,7 @@ CREATE TABLE `bb_core_blog` (
   `isPublic` bit(1) DEFAULT b'1' COMMENT '是否公开',
   `category_id` int(11) NOT NULL COMMENT '博客类型',
   `blog_content` longtext DEFAULT NULL COMMENT '博客内容',
-  `status` enum('0','1','100','400') DEFAULT NULL COMMENT '状态\n0  :待审核-new\n1   :进行中-run\n100:已结束-end\n400:已删除-del\n',
+  `status` enum('0','1','100','400') DEFAULT NULL COMMENT '状态\n0:待审核-pend\n1:进行中-run\n100:已结束-end\n400:已删除-del\n',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
   `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`blog_id`,`user_id`),

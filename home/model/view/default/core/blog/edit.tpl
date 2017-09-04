@@ -15,7 +15,11 @@
         {if $blog}<tr class="entry"><th class="head">标识</th><td class="content">{$blog.blog_id}</td></tr>{/if}
         <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$blog.user_id}"/></td></tr>
         <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-        <tr class="entry"><th class="head">博客头像</th><td class="content"><input type="file" class="edit" name="icon_urlUpload" accept="image/png,image/gif,image/jpg,image/jpeg" value="{$blog.icon_url}"/></td></tr>
+        <tr class="entry"><th class="head">排序</th><td class="content"><input type="text" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
+        <tr class="entry"><th class="head">封面</th><td class="content"><input type="file" class="edit" name="icon_urlUpload" accept="image/png,image/gif,image/jpg,image/jpeg" value="{$blog.icon_url}"/></td></tr>
+        <tr class="entry"><th class="head">是否公开</th><td class="content"><input type="text" class="edit" name="isPublic" value="{$blog.isPublic}"/></td></tr>
+        <tr class="entry"><th class="head">博客类型</th><td class="content"><input type="text" class="edit" name="category_id" value="{$blog.category_id}"/></td></tr>
+        <tr class="entry"><th class="head">状态</th><td class="content"><input type="text" class="edit" name="status" value="{$blog.status}"/></td></tr>
         <tr class="entry"><th class="head">博客内容</th>
             <td class="content">
                 <textarea id="blog_content" name="blog_content" style="width:90%;height:300px;">{$blog.blog_content}</textarea>

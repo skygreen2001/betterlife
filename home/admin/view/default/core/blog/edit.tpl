@@ -1,6 +1,5 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-
     <!-- page container begin -->
     <div class="page-container">
         <!-- page content begin -->
@@ -26,6 +25,12 @@
                 <div class="container-fluid edit">
                   <div class="row col-xs-12">
                       <form id="editBlogForm" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+                      {if $blog}
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">标识</label>
+                        <div class="col-sm-9 edit-view">{$blog.blog_id}</div>
+                      </div>
+                      {/if}
                       <div class="form-group">
                           <label for="iconImage" class="col-sm-3 control-label">封面</label>
                           <div class="col-sm-9">
@@ -40,7 +45,7 @@
                           <label for="title" class="col-sm-3 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="title" name="blog_name" placeholder="标题" class="form-control" type="text" value=""/>
+                              <input id="title" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name}"/>
                             </div>
                           </div>
                       </div>
@@ -48,7 +53,7 @@
                           <label for="sequenceNo" class="col-sm-3 control-label">序号</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value=""/>
+                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog.sequenceNo}"/>
                             </div>
                           </div>
                       </div>
@@ -66,10 +71,10 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="content" class="col-sm-3 control-label">内容</label>
+                          <label for="blog_content" class="col-sm-3 control-label">内容</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <textarea class="form-control" id="content" name="content" placeholder="内容" rows="6" cols="60"></textarea>
+                              <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog.blog_content}</textarea>
                             </div>
                           </div>
                       </div>
@@ -77,14 +82,6 @@
                           <label for="isPublic" class="col-sm-3 control-label">公开</label>
                           <div class="col-sm-9">
                               <input class="form-control" id="isPublic" type="checkbox" name="isPublic" data-on-text="是" data-off-text="否" />
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label for="authorName" class="col-sm-3 control-label">作者</label>
-                          <div class="col-sm-9">
-                              <div>
-                                  <input id="authorName" name="authorName" placeholder="作者" class="form-control" type="text" value=""/>
-                              </div>
                           </div>
                       </div>
                       <div class="form-group">
@@ -126,38 +123,6 @@
 
     <script src="{$template_url}js/normal/edit.js"></script>
     <script src="{$template_url}js/betterlife/blog.js"></script>
-
-    {if ($online_editor=='CKEditor')}
-        {$editorHtml}
-        <script>
-        $(function(){
-                ckeditor_replace_blog_content();
-        });
-        </script>
-    {/if}
-     <div class="block">
-        <div><h1>{if $blog}编辑{else}新增{/if}博客</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="blogForm" method="post" enctype="multipart/form-data"><input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
-        <table class="viewdoblock">
-        {if $blog}<tr class="entry"><th class="head">标识</th><td class="content">{$blog.blog_id}</td></tr>{/if}
-        <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$blog.user_id}"/></td></tr>
-        <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-        <tr class="entry"><th class="head">博客头像</th><td class="content"><input type="file" class="edit" name="icon_urlUpload" accept="image/png,image/gif,image/jpg,image/jpeg" value="{$blog.icon_url}"/></td></tr>
-        <tr class="entry"><th class="head">博客内容</th>
-            <td class="content">
-                <textarea id="blog_content" name="blog_content" style="width:90%;height:300px;">{$blog.blog_content}</textarea>
-            </td>
-        </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
-        </table>
-        </form>
-        <div class="footer" align="center">
-            <my:a href='{$url_base}index.php?go=model.blog.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
-            {if $blog}
-            |<my:a href='{$url_base}index.php?go=model.blog.view&amp;id={$blog.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客</my:a>
-            {/if}
-        </div>
-    </div>
     {if ($online_editor == 'UEditor')}
         <script>pageInit_ue_blog_content();</script>
     {/if}
