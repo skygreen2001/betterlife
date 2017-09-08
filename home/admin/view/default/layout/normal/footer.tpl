@@ -6,3 +6,4 @@
 
     <script type="text/javascript" src="{$template_url}js/common/bower/bower.min.js"></script>
     <script type="text/javascript" src="{$template_url}js/common/common.jquery.min.js"></script>
+    <script type="text/javascript" src="{$template_url}js/normal/layout.js"></script>

@@ -50,9 +50,6 @@
     </div>
 
     {include file="$templateDir/layout/normal/footer.tpl"}
-    <script type="text/javascript" src="{$template_url}js/normal/layout.js"></script>
-
-
     <div id="image-model"></div>
     <script id="imgModalTmpl" type="text/x-jsrender">
     <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
