@@ -40,7 +40,7 @@ class Action_Blog extends ActionModel
      */
     public function view()
     {
-        $blogId = $this->data["id"];
+        $blogId = $this->data["blog_id"];
         $blog = Blog::get_by_id($blogId);
         $user_instance = null;
         if ($blog->user_id) {
@@ -58,8 +58,8 @@ class Action_Blog extends ActionModel
             $blog = $this->model->Blog;
             $id = $blog->getId();
             $isRedirect=true;
-            if (!empty($_FILES)&&!empty($_FILES["icon_urlUpload"]["name"])){
-                $result=$this->uploadImg($_FILES,"icon_urlUpload","icon_url","blog");
+            if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])){
+                $result=$this->uploadImg($_FILES,"icon_url","icon_url","blog");
                 if ($result&&($result['success']==true)){
                     if (array_key_exists('file_name',$result))$blog->icon_url = $result['file_name'];
                 }else{
@@ -73,7 +73,7 @@ class Action_Blog extends ActionModel
                 $id = $blog->save();
             }
             if ($isRedirect){
-                $this->redirect("blog", "view", "id=$id");
+                $this->redirect("blog", "view", "blog_id=$id");
                 exit;
             }
         }

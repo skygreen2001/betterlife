@@ -13433,6 +13433,7 @@ a:hover {
 
 .navbar.navbar-fixed-top {
   border-bottom: 1px solid #222;
+  z-index: 20000;
 }
 
 .navbar .navbar-container #navbar li {
@@ -15204,6 +15205,10 @@ div.dataTables_wrapper div.dataTables_info {
   margin-top: 2px;
 }
 
+.edit .bootstrap-datetimepicker-widget.dropdown-menu {
+  z-index: 10000;
+}
+
 .edit select + .btn-group {
   width: 100%;
 }
@@ -15265,8 +15270,12 @@ div.dataTables_wrapper div.dataTables_info {
   padding: 19px 20px 20px;
 }
 
+.edit .input-group.col-sm-9 {
+  width: 100%;
+}
+
 .select2-container {
-  width: 75% !important;
+  width: 100% !important;
 }
 
 .select2-container .select2-selection--single {
@@ -15284,10 +15293,14 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 @media (min-width: 768px) {
+  .edit .input-group.col-sm-9 {
+    width: 98%;
+  }
+
   .edit input,
   .edit textarea,
   .edit select {
-    width: 75%;
+    width: 98%;
   }
 
   .edit .btn-file-browser {
@@ -15299,6 +15312,10 @@ div.dataTables_wrapper div.dataTables_info {
   }
 
   .edit select + .btn-group > .multiselect:first-child {
-    width: 86.5%;
+    width: 113%;
+  }
+
+  .edit .select2-container {
+    width: 98% !important;
   }
 }

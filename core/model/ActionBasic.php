@@ -247,8 +247,8 @@ class ActionBasic extends Object
                     }
                 }
                 $querystring = $querystring_tmp;
+                $querystring = substr($querystring, 0, strlen($querystring)-1);
             }
-            $querystring = substr($querystring, 0, strlen($querystring)-1);
         }
 
         $Header_Location="Location:";

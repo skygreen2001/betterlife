@@ -11,7 +11,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
             <i class="glyphicon glyphicon-grain"></i> Betterlife Front UI
           </a>
         </div>

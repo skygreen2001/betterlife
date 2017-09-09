@@ -14,7 +14,7 @@
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
                       <li><a href="/"><i class="icon-home2 position-left"></i> 首页</a></li>
-                      <li><a href="list.html">读书</a></li>
+                      <li><a href="{$url_base}index.php?go=admin.blog.lists">读书</a></li>
                       <li class="active">编辑读书</li>
                     </ul>
                   </div>
@@ -27,12 +27,12 @@
                       <form id="editBlogForm" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
                       {if $blog}
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">标识</label>
+                        <label class="col-sm-2 control-label">标识</label>
                         <div class="col-sm-9 edit-view">{$blog.blog_id}</div>
                       </div>
                       {/if}
                       <div class="form-group">
-                          <label for="iconImage" class="col-sm-3 control-label">封面</label>
+                          <label for="iconImage" class="col-sm-2 control-label">封面</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9">
                                   <input type="text" id="iconImageTxt" readonly="readonly" class="form-control" />
@@ -42,7 +42,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="title" class="col-sm-3 control-label">标题</label>
+                          <label for="title" class="col-sm-2 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
                               <input id="title" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name}"/>
@@ -50,7 +50,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="sequenceNo" class="col-sm-3 control-label">序号</label>
+                          <label for="sequenceNo" class="col-sm-2 control-label">序号</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
                               <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog.sequenceNo}"/>
@@ -58,7 +58,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="categoryIds" class="col-sm-3 control-label">博客类型</label>
+                          <label for="categoryIds" class="col-sm-2 control-label">博客类型</label>
                           <div class="col-sm-9">
                               <select id="categoryIds" name="categoryId" class="form-control" multiple>
                                   <option value="1">科技类</option>
@@ -71,7 +71,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="blog_content" class="col-sm-3 control-label">内容</label>
+                          <label for="blog_content" class="col-sm-2 control-label">内容</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
                               <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog.blog_content}</textarea>
@@ -79,13 +79,13 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="isPublic" class="col-sm-3 control-label">公开</label>
+                          <label for="isPublic" class="col-sm-2 control-label">公开</label>
                           <div class="col-sm-9">
                               <input class="form-control" id="isPublic" type="checkbox" name="isPublic" data-on-text="是" data-off-text="否" />
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="creationTimeStr" class="col-sm-3 control-label">发布日期</label>
+                          <label for="creationTimeStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="creationTime">
                                   <input id="creationTimeStr" name="updateTime" class="form-control date-picker" type="text" value=""/>

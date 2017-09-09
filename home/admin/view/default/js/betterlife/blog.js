@@ -36,7 +36,7 @@ $(function(){
                 { data:"icon_url" },
                 { data:"status" },
                 { data:"updateTime"},
-                { data:"user_id" }
+                { data:"blog_id" }
             ],
             "columnDefs": [
                 {"orderable": false, "targets": 2,
@@ -85,7 +85,6 @@ $(function(){
                         if (!pageNo ) pageNo = 1;
                         location.href = 'index.php?go=admin.blog.edit&id='+data+'&pageNo='+pageNo;
                     });
-
 
                     $("body").off('click', 'a#info-dele'+data);
                     $("body").on('click', 'a#info-dele'+data, function(){//删除
