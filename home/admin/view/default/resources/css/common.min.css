@@ -15319,3 +15319,50 @@ div.dataTables_wrapper div.dataTables_info {
     width: 98% !important;
   }
 }
+
+.view .row.col-xs-12 {
+  margin-bottom: 20px;
+}
+
+.view h4 {
+  display: block;
+  -webkit-margin-before: 1.33em;
+  -webkit-margin-after: 1.33em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+.view dt {
+  font-weight: bold;
+  float: left;
+  width: 160px;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.view dd {
+  border-bottom: 1px solid #eee;
+  padding-left: 180px;
+  margin-left: 0;
+}
+
+.view dt,
+.view dd {
+  line-height: 1.42857;
+  font-size: 14px;
+  padding-bottom: 15px;
+}
+
+.view .btn-info {
+  background-color: #999;
+  border-color: #999;
+}
+
+.view .btn-info:hover,
+.view .btn-info:active {
+  background-color: #77cc6d;
+  border-color: #77cc6d;
+}

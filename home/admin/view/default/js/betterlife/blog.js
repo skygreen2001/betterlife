@@ -41,6 +41,8 @@ $(function(){
             "columnDefs": [
                 {"orderable": false, "targets": 2,
                  "render"   : function(data, type, row) {
+                    // 该图片仅供测试
+                    if ( !data ) data = "https://lorempixel.com/900/500?r=1";
                     var data = {
                         "img_id"  : "imgUrl"+row.id,
                         "img_src" : data,
@@ -72,14 +74,12 @@ $(function(){
                  "render"   : function(data, type, row){
                     var result = $.templates("#actionTmpl").render({ "id"  : data });
 
-                    $("body").off('click', 'a#info-view'+data);
-                    $("body").on('click', 'a#info-view'+data, function(){//查看
-                        bootbox.confirm("确定要查看该博客:" + data + "?",function(result){
-                            if ( result == true ){
-                                console.log("查看博客:" + data);
-                            }
-                        });
+                    $("a#info-view"+data).click(function(){
+                        var pageNo = $_.params("pageNo");
+                        if (!pageNo ) pageNo = 1;
+                        location.href = 'index.php?go=admin.blog.view&id='+data+'&pageNo='+pageNo;
                     });
+
                     $("a#info-edit"+data).click(function(){
                         var pageNo = $_.params("pageNo");
                         if (!pageNo ) pageNo = 1;

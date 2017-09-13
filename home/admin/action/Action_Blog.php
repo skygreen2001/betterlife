@@ -40,7 +40,7 @@ class Action_Blog extends ActionModel
      */
     public function view()
     {
-        $blogId = $this->data["blog_id"];
+        $blogId = $this->data["id"];
         $blog = Blog::get_by_id($blogId);
         $user_instance = null;
         if ($blog->user_id) {
