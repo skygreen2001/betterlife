@@ -14,8 +14,8 @@
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
                       <li><a href="/"><i class="icon-home2 position-left"></i> 首页</a></li>
-                      <li><a href="{$url_base}index.php?go=admin.blog.lists">读书</a></li>
-                      <li class="active">编辑读书</li>
+                      <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
+                      <li class="active">编辑博客</li>
                     </ul>
                   </div>
                 </div>
@@ -25,6 +25,11 @@
                 <div class="container-fluid edit">
                   <div class="row col-xs-12">
                       <form id="editBlogForm" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label error-msg">错误信息</label>
+                        <div class="col-sm-9 edit-view error-msg">{$message}</div>
+                      </div>
                       {if $blog}
                       <div class="form-group">
                         <label class="col-sm-2 control-label">标识</label>

@@ -164,6 +164,29 @@ function is_server_windows()
 }
 
 /**
+ * 提示系统目录需要创建的信息
+ */
+function system_dir_info($dir_name)
+{
+    if ( !is_dir($dir_name) ){
+        $isMac = (contain(strtolower(php_uname()),"darwin")) ? true : false;
+        $os = $isMac ? "MacOS" : "Linux";
+        $dir_log = $dir_name;
+        $info = "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建框架日志存放的目录:" . $dir_log . "<br/>" .
+                "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
+                "sudo mkdir -p " . $dir_log . "<br/>" . str_repeat("&nbsp;",40);
+        $info .=
+            "sudo chmod -R 0777 " . $dir_log . "</p>";
+        // if (!$isMac){
+        //     $info .=
+        //         "sudo chown -R www-data:www-data " . self::$save_dir . "<br/>" . str_repeat("&nbsp;",8) .
+        //         "sudo chmod -R 0755 " . self::$save_dir . "</p>";
+        // }
+        die($info);
+    }
+}
+
+/**
  * 取得阅读器名称和版本
  * @access public
  * @return string

@@ -9,7 +9,7 @@
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
                       <li><a href="/"><i class="icon-home2 position-left"></i> 首页</a></li>
-                      <li class="active">读书</li>
+                      <li class="active">博客</li>
                     </ul>
                   </div>
                 </div>

@@ -96,18 +96,7 @@ class LogMe extends Object
         if (isset ($destination)){
             UtilFileSystem::createDir(dirname($destination));
         }
-        if (!is_dir(dirname($destination))){
-            $isMac = (contain(strtolower(php_uname()),"darwin")) ? true : false;
-            $os = $isMac ? "MacOS" : "Linux";
-            $dir_log = dirname($destination);
-            $info = "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建框架日志存放的目录:" . $dir_log . "<br/>" .
-                    "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
-                    "sudo mkdir -p " . $dir_log . "<br/>" . str_repeat("&nbsp;",40);
-            $info .=
-                "sudo chown -R www-data:www-data " . $dir_log . "<br/>" . str_repeat("&nbsp;",40) .
-                "sudo chmod -R 0777 " . $dir_log . "</p>";
-            die($info);
-        }
+        system_dir_info(dirname($destination));
         return $destination;
     }
 

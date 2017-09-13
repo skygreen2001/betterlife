@@ -7,7 +7,7 @@
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
  */
-class Action_Blog extends ActionModel
+class Action_Blog extends ActionAdmin
 {
     /**
      * 博客列表
@@ -54,16 +54,17 @@ class Action_Blog extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $blog = $this->model->Blog;
-            $id = $blog->getId();
-            $isRedirect=true;
-            if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])){
-                $result=$this->uploadImg($_FILES,"icon_url","icon_url","blog");
-                if ($result&&($result['success']==true)){
-                    if (array_key_exists('file_name',$result))$blog->icon_url = $result['file_name'];
-                }else{
-                    $isRedirect=false;
+            $id   = $blog->getId();
+            $isRedirect = true;
+            if ( !empty($_FILES) && !empty($_FILES["icon_url"]["name"]) ){
+                $result = $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
+                print_r($result);
+                if ( $result&&($result['success'] == true) ){
+                    if ( array_key_exists('file_name',$result) )$blog->icon_url = $result['file_name'];
+                } else {
+                    $isRedirect = false;
                     $this->view->set("message",$result["msg"]);
                 }
             }
@@ -73,12 +74,12 @@ class Action_Blog extends ActionModel
                 $id = $blog->save();
             }
             if ($isRedirect){
-                $this->redirect("blog", "view", "blog_id=$id");
+                $this->redirect("blog", "view", "id=$id");
                 exit;
             }
         }
         $blogId = $this->data["id"];
-        $blog = Blog::get_by_id($blogId);
+        $blog   = Blog::get_by_id($blogId);
         $this->view->set("blog", $blog);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor('blog_content');

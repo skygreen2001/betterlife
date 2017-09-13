@@ -257,18 +257,7 @@ class View {
                 $this->template->caching = Gc::$is_online_optimize;
                 $this->template->cache_lifetime = 86400;//缓存一周
                 UtilFileSystem::createDir($this->template->compile_dir);
-                if (!is_dir($this->template->compile_dir)) {
-                    $os = "Linux";
-                    $mod = "0755";
-                    if (contain(strtolower(php_uname()),"darwin")) {
-                        $os = "MacOS";
-                        $mod = "0777";
-                    }
-                    die("<p style='font: 15px/1 . 5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建目录:" . $this->template->compile_dir . "<br/>" .
-                        "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
-                        "sudo mkdir -p " . $this->template->compile_dir . "<br/>" . str_repeat("&nbsp;",40) .
-                        "sudo chmod $mod " . $this->template->compile_dir . "</p>");
-                }
+                system_dir_info($this->template->compile_dir);
                 break;
             case self::TEMPLATE_MODE_TWIG:
                 $this->templateMode = self::TEMPLATE_MODE_TWIG;

@@ -1,9 +1,10 @@
-
 .edit form .edit-view{
   padding: 8px 16px;
   min-height: 22px;
 }
-
+.edit .error-msg{
+  color: #c30c0c;
+}
 /* textarea在线编辑器ueditor显示 */
 .edit form .form-control.edui-default{
   display: inline-table;
@@ -12,7 +13,6 @@
   padding: 0px;
   box-shadow: inset 0 0px 0px #fff;
 }
-
 .edit form .edui-default .edui-editor-bottomContainer td{
   padding-right: 5px;
 }

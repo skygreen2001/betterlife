@@ -76,7 +76,7 @@
                         <span>{$blog.blog_content}</span>
                       </dd>
                     </dl>
-                    <button type="submit" onclick="javascript: history.go(-1);" class="btn btn-info">
+                    <button type="submit" onclick="{$url_base}index.php?go=admin.blog.lists&amp;{$smarty.get.pageNo|default:"1"}" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
                     </button>
                   </div>

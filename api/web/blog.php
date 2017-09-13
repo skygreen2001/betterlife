@@ -38,6 +38,9 @@ if ($data){
       $user = User::get_by_id($blog->user_id);
       if ($user) $blog->user_name = $user->username;
     }
+    if (!empty($blog->icon_url)){
+      $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url; 
+    }
   }
 }
 $recordsFiltered = $pageBlogs["count"];

@@ -196,14 +196,14 @@ class AutoCodeModel extends AutoCode
             foreach ($overwrite_not_run_arr as $overwrite_not_dir) {
                 $overwrite_not_dir_str .=
                     "sudo mkdir -p " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
-                if ($isMac) {
-                    $overwrite_not_dir_str .=
-                        "sudo chmod -R 0777 " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
-                }else{
-                    $overwrite_not_dir_str .=
-                        "sudo chown -R www-data:www-data " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8) .
-                        "sudo chmod -R 0755 " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
-                }
+
+                $overwrite_not_dir_str .=
+                    "sudo chmod -R 0777 " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
+                // if (!$isMac){
+                //     $info .=
+                //         "sudo chown -R www-data:www-data " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8) .
+                //         "sudo chmod -R 0755 " . $overwrite_not_dir . "</p>";
+                // }
             }
 
             $os = $isMac ? "MacOS" : "Linux";

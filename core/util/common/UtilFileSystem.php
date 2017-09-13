@@ -190,51 +190,53 @@ class UtilFileSystem extends Util
      * @param sting $file_permit_upload_size 上传文件大小尺寸,单位是M
      * @return array 返回信息数组
      */
-    public static function uploadFile($files,$uploadPath,$uploadFieldName="upload_file",$file_permit_upload_size=2)
+    public static function uploadFile($files, $uploadPath, $uploadFieldName="upload_file", $file_permit_upload_size=2)
     {
-        if ($files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000) {
-            if ($files[$uploadFieldName]["error"] > 0) {
-                switch($files[$uploadFieldName]['error']) {
+        if ( $files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000 ) {
+            if ( $files[$uploadFieldName]["error"] > 0 ) {
+                switch( $files[$uploadFieldName]['error'] ) {
                     case 1:
-                        $errorInfo="超出了限制上传的文件大小";//The file is too large (server)
+                        $errorInfo = "超出了限制上传的文件大小";//The file is too large (server)
                         break;
                     case 2:
-                        $errorInfo="要上传的文件大小超出浏览器限制";//The file is too large (form)
+                        $errorInfo = "要上传的文件大小超出浏览器限制";//The file is too large (form)
                         break;
                     case 3:
-                        $errorInfo="文件仅部分被上传";//The file was only partially uploaded.
+                        $errorInfo = "文件仅部分被上传";//The file was only partially uploaded.
                         break;
                     case 4:
-                        $errorInfo="没有文件被上传";//No file was uploaded.
+                        $errorInfo = "没有文件被上传";//No file was uploaded.
                         break;
                     case 5:
-                        $errorInfo="服务器临时文件夹丢失";//The servers temporary folder is missing.
+                        $errorInfo = "服务器临时文件夹丢失";//The servers temporary folder is missing.
                         break;
                     case 6:
-                        $errorInfo="文件写入到临时文件夹出错";//Failed to write to the temporary folder.
+                        $errorInfo = "文件写入到临时文件夹出错";//Failed to write to the temporary folder.
                         break;
                 }
-                $errorInfo.="<br/>[错误号：".$files[$uploadFieldName]["error"]."],详情查看：<br/>http://php.net/manual/zh/features.file-upload.errors.php";
-                return array('success' => false, 'msg' =>  $errorInfo);
+                $errorInfo .= "<br/>[错误号：" . $files[$uploadFieldName]["error"] . "],详情查看：<br/>http://php.net/manual/zh/features.file-upload.errors.php";
+                return array( 'success' => false, 'msg' =>  $errorInfo );
             } else {
                 //获得临时文件名
-                $tmptail = end(explode('.', $files[$uploadFieldName]["name"]));
-                $temp_name=basename($uploadPath);
-                if (contain($temp_name,".")){
+                $path_r    = explode('.', $files[$uploadFieldName]["name"]);
+                $tmptail   = end($path_r);
+                $temp_name = basename($uploadPath);
+                if ( contain($temp_name,".") ){
                     $temp_name="";
                     self::createDir(dirname($uploadPath));
-                }else{
+                } else {
                     $temp_name = date("YmdHis").'.'.$tmptail;
                     self::createDir($uploadPath);
                 }
-                if (file_exists($uploadPath.$temp_name)) {
+                system_dir_info(dirname($uploadPath));
+                if ( file_exists($uploadPath.$temp_name) ) {
                     return array('success' => false, 'msg' => '文件重名!');
                 } else {
-                    $IsUploadSucc=move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath.$temp_name);
-                    if (!$IsUploadSucc){
+                    $IsUploadSucc = move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath.$temp_name);
+                    if ( !$IsUploadSucc ){
                         return array('success' => false, 'msg' => '文件上传失败，通知系统管理员!');
                     }
-                    if (empty($temp_name)){
+                    if ( empty($temp_name) ){
                         $temp_name=basename($uploadPath);
                     }
                     return array('success' => true,'file_showname'=>$files[$uploadFieldName]["name"],'file_name' => $temp_name);
