@@ -25,11 +25,12 @@
                 <div class="container-fluid edit">
                   <div class="row col-xs-12">
                       <form id="editBlogForm" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
-
+                      {if $message}
                       <div class="form-group">
                         <label class="col-sm-2 control-label error-msg">错误信息</label>
                         <div class="col-sm-9 edit-view error-msg">{$message}</div>
                       </div>
+                      {/if}
                       {if $blog}
                       <div class="form-group">
                         <label class="col-sm-2 control-label">标识</label>
@@ -86,7 +87,7 @@
                       <div class="form-group">
                           <label for="isPublic" class="col-sm-2 control-label">公开</label>
                           <div class="col-sm-9">
-                              <input class="form-control" id="isPublic" type="checkbox" name="isPublic" data-on-text="是" data-off-text="否" />
+                              <input class="form-control" id="isPublic" type="checkbox" name="isPublic" {if $blog.isPublic} checked {/if} data-on-text="是" data-off-text="否" />
                           </div>
                       </div>
                       <div class="form-group">

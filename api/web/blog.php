@@ -39,7 +39,7 @@ if ($data){
       if ($user) $blog->user_name = $user->username;
     }
     if (!empty($blog->icon_url)){
-      $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url; 
+      $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
     }
   }
 }

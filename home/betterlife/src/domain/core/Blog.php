@@ -64,7 +64,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * 
+     *
      * @var enum
      * @access public
      */
@@ -111,5 +111,17 @@ class Blog extends DataObject
         return EnumBlogStatus::statusShow($status);
     }
 
+    /**
+     * 是否公开<br/>
+     * 0:公开<br/>
+     * 1:不公开<br/>
+     * <br/>
+     */
+    public function isPublicShow()
+    {
+        if ($this->isPublic){
+            return "是";
+        }
+        return "否";
+    }
 }
-

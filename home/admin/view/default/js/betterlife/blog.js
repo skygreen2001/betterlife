@@ -34,6 +34,7 @@ $(function(){
                 { data:"blog_name" },
                 { data:"user_name" },
                 { data:"icon_url" },
+                { data:"isPublic" },
                 { data:"status" },
                 { data:"updateTime"},
                 { data:"blog_id" }
@@ -61,6 +62,15 @@ $(function(){
                 },
                 {"orderable": false, "targets": 3,
                  "render"   : function(data,type,row){
+                    if ( data == 1 ) {
+                        return '是';
+                    } else {
+                        return '否';
+                    }
+                 }
+                },
+                {"orderable": false, "targets": 4,
+                 "render"   : function(data,type,row){
                     if ( data == 0 ){
                         return '<span class="status-fail">待审核</span>';
                     } else if ( data == 1 ) {
@@ -70,7 +80,7 @@ $(function(){
                     }
                  }
                 },
-                {"orderable": false, "targets": 5,
+                {"orderable": false, "targets": 6,
                  "render"   : function(data, type, row){
                     var result = $.templates("#actionTmpl").render({ "id"  : data });
 

@@ -31,52 +31,44 @@
                     </h4><hr>
                     <dl>
                       <dt><span>标识</span></dt>
-                      <dd>
-                        <span>{$blog.blog_id}</span>
-                      </dd>
+                      <dd><span>{$blog.blog_id}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>序号</span></dt>
-                      <dd>
-                        <span>{$blog.sequenceNo}</span>
-                      </dd>
+                      <dd><span>{$blog.sequenceNo}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>名称</span></dt>
-                      <dd>
-                        <span>{$blog.blog_name}</span>
-                      </dd>
+                      <dd><span>{$blog.blog_name}</span></dd>
                     </dl>
                     <dl>
-                      <dt><span>用户</span></dt>
-                      <dd>
-                        <span>{$blog.username}</span>
-                      </dd>
+                      <dt><span>作者</span></dt>
+                      <dd><span>{$blog.username}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>封面</span></dt>
                       <dd>
                         {if $blog.icon_url}
-                        <span><img class="img-thumbnail" src="{$blog.icon_url}" alt="{$blog.blog_name}" /></span>
-                        <span>存储相对路径:{$blog.icon_url}</span>
+                        <span><img class="img-thumbnail" src="{$blog.icon_url}" alt="{$blog.blog_name}" /></span><br>
+                        <span>存储路径:</span><br><span>{$blog.icon_url}</span>
                         {else}
                         <span><img class="img-thumbnail" src="https://lorempixel.com/900/500?r=1" alt="{$blog.blog_name}" /></span>
                         {/if}
                       </dd>
                     </dl>
                     <dl>
+                      <dt><span>是否公开</span></dt>
+                      <dd><span>{$blog.isPublicShow}</span></dd>
+                    </dl>
+                    <dl>
                       <dt><span>状态</span></dt>
-                      <dd>
-                        <span>{$blog.statusShow}</span>
-                      </dd>
+                      <dd><span>{$blog.statusShow}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>博客内容</span></dt>
-                      <dd>
-                        <span>{$blog.blog_content}</span>
-                      </dd>
+                      <dd><span>{$blog.blog_content}</span></dd>
                     </dl>
-                    <button type="submit" onclick="{$url_base}index.php?go=admin.blog.lists&amp;{$smarty.get.pageNo|default:"1"}" class="btn btn-info">
+                    <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.lists&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
                     </button>
                   </div>
