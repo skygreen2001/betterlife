@@ -49,10 +49,10 @@
                       <dt><span>封面</span></dt>
                       <dd>
                         {if $blog.icon_url}
-                        <span><img class="img-thumbnail" src="{$blog.icon_url}" alt="{$blog.blog_name}" /></span><br>
+                        <span><a href="{$blog.icon_url}" target="_blank"><img class="img-thumbnail" src="{$blog.icon_url}" alt="{$blog.blog_name}" /></a></span><br>
                         <span>存储路径:</span><br><span>{$blog.icon_url}</span>
                         {else}
-                        <span><img class="img-thumbnail" src="https://lorempixel.com/900/500?r=1" alt="{$blog.blog_name}" /></span>
+                        <span><a href="https://lorempixel.com/900/500?r=1" target="_blank"><img class="img-thumbnail" src="https://lorempixel.com/900/500?r=1" alt="{$blog.blog_name}" /></a></span>
                         {/if}
                       </dd>
                     </dl>
