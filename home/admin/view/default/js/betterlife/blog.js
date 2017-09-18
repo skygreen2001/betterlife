@@ -44,17 +44,18 @@ $(function(){
                  "render"   : function(data, type, row) {
                     // 该图片仅供测试
                     if ( !data ) data = "https://lorempixel.com/900/500?r=1";
+                    var blog_id = row.blog_id;
                     var data = {
-                        "img_id"  : "imgUrl"+row.id,
+                        "img_id"  : "imgUrl" + blog_id,
                         "img_src" : data,
                         "img_name": row.blog_name
                     };
                     var result = $.templates("#imgTmpl").render(data);
 
-                    $("body").off('click', 'a#imgUrl'+row.id);
-                    $("body").on('click', 'a#imgUrl'+row.id, function(){
-                        $('#imagePreview').attr('src', $('a#imgUrl' + row.id + " img").attr('src'));
-                        $('#imagePreview-link').attr('href', $('a#imgUrl' + row.id + " img").attr('src'));
+                    $("body").off('click', 'a#imgUrl' + blog_id);
+                    $("body").on('click', 'a#imgUrl' + blog_id, function(){
+                        $('#imagePreview').attr('src', $('a#imgUrl' + blog_id + " img").attr('src'));
+                        $('#imagePreview-link').attr('href', $('a#imgUrl' + blog_id + " img").attr('src'));
                         $('#imageModal').modal('show');
                     });
                     return result;
