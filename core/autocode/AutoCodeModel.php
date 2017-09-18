@@ -24,7 +24,7 @@ class AutoCodeModel extends AutoCode
         if(Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW)AutoCodeConfig::run();
         if (!file_exists($filename)){
             AutoCodeConfig::run();
-            die("&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码！");
+            die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码！</div>");
         }
         self::$showReport.=AutoCodeFoldHelper::foldEffectReady();
         //生成实体数据对象类

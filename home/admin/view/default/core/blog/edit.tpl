@@ -66,13 +66,14 @@
                       <div class="form-group">
                           <label for="categoryIds" class="col-sm-2 control-label">博客类型</label>
                           <div class="col-sm-9">
-                              <select id="categoryIds" name="categoryId" class="form-control" multiple>
-                                  <option value="1">科技类</option>
-                                  <option value="2" selected>时尚类</option>
-                                  <option value="3">新闻类</option>
-                                  <option value="4">体育类</option>
-                                  <option value="5">军事类</option>
-                                  <option value="6">生活类</option>
+                              <select id="categoryIds" name="categoryId[]" class="form-control" multiple>
+                                  {foreach item=category from=$categorys}
+                                  {if $category.category_id|in_array:$blogCategorys}
+                                  <option value="{$category.category_id}" selected>{$category.name}</option>
+                                  {else}
+                                  <option value="{$category.category_id}">{$category.name}</option>
+                                  {/if}
+                                  {/foreach}
                               </select>
                           </div>
                       </div>

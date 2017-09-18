@@ -47,12 +47,6 @@ class Blog extends DataObject
      */
     public $isPublic;
     /**
-     * 博客类型
-     * @var int
-     * @access public
-     */
-    public $category_id;
-    /**
      * 博客内容
      * @var string
      * @access public
@@ -83,6 +77,13 @@ class Blog extends DataObject
      */
     static $has_many=array(
         "comments"=>"Comment"
+    );
+
+    /**
+     * 多对多关系
+     */
+    static $many_many=array(
+        "categorys"=>"Category"
     );
 
     /**

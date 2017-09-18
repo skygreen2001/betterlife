@@ -38,6 +38,10 @@
                       <dd><span>{$blog.sequenceNo}</span></dd>
                     </dl>
                     <dl>
+                      <dt><span>分类</span></dt>
+                      <dd><span>{foreach item=category from=$blog.categorys}{$category.name}&nbsp;{/foreach}</span></dd>
+                    </dl>
+                    <dl>
                       <dt><span>名称</span></dt>
                       <dd><span>{$blog.blog_name}</span></dd>
                     </dl>
@@ -70,6 +74,9 @@
                     </dl>
                     <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.lists&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
+                    </button>
+                    <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.edit&amp;id={$smarty.get.id}&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
+                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span>编辑</span>
                     </button>
                   </div>
                 </div>

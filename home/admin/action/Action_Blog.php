@@ -76,6 +76,40 @@ class Action_Blog extends ActionAdmin
             }else{
                 $id = $blog->save();
             }
+
+            $blogcategorys = $this->data["categoryId"];
+            $blogcategorys_db = Blogcategory::select("category_id", "blog_id = " . $id);
+            if ($blogcategorys_db) {
+                //添加数据库里没有的
+                foreach ($blogcategorys as $category_id) {
+                    if (!in_array($category_id, $blogcategorys_db)){
+                        $blogcategory = new Blogcategory(
+                            array(
+                              "blog_id" => $id,
+                              "category_id" => $category_id
+                            )
+                        );
+                        $blogcategory->save();
+                    }
+                }
+                //删除用户取消的选择
+                foreach ($blogcategorys_db as $category_id) {
+                    if (!in_array($category_id, $blogcategorys)){
+                        Blogcategory::deleteBy( "category_id =" . $category_id );
+                    }
+                }
+            } else {
+                foreach ($blogcategorys as $blogcategory) {
+                    $blogcategory = new Blogcategory(
+                        array(
+                          "blog_id" => $id,
+                          "category_id" => $blogcategory
+                        )
+                    );
+                    $blogcategory->save();
+                }
+            }
+
             if ($isRedirect){
                 $this->redirect("blog", "view", "id=$id");
                 exit;
@@ -83,7 +117,13 @@ class Action_Blog extends ActionAdmin
         }
         $blogId = $this->data["id"];
         $blog   = Blog::get_by_id($blogId);
+        $categorys = Category::get();
         $this->view->set("blog", $blog);
+        $this->view->set("categorys", $categorys);
+        if ($blog) {
+            $blogCategorys = Blogcategory::select("category_id", "blog_id = " . $blogId);
+            $this->view->set("blogCategorys", $blogCategorys);
+        }
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor('blog_content');
     }

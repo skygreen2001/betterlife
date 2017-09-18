@@ -14,6 +14,9 @@
         <has_many>
             <relationclass name="Comment">comments</relationclass>
         </has_many>
+        <many_many>
+            <relationclass name="Category">categorys</relationclass>
+        </many_many>
     </class>
     <class name="Comment">
         <conditions>

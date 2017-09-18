@@ -34,7 +34,7 @@ class Region extends DataObject
      * 1:省-province<br/>
      * 2:市-city<br/>
      * 3:区-region<br/>
-     * 
+     *
      * @var enum
      * @access public
      */
@@ -61,6 +61,10 @@ class Region extends DataObject
     public $field_spec=array(
         EnumDataSpec::FOREIGN_ID=>array(
             "region_p"=>"parent_id"
+        ),
+        EnumDataSpec::REMOVE=>array(
+            'commitTime',
+            'updateTime'
         )
     );
 
@@ -99,4 +103,3 @@ class Region extends DataObject
     }
 
 }
-
