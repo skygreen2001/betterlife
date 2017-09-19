@@ -44,6 +44,7 @@ $(function(){
                  "render"   : function(data, type, row) {
                     // 该图片仅供测试
                     if ( !data ) data = "https://lorempixel.com/900/500?r=1";
+
                     var blog_id = row.blog_id;
                     var data = {
                         "img_id"  : "imgUrl" + blog_id,
@@ -54,9 +55,11 @@ $(function(){
 
                     $("body").off('click', 'a#imgUrl' + blog_id);
                     $("body").on('click', 'a#imgUrl' + blog_id, function(){
-                        $('#imagePreview').attr('src', $('a#imgUrl' + blog_id + " img").attr('src'));
-                        $('#imagePreview-link').attr('href', $('a#imgUrl' + blog_id + " img").attr('src'));
-                        $('#imageModal').modal('show');
+                        var imgLink = $('a#imgUrl' + blog_id + " img").attr('src');
+                        $('#imagePreview').attr('src', imgLink);
+                        $('#imagePreview-link').attr('href', imgLink);
+                        var isShow = $.dataTable.showImages($(this).find("img"), "#imageModal .modal-dialog");
+                        if (isShow) $('#imageModal').modal('show'); else window.open(imgLink, '_blank');
                     });
                     return result;
                  }
