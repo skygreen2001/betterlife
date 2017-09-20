@@ -13619,6 +13619,12 @@ footer #footer-inner a:hover {
   color: #fff;
 }
 
+@media (max-width: 320px) {
+  .navbar .navbar-container .navbar-header a.navbar-brand {
+    width: 100%;
+  }
+}
+
 /************************* Layout:  end ************************/
 
 /************************* Sidebar:start ************************/
@@ -14134,6 +14140,13 @@ body.login .login-container footer #footer-inner a {
 
 body.login .login-container footer #footer-inner a:hover {
   color: #fff;
+}
+
+.home .container-fluid {
+  text-align: center;
+  padding-top: 20%;
+  line-height: 120px;
+  min-height: 400px;
 }
 
 .index {

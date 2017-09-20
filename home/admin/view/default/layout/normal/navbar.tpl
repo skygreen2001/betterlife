@@ -12,7 +12,7 @@
               <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
-            <i class="glyphicon glyphicon-grain"></i> Betterlife Front UI
+            <i class="glyphicon glyphicon-grain"></i> Betterlife
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -40,7 +40,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
                 <li><a href="#reset"><span class="glyphicon glyphicon-edit"></span>修改密码</a></li>
-                <li><a href="../../index.html"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+                <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
             <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
