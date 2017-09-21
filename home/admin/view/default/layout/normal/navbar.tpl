@@ -18,7 +18,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{$url_base}index.php?go=admin.index.index">首页</a></li>
-            <li><a class="active" href="{$url_base}index.php?go=admin.blog.lists">读书</a></li>
+            <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
             <li><a href="#contact">电影</a></li>
             <li><a href="#about">音乐</a></li>
             <li><a href="#contact">研发</a></li>

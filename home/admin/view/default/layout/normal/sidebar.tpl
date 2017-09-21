@@ -4,7 +4,10 @@
           <li ><a href="#"><i class="icon-th-list" title="功能导航"></i></a></li>
         </ul>
         <ul class="sidebar-nav">
-            <li><a href="#"><i class="icon-dashboard"></i> <span>控制台</span></a></li>
+            <li><a href="{$url_base}index.php?go=admin.index.index"><i class="icon-dashboard"></i> <span>控制台</span></a></li>
+            <li>
+                <a href="{$url_base}index.php?go=admin.blog.lists"><i class="icon-life-ring"></i> <span>博客</span></a>
+            </li>
             <li data-role="dropdown">
               <a class="has-ul" href="#collapse-it" aria-expanded="false" aria-controls="collapse-it"><i class="icon-book"></i> <span>科技类</span><i class="glyphicon glyphicon-menu-right menu-right"></i></a>
               <ul class="sub-menu" id="collapse-it">
