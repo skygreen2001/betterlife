@@ -36,7 +36,7 @@ $(function(){
                 { data:"icon_url" },
                 { data:"isPublic" },
                 { data:"status" },
-                { data:"updateTime"},
+                { data:"publish_date"},
                 { data:"blog_id" }
             ],
             "columnDefs": [
@@ -125,7 +125,7 @@ $(function(){
 
     if( $(".content-wrapper form").length ){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
-        $.edit.datetimePicker('#creationTime');
+        $.edit.datetimePicker('#publishDate');
         $.edit.multiselect('#categoryIds');
 
         $("input[name='isPublic']").bootstrapSwitch();

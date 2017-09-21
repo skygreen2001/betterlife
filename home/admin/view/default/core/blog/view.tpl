@@ -72,6 +72,26 @@
                       <dt><span>博客内容</span></dt>
                       <dd><span>{$blog.blog_content}</span></dd>
                     </dl>
+                    <dl>
+                      <dt><span>发布日期</span></dt>
+                      <dd><span>{$blog.publish_date|date_format:"%Y-%m-%d"}</span></dd>
+                    </dl>
+
+                    <h4>
+                      <span class="glyphicon glyphicon-list-alt"></span>
+                      <span>其他信息</span>
+                    </h4><hr>
+                    <dl>
+                      <dt><span>标识</span></dt>
+                      <dd><span>{$blog.blog_id}</span></dd>
+                    </dl>
+                    <dl>
+                      <dt><span>创建时间</span></dt>
+                      <dd><span>{$blog.commitTime|date_format:"%Y-%m-%d %H:%M"}</span></dd>
+                    </dl><dl>
+                      <dt><span>更新时间</span></dt>
+                      <dd><span>{$blog.updateTime|date_format:"%Y-%m-%d %H:%M"}</span></dd>
+                    </dl>
                     <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.lists&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
                     </button>

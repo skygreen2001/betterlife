@@ -63,6 +63,12 @@ class Blog extends DataObject
      * @access public
      */
     public $status;
+    /**
+    * 发布日期
+    * @var string
+    * @access public
+    */
+    public $publish_date;
     //</editor-fold>
 
     /**

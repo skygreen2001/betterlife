@@ -94,8 +94,8 @@
                       <div class="form-group">
                           <label for="creationTimeStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
-                              <div class="input-group col-sm-9 datetimeStyle" id="creationTime">
-                                  <input id="creationTimeStr" name="updateTime" class="form-control date-picker" type="text" value=""/>
+                              <div class="input-group col-sm-9 datetimeStyle" id="publishDate">
+                                  <input id="publishDateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
                                   <span class="input-group-addon">
                                       <i class="icon-calendar bigger-110"></i>
                                   </span>

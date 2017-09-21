@@ -59,6 +59,7 @@ CREATE TABLE `bb_core_blog` (
   `isPublic` bit(1) DEFAULT b'1' COMMENT '是否公开',
   `blog_content` longtext DEFAULT NULL COMMENT '博客内容',
   `status` enum('0','1','100','400') DEFAULT NULL COMMENT '状态\n0:待审核-pend\n1:进行中-run\n100:已结束-end\n400:已删除-del\n',
+  `publish_date` date DEFAULT NULL COMMENT '发布日期',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
   `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`blog_id`,`user_id`),
@@ -68,11 +69,11 @@ CREATE TABLE `bb_core_blog` (
 -- ----------------------------
 -- Records of bb_core_blog
 -- ----------------------------
-INSERT INTO `bb_core_blog` VALUES ('1', '1', 'Web在线编辑器', 100, '', b'1', '搜索关键字：在线编辑器\r\n引自：<a href=\"http://paranimage.com/22-online-web-editor/\" target=\"_blank\">http://paranimage.com/22-online-web-editor/</a>', '1', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('2', '1', '地图导航第三方库', 100, '', b'1', '百度地图:<a href=\"http://openapi.baidu.com/map/index.html\" target=\"_blank\">http://openapi.baidu.com/map/index.html</a><br />City8 &nbsp; &nbsp; :<a href=\"http://sh.city8.com/api.html\" target=\"_blank\">http://sh.city8.com/api.html</a>', '1', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('3', '1', 'PHPLinq', 100, '', b'1', 'PHPLinq:<a href=\"http://phplinq.codeplex.com/\" target=\"_blank\">http://phplinq.codeplex.com/</a>', '1', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('4', '1', 'EditArea', 100, '', b'1', 'EditArea:<a href=\"http://www.cdolivet.com/index.php?page=editArea\" target=\"_blank\">http://www.cdolivet.com/index.php?page=editArea</a>&nbsp;\r\n提供给开发者和工作者的用于编辑源码或者样式模板的TextArea', '1', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('5', '1', '名校公开课', 100, '', b'1', '来自新浪、搜狐、网易和QQ的名校公开课。', '1', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('1', '1', 'Web在线编辑器', 100, '', b'1', '搜索关键字：在线编辑器\r\n引自：<a href=\"http://paranimage.com/22-online-web-editor/\" target=\"_blank\">http://paranimage.com/22-online-web-editor/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('2', '1', '地图导航第三方库', 100, '', b'1', '百度地图:<a href=\"http://openapi.baidu.com/map/index.html\" target=\"_blank\">http://openapi.baidu.com/map/index.html</a><br />City8 &nbsp; &nbsp; :<a href=\"http://sh.city8.com/api.html\" target=\"_blank\">http://sh.city8.com/api.html</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('3', '1', 'PHPLinq', 100, '', b'1', 'PHPLinq:<a href=\"http://phplinq.codeplex.com/\" target=\"_blank\">http://phplinq.codeplex.com/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('4', '1', 'EditArea', 100, '', b'1', 'EditArea:<a href=\"http://www.cdolivet.com/index.php?page=editArea\" target=\"_blank\">http://www.cdolivet.com/index.php?page=editArea</a>&nbsp;\r\n提供给开发者和工作者的用于编辑源码或者样式模板的TextArea', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('5', '1', '名校公开课', 100, '', b'1', '来自新浪、搜狐、网易和QQ的名校公开课。', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
 
 -- ----------------------------
 -- Table structure for `bb_core_re_blogcategory`
