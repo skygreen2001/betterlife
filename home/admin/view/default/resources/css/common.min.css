@@ -13619,6 +13619,10 @@ footer #footer-inner a:hover {
   color: #fff;
 }
 
+.bootbox .modal-dialog {
+  padding-top: 260px;
+}
+
 @media (max-width: 320px) {
   .navbar .navbar-container .navbar-header a.navbar-brand {
     width: 100%;
@@ -14144,9 +14148,21 @@ body.login .login-container footer #footer-inner a:hover {
 
 .home .container-fluid {
   text-align: center;
-  padding-top: 20%;
+  padding-top: 40%;
   line-height: 120px;
   min-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .home .container-fluid {
+    padding-top: 25%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home .container-fluid {
+    padding-top: 18%;
+  }
 }
 
 .index {

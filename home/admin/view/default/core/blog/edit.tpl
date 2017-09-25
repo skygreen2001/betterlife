@@ -13,7 +13,7 @@
                 <div class="row">
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
-                      <li><a href="/"><i class="icon-home2 position-left"></i> 首页</a></li>
+                      <li><a href="{$url_base}index.php?go=admin.index.index"><i class="icon-home2 position-left"></i> 首页</a></li>
                       <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
                       <li class="active">编辑博客</li>
                     </ul>

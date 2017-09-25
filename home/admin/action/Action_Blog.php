@@ -134,6 +134,5 @@ class Action_Blog extends ActionAdmin
     {
         $blogId = $this->data["id"];
         $isDelete = Blog::deleteByID($blogId);
-        $this->redirect("blog", "lists", $this->data);
     }
 }

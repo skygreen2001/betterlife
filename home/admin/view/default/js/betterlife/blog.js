@@ -100,11 +100,13 @@ $(function(){
                         location.href = 'index.php?go=admin.blog.edit&id='+data+'&pageNo='+pageNo;
                     });
 
-                    $("body").off('click', 'a#info-dele'+data);
-                    $("body").on('click', 'a#info-dele'+data, function(){//删除
+                    $("body").off('click', 'a#info-dele' + data);
+                    $("body").on('click', 'a#info-dele' + data, function(){//删除
                         bootbox.confirm("确定要删除该博客:" + data + "?",function(result){
                             if ( result == true ){
-                                console.log("删除博客:" + data);
+                                $.get("index.php?go=admin.blog.delete&id="+data, function(response, status){
+                                    $( 'a#info-dele' + data ).parent().parent().css("display", "none");
+                                });
                             }
                         });
                     });
@@ -134,10 +136,6 @@ $(function(){
             console.log(state);
         });
 
-        var default_keyword_id   = 6;
-        var default_keyword_text = "音乐";
-        $.edit.select2("select[name='keyword_id']", "../../data/keyword.json", default_keyword_id, default_keyword_text);
-
         $('#editBlogForm').validate({
             errorElement: 'div',
             errorClass: 'help-block',
@@ -145,55 +143,36 @@ $(function(){
             focusInvalid: true,
             // debug:true,
             rules: {
-                title:{
-                    required:true
-                },
-                content:{
-                    required:true
-                },
-                authorName:{
+                blog_name:{
                     required:true
                 },
                 sequenceNo: {
                     required:true,
                     number:true,
-                },
-                authorUrl:{
-                    url:true
                 }
             },
             messages: {
-                title:"此项为必填项",
-                content:"此项为必填项",
-                authorName:"此项为必填项",
+                blog_name:"此项为必填项",
                 sequenceNo:{
                     required:"此项为必填项",
                     number:"此项必须为数字"
-                },
-                authorUrl:{
-                    url:"必须输入正确格式的网址"
                 }
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 $('.alert-danger', $('.login-form')).show();
             },
-
             highlight: function (e) {
                 $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
             },
-
             success: function (e) {
                 $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
                 $(e).remove();
             },
-
             errorPlacement: function (error, element) {
                 error.insertAfter(element.parent());
             },
             submitHandler: function (form) {
                 form.submit();
-            },
-            invalidHandler: function (form) {
             }
         });
     }
