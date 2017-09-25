@@ -380,5 +380,49 @@ class DataObjectRelation extends Object
             LogMe::record(Wl::ERROR_INFO_EXTENDS_CLASS);
         }
     }
+
+    /**
+     * 同步删除取消了已有多对多关系、保存新增多对多关系
+     * 示例：<br>
+     *     Blogcategory::saveDeleteRelateions("blog_id", 1, "category_id", array(1,2,3,4,5,6));
+     * @param string $classname 数据对象类名
+     * @param string $id_name 主标识名称
+     * @param int $id 主标识
+     * @param string $rel_name 关系标识名称
+     * @param array $other_ids 关系标识组
+     */
+    public static function saveDeleteRelateions($classname, $id_name, $id, $rel_name, $other_ids) {
+        $relations_db = $classname::select($rel_name, $id_name . " = " . $id);
+        if ($relations_db) {
+            //添加数据库里没有的
+            foreach ($other_ids as $other_id) {
+                if (!in_array($other_id, $relations_db)){
+                    $relation_db = new $classname(
+                        array(
+                          $id_name => $id,
+                          $rel_name => $other_id
+                        )
+                    );
+                    $relation_db->save();
+                }
+            }
+            //删除用户取消的选择
+            foreach ($relations_db as $other_id) {
+                if (!in_array($other_id, $other_ids)){
+                    $classname::deleteBy( $rel_name . " = " . $other_id );
+                }
+            }
+        } else {
+            foreach ($other_ids as $other_id) {
+                $relation_db = new $classname(
+                    array(
+                      $id_name => $id,
+                      $rel_name => $other_id
+                    )
+                );
+                $relation_db->save();
+            }
+        }
+    }
 }
 ?>

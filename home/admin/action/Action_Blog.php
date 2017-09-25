@@ -14,26 +14,6 @@ class Action_Blog extends ActionAdmin
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
-            $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
-        } else {
-            $nowpage = 1;
-        }
-        $count = Blog::count();
-        $this->view->countBlogs = $count;
-        $this->view->set("blogs", NULL);
-        if ($count>0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $blogs = Blog::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            foreach ($blogs as $blog) {
-                $user_instance = null;
-                if ($blog->user_id) {
-                    $user_instance = User::get_by_id($blog->user_id);
-                    $blog['username'] = $user_instance->username;
-                }
-            }
-            $this->view->set("blogs", $blogs);
-        }
     }
     /**
      * 查看博客
@@ -78,37 +58,7 @@ class Action_Blog extends ActionAdmin
             }
 
             $blogcategorys = $this->data["categoryId"];
-            $blogcategorys_db = Blogcategory::select("category_id", "blog_id = " . $id);
-            if ($blogcategorys_db) {
-                //添加数据库里没有的
-                foreach ($blogcategorys as $category_id) {
-                    if (!in_array($category_id, $blogcategorys_db)){
-                        $blogcategory = new Blogcategory(
-                            array(
-                              "blog_id" => $id,
-                              "category_id" => $category_id
-                            )
-                        );
-                        $blogcategory->save();
-                    }
-                }
-                //删除用户取消的选择
-                foreach ($blogcategorys_db as $category_id) {
-                    if (!in_array($category_id, $blogcategorys)){
-                        Blogcategory::deleteBy( "category_id =" . $category_id );
-                    }
-                }
-            } else {
-                foreach ($blogcategorys as $blogcategory) {
-                    $blogcategory = new Blogcategory(
-                        array(
-                          "blog_id" => $id,
-                          "category_id" => $blogcategory
-                        )
-                    );
-                    $blogcategory->save();
-                }
-            }
+            Blogcategory::saveDeleteRelateions("blog_id", $id, "category_id", $blogcategorys);
 
             if ($isRedirect){
                 $this->redirect("blog", "view", "id=$id");
