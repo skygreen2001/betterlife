@@ -58,12 +58,12 @@ class AutoCodeService extends AutoCode
         switch (self::$type) {
            case 1:
              self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_22");
-             self::$showReport .= "<font color='#FF0000'>生成继承具有标准方法的Service文件导出:</font></a>";
+             self::$showReport .= "<font color='#237319'>生成继承具有标准方法的Service文件导出↓</font></a>";
              self::$showReport .= '<div id="Content_22" style="display:none;">';
              break;
            case 2:
              self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_21");
-             self::$showReport .= "<font color='#FF0000'>标准方法的Service文件导出:</font></a><br/>";
+             self::$showReport .= "<font color='#237319'>标准方法的Service文件导出↓</font></a><br/>";
              self::$showReport .= '<div id="Content_21" style="display:none;">';
              break;
         }
@@ -92,7 +92,7 @@ class AutoCodeService extends AutoCode
         /**
          * 需要在管理类Manager_Service.php里添加的代码
          */
-        self::$showReport .= "<font color='#FF0000'>[需要在管理类Manager_Service里添加没有的代码]</font><br />";
+        self::$showReport .= "<font color='#237319'>[需要在管理类Manager_Service里添加没有的代码]</font><br />";
 
         // 创建前台管理服务类
         $result = self::createManageService($table_names);
@@ -111,7 +111,8 @@ class AutoCodeService extends AutoCode
                     "{\r\n".$section_define."\r\n".$section_content."}\r\n";
         self::saveDefineToDir(self::$service_dir_full, "Manager_Service.php", $e_result);
         $link_service_manage_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full) . "Manager_Service.php";
-        self::$showReport .=  "新生成的Manager_Service文件路径:<font color='#0000FF'style='word-break: break-all;'><a target='_blank' href='$link_service_manage_dir_href'>" . self::$service_dir_full . "Manager_Service.php</a></font><br />";
+        self::$showReport .=  "新生成的Manager_Service文件路径:<br />" . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
+                              "<font color='#0000FF'style='word-break: break-all;'><a target='_blank' href='$link_service_manage_dir_href'>" . self::$service_dir_full . "Manager_Service.php</a></font><br />";
     }
 
     /**
@@ -550,7 +551,7 @@ class AutoCodeService extends AutoCode
         if ($isNeedCreate){
             self::$showReport .= "<br />";
             self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_23");
-            self::$showReport .= "<font color='#FF0000'>生成关系列Ajax请求php文件:</font></a>";
+            self::$showReport .= "<font color='#237319'>生成关系列Ajax请求php文件↓</font></a>";
             self::$showReport .= '<div id="Content_23" style="display:none;">';
             $link_view_ext_dir_href = "file:///".str_replace("\\", "/", self::$ajax_dir_full);
             self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_ext_dir_href."'>".self::$ajax_dir_full."</a></font><br/><br/>";

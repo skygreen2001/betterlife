@@ -66,10 +66,10 @@ HTMLCONTENT;
     {
         $htmlContent = '<div id="hidden_div" style="display:block;">
                           <a href="javascript:" onclick="(document.getElementById(\'Content_1\').style.display=(document.getElementById(\'Content_1\').style.display==\'none\')?\'\':\'none\');">';
-        $htmlContent.= "    <font color='#00FF00'>&nbsp;&nbsp;/".str_repeat("*",40)."生成实体数据对象类:start".str_repeat("*",40)."</font>
+        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 40)."生成实体数据对象类:start".str_repeat("-", 40)."]</font>
                           </a>";
         $htmlContent.= '  <div id="Content_1" style="display:block;">';
-        $htmlContent.= '    <a href="javascript:" onclick="(document.getElementById(\'Content_11\').style.display=(document.getElementById(\'Content_11\').style.display==\'none\')?\'\':\'none\');"><font color="#FF0000">生成实体数据对象:</font></a>';
+        $htmlContent.= '    <a href="javascript:" onclick="(document.getElementById(\'Content_11\').style.display=(document.getElementById(\'Content_11\').style.display==\'none\')?\'\':\'none\');"><font color="#237319">生成实体数据对象↓</font></a>';
         return $htmlContent;
     }
 
@@ -80,7 +80,7 @@ HTMLCONTENT;
     {
 
         $htmlContent = '    <a class="after_link" href="javascript:" onClick="document.getElementById(\'Content_1\').style.display=(document.getElementById(\'Content_1\').style.display==\'none\')?\'\':\'none\';">';
-        $htmlContent.= "      <font color='#0000FF'>/".str_repeat("*",40)."生成实体数据对象类:&nbsp;end".str_repeat("*",40)."</font>
+        $htmlContent.= "      <font color='#7b7b7b'>[".str_repeat("-", 40)."生成实体数据对象类:&nbsp;end".str_repeat("-", 40)."]</font>
                             </a>";
         $htmlContent.= "  </div><br/>";
         return $htmlContent;
@@ -92,7 +92,7 @@ HTMLCONTENT;
     public static function foldbeforeservice()
     {
         $htmlContent = '  <a href="javascript:" onClick="(document.getElementById(\'Content_2\').style.display=(document.getElementById(\'Content_2\').style.display==\'none\')?\'\':\'none\')">';
-        $htmlContent.= "    <font color='#00FF00'>&nbsp;&nbsp;/".str_repeat("*",35)."生成提供服务类[前端Service类]:start".str_repeat("*",34)."</font>
+        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 35)."生成提供服务类[前端Service类]:start".str_repeat("-", 34)."]</font>
                           </a>";
         $htmlContent.= '  <div id="Content_2" style="display:block;">';
         return $htmlContent;
@@ -104,7 +104,7 @@ HTMLCONTENT;
     public static function foldafterservice()
     {
         $htmlContent = '  <a class="after_link" href="javascript:" onClick="document.getElementById(\'Content_2\').style.display=(document.getElementById(\'Content_2\').style.display==\'none\')?\'\':\'none\'">';
-        $htmlContent.= "    <font color='#0000FF'>/".str_repeat("*",35)."生成提供服务类[前端Service类]:&nbsp;end".str_repeat("*",34)."</font>
+        $htmlContent.= "    <font color='#7b7b7b'>[".str_repeat("-", 35)."生成提供服务类[前端Service类]:&nbsp;end".str_repeat("-", 34)."]</font>
                           </a>";
         $htmlContent.= "  </div><br/>";
         return $htmlContent;
@@ -116,7 +116,7 @@ HTMLCONTENT;
     public static function foldbeforeaction()
     {
         $htmlContent = '  <a href="javascript:" onClick="(document.getElementById(\'Content_3\').style.display=(document.getElementById(\'Content_3\').style.display==\'none\')?\'\':\'none\')">';
-        $htmlContent.= "    <font color='#00FF00'>&nbsp;&nbsp;/".str_repeat("*",30)."生成Action类[增删改查模板、前端和后端]:start".str_repeat("*",30)."</font>
+        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后端]:start".str_repeat("-", 30)."]</font>
                           </a>";
         $htmlContent.= '  <div id="Content_3" style="display:block;">';
         return $htmlContent;
@@ -128,7 +128,7 @@ HTMLCONTENT;
      */
     public static function foldbeforeaction0()
     {
-        $htmlContent = '    <a href="javascript:" onClick="(document.getElementById(\'Content_31\').style.display=(document.getElementById(\'Content_31\').style.display==\'none\')?\'\':\'none\');"><font color="#FF0000">生成前端Action，继承基本Action:</font></a>';
+        $htmlContent = '    <a href="javascript:" onClick="(document.getElementById(\'Content_31\').style.display=(document.getElementById(\'Content_31\').style.display==\'none\')?\'\':\'none\');"><font color="#237319">生成前端Action，继承基本Action↓</font></a>';
         $htmlContent.= '    <div id="Content_31" style="display:none;">';
         return $htmlContent;
     }
@@ -138,7 +138,7 @@ HTMLCONTENT;
      */
     public static function foldbeforeaction1()
     {
-        $htmlContent = '    <a href="javascript:" onClick="(document.getElementById(\'Content_32\').style.display=(document.getElementById(\'Content_32\').style.display==\'none\')?\'\':\'none\');"><font color="#FF0000">生成标准的增删改查模板Action，继承基本Action:</font></a>';
+        $htmlContent = '    <a href="javascript:" onClick="(document.getElementById(\'Content_32\').style.display=(document.getElementById(\'Content_32\').style.display==\'none\')?\'\':\'none\');"><font color="#237319">生成标准的增删改查模板Action，继承基本Action↓</font></a>';
         $htmlContent.= '    <div id="Content_32" style="display:none;">';
         return $htmlContent;
     }
@@ -149,7 +149,7 @@ HTMLCONTENT;
     public static function foldafteraction()
     {
         $htmlContent = '    <a class="after_link" href="javascript:" onClick="document.getElementById(\'Content_3\').style.display=(document.getElementById(\'Content_3\').style.display==\'none\')?\'\':\'none\'">';
-        $htmlContent.= "     <font color='#0000FF'>/".str_repeat("*",30)."生成Action类[增删改查模板、前端和后端]:&nbsp;end".str_repeat("*",30)."</font>
+        $htmlContent.= "     <font color='#7b7b7b'>[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后端]:&nbsp;end".str_repeat("-", 30)."]</font>
                             </a>";
         $htmlContent.= "  </div><br/>";
         return $htmlContent;
@@ -161,7 +161,7 @@ HTMLCONTENT;
     public static function foldbeforeviewdefault()
     {
         $htmlContent = '  <a href="javascript:" onClick="(document.getElementById(\'Content_4\').style.display=(document.getElementById(\'Content_4\').style.display==\'none\')?\'\':\'none\')">';
-        $htmlContent.= "    <font color='#00FF00'>&nbsp;&nbsp;/".str_repeat("*",35)."生成增删改查模板、前端表示层:start".str_repeat("*",35)."</font>
+        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 35)."生成增删改查模板、前端表示层:start".str_repeat("-", 35)."]</font>
                           </a>";
         $htmlContent.= '  <div id="Content_4" style="display:block;">';
         return $htmlContent;
@@ -173,7 +173,7 @@ HTMLCONTENT;
     public static function foldafterviewdefault()
     {
         $htmlContent = '    <a class="after_link" href="javascript:" onClick="document.getElementById(\'Content_4\').style.display=(document.getElementById(\'Content_4\').style.display==\'none\')?\'\':\'none\'">';
-        $htmlContent.= "      <font color='#0000FF'>/".str_repeat("*",35)."生成增删改查模板、前端表示层:&nbsp;end".str_repeat("*",35)."</font>
+        $htmlContent.= "      <font color='#7b7b7b'>[".str_repeat("-", 35)."生成增删改查模板、前端表示层:&nbsp;end".str_repeat("-", 35)."]</font>
                             </a>";
         $htmlContent.= "  </div><br/>";
         return $htmlContent;

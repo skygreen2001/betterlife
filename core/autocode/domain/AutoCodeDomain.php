@@ -60,7 +60,7 @@ class AutoCodeDomain extends AutoCode
         }
         self::$showReport.= "</div><br/>";
         self::$showReport.=AutoCodeFoldHelper::foldEffectCommon("Content_12");
-        self::$showReport.= "<font color='#FF0000'>生成枚举类型:</font><br/>";
+        self::$showReport.= '<font color="#237319">生成枚举类型↓</font><br/>';
         self::$showReport.= '</a>';
         self::$showReport.= '<div id="Content_12" style="display:none;">';
         self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_domain_dir_href.self::$enum_dir."'>".self::$domain_dir_full.self::$enum_dir."</a></font><br/><br/>";

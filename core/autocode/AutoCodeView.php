@@ -1,4 +1,27 @@
 <?php
+
+/**
+ +---------------------------------------<br/>
+ * 枚举类型：表示层生成类型定义
+ +---------------------------------------<br/>
+ * @category betterlife
+ * @package core.config
+ * @author skygreen
+ */
+class EnumAutoCodeViewType extends Enum {
+    /**
+     * 前台
+     */
+    const FRONT = 0;
+    /**
+     * 通用模版
+     */
+    const MODEL = 1;
+    /**
+     * 后台
+     */
+    const ADMIN = 1;
+}
 /**
  +---------------------------------<br/>
  * 工具类:自动生成代码-前端默认的表示层
@@ -13,6 +36,7 @@ class AutoCodeView extends AutoCode
      * 表示层生成定义的方式<br/>
      * 0.生成前台所需的表示层页面。<br/>
      * 1.生成标准的增删改查模板所需的表示层页面。<br/>
+     * 2.生成后台所需的表示层页面。<br/>
      */
     public static $type;
     /**
@@ -33,16 +57,19 @@ class AutoCodeView extends AutoCode
     public static function pathset()
     {
         switch (self::$type) {
-           case 0:
-             self::$app_dir=Gc::$appName;
-             if (empty(self::$appName)){
-                self::$appName=Gc::$appName;
-             }
-             break;
-           case 1:
-             self::$app_dir="model";
-             self::$appName="model";
-             break;
+            case EnumAutoCodeViewType::FRONT:
+                self::$app_dir=Gc::$appName;
+                if (empty(self::$appName)) self::$appName=Gc::$appName;
+                break;
+            case EnumAutoCodeViewType::MODEL:
+                self::$app_dir="model";
+                self::$appName="model";
+                break;
+            case EnumAutoCodeViewType::ADMIN:
+                self::$app_dir="admin";
+                self::$appName="admin";
+                break;
+
         }
         self::$view_dir_full=self::$save_dir.self::$app_dir.DS.Config_F::VIEW_VIEW.DS.Gc::$self_theme_dir.DS.Config_F::VIEW_CORE.DS;
     }
@@ -60,9 +87,9 @@ class AutoCodeView extends AutoCode
         self::init();
         if (self::$isOutputCss)self::$showReport.= UtilCss::form_css()."\r\n";
         switch (self::$type) {
-           case 0:
+            case EnumAutoCodeViewType::FRONT:
                 self::$showReport.=AutoCodeFoldHelper::foldEffectCommon("Content_41");
-                self::$showReport.= "<font color='#FF0000'>生成前台所需的表示层页面:</font></a>";
+                self::$showReport.= '<font color="#237319">生成前台所需的表示层页面↓</font></a>';
                 self::$showReport.= '<div id="Content_41" style="display:none;">';
 
                 $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
@@ -71,10 +98,10 @@ class AutoCodeView extends AutoCode
                 AutoCodeViewModel::createModelIndexFile($table_names);
                 self::createFrontModelPages($table_names);
                 self::$showReport.= "</div><br>";
-             break;
-           case 1:
-                self::$showReport.=AutoCodeFoldHelper::foldEffectCommon("Content_42");
-                self::$showReport.= "<font color='#FF0000'>生成标准的增删改查模板表示层页面:</font></a>";
+                break;
+            case EnumAutoCodeViewType::MODEL:
+                self::$showReport.= AutoCodeFoldHelper::foldEffectCommon("Content_42");
+                self::$showReport.= '<font color="#237319">生成标准的增删改查模板表示层页面↓</font></a>';
                 self::$showReport.= '<div id="Content_42" style="display:none;">';
 
                 $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
@@ -97,7 +124,9 @@ class AutoCodeView extends AutoCode
                     self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
                 }
                 self::$showReport.= "</div><br>";
-             break;
+                break;
+            case EnumAutoCodeViewType::ADMIN:
+                break;
         }
     }
 
@@ -108,8 +137,9 @@ class AutoCodeView extends AutoCode
     public static function UserInput($default_value="", $title="", $inputArr=null, $more_content="")
     {
         $inputArr=array(
-            "0"=>"生成前台所需的表示层页面",
-            "1"=>"生成标准的增删改查模板所需的表示层页面"
+            EnumAutoCodeViewType::FRONT => "生成前台所需的表示层页面",
+            EnumAutoCodeViewType::MODEL => "生成标准的增删改查模板所需的表示层页面",
+            EnumAutoCodeViewType::ADMIN => "生成后台所需的表示层页面"
         );
         return parent::UserInput("一键生成表示层页面",$inputArr,$default_value);
     }
@@ -139,9 +169,9 @@ class AutoCodeView extends AutoCode
 
         $fieldInfos=self::fieldInfosByTable_names($table_names);
         foreach ($fieldInfos as $tablename=>$fieldInfo){
-            if(self::$type==0) {
+            if(self::$type==EnumAutoCodeViewType::FRONT) {
                 $classname=self::getClassname($tablename);
-                if ($classname=="Admin")continue;
+                if ($classname=="Admin") continue;
             }
             $table_comment=self::tableCommentKey($tablename);
             $appname=self::$appName;
@@ -178,10 +208,10 @@ class AutoCodeView extends AutoCode
         $classname=self::getClassname($tablename);
         $relative_path=str_replace(self::$save_dir, "", $dir.$filename);
         switch (self::$type) {
-            case 0:
+            case EnumAutoCodeViewType::FRONT:
                 AutoCodePreviewReport::$view_front_files[$classname.$filename]=$relative_path;
                 break;
-            case 1:
+            case EnumAutoCodeViewType::MODEL:
                 AutoCodePreviewReport::$view_model_files[$classname.$filename]=$relative_path;
                 break;
         }

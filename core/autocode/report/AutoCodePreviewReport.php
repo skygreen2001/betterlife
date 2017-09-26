@@ -17,28 +17,31 @@ class AutoCodePreviewReport extends AutoCode
     /**
      * 第一次运行
      */
-    public static $is_first_run=true;
-    public static $domain_files=array();
-    public static $enum_files=array();
-    public static $action_front_files=array();
-    public static $action_model_files=array();
-    public static $service_files=array();
-    public static $service_bg_files=array();
-    public static $view_front_files=array();
-    public static $view_model_files=array();
-    public static $bg_ajax_php_files=array();
-    public static $manage_service_file="";
-    public static $model_index_file="";
+    public static $is_first_run        = true;
+    public static $domain_files        = array();
+    public static $enum_files          = array();
+    public static $action_front_files  = array();
+    public static $action_model_files  = array();
+    public static $service_files       = array();
+    public static $service_bg_files    = array();
+    public static $view_front_files    = array();
+    public static $view_model_files    = array();
+    public static $view_admin_files    = array();
+    public static $bg_ajax_php_files   = array();
+    public static $manage_service_file = "";
+    public static $model_index_file    = "";
+
+    private static $url_base           = "";
 
     /**
      * 初始化
      */
     public static function init()
     {
-        self::$manage_service_file=Gc::$appName.DS.self::$dir_src.DS.AutoCodeService::$service_dir.DS."Manager_Service.php";
-        $category_cap=Gc::$appName;
-        $category_cap{0}=ucfirst($category_cap{0});
-        self::$model_index_file=self::$m_model.DS.Config_F::VIEW_VIEW.DS.Gc::$self_theme_dir.DS.Config_F::VIEW_CORE.DS."index".DS."index".Config_F::SUFFIX_FILE_TPL;
+        self::$manage_service_file = Gc::$appName.DS.self::$dir_src.DS.AutoCodeService::$service_dir.DS."Manager_Service.php";
+        $category_cap              = Gc::$appName;
+        $category_cap{0}           = ucfirst($category_cap{0});
+        self::$model_index_file    = self::$m_model.DS.Config_F::VIEW_VIEW.DS.Gc::$self_theme_dir.DS.Config_F::VIEW_CORE.DS."index".DS."index".Config_F::SUFFIX_FILE_TPL;
     }
 
     /**
@@ -50,31 +53,141 @@ class AutoCodePreviewReport extends AutoCode
      */
     public static function showReport($table_names="")
     {
-        $file ="";
-        $origin_file="";
-        $url_base=Gc::$url_base;
+        $file        = "";
+        $origin_file = "";
+        $url_base    = Gc::$url_base;
 
         if (contain(strtolower(php_uname()),"darwin")){
-            $url_base=UtilNet::urlbase();
-            $file_sub_dir=str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
-            if (contain($file_sub_dir,"tools".DS))
-                $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
-            $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
-            if(!endwith($url_base,$domainSubDir))$url_base.=$domainSubDir;
+            $url_base     = UtilNet::urlbase();
+            $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
+            if ( contain($file_sub_dir,"tools".DS) )
+                $file_sub_dir = substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
+            $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
+            if ( !endwith($url_base,$domainSubDir) ) $url_base .= $domainSubDir;
         }
+        self::$url_base = $url_base;
 
-        $dir_autocode=$url_base."tools/tools/autocode/";
-        $layer_autocode=$dir_autocode."layer";
-        $url_base=substr($url_base,0,strlen($url_base)-1);
-        $color_b = UtilCss::$color_b;
-        $module_model=<<<MODEL
-    <tr class="overwrite" style="background-color:$color_b;color:white;"><td><input type="checkbox" [checked] id="select[module_name]" name="select[module_name]"  onclick="toggleGroup(this, '[module_name]')" /></td><td colspan="2">[title]</td></tr>
-MODEL;
-
-        $title_model=<<<MODEL
+        $dir_autocode   = $url_base . "tools/tools/autocode/";
+        $layer_autocode = $dir_autocode . "layer";
+        $title_model = <<<MODEL
     <tr class="overwrite"><td colspan="3">[title]</td></tr>
 MODEL;
-        $model=<<<MODEL
+        $color_b        = UtilCss::$color_b;
+        $module_model   = <<<MODEL
+    <tr class="overwrite" style="background-color:$color_b;color:white;"><td><input type="checkbox" [checked] id="select[module_name]" name="select[module_name]"  onclick="toggleGroup(this, '[module_name]')" /></td><td colspan="2">[title]</td></tr>
+MODEL;
+        $title       = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>数据模型<Domain|Model></a>";
+        $moreContent = str_replace("[title]", $title, $module_model);
+        if( self::$is_first_run ){
+            $moreContent = str_replace("[checked]", "checked", $moreContent);
+        } else {
+            $moreContent = str_replace("[checked]", "", $moreContent);
+        }
+        $moreContent  = str_replace("[module_name]", "domain", $moreContent);
+
+        $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank'>实体数据对象类</a>";
+        $moreContent .= str_replace("[title]", $title, $title_model);
+        //[前台]生成实体数据对象
+        $moreContent .= self::groupFileContentsStatus( self::$domain_files, "domain", true );
+
+        //[前台]生成枚举类型
+        if ( self::$enum_files&&(count(self::$enum_files)>0) ) {
+            $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>枚举类型类</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+        }
+        $moreContent     .= self::groupFileContentsStatus( self::$enum_files, "domain", true );
+
+        if( Config_AutoCode::ONLY_DOMAIN ){
+            $showResult = self::modelShowDetailReport( $table_names, $moreContent );
+            return $showResult;
+        }
+
+        //[后台]生成Ajax请求php文件:
+        if( self::$bg_ajax_php_files && (count(self::$bg_ajax_php_files)>0) ){
+            $title        = "<a href='$layer_autocode/view/db_view_ext.php' target='_blank'>Ajax请求php文件</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+        }
+        $moreContent     .= self::groupFileContentsStatus( self::$bg_ajax_php_files, "bg", true );
+
+        if (Config_AutoCode::SHOW_REPORT_FRONT)
+        {
+            $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[前台]</a>";
+            $moreContent .= str_replace("[title]", $title, $module_model);
+            $moreContent  = str_replace("[module_name]", "front", $moreContent);
+            $moreContent  = str_replace("[checked]", "", $moreContent);
+
+            //生成标准方法的Service文件
+            if( self::$service_files && (count(self::$service_files)>0) ) {
+                $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent     .= self::groupFileContentsStatus( self::$service_files, "front" );
+
+            //生成前台管理服务类
+            $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+            $manage_file      = self::$manage_service_file;
+            $arr_manage_files = array($service_manage_file);
+            $moreContent     .= self::groupFileContentsStatus( $arr_service_manage_files, "front" );
+
+            // 生成前端Action，继承基本Action
+            if ( self::$action_front_files&&(count(self::$action_front_files)>0) ) {
+                $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>控制器</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$action_front_files, "front" );
+
+            // 生成前台所需的表示层页面
+            if( self::$view_front_files && (count(self::$view_front_files)>0) ) {
+                $title        = "<a href='$layer_autocode/view/db_view_default.php' target='_blank'>表示层页面</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$view_front_files, "front" );
+        }
+
+        $model_module = Gc::$nav_root_path . Gc::$module_root . DS . self::$m_model . DS;
+        if(is_dir($model_module)){
+            $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[通用模板]</a>";
+            $moreContent .= str_replace("[title]", $title, $module_model);
+            $moreContent  = str_replace("[module_name]", "model", $moreContent);
+            $moreContent  = str_replace("[checked]", "", $moreContent);
+
+            // 生成标准的增删改查模板Action，继承基本Action
+            if ( self::$action_model_files&&(count(self::$action_model_files)>0) ) {
+                $title        = "<a href='$layer_autocode/db_action.php?type=1' target='_blank'>控制器</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+
+            // 生成控制器Index和模板父类:Action_Index
+            $action_model_index = "model" . DS . "action" . DS . "Action_Index.php";
+            $arr_action_models  = array($action_model_index);
+            $moreContent .= self::groupFileContentsStatus( $arr_action_models, "model" );
+            $moreContent .= self::groupFileContentsStatus( self::$action_model_files, "model" );
+
+            //生成首页
+            $title        = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>模板首页</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+            $file         = self::$model_index_file;
+            $tpl_model_index = self::$model_index_file;
+            $arr_tpl_models  = array($tpl_model_index);
+            $moreContent    .= self::groupFileContentsStatus( $arr_tpl_models, "model" );
+
+            // 生成标准的增删改查模板表示层页面
+            if( self::$view_model_files && ( count(self::$view_model_files) > 0 ) ){
+                $title        = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>表示层页面</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$view_model_files, "model" );
+        }
+
+        $showResult = self::modelShowDetailReport( $table_names, $moreContent );
+        return $showResult;
+    }
+
+    private static function model(){
+        $url_base = self::$url_base;
+        $url_base = substr($url_base, 0, strlen($url_base)-1);
+        $model = <<<MODEL
     <tr class="overwrite">
         <td class="confirm">[status]<input type="checkbox" [checked] name="overwrite[module_name][]" value="[relative_file]" /></td>
         <td class="file" style="max-width: 720px;word-wrap: break-word;">
@@ -83,320 +196,45 @@ MODEL;
         <td><a href="$url_base/tools/file/viewfilebyline.php?f=[file]" target='_blank'>查看</a>|<a href="$url_base/tools/file/editfile.php?f=[file]" target='_blank'>编辑</a>|<a href="$url_base/tools/file/diff.php?old_file=[origin_file]&new_file=[file]" target="_blank">比较差异</a></td>
     </tr>
 MODEL;
-        $status=array("<font color='#cc5854'>[会覆盖]</font>","<font color='#77cc6d'>[新生成]</font>","[未修改]");
-
-        $title="<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>数据模型<Domain|Model></a>";
-        $moreContent=str_replace("[title]",$title,$module_model);
-        if(self::$is_first_run){
-            $moreContent=str_replace("[checked]","checked", $moreContent);
-        }else{
-            $moreContent=str_replace("[checked]","", $moreContent);
-        }
-        $moreContent=str_replace("[module_name]","domain",$moreContent);
-
-        $title="<a href='$layer_autocode/domain/db_domain.php' target='_blank'>实体数据对象类</a>";
-        $moreContent.=str_replace("[title]",$title,$title_model);
-        //[前台]生成实体数据对象
-        foreach (self::$domain_files as $file) {
-            $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-            $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-            $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-            $file_content=str_replace("[relative_file]",$file, $file_content);
-            if(file_exists($origin_file)){
-                $file_content_old=file_get_contents($origin_file);
-                $file_content_new=file_get_contents(self::$save_dir.$file);
-                if($file_content_old==$file_content_new){
-                    $file_content=str_replace("[status]",$status[2], $file_content);
-                }else{
-                    $file_content=str_replace("[status]",$status[0], $file_content);
+        return $model;
+    }
+    /**
+     * 一组同类型文件状态报告编写
+     */
+    private static function groupFileContentsStatus( $files, $replace_module_name, $only_once = true ) {
+        $result = "";
+        $status = array("<font color='#cc5854'>[会覆盖]</font>","<font color='#77cc6d'>[新生成]</font>","[未修改]");
+        $model  = self::model();
+        foreach ( $files as $file ) {
+            $file_content = str_replace("[file]", self::$save_dir . $file, $model);
+            $origin_file  = Gc::$nav_root_path . Gc::$module_root . DS . $file;
+            $file_content = str_replace("[origin_file]", $origin_file, $file_content);
+            $file_content = str_replace("[relative_file]", $file, $file_content);
+            if ( file_exists($origin_file) ) {
+                $file_content_old = file_get_contents( $origin_file );
+                $file_content_new = file_get_contents( self::$save_dir . $file );
+                if ( $file_content_old == $file_content_new ) {
+                    $file_content = str_replace("[status]", $status[2], $file_content);
+                } else {
+                    $file_content = str_replace("[status]", $status[0], $file_content);
                 }
-            }else{
-                $file_content=str_replace("[status]",$status[1], $file_content);
+            } else {
+                $file_content = str_replace("[status]", $status[1], $file_content);
             }
-            if(self::$is_first_run){
-                $file_content=str_replace("[checked]","checked", $file_content);
-            }else{
-                $file_content=str_replace("[checked]","", $file_content);
-            }
-            $file_content=str_replace("[module_name]","domain",$file_content);
-            $moreContent.=$file_content;
-        }
-        //[前台]生成枚举类型
-        if(self::$enum_files&&(count(self::$enum_files)>0)){
-            $title="<a href='$layer_autocode/db_domain.php' target='_blank'>枚举类型类</a>";
-            $moreContent.=str_replace("[title]",$title,$title_model);
-        }
-        foreach (self::$enum_files as $file) {
-            $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-            $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-            $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-            $file_content=str_replace("[relative_file]",$file, $file_content);
-            if(file_exists($origin_file)){
-                $file_content_old=file_get_contents($origin_file);
-                $file_content_new=file_get_contents(self::$save_dir.$file);
-                if($file_content_old==$file_content_new){
-                    $file_content=str_replace("[status]",$status[2], $file_content);
-                }else{
-                    $file_content=str_replace("[status]",$status[0], $file_content);
+
+            if ( $only_once ) {
+                if ( self::$is_first_run ) {
+                    $file_content = str_replace("[checked]", "checked", $file_content);
+                } else {
+                    $file_content = str_replace("[checked]", "", $file_content);
                 }
-            }else{
-                $file_content=str_replace("[status]",$status[1], $file_content);
+            } else {
+                $file_content = str_replace("[checked]", "", $file_content);
             }
-            if(self::$is_first_run){
-                $file_content=str_replace("[checked]","checked", $file_content);
-            }else{
-                $file_content=str_replace("[checked]","", $file_content);
-            }
-            $file_content=str_replace("[module_name]","domain",$file_content);
-            $moreContent.=$file_content;
+            $file_content = str_replace("[module_name]", "model", $file_content);
+            $result      .= $file_content;
         }
-
-        if(Config_AutoCode::ONLY_DOMAIN){
-            $showResult=self::modelShowDetailReport($table_names,$moreContent);
-            return $showResult;
-        }
-
-        //[后台]生成Ajax请求php文件:
-        if(self::$bg_ajax_php_files&&(count(self::$bg_ajax_php_files)>0)){
-            $title="<a href='$layer_autocode/view/db_view_ext.php' target='_blank'>Ajax请求php文件</a>";
-            $moreContent.=str_replace("[title]",$title,$title_model);
-        }
-        foreach (self::$bg_ajax_php_files as $file) {
-            $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-            $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-            $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-            $file_content=str_replace("[relative_file]",$file, $file_content);
-            if(file_exists($origin_file)){
-                $file_content_old=file_get_contents($origin_file);
-                $file_content_new=file_get_contents(self::$save_dir.$file);
-                if($file_content_old==$file_content_new){
-                    $file_content=str_replace("[status]",$status[2], $file_content);
-                }else{
-                    $file_content=str_replace("[status]",$status[0], $file_content);
-                }
-            }else{
-                $file_content=str_replace("[status]",$status[1], $file_content);
-            }
-
-            if(self::$is_first_run){
-                $file_content=str_replace("[checked]","checked", $file_content);
-            }else{
-                $file_content=str_replace("[checked]","", $file_content);
-            }
-            $file_content=str_replace("[module_name]","bg",$file_content);
-            $moreContent.=$file_content;
-        }
-
-        if (Config_AutoCode::SHOW_REPORT_FRONT)
-        {
-            $title="<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[前台]</a>";
-            $moreContent.=str_replace("[title]",$title,$module_model);
-            $moreContent=str_replace("[module_name]","front",$moreContent);
-            $moreContent=str_replace("[checked]","", $moreContent);
-
-            //生成标准方法的Service文件
-            if(self::$service_files&&(count(self::$service_files)>0)){
-                $title="<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
-                $moreContent.=str_replace("[title]",$title,$title_model);
-            }
-            foreach (self::$service_files as $file) {
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","front",$file_content);
-                $moreContent.=$file_content;
-            }
-
-            //生成前台管理服务类
-            $title="<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
-            $moreContent.=str_replace("[title]",$title,$title_model);
-            $file=self::$manage_service_file;
-            $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-            $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-            $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-            $file_content=str_replace("[relative_file]",$file, $file_content);
-            $file_content_old=file_get_contents($origin_file);
-            $file_content_new=file_get_contents(self::$save_dir.$file);
-            if($file_content_old==$file_content_new){
-                $file_content=str_replace("[status]",$status[2], $file_content);
-            }else{
-                $file_content=str_replace("[status]","<font color='#77cc6d'>[新增加]</font>", $file_content);
-            }
-            $file_content=str_replace("[checked]","", $file_content);
-            $file_content=str_replace("[module_name]","front",$file_content);
-            $moreContent.=$file_content;
-
-            // 生成前端Action，继承基本Action
-            if(self::$action_front_files&&(count(self::$action_front_files)>0)){
-                $title="<a href='$layer_autocode/db_action.php' target='_blank'>控制器</a>";
-                $moreContent.=str_replace("[title]",$title,$title_model);
-            }
-            foreach (self::$action_front_files as $file) {
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","front",$file_content);
-                $moreContent.=$file_content;
-            }
-
-            // 生成前台所需的表示层页面
-            if(self::$view_front_files&&(count(self::$view_front_files)>0)){
-                $title="<a href='$layer_autocode/view/db_view_default.php' target='_blank'>表示层页面</a>";
-                $moreContent.=str_replace("[title]",$title,$title_model);
-            }
-            foreach (self::$view_front_files as $file) {
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","front",$file_content);
-                $moreContent.=$file_content;
-            }
-        }
-        $model_module=Gc::$nav_root_path.Gc::$module_root.DS.self::$m_model.DS;
-        if(is_dir($model_module)){
-            $title="<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[通用模板]</a>";
-            $moreContent.=str_replace("[title]",$title,$module_model);
-            $moreContent=str_replace("[module_name]","model",$moreContent);
-            $moreContent=str_replace("[checked]","", $moreContent);
-
-            // 生成标准的增删改查模板Action，继承基本Action
-            if(self::$action_model_files&&(count(self::$action_model_files)>0)){
-                $title="<a href='$layer_autocode/db_action.php?type=1' target='_blank'>控制器</a>";
-                $moreContent.=str_replace("[title]",$title,$title_model);
-            }
-
-            // 生成控制器Index和模板父类:ActionModel
-            $arr_action_models=array("Action_Index");
-            foreach ($arr_action_models as $action_model) {
-                $file="model".DS."action".DS.$action_model.".php";
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","model",$file_content);
-                $moreContent.=$file_content;
-            }
-
-            foreach (self::$action_model_files as $file) {
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","model",$file_content);
-                $moreContent.=$file_content;
-            }
-
-            //生成首页
-            $title="<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>模板首页</a>";
-            $moreContent.=str_replace("[title]",$title,$title_model);
-            $file=self::$model_index_file;
-            $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-            $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-            $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-            $file_content=str_replace("[relative_file]",$file, $file_content);
-            $file_content_old=file_get_contents($origin_file);
-            $file_content_new=file_get_contents(self::$save_dir.$file);
-            if($file_content_old==$file_content_new){
-                $file_content=str_replace("[status]",$status[2], $file_content);
-            }else{
-                $file_content=str_replace("[status]","<font color='#77cc6d'>[新增加]</font>", $file_content);
-            }
-            $file_content=str_replace("[checked]","", $file_content);
-            $file_content=str_replace("[module_name]","model",$file_content);
-            $moreContent.=$file_content;
-
-            // 生成标准的增删改查模板表示层页面
-            if(self::$view_model_files&&(count(self::$view_model_files)>0)){
-                $title="<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>表示层页面</a>";
-                $moreContent.=str_replace("[title]",$title,$title_model);
-            }
-            foreach (self::$view_model_files as $file) {
-                $file_content=str_replace("[file]", self::$save_dir.$file, $model);
-                $origin_file= Gc::$nav_root_path.Gc::$module_root.DS.$file;
-                $file_content=str_replace("[origin_file]",$origin_file, $file_content);
-                $file_content=str_replace("[relative_file]",$file, $file_content);
-                if(file_exists($origin_file)){
-                    $file_content_old=file_get_contents($origin_file);
-                    $file_content_new=file_get_contents(self::$save_dir.$file);
-                    if($file_content_old==$file_content_new){
-                        $file_content=str_replace("[status]",$status[2], $file_content);
-                    }else{
-                        $file_content=str_replace("[status]",$status[0], $file_content);
-                    }
-                }else{
-                    $file_content=str_replace("[status]",$status[1], $file_content);
-                }
-                $file_content=str_replace("[checked]","", $file_content);
-                $file_content=str_replace("[module_name]","model",$file_content);
-                $moreContent.=$file_content;
-            }
-        }
-
-        $showResult=self::modelShowDetailReport($table_names,$moreContent);
-        return $showResult;
+        return $result;
     }
 
     /**
