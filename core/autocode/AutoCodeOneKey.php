@@ -49,11 +49,11 @@ class AutoCodeOneKey extends AutoCode
 
         //生成前端表示层
         self::$showReport.=AutoCodeFoldHelper::foldbeforeviewdefault();
-        AutoCodeViewDefault::$save_dir =self::$save_dir;
-        AutoCodeViewDefault::$type     =0;
-        AutoCodeViewDefault::AutoCode();
-        AutoCodeViewDefault::$type     =1;
-        AutoCodeViewDefault::AutoCode();
+        AutoCodeView::$save_dir =self::$save_dir;
+        AutoCodeView::$type     =0;
+        AutoCodeView::AutoCode();
+        AutoCodeView::$type     =1;
+        AutoCodeView::AutoCode();
         self::$showReport.=AutoCodeFoldHelper::foldafterviewdefault();
 
         if(Config_AutoCode::SHOW_PREVIEW_REPORT){

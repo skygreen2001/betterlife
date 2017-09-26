@@ -13,18 +13,18 @@ if (isset($_REQUEST["type"])&&!empty($_REQUEST["type"])){
 if (isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"]))
 {
     $save_dir=$_REQUEST["save_dir"];
-    AutoCodeViewDefault::$save_dir =$save_dir;
-    AutoCodeViewDefault::$type     =$type;
-    AutoCodeViewDefault::$showReport="";
-    AutoCodeViewDefault::$showReport.=AutoCodeFoldHelper::foldEffectReady();
-    AutoCodeViewDefault::$showReport.="<br/>";
-    AutoCodeViewDefault::$showReport.=AutoCodeFoldHelper::foldbeforeaction();
-    AutoCodeViewDefault::AutoCode();
-    AutoCodeViewDefault::$showReport.="<br/>";
-    AutoCodeViewDefault::$showReport.=AutoCodeFoldHelper::foldafteraction();
-    echo AutoCodeViewDefault::$showReport;
+    AutoCodeView::$save_dir =$save_dir;
+    AutoCodeView::$type     =$type;
+    AutoCodeView::$showReport="";
+    AutoCodeView::$showReport.=AutoCodeFoldHelper::foldEffectReady();
+    AutoCodeView::$showReport.="<br/>";
+    AutoCodeView::$showReport.=AutoCodeFoldHelper::foldbeforeaction();
+    AutoCodeView::AutoCode();
+    AutoCodeView::$showReport.="<br/>";
+    AutoCodeView::$showReport.=AutoCodeFoldHelper::foldafteraction();
+    echo AutoCodeView::$showReport;
 }  else {
-    AutoCodeViewDefault::UserInput($type);
+    AutoCodeView::UserInput($type);
 }
 
 ?>

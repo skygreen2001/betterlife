@@ -59,11 +59,11 @@ class AutoCodeModel extends AutoCode
         self::$showReport.=AutoCodeFoldHelper::foldafteraction();
         //生成前端表示层
         self::$showReport.=AutoCodeFoldHelper::foldbeforeviewdefault();
-        AutoCodeViewDefault::$save_dir =self::$save_dir;
-        AutoCodeViewDefault::$type     =0;
-        AutoCodeViewDefault::AutoCode($table_names);
-        AutoCodeViewDefault::$type     =1;
-        AutoCodeViewDefault::AutoCode($table_names);
+        AutoCodeView::$save_dir =self::$save_dir;
+        AutoCodeView::$type     =0;
+        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::$type     =1;
+        AutoCodeView::AutoCode($table_names);
         self::$showReport.=AutoCodeFoldHelper::foldafterviewdefault();
 
         //将新添加的内容放置在文件最后作为可覆盖的内容
