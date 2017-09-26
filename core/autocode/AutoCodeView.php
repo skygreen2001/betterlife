@@ -67,7 +67,7 @@ class AutoCodeView extends AutoCode
 
                 $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
                 self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_default_dir_href."'>".self::$view_dir_full."</a></font><br/><br/>";
-                AutoCodeViewModel::sync(self::$appName, self::$view_dir_full);
+
                 AutoCodeViewModel::createModelIndexFile($table_names);
                 self::createFrontModelPages($table_names);
                 self::$showReport.= "</div><br>";
@@ -80,9 +80,7 @@ class AutoCodeView extends AutoCode
                 $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
                 self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_default_dir_href."'>".self::$view_dir_full."</a></font><br/><br/>";
 
-                AutoCodeViewModel::sync(self::$appName, self::$view_dir_full);
                 AutoCodeViewModel::createModelIndexFile($table_names);
-
                 $fieldInfos=self::fieldInfosByTable_names($table_names);
                 foreach ($fieldInfos as $tablename=>$fieldInfo){
                     $tpl_listsContent=AutoCodeViewModel::tpl_lists($tablename,$fieldInfo);

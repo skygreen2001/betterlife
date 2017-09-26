@@ -1,32 +1,14 @@
 <?php
 /**
  +---------------------------------<br/>
- * 工具类:自动生成代码-前端默认的表示层
+ * 工具类:自动生成代码-通用模版的表示层
  +---------------------------------<br/>
  * @category betterlife
  * @package core.autocode.view
  * @author skygreen skygreen2001@gmail.com
  */
-class AutoCodeViewModel extends AutoCode
+class AutoCodeViewModel extends AutoCodeView
 {
-    /**
-     * View生成tpl所在的应用名称，默认同网站应用的名称
-     */
-    public static $appName;
-    /**
-     * 表示层完整的保存路径
-     */
-    public static $view_dir_full;
-
-    /**
-     * 初始化
-     */
-    public static function sync($appName, $view_dir_full)
-    {
-        self::$appName       = $appName;
-        self::$view_dir_full = $view_dir_full;
-    }
-
     /**
      * 生成标准的增删改查模板Action文件需生成首页访问所有生成的链接
      * @param array|string $table_names
@@ -56,7 +38,7 @@ class AutoCodeViewModel extends AutoCode
                      $result.
                      "    </table>\r\n".
                      "        \r\n";
-        $tpl_content = AutoCodeView::tableToViewTplDefine($tpl_content);
+        $tpl_content = self::tableToViewTplDefine($tpl_content);
         $filename    = "index".Config_F::SUFFIX_FILE_TPL;
         $dir         = self::$view_dir_full."index".DS;
         return self::saveDefineToDir($dir, $filename, $tpl_content);
@@ -167,9 +149,9 @@ class AutoCodeViewModel extends AutoCode
             $contents=substr($contents,0,strlen($contents)-2);
         }
         $realId=DataObjectSpec::getRealIDColumnName($classname);
-        include("template".DS."view".DS."default.php");
+        include("template" . DS . "default.php");
         $result = $list_template;
-        $result=AutoCodeView::tableToViewTplDefine($result);
+        $result=self::tableToViewTplDefine($result);
         return $result;
     }
 
@@ -257,12 +239,12 @@ UETC;
         if (!empty($edit_contents) && (strlen($edit_contents)>2)) {
             $edit_contents=substr($edit_contents,0,strlen($edit_contents)-2);
         }
-        include("template".DS."view".DS."default.php");
+        include("template" . DS . "default.php");
         $result = $edit_template;
         if (count($text_area_fieldname)>=1) {
             $result=$textareapreparesentence."\r\n".$result;
         }
-        $result=AutoCodeView::tableToViewTplDefine($result);
+        $result=self::tableToViewTplDefine($result);
         return $result;
     }
 
@@ -368,8 +350,9 @@ UETC;
             $view_contents=substr($view_contents,0,strlen($view_contents)-2);
         }
         $realId=DataObjectSpec::getRealIDColumnName($classname);
+        include("template" . DS . "default.php");
         $result = $view_template;
-        $result=AutoCodeView::tableToViewTplDefine($result);
+        $result=self::tableToViewTplDefine($result);
         return $result;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 $url_base = UtilNet::urlbase();
 $form_css = UtilCss::form_css();
 $default_dir=Gc::$nav_root_path."model".DS;

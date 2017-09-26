@@ -92,7 +92,7 @@ class AutoCodeModel extends AutoCode
                 $inputArr[$tablename]=$tablename;
             }
         }
-        include("template" . DS . "form" . DS . "model.php");
+        include("view" . DS . "form" . DS . "model.php");
         echo $userinput_model;
     }
 

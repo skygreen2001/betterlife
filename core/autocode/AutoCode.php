@@ -320,7 +320,7 @@ class AutoCode extends Object
     protected static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
     {
         ob_clean();
-        include("template" . DS . "form" . DS . "userinput.php");
+        include("view" . DS . "form" . DS . "userinput.php");
         echo $userinput_model;
     }
 
