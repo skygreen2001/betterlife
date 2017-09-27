@@ -27,6 +27,7 @@ class AutoCodePreviewReport extends AutoCode
     public static $view_front_files    = array();
     public static $view_model_files    = array();
     public static $view_admin_files    = array();
+    public static $js_admin_files      = array();
     public static $bg_ajax_php_files   = array();
     public static $manage_service_file = "";
     public static $model_index_file    = "";
@@ -143,6 +144,27 @@ MODEL;
                 $moreContent .= str_replace("[title]", $title, $title_model);
             }
             $moreContent .= self::groupFileContentsStatus( self::$view_front_files, "front" );
+        }
+
+        if (Config_AutoCode::SHOW_REPORT_ADMIN)
+        {
+            $title        = "<a href='$dir_autocode/db_admin.php' target='_blank' style='color:white;'>[后台]</a>";
+            $moreContent .= str_replace("[title]", $title, $module_model);
+            $moreContent  = str_replace("[module_name]", "admin", $moreContent);
+            $moreContent  = str_replace("[checked]", "", $moreContent);
+
+            // 生成后台管理表示层页面
+            if( self::$view_admin_files && ( count(self::$view_admin_files) > 0 ) ){
+                $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层页面</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$view_admin_files, "admin" );
+
+            if( self::$js_admin_files && ( count(self::$js_admin_files) > 0 ) ){
+                $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层Js文件</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$js_admin_files, "admin" );
         }
 
         $model_module = Gc::$nav_root_path . Gc::$module_root . DS . self::$m_model . DS;

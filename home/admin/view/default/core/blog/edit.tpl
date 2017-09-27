@@ -129,7 +129,7 @@
     {include file="$templateDir/layout/normal/footer.tpl"}
 
     <script src="{$template_url}js/normal/edit.js"></script>
-    <script src="{$template_url}js/betterlife/blog.js"></script>
+    <script src="{$template_url}js/core/blog.js"></script>
     {if ($online_editor == 'UEditor')}
         <script>pageInit_ue_blog_content();</script>
     {/if}

@@ -20,7 +20,7 @@ class EnumAutoCodeViewType extends Enum {
     /**
      * 后台
      */
-    const ADMIN = 1;
+    const ADMIN = 2;
 }
 /**
  +---------------------------------<br/>
@@ -58,20 +58,19 @@ class AutoCodeView extends AutoCode
     {
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
-                self::$app_dir=Gc::$appName;
-                if (empty(self::$appName)) self::$appName=Gc::$appName;
+                self::$app_dir = Gc::$appName;
+                if (empty(self::$appName)) self::$appName = Gc::$appName;
                 break;
             case EnumAutoCodeViewType::MODEL:
-                self::$app_dir="model";
-                self::$appName="model";
+                self::$app_dir = "model";
+                self::$appName = "model";
                 break;
             case EnumAutoCodeViewType::ADMIN:
-                self::$app_dir="admin";
-                self::$appName="admin";
+                self::$app_dir = "admin";
+                self::$appName = "admin";
                 break;
-
         }
-        self::$view_dir_full=self::$save_dir.self::$app_dir.DS.Config_F::VIEW_VIEW.DS.Gc::$self_theme_dir.DS.Config_F::VIEW_CORE.DS;
+        self::$view_dir_full = self::$save_dir . self::$app_dir . DS.Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . Config_F::VIEW_CORE.DS;
     }
 
     /**
@@ -83,49 +82,81 @@ class AutoCodeView extends AutoCode
      */
     public static function AutoCode($table_names="")
     {
-        self::pathset();
-        self::init();
-        if (self::$isOutputCss)self::$showReport.= UtilCss::form_css()."\r\n";
+        self::pathset( );
+        self::init( );
+        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . "\r\n";
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
-                self::$showReport.=AutoCodeFoldHelper::foldEffectCommon("Content_41");
-                self::$showReport.= '<font color="#237319">生成前台所需的表示层页面↓</font></a>';
-                self::$showReport.= '<div id="Content_41" style="display:none;">';
+                self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_41" );
+                self::$showReport .= '<font color="#237319">生成前台所需的表示层页面↓</font></a>';
+                self::$showReport .= '<div id="Content_41" style="display:none;">';
 
-                $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
-                self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_default_dir_href."'>".self::$view_dir_full."</a></font><br/><br/>";
+                $link_view_dir = "file:///".str_replace("\\", "/", self::$view_dir_full );
+                self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_view_dir."'>" . self::$view_dir_full . "</a></font><br/><br/>";
 
-                AutoCodeViewModel::createModelIndexFile($table_names);
-                self::createFrontModelPages($table_names);
-                self::$showReport.= "</div><br>";
+                AutoCodeViewModel::createModelIndexFile( $table_names );
+                self::createFrontModelPages( $table_names );
+                self::$showReport .= "</div><br>";
                 break;
             case EnumAutoCodeViewType::MODEL:
-                self::$showReport.= AutoCodeFoldHelper::foldEffectCommon("Content_42");
-                self::$showReport.= '<font color="#237319">生成标准的增删改查模板表示层页面↓</font></a>';
-                self::$showReport.= '<div id="Content_42" style="display:none;">';
+                self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_42" );
+                self::$showReport .= '<font color="#237319">生成标准的增删改查模板表示层页面↓</font></a>';
+                self::$showReport .= '<div id="Content_42" style="display:none;">';
 
-                $link_view_default_dir_href="file:///".str_replace("\\", "/", self::$view_dir_full);
-                self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_default_dir_href."'>".self::$view_dir_full."</a></font><br/><br/>";
+                $link_view_dir     = "file:///".str_replace("\\", "/", self::$view_dir_full );
+                self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_dir."'>".self::$view_dir_full."</a></font><br/><br/>";
 
-                AutoCodeViewModel::createModelIndexFile($table_names);
-                $fieldInfos=self::fieldInfosByTable_names($table_names);
-                foreach ($fieldInfos as $tablename=>$fieldInfo){
-                    $tpl_listsContent=AutoCodeViewModel::tpl_lists($tablename,$fieldInfo);
-                    $filename="lists".Config_F::SUFFIX_FILE_TPL;
-                    $tplName=self::saveTplDefineToDir($tablename,$tpl_listsContent,$filename);
+                AutoCodeViewModel::createModelIndexFile( $table_names );
+                $fieldInfos = self::fieldInfosByTable_names( $table_names );
+                foreach ($fieldInfos as $tablename => $fieldInfo) {
+                    $tpl_listsContent = AutoCodeViewModel::tpl_lists( $tablename, $fieldInfo );
+                    $filename         = "lists".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_listsContent, $filename );
                     self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
-                    $tpl_viewContent=AutoCodeViewModel::tpl_view($tablename,$fieldInfo);
-                    $filename="view".Config_F::SUFFIX_FILE_TPL;
-                    $tplName=self::saveTplDefineToDir($tablename,$tpl_viewContent,$filename);
+
+                    $tpl_viewContent  = AutoCodeViewModel::tpl_view( $tablename, $fieldInfo );
+                    $filename         = "view".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_viewContent, $filename );
                     self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
-                    $tpl_editContent=AutoCodeViewModel::tpl_edit($tablename,$fieldInfo);
-                    $filename="edit".Config_F::SUFFIX_FILE_TPL;
-                    $tplName=self::saveTplDefineToDir($tablename,$tpl_editContent,$filename);
+
+                    $tpl_editContent  = AutoCodeViewModel::tpl_edit( $tablename, $fieldInfo );
+                    $filename         = "edit".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_editContent, $filename );
                     self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
                 }
-                self::$showReport.= "</div><br>";
+                self::$showReport .= "</div><br>";
                 break;
             case EnumAutoCodeViewType::ADMIN:
+                self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_43" );
+                self::$showReport .= '<font color="#237319">生成后台所需的表示层页面↓</font></a>';
+                self::$showReport .= '<div id="Content_43" style="display:none;">';
+
+                $link_view_dir     = "file:///".str_replace("\\", "/", self::$view_dir_full );
+                self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_dir."'>".self::$view_dir_full."</a></font><br/><br/>";
+
+                $fieldInfos = self::fieldInfosByTable_names( $table_names );
+                foreach ($fieldInfos as $tablename => $fieldInfo) {
+                    $tpl_listsContent = AutoCodeViewAdmin::tpl_lists( $tablename, $fieldInfo );
+                    $filename         = "lists".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_listsContent, $filename );
+                    self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
+
+                    $tpl_viewContent  = AutoCodeViewAdmin::tpl_view( $tablename, $fieldInfo );
+                    $filename         = "view".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_viewContent, $filename );
+                    self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
+
+                    $tpl_editContent  = AutoCodeViewAdmin::tpl_edit( $tablename, $fieldInfo );
+                    $filename         = "edit".Config_F::SUFFIX_FILE_TPL;
+                    $tplName          = self::saveTplDefineToDir( $tablename, $tpl_editContent, $filename );
+                    self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
+
+                    $tpl_editContent  = AutoCodeViewAdmin::js_core( $tablename, $fieldInfo );
+                    $filename         = $tablename.Config_F::SUFFIX_FILE_JS;
+                    $jsName           = self::saveJsDefineToDir( $tablename, $tpl_editContent );
+                    self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
+                }
+                self::$showReport .= "</div><br>";
                 break;
         }
     }
@@ -139,9 +170,9 @@ class AutoCodeView extends AutoCode
         $inputArr=array(
             EnumAutoCodeViewType::FRONT => "生成前台所需的表示层页面",
             EnumAutoCodeViewType::MODEL => "生成标准的增删改查模板所需的表示层页面",
-            EnumAutoCodeViewType::ADMIN => "生成后台所需的表示层页面"
+            EnumAutoCodeViewType::ADMIN => "生成后台管理所需的表示层页面"
         );
-        return parent::UserInput("一键生成表示层页面",$inputArr,$default_value);
+        return parent::UserInput("一键生成表示层页面",$inputArr,$default_value );
     }
 
     /**
@@ -167,29 +198,31 @@ class AutoCodeView extends AutoCode
     private static function createFrontModelPages($table_names="")
     {
 
-        $fieldInfos=self::fieldInfosByTable_names($table_names);
+        $fieldInfos=self::fieldInfosByTable_names($table_names );
         foreach ($fieldInfos as $tablename=>$fieldInfo){
             if(self::$type==EnumAutoCodeViewType::FRONT) {
-                $classname=self::getClassname($tablename);
+                $classname=self::getClassname($tablename );
                 if ($classname=="Admin") continue;
             }
-            $table_comment=self::tableCommentKey($tablename);
+            $table_comment=self::tableCommentKey($tablename );
             $appname=self::$appName;
-            $instancename=self::getInstancename($tablename);
+            $instancename=self::getInstancename($tablename );
             $link="    <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.view\">查看</my:a>|<my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.edit\">修改</my:a>";
             $back_index="    <my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a></div>";
-            $tpl_content=self::tableToViewTplDefine("    <div><h1>".$table_comment."列表</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}");
+            $tpl_content=self::tableToViewTplDefine("    <div><h1>".$table_comment."列表</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
             $filename="lists".Config_F::SUFFIX_FILE_TPL;
-            $tplName=self::saveTplDefineToDir($tablename,$tpl_content,$filename);
+            $tplName=self::saveTplDefineToDir( $tablename, $tpl_content,$filename );
             self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
+
             $link="     <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.lists\">返回列表</my:a>";
-            $tpl_content=self::tableToViewTplDefine("    <div><h1>查看".$table_comment."</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}");
+            $tpl_content=self::tableToViewTplDefine("    <div><h1>查看".$table_comment."</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
             $filename="view".Config_F::SUFFIX_FILE_TPL;
-            $tplName=self::saveTplDefineToDir($tablename,$tpl_content,$filename);
+            $tplName=self::saveTplDefineToDir( $tablename, $tpl_content,$filename );
             self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
-            $tpl_content=self::tableToViewTplDefine("    <div><h1>编辑".$table_comment."</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}");
+
+            $tpl_content=self::tableToViewTplDefine("    <div><h1>编辑".$table_comment."</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
             $filename="edit".Config_F::SUFFIX_FILE_TPL;
-            $tplName=self::saveTplDefineToDir($tablename,$tpl_content,$filename);
+            $tplName=self::saveTplDefineToDir( $tablename, $tpl_content,$filename );
             self::$showReport.= "生成导出完成:$tablename=>$tplName!<br/>";
         }
     }
@@ -200,21 +233,40 @@ class AutoCodeView extends AutoCode
      * @param string $defineTplFileContent 生成的代码
      * @param string $filename 文件名称
      */
-    private static function saveTplDefineToDir($tablename,$defineTplFileContent,$filename)
+    private static function saveTplDefineToDir( $tablename,  $defineTplFileContent,  $filename)
     {
-        $package =self::getInstancename($tablename);
-        $dir=self::$view_dir_full.$package.DS;
-
-        $classname=self::getClassname($tablename);
-        $relative_path=str_replace(self::$save_dir, "", $dir.$filename);
+        $package       = self::getInstancename($tablename );
+        $dir           = self::$view_dir_full. $package. DS;
+        $classname     = self::getClassname($tablename );
+        $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
-                AutoCodePreviewReport::$view_front_files[$classname.$filename]=$relative_path;
+                AutoCodePreviewReport::$view_front_files[$classname . $filename] = $relative_path;
                 break;
             case EnumAutoCodeViewType::MODEL:
-                AutoCodePreviewReport::$view_model_files[$classname.$filename]=$relative_path;
+                AutoCodePreviewReport::$view_model_files[$classname . $filename] = $relative_path;
+                break;
+            case EnumAutoCodeViewType::ADMIN:
+                AutoCodePreviewReport::$view_admin_files[$classname . $filename] = $relative_path;
                 break;
         }
-        return self::saveDefineToDir($dir,$filename,$defineTplFileContent);
+        return self::saveDefineToDir($dir, $filename, $defineTplFileContent );
+    }
+
+
+    /**
+     * 保存生成的JS代码到指定命名规范的文件中
+     * @param string $tablename 表名称
+     * @param string $defineJsFileContent 生成的代码
+     * @param string $filename 文件名称
+     */
+    private static function saveJsDefineToDir( $tablename,  $defineJsFileContent )
+    {
+        $dir           = dirname(self::$view_dir_full) . DS . "js" . DS . "core" . DS;
+        $classname     = self::getClassname($tablename );
+        $filename      = self::getInstancename( $tablename ) . ".js";
+        $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
+        AutoCodePreviewReport::$js_admin_files[$classname . $filename] = $relative_path;
+        return self::saveDefineToDir($dir, $filename, $defineJsFileContent );
     }
 }

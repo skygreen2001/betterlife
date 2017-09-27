@@ -80,5 +80,5 @@
     </script>
     {/literal}
     <script src="{$template_url}js/normal/list.js"></script>
-    <script src="{$template_url}js/betterlife/blog.js"></script>
+    <script src="{$template_url}js/core/blog.js"></script>
 {/block}
