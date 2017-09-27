@@ -54,25 +54,21 @@
     </div>
 
     {include file="$templateDir/layout/normal/footer.tpl"}
-    <div id="image-model"></div>
-    <script id="imgModalTmpl" type="text/x-jsrender">
-    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">X</span></button>
-          </div>
-          <div class="modal-body">
-            <a id="imagePreview-link" href="#" target="_blank"><img src="" id="imagePreview" /></a>
+    <div id="image-model">
+      <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">X</span></button>
+            </div>
+            <div class="modal-body">
+              <a id="imagePreview-link" href="#" target="_blank"><img src="" id="imagePreview" /></a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </script>
     {literal}
-    <script id="imgTmpl" type="text/x-jsrender">
-    <a id="{{:img_id}}" href="#"><img src="{{:img_src}}" class="img-thumbnail" alt="{{:img_name}}" /></a>
-    </script>
     <script id="actionTmpl" type="text/x-jsrender">
     <a id="info-view{{:id}}" href="#" class="btn-view">查看</a>
     <a id="info-edit{{:id}}" href="#" class="btn-edit">修改</a>

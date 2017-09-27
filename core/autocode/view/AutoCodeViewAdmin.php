@@ -16,7 +16,98 @@ class AutoCodeViewAdmin extends AutoCodeView
      */
     public static function js_core($tablename,$fieldInfo)
     {
-        return "";
+        $appname   = self::$appName;
+        $classname = self::getClassname($tablename);
+        $realId    = DataObjectSpec::getRealIDColumnName($classname);
+
+        $column_contents  = "";
+        $imgColumnDefs    = "";
+        $bitColumnDefs    = "";
+        $statusColumnDefs = "";
+        $editImgColumn    = "";
+        $editDateColumn   = "";
+        $editBitColumn    = "";
+        $editMulSelColumn = "";
+        $editValidRules   = "";
+        $editValidMsg     = "";
+        $row_no           = 0;
+
+        foreach ($fieldInfo as $fieldname=>$field)
+        {
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+                $column_contents .= "                { data: \"$fieldname\" },\r\n";
+                // $show_columns[]   = $fieldname;
+                $field_comment    = $field["Comment"];
+                $isImage = self::columnIsImage($fieldname, $field_comment);
+                if ($isImage){
+                    $editImgColumn .= '        $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");';
+                    include("template" . DS . "admin.php");
+                    //todo: alt="' + row.$realId + '"
+                    $imgColumnDefs .= $js_sub_template_img;
+                }
+                // todo:
+                // $editValidRules
+                // blog_name:{
+                //     required:true
+                // },
+                // sequenceNo: {
+                //     required:true,
+                //     number:true,
+                // }
+                //
+                // $editValidMsg
+                // blog_name:"此项为必填项",
+                // sequenceNo:{
+                //     required:"此项为必填项",
+                //     number:"此项必须为数字"
+                // }
+                $datatype = self::comment_type($field["Type"]);
+                switch ($datatype) {
+                  case 'bit':
+                    include("template" . DS . "admin.php");
+                    $bitColumnDefs .= $js_sub_template_bit;
+                    $editBitColumn .= "        \$(\"input[name='isPublic']\").bootstrapSwitch();\r\n";
+                    $editBitColumn .= "        \$('input[name=\"isPublic\"]').on('switchChange.bootstrapSwitch', function(event, state) {\r\n";
+                    $editBitColumn .= "            console.log(state);\r\n";
+                    $editBitColumn .= "        });\r\n";
+                    break;
+                  case 'enum':
+                    $enum_columnDefine = self::enumDefines($field["Comment"]);
+                    if (isset($enum_columnDefine)&&(count($enum_columnDefine)>0))
+                    {
+                        $status_switch_show = "";
+                        $color_status = "status-fail";
+                        foreach ($enum_columnDefine as $enum_column) {
+                            $enum_val = $enum_column['value'];
+                            if ( $enum_val == '0' ) $color_status = "status-wait";
+                            if ( $enum_val == '1' ) $color_status = "status-pass";
+                            $enumcomment         = $enum_column['comment'];
+                            $status_switch_show .= "                      case '$enum_val':\r\n";
+                            $status_switch_show .= "                        return '<span class=\"$color_status\">$enumcomment</span>';\r\n";
+                            $status_switch_show .= "                        break;\r\n";
+                        }
+                        include("template" . DS . "admin.php");
+                        $statusColumnDefs .= $js_sub_template_status;
+                    }
+                    break;
+                  case 'date':
+                    $editDateColumn .= "        \$.edit.datetimePicker('#$fieldname');\r\n";
+                    break;
+                  // todo:
+                  // $editMultiselectColumn
+                  // $.edit.multiselect('#categoryIds');
+                  default:
+                    break;
+                }
+                $row_no ++;
+            }
+        }
+        $column_contents .= "                { data: \"$realId\" }";
+        include("template" . DS . "admin.php");
+        $idColumnDefs     = $js_sub_template_id;
+        include("template" . DS . "admin.php");
+        $result = $js_template;
+        return $result;
     }
 
     /**
@@ -26,107 +117,29 @@ class AutoCodeViewAdmin extends AutoCodeView
      */
     public static function tpl_lists($tablename,$fieldInfo)
     {
-        $table_comment=self::tableCommentKey($tablename);
-        $appname=self::$appName;
-        $classname=self::getClassname($tablename);
-        $instancename=self::getInstancename($tablename);
-        $fieldNameAndComments=array();
-        $enumColumns=array();
+        $appname       = self::$appName;
+        $table_comment = self::tableCommentKey($tablename);
+        $instancename  = self::getInstancename($tablename);
+        $classname     = self::getClassname($tablename);
+        $realId        = DataObjectSpec::getRealIDColumnName($classname);
+
+        $column_contents = "";
         foreach ($fieldInfo as $fieldname=>$field)
         {
-            $field_comment=$field["Comment"];
-            if (contain($field_comment,"\r")||contain($field_comment,"\n"))
-            {
-                $field_comment=preg_split("/[\s,]+/", $field_comment);
-                $field_comment=$field_comment[0];
-            }
-            $fieldNameAndComments[$fieldname]=$field_comment;
-            $datatype=self::comment_type($field["Type"]);
-            if ($datatype=='enum'){
-                $enumColumns[]=$fieldname;
-            }
-        }
-        $headers="";
-        $contents="";
-
-        foreach ($fieldNameAndComments as $key=>$value) {
-            if (self::isNotColumnKeywork($key)){
-                $isImage = self::columnIsImage($key,$value);
-                if ($isImage)continue;
-
-                $is_no_relation = true;
-                //关系列的显示
-                if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield)>0))
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+                $field_comment=$field["Comment"];
+                if (contain($field_comment,"\r")||contain($field_comment,"\n"))
                 {
-                    if (array_key_exists($classname, self::$relation_viewfield))
-                    {
-                        $relationSpecs = self::$relation_viewfield[$classname];
-                        if (array_key_exists($key, $relationSpecs))
-                        {
-                            $relationShow = $relationSpecs[$key];
-                            foreach ($relationShow as $key_r => $value_r) {
-                                $realId = DataObjectSpec::getRealIDColumnName($key_r);
-                                if (empty($realId)) $realId = $key;
-                                if ((!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r)) {
-                                    $show_fieldname=$value_r;
-                                    if ($realId!=$key){
-                                        if (contain($key,"_id")){
-                                            $key=str_replace("_id","",$key);
-                                        }
-                                        $show_fieldname.="_".$key;
-                                    }
-                                    if ($show_fieldname=="name"){
-                                        $show_fieldname= strtolower($key_r)."_".$value_r;
-                                    }
-                                    if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                        $field_comment=$value;
-                                        $field_comment=self::columnCommentKey($field_comment,$key);
-                                        $headers.="            <th class=\"header\">$field_comment</th>\r\n";
-                                        $contents.="            <td class=\"content\">{\${$instancename}.$show_fieldname}</td>\r\n";
-                                        $is_no_relation=false;
-                                    }
-                                }else{
-                                    if ($value_r=="name"){
-                                        $show_fieldname= strtolower($key_r)."_".$value_r;
-                                        if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                            $field_comment=$value;
-                                            $field_comment=self::columnCommentKey($field_comment,$key);
-                                            $headers.="            <th class=\"header\">$field_comment</th>\r\n";
-                                            $contents.="            <td class=\"content\">{\${$instancename}.$show_fieldname}</td>\r\n";
-                                            $is_no_relation=false;
-                                        }
-                                    }
-                                }
-
-                                $fieldInfo_relationshow=self::$fieldInfos[self::getTablename($key_r)];
-                                $key_r{0}=strtolower($key_r{0});
-                                if (array_key_exists("parent_id",$fieldInfo_relationshow)){
-                                    $headers.="            <th class=\"header\">{$field_comment}[全]</th>\r\n";
-                                    $contents.="            <td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td>\r\n";
-                                }
-                            }
-                        }
-                    }
+                    $field_comment=preg_split("/[\s,]+/", $field_comment);
+                    $field_comment=$field_comment[0];
                 }
-                if($is_no_relation){
-                    $headers.="            <th class=\"header\">$value</th>\r\n";
-                    if((count($enumColumns)>0) && (in_array($key, $enumColumns))) {
-                        $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
-                    }else{
-                        $contents .= "            <td class=\"content\">{\${$instancename}.$key}</td>\r\n";
-                    }
-                }
+                $column_contents .= "                                    <th>$field_comment</th>\r\n";
             }
         }
 
-        if (!empty($headers) && (strlen($headers)>2)) {
-            $headers=substr($headers,0,strlen($headers)-2);
-            $contents=substr($contents,0,strlen($contents)-2);
-        }
-        $realId=DataObjectSpec::getRealIDColumnName($classname);
-        include("template" . DS . "default.php");
+        include("template" . DS . "admin.php");
         $result = $list_template;
-        $result=self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine($result);
         return $result;
     }
 
@@ -137,56 +150,76 @@ class AutoCodeViewAdmin extends AutoCodeView
      */
     public static function tpl_edit($tablename,$fieldInfo)
     {
-        $table_comment=self::tableCommentKey($tablename);
-        $appname=self::$appName;
-        $classname=self::getClassname($tablename);
-        $instancename=self::getInstancename($tablename);
-        $fieldNameAndComments=array();
-        $text_area_fieldname=array();
-        $enumColumns=array();
-        foreach ($fieldInfo as $fieldname=>$field)
+        $appname       = self::$appName;
+        $table_comment = self::tableCommentKey($tablename);
+        $appname       = self::$appName;
+        $classname     = self::getClassname($tablename);
+        $instancename  = self::getInstancename($tablename);
+        $edit_contents = "";
+        $realId  = "id";
+        $hasImgFormFlag= "";
+
+        $text_area_fieldname  = array();
+        foreach ( $fieldInfo as $fieldname => $field )
         {
-            $field_comment=$field["Comment"];
-            if (contain($field_comment,"\r")||contain($field_comment,"\n"))
+            $field_comment = $field["Comment"];
+            if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
             {
-                $field_comment=preg_split("/[\s,]+/", $field_comment);
-                $field_comment=$field_comment[0];
+                $field_comment = preg_split("/[\s,]+/", $field_comment);
+                $field_comment = $field_comment[0];
             }
-            if (self::columnIsTextArea($fieldname,$field["Type"]))
+            if ( self::columnIsTextArea($fieldname,$field["Type"]) )
             {
                 $text_area_fieldname[$fieldname]=$field_comment;
-            }else{
-                $fieldNameAndComments[$fieldname]=$field_comment;
+                continue;
             }
-            $datatype=self::comment_type($field["Type"]);
-            if ($datatype=='enum'){
-                $enumColumns[]=$fieldname;
-            }
-        }
-        $edit_contents="";
-        $idColumnName="id";
-        $hasImgFormFlag="";
-        foreach ($fieldNameAndComments as $key=>$value) {
-            $idColumnName=DataObjectSpec::getRealIDColumnName($classname);
-            if (self::isNotColumnKeywork($key)){
-                $isImage =self::columnIsImage($key,$value);
-                if($idColumnName==$key){
-                    $edit_contents.="        {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\${$instancename}.$key}</td></tr>{/if}\r\n";
-                }else if ($isImage){
-                    $hasImgFormFlag=" enctype=\"multipart/form-data\"";
-                    $edit_contents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"file\" class=\"edit\" name=\"{$key}Upload\" accept=\"image/png,image/gif,image/jpg,image/jpeg\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
-                }else{
-                    $edit_contents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$key\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
+            $realId = DataObjectSpec::getRealIDColumnName( $classname );
+            if (  ($realId != $fieldname) && self::isNotColumnKeywork( $key, $field_comment ) ){
+                $isImage = self::columnIsImage( $key, $value );
+                if ( $isImage ) {
+                    $hasImgFormFlag = "enctype=\"multipart/form-data\"";
+                    $edit_contents .= '                      <div class="form-group">';
+                    $edit_contents .= '                          <label for="iconImage" class="col-sm-2 control-label">' . $field_comment .'</label>';
+                    $edit_contents .= '                          <div class="col-sm-9">';
+                    $edit_contents .= '                              <div class="input-group col-sm-9">';
+                    $edit_contents .= '                                  <input type="text" id="iconImageTxt" readonly="readonly" class="form-control" />';
+                    $edit_contents .= '                                  <span class="btn-file-browser btn-success input-group-addon" id="iconImageDiv">浏览 ...</span>';
+                    $edit_contents .= '                                  <input type="file" id="iconImage" name="icon_url" style="display:none;" accept="image/*" />';
+                    $edit_contents .= '                              </div>';
+                    $edit_contents .= '                          </div>';
+                    $edit_contents .= '                      </div>';
+                } else {
+                    $datatype = self::comment_type($field["Type"]);
+                    $edit_contents .= '                      <div class="form-group">';
+                    $edit_contents .= '                          <label for="' . $fieldname .'" class="col-sm-2 control-label">' . $field_comment .'</label>';
+                    $edit_contents .= '                          <div class="col-sm-9">';
+                    switch ($datatype) {
+                        case 'bit':
+
+                          break;
+                        case 'enum':
+
+                          break;
+                        case 'date':
+
+                          break;
+                        default:
+
+                          break;
+                    }
+                    $edit_contents .= '                          </div>';
+                    $edit_contents .= '                      </div>';
                 }
             }
         }
 
-        $ueTextareacontents = "";
+
+        $ueTextareacontents   = "";
         if (count($text_area_fieldname)>=1){
             $ckeditor_prepare = "    ";
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
-                $edit_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
+                $edit_contents   .= "        <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
                                     "            <td class=\"content\">\r\n".
                                     "                <textarea id=\"$key\" name=\"$key\" style=\"width:90%;height:300px;\">{\${$instancename}.$key}</textarea>\r\n".
                                     "            </td>\r\n".
@@ -205,21 +238,21 @@ class AutoCodeViewAdmin extends AutoCodeView
         </script>
     {/if}
 EDIT;
-            $ueTextareacontents=<<<UETC
+            $ueTextareacontents = <<<UETC
     {if (\$online_editor == 'UEditor')}
         <script>$ueEditor_prepare</script>
     {/if}
 UETC;
         }
-        if (!empty($edit_contents) && (strlen($edit_contents)>2)) {
-            $edit_contents=substr($edit_contents,0,strlen($edit_contents)-2);
+        if ( !empty($edit_contents) && (strlen($edit_contents) > 2) ) {
+            $edit_contents = substr($edit_contents,0,strlen($edit_contents)-2);
         }
-        include("template" . DS . "default.php");
+        include("template" . DS . "admin.php");
         $result = $edit_template;
-        if (count($text_area_fieldname)>=1) {
-            $result=$textareapreparesentence."\r\n".$result;
+        if ( count( $text_area_fieldname ) >= 1 ) {
+            $result = $textareapreparesentence . "\r\n" . $result;
         }
-        $result=self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine( $result );
         return $result;
     }
 
@@ -230,104 +263,60 @@ UETC;
      */
     public static function tpl_view($tablename,$fieldInfo)
     {
-        $table_comment=self::tableCommentKey($tablename);
-        $appname=self::$appName;
-        $classname=self::getClassname($tablename);
-        $instancename=self::getInstancename($tablename);
-        $fieldNameAndComments=array();
-        $enumColumns=array();
-        foreach ($fieldInfo as $fieldname=>$field)
+        $appname       = self::$appName;
+        $table_comment = self::tableCommentKey($tablename);
+        $classname     = self::getClassname($tablename);
+        $instancename  = self::getInstancename($tablename);
+        $realId        = DataObjectSpec::getRealIDColumnName($classname);
+        $showColumns   = "";
+        foreach ($fieldInfo as $fieldname => $field)
         {
-            $field_comment=$field["Comment"];
-            if (contain($field_comment,"\r")||contain($field_comment,"\n"))
-            {
-                $field_comment=preg_split("/[\s,]+/", $field_comment);
-                $field_comment=$field_comment[0];
-            }
-            $fieldNameAndComments[$fieldname]=$field_comment;
-            $datatype=self::comment_type($field["Type"]);
-            if ($datatype=='enum'){
-                $enumColumns[]=$fieldname;
-            }
-        }
-        $view_contents="";
-        foreach ($fieldNameAndComments as $key=>$value) {
-            if (self::isNotColumnKeywork($key)){
-                $isImage =self::columnIsImage($key,$value);
-                if ($isImage){
-                    $view_contents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">\r\n".
-                    "            <div class=\"wrap_2_inner\"><img src=\"{\$uploadImg_url|cat:\$$instancename.$key}\" alt=\"$value\"></div>\r\n".
-                    "            <br/>存储相对路径:{\$$instancename.$key}</td></tr>\r\n";
-                    continue;
-                }
-
-                //关系列的显示
-                // $is_no_relation=true;
-                if (is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0))
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+                $field_comment = $field["Comment"];
+                $isImage       = self::columnIsImage( $fieldname, $field_comment );
+                if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
                 {
-                    if (array_key_exists($classname,self::$relation_viewfield))
-                    {
-                        $relationSpecs=self::$relation_viewfield[$classname];
-                        if (array_key_exists($key,$relationSpecs))
-                        {
-                            $relationShow=$relationSpecs[$key];
-                            foreach ($relationShow as $key_r=>$value_r) {
-                                $realId=DataObjectSpec::getRealIDColumnName($key_r);
-                                if (empty($realId))$realId=$key;
-                                if ((!array_key_exists($value_r,$fieldInfo))||($classname==$key_r)){
-                                    $show_fieldname=$value_r;
-                                    if ($realId!=$key){
-                                        $key_m=$key;
-                                        if (contain($key,"_id")){
-                                            $key_m=str_replace("_id","",$key_m);
-                                        }
-                                        $show_fieldname.="_".$key_m;
-                                    }
-                                    if ($show_fieldname=="name"){
-                                        $show_fieldname= strtolower($key_r)."_".$value_r;
-                                    }
-                                    if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                        $field_comment=$value;
-                                        $field_comment=self::columnCommentKey($field_comment,$key);
-                                        $view_contents.="        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$show_fieldname}</td></tr>\r\n";
-                                        // $is_no_relation=false;
-                                    }
-                                }else{
-                                    if ($value_r=="name"){
-                                        $show_fieldname= strtolower($key_r)."_".$value_r;
-                                        if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                            $field_comment=$value;
-                                            $field_comment=self::columnCommentKey($field_comment,$key);
-                                            $view_contents.="        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$show_fieldname}</td></tr>\r\n";
-                                            // $is_no_relation=false;
-                                        }
-                                    }
-                                }
-
-                                $fieldInfo_relationshow=self::$fieldInfos[self::getTablename($key_r)];
-                                $key_r{0}=strtolower($key_r{0});
-                                if (array_key_exists("parent_id",$fieldInfo_relationshow)){
-                                    $view_contents.="        <tr class=\"entry\"><th class=\"head\">{$field_comment}[全]</th><td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td></tr>\r\n";
-                                }
-                            }
-                        }
-                    }
+                    $field_comment = preg_split("/[\s,]+/", $field_comment);
+                    $field_comment = $field_comment[0];
                 }
-
-                if((count($enumColumns)>0)&&(in_array($key, $enumColumns))){
-                    $view_contents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";
-                }else{
-                    $view_contents.="        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.$key}</td></tr>\r\n";
+                $showColName  = $fieldname;
+                $datatype     = self::comment_type($field["Type"]);
+                switch ($datatype) {
+                    case 'bit':
+                    case 'enum':
+                      $showColName .= "Show";
+                      break;
+                    case 'date':
+                      $showColName .= "|date_format:\"%Y-%m-%d\"";
+                      break;
                 }
+                $showColumns .= "                    <dl>\r\n";
+                $showColumns .= "                      <dt><span>$field_comment</span></dt>\r\n";
+                if ( $isImage ) {
+                    $showColumns .= "                      <dd>\r\n";
+                    $showColumns .= "                        {if $$instancename.$showColName}\r\n";
+                    // todo
+                    // alt="{$blog.blog_name}"
+                    $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$realId}\" /></a></span><br>\r\n";
+                    $showColumns .= "                        <span>存储路径:</span><br><span>{\$$instancename.$showColName}</span>\r\n";
+                    $showColumns .= "                        {else}\r\n";
+                    $showColumns .= "                        <span></span>\r\n";
+                    $showColumns .= "                        {/if}\r\n";
+                    $showColumns .= "                      </dd>\r\n";
+                } else {
+                    $showColumns .= "                      <dd><span>{\$$instancename.$showColName}</span></dd>\r\n";
+                }
+                $showColumns .= "                    </dl>\r\n";
+                // todo
+                // <dd><span>{foreach item=category from=$blog.categorys}{$category.name}&nbsp;{/foreach}</span></dd>
             }
         }
-        if (!empty($view_contents)&&(strlen($view_contents)>2)){
-            $view_contents=substr($view_contents,0,strlen($view_contents)-2);
-        }
-        $realId=DataObjectSpec::getRealIDColumnName($classname);
-        include("template" . DS . "default.php");
+
+        $commitTimeStr = EnumColumnNameDefault::COMMITTIME;
+        $updateTimeStr = EnumColumnNameDefault::UPDATETIME;
+        include("template" . DS . "admin.php");
         $result = $view_template;
-        $result=self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine($result);
         return $result;
     }
 }

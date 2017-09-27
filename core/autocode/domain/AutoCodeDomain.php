@@ -441,7 +441,10 @@ class AutoCodeDomain extends AutoCode
     private static function domainDataobjectSpec($fieldInfo,$tablename)
     {
         $result="";
-        $table_keyfield=array("commitTime","updateTime");
+        $table_keyfield=array(
+            EnumColumnNameDefault::COMMITTIME,
+            EnumColumnNameDefault::UPDATETIME
+        );
         $removefields=array();
         foreach ($table_keyfield as $keyfield) {
             if (!array_key_exists($keyfield,$fieldInfo)){

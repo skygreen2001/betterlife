@@ -271,9 +271,12 @@ class AutoCode extends Object
                 return $typep;
             case "timestamp":
             case "datetime":
+            case "date":
                 return 'date';
             case "bigint":
                 return "int";
+            case "bit":
+                return "bit";
             case "decimal":
                 return "float";
             case "varchar":
@@ -472,8 +475,8 @@ class AutoCode extends Object
      */
     protected static function isNotColumnKeywork($fieldname)
     {
-        $fieldname=strtoupper($fieldname);
-        if ($fieldname=="COMMITTIME"||$fieldname=="UPDATETIME"){
+        $fieldname = strtoupper($fieldname);
+        if ($fieldname == strtoupper(EnumColumnNameDefault::COMMITTIME) || $fieldname == strtoupper(EnumColumnNameDefault::UPDATETIME)){
             return false;
         }else{
             return true;
@@ -541,15 +544,15 @@ class AutoCode extends Object
      */
     protected static function getShowFieldNameByClassname($classname,$isReturnNull=false)
     {
-        $fieldInfo=self::$fieldInfos[self::getTablename($classname)];
-        $fieldNames=array_keys($fieldInfo);
+        $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
+        $fieldNames = array_keys($fieldInfo);
         foreach ($fieldNames as $fieldname)
         {
-            $fieldname_filter=strtolower($fieldname);
-            if (!contain($fieldname,"id")){
-                if (contains($fieldname,array("name","title")))return $fieldname;
-                $classname_filter=strtolower($classname);
-                if (contain($fieldname,$classname_filter))return $fieldname;
+            $fieldname_filter = strtolower($fieldname);
+            if ( !contain($fieldname,"id") ) {
+                if ( contains($fieldname, array("name","title")) ) return $fieldname;
+                $classname_filter = strtolower($classname);
+                if ( contain($fieldname,$classname_filter) ) return $fieldname;
             }
         }
         if ($isReturnNull){
@@ -565,17 +568,17 @@ class AutoCode extends Object
      */
     protected static function isMany2ManyByClassname($classname)
     {
-        $tablename=self::getTablename($classname);
-        if (contain($tablename,Config_Db::TABLENAME_RELATION."_")){
-            $fieldInfo=self::$fieldInfos[self::getTablename($classname)];
-            $realId=DataObjectSpec::getRealIDColumnName($classname);
+        $tablename = self::getTablename($classname);
+        if ( contain($tablename,Config_Db::TABLENAME_RELATION."_") ) {
+            $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
+            $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
-            $countC=0;
-            foreach (array_keys($fieldInfo) as $fieldname)
+            $countC    = 0;
+            foreach ( array_keys($fieldInfo) as $fieldname )
             {
-                if (contain($fieldname,"_id"))$countC+=1;
+                if (contain($fieldname,"_id")) $countC += 1;
             }
-            if($countC<=1){
+            if($countC <= 1) {
                 return false;
             }
 
@@ -593,7 +596,7 @@ class AutoCode extends Object
         if (self::isMany2ManyByClassname($classname))
         {
             $fieldInfo=self::$fieldInfos[self::getTablename($classname)];
-            unset($fieldInfo['updateTime'],$fieldInfo['commitTime']);
+            unset($fieldInfo[EnumColumnNameDefault::COMMITTIME], $fieldInfo[EnumColumnNameDefault::UPDATETIME]);
             $realId=DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
             if (count($fieldInfo)==2)return false;

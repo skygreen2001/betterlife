@@ -1,6 +1,4 @@
 $(function(){
-    $("#image-model").html($.templates("#imgModalTmpl"));
-
     //Datatables中文网[帮助]: http://datatables.club/
     if ($.dataTable) {
         var infoTable = $('#infoTable').DataTable({
@@ -44,14 +42,8 @@ $(function(){
                  "render"   : function(data, type, row) {
                     // 该图片仅供测试
                     if ( !data ) data = "https://lorempixel.com/900/500?r=1";
-
                     var blog_id = row.blog_id;
-                    var data = {
-                        "img_id"  : "imgUrl" + blog_id,
-                        "img_src" : data,
-                        "img_name": row.blog_name
-                    };
-                    var result = $.templates("#imgTmpl").render(data);
+                    var result = '<a id="' + "imgUrl" + blog_id + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.blog_name + '" /></a>';
 
                     $("body").off('click', 'a#imgUrl' + blog_id);
                     $("body").on('click', 'a#imgUrl' + blog_id, function(){
@@ -74,13 +66,16 @@ $(function(){
                  }
                 },
                 {"orderable": false, "targets": 4,
-                 "render"   : function(data,type,row){
-                    if ( data == 0 ){
-                        return '<span class="status-fail">待审核</span>';
-                    } else if ( data == 1 ) {
+                 "render"   : function(data, type, row){
+                    switch (data) {
+                      case '0':
+                        return '<span class="status-wait">待审核</span>';
+                        break;
+                      case '1':
                         return '<span class="status-pass">正常</span>';
-                    } else {
-                        return '<span class="status-wait">已结束</span>';
+                        break;
+                      default:
+                        return '<span class="status-fail">已结束</span>';
                     }
                  }
                 },
