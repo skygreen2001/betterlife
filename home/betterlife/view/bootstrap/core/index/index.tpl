@@ -70,6 +70,7 @@
           <div class="slogan-top">Betterlife Front UI</div>
           <div class="title slogan-bottom">
             Just Do It
+            <div>No Best → Go Better</div>
           </div>
         </div>
         <div class="container content-head">

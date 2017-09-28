@@ -53,6 +53,7 @@ $idColumnDefs
 
     if( \$(".content-wrapper form").length ) {
 $editImgColumn
+$editEnumColumn
 $editDateColumn
 $editMulSelColumn
 $editBitColumn
@@ -386,6 +387,17 @@ $edit_contents
 
     <script src="{\$template_url}js/normal/edit.js"></script>
     <script src="{\$template_url}js/core/blog.js"></script>
+$enumJsContent
 $ueTextareacontents
 EDIT_TPL;
+
+$edit_sub_json_template = <<<EDIT_JSON
+{
+    "code": 1,
+    "description": "",
+    "data": [
+$edit_json_enums
+    ]
+}
+EDIT_JSON;
 ?>

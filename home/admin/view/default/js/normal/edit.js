@@ -41,6 +41,7 @@ var edit = {
           url: ajaxUrl,
           dataType: 'json',
           delay: delay,
+          // debug: true,
           cache: cache,
           data: function (query) {
             return query;

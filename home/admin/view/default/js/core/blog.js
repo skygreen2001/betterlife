@@ -122,8 +122,9 @@ $(function(){
 
     if( $(".content-wrapper form").length ){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
-        $.edit.datetimePicker('#publishDate');
+        $.edit.datetimePicker('#publish_date');
         $.edit.multiselect('#categoryIds');
+        $.edit.select2("#status", "home/admin/data/blogStatus.json", default_keyword_id, default_keyword_text);
 
         $("input[name='isPublic']").bootstrapSwitch();
 

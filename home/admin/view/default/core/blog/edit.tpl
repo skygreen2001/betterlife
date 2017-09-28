@@ -48,10 +48,10 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="title" class="col-sm-2 control-label">标题</label>
+                          <label for="blog_name" class="col-sm-2 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="title" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name}"/>
+                              <input id="blog_name" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name}"/>
                             </div>
                           </div>
                       </div>
@@ -94,12 +94,16 @@
                       <div class="form-group">
                           <label for="creationTimeStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
-                              <div class="input-group col-sm-9 datetimeStyle" id="publishDate">
-                                  <input id="publishDateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
-                                  <span class="input-group-addon">
-                                      <i class="icon-calendar bigger-110"></i>
-                                  </span>
+                              <div class="input-group col-sm-9 datetimeStyle" id="publish_date">
+                                  <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
+                                  <span class="input-group-addon"><i class="icon-calendar bigger-110"></i></span>
                               </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">状态</label>
+                          <div class="col-sm-9">
+                              <select id="status" name="status" class="form-control"></select>
                           </div>
                       </div>
 
@@ -127,7 +131,10 @@
     <!-- /page container end -->
 
     {include file="$templateDir/layout/normal/footer.tpl"}
-
+    <script type="text/javascript">
+        var default_keyword_id   = "{$blog.status}";
+        var default_keyword_text = "{$blog.statusShow}";
+    </script>
     <script src="{$template_url}js/normal/edit.js"></script>
     <script src="{$template_url}js/core/blog.js"></script>
     {if ($online_editor == 'UEditor')}
