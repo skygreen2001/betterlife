@@ -38,18 +38,20 @@ class AutoCodeOneKey extends AutoCode
         AutoCodeService::AutoCode();
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
-        //生成Action类[前端和模版]
+        //生成Action类[前端、后台和通用模版]
         AutoCodeAction::$save_dir = self::$save_dir;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
-        AutoCodeAction::$type     = 0;
-        AutoCodeAction::AutoCode();
-        AutoCodeAction::$type     = 1;
-        AutoCodeAction::AutoCode();
+        AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
+        AutoCodeAction::AutoCode( $table_names );
+        AutoCodeAction::$type     = EnumAutoCodeViewType::MODEL;
+        AutoCodeAction::AutoCode( $table_names );
+        AutoCodeAction::$type     = EnumAutoCodeViewType::ADMIN;
+        AutoCodeAction::AutoCode( $table_names );
         self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
-        //生成前端表示层
-        self::$showReport      .= AutoCodeFoldHelper::foldbeforeviewdefault();
+        //生成表示层[前端、后台和通用模版]
         AutoCodeView::$save_dir = self::$save_dir;
+        self::$showReport      .= AutoCodeFoldHelper::foldbeforeviewdefault();
         AutoCodeView::$type     = EnumAutoCodeViewType::FRONT;
         AutoCodeView::AutoCode();
         AutoCodeView::$type     = EnumAutoCodeViewType::MODEL;

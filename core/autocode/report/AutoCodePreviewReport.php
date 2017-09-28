@@ -22,6 +22,7 @@ class AutoCodePreviewReport extends AutoCode
     public static $enum_files          = array();
     public static $action_front_files  = array();
     public static $action_model_files  = array();
+    public static $action_admin_files  = array();
     public static $service_files       = array();
     public static $service_bg_files    = array();
     public static $view_front_files    = array();
@@ -133,7 +134,7 @@ MODEL;
 
             // 生成前端Action，继承基本Action
             if ( self::$action_front_files&&(count(self::$action_front_files)>0) ) {
-                $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>控制器</a>";
+                $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>前端控制器</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
             }
             $moreContent .= self::groupFileContentsStatus( self::$action_front_files, "front" );
@@ -153,6 +154,13 @@ MODEL;
             $moreContent  = str_replace("[module_name]", "admin", $moreContent);
             $moreContent  = str_replace("[checked]", "", $moreContent);
 
+            // 生成后台Action，继承基本Action
+            if ( self::$action_admin_files&&(count(self::$action_admin_files)>0) ) {
+                $title        = "<a href='$layer_autocode/db_action.php?type=2' target='_blank'>后台控制器</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+            }
+            $moreContent .= self::groupFileContentsStatus( self::$action_admin_files, "admin" );
+
             // 生成后台管理表示层页面
             if( self::$view_admin_files && ( count(self::$view_admin_files) > 0 ) ){
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层页面</a>";
@@ -169,14 +177,14 @@ MODEL;
 
         $model_module = Gc::$nav_root_path . Gc::$module_root . DS . self::$m_model . DS;
         if(is_dir($model_module)){
-            $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[通用模板]</a>";
+            $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[通用模版]</a>";
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "model", $moreContent);
             $moreContent  = str_replace("[checked]", "", $moreContent);
 
             // 生成标准的增删改查模板Action，继承基本Action
             if ( self::$action_model_files&&(count(self::$action_model_files)>0) ) {
-                $title        = "<a href='$layer_autocode/db_action.php?type=1' target='_blank'>控制器</a>";
+                $title        = "<a href='$layer_autocode/db_action.php?type=1' target='_blank'>通用模版控制器</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
             }
 

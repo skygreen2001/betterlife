@@ -111,12 +111,12 @@ HTMLCONTENT;
     }
 
     /**
-     * 折叠前半部分:生成Action类[增删改查模板、前端和后端]
+     * 折叠前半部分:生成Action类[增删改查模板、前端和后台]
      */
     public static function foldbeforeaction()
     {
         $htmlContent = '  <a href="javascript:" onClick="(document.getElementById(\'Content_3\').style.display=(document.getElementById(\'Content_3\').style.display==\'none\')?\'\':\'none\')">';
-        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后端]:start".str_repeat("-", 30)."]</font>
+        $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后台]:start".str_repeat("-", 30)."]</font>
                           </a>";
         $htmlContent.= '  <div id="Content_3" style="display:block;">';
         return $htmlContent;
@@ -144,12 +144,22 @@ HTMLCONTENT;
     }
 
     /**
-     * 折叠后半部分:生成Action类[增删改查模板、前端和后端]
+     * 折叠前半部分:生成Action类[生成后台Action，继承基本Action:]
+     */
+    public static function foldbeforeaction2()
+    {
+        $htmlContent = '    <a href="javascript:" onClick="(document.getElementById(\'Content_33\').style.display=(document.getElementById(\'Content_33\').style.display==\'none\')?\'\':\'none\');"><font color="#237319">生成后台Action，继承基本Action↓</font></a>';
+        $htmlContent.= '    <div id="Content_33" style="display:none;">';
+        return $htmlContent;
+    }
+
+    /**
+     * 折叠后半部分:生成Action类[增删改查模板、前端和后台]
      */
     public static function foldafteraction()
     {
         $htmlContent = '    <a class="after_link" href="javascript:" onClick="document.getElementById(\'Content_3\').style.display=(document.getElementById(\'Content_3\').style.display==\'none\')?\'\':\'none\'">';
-        $htmlContent.= "     <font color='#7b7b7b'>[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后端]:&nbsp;end".str_repeat("-", 30)."]</font>
+        $htmlContent.= "     <font color='#7b7b7b'>[".str_repeat("-", 30)."生成Action类[增删改查模板、前端和后台]:&nbsp;end".str_repeat("-", 30)."]</font>
                             </a>";
         $htmlContent.= "  </div><br/>";
         return $htmlContent;

@@ -1,28 +1,6 @@
 <?php
 
 /**
- +---------------------------------------<br/>
- * 枚举类型：表示层生成类型定义
- +---------------------------------------<br/>
- * @category betterlife
- * @package core.config
- * @author skygreen
- */
-class EnumAutoCodeViewType extends Enum {
-    /**
-     * 前台
-     */
-    const FRONT = 0;
-    /**
-     * 通用模版
-     */
-    const MODEL = 1;
-    /**
-     * 后台
-     */
-    const ADMIN = 2;
-}
-/**
  +---------------------------------<br/>
  * 工具类:自动生成代码-前端默认的表示层
  +---------------------------------<br/>

@@ -28,7 +28,7 @@ class Action_Blog extends ActionAdmin
             $blog['username'] = $user_instance->username;
         }
         if (!empty($blog->icon_url)){
-          $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
+            $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
         $this->view->set("blog", $blog);
     }
@@ -43,22 +43,22 @@ class Action_Blog extends ActionAdmin
             $isRedirect = true;
             if ( !empty($_FILES) && !empty($_FILES["icon_url"]["name"]) ){
                 $result = $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
-                if ( $result&&($result['success'] == true) ){
-                    if ( array_key_exists('file_name',$result) )$blog->icon_url = $result['file_name'];
+                if ( $result && ( $result['success'] == true ) ){
+                    if ( array_key_exists('file_name', $result) ) $blog->icon_url = $result['file_name'];
                 } else {
                     $isRedirect = false;
                     $this->view->set("message",$result["msg"]);
                 }
             }
-            if (!empty($id)){
-                if ($blog->isPublic == 'on') $blog->isPublic = true; else $blog->isPublic = false;
+            if ( !empty($id) ) {
+                if ( $blog->isPublic == 'on' ) $blog->isPublic = true; else $blog->isPublic = false;
                 $blog->update();
-            }else{
+            } else {
                 $id = $blog->save();
             }
 
             $blogcategorys = $this->data["categoryId"];
-            Blogcategory::saveDeleteRelateions("blog_id", $id, "category_id", $blogcategorys);
+            Blogcategory::saveDeleteRelateions( "blog_id", $id, "category_id", $blogcategorys );
 
             if ($isRedirect){
                 $this->redirect("blog", "view", "id=$id");
@@ -71,7 +71,7 @@ class Action_Blog extends ActionAdmin
         $this->view->set("blog", $blog);
         $this->view->set("categorys", $categorys);
         if ($blog) {
-            $blogCategorys = Blogcategory::select("category_id", "blog_id = " . $blogId);
+            $blogCategorys = Blogcategory::select( "category_id", "blog_id = " . $blogId );
             $this->view->set("blogCategorys", $blogCategorys);
         }
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
@@ -82,7 +82,7 @@ class Action_Blog extends ActionAdmin
      */
     public function delete()
     {
-        $blogId = $this->data["id"];
+        $blogId   = $this->data["id"];
         $isDelete = Blog::deleteByID($blogId);
     }
 }

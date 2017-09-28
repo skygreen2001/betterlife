@@ -39,8 +39,8 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $column_contents .= "                { data: \"$fieldname\" },\r\n";
                 // $show_columns[]   = $fieldname;
                 $field_comment    = $field["Comment"];
-                $isImage = self::columnIsImage($fieldname, $field_comment);
-                if ($isImage){
+                $isImage          = self::columnIsImage( $fieldname, $field_comment );
+                if ( $isImage ) {
                     $editImgColumn .= '        $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");';
                     include("template" . DS . "admin.php");
                     //todo: alt="' + row.$realId + '"

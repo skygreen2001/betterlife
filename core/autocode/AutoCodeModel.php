@@ -49,25 +49,27 @@ class AutoCodeModel extends AutoCode
         AutoCodeService::AutoCode( $table_names );
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
-        //生成Action类[前端]
-        AutoCodeAction::$save_dir  = self::$save_dir;
-        self::$showReport         .= AutoCodeFoldHelper::foldbeforeaction();
-        AutoCodeAction::$type      = 0;
+        //生成Action类[前端、后台和通用模版]
+        AutoCodeAction::$save_dir = self::$save_dir;
+        self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
+        AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
         AutoCodeAction::AutoCode( $table_names );
-        AutoCodeAction::$type      = 1;
+        AutoCodeAction::$type     = EnumAutoCodeViewType::MODEL;
         AutoCodeAction::AutoCode( $table_names );
-        self::$showReport         .= AutoCodeFoldHelper::foldafteraction();
+        AutoCodeAction::$type     = EnumAutoCodeViewType::ADMIN;
+        AutoCodeAction::AutoCode( $table_names );
+        self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
-        //生成前端表示层
-        self::$showReport         .= AutoCodeFoldHelper::foldbeforeviewdefault();
-        AutoCodeView::$save_dir    = self::$save_dir;
-        AutoCodeView::$type        = EnumAutoCodeViewType::FRONT;
+        //生成表示层[前端、后台和通用模版]
+        AutoCodeView::$save_dir  = self::$save_dir;
+        self::$showReport       .= AutoCodeFoldHelper::foldbeforeviewdefault();
+        AutoCodeView::$type      = EnumAutoCodeViewType::FRONT;
         AutoCodeView::AutoCode();
-        AutoCodeView::$type        = EnumAutoCodeViewType::MODEL;
+        AutoCodeView::$type      = EnumAutoCodeViewType::MODEL;
         AutoCodeView::AutoCode();
-        AutoCodeView::$type        = EnumAutoCodeViewType::ADMIN;
+        AutoCodeView::$type      = EnumAutoCodeViewType::ADMIN;
         AutoCodeView::AutoCode();
-        self::$showReport         .= AutoCodeFoldHelper::foldafterviewdefault();
+        self::$showReport       .= AutoCodeFoldHelper::foldafterviewdefault();
 
         //将新添加的内容放置在文件最后作为可覆盖的内容
         AutoCodePreviewReport::init();

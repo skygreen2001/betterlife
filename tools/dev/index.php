@@ -713,7 +713,7 @@ AUTHCONTENT;
                 $content=$ctrl.self::$git_name.$ctrr;
             }
             $content=str_replace("网站后台", "", $content);
-            $content=str_replace("通用模板", "", $content);
+            $content=str_replace("通用模版", "", $content);
             $content=str_replace("工程重用</a>|", "", $content);
             file_put_contents($welcome_file, $content);
 
@@ -772,7 +772,7 @@ AUTHCONTENT;
                 $ctrr=substr($ctrr,strpos($ctrr,"\""));
                 $content=$ctrl.self::$git_name.$ctrr;
                 if(self::$reuse_type!=EnumReusePjType::FULL){
-                    $content=str_replace("通用模板", "", $content);
+                    $content=str_replace("通用模版", "", $content);
                 }
 
                 file_put_contents($welcome_file, $content);
