@@ -41,11 +41,9 @@ class EnumReusePjType extends Enum
  *      精简版还执行了以下操作
  *            1.清除在大部分项目中不需要的目录
  *            2.清除在大部分项目中不需要的文件
- *            4.清除缓存相关的文件
- *            5.清除mysql|sqlite|postgres以外的其他数据库引擎
- *            7.清除tools大部分工程无需的文件
- *            8.清除common大部分工程无需的文件
- *            9.清除util大部分工程无需的文件
+ *            3.清除缓存相关的文件
+ *            4.清除mysql|sqlite|postgres以外的其他数据库引擎
+ *            5.清除common大部分工程无需的文件
  * @author skygreen2001@gmail.com
  */
 class Project_Refactor
@@ -53,39 +51,39 @@ class Project_Refactor
     /**
      * 重用类型
      */
-    public static $reuse_type=EnumReusePjType::FULL;
+    public static $reuse_type    = EnumReusePjType::FULL;
     /**
      * 保存新Web项目路径
      */
-    public static $save_dir="";
+    public static $save_dir      = "";
     /**
      * 新Web项目名称【中文】
      */
-    public static $pj_name_cn="";
+    public static $pj_name_cn    = "";
     /**
      * 新Web项目名称【英文】
      */
-    public static $pj_name_en="";
+    public static $pj_name_en    = "";
     /**
      * 新Web项目名称别名【最好两个字母,头字母大写】
      */
-    public static $pj_name_alias="";
+    public static $pj_name_alias = "";
     /**
      * 数据库名称
      */
-    public static $db_name="";
+    public static $db_name       = "";
     /**
      * 数据库表名前缀
      */
-    public static $table_prefix="";
+    public static $table_prefix  = "";
     /**
      * Git版本地址
      */
-    public static $git_name="";
+    public static $git_name      = "";
     /**
      * 需要忽略的目录【在大部分的项目中都不会用到】
      */
-    public static $ignore_dir=array(
+    public static $ignore_dir    = array(
         "document",
         "log",
         "model",
@@ -94,7 +92,7 @@ class Project_Refactor
     /**
      * 需要忽略的文件【在大部分的项目中都不会用到】
      */
-    public static $ignore_files=array(
+    public static $ignore_files  = array(
         ".DS_Store",
         ".gitignore",
         ".project",
@@ -106,12 +104,12 @@ class Project_Refactor
     private static function IgnoreDir()
     {
         foreach (self::$ignore_dir as $ignore_dir) {
-            $toDeleteDir=self::$save_dir.$ignore_dir;
-            if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
+            $toDeleteDir = self::$save_dir.$ignore_dir;
+            if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
         }
 
-        if(is_dir(self::$save_dir.Gc::$module_root.DS."business"))
-            UtilFileSystem::deleteDir(self::$save_dir.Gc::$module_root.DS."business");
+        if( is_dir(self::$save_dir.Gc::$module_root.DS."business") )
+            UtilFileSystem::deleteDir( self::$save_dir.Gc::$module_root.DS."business" );
     }
 
     /**
@@ -120,8 +118,8 @@ class Project_Refactor
     private static function IgnoreFiles()
     {
         foreach (self::$ignore_files as $ignore_file) {
-            $toDeleteFile=self::$save_dir.$ignore_file;
-            if(file_exists($toDeleteFile))unlink($toDeleteFile);
+            $toDeleteFile = self::$save_dir.$ignore_file;
+            if ( file_exists($toDeleteFile) ) unlink($toDeleteFile);
         }
     }
 
@@ -130,7 +128,6 @@ class Project_Refactor
      * 1.配置文件:config/db
      * 2.数据库引擎文件:core/db/
      * 3.数据库备份:db/
-     * 4.修改Manager_Db.php文件
      */
     private static function IgnoreAllDbEngineExceptMysql()
     {
@@ -165,262 +162,6 @@ class Project_Refactor
             $toDeleteDir=self::$save_dir."db".DS.$ignore_db_dir;
             if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
         }
-
-        //4.修改Manager_Db.php文件
-        $manager_db_content=<<<MANAGEDB
-<?php
-/**
- +---------------------------------<br/>
- * 数据库操作管理<br/>
- * 所有的数据库都通过这里进行访问<br/>
- +---------------------------------<br/>
- * @category betterlife
- * @package core.db
- * @author skygreen <skygreen2001@gmail.com>
- */
-class Manager_Db extends Manager {
-    /**
-     * @var IDao 默认Dao对象，采用默认配置
-     */
-    private \$dao_static;
-    /**
-     * @var mixed 实时指定的Dao或者Dal对象，实时注入配置
-     */
-    private \$dao_dynamic;
-    /**
-     * @var mixed 当前使用的Dao或者Dal对象
-     */
-    private \$currentdao;
-    /**
-     * @var IDbInfo 获取数据库表信息对象
-     */
-    private \$dbinfo_static;
-    /**
-     * @var Manager_Db 当前唯一实例化的Db管理类。
-     */
-    private static \$instance;
-
-    /**
-     * 构造器
-     */
-    private function __construct() {
-    }
-
-    public static function singleton() {
-        return newInstance();
-    }
-
-    /**
-     * 单例化
-     * @return Manager_Db
-     */
-    public static function newInstance() {
-        if (!isset(self::\$instance)) {
-            \$c = __CLASS__;
-            self::\$instance=new \$c();
-        }
-        return self::\$instance;
-    }
-
-    /**
-     * 返回当前使用的Dao
-     * @return mixed 当前使用的Dao
-     */
-    public function currentdao(){
-        if (\$this->currentdao==null){
-            \$this->dao();
-        }
-        return \$this->currentdao;
-    }
-
-    /**
-     * 全局设定一个Dao对象；
-     * 由开发者配置设定对象决定
-     */
-    public function dao() {
-        switch (Config_Db::\$db) {
-            case EnumDbSource::DB_MYSQL:
-                switch (Config_Db::\$engine) {
-                    case EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI:
-                        if (\$this->dao_static==null)  \$this->dao_static=new Dao_MysqlI5();
-                        break;
-                    case EnumDbEngine::ENGINE_OBJECT_MYSQL_PHP:
-                        if (\$this->dao_static==null) \$this->dao_static=new Dao_Php5();
-                        break;
-                    default:
-                    //默认：Config_Mysql::ENGINE_MYSQL_PHP
-                        if (\$this->dao_static==null) \$this->dao_static=new Dao_Php5();
-                        break;
-                }
-                break;
-            case EnumDbSource::DB_PGSQL:
-                if (\$this->dao_static==null) \$this->dao_static=new Dao_Postgres();
-                break;
-            case EnumDbSource::DB_SQLITE2:
-                if (\$this->dao_static==null) \$this->dao_static=new Dao_Sqlite2();
-                break;
-            case EnumDbSource::DB_SQLITE3:
-                if (\$this->dao_static==null) \$this->dao_static=new Dao_Sqlite3();
-                break;
-            default:
-            //默认：Config_Mysql::ENGINE_MYSQL_PHP
-                if (\$this->dao_static==null) \$this->dao_static=new Dao_Php5();
-                break;
-        }
-        \$this->currentdao=\$this->dao_static;
-        return \$this->dao_static;
-    }
-
-    /**
-     * 获取数据库信息对对象
-     * @param bool \$isUseDbInfoDatabase 是否使用获取数据库信息的数据库
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @return mixed 实时指定的Dbinfo对象
-     */
-    public function dbinfo(\$isUseDbInfoDatabase=false,\$forced=false,\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$engine=null) {
-        if ((\$this->dbinfo_static==null)||\$forced) {
-            switch (Config_Db::\$db) {
-                case EnumDbSource::DB_MYSQL:
-                    DbInfo_Mysql::\$isUseDbInfoDatabase=\$isUseDbInfoDatabase;
-                    \$this->dbinfo_static=new DbInfo_Mysql(\$host,\$port,\$username,\$password,\$dbname,\$engine);
-                    DbInfo_Mysql::\$isUseDbInfoDatabase=false;
-                    break;
-            }
-        }
-        return \$this->dbinfo_static;
-    }
-
-    /**
-     * 使用PHP自带的MYSQL数据库访问方法函数
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @return mixed 实时指定的Dao对象
-     */
-    public function object_mysql_php5(\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$forced=false) {
-        if ((\$this->dao_dynamic==null)||\$forced) {
-            \$this->dao_dynamic=new Dao_Php5(\$host,\$port,\$username,\$password,\$dbname);
-        }else if (!(\$this->dao_dynamic instanceof Dao_Php5)) {
-            \$this->dao_dynamic=new Dao_Php5(\$host,\$port,\$username,\$password,\$dbname);
-        }
-        \$this->currentdao=\$this->dao_dynamic;
-        return \$this->dao_dynamic;
-    }
-
-    /**
-     * 使用经典的MYSQLI访问数据库方法函数
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @return mixed 实时指定的Dao对象
-     */
-    public function object_mysql_mysqli(\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$forced=false) {
-        if ((\$this->dao_dynamic==null)||\$forced) {
-            \$this->dao_dynamic=new Dao_MysqlI5(\$host,\$port,\$username,\$password,\$dbname);
-        }else if (!(\$this->dao_dynamic instanceof Dao_MysqlI5)) {
-            \$this->dao_dynamic=new Dao_MysqlI5(\$host,\$port,\$username,\$password,\$dbname);
-        }
-        \$this->currentdao=\$this->dao_dynamic;
-        return \$this->dao_dynamic;
-    }
-
-    /**
-     * 使用经典的Sqlite 2数据库方法函数
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @return mixed 实时指定的Dao对象
-     */
-    public function object_sqlite2(\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$forced=false) {
-        if ((\$this->dao_dynamic==null)||\$forced) {
-            \$this->dao_dynamic=new Dao_Sqlite2(\$host,\$port,\$username,\$password,\$dbname);
-        }else if (!(\$this->dao_dynamic instanceof Dao_Sqlite2)) {
-            \$this->dao_dynamic=new Dao_Sqlite2(\$host,\$port,\$username,\$password,\$dbname);
-        }
-        \$this->currentdao=\$this->dao_dynamic;
-        return \$this->dao_dynamic;
-    }
-
-    /**
-     * 使用经典的Sqlite 3数据库方法函数
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @return mixed 实时指定的Dao对象
-     */
-    public function object_sqlite3(\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$forced=false) {
-        if ((\$this->dao_dynamic==null)||\$forced) {
-            \$this->dao_dynamic=new Dao_Sqlite3(\$host,\$port,\$username,\$password,\$dbname);
-        }else if (!(\$this->dao_dynamic instanceof Dao_Sqlite3)) {
-            \$this->dao_dynamic=new Dao_Sqlite3(\$host,\$port,\$username,\$password,\$dbname);
-        }
-        \$this->currentdao=\$this->dao_dynamic;
-        return \$this->dao_dynamic;
-    }
-
-    /**
-     * 使用经典的Postgres 数据库方法函数
-     * @param string \$host
-     * @param string \$port
-     * @param string \$username
-     * @param string \$password
-     * @param string \$dbname
-     * @param bool \$forced 是否强制重新连接数据库获取新的数据库连接对象实例
-     * @return mixed 实时指定的Dao对象
-     */
-    public function object_postgres(\$host=null,\$port=null,\$username=null,\$password=null,\$dbname=null,\$forced=false) {
-        if ((\$this->dao_dynamic==null)||\$forced) {
-            \$this->dao_dynamic=new Dao_Postgres(\$host,\$port,\$username,\$password,\$dbname);
-        }else if (!(\$this->dao_dynamic instanceof Dao_Postgres)) {
-            \$this->dao_dynamic=new Dao_Postgres(\$host,\$port,\$username,\$password,\$dbname);
-        }
-        \$this->currentdao=\$this->dao_dynamic;
-        return \$this->dao_dynamic;
-    }
-}
-?>
-MANAGEDB;
-        $manager_db_file=$ignore_core_db_dir.DS."Manager_Db.php";
-        file_put_contents($manager_db_file, $manager_db_content);
-    }
-
-    /**
-     * 清除tools大部分工程无需的文件
-     */
-    private static function IgnoreTools()
-    {
-        $root_tools="tools";
-        //3.数据库备份:db/
-        $ignore_db_dirs=array(
-            "probe",
-            "timertask",
-            "webservice"
-        );
-        foreach ($ignore_db_dirs as $ignore_db_dir) {
-            $toDeleteDir=self::$save_dir.$root_tools.DS.$ignore_db_dir;
-            if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        }
-        $toDeleteDir=self::$save_dir.$root_tools.DS."dev".DS."install";
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        $toDeleteDir=self::$save_dir.$root_tools.DS."dev".DS."phpsetget";
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
     }
 
     /**
@@ -473,120 +214,6 @@ MANAGEDB;
         );
         foreach ($ignore_files as $ignore_file) {
             $toDeleteFile=self::$save_dir.$root_commons.DS."js".DS."ajax".DS."jquery".DS.$ignore_file;
-            if(file_exists($toDeleteFile))unlink($toDeleteFile);
-        }
-    }
-
-    /**
-     * 清除util大部分工程无需的文件
-     * 1.去除ucenter工具集
-     * - 修改Action_Auth.php文件
-     * 2.去除在线编辑器工具集
-     * 3.去除js框架工具集
-     */
-    private static function IgnoreUtils()
-    {
-        $root_core="core";
-        //1.去除ucenter工具集
-        $toDeleteDir=self::$save_dir.$root_core.DS."util".DS."ucenter";
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-
-         // - 修改Action_Auth.php文件
-        $action_auth_content=<<<AUTHCONTENT
-<?php
-/**
- +---------------------------------<br/>
- * 控制器:用户身份验证<br/>
- +---------------------------------
- * @category betterlife
- * @package  web.front
- * @subpackage auth
- * @author skygreen <skygreen2001@gmail.com>
- */
-class Action_Auth extends Action
-{
-    /**
-     * 退出
-     */
-    public function logout()
-    {
-        HttpSession::remove("user_id");
-        \$this->redirect("auth","login");
-    }
-
-    /**
-     * 登录
-     */
-    public function login()
-    {
-        \$this->view->set("message","");
-        if(HttpSession::isHave('user_id')) {
-            \$this->redirect("blog","display");
-        }else if (!empty(\$_POST)) {
-            \$user = \$this->model->User;
-            \$userdata = User::get_one(array("username"=>\$user->username,
-                    "password"=>md5(\$user->getPassword())));
-            if (empty(\$userdata)) {
-                \$this->view->set("message","用户名或者密码错误");
-            }else {
-                HttpSession::set('user_id',\$userdata->user_id);
-                \$this->redirect("blog","display");
-            }
-        }
-    }
-
-    /**
-     * 注册
-     */
-    public function register()
-    {
-        if(!empty(\$_POST)) {
-            \$user = \$this->model->User;
-            \$userdata=User::get(array("username"=>\$user->username));
-            if (empty(\$userdata)) {
-                \$pass=\$user->getPassword();
-                \$user->setPassword(md5(\$user->getPassword()));
-                \$user->loginTimes=0;
-                \$user->save();
-                HttpSession::set('user_id',\$user->id);
-                \$this->redirect("blog","display");
-            }else{
-                \$this->view->color="red";
-                \$this->view->set("message","该用户名已有用户注册！");
-            }
-        }
-    }
-}
-?>
-AUTHCONTENT;
-
-        $action_auth_file=self::$save_dir.Gc::$module_root.DS.self::$pj_name_en.DS."action".DS."Action_Auth.php";
-        if(file_exists($action_auth_file))file_put_contents($action_auth_file, $action_auth_content);
-
-        $util_view_dir=self::$save_dir.$root_core.DS."util".DS."view".DS;
-        //2.去除在线编辑器工具集
-        $ignore_files=array(
-            "UtilKindEditor.php",
-            "UtilXheditor.php",
-        );
-        foreach ($ignore_files as $ignore_file) {
-            $toDeleteFile=$util_view_dir.DS."onlineditor".DS.$ignore_file;
-            if(file_exists($toDeleteFile))unlink($toDeleteFile);
-        }
-        $toDeleteDir=$util_view_dir.DS."onlineditor".DS."ckEditor";
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-
-        //3.去除js框架工具集
-        $ignore_files=array(
-            "UtilAjaxDojo.php",
-            "UtilAjaxMootools.php",
-            "UtilAjaxProtaculous.php",
-            "UtilAjaxPrototype.php",
-            "UtilAjaxScriptaculous.php",
-            "UtilAjaxYui.php"
-        );
-        foreach ($ignore_files as $ignore_file) {
-            $toDeleteFile=$util_view_dir.DS."ajax".DS.$ignore_file;
             if(file_exists($toDeleteFile))unlink($toDeleteFile);
         }
     }
@@ -717,10 +344,7 @@ AUTHCONTENT;
             $content=str_replace("工程重用</a>|", "", $content);
             file_put_contents($welcome_file, $content);
 
-            self::IgnoreTools();
-
             self::IgnoreAllDbEngineExceptMysql();
-            self::IgnoreUtils();
 
             //修改Config_AutoCode.php配置文件
             $config_autocode_file=self::$save_dir."config".DS."config".DS."Config_AutoCode.php";
@@ -815,7 +439,6 @@ AUTHCONTENT;
 
                     self::IgnoreAllDbEngineExceptMysql();
                     self::IgnoreCommons();
-                    self::IgnoreUtils();
                     break;
                 default:
                     //修改Action控制器类的注释:* @category 应用名称
@@ -830,19 +453,20 @@ AUTHCONTENT;
                     break;
             }
         }
-        self::$save_dir=$save_dir;
+        self::$save_dir = $save_dir;
         self::UserInput();
-        $default_dir=Gc::$url_base;
-        $domain_url=str_replace(Gc::$appName."/", "", $default_dir);
+        $default_dir    = Gc::$url_base;
+        $domain_url     = str_replace(Gc::$appName."/", "", $default_dir);
 
         if (contain(strtolower(php_uname()),"darwin")){
-            $domain_url=UtilNet::urlbase();
-            $file_sub_dir=str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
-            if (contain($file_sub_dir,"tools".DS))
-                $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
-            $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
-            if(!endwith($domain_url,$domainSubDir))$domain_url.=$domainSubDir;
-            $domain_url=str_replace(Gc::$appName."/", "", $domain_url);
+            $domain_url   = UtilNet::urlbase();
+            $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
+            if ( contain( $file_sub_dir, "tools" . DS ) )
+                $file_sub_dir = substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
+            $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);;
+            if ( !endwith($domain_url,$domainSubDir) ) $domain_url .= $domainSubDir;
+            $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
+            $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
         die("<div align='center'><font color='green'><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>新地址</a></div>");
     }
@@ -854,7 +478,6 @@ AUTHCONTENT;
     {
         self::IgnoreDir();
         self::IgnoreFiles();
-        self::IgnoreTools();
     }
 
     /**
@@ -863,29 +486,29 @@ AUTHCONTENT;
     public static function UserInput()
     {
         $title="一键重用Web项目代码";
-        if(empty($_REQUEST["save_dir"])){
-            $pj_name_cn=Gc::$site_name;
-            $pj_name_en=Gc::$appName;
-            $pj_name_alias=Gc::$appName_alias;
-            $default_dir=Gc::$nav_root_path;
-            $domain_root=str_replace($pj_name_en . DS, "", $default_dir);
-            $domain_root=str_replace(Gc::$appName_alias . DS, "", $domain_root);
-            $default_dir=$pj_name_en;
-            $dbname=Config_Db::$dbname;
-            $table_prefix=Config_Db::$table_prefix;
-            $git_name="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html";
+        if( empty($_REQUEST["save_dir"]) ){
+            $pj_name_cn    = Gc::$site_name;
+            $pj_name_en    = Gc::$appName;
+            $pj_name_alias = Gc::$appName_alias;
+            $default_dir   = Gc::$nav_root_path;
+            $domain_root   = str_replace($pj_name_en . DS, "", $default_dir);
+            $domain_root   = str_replace(Gc::$appName_alias . DS, "", $domain_root);
+            $default_dir   = $pj_name_en;
+            $dbname        = Config_Db::$dbname;
+            $table_prefix  = Config_Db::$table_prefix;
+            $git_name      = "http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html";
         }else{
-            $reuse_type=self::$reuse_type;
-            $pj_name_cn=self::$pj_name_cn;
-            $pj_name_en=self::$pj_name_en;
-            $pj_name_alias=self::$pj_name_alias;
-            $default_dir=Gc::$nav_root_path;
-            $domain_root=str_replace(Gc::$appName . DS, "", $default_dir);
-            $domain_root=str_replace(Gc::$appName_alias . DS, "", $domain_root);
-            $default_dir=self::$save_dir;
-            $dbname=self::$db_name;
-            $table_prefix=self::$table_prefix;
-            $git_name=self::$git_name;
+            $reuse_type    = self::$reuse_type;
+            $pj_name_cn    = self::$pj_name_cn;
+            $pj_name_en    = self::$pj_name_en;
+            $pj_name_alias = self::$pj_name_alias;
+            $default_dir   = Gc::$nav_root_path;
+            $domain_root   = str_replace(Gc::$appName . DS, "", $default_dir);
+            $domain_root   = str_replace(Gc::$appName_alias . DS, "", $domain_root);
+            $default_dir   = self::$save_dir;
+            $dbname        = self::$db_name;
+            $table_prefix  = self::$table_prefix;
+            $git_name      = self::$git_name;
         }
         $inputArr=array(
             "1"=>"完整版",
@@ -898,16 +521,23 @@ AUTHCONTENT;
         echo "<head>\r\n";
         echo UtilCss::form_css()."\r\n";
         $url_base=UtilNet::urlbase();
+        echo "";
+        echo "";
+        echo "";
+        echo "";
+        echo "";
+        echo "";
+        echo "";
         echo "</head>";
-        echo "<body>";
-        echo "<br/><br/><br/><h1 align='center'>$title</h1>\r\n";
+        echo "<body class='prj-onekey'>";
+        echo "<h1 align='center'>$title</h1>\r\n";
         echo "<div align='center' height='450'>\r\n";
         echo "<form>\r\n";
         echo "    <div style='line-height:1.5em;'>\r\n";
         echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>\r\n";
         echo "        <label>Web项目名称【英文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【英文】' name='pj_name_en' value='$pj_name_en' id='pj_name_en' oninput=\"document.getElementById('dbname').value=this.value;document.getElementById('save_dir').value=this.value;\" /><br/>\r\n";
         echo "        <label title='最好两个字母,头字母大写'>&nbsp;&nbsp;&nbsp;&nbsp;Web项目别名:</label><input title='最好两个字母,头字母大写' style='width:400px;text-align:left;padding-left:10px;' type='text' name='pj_name_alias' value='$pj_name_alias' id='pj_name_alias' /><br/>\r\n";
-        echo "        <label>&nbsp;&nbsp;输出Web项目路径:</label><label>$domain_root</label><input style='width:190px;text-align:left;padding-left:10px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /><br/>\r\n";
+        echo "        <label>&nbsp;&nbsp;输出Web项目路径:</label><label style='width:400px;text-align:left;'>$domain_root</label><br><input style='width:190px;text-align:left;padding-left:10px;margin-left:40px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
@@ -923,7 +553,7 @@ AUTHCONTENT;
             echo "        </select>\r\n";
         }
         echo "    </div>\r\n";
-        echo "    <input type='submit' value='生成' /><br/>\r\n";
+        echo "    <input class='btnSubmit' type='submit' value='生成' /><br/><br><br><br><br><br><br>\r\n";
         echo "</form>\r\n";
         echo "</div>\r\n";
         echo "</body>\r\n";

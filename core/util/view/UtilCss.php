@@ -287,7 +287,7 @@ class UtilCss extends Util
                   padding:0;
                 }
                 .container {
-                  width:620px;
+                  width:800px;
                   margin:0 auto;
                 }
                 h1,h2,h3 {
@@ -295,7 +295,6 @@ class UtilCss extends Util
                 }
                 h1{
                   margin-top: 150px;
-                  margin-left: 70px;
                 }
                 p#indexPage {
                   line-height:2em;
@@ -330,7 +329,7 @@ class UtilCss extends Util
                 }
                 label {
                   vertical-align:middle;
-                  width:150px;
+                  width:200px;
                   height:35px;
                   text-align:right;
                   display:inline-block;
@@ -429,6 +428,13 @@ class UtilCss extends Util
                 }
                 .more_java:hover{
                   color:'. self::$color_b .';
+                }
+
+                .prj-onekey label{
+                  margin-top:20px;
+                }
+                .prj-onekey input{
+                  margin-top:0px;
                 }
                 @media screen and (-webkit-min-device-pixel-ratio:0) {
                   .btnSubmit{
