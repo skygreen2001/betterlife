@@ -1,8 +1,8 @@
 $(function(){
   //自动高亮当前页面链接地址对应的导航菜单
   function showLayoutMenuActive(linkName){
-    var urlstr = location.href;
     var urlstatus=false;
+    var urlstr = location.href;
     $(linkName).each(function () {
       var link = $(this).attr('href').replace(/\.\.\//g,"");
       if (((urlstr + '/').indexOf(link) > -1)&&(link!='')&&(link!='#')) {

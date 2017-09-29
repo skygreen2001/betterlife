@@ -295,7 +295,7 @@ class AutoCodeAction extends AutoCode
                   "    {\r\n".
                   "        if ( !empty(\$_POST) ) {\r\n".
                   "            \$$instancename = \$this->model->$classname;\r\n".
-                  "            \$id   = \$$instancename->getId();\r\n".
+                  "            \$id   = \${$instancename}->getId();\r\n".
                   "            \$isRedirect = true;\r\n".
                   $editImgContent.
                   $editBitContent.

@@ -33,7 +33,6 @@
     </div>
 
     {include file="$templateDir/layout/normal/footer.tpl"}
-    <script type="text/javascript" src="{$template_url}js/normal/layout.js"></script>
 
     <script type="text/javascript">
       $(function(){
