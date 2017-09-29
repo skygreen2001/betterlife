@@ -85,22 +85,23 @@ class AutoCode extends Object
      */
     public static function init()
     {
-        UtilFileSystem::createDir(self::$save_dir);
-        system_dir_info(self::$save_dir);
-        if (empty(self::$tableList)){
-            self::$tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
-            if(self::$tableInfoList)self::$tableList=array_keys(self::$tableInfoList);//Manager_Db::newInstance()->dbinfo()->tableList();
+        UtilFileSystem::createDir( self::$save_dir );
+        system_dir_info( self::$save_dir );
+        if ( empty(self::$tableList) ) {
+            self::$tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
+            if ( self::$tableInfoList ) self::$tableList = array_keys(self::$tableInfoList);
         }
-        if (empty(self::$fieldInfos)&&(!empty(self::$tableList))){
-            $ignoreTables=array();
-            foreach (self::$tableList as $tablename){
-                $classname=self::getClassname($tablename);
-                $prefix = Config_Db::$table_prefix;
-                if ((!empty($prefix))&&(!contain($tablename,$prefix))){
+        if ( empty(self::$fieldInfos) && ( !empty(self::$tableList) ) ) {
+            $ignoreTables = array();
+            foreach (self::$tableList as $tablename) {
+                $classname = self::getClassname($tablename);
+                $prefix    = Config_Db::$table_prefix;
+                if ( ( !empty($prefix) ) && ( !contain( $tablename, $prefix ) ) ) {
                     $ignoreTables[]=$tablename;
                     continue;
                 }
-                if (($classname=="Copy")||($classname=="Copy1")||($classname=="Copy2")||($classname=="Copy3")||($classname=="Copy4")){
+
+                if ( startWith( strtolower($classname), "copy" ) ) {
                     $ignoreTables[]=$tablename;
                     continue;
                 }
@@ -362,37 +363,37 @@ class AutoCode extends Object
      */
     protected static function enumDefines($fieldComment)
     {
-        $comment_arr=preg_split("/[\r\n;]+/", $fieldComment);
+        $comment_arr = preg_split("/[\r\n;]+/", $fieldComment);
         unset($comment_arr[0]);
-        $enum_columnDefine=array();
-        if ((!empty($comment_arr))&&(count($comment_arr)>0))
+        $enum_columnDefine = array();
+        if ( ( !empty($comment_arr) ) && ( count($comment_arr) > 0 ) )
         {
             foreach ($comment_arr as $comment) {
-                if (!UtilString::is_utf8($comment)){
-                    $comment=UtilString::gbk2utf8($comment);
+                if ( !UtilString::is_utf8( $comment ) ) {
+                    $comment = UtilString::gbk2utf8( $comment );
                 }
-                if (contain($comment,"：")){
-                    $comment = str_replace("：",':',$comment);
+                if ( contain( $comment, "：" ) ) {
+                    $comment = str_replace("：", ':', $comment);
                 }
-                $part_arr=preg_split("/[.:]+/", $comment);
-                if ((!empty($part_arr))&&(count($part_arr)==2)){
-                    $cn_en_arr=array();
-                    $enum_comment=$part_arr[1];
-                    if (is_numeric($part_arr[0])){
-                        if (contain($enum_comment,"-")){
-                            $cn_en_arr[0]=substr($enum_comment,0,strrpos($enum_comment,"-"));
-                            $cn_en_arr[1]=substr($enum_comment,strrpos($enum_comment,"-")+1);
-                            $enum_columnDefine[]=array(
-                                'name'=>strtolower($cn_en_arr[1]),
-                                'value'=>$part_arr[0],
-                                'comment'=>$cn_en_arr[0]
+                $part_arr = preg_split("/[.:]+/", $comment);
+                if ( ( !empty($part_arr) ) && ( count($part_arr) == 2 ) ) {
+                    $cn_en_arr    = array();
+                    $enum_comment = $part_arr[1];
+                    if ( is_numeric($part_arr[0]) ) {
+                        if ( contain( $enum_comment, "-" ) ) {
+                            $cn_en_arr[0] = substr($enum_comment, 0, strrpos($enum_comment, "-"));
+                            $cn_en_arr[1] = substr($enum_comment, strrpos($enum_comment, "-") + 1);
+                            $enum_columnDefine[] = array(
+                                'name'    => strtolower($cn_en_arr[1]),
+                                'value'   => $part_arr[0],
+                                'comment' => $cn_en_arr[0]
                             );
                         }
                     }else{
-                        $enum_columnDefine[]=array(
-                            'name'=>strtolower($part_arr[0]),
-                            'value'=>strtolower($part_arr[0]),
-                            'comment'=>$part_arr[1]
+                        $enum_columnDefine[] = array(
+                            'name'    => strtolower($part_arr[0]),
+                            'value'   => strtolower($part_arr[0]),
+                            'comment' => $part_arr[1]
                         );
                     }
                 }
@@ -406,14 +407,15 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param string $column_type 列类型
      */
-    protected static function columnIsTextArea($column_name,$column_type)
+    protected static function columnIsTextArea( $column_name, $column_type )
     {
-        $column_name=strtoupper($column_name);
-        if (contain($column_name,"ID")){
+        $column_name = strtoupper($column_name);
+        if ( contain( $column_name, "ID" ) ) {
             return false;
         }
-        if (((self::column_length($column_type)>=500)&&(!contains($column_name,array("URL","PROFILE","IMAGES","LINK","ICO","PASSWORD","EMAIL","PHONE","ADDRESS"))))
-             ||(contains($column_name,array("INTRO","MEMO","CONTENT")))||(self::column_type($column_type)=='text')||(self::column_type($column_type)=='longtext')){
+        if ( ( (self::column_length( $column_type ) >= 500) && ( !contains( $column_name, array("URL", "LINK", "PASSWORD", "EMAIL", "PHONE", "ADDRESS") ) ) )
+             || ( contains( $column_name, array("INTRO","MEMO","CONTENT") ) ) || ( self::column_type( $column_type ) == 'text' ) || ( self::column_type( $column_type ) == 'longtext' ) ) {
+            if ( self::columnIsImage( $column_name ) ) return false;
             return true;
         }else{
             return false;
@@ -425,13 +427,13 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
      */
-    protected static function columnIsImage($column_name,$column_comment)
+    protected static function columnIsImage( $column_name, $column_comment = "" )
     {
-        $column_name=strtoupper($column_name);
-        if (contain($column_name,"ID")){
+        $column_name = strtoupper($column_name);
+        if ( contain( $column_name, "ID" ) ) {
             return false;
         }
-        if (contains($column_name,array("PROFILE","IMAGE","IMG","ICO","LOGO","PIC"))){
+        if ( contains( $column_name, array("PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC") ) ) {
             return true;
         }
         return false;
@@ -442,10 +444,10 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
      */
-    protected static function columnIsEmail($column_name,$column_comment)
+    protected static function columnIsEmail( $column_name, $column_comment )
     {
-        $column_name=strtoupper($column_name);
-        if ((contain($column_name,"EMAIL")||contains($column_comment,array("邮件","邮箱")))&&(!contain($column_name,"IS"))){
+        $column_name = strtoupper($column_name);
+        if ( (contain( $column_name, "EMAIL" ) || contains( $column_comment, array("邮件","邮箱")) ) && ( !contain( $column_name, "IS" ) ) ) {
             return true;
         }
         return false;
@@ -456,13 +458,13 @@ class AutoCode extends Object
      * @param string $tablename 表名称
      * @param string $column_name 列名称
      */
-    protected static function columnIsPassword($table_name,$column_name)
+    protected static function columnIsPassword( $table_name, $column_name )
     {
 
-        $table_name=strtoupper($table_name);
-        if (contains($table_name,array("MEMBER","ADMIN","USER"))){
-            $column_name=strtoupper($column_name);
-            if (contain($column_name,"PASSWORD")){
+        $table_name = strtoupper($table_name);
+        if ( contains( $table_name, array("MEMBER", "ADMIN", "USER") ) ) {
+            $column_name = strtoupper($column_name);
+            if ( contain( $column_name, "PASSWORD" ) ) {
                 return true;
             }
         }
@@ -473,7 +475,7 @@ class AutoCode extends Object
      * 是否默认的列关键字：id,committime,updateTime
      * @param string $fieldname 列名称
      */
-    protected static function isNotColumnKeywork($fieldname)
+    protected static function isNotColumnKeywork( $fieldname )
     {
         $fieldname = strtoupper($fieldname);
         if ($fieldname == strtoupper(EnumColumnNameDefault::COMMITTIME) || $fieldname == strtoupper(EnumColumnNameDefault::UPDATETIME)){
@@ -487,28 +489,28 @@ class AutoCode extends Object
      * 获取数据对象的ID列名称
      * @param mixed $dataobject 数据对象实体|对象名称
      */
-    protected static function keyIDColumn($dataobject)
+    protected static function keyIDColumn( $dataobject )
     {
-        return DataObjectSpec::getRealIDColumnNameStatic($dataobject);
+        return DataObjectSpec::getRealIDColumnNameStatic( $dataobject );
     }
 
     /**
      * 获取表注释第一行关键词说明
      * @param string $tablename 表名称
      */
-    protected static function tableCommentKey($tablename)
+    protected static function tableCommentKey( $tablename )
     {
-        if (self::$tableInfoList!=null&&count(self::$tableInfoList)>0&&array_key_exists("$tablename", self::$tableInfoList))
+        if ( self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList) )
         {
-            $table_comment=self::$tableInfoList[$tablename]["Comment"];
-            $table_comment=str_replace("关系表","",$table_comment);
-            $table_comment=str_replace("表","",$table_comment);
-            if (contain($table_comment,"\r")||contain($table_comment,"\n")){
-                $table_comment=preg_split("/[\s,]+/", $table_comment);
-                $table_comment=$table_comment[0];
+            $table_comment = self::$tableInfoList[$tablename]["Comment"];
+            $table_comment = str_replace("关系表","",$table_comment);
+            $table_comment = str_replace("表","",$table_comment);
+            if ( contain( $table_comment, "\r" ) || contain( $table_comment, "\n" ) ) {
+                $table_comment = preg_split("/[\s,]+/", $table_comment);
+                $table_comment = $table_comment[0];
             }
         }else{
-            $table_comment=self::getClassname($tablename);
+            $table_comment = self::getClassname( $tablename );
         }
         return $table_comment;
     }
@@ -519,19 +521,19 @@ class AutoCode extends Object
      * @param mixed $default 默认返回值
      * @return mixed
      */
-    protected static function columnCommentKey($field_comment,$default="")
+    protected static function columnCommentKey( $field_comment, $default = "" )
     {
-        if (empty($field_comment)){
+        if ( empty($field_comment) ) {
             return $default;
         }
-        if (contain($field_comment,"\r")||contain($field_comment,"\n"))
+        if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
         {
-            $field_comment=preg_split("/[\s,]+/", $field_comment);
-            $field_comment=$field_comment[0];
+            $field_comment = preg_split("/[\s,]+/", $field_comment);
+            $field_comment = $field_comment[0];
         }
-        if ($field_comment){
-            if(($field_comment!="标识")&&($field_comment!="编号")&&($field_comment!="主键")){
-                $field_comment=str_replace(array('标识','编号','主键'),"",$field_comment);
+        if ( $field_comment ) {
+            if ( ( $field_comment != "标识" ) && ( $field_comment != "编号" ) && ( $field_comment != "主键" ) ) {
+                $field_comment = str_replace(array('标识', '编号', '主键'), "", $field_comment);
             }
         }
         return $field_comment;
@@ -542,7 +544,7 @@ class AutoCode extends Object
      * @param string $classname 数据对象类名
      * @param bool $isReturnNull 是否没有就返回Null
      */
-    protected static function getShowFieldNameByClassname($classname,$isReturnNull=false)
+    protected static function getShowFieldNameByClassname( $classname, $isReturnNull = false )
     {
         $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
         $fieldNames = array_keys($fieldInfo);
@@ -555,7 +557,7 @@ class AutoCode extends Object
                 if ( contain($fieldname,$classname_filter) ) return $fieldname;
             }
         }
-        if ($isReturnNull){
+        if ( $isReturnNull ){
             return "";
         }else{
             return "name";
@@ -569,16 +571,16 @@ class AutoCode extends Object
     protected static function isMany2ManyByClassname($classname)
     {
         $tablename = self::getTablename($classname);
-        if ( contain($tablename,Config_Db::TABLENAME_RELATION."_") ) {
+        if ( contain( $tablename, Config_Db::TABLENAME_RELATION . "_") ) {
             $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
             $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
             $countC    = 0;
-            foreach ( array_keys($fieldInfo) as $fieldname )
+            foreach (array_keys($fieldInfo) as $fieldname)
             {
-                if (contain($fieldname,"_id")) $countC += 1;
+                if ( contain( $fieldname,"_id" ) ) $countC += 1;
             }
-            if($countC <= 1) {
+            if( $countC <= 1 ) {
                 return false;
             }
 
@@ -591,15 +593,15 @@ class AutoCode extends Object
      * 根据类名判断是不是多对多关系，如果存在其他显示字段则需要在显示Tab中显示has_many
      * @param string $classname 数据对象类名
      */
-    protected static function isMany2ManyShowHasMany($classname)
+    protected static function isMany2ManyShowHasMany( $classname )
     {
-        if (self::isMany2ManyByClassname($classname))
+        if ( self::isMany2ManyByClassname( $classname ) )
         {
-            $fieldInfo=self::$fieldInfos[self::getTablename($classname)];
+            $fieldInfo = self::$fieldInfos[self::getTablename( $classname )];
             unset($fieldInfo[EnumColumnNameDefault::COMMITTIME], $fieldInfo[EnumColumnNameDefault::UPDATETIME]);
-            $realId=DataObjectSpec::getRealIDColumnName($classname);
+            $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
-            if (count($fieldInfo)==2)return false;
+            if ( count($fieldInfo) == 2 ) return false;
         }
         return true;
     }

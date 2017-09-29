@@ -24,11 +24,10 @@ CREATE TABLE `bb_core_category` (
   `sequence_no` int(11) DEFAULT NULL COMMENT '序号',
   `name` varchar(255) NOT NULL COMMENT '名称',
   `icon_url` varchar(500) DEFAULT NULL COMMENT '图标',
-  `is_system` int(11) DEFAULT NULL COMMENT '是否系统设置',
   `intro` varchar(1000) DEFAULT NULL COMMENT '说明',
   `status` smallint(3) DEFAULT '1' COMMENT '状态',
-  `creation_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modified` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `id_UNIQUE` (`category_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='博客分类';
@@ -36,15 +35,15 @@ CREATE TABLE `bb_core_category` (
 -- ----------------------------
 -- Records of bb_core_category
 -- ----------------------------
-INSERT INTO `bb_core_category` VALUES (1, 100, '科技', '', 1, '科技', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (2, 100, '时尚', '', 1, '时尚', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (3, 100, '新闻', '', 1, '新闻', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (4, 100, '体育', '', 1, '体育', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (5, 100, '军事', '', 1, '军事', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (6, 100, '生活', '', 1, '生活', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (7, 100, '音乐', '', 1, '音乐', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (8, 100, '购物', '', 1, '购物', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (9, 100, '其他', '', 1, '其他', 1, '2017-05-22 13:47:02', '2017-09-18 15:41:50');
+INSERT INTO `bb_core_category` VALUES (1, 100, '科技', '', '科技', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (2, 100, '时尚', '', '时尚', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (3, 100, '新闻', '', '新闻', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (4, 100, '体育', '', '体育', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (5, 100, '军事', '', '军事', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (6, 100, '生活', '', '生活', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (7, 100, '音乐', '', '音乐', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (8, 100, '购物', '', '购物', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (9, 100, '其他', '', '其他', 1, '2017-05-22 13:47:02', '2017-09-18 15:41:50');
 
 -- ----------------------------
 -- Table structure for `bb_core_blog`

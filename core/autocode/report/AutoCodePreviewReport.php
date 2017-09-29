@@ -80,11 +80,6 @@ MODEL;
 MODEL;
         $title       = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>数据模型<Domain|Model></a>";
         $moreContent = str_replace("[title]", $title, $module_model);
-        if( self::$is_first_run ){
-            $moreContent = str_replace("[checked]", "checked", $moreContent);
-        } else {
-            $moreContent = str_replace("[checked]", "", $moreContent);
-        }
         $moreContent  = str_replace("[module_name]", "domain", $moreContent);
 
         $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank'>实体数据对象类</a>";
@@ -250,18 +245,17 @@ MODEL;
                 }
             } else {
                 $file_content = str_replace("[status]", $status[1], $file_content);
+                $file_content = str_replace("[checked]", "checked", $file_content);
             }
 
             if ( $only_once ) {
-                if ( self::$is_first_run ) {
-                    $file_content = str_replace("[checked]", "checked", $file_content);
-                } else {
+                if ( !self::$is_first_run ) {
                     $file_content = str_replace("[checked]", "", $file_content);
                 }
             } else {
                 $file_content = str_replace("[checked]", "", $file_content);
             }
-            $file_content = str_replace("[module_name]", "model", $file_content);
+            $file_content = str_replace("[module_name]", $replace_module_name, $file_content);
             $result      .= $file_content;
         }
         return $result;
@@ -305,6 +299,7 @@ MODEL;
         toggleGroup(source, 'bg');
         toggleGroup(source, 'front');
         toggleGroup(source, 'model');
+        toggleGroup(source, 'admin');
     }
     </script>
 

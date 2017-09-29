@@ -316,7 +316,7 @@ class Project_Refactor
             //修改Gc.php配置文件
             $gc_file=self::$save_dir."Gc.php";
             $content=file_get_contents($gc_file);
-            $content=str_replace("\"model\",", "", $content);
+            // $content=str_replace("\"model\",", "", $content);
             $content=str_replace("\"admin\",\r\n", "", $content);
             $content=str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content=str_replace(Gc::$appName, self::$pj_name_en, $content);
@@ -374,7 +374,7 @@ class Project_Refactor
             $content=str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content=str_replace(Gc::$appName, self::$pj_name_en, $content);
             $content=str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
-            if((self::$reuse_type!=EnumReusePjType::FULL)){
+            if ( ( self::$reuse_type != EnumReusePjType::FULL ) ) {
                 $content=str_replace("\"model\",", "", $content);
             }
             file_put_contents($gc_file, $content);
@@ -434,16 +434,17 @@ class Project_Refactor
             switch (self::$reuse_type) {
                 case EnumReusePjType::SIMPLE:
                     self::IgnoreInCommon();
-                    $toDeleteDir=self::$save_dir.Gc::$module_root.DS."model";
-                    if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
+                    $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "model";
+                    if( is_dir( $toDeleteDir ) ) UtilFileSystem::deleteDir( $toDeleteDir );
+                    UtilFileSystem::createDir( $toDeleteDir );
 
                     self::IgnoreAllDbEngineExceptMysql();
                     self::IgnoreCommons();
                     break;
                 default:
                     //修改Action控制器类的注释:* @category 应用名称
-                    $modelActionDir=self::$save_dir.Gc::$module_root.DS."model".DS."action".DS;
-                    $actionFiles=UtilFileSystem::getAllFilesInDirectory($modelActionDir,array("php"));
+                    $modelActionDir = self::$save_dir . Gc::$module_root . DS . "model" . DS . "action" . DS;
+                    $actionFiles    = UtilFileSystem::getAllFilesInDirectory( $modelActionDir, array("php") );
 
                     foreach ($actionFiles as $actionFile) {
                         $content=file_get_contents($actionFile);
@@ -468,7 +469,7 @@ class Project_Refactor
             $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
-        die("<div align='center'><font color='green'><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>新地址</a></div>");
+        die("<div align='center'><font color='green'><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>新地址</a></div><br><br><br><br><br><br><br><br>");
     }
 
     /**

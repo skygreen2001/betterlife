@@ -27,6 +27,11 @@ class AutoCodeDomain extends AutoCode
      * 2.所有的列定义的对象属性都是public。
      */
     public static $type;
+
+    private static $spec_comment = "";
+    private static $spec_content = "";
+    private static $relation_spec_comment = "";
+    private static $relation_spec_content = "";
     /**
      * 自动生成代码-实体类
      * @param array|string $table_names
@@ -303,12 +308,30 @@ class AutoCodeDomain extends AutoCode
                 $result.= "    //</editor-fold>\r\n";
                 break;
         }
-        $result.=self::domainDataobjectSpec($fieldInfo,$tablename);
-        $result.=self::domainDataobjectRelationSpec($fieldInfo,$classname);
-        $result.=self::domainEnumPropertyShow($fieldInfo,$tablename);
-        $result.=self::domainEnumShow($fieldInfo,$tablename);
-        $result.=self::domainTreeLevelDefine($fieldInfo,$classname);
-        $result.="}\r\n\r\n";
+
+        self::$spec_comment          = "";
+        self::$spec_content          = "";
+        self::$relation_spec_comment = "";
+        self::$relation_spec_content = "";
+        $result .= self::domainDataobjectSpec( $fieldInfo, $tablename );
+        $result .= self::domainDataobjectRelationSpec( $fieldInfo, $classname );
+        if ( !empty(self::$spec_content) || !empty(self::$relation_spec_content) ) {
+            $result .= "    /**\r\n".
+                       "     * 规格说明\r\n".
+                       self::$spec_comment.
+                       self::$relation_spec_comment.
+                       "     * @var mixed\r\n".
+                       "     */\r\n".
+                       "    public \$field_spec=array(\r\n".
+                       self::$spec_content.
+                       self::$relation_spec_content.
+                       "    );\r\n";
+        }
+
+        $result .= self::domainEnumPropertyShow($fieldInfo,$tablename);
+        $result .= self::domainEnumShow($fieldInfo,$tablename);
+        $result .= self::domainTreeLevelDefine($fieldInfo,$classname);
+        $result .= "}\r\n\r\n";
         return $result;
     }
 
@@ -363,17 +386,11 @@ class AutoCodeDomain extends AutoCode
                 $classname_lc=$classname;
                 $classname_lc{0}=strtolower($classname_lc{0});
                 foreach ($belong_has_one as $key=>$value) {
-                    if($value==$classname_lc."_p"){
-                        $result.="\r\n".
-                                "    /**\r\n".
-                                "     * 规格说明:外键声明\r\n".
-                                "     * @var array\r\n".
-                                "     */\r\n".
-                                "    public \$field_spec=array(\r\n".
-                                "        EnumDataSpec::FOREIGN_ID=>array(\r\n".
-                                "            \"".$classname_lc."_p"."\"=>\"parent_id\"\r\n".
-                                "        )\r\n".
-                                "    );\r\n";
+                    if( $value == $classname_lc."_p" ) {
+                        self::$relation_spec_comment = "     * 外键特殊定义声明: FOREIGN_ID\r\n";
+                        self::$relation_spec_content = "        EnumDataSpec::FOREIGN_ID => array(\r\n".
+                                                       "            \"" . $classname_lc . "_p" . "\" => \"parent_id\"\r\n".
+                                                       "        )\r\n";
                     }
                 }
             }
@@ -455,18 +472,12 @@ class AutoCodeDomain extends AutoCode
         foreach ($removefields as $removefield) {
             $removeStr.="            '$removefield',\r\n";
         }
-        if (!empty($removeStr)){
-            $removeStr=substr($removeStr,0,strlen($removeStr)-3);
-            $result.="    /**\r\n".
-                     "     * 规格说明\r\n".
-                     "     * 表中不存在的默认列定义:".implode(",",$removefields)."\r\n".
-                     "     * @var mixed\r\n".
-                     "     */\r\n".
-                     "    public \$field_spec=array(\r\n".
-                     "        EnumDataSpec::REMOVE=>array(\r\n".
-                     $removeStr."\r\n".
-                     "        )\r\n".
-                     "    );\r\n";
+        if ( !empty($removeStr) ) {
+            $removeStr = substr($removeStr, 0, strlen($removeStr) - 3);
+            self::$spec_comment = "     * 表中不存在的默认列定义:" . implode(",", $removefields) . "\r\n";
+            self::$spec_content = "        EnumDataSpec::REMOVE=>array(\r\n".
+                                  $removeStr . "\r\n".
+                                  "        ),\r\n";
         }
         return $result;
     }
