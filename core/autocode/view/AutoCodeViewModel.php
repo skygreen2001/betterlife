@@ -10,13 +10,13 @@
 class AutoCodeViewModel extends AutoCodeView
 {
     /**
-     * 生成标准的增删改查模板Action文件需生成首页访问所有生成的链接
+     * 生成通用模版首页访问所有生成的链接
      * @param array|string $table_names
      * 示例如下：
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function createModelIndexFile($table_names="")
+    public static function createModelIndexFile($table_names = "")
     {
         $tableInfos  = self::tableInfosByTable_names($table_names);
         $tpl_content = "    <div><h1>这是首页列表(共计数据对象".count($tableInfos)."个)</h1></div>\r\n";
@@ -36,11 +36,10 @@ class AutoCodeViewModel extends AutoCodeView
         }
         $tpl_content.="    <table class=\"viewdoblock\" style=\"width: 500px;\">\r\n".
                      $result.
-                     "    </table>\r\n".
-                     "        \r\n";
+                     "    </table>";
         $tpl_content = self::tableToViewTplDefine($tpl_content);
-        $filename    = "index".Config_F::SUFFIX_FILE_TPL;
-        $dir         = self::$view_dir_full."index".DS;
+        $filename    = "index" . Config_F::SUFFIX_FILE_TPL;
+        $dir         = self::$view_dir_full . "index" . DS;
         return self::saveDefineToDir( $dir, $filename, $tpl_content );
     }
 

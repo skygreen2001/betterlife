@@ -32,11 +32,11 @@ class Config_F extends ConfigBB
     /**
      * 框架模块Module所在文件夹的名称
      */
-    const ROOT_MODULE="module";    
+    const ROOT_MODULE="module";
     /**
      * 框架函数和功能库所在文件夹的名称
      */
-    const ROOT_INCLUDE_FUNCTION="include";    
+    const ROOT_INCLUDE_FUNCTION="include";
     /**
      * 框架运行主文件所在文件夹的名称
      */
@@ -69,7 +69,7 @@ class Config_F extends ConfigBB
     /**
      * JS文件名后缀
      */
-    const SUFFIX_FILE_JS=".js";  
+    const SUFFIX_FILE_JS=".js";
     /**
      * Smarty模板文件名后缀
      */
@@ -83,13 +83,17 @@ class Config_F extends ConfigBB
      */
     const SUFFIX_FILE_HTM=".htm";
     /**
+     * JSON文件名后缀
+     */
+    const SUFFIX_FILE_JSON=".json";
+    /**
      * 日志文件名后缀
      */
-    const SUFFIX_FILE_LOG=".log";    
+    const SUFFIX_FILE_LOG=".log";
 
     /**
      * XML配置文件名后缀
      */
-    const SUFFIX_FILE_XML=".xml";      
+    const SUFFIX_FILE_XML=".xml";
 }
 ?>

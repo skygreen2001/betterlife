@@ -14,7 +14,7 @@ class AutoCodeViewAdmin extends AutoCodeView
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    public static function js_core($tablename,$fieldInfo)
+    public static function js_core($tablename, $fieldInfo)
     {
         $appname      = self::$appName;
         $classname    = self::getClassname($tablename);
@@ -121,17 +121,65 @@ class AutoCodeViewAdmin extends AutoCodeView
         return $result;
     }
 
+    /**
+     * 将表列定义转换成表示层js所需Api Web文件定义的内容
+     * @param string $tablename 表名
+     * @param array $fieldInfo 表列信息列表
+     */
+    public static function api_web_admin($tablename, $fieldInfo)
+    {
+        $appname      = self::$appName;
+        $classname    = self::getClassname($tablename);
+        $instancename = self::getInstancename($tablename);
+        $realId       = DataObjectSpec::getRealIDColumnName($classname);
+        $editApiImg   = "";
+        $editApiRela  = "";
+        foreach ($fieldInfo as $fieldname=>$field)
+        {
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+                $field_comment    = $field["Comment"];
+                $isImage          = self::columnIsImage( $fieldname, $field_comment );
+                if ( $isImage ) {
+                    $editApiImg  .= "    if (!empty(\${$instancename}->$fieldname)){\r\n".
+                                    "      \${$instancename}->$fieldname = Gc::\$upload_url . \"images/\" . \${$instancename}->$fieldname;\r\n".
+                                    "    }\r\n";
+                }
+                $datatype = self::comment_type($field["Type"]);
+                switch ($datatype) {
+                  case 'bit':
+                    break;
+                  case 'enum':
+                    break;
+                  case 'date':
+                    break;
+                  default:
+                    break;
+                }
+                //TODO
+                // if (!empty($blog->user_id)){
+                //   $user = User::get_by_id($blog->user_id);
+                //   if ($user) $blog->user_name = $user->username;
+                // }
+            }
+        }
+        include("template" . DS . "admin.php");
+        $result = $api_web_template;
+        return $result;
+    }
 
     /**
      * 保存生成的Json代码到指定命名规范的文件中
+     * @param string $instantceName 对象实例名称
      * @param string $fieldname field属性名称
      * @param string $defineJsFileContent 生成的代码
      */
-    private static function saveJsonDefineToDir( $instantceName, $fieldname,  $defineJsonFileContent )
+    private static function saveJsonDefineToDir($instantceName, $fieldname, $defineJsonFileContent)
     {
-        $dir          = self::$save_dir . "admin" . DS . "data" . DS;
-        $fieldname{0} = strtoupper($fieldname{0});
-        $filename     = $instantceName . $fieldname . ".json";
+        $dir           = self::$save_dir . Gc::$module_root . DS . "admin" . DS . "data" . DS;
+        $fieldname{0}  = strtoupper($fieldname{0});
+        $filename      = $instantceName . $fieldname . Config_F::SUFFIX_FILE_JSON;
+        $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
+        AutoCodePreviewReport::$json_admin_files[$classname . $filename] = $relative_path;
         return self::saveDefineToDir($dir, $filename, $defineJsonFileContent );
     }
 
@@ -173,7 +221,7 @@ class AutoCodeViewAdmin extends AutoCodeView
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    public static function tpl_edit($tablename,$fieldInfo)
+    public static function tpl_edit($tablename, $fieldInfo)
     {
         $appname       = self::$appName;
         $table_comment = self::tableCommentKey($tablename);
@@ -296,7 +344,7 @@ UETC;
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    public static function tpl_view($tablename,$fieldInfo)
+    public static function tpl_view($tablename, $fieldInfo)
     {
         $appname       = self::$appName;
         $table_comment = self::tableCommentKey($tablename);

@@ -45,7 +45,7 @@ function hidden_hiddendiv(){
 }
 </script>
 <span>&nbsp;</span>
-<a href="javascript:show_showdiv();"><span id="_strHref" class="hidden">全部展开+</span></a>|<a href="javascript:hidden_hiddendiv();"><span id="_strSpan" class="hidden">全部收起-</span></a>
+<a href="javascript:show_showdiv();" style="padding-left: 16px;"><span id="_strHref" class="hidden">全部展开+</span></a>|<a href="javascript:hidden_hiddendiv();"><span id="_strSpan" class="hidden">全部收起-</span></a>
 HTMLCONTENT;
         return $htmlContent;
     }
@@ -64,7 +64,7 @@ HTMLCONTENT;
      */
     public static function foldbeforedomain()
     {
-        $htmlContent = '<div id="hidden_div" style="display:block;">
+        $htmlContent = '<div id="hidden_div" style="display:block; padding-left: 16px;">
                           <a href="javascript:" onclick="(document.getElementById(\'Content_1\').style.display=(document.getElementById(\'Content_1\').style.display==\'none\')?\'\':\'none\');">';
         $htmlContent.= "    <font color='#77cc6d'>&nbsp;&nbsp;[".str_repeat("-", 40)."生成实体数据对象类:start".str_repeat("-", 40)."]</font>
                           </a>";

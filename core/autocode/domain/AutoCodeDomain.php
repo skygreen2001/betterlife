@@ -39,63 +39,62 @@ class AutoCodeDomain extends AutoCode
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode($table_names="")
+    public static function AutoCode($table_names = "")
     {
-        self::$app_dir = Gc::$appName;
-        self::$domain_dir_full = self::$save_dir.self::$app_dir.DS.self::$dir_src.DS.self::$domain_dir.DS;
+        self::$app_dir         = Gc::$appName;
+        self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS.self::$dir_src . DS . self::$domain_dir . DS;
         self::init();
         if (self::$isOutputCss) self::$showReport .= UtilCss::form_css() . "\r\n";
-        self::$enumClass="";
-        self::$showReport.= '<div id="Content_11" style="display:none;">';
-        $link_domain_dir_href="file:///".str_replace("\\", "/", self::$domain_dir_full);
-        self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_domain_dir_href."'>".self::$domain_dir_full."</a></font><br/><br/>";
+        self::$enumClass       = "";
+        self::$showReport     .= '<div id="Content_11" style="display:none;">';
+        $link_domain_dir_href  ="file:///".str_replace("\\", "/", self::$domain_dir_full);
+        self::$showReport     .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . "'>" . self::$domain_dir_full . "</a></font><br/><br/>";
 
-        $fieldInfos=self::fieldInfosByTable_names($table_names);
-        foreach ($fieldInfos as $tablename=>$fieldInfo){
+        $fieldInfos=self::fieldInfosByTable_names( $table_names );
+        foreach ($fieldInfos as $tablename => $fieldInfo){
            //print_r($fieldInfo);
            //self::$showReport.="<br/>";
            $definePhpFileContent=self::tableToDataObjectDefine($tablename,$fieldInfo);
-           if (isset(self::$save_dir)&&!empty(self::$save_dir)&&isset($definePhpFileContent)){
-               $classname=self::saveDataObjectDefineToDir($tablename,$definePhpFileContent);
-               self::$showReport.= "生成导出完成:$tablename=>$classname!<br/>";
+           if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ) {
+               $classname         = self::saveDataObjectDefineToDir( $tablename, $definePhpFileContent );
+               self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
            }else{
-               self::$showReport.= $definePhpFileContent."<br/>";
+               self::$showReport .= $definePhpFileContent . "<br/>";
            }
-           self::tableToEnumClass($tablename,$fieldInfo);
+           self::tableToEnumClass( $tablename, $fieldInfo );
         }
-        self::$showReport.= "</div><br/>";
-        self::$showReport.=AutoCodeFoldHelper::foldEffectCommon("Content_12");
-        self::$showReport.= '<font color="#237319">生成枚举类型↓</font><br/>';
-        self::$showReport.= '</a>';
-        self::$showReport.= '<div id="Content_12" style="display:none;">';
-        self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_domain_dir_href.self::$enum_dir."'>".self::$domain_dir_full.self::$enum_dir."</a></font><br/><br/>";
-        self::$showReport.= self::$enumClass;
-        self::$showReport.= "</div>";
+        self::$showReport .= "</div><br/>";
+        self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_12");
+        self::$showReport .= '<font color="#237319">生成枚举类型↓</font><br/>';
+        self::$showReport .= '</a>';
+        self::$showReport .= '<div id="Content_12" style="display:none;">';
+        self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . self::$enum_dir . "'>" . self::$domain_dir_full . self::$enum_dir."</a></font><br/><br/>";
+        self::$showReport .= self::$enumClass;
+        self::$showReport .= "</div>";
     }
 
     /**
      * 用户输入需求
      * @param $default_value 默认值
      */
-    public static function UserInput( $default_value="", $title="", $inputArr=null, $more_content="" )
+    public static function UserInput($default_value="", $title="", $inputArr=null, $more_content="")
     {
-        $url_base=Gc::$url_base;
-        if (contain(strtolower(php_uname()),"darwin")){
-            $url_base=UtilNet::urlbase();
-            $file_sub_dir=str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
-            if (contain($file_sub_dir,"tools".DS))
-                $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
-            $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
-            if(!endwith($url_base,$domainSubDir))$url_base.=$domainSubDir;
+        $url_base = Gc::$url_base;
+        if ( contain( strtolower(php_uname()), "darwin") ) {
+            $url_base     = UtilNet::urlbase();
+            $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
+            if ( contain( $file_sub_dir, "tools" . DS ) )
+                $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir,"tools".DS));
+            $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
+            if ( !endwith( $url_base, $domainSubDir ) ) $url_base .= $domainSubDir;
         }
-        $db_domian_java=$url_base."tools/tools/autocode/layer/domain/db_domain_java.php";
-        $inputArr=array(
-            "2"=>"所有的列定义的对象属性都是public",
-            "1"=>"对象属性都是private,定义setter和getter方法",
+        $db_domian_java = $url_base . "tools/tools/autocode/layer/domain/db_domain_java.php";
+        $inputArr = array(
+              "2" => "所有的列定义的对象属性都是public",
+              "1" => "对象属性都是private,定义setter和getter方法",
         );
-        $more_content="<br/><br/><a class='more_java' href='$db_domian_java' target='_blank'>生成Java实体类</a>";
-        parent::UserInput("一键生成数据对象定义实体类层",$inputArr,$default_value,$more_content);
-
+        $more_content = "<br/><br/><a class='more_java' href='$db_domian_java' target='_blank'>生成Java实体类</a>";
+        parent::UserInput( "一键生成数据对象定义实体类层", $inputArr, $default_value, $more_content );
     }
 
     /**
@@ -103,111 +102,110 @@ class AutoCodeDomain extends AutoCode
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    private static function tableToEnumClass($tablename,$fieldInfo)
+    private static function tableToEnumClass($tablename, $fieldInfo)
     {
         $category  = Gc::$appName;
         $author    = self::$author;
-        foreach ($fieldInfo as $fieldname=>$field){
-            $datatype =self::comment_type($field["Type"]);
-            if ($datatype=='enum'){
-                $enumclassname=self::enumClassName($fieldname,$tablename);
-                $enum_columnDefine=self::enumDefines($field["Comment"]);
-                if (isset($enum_columnDefine)&&(count($enum_columnDefine)>0))
+        foreach ($fieldInfo as $fieldname => $field){
+            $datatype = self::comment_type($field["Type"]);
+            if ($datatype == 'enum'){
+                $enumclassname     = self::enumClassName( $fieldname, $tablename );
+                $enum_columnDefine = self::enumDefines( $field["Comment"] );
+                if ( isset($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) )
                 {
-                    $comment=$field["Comment"];
-                    if (contains($comment,array("\r","\n"))){
-                        $comment=preg_split("/[\s,]+/", $comment);
-                        $comment=$comment[0];
+                    $comment = $field["Comment"];
+                    if ( contains( $comment, array("\r", "\n") ) ) {
+                        $comment = preg_split("/[\s,]+/", $comment);
+                        $comment = $comment[0];
                     }
-                    $result="<?php\r\n".
-                             "/**\r\n".
-                             " *---------------------------------------<br/>\r\n".
-                             " * 枚举类型:$comment  <br/>\r\n".
-                             " *---------------------------------------<br/>\r\n".
-                             " * @category $category\r\n".
-                             " * @package domain\r\n".
-                             " * @subpackage enum\r\n".
-                             " * @author $author\r\n".
-                             " */\r\n".
-                             "class $enumclassname extends Enum\r\n".
-                             "{\r\n";
+                    $result = "<?php\r\n".
+                              "/**\r\n".
+                              " *---------------------------------------<br/>\r\n".
+                              " * 枚举类型:$comment  <br/>\r\n".
+                              " *---------------------------------------<br/>\r\n".
+                              " * @category $category\r\n".
+                              " * @package domain\r\n".
+                              " * @subpackage enum\r\n".
+                              " * @author $author\r\n".
+                              " */\r\n".
+                              "class $enumclassname extends Enum\r\n".
+                              "{\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
-                        $enumname=strtoupper($enum_column['name']) ;
-                        $enumvalue=$enum_column['value'];
-                        $enumcomment=$enum_column['comment'];
-                        $result.="    /**\r\n".
-                                 "     * $comment:$enumcomment\r\n".
-                                 "     */\r\n".
-                                 "    const $enumname='$enumvalue';\r\n";
+                        $enumname    = strtoupper($enum_column['name']) ;
+                        $enumvalue   = $enum_column['value'];
+                        $enumcomment = $enum_column['comment'];
+                        $result     .= "    /**\r\n".
+                                       "     * $comment:$enumcomment\r\n".
+                                       "     */\r\n".
+                                       "    const $enumname='$enumvalue';\r\n";
                     }
-                    $result.="\r\n";
+                    $result  .="\r\n";
                     $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
                     $comment  =str_replace("\r", "     * ", $comment);
                     $comment  =str_replace("\n", "     * ", $comment);
                     $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
-                    $result.="    /**\r\n".
-                             "     * 显示".$comment."<br/>\r\n".
-                             "     */\r\n".
-                             "    public static function {$fieldname}Show(\${$fieldname})\r\n".
-                             "    {\r\n".
-                             "        switch(\${$fieldname}){\r\n";
+                    $result  .="    /**\r\n".
+                               "     * 显示".$comment."<br/>\r\n".
+                               "     */\r\n".
+                               "    public static function {$fieldname}Show(\${$fieldname})\r\n".
+                               "    {\r\n".
+                               "        switch(\${$fieldname}){\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
-                        $enumname=strtoupper($enum_column['name']) ;
-                        $enumcomment=$enum_column['comment'];
-                        $result.="            case self::{$enumname}:\r\n".
-                                 "                return \"{$enumcomment}\";\r\n";
+                        $enumname    = strtoupper($enum_column['name']) ;
+                        $enumcomment = $enum_column['comment'];
+                        $result     .= "            case self::{$enumname}:\r\n".
+                                       "                return \"{$enumcomment}\";\r\n";
                     }
-                    $result.="        }\r\n";
-                    $result.="        return \"未知\";\r\n".
-                             "    }\r\n\r\n";
-                    $comment=explode("<br/>",$comment);
-                    if (count($comment)>0){
-                        $comment=$comment[0];
+                    $result .= "        }\r\n";
+                    $result .= "        return \"未知\";\r\n".
+                               "    }\r\n\r\n";
+                    $comment = explode("<br/>",$comment);
+                    if ( count($comment) > 0 ) {
+                        $comment = $comment[0];
                     }
-                    $result.="    /**\r\n".
-                             "     * 根据{$comment}显示文字获取{$comment}<br/>\r\n".
-                             "     * @param mixed \${$fieldname}Show {$comment}显示文字\r\n".
-                             "     */\r\n".
-                             "    public static function {$fieldname}ByShow(\${$fieldname}Show)\r\n".
-                             "    {\r\n".
-                             "        switch(\${$fieldname}Show){\r\n";
+                    $result .= "    /**\r\n".
+                               "     * 根据{$comment}显示文字获取{$comment}<br/>\r\n".
+                               "     * @param mixed \${$fieldname}Show {$comment}显示文字\r\n".
+                               "     */\r\n".
+                               "    public static function {$fieldname}ByShow(\${$fieldname}Show)\r\n".
+                               "    {\r\n".
+                               "        switch(\${$fieldname}Show){\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
-                        $enumname=strtoupper($enum_column['name']);
-                        $enumcomment=$enum_column['comment'];
-                        $result.="            case \"{$enumcomment}\":\r\n".
-                                 "                return self::{$enumname};\r\n";
+                        $enumname    = strtoupper($enum_column['name']);
+                        $enumcomment = $enum_column['comment'];
+                        $result     .= "            case \"{$enumcomment}\":\r\n".
+                                       "                return self::{$enumname};\r\n";
                     }
-                    $result.="        }\r\n";
-                    if (!empty($enum_columnDefine)&&(count($enum_columnDefine)>0)){
-                        $enumname=strtoupper($enum_columnDefine[0]['name']);
-                        $result.="        return self::{$enumname};\r\n";
-                    }else{
-                        $result.="        return null;\r\n";
+                    $result .= "        }\r\n";
+                    if ( !empty($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) ) {
+                        $enumname  = strtoupper($enum_columnDefine[0]['name']);
+                        $result   .= "        return self::{$enumname};\r\n";
+                    } else {
+                        $result   .= "        return null;\r\n";
                     }
-                    $result.="    }\r\n\r\n";
-                    $result.="    /**\r\n".
-                             "     * 通过枚举值获取枚举键定义<br/>\r\n".
-                             "     */\r\n".
-                             "    public static function {$fieldname}EnumKey(\${$fieldname})\r\n".
-                             "    {\r\n".
-                             "        switch(\${$fieldname}){\r\n";
+                    $result .= "    }\r\n\r\n";
+                    $result .= "    /**\r\n".
+                               "     * 通过枚举值获取枚举键定义<br/>\r\n".
+                               "     */\r\n".
+                               "    public static function {$fieldname}EnumKey(\${$fieldname})\r\n".
+                               "    {\r\n".
+                               "        switch(\${$fieldname}){\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
-                        $enumname=strtoupper($enum_column['name']);
-                        $enumvalue=$enum_column['value'];
-                        $result.="            case '{$enumvalue}':\r\n".
-                                 "                return \"{$enumname}\";\r\n";
+                        $enumname  = strtoupper($enum_column['name']);
+                        $enumvalue = $enum_column['value'];
+                        $result   .= "            case '{$enumvalue}':\r\n".
+                                     "                return \"{$enumname}\";\r\n";
                     }
-                    $result.="        }\r\n";
-                    if (!empty($enum_columnDefine)&&(count($enum_columnDefine)>0)){
-                        $enumname=strtoupper($enum_columnDefine[0]['name']);
-                        $result.="        return \"{$enumname}\";\r\n";
-                    }else{
-                        $result.="        return null;\r\n";
+                    $result .= "        }\r\n";
+                    if ( !empty($enum_columnDefine) && (count($enum_columnDefine)>0) ) {
+                        $enumname = strtoupper($enum_columnDefine[0]['name']);
+                        $result  .= "        return \"{$enumname}\";\r\n";
+                    } else {
+                        $result  .= "        return null;\r\n";
                     }
-                    $result.="    }\r\n\r\n";
-
-                    $result.="}\r\n\r\n";
-                    self::$enumClass.="生成导出完成:".$tablename."[".$fieldname."]=>".self::saveEnumDefineToDir($enumclassname,$result)."!<br/>";
+                    $result .= "    }\r\n\r\n";
+                    $result .= "}\r\n\r\n";
+                    self::$enumClass .= "生成导出完成:" . $tablename . "[" . $fieldname . "] => " . self::saveEnumDefineToDir( $enumclassname, $result ) . "!<br/>";
                 }
             }
         }
@@ -220,46 +218,46 @@ class AutoCodeDomain extends AutoCode
      */
     private static function tableToDataObjectDefine($tablename,$fieldInfo)
     {
-        $result="<?php\r\n";
-        if (self::$tableInfoList!=null&&count(self::$tableInfoList)>0&&  array_key_exists("$tablename", self::$tableInfoList)){
-            $table_comment=self::$tableInfoList[$tablename]["Comment"];
-            $table_comment=str_replace("关系表","",$table_comment);
-            if (contain($table_comment,"\r")||contain($table_comment,"\n")){
-                $table_comment_arr=preg_split("/[\s,]+/", $table_comment);
-                $table_comment="";
-                foreach ($table_comment_arr as $tcomment){
-                    $table_comment.=" * $tcomment<br/>\r\n";
+        $result = "<?php\r\n";
+        if ( (self::$tableInfoList != null) && ( count(self::$tableInfoList) > 0) && ( array_key_exists("$tablename", self::$tableInfoList ) ) ) {
+            $table_comment = self::$tableInfoList[$tablename]["Comment"];
+            $table_comment = str_replace("关系表","",$table_comment);
+            if ( contain( $table_comment, "\r" ) || contain( $table_comment, "\n" ) ) {
+                $table_comment_arr = preg_split("/[\s,]+/", $table_comment);
+                $table_comment     = "";
+                foreach ($table_comment_arr as $tcomment) {
+                    $table_comment .= " * $tcomment<br/>\r\n";
                 }
             }else{
-                $table_comment=" * ".$table_comment."<br/>\r\n";
+                $table_comment = " * " . $table_comment . "<br/>\r\n";
             }
         }else{
-            $table_comment="关于$tablename的描述";
+            $table_comment = "关于$tablename的描述";
         }
         $category  = Gc::$appName;
         $author    = self::$author;
         $package   = self::getPackage($tablename);
         $classname = self::getClassname($tablename);
-        $result.="/**\r\n".
-                 " +---------------------------------------<br/>\r\n".
-                 "$table_comment".
-                 " +---------------------------------------\r\n".
-                 " * @category $category\r\n".
-                 " * @package $package\r\n".
-                 " * @author $author\r\n".
-                 " */\r\n";
-        $result  .="class $classname extends DataObject\r\n{\r\n";
-        $datatype ="string";
+        $result   .= "/**\r\n".
+                     " +---------------------------------------<br/>\r\n".
+                     "$table_comment".
+                     " +---------------------------------------\r\n".
+                     " * @category $category\r\n".
+                     " * @package $package\r\n".
+                     " * @author $author\r\n".
+                     " */\r\n";
+        $result   .= "class $classname extends DataObject\r\n{\r\n";
+        $datatype  = "string";
         switch (self::$type) {
             case 2:
-                $result.= '    //<editor-fold defaultstate="collapsed" desc="定义部分">'."\r\n";
-                foreach ($fieldInfo as $fieldname=>$field){
-                    if (self::isNotColumnKeywork($fieldname)){
-                        $datatype =self::comment_type($field["Type"]);
-                        $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
-                        $comment  =str_replace("\r", "     * ", $comment);
-                        $comment  =str_replace("\n", "     * ", $comment);
-                        $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
+                $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">'."\r\n";
+                foreach ($fieldInfo as $fieldname => $field) {
+                    if ( self::isNotColumnKeywork( $fieldname ) ) {
+                        $datatype = self::comment_type($field["Type"]);
+                        $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                        $comment  = str_replace("\r", "     * ", $comment);
+                        $comment  = str_replace("\n", "     * ", $comment);
+                        $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
                         $result  .=
                                     "    /**\r\n".
                                     "     * ".$comment."\r\n".
@@ -269,18 +267,18 @@ class AutoCodeDomain extends AutoCode
                                     "    public \$".$fieldname.";\r\n";
                     }
                 };
-                $result.= "    //</editor-fold>\r\n";
+                $result .= "    //</editor-fold>\r\n";
                 break;
             default:
-                $result.= '    //<editor-fold defaultstate="collapsed" desc="定义部分">'."\r\n";
-                foreach ($fieldInfo as $fieldname=>$field){
-                  if (self::isNotColumnKeywork($fieldname)){
-                       $datatype=self::comment_type($field["Type"]);
-                       $comment=str_replace("\r\n", "     * ", $field["Comment"]);
-                       $comment=str_replace("\r", "     * ", $comment);
-                       $comment=str_replace("\n", "     * ", $comment);
-                       $comment=str_replace("     * ", "\r\n     * ", $comment);
-                       $result.=
+                $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">'."\r\n";
+                foreach ($fieldInfo as $fieldname => $field) {
+                  if ( self::isNotColumnKeywork( $fieldname ) ) {
+                       $datatype = self::comment_type( $field["Type"] );
+                       $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                       $comment  = str_replace("\r", "     * ", $comment);
+                       $comment  = str_replace("\n", "     * ", $comment);
+                       $comment  = str_replace("     * ", "\r\n     * ", $comment);
+                       $result  .=
                                 "    /**\r\n".
                                 "     * ".$comment."\r\n".
                                 "     * @var $datatype\r\n".
@@ -289,23 +287,23 @@ class AutoCodeDomain extends AutoCode
                                 "    private \$".$fieldname.";\r\n";
                     };
                 }
-                $result.= "    //</editor-fold>\r\n\r\n";
-                $result.= '    //<editor-fold defaultstate="collapsed" desc="setter和getter">'."\r\n";
-                foreach ($fieldInfo as $fieldname=>$field){
-                    if (self::isNotColumnKeywork($fieldname)){
-                        $result.=
+                $result .= "    //</editor-fold>\r\n\r\n";
+                $result .= '    //<editor-fold defaultstate="collapsed" desc="setter和getter">'."\r\n";
+                foreach ($fieldInfo as $fieldname => $field) {
+                    if ( self::isNotColumnKeywork( $fieldname ) ) {
+                        $result .=
                             "    public function set".ucfirst($fieldname)."(\$".$fieldname.")\r\n".
                             "    {\r\n".
                             "        \$this->".$fieldname."=\$".$fieldname.";\r\n".
                             "    }\r\n";
-                        $result.=
+                        $result .=
                             "    public function get".ucfirst($fieldname)."()\r\n".
                             "    {\r\n".
                             "        return \$this->".$fieldname.";\r\n".
                             "    }\r\n";
                     };
                 }
-                $result.= "    //</editor-fold>\r\n";
+                $result .= "    //</editor-fold>\r\n";
                 break;
         }
 
@@ -612,13 +610,13 @@ class AutoCodeDomain extends AutoCode
      */
     private static function saveDataObjectDefineToDir($tablename,$definePhpFileContent)
     {
-        $package  =self::getPackage($tablename);
-        $classname=self::getClassname($tablename);
-        $filename ="$classname.php";
-        $package  =str_replace(".", DIRECTORY_SEPARATOR, $package);
-        $relative_path=str_replace(self::$save_dir, "", self::$domain_dir_full.$package.DS.$filename);
-        AutoCodePreviewReport::$domain_files[$classname]=$relative_path;
-        return self::saveDefineToDir(self::$domain_dir_full.$package,$filename,$definePhpFileContent);
+        $package   = self::getPackage($tablename);
+        $classname = self::getClassname($tablename);
+        $filename  = "$classname.php";
+        $package   = str_replace(".", DS, $package);
+        $relative_path = str_replace(self::$save_dir, "", self::$domain_dir_full . $package . DS . $filename);
+        AutoCodePreviewReport::$domain_files[$classname] = $relative_path;
+        return self::saveDefineToDir( self::$domain_dir_full . $package, $filename, $definePhpFileContent );
     }
 
     /**
@@ -629,8 +627,8 @@ class AutoCodeDomain extends AutoCode
     private static function saveEnumDefineToDir($enumclassname,$definePhpFileContent)
     {
         $filename = $enumclassname.".php";
-        $relative_path=str_replace(self::$save_dir, "",self::$domain_dir_full.self::$enum_dir.DS.$filename);
+        $relative_path=str_replace(self::$save_dir, "", self::$domain_dir_full . self::$enum_dir . DS . $filename);
         AutoCodePreviewReport::$enum_files[$enumclassname]=$relative_path;
-        return self::saveDefineToDir(self::$domain_dir_full.self::$enum_dir,$filename,$definePhpFileContent);
+        return self::saveDefineToDir(self::$domain_dir_full . self::$enum_dir, $filename, $definePhpFileContent);
     }
 }

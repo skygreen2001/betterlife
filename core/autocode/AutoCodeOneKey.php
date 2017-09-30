@@ -24,7 +24,6 @@ class AutoCodeOneKey extends AutoCode
         }
         self::$showReport        .= AutoCodeFoldHelper::foldEffectReady();
         //生成实体数据对象类
-        AutoCodeDomain::$save_dir = self::$save_dir;
         AutoCodeDomain::$type     = 2;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforedomain();
         AutoCodeDomain::AutoCode();
@@ -32,14 +31,13 @@ class AutoCodeOneKey extends AutoCode
         AutoCode::$isOutputCss    = false;
 
         //生成提供服务类[前端Service类]
-        AutoCodeService::$save_dir = self::$save_dir;
         self::$showReport         .= AutoCodeFoldHelper::foldbeforeservice();
         AutoCodeService::$type     = 2;
         AutoCodeService::AutoCode();
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
         //生成Action类[前端、后台和通用模版]
-        AutoCodeAction::$save_dir = self::$save_dir;
+        AutoCodeAction::$type     = 0;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
         AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
         AutoCodeAction::AutoCode( $table_names );
@@ -50,14 +48,13 @@ class AutoCodeOneKey extends AutoCode
         self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
         //生成表示层[前端、后台和通用模版]
-        AutoCodeView::$save_dir = self::$save_dir;
         self::$showReport      .= AutoCodeFoldHelper::foldbeforeviewdefault();
         AutoCodeView::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeView::AutoCode();
+        AutoCodeView::AutoCode( $table_names );
         AutoCodeView::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeView::AutoCode();
+        AutoCodeView::AutoCode( $table_names );
         AutoCodeView::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeView::AutoCode();
+        AutoCodeView::AutoCode( $table_names );
         self::$showReport      .= AutoCodeFoldHelper::foldafterviewdefault();
 
         if(Config_AutoCode::SHOW_PREVIEW_REPORT){

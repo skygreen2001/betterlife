@@ -12,7 +12,7 @@ class EnumReusePjType extends Enum
     /**
      * 精简版【只包括框架核心-包括MVC,前后台】
      */
-    const SIMPLE    = 2;
+    const SIMPLE  = 2;
     /**
      * MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
      */
@@ -131,19 +131,19 @@ class Project_Refactor
      */
     private static function IgnoreAllDbEngineExceptMysql()
     {
-        $root_config="config";
+        $root_config = "config";
         //1.清除配置文件:config/db
-        $ignore_config_db_dir=self::$save_dir.$root_config.DS."config".DS."db".DS;
-        $toDeleteDir=$ignore_config_db_dir."dal".DS;
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        $toDeleteFile=$ignore_config_db_dir."object".DS."Config_Mssql.php";
-        if(file_exists($toDeleteFile))unlink($toDeleteFile);
-        $toDeleteFile=$ignore_config_db_dir."object".DS."Config_Odbc.php";
+        $ignore_config_db_dir = self::$save_dir.$root_config.DS."config".DS."db".DS;
+        $toDeleteDir  = $ignore_config_db_dir."dal".DS;
+        if( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        $toDeleteFile = $ignore_config_db_dir."object".DS."Config_Mssql.php";
+        if ( file_exists($toDeleteFile) ) unlink($toDeleteFile);
+        $toDeleteFile = $ignore_config_db_dir."object".DS."Config_Odbc.php";
         if(file_exists($toDeleteFile))unlink($toDeleteFile);
 
         //2.数据库引擎文件:core/db/
-        $root_core="core";
-        $ignore_core_db_dir=self::$save_dir.$root_core.DS."db".DS;
+        $root_core = "core";
+        $ignore_core_db_dir=self::$save_dir . $root_core.DS."db".DS;
         $toDeleteDir=$ignore_core_db_dir."dal".DS;
         if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
         $toDeleteDir=$ignore_core_db_dir."object".DS."odbc".DS;
@@ -223,7 +223,7 @@ class Project_Refactor
      */
     public static function Run()
     {
-        if(isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"]))self::$save_dir=$_REQUEST["save_dir"];
+        if(isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"])) self::$save_dir = $_REQUEST["save_dir"];
         if(isset($_REQUEST["pj_name_cn"])&&!empty($_REQUEST["pj_name_cn"]))
         {
             self::$pj_name_cn=$_REQUEST["pj_name_cn"];
@@ -292,15 +292,15 @@ class Project_Refactor
                 }
             }
 
-            $homeAppDir=self::$save_dir.Gc::$module_root.DS.self::$pj_name_en;
-            UtilFileSystem::createDir($homeAppDir.DS."src".DS."domain".DS);
+            $homeAppDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en;
+            UtilFileSystem::createDir( $homeAppDir . DS . "src" . DS . "domain" . DS );
 
             //修改Initializer.php初始化文件
-            $init_file=self::$save_dir."core".DS."main".DS."Initializer.php";
-            $content=file_get_contents($init_file);
+            $init_file = self::$save_dir . "core" . DS . "main" . DS . "Initializer.php";
+            $content   = file_get_contents( $init_file );
             file_put_contents($init_file, $content);
 
-            $include_files=array(
+            $include_files = array(
                 ".htaccess",
                 "favicon.ico",
                 "Gc.php",
@@ -310,38 +310,38 @@ class Project_Refactor
                 "welcome.php"
             );
             foreach ($include_files as $include_file) {
-                copy(Gc::$nav_root_path.$include_file, self::$save_dir.$include_file);
+                copy(Gc::$nav_root_path . $include_file, self::$save_dir . $include_file);
             }
 
             //修改Gc.php配置文件
-            $gc_file=self::$save_dir."Gc.php";
-            $content=file_get_contents($gc_file);
+            $gc_file = self::$save_dir."Gc.php";
+            $content = file_get_contents($gc_file);
             // $content=str_replace("\"model\",", "", $content);
-            $content=str_replace("\"admin\",\r\n", "", $content);
-            $content=str_replace(Gc::$site_name, self::$pj_name_cn, $content);
-            $content=str_replace(Gc::$appName, self::$pj_name_en, $content);
-            $content=str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
+            $content = str_replace("\"admin\",\r\n", "", $content);
+            $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
+            $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
+            $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             file_put_contents($gc_file, $content);
 
             //修改Config_Db.php配置文件
-            $conf_db_file=self::$save_dir."config".DS."config".DS."Config_Db.php";
-            $content=file_get_contents($conf_db_file);
-            $content=str_replace("\$dbname=\"".Config_Db::$dbname."\"", "\$dbname=\"".self::$db_name."\"", $content);
-            $content=str_replace("\$table_prefix=\"".Config_Db::$table_prefix."\"", "\$table_prefix=\"".self::$table_prefix."\"", $content);
+            $conf_db_file = self::$save_dir."config".DS."config".DS."Config_Db.php";
+            $content      = file_get_contents($conf_db_file);
+            $content      = str_replace("\$dbname=\"".Config_Db::$dbname."\"", "\$dbname=\"".self::$db_name."\"", $content);
+            $content      = str_replace("\$table_prefix=\"".Config_Db::$table_prefix."\"", "\$table_prefix=\"".self::$table_prefix."\"", $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
-            $welcome_file=self::$save_dir."welcome.php";
-            $content=file_get_contents($welcome_file);
-            if(!empty(self::$git_name)){
-                $ctrl=substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
-                $ctrr=substr($content,strpos($content,"<?php \$help_url=\"")+18);
-                $ctrr=substr($ctrr,strpos($ctrr,"\""));
-                $content=$ctrl.self::$git_name.$ctrr;
+            $welcome_file = self::$save_dir."welcome.php";
+            $content      = file_get_contents($welcome_file);
+            if ( !empty(self::$git_name) ) {
+                $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
+                $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
+                $ctrr    = substr($ctrr,strpos($ctrr,"\""));
+                $content = $ctrl.self::$git_name.$ctrr;
             }
-            $content=str_replace("网站后台", "", $content);
-            $content=str_replace("通用模版", "", $content);
-            $content=str_replace("工程重用</a>|", "", $content);
+            $content = str_replace("网站后台", "", $content);
+            $content = str_replace("通用模版", "", $content);
+            $content = str_replace("工程重用</a>|", "", $content);
             file_put_contents($welcome_file, $content);
 
             self::IgnoreAllDbEngineExceptMysql();

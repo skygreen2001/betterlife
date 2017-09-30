@@ -49,7 +49,7 @@ class AutoCodeService extends AutoCode
         if (!UtilString::is_utf8(self::$service_dir_full)) {
             self::$service_dir_full = UtilString::gbk2utf8(self::$service_dir_full);
         }
-        self::$service_dir_full = self::$save_dir . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
+        self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
 
         self::init();
 
@@ -82,7 +82,7 @@ class AutoCodeService extends AutoCode
         }
         self::$showReport .= '</div><br>';
 
-        self::$ajax_dir_full = self::$save_dir.self::$app_dir.DS.self::$dir_src.DS."httpdata".DS;
+        self::$ajax_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$dir_src . DS . "httpdata" . DS;
         self::tableToAjaxPhpDefine();
 
         $category  = Gc::$appName;

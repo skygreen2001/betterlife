@@ -246,6 +246,10 @@ class UtilCss extends Util
                 border-collapse: separate;
                 border-spacing: 0;
             }
+            table, td, th {
+                vertical-align: middle;
+                padding: 6px 0px;
+            }
             table.preview {
                 border-collapse: collapse;
                 margin-bottom: 1.4em;
@@ -257,12 +261,17 @@ class UtilCss extends Util
             }
             table.preview td {
                 text-align:center;
+                padding: 6px 12px;
             }
             table.preview, table.preview th,table.preview td {
                 border: 1px solid '. self::$color_b .';
             }
-            table, td, th {
-                vertical-align: middle;
+            table.preview td:first-child {
+                min-width: 90px;
+                padding: 6px 0px;
+            }
+            table.preview td:last-child {
+                min-width: 160px;
                 padding: 6px 0px;
             }
             table.preview a:hover{
