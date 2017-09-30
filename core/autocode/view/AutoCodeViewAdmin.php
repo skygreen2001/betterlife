@@ -276,35 +276,37 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $datatype = self::comment_type($field["Type"]);
                     $edit_contents .= "                      <div class=\"form-group\">\r\n".
                                       "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
-                                      "                          <div class=\"col-sm-9\">\r\n";
+                                      "                          <div class=\"col-sm-9\">\r\n".
+                                      "                              <div class=\"clearfix\">\r\n";
                     switch ($datatype) {
                         //todo
                         //<select id="categoryIds" name="categoryId[]" class="form-control" multiple>
                         case "bit":
-                          $edit_contents .= "                              <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" {if \$" . $instancename . "." . $fieldname . "} checked {/if} data-on-text=\"是\" data-off-text=\"否\" />\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" {if \$" . $instancename . "." . $fieldname . "} checked {/if} data-on-text=\"是\" data-off-text=\"否\" />\r\n";
                           break;
                         case "enum":
-                          $edit_contents .= "                              <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
+                          $edit_contents .= "                                  <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
                           $enumJsContent .= "    <script type=\"text/javascript\">\r\n".
                                             "        var default_keyword_id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
                                             "        var default_keyword_text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
                                             "    </script>\r\n";
                           break;
                         case "date":
-                          $edit_contents .= "                              <div class=\"input-group col-sm-9 datetimeStyle\" id=\"" . $fieldname . "\">\r\n".
-                                            "                                  <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n".
-                                            "                                  <span class=\"input-group-addon\"><i class=\"icon-calendar bigger-110\"></i></span>\r\n".
-                                            "                              </div>\r\n";
+                          $edit_contents .= "                                  <div class=\"input-group col-sm-9 datetimeStyle\" id=\"" . $fieldname . "\">\r\n".
+                                            "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n".
+                                            "                                      <span class=\"input-group-addon\"><i class=\"icon-calendar bigger-110\"></i></span>\r\n".
+                                            "                                  </div>\r\n";
                           break;
                         case "int":
                         case "bigint":
-                          $edit_contents .= "                              <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
                           break;
                         default:
-                          $edit_contents .= "                              <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
                           break;
                     }
-                    $edit_contents .= "                          </div>\r\n".
+                    $edit_contents .= "                              </div>\r\n".
+                                      "                          </div>\r\n".
                                       "                      </div>\r\n";
                 }
             }

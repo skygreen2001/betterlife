@@ -12,7 +12,7 @@
               <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
-            <i class="glyphicon glyphicon-grain"></i> Betterlife
+            <i class="glyphicon glyphicon-grain"></i> {$site_name}
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">

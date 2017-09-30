@@ -219,7 +219,7 @@ $js_sub_template_id = <<<JS_ID
 
                     \$("body").off('click', 'a#info-dele' + data);
                     \$("body").on('click', 'a#info-dele' + data, function(){//删除
-                        bootbox.confirm("确定要删除该博客:" + data + "?",function(result){
+                        bootbox.confirm("确定要删除该{$table_comment}:" + data + "?",function(result){
                             if ( result == true ){
                                 \$.get("index.php?go={$appname}.{$instancename}.delete&id="+data, function(response, status){
                                     \$( 'a#info-dele' + data ).parent().parent().css("display", "none");
@@ -333,7 +333,7 @@ $view_template = <<<VIEW_TPL
                 <!-- content area begin -->
                 <div class="container-fluid view">
                   <div class="row col-xs-12">
-                    <h2>博客详情</h2><hr>
+                    <h2>{$table_comment}详情</h2><hr>
                     <h4>
                       <span class="glyphicon glyphicon-list-alt"></span>
                       <span>基本信息</span>
@@ -422,10 +422,10 @@ $edit_template = <<<EDIT_TPL
                       {/if}
 $edit_contents
                       <div class="space-4"></div>
-                      <input type="hidden" name="blog_id" value="{\{$instancename}.$realId}"/>
+                      <input type="hidden" name="$instancename_id" value="{\${$instancename}.$realId}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
-                          <div  class="btn-group" role="group">
+                          <div class="btn-group" role="group">
                             <button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
                           </div>
                       </div>
@@ -447,7 +447,7 @@ $edit_contents
     {include file="\$templateDir/layout/normal/footer.tpl"}
 
     <script src="{\$template_url}js/normal/edit.js"></script>
-    <script src="{\$template_url}js/core/blog.js"></script>
+    <script src="{\$template_url}js/core/{$instancename}.js"></script>
 $enumJsContent
 $ueTextareacontents
 EDIT_TPL;

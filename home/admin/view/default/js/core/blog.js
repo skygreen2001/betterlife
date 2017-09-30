@@ -144,7 +144,7 @@ $(function(){
                 },
                 sequenceNo: {
                     required:true,
-                    number:true,
+                    number:true
                 }
             },
             messages: {

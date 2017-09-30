@@ -318,7 +318,7 @@ class AutoCodeAction extends AutoCode
                   "     */\r\n".
                   "    public function delete()\r\n".
                   "    {\r\n".
-                  "        \${$instancename}Id   = \$this->data[\"id\"];\r\n".
+                  "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \$isDelete = $classname::deleteByID(\${$instancename}Id);\r\n".
                   "    }\r\n";
         return $result;

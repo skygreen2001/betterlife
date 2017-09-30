@@ -340,7 +340,7 @@ class Project_Refactor
                 $content = $ctrl.self::$git_name.$ctrr;
             }
             $content = str_replace("网站后台", "", $content);
-            $content = str_replace("通用模版", "", $content);
+            // $content = str_replace("通用模版", "", $content);
             $content = str_replace("工程重用</a>|", "", $content);
             file_put_contents($welcome_file, $content);
 
