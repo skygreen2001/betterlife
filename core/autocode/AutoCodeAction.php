@@ -481,23 +481,23 @@ class AutoCodeAction extends AutoCode
     public static function relationFieldTreeRecursive($instance_name,$classname,$fieldInfo)
     {
         $result="";
-        if ( is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0) )
+        if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
         {
-            if ( array_key_exists($classname,self::$relation_viewfield) ) {
+            if ( array_key_exists($classname, self::$relation_viewfield) ) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
-                foreach ( $fieldInfo as $fieldname => $field ) {
-                    if ( array_key_exists($fieldname,$relationSpecs) ) {
+                foreach ($fieldInfo as $fieldname => $field) {
+                    if ( array_key_exists($fieldname, $relationSpecs) ) {
                         $relationShow  = $relationSpecs[$fieldname];
-                        foreach ( $relationShow as $key => $value ) {
+                        foreach ($relationShow as $key => $value) {
                             $i_name    = $key;
                             $i_name{0} = strtolower($i_name{0});
                             $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                             if ( !$isTreeLevelHad ) {
-                                if (array_key_exists("parent_id",$fieldInfo)&&array_key_exists("level",$fieldInfo)){
-                                    $classNameField = self::getShowFieldNameByClassname($key);                                    $classNameField=self::getShowFieldNameByClassname($key);
+                                if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {
+                                    $classNameField = self::getShowFieldNameByClassname( $key );
                                     $field_comment  = $field["Comment"];
-                                    $field_comment  = self::columnCommentKey($field_comment,$fieldname);
+                                    $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
                                     $result .= "    /**\r\n".
                                                "     * 显示{$field_comment}[全]\r\n".
                                                "     * 注:采用了递归写法\r\n".

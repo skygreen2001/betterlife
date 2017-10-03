@@ -194,16 +194,15 @@ class AutoCode extends Object
      */
     protected static function tableInfosByTable_names($table_names)
     {
-        $tableInfos=self::$tableInfoList;
-        if(!empty($table_names)){
+        $tableInfos = self::$tableInfoList;
+        if( !empty($table_names) ) {
             $tableInfos=array();
-
-            if (is_string($table_names))$table_names=explode(",",$table_names);
-            if ($table_names&&(count($table_names)>0)){
-                for($i=0;$i<count($table_names);$i++){
-                    if (!empty($table_names[$i])){
-                        $tablename=$table_names[$i];
-                        $tableInfos[$tablename]=self::$tableInfoList[$tablename];
+            if ( is_string($table_names) ) $table_names = explode(",", $table_names);
+            if ( $table_names && ( count($table_names) > 0 ) ) {
+                for ($i = 0; $i < count($table_names); $i++ ) {
+                    if ( !empty($table_names[$i]) ) {
+                        $tablename = $table_names[$i];
+                        $tableInfos[$tablename] = self::$tableInfoList[$tablename];
                     }
                 }
             }
@@ -220,10 +219,10 @@ class AutoCode extends Object
      */
     protected static function tableListByTable_names($table_names)
     {
-        $tableList=self::$tableList;
-        if(!empty($table_names)){
-            if (is_string($table_names))$table_names=explode(",",$table_names);
-            if ($table_names&&(count($table_names)>0))$tableList=$table_names;
+        $tableList = self::$tableList;
+        if( !empty($table_names) ) {
+            if ( is_string($table_names) ) $table_names = explode(",", $table_names);
+            if ( $table_names && ( count($table_names) > 0 ) ) $tableList = $table_names;
         }
         return $tableList;
     }
@@ -235,12 +234,12 @@ class AutoCode extends Object
      */
     protected static function getInstancename($tablename)
     {
-        if (in_array($tablename, Config_Db::$orm)) {
-            $classname=array_search($tablename, Config_Db::$orm);
+        if ( in_array($tablename, Config_Db::$orm) ) {
+            $classname = array_search($tablename, Config_Db::$orm);
         }else {
-            $classnameSplit= explode("_", $tablename);
-            $classnameSplit=array_reverse($classnameSplit);
-            $classname=$classnameSplit[0];
+            $classnameSplit = explode("_", $tablename);
+            $classnameSplit = array_reverse($classnameSplit);
+            $classname      = $classnameSplit[0];
         }
         return $classname;
     }
@@ -251,10 +250,10 @@ class AutoCode extends Object
      */
     protected static function column_type($type)
     {
-        if (UtilString::contain($type,"(")){
-            list($typep,$length)=split('[()]', $type);
+        if ( UtilString::contain( $type, "(" ) ) {
+            list($typep,$length) = split('[()]', $type);
         }else{
-            $typep=$type;
+            $typep = $type;
         }
         return $typep;
     }
@@ -265,7 +264,7 @@ class AutoCode extends Object
      */
     protected static function comment_type($type)
     {
-        $typep=self::column_type($type);
+        $typep = self::column_type( $type );
         switch ($typep) {
             case "int":
             case "enum":
@@ -293,10 +292,10 @@ class AutoCode extends Object
      */
     protected static function column_length($type)
     {
-        if (UtilString::contain($type,"(")){
-            list($typep,$length)=split('[()]', $type);
+        if ( UtilString::contain( $type, "(") ) {
+            list($typep,$length) = split('[()]', $type);
         }else{
-            $length=1;
+            $length = 1;
         }
         return $length;
     }
@@ -307,10 +306,10 @@ class AutoCode extends Object
      * @param string $filename 文件名称
      * @param string $definePhpFileContent 生成的代码
      */
-    protected static function saveDefineToDir($dir,$filename,$definePhpFileContent)
+    protected static function saveDefineToDir($dir, $filename, $definePhpFileContent)
     {
-        UtilFileSystem::createDir($dir);
-        UtilFileSystem::save_file_content($dir.DS.$filename,$definePhpFileContent);
+        UtilFileSystem::createDir( $dir );
+        UtilFileSystem::save_file_content( $dir . DS . $filename, $definePhpFileContent );
         return basename($filename, ".php");
     }
 
@@ -321,7 +320,7 @@ class AutoCode extends Object
      * @param $default_value 默认值
      * @param $more_content 更多个性化内容
      */
-    protected static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
+    protected static function UserInput($title="", $inputArr=null, $default_value = "", $more_content = "")
     {
         ob_clean();
         include("view" . DS . "form" . DS . "userinput.php");
@@ -333,19 +332,19 @@ class AutoCode extends Object
      * @param string $columnname 枚举列名称
      * @param string $tablename 表名称
      */
-    protected static function enumClassName($columnname,$tablename=null)
+    protected static function enumClassName($columnname, $tablename = null)
     {
-        $enumclassname="Enum";
-        if ((strtolower($columnname)=='type')||(strtolower($columnname)=='statue')||(strtolower($columnname)=='status')){
-            $enumclassname.=self::getClassname($tablename).ucfirst($columnname);
-        }else{
-            if (contain($columnname,"_")){
-                $c_part=explode("_",$columnname);
+        $enumclassname = "Enum";
+        if ( ( strtolower($columnname) == 'type' ) || ( strtolower($columnname) == 'statue' ) || ( strtolower($columnname) == 'status' ) ) {
+            $enumclassname .= self::getClassname( $tablename ) . ucfirst( $columnname );
+        } else {
+            if ( contain( $columnname, "_" ) ) {
+                $c_part = explode("_",$columnname);
                 foreach ($c_part as $column) {
-                    $enumclassname.=ucfirst($column);
+                    $enumclassname .= ucfirst($column);
                 }
-            }else{
-                $enumclassname.=ucfirst($columnname);
+            } else {
+                $enumclassname .= ucfirst($columnname);
             }
         }
         return $enumclassname;
@@ -407,7 +406,7 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param string $column_type 列类型
      */
-    protected static function columnIsTextArea( $column_name, $column_type )
+    protected static function columnIsTextArea($column_name, $column_type)
     {
         $column_name = strtoupper($column_name);
         if ( contain( $column_name, "ID" ) ) {
@@ -427,7 +426,7 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
      */
-    protected static function columnIsImage( $column_name, $column_comment = "" )
+    protected static function columnIsImage($column_name, $column_comment = "")
     {
         $column_name = strtoupper($column_name);
         if ( contain( $column_name, "ID" ) ) {
@@ -444,7 +443,7 @@ class AutoCode extends Object
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
      */
-    protected static function columnIsEmail( $column_name, $column_comment )
+    protected static function columnIsEmail($column_name, $column_comment)
     {
         $column_name = strtoupper($column_name);
         if ( (contain( $column_name, "EMAIL" ) || contains( $column_comment, array("邮件","邮箱")) ) && ( !contain( $column_name, "IS" ) ) ) {
@@ -458,7 +457,7 @@ class AutoCode extends Object
      * @param string $tablename 表名称
      * @param string $column_name 列名称
      */
-    protected static function columnIsPassword( $table_name, $column_name )
+    protected static function columnIsPassword($table_name, $column_name)
     {
 
         $table_name = strtoupper($table_name);
@@ -475,7 +474,7 @@ class AutoCode extends Object
      * 是否默认的列关键字：id,committime,updateTime
      * @param string $fieldname 列名称
      */
-    protected static function isNotColumnKeywork( $fieldname )
+    protected static function isNotColumnKeywork($fieldname)
     {
         $fieldname = strtoupper($fieldname);
         if ($fieldname == strtoupper(EnumColumnNameDefault::COMMITTIME) || $fieldname == strtoupper(EnumColumnNameDefault::UPDATETIME)){
@@ -489,7 +488,7 @@ class AutoCode extends Object
      * 获取数据对象的ID列名称
      * @param mixed $dataobject 数据对象实体|对象名称
      */
-    protected static function keyIDColumn( $dataobject )
+    protected static function keyIDColumn($dataobject)
     {
         return DataObjectSpec::getRealIDColumnNameStatic( $dataobject );
     }
@@ -498,7 +497,7 @@ class AutoCode extends Object
      * 获取表注释第一行关键词说明
      * @param string $tablename 表名称
      */
-    protected static function tableCommentKey( $tablename )
+    protected static function tableCommentKey($tablename)
     {
         if ( self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList) )
         {
@@ -521,7 +520,7 @@ class AutoCode extends Object
      * @param mixed $default 默认返回值
      * @return mixed
      */
-    protected static function columnCommentKey( $field_comment, $default = "" )
+    protected static function columnCommentKey($field_comment, $default = "")
     {
         if ( empty($field_comment) ) {
             return $default;
@@ -544,17 +543,17 @@ class AutoCode extends Object
      * @param string $classname 数据对象类名
      * @param bool $isReturnNull 是否没有就返回Null
      */
-    protected static function getShowFieldNameByClassname( $classname, $isReturnNull = false )
+    protected static function getShowFieldNameByClassname($classname, $isReturnNull = false)
     {
-        $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
+        $fieldInfo  = self::$fieldInfos[self::getTablename( $classname )];
         $fieldNames = array_keys($fieldInfo);
         foreach ($fieldNames as $fieldname)
         {
             $fieldname_filter = strtolower($fieldname);
-            if ( !contain($fieldname,"id") ) {
-                if ( contains($fieldname, array("name","title")) ) return $fieldname;
-                $classname_filter = strtolower($classname);
-                if ( contain($fieldname,$classname_filter) ) return $fieldname;
+            if ( !contain( $fieldname, "id" ) ) {
+                if ( contains( $fieldname, array("name", "title") ) ) return $fieldname;
+                $classname_filter = strtolower( $classname );
+                if ( contain( $fieldname, $classname_filter ) ) return $fieldname;
             }
         }
         if ( $isReturnNull ){
@@ -593,7 +592,7 @@ class AutoCode extends Object
      * 根据类名判断是不是多对多关系，如果存在其他显示字段则需要在显示Tab中显示has_many
      * @param string $classname 数据对象类名
      */
-    protected static function isMany2ManyShowHasMany( $classname )
+    protected static function isMany2ManyShowHasMany($classname)
     {
         if ( self::isMany2ManyByClassname( $classname ) )
         {

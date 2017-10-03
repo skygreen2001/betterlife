@@ -46,22 +46,6 @@ class AutoCodeViewAdmin extends AutoCodeView
                     //todo: alt="' + row.$realId + '"
                     $imgColumnDefs .= $js_sub_template_img;
                 }
-                // todo:
-                // $editValidRules
-                // blog_name:{
-                //     required:true
-                // },
-                // sequenceNo: {
-                //     required:true,
-                //     number:true,
-                // }
-                //
-                // $editValidMsg
-                // blog_name:"此项为必填项",
-                // sequenceNo:{
-                //     required:"此项为必填项",
-                //     number:"此项必须为数字"
-                // }
                 $datatype = self::comment_type($field["Type"]);
                 switch ($datatype) {
                   case 'bit':
@@ -113,6 +97,26 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $row_no ++;
             }
         }
+        // todo:
+        // $editValidRules
+        // blog_name:{
+        //     required:true
+        // },
+        // sequenceNo: {
+        //     required:true,
+        //     number:true,
+        // }
+        //
+        // $editValidMsg
+        // blog_name:"此项为必填项",
+        // sequenceNo:{
+        //     required:"此项为必填项",
+        //     number:"此项必须为数字"
+        // }
+        $classNameField = self::getShowFieldNameByClassname( $classname );
+        
+
+
         $column_contents .= "                { data: \"$realId\" }";
         include("template" . DS . "admin.php");
         $idColumnDefs     = $js_sub_template_id;
