@@ -541,7 +541,7 @@ class AutoCode extends Object
     /**
      * 根据类名获取表代表列显示名称
      * @param string $classname 数据对象类名
-     * @param bool $isReturnNull 是否没有就返回Null
+     * @param bool $isReturnEmpty 是否没有就返回空
      */
     protected static function getShowFieldNameByClassname($classname, $isReturnNull = false)
     {
@@ -558,7 +558,7 @@ class AutoCode extends Object
         }
         if ( $isReturnNull ){
             return "";
-        }else{
+        } else {
             return "name";
         }
     }

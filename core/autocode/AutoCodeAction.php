@@ -121,9 +121,9 @@ class AutoCodeAction extends AutoCode
             }
             $definePhpFileContent      = self::tableToActionDefine($tablename,$fieldInfo);
             if ( !empty($definePhpFileContent) ) {
-                if (isset(self::$save_dir)&&!empty(self::$save_dir)&&isset($definePhpFileContent)){
-                    $classname         = self::saveActionDefineToDir($tablename,$definePhpFileContent);
-                    self::$showReport .= "生成导出完成:$tablename=>$classname!<br/>";
+                if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ){
+                    $classname         = self::saveActionDefineToDir( $tablename, $definePhpFileContent );
+                    self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
                 }else{
                     self::$showReport .= $definePhpFileContent."<br/>";
                 }
@@ -376,7 +376,7 @@ class AutoCodeAction extends AutoCode
         $result        = "";
         $appname_alias = strtolower(Gc::$appName_alias);
 
-        $relationField = self::relationFieldShow($instancename,$classname,$fieldInfo,"        ");
+        $relationField = self::relationFieldShow($instancename, $classname, $fieldInfo, "        ");
         $specialResult = "";
         if ( (!empty($relationField)) ) {
             $specialResult .= "            foreach (\${$instancename}s as \$$instancename) {\r\n".
@@ -405,10 +405,10 @@ class AutoCodeAction extends AutoCode
                    "    }\r\n";
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
-        $relationFieldTreeRecursive = self::relationFieldTreeRecursive($instancename, $classname, $fieldInfo);
-        if($relationFieldTreeRecursive) $relationFieldTreeRecursive = "\r\n".$relationFieldTreeRecursive;
+        $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
+        if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
         $result .= $relationFieldTreeRecursive;
-        $relationField = self::relationFieldShow($instancename,$classname,$fieldInfo);
+        $relationField = self::relationFieldShow( $instancename, $classname, $fieldInfo );
         $result .= "    /**\r\n".
                    "     * 查看{$table_comment}\r\n".
                    "     */\r\n".
@@ -453,7 +453,7 @@ class AutoCodeAction extends AutoCode
         if ( count($text_area_fieldname) == 1 ) {
             $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
                        "        \$this->load_onlineditor({$text_area_fieldname[0]});\r\n";
-        } else if (count($text_area_fieldname)>1){
+        } else if ( count($text_area_fieldname) > 1 ) {
             $fieldnames = implode(",", $text_area_fieldname);
             $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
                           "        \$this->load_onlineditor(array({$fieldnames}));\r\n";
@@ -478,9 +478,9 @@ class AutoCodeAction extends AutoCode
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
      */
-    public static function relationFieldTreeRecursive($instance_name,$classname,$fieldInfo)
+    public static function relationFieldTreeRecursive($instance_name, $classname, $fieldInfo)
     {
-        $result="";
+        $result = "";
         if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
         {
             if ( array_key_exists($classname, self::$relation_viewfield) ) {
@@ -581,7 +581,6 @@ class AutoCodeAction extends AutoCode
         }
         return $result;
     }
-
 
     /**
      * 是否需要在编辑页面上传图片

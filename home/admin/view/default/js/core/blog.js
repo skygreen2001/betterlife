@@ -139,12 +139,12 @@ $(function(){
             focusInvalid: true,
             // debug:true,
             rules: {
-                blog_name:{
-                    required:true
+                blog_name: {
+                    required: true
                 },
                 sequenceNo: {
-                    required:true,
-                    number:true
+                    required: true,
+                    number: true
                 }
             },
             messages: {

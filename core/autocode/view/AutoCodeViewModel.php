@@ -80,18 +80,18 @@ class AutoCodeViewModel extends AutoCodeView
 
                 $is_no_relation = true;
                 //关系列的显示
-                if ( is_array( self::$relation_viewfield ) && ( count( self::$relation_viewfield )>0 ) )
+                if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield )>0 ) )
                 {
-                    if ( array_key_exists( $classname, self::$relation_viewfield ) )
+                    if ( array_key_exists($classname, self::$relation_viewfield) )
                     {
                         $relationSpecs = self::$relation_viewfield[$classname];
-                        if ( array_key_exists( $key, $relationSpecs ) )
+                        if ( array_key_exists($key, $relationSpecs) )
                         {
                             $relationShow = $relationSpecs[$key];
                             foreach ( $relationShow as $key_r => $value_r ) {
                                 $realId = DataObjectSpec::getRealIDColumnName( $key_r );
                                 if ( empty( $realId ) ) $realId = $key;
-                                if ( ( !array_key_exists( $value_r, $fieldInfo ) ) || ( $classname == $key_r ) ) {
+                                if ( ( !array_key_exists($value_r, $fieldInfo) ) || ( $classname == $key_r ) ) {
                                     $show_fieldname = $value_r;
                                     if ( $realId != $key ) {
                                         if ( contain( $key, "_id" ) ) {
@@ -112,9 +112,9 @@ class AutoCodeViewModel extends AutoCodeView
                                 }else{
                                     if ( $value_r == "name" ) {
                                         $show_fieldname = strtolower($key_r)."_".$value_r;
-                                        if ( !array_key_exists("$show_fieldname",$fieldInfo) ) {
+                                        if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
                                             $field_comment  = $value;
-                                            $field_comment  = self::columnCommentKey($field_comment,$key);
+                                            $field_comment  = self::columnCommentKey( $field_comment, $key );
                                             $headers       .= "            <th class=\"header\">$field_comment</th>\r\n";
                                             $contents      .= "            <td class=\"content\">{\${$instancename}.$show_fieldname}</td>\r\n";
                                             $is_no_relation = false;
@@ -122,7 +122,7 @@ class AutoCodeViewModel extends AutoCodeView
                                     }
                                 }
 
-                                $fieldInfo_relationshow = self::$fieldInfos[self::getTablename($key_r)];
+                                $fieldInfo_relationshow = self::$fieldInfos[self::getTablename( $key_r )];
                                 $key_r{0} = strtolower($key_r{0});
                                 if ( array_key_exists("parent_id",$fieldInfo_relationshow) ) {
                                     $headers  .= "            <th class=\"header\">{$field_comment}[全]</th>\r\n";
@@ -134,9 +134,9 @@ class AutoCodeViewModel extends AutoCodeView
                 }
                 if ( $is_no_relation ) {
                     $headers      .= "            <th class=\"header\">$value</th>\r\n";
-                    if((count($enumColumns)>0) && (in_array($key, $enumColumns))) {
+                    if ( ( count($enumColumns) > 0 ) && ( in_array($key, $enumColumns) ) ) {
                         $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
-                    }else{
+                    } else {
                         $contents .= "            <td class=\"content\">{\${$instancename}.$key}</td>\r\n";
                     }
                 }
@@ -150,7 +150,7 @@ class AutoCodeViewModel extends AutoCodeView
         $realId = DataObjectSpec::getRealIDColumnName( $classname );
         include("template" . DS . "default.php");
         $result = $list_template;
-        $result = self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine( $result );
         return $result;
     }
 
@@ -159,30 +159,30 @@ class AutoCodeViewModel extends AutoCodeView
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    public static function tpl_edit($tablename,$fieldInfo)
+    public static function tpl_edit($tablename, $fieldInfo)
     {
-        $table_comment = self::tableCommentKey($tablename);
+        $table_comment = self::tableCommentKey( $tablename );
         $appname       = self::$appName;
-        $classname     = self::getClassname($tablename);
-        $instancename  = self::getInstancename($tablename);
+        $classname     = self::getClassname( $tablename );
+        $instancename  = self::getInstancename( $tablename );
         $fieldNameAndComments = array();
         $text_area_fieldname  = array();
         $enumColumns          = array();
-        foreach ( $fieldInfo as $fieldname => $field )
+        foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
+            if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
             {
                 $field_comment = preg_split("/[\s,]+/", $field_comment);
                 $field_comment = $field_comment[0];
             }
-            if ( self::columnIsTextArea($fieldname,$field["Type"]) )
+            if ( self::columnIsTextArea( $fieldname, $field["Type"] ) )
             {
-                $text_area_fieldname[$fieldname]=$field_comment;
+                $text_area_fieldname[$fieldname]  = $field_comment;
             } else {
-                $fieldNameAndComments[$fieldname]=$field_comment;
+                $fieldNameAndComments[$fieldname] = $field_comment;
             }
-            $datatype = self::comment_type($field["Type"]);
+            $datatype = self::comment_type( $field["Type"] );
             if ( $datatype == 'enum' ) {
                 $enumColumns[] = $fieldname;
             }
@@ -192,7 +192,7 @@ class AutoCodeViewModel extends AutoCodeView
         $hasImgFormFlag = "";
         foreach ($fieldNameAndComments as $key => $value) {
             $idColumnName = DataObjectSpec::getRealIDColumnName( $classname );
-            if ( self::isNotColumnKeywork($key) ){
+            if ( self::isNotColumnKeywork( $key ) ){
                 $isImage = self::columnIsImage( $key, $value );
                 if ( $idColumnName == $key ) {
                     $edit_contents .= "        {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\${$instancename}.$key}</td></tr>{/if}\r\n";
@@ -206,7 +206,7 @@ class AutoCodeViewModel extends AutoCodeView
         }
 
         $ueTextareacontents   = "";
-        if (count($text_area_fieldname)>=1){
+        if ( count($text_area_fieldname) >= 1) {
             $ckeditor_prepare = "    ";
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
@@ -236,14 +236,14 @@ EDIT;
 UETC;
         }
         if ( !empty($edit_contents) && (strlen($edit_contents)>2) ) {
-            $edit_contents = substr($edit_contents,0,strlen($edit_contents)-2);
+            $edit_contents = substr($edit_contents, 0, strlen($edit_contents) - 2);
         }
         include("template" . DS . "default.php");
         $result = $edit_template;
         if ( count($text_area_fieldname) >= 1 ) {
             $result = $textareapreparesentence."\r\n".$result;
         }
-        $result = self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine( $result );
         return $result;
     }
 
@@ -252,18 +252,18 @@ UETC;
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    public static function tpl_view($tablename,$fieldInfo)
+    public static function tpl_view($tablename, $fieldInfo)
     {
-        $table_comment = self::tableCommentKey($tablename);
+        $table_comment = self::tableCommentKey( $tablename );
         $appname       = self::$appName;
-        $classname     = self::getClassname($tablename);
-        $instancename  = self::getInstancename($tablename);
+        $classname     = self::getClassname( $tablename );
+        $instancename  = self::getInstancename( $tablename );
         $fieldNameAndComments = array();
         $enumColumns          = array();
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
+            if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
             {
                 $field_comment = preg_split("/[\s,]+/", $field_comment);
                 $field_comment = $field_comment[0];
@@ -275,9 +275,9 @@ UETC;
             }
         }
         $view_contents="";
-        foreach ( $fieldNameAndComments as $key => $value ) {
-            if ( self::isNotColumnKeywork($key) ){
-                $isImage = self::columnIsImage($key,$value);
+        foreach ($fieldNameAndComments as $key => $value) {
+            if ( self::isNotColumnKeywork( $key ) ) {
+                $isImage = self::columnIsImage( $key, $value );
                 if ( $isImage ) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">\r\n".
                                       "            <div class=\"wrap_2_inner\"><img src=\"{\$uploadImg_url|cat:\$$instancename.$key}\" alt=\"$value\"></div>\r\n".
@@ -287,7 +287,7 @@ UETC;
 
                 //关系列的显示
                 // $is_no_relation=true;
-                if ( is_array( self::$relation_viewfield ) && ( count(self::$relation_viewfield) > 0 ) )
+                if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
                 {
                     if ( array_key_exists($classname, self::$relation_viewfield) )
                     {
@@ -296,7 +296,7 @@ UETC;
                         {
                             $relationShow = $relationSpecs[$key];
                             foreach ($relationShow as $key_r => $value_r) {
-                                $realId = DataObjectSpec::getRealIDColumnName($key_r);
+                                $realId = DataObjectSpec::getRealIDColumnName( $key_r );
                                 if ( empty($realId) ) $realId = $key;
                                 if ( (!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r) ){
                                     $show_fieldname = $value_r;
@@ -312,7 +312,7 @@ UETC;
                                     }
                                     if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
                                         $field_comment = $value;
-                                        $field_comment = self::columnCommentKey($field_comment,$key);
+                                        $field_comment = self::columnCommentKey( $field_comment, $key );
                                         $view_contents.= "        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$show_fieldname}</td></tr>\r\n";
                                         // $is_no_relation=false;
                                     }
@@ -338,20 +338,20 @@ UETC;
                     }
                 }
 
-                if( (count($enumColumns)>0) && (in_array($key, $enumColumns)) ) {
+                if( ( count($enumColumns) > 0 ) && (in_array($key, $enumColumns)) ) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";
-                }else{
+                } else {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.$key}</td></tr>\r\n";
                 }
             }
         }
         if ( !empty($view_contents) && (strlen($view_contents)>2) ) {
-            $view_contents = substr($view_contents,0,strlen($view_contents)-2);
+            $view_contents = substr($view_contents, 0, strlen($view_contents) - 2);
         }
-        $realId = DataObjectSpec::getRealIDColumnName($classname);
+        $realId = DataObjectSpec::getRealIDColumnName( $classname );
         include("template" . DS . "default.php");
         $result = $view_template;
-        $result = self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine( $result );
         return $result;
     }
 }
