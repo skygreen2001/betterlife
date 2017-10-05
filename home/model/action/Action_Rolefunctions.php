@@ -21,7 +21,8 @@ class Action_Rolefunctions extends ActionModel
         }
         $count = Rolefunctions::count();
         $this->view->countRolefunctionss = $count;
-        if ($count>0) {
+        $this->view->set("rolefunctionss", NULL);
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $rolefunctionss = Rolefunctions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($rolefunctionss as $rolefunctions) {

@@ -1,13 +1,13 @@
 <?php
 /**
  +---------------------------------------<br/>
- * 博客分类<br/>
+ * 标签<br/>
  +---------------------------------------
  * @category betterlife
  * @package core
  * @author skygreen skygreen2001@gmail.com
  */
-class Category extends DataObject
+class Tags extends DataObject
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
@@ -15,7 +15,7 @@ class Category extends DataObject
      * @var int
      * @access public
      */
-    public $category_id;
+    public $tags_id;
     /**
      * 序号
      * @var int
@@ -27,19 +27,7 @@ class Category extends DataObject
      * @var string
      * @access public
      */
-    public $name;
-    /**
-     * 图标
-     * @var string
-     * @access public
-     */
-    public $icon_url;
-    /**
-     * 说明
-     * @var string
-     * @access public
-     */
-    public $intro;
+    public $title;
     /**
      * 状态
      * @var string

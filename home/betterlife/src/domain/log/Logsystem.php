@@ -60,7 +60,7 @@ class Logsystem extends DataObject
         EnumDataSpec::REMOVE=>array(
             'commitTime',
             'updateTime'
-        )
+        ),
     );
 
     /**
@@ -73,7 +73,7 @@ class Logsystem extends DataObject
      * 5:通知-NOTICE<br/>
      * 6:信息-INFO<br/>
      * 7:调试-DEBUG<br/>
-     * 8:SQL-SQL<br/>
+     * 8:SQL-SQL
      */
     public function getPriorityShow()
     {
@@ -90,7 +90,7 @@ class Logsystem extends DataObject
      * 5:通知-NOTICE<br/>
      * 6:信息-INFO<br/>
      * 7:调试-DEBUG<br/>
-     * 8:SQL-SQL<br/>
+     * 8:SQL-SQL
      */
     public static function priorityShow($priority)
     {

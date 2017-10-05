@@ -34,7 +34,7 @@ class Region extends DataObject
      * 1:省-province<br/>
      * 2:市-city<br/>
      * 3:区-region<br/>
-     *
+     * 
      * @var enum
      * @access public
      */
@@ -53,18 +53,19 @@ class Region extends DataObject
     static $belong_has_one=array(
         "region_p"=>"Region"
     );
-
     /**
-     * 规格说明:外键声明
-     * @var array
+     * 规格说明
+     * 表中不存在的默认列定义:commitTime,updateTime
+     * 外键特殊定义声明: FOREIGN_ID
+     * @var mixed
      */
     public $field_spec=array(
-        EnumDataSpec::FOREIGN_ID=>array(
-            "region_p"=>"parent_id"
-        ),
         EnumDataSpec::REMOVE=>array(
             'commitTime',
             'updateTime'
+        ),
+        EnumDataSpec::FOREIGN_ID => array(
+            "region_p" => "parent_id"
         )
     );
 
@@ -74,7 +75,7 @@ class Region extends DataObject
      * 1:省-province<br/>
      * 2:市-city<br/>
      * 3:区-region<br/>
-     * <br/>
+     * 
      */
     public function getRegion_typeShow()
     {
@@ -87,7 +88,7 @@ class Region extends DataObject
      * 1:省-province<br/>
      * 2:市-city<br/>
      * 3:区-region<br/>
-     * <br/>
+     * 
      */
     public static function region_typeShow($region_type)
     {
@@ -103,3 +104,4 @@ class Region extends DataObject
     }
 
 }
+

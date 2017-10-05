@@ -80,7 +80,7 @@ class Admin extends DataObject
      * 0:超级管理员-superadmin<br/>
      * 1:管理人员-manager<br/>
      * 2:运维人员-normal<br/>
-     * 3:合作伙伴-partner<br/>
+     * 3:合作伙伴-partner
      */
     public function getRoletypeShow()
     {
@@ -90,7 +90,7 @@ class Admin extends DataObject
     /**
      * 显示视野<br/>
      * 0:只能查看自己的信息-self<br/>
-     * 1:查看所有的信息-all<br/>
+     * 1:查看所有的信息-all
      */
     public function getSeescopeShow()
     {
@@ -103,7 +103,7 @@ class Admin extends DataObject
      * 0:超级管理员-superadmin<br/>
      * 1:管理人员-manager<br/>
      * 2:运维人员-normal<br/>
-     * 3:合作伙伴-partner<br/>
+     * 3:合作伙伴-partner
      */
     public static function roletypeShow($roletype)
     {
@@ -113,7 +113,7 @@ class Admin extends DataObject
     /**
      * 显示视野<br/>
      * 0:只能查看自己的信息-self<br/>
-     * 1:查看所有的信息-all<br/>
+     * 1:查看所有的信息-all
      */
     public static function seescopeShow($seescope)
     {

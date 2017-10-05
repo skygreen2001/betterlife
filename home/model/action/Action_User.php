@@ -21,7 +21,8 @@ class Action_User extends ActionModel
         }
         $count = User::count();
         $this->view->countUsers = $count;
-        if ($count>0) {
+        $this->view->set("users", NULL);
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $users = User::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             $this->view->set("users", $users);

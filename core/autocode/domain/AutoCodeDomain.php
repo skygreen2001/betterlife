@@ -326,9 +326,10 @@ class AutoCodeDomain extends AutoCode
                        "    );\r\n";
         }
 
-        $result .= self::domainEnumPropertyShow($fieldInfo,$tablename);
-        $result .= self::domainEnumShow($fieldInfo,$tablename);
-        $result .= self::domainTreeLevelDefine($fieldInfo,$classname);
+        $result .= self::domainEnumPropertyShow( $fieldInfo, $tablename );
+        $result .= self::domainEnumShow( $fieldInfo, $tablename );
+        $result .= self::domainTreeLevelDefine( $fieldInfo, $classname );
+        $result .= self::domainBitShow( $fieldInfo, $tablename );
         $result .= "}\r\n\r\n";
         return $result;
     }
@@ -453,22 +454,22 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $tablename 表名称
      */
-    private static function domainDataobjectSpec($fieldInfo,$tablename)
+    private static function domainDataobjectSpec($fieldInfo, $tablename)
     {
-        $result="";
-        $table_keyfield=array(
+        $result = "";
+        $table_keyfield = array(
             EnumColumnNameDefault::COMMITTIME,
             EnumColumnNameDefault::UPDATETIME
         );
-        $removefields=array();
+        $removefields = array();
         foreach ($table_keyfield as $keyfield) {
-            if (!array_key_exists($keyfield,$fieldInfo)){
-                $removefields[]=$keyfield;
+            if ( !array_key_exists($keyfield, $fieldInfo) ) {
+                $removefields[] = $keyfield;
             }
         }
-        $removeStr="";
+        $removeStr = "";
         foreach ($removefields as $removefield) {
-            $removeStr.="            '$removefield',\r\n";
+            $removeStr .= "            '$removefield',\r\n";
         }
         if ( !empty($removeStr) ) {
             $removeStr = substr($removeStr, 0, strlen($removeStr) - 3);
@@ -487,25 +488,24 @@ class AutoCodeDomain extends AutoCode
      */
     private static function domainEnumShow($fieldInfo,$tablename)
     {
-        $result="";
-        foreach ($fieldInfo as $fieldname=>$field){
-            if (self::isNotColumnKeywork($fieldname)){
-                $datatype =self::comment_type($field["Type"]);
-                if ($datatype=='enum'){
-                    $enum_columnDefine=self::enumDefines($field["Comment"]);
-                    $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
-                    $comment  =str_replace("\r", "     * ", $comment);
-                    $comment  =str_replace("\n", "     * ", $comment);
-                    $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
-                    $result.= "\r\n".
-                              "    /**\r\n".
-                              "     * 显示".$comment."<br/>\r\n".
-                              "     */\r\n";
-                    $enumclassname=self::enumClassName($fieldname,$tablename);
-                    $result.="    public static function {$fieldname}Show(\${$fieldname})\r\n".
-                             "    {\r\n".
-                             "        return {$enumclassname}::{$fieldname}Show(\${$fieldname});\r\n".
-                             "    }\r\n";
+        $result = "";
+        foreach ($fieldInfo as $fieldname => $field){
+            if ( self::isNotColumnKeywork( $fieldname ) ) {
+                $datatype = self::comment_type( $field["Type"] );
+                if ( $datatype == 'enum' ) {
+                    $comment = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment = str_replace("\r", "     * ", $comment);
+                    $comment = str_replace("\n", "     * ", $comment);
+                    $comment = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $result .= "\r\n".
+                               "    /**\r\n".
+                               "     * 显示" . $comment . "\r\n".
+                               "     */\r\n";
+                    $enumclassname = self::enumClassName($fieldname,$tablename);
+                    $result .= "    public static function {$fieldname}Show(\${$fieldname})\r\n".
+                               "    {\r\n".
+                               "        return {$enumclassname}::{$fieldname}Show(\${$fieldname});\r\n".
+                               "    }\r\n";
                 }
             }
         }
@@ -517,28 +517,60 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $tablename 表名称
      */
-    private static function domainEnumPropertyShow($fieldInfo,$tablename)
+    private static function domainEnumPropertyShow($fieldInfo, $tablename)
     {
-        $result="";
-        foreach ($fieldInfo as $fieldname=>$field){
-            if (self::isNotColumnKeywork($fieldname)){
-                $datatype =self::comment_type($field["Type"]);
-                if ($datatype=='enum'){
-                    $enum_columnDefine=self::enumDefines($field["Comment"]);
-                    $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
-                    $comment  =str_replace("\r", "     * ", $comment);
-                    $comment  =str_replace("\n", "     * ", $comment);
-                    $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
+        $result = "";
+        foreach ($fieldInfo as $fieldname => $field) {
+            if ( self::isNotColumnKeywork( $fieldname ) ) {
+                $datatype = self::comment_type($field["Type"]);
+                if ( $datatype == 'enum' ) {
+                    $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = str_replace("\r", "     * ", $comment);
+                    $comment  = str_replace("\n", "     * ", $comment);
+                    $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $result  .= "\r\n".
+                                "    /**\r\n".
+                                "     * 显示" . $comment . "\r\n".
+                                "     */\r\n";
+                    $enumclassname = self::enumClassName($fieldname, $tablename);
+                    $fieldname_up  = ucfirst($fieldname);
+                    $result  .= "    public function get{$fieldname_up}Show()\r\n".
+                                "    {\r\n".
+                                "        return self::{$fieldname}Show(\$this->{$fieldname});\r\n".
+                                "    }\r\n";
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 在实体数据对象定义中定义布尔类型bit的显示
+     * @param array $fieldInfo 表列信息列表
+     * @param string $tablename 表名称
+     */
+    private static function domainBitShow($fieldInfo, $tablename)
+    {
+        $result = "";
+        foreach ($fieldInfo as $fieldname=>$field) {
+            if ( self::isNotColumnKeywork($fieldname) ) {
+                $datatype = self::comment_type($field["Type"]);
+                if ( $datatype == 'bit' ) {
+                    $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = str_replace("\r", "     * ", $comment);
+                    $comment  = str_replace("\n", "     * ", $comment);
+                    $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
                     $result.= "\r\n".
                               "    /**\r\n".
-                              "     * 显示".$comment."<br/>\r\n".
+                              "     * " . $comment . "\r\n".
                               "     */\r\n";
-                    $enumclassname=self::enumClassName($fieldname,$tablename);
-                    $fieldname_up=ucfirst($fieldname);
-                    $result.="    public function get{$fieldname_up}Show()\r\n".
-                             "    {\r\n".
-                             "        return self::{$fieldname}Show(\$this->{$fieldname});\r\n".
-                             "    }\r\n";
+                    $result.= "    public function {$fieldname}Show()\r\n".
+                              "    {\r\n".
+                              "        if ( \$this->$fieldname ) {\r\n".
+                              "            return \"是\";\r\n".
+                              "        }\r\n".
+                              "        return \"否\";\r\n".
+                              "    }\r\n";
                 }
             }
         }
@@ -550,10 +582,10 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 当前类名称
      */
-    private static function domainTreeLevelDefine($fieldInfo,$classname)
+    private static function domainTreeLevelDefine($fieldInfo, $classname)
     {
-        $result="\r\n";
-        if (array_key_exists("countChild",$fieldInfo)||array_key_exists("childCount",$fieldInfo)){
+        $result = "\r\n";
+        if ( array_key_exists("countChild", $fieldInfo) || array_key_exists("childCount", $fieldInfo) ) {
             $realId=DataObjectSpec::getRealIDColumnName($classname);
             $result.="    /**\r\n".
                      "     * 计算所有的子元素数量并存储\r\n".

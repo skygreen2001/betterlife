@@ -97,29 +97,29 @@ class AutoCode extends Object
                 $classname = self::getClassname($tablename);
                 $prefix    = Config_Db::$table_prefix;
                 if ( ( !empty($prefix) ) && ( !contain( $tablename, $prefix ) ) ) {
-                    $ignoreTables[]=$tablename;
+                    $ignoreTables[] = $tablename;
                     continue;
                 }
 
                 if ( startWith( strtolower($classname), "copy" ) ) {
-                    $ignoreTables[]=$tablename;
+                    $ignoreTables[] = $tablename;
                     continue;
                 }
-                $fieldInfoList=Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
-                foreach($fieldInfoList as $fieldname=>$field){
-                    self::$fieldInfos[$tablename][$fieldname]["Field"]=$field["Field"];
-                    self::$fieldInfos[$tablename][$fieldname]["Type"]=$field["Type"];
-                    self::$fieldInfos[$tablename][$fieldname]["Comment"]=$field["Comment"];
-                    self::$fieldInfos[$tablename][$fieldname]["Key"]=$field["Key"];
-                    if ($field["Null"]=='NO'){
-                        self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"]=false;
-                    }else{
-                        self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"]=true;
+                $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
+                foreach($fieldInfoList as $fieldname => $field) {
+                    self::$fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
+                    self::$fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
+                    self::$fieldInfos[$tablename][$fieldname]["Comment"] = $field["Comment"];
+                    self::$fieldInfos[$tablename][$fieldname]["Key"]     = $field["Key"];
+                    if ( $field["Null"] == 'NO' ) {
+                        self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"] = false;
+                    } else {
+                        self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"] = true;
                     }
                 }
-                self::$class_comments[$classname]=self::$tableInfoList[$tablename]["Comment"];
+                self::$class_comments[$classname] = self::$tableInfoList[$tablename]["Comment"];
             }
-            self::$tableList=array_diff(self::$tableList, $ignoreTables);
+            self::$tableList = array_diff(self::$tableList, $ignoreTables);
             foreach ($ignoreTables as $tablename) {
                 unset(self::$tableInfoList[$tablename]);
             }
@@ -149,10 +149,10 @@ class AutoCode extends Object
      */
     protected static function getTablename($class)
     {
-        $tableList=Manager_Db::newInstance()->dbinfo()->tableList();
-        foreach ($tableList as $tablename){
-            $classname=self::getClassname($tablename);
-            if ($class==$classname){
+        $tableList = Manager_Db::newInstance()->dbinfo()->tableList();
+        foreach ($tableList as $tablename) {
+            $classname = self::getClassname($tablename);
+            if ( $class == $classname ) {
                 return $tablename;
             }
         }
@@ -168,16 +168,16 @@ class AutoCode extends Object
      */
     protected static function fieldInfosByTable_names($table_names)
     {
-        $fieldInfos=self::$fieldInfos;
-        if(!empty($table_names)){
-            $fieldInfos=array();
+        $fieldInfos = self::$fieldInfos;
+        if ( !empty($table_names) ) {
+            $fieldInfos = array();
 
-            if (is_string($table_names))$table_names=explode(",",$table_names);
-            if ($table_names&&(count($table_names)>0)){
-                for($i=0;$i<count($table_names);$i++){
-                    if (!empty($table_names[$i])){
-                        $tablename=$table_names[$i];
-                        $fieldInfos[$tablename]=self::$fieldInfos[$tablename];
+            if ( is_string($table_names) ) $table_names = explode(",", $table_names);
+            if ( $table_names && ( count($table_names) > 0 ) ) {
+                for ($i = 0; $i < count($table_names); $i++) {
+                    if ( !empty($table_names[$i]) ) {
+                        $tablename = $table_names[$i];
+                        $fieldInfos[$tablename] = self::$fieldInfos[$tablename];
                     }
                 }
             }

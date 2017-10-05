@@ -30,6 +30,14 @@ class Userrole extends DataObject
      */
     public $role_id;
     //</editor-fold>
+
+    /**
+     * 从属一对一关系
+     */
+    static $belong_has_one=array(
+        "user"=>"User",
+        "role"=>"Role"
+    );
     /**
      * 规格说明
      * 表中不存在的默认列定义:commitTime,updateTime
@@ -39,15 +47,7 @@ class Userrole extends DataObject
         EnumDataSpec::REMOVE=>array(
             'commitTime',
             'updateTime'
-        )
-    );
-
-    /**
-     * 从属一对一关系
-     */
-    static $belong_has_one=array(
-        "user"=>"User",
-        "role"=>"Role"
+        ),
     );
 
 }

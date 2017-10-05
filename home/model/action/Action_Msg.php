@@ -22,7 +22,7 @@ class Action_Msg extends ActionModel
         $count = Msg::count();
         $this->view->countMsgs = $count;
         $this->view->set("msgs", NULL);
-        if ($count>0) {
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $msgs = Msg::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             $this->view->set("msgs", $msgs);
@@ -72,3 +72,4 @@ class Action_Msg extends ActionModel
         $this->redirect("msg", "lists", $this->data);
     }
 }
+

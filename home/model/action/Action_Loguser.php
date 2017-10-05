@@ -22,7 +22,7 @@ class Action_Loguser extends ActionModel
         $count = Loguser::count();
         $this->view->countLogusers = $count;
         $this->view->set("logusers", NULL);
-        if ($count>0) {
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($logusers as $loguser) {
@@ -84,3 +84,4 @@ class Action_Loguser extends ActionModel
         $this->redirect("loguser", "lists", $this->data);
     }
 }
+

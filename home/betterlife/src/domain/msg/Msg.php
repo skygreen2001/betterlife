@@ -64,7 +64,7 @@ class Msg extends DataObject
      * 显示消息状态<br/>
      * 枚举类型。<br/>
      * 0:未读-unread<br/>
-     * 1:已读-read<br/>
+     * 1:已读-read
      */
     public function getStatusShow()
     {
@@ -75,7 +75,7 @@ class Msg extends DataObject
      * 显示消息状态<br/>
      * 枚举类型。<br/>
      * 0:未读-unread<br/>
-     * 1:已读-read<br/>
+     * 1:已读-read
      */
     public static function statusShow($status)
     {

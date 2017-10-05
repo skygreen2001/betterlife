@@ -10,7 +10,7 @@
 class AutoCodeViewAdmin extends AutoCodeView
 {
     /**
-     * 模板Action所在的namespace
+     * 后台关系显示
      */
     private static $admin_relation_view = array(
 
@@ -399,12 +399,36 @@ UETC;
                         if ( array_key_exists($fieldname, $relationSpecs) ) {
                             $relationShow = $relationSpecs[$fieldname];
                             foreach ( $relationShow as $key => $value ) {
-                                $showColName   = $value;
-                                $field_comment = str_replace( "标识", "", $field_comment ); 
+                                $talname_rela   = self::getTablename( $key );
+                                $insname_rela   = self::getInstancename( $talname_rela );
+                                $classNameField = self::getShowFieldNameByClassname( $key, true );
+                                if ( empty($classNameField) ) $classNameField = $realId;
+                                $showColName   = $insname_rela . "." . $classNameField;
+                                $field_comment = str_replace( "标识", "", $field_comment );
+                                $field_comment = str_replace( "编号", "", $field_comment );
                             }
                         }
                     }
                 }
+                // if ( array_key_exists($classname, self::$relation_all) ) {
+                //     $relationSpec = self::$relation_all[$classname];
+                //     if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+                //     {
+                //         if ( array_key_exists("belong_has_one",$relationSpec) ) {
+                //             $belong_has_one = $relationSpec["belong_has_one"];
+                //             foreach ($belong_has_one as $key => $value)
+                //             {
+                //                 $field_comment  = str_replace( "标识", "", $field_comment );
+                //                 $field_comment  = str_replace( "编号", "", $field_comment );
+                //                 $classNameField = self::getShowFieldNameByClassname( $classname, true );
+                //                 if ( empty($classNameField) ) $classNameField = $realId;
+                //                 $showColName    = $value . "." . $classNameField;
+                //             }
+                //         }
+                //     }
+                //
+                // }
+
                 $showColumns .= "                    <dl>\r\n";
                 $showColumns .= "                      <dt><span>$field_comment</span></dt>\r\n";
                 if ( $isImage ) {
@@ -447,7 +471,6 @@ UETC;
         {
             if ( array_key_exists($classname, self::$relation_viewfield) ) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
-                $isTreeLevelHad = false;
                 foreach ( $fieldInfo as $fieldname => $field ) {
                     if ( array_key_exists($fieldname, $relationSpecs) ) {
                         $relationShow = $relationSpecs[$fieldname];

@@ -22,7 +22,7 @@ class Action_Functions extends ActionModel
         $count = Functions::count();
         $this->view->countFunctionss = $count;
         $this->view->set("functionss", NULL);
-        if ($count>0) {
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $functionss = Functions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             $this->view->set("functionss", $functionss);
@@ -70,3 +70,4 @@ class Action_Functions extends ActionModel
         $this->redirect("functions", "lists", $this->data);
     }
 }
+

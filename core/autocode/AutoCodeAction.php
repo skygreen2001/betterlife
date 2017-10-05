@@ -283,8 +283,6 @@ class AutoCodeAction extends AutoCode
                   "    {\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \${$instancename} = $classname::get_by_id(\${$instancename}Id);\r\n".
-                  //TODO
-                  //$user_instance = null;
                   $viewImgContent.
                   "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
                   "    }\r\n".
@@ -396,7 +394,7 @@ class AutoCodeAction extends AutoCode
                    "        \$count = {$classname}::count();\r\n".
                    "        \$this->view->count{$classname}s = \$count;\r\n".
                    "        \$this->view->set(\"{$instancename}s\", NULL);\r\n".
-                   "        if (\$count>0) {\r\n".
+                   "        if ( \$count > 0 ) {\r\n".
                    "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());\r\n".
                    $specialResult.

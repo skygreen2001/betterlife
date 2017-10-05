@@ -141,7 +141,6 @@ class AutoCodeModel extends AutoCode
         foreach ($files as $file)
         {
             $file_overwrite = Gc::$nav_root_path . DS . $file;
-            die ($file_overwrite);
             $content        = file_get_contents($model_save_dir . $file);
             $dir_overwrite  = dirname($file_overwrite);
             UtilFileSystem::createDir( $dir_overwrite );

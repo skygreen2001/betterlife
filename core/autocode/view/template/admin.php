@@ -2,7 +2,7 @@
 $api_web_template = <<<API_WEB
 <?php
 // error_reporting(0);
-require_once ("../../init.php");
+require_once ("../../../init.php");
 
 \$draw         = \$_GET["draw"];
 \$page         = \$_GET["page"];
@@ -70,7 +70,7 @@ $(function(){
             "serverSide": true,
             "retrieve"  : true,
             "ajax": {
-                "url" : "api/web/{$instancename}.php",
+                "url" : "api/web/list/{$instancename}.php",
                 "data": function ( d ) {
                     d.query    = \$("#input-search").val();
                     d.pageSize = d.length;

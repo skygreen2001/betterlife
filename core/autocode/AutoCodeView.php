@@ -242,7 +242,7 @@ class AutoCodeView extends AutoCode
     {
         $classname     = self::getClassname( $tablename );
         $instancename  = self::getInstancename( $tablename );
-        $dir           = self::$save_dir . DS . "api" . DS . "web" . DS;
+        $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "list" . DS;
         $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
         $relative_path = "api" . DS . "web" . DS . $filename;
         AutoCodePreviewReport::$api_admin_files[$classname . $filename] = $relative_path;
