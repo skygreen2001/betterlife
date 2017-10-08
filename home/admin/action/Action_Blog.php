@@ -68,7 +68,7 @@ class Action_Blog extends ActionAdmin
         $blogId = $this->data["id"];
         $blog   = Blog::get_by_id($blogId);
         $this->view->set("blog", $blog);
-        $categorys = Category::get();
+        $categorys = Category::get("", "category_id asc");
         $tags      = Tags::get();
         $this->view->set("categorys", $categorys);
         $this->view->set("tags", $tags);
