@@ -148,9 +148,11 @@
         {/foreach}
 
         var select_status = {};
-        select_status.id = "{$blog.status}";
+        {if $blog.status}
+        select_status.id   = "{$blog.status}";
         select_status.text = "{$blog.statusShow}";
         select_status =  new Array(select_status);
+        {/if}
     </script>
     <script src="{$template_url}js/normal/edit.js"></script>
     <script src="{$template_url}js/core/blog.js"></script>
