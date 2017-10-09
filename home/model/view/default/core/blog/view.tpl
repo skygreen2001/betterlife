@@ -8,6 +8,7 @@
         <tr class="entry"><th class="head">用户标识</th><td class="content">{$blog.user_id}</td></tr>
         <tr class="entry"><th class="head">博客标题</th><td class="content">{$blog.blog_name}</td></tr>
         <tr class="entry"><th class="head">排序</th><td class="content">{$blog.sequenceNo}</td></tr>
+        <tr class="entry"><th class="head">分类</th><td class="content">{$blog.category_name}</td></tr>
         <tr class="entry"><th class="head">分类编号</th><td class="content">{$blog.category_id}</td></tr>
         <tr class="entry"><th class="head">封面</th><td class="content">
             <div class="wrap_2_inner"><img src="{$uploadImg_url|cat:$blog.icon_url}" alt="封面"></div>

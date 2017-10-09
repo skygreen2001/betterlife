@@ -124,8 +124,8 @@ $(function(){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
         $.edit.datetimePicker('#publish_date');
         $.edit.multiselect('#categoryIds');
-        // $.edit.select2('#tagIds', );
-        $.edit.select2("#status", "home/admin/data/blogStatus.json", default_keyword_id, default_keyword_text);
+        $.edit.select2('#tags_id', "api/web/select/tag.php", select_tags);
+        $.edit.select2("#status", "home/admin/data/blogStatus.json", select_status);
 
         $("input[name='isPublic']").bootstrapSwitch();
 

@@ -5,7 +5,7 @@ require_once ("../../../init.php");
 $draw         = $_GET["draw"];
 $page         = $_GET["page"];
 $page_size    = $_GET["pageSize"];
-$search       = $_GET["query"];
+$query        = $_GET["query"];
 $columns      = $_GET["columns"];
 $where_clause = "";
 $orderDes     = "blog_id desc";

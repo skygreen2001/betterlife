@@ -80,7 +80,7 @@
                       <div class="form-group">
                           <label for="tagIds" class="col-sm-2 control-label">标签</label>
                           <div class="col-sm-9">
-                              <select id="tagId" name="tagId[]" class="form-control" multiple></select>
+                              <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
                           </div>
                       </div>
                       <div class="form-group">
@@ -138,8 +138,19 @@
 
     {include file="$templateDir/layout/normal/footer.tpl"}
     <script type="text/javascript">
-        var default_keyword_id   = "{$blog.status}";
-        var default_keyword_text = "{$blog.statusShow}";
+        var select_tags =  new Array({count($blog.tagss)});
+        {foreach $blog.tagss as $tags}
+
+        var tags       = {};
+        tags.id        = "{$tags.tags_id}";
+        tags.text      = "{$tags.title}";
+        select_tags[{$tags@index}] = tags;
+        {/foreach}
+
+        var select_status = {};
+        select_status.id = "{$blog.status}";
+        select_status.text = "{$blog.statusShow}";
+        select_status =  new Array(select_status);
     </script>
     <script src="{$template_url}js/normal/edit.js"></script>
     <script src="{$template_url}js/core/blog.js"></script>

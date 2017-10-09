@@ -7,7 +7,7 @@ require_once ("../../../init.php");
 \$draw         = \$_GET["draw"];
 \$page         = \$_GET["page"];
 \$page_size    = \$_GET["pageSize"];
-\$search       = \$_GET["query"];
+\$query        = \$_GET["query"];
 \$columns      = \$_GET["columns"];
 \$where_clause = "";
 \$orderDes     = "$realId desc";
@@ -16,7 +16,7 @@ if ( !empty(\$query) ) {
   \$where_clause = "(";
   \$search_atom  = explode(" ", trim(\$query));
   array_walk(\$search_atom, function(&\$value, \$key) {
-    \$value = " ( $realId LIKE '%" . \$value . "%' ) ";
+    \$value = " ( $classNameField LIKE '%" . \$value . "%' ) ";
   });
   \$where_clause .= implode(" and ", \$search_atom);
   \$where_clause .= ")";

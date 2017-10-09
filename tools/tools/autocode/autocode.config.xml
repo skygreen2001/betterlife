@@ -4,11 +4,12 @@
         <conditions>
             <condition>blog_name</condition>
             <condition relation_class="User" show_name="username">user_id</condition>
-            <condition relation_class="Category" show_name="categoryName">category_id</condition>
+            <condition relation_class="Category" show_name="name">category_id</condition>
+            <condition>status</condition>
         </conditions>
         <relationShows>
             <show local_key="user_id" relation_class="User">username</show>
-            <show local_key="category_id" relation_class="Category">categoryName</show>
+            <show local_key="category_id" relation_class="Category">name</show>
         </relationShows>
         <belong_has_one>
             <relationclass name="User">user</relationclass>
@@ -16,10 +17,21 @@
         </belong_has_one>
         <has_many>
             <relationclass name="Comment">comments</relationclass>
+            <relationclass name="Blogtags">blogtagss</relationclass>
         </has_many>
         <many_many>
-            <relationclass name="Tag">tags</relationclass>
+            <relationclass name="Tags">tagss</relationclass>
         </many_many>
+    </class>
+    <class name="Category">
+        <conditions>
+            <condition>name</condition>
+            <condition>sequence_no</condition>
+            <condition>status</condition>
+        </conditions>
+        <has_many>
+            <relationclass name="Blog">blogs</relationclass>
+        </has_many>
     </class>
     <class name="Comment">
         <conditions>
@@ -35,6 +47,33 @@
             <relationclass name="User">user</relationclass>
             <relationclass name="Blog">blog</relationclass>
         </belong_has_one>
+    </class>
+    <class name="Blogtags">
+        <conditions>
+            <condition relation_class="Blog" show_name="blog_name">blog_id</condition>
+            <condition relation_class="Tags" show_name="title">tags_id</condition>
+        </conditions>
+        <relationShows>
+            <show local_key="blog_id" relation_class="Blog">blog_name</show>
+            <show local_key="tags_id" relation_class="Tags">title</show>
+        </relationShows>
+        <belong_has_one>
+            <relationclass name="Blog">blog</relationclass>
+            <relationclass name="Tags">tags</relationclass>
+        </belong_has_one>
+    </class>
+    <class name="Tags">
+        <conditions>
+            <condition>title</condition>
+            <condition>sequence_no</condition>
+            <condition>status</condition>
+        </conditions>
+        <has_many>
+            <relationclass name="Blogtags">blogtagss</relationclass>
+        </has_many>
+        <belongs_many_many>
+            <relationclass name="Blog">blogs</relationclass>
+        </belongs_many_many>
     </class>
     <class name="Region">
         <conditions>

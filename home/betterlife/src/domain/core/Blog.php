@@ -93,14 +93,15 @@ class Blog extends DataObject
      * 一对多关系
      */
     static $has_many=array(
-        "comments"=>"Comment"
+        "comments"=>"Comment",
+        "blogtagss"=>"Blogtags"
     );
 
     /**
      * 多对多关系
      */
     static $many_many=array(
-        "tags"=>"Tag"
+        "tagss"=>"Tags"
     );
 
     /**

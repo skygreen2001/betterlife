@@ -25,6 +25,18 @@ class Action_Blogtags extends ActionModel
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $blogtagss = Blogtags::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            foreach ($blogtagss as $blogtags) {
+                $blog_instance = null;
+                if ($blogtags->blog_id) {
+                    $blog_instance = Blog::get_by_id($blogtags->blog_id);
+                    $blogtags['blog_name'] = $blog_instance->blog_name;
+                }
+                $tags_instance = null;
+                if ($blogtags->tags_id) {
+                    $tags_instance = Tags::get_by_id($blogtags->tags_id);
+                    $blogtags['title'] = $tags_instance->title;
+                }
+            }
             $this->view->set("blogtagss", $blogtagss);
         }
     }
@@ -35,6 +47,16 @@ class Action_Blogtags extends ActionModel
     {
         $blogtagsId = $this->data["id"];
         $blogtags = Blogtags::get_by_id($blogtagsId);
+        $blog_instance = null;
+        if ($blogtags->blog_id) {
+            $blog_instance = Blog::get_by_id($blogtags->blog_id);
+            $blogtags['blog_name'] = $blog_instance->blog_name;
+        }
+        $tags_instance = null;
+        if ($blogtags->tags_id) {
+            $tags_instance = Tags::get_by_id($blogtags->tags_id);
+            $blogtags['title'] = $tags_instance->title;
+        }
         $this->view->set("blogtags", $blogtags);
     }
     /**

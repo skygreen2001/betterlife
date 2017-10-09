@@ -154,11 +154,12 @@ class AutoCodeModel extends AutoCode
             foreach ($overwrite_not_arr as $overwrite_not_dir) {
                 if( contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
                 {
-                    if ( !in_array(Gc::$nav_root_path.Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr) ) {
+                    if ( !in_array(Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr) ) {
                         $overwrite_not_run_arr[] = Gc::$nav_root_path . Gc::$module_root.DS.$app_dir.DS;
                     }
                 } else {
-                    $overwrite_not_run_arr[] = $overwrite_not_dir;
+                    if ( !in_array($overwrite_not_dir, $overwrite_not_run_arr) )
+                        $overwrite_not_run_arr[] = $overwrite_not_dir;
                 }
             }
 

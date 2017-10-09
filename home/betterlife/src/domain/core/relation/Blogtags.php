@@ -30,6 +30,14 @@ class Blogtags extends DataObject
      */
     public $tags_id;
     //</editor-fold>
+
+    /**
+     * 从属一对一关系
+     */
+    static $belong_has_one=array(
+        "blog"=>"Blog",
+        "tags"=>"Tags"
+    );
     /**
      * 规格说明
      * 表中不存在的默认列定义:commitTime,updateTime

@@ -564,6 +564,27 @@ class AutoCode extends Object
     }
 
     /**
+     * 根据类名和表信息获取表代表列显示名称
+     * @param array $fieldInfo 表列信息列表
+     * @param string $classname 数据对象类名
+     */
+    protected static function getShowFieldName($fieldInfo, $classname)
+    {
+        $classNameField = self::getShowFieldNameByClassname( $classname, true );
+        if ( empty($classNameField) ) {
+            $fieldNames = array_keys($fieldInfo);
+            foreach ($fieldNames as $fieldname)
+            {
+                if ( !contain( $fieldname, "id" ) ) {
+                    $classNameField = $fieldname;
+                    break;
+                }
+            }
+        }
+        return $classNameField;
+    }
+
+    /**
      * 根据类名判断是不是多对多关系，存在中间表表名
      * @param string $classname 数据对象类名
      */

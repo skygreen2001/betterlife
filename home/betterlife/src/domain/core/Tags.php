@@ -36,5 +36,19 @@ class Tags extends DataObject
     public $status;
     //</editor-fold>
 
+    /**
+     * 一对多关系
+     */
+    static $has_many=array(
+        "blogtagss"=>"Blogtags"
+    );
+
+    /**
+     * 从属于多对多关系
+     */
+    static $belongs_many_many=array(
+        "blogs"=>"Blog"
+    );
+
 }
 

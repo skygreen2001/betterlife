@@ -48,5 +48,12 @@ class Category extends DataObject
     public $status;
     //</editor-fold>
 
+    /**
+     * 一对多关系
+     */
+    static $has_many=array(
+        "blogs"=>"Blog"
+    );
+
 }
 

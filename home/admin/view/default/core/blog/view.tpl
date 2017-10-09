@@ -46,6 +46,10 @@
                       <dd><span>{$blog.blog_name}</span></dd>
                     </dl>
                     <dl>
+                      <dt><span>标签</span></dt>
+                      <dd>{foreach item=tags from=$blog.tagss}<span>{$tags.title}</span> {/foreach}</dd>
+                    </dl>
+                    <dl>
                       <dt><span>作者</span></dt>
                       <dd><span>{$blog.user.username}</span></dd>
                     </dl>

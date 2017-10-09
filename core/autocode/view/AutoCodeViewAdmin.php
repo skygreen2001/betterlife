@@ -40,17 +40,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $editValidMsg     = "";
         $row_no           = 0;
 
-        $classNameField = self::getShowFieldNameByClassname( $classname, true );
-        if ( empty($classNameField) ) {
-            $fieldNames = array_keys($fieldInfo);
-            foreach ($fieldNames as $fieldname)
-            {
-                if ( !contain( $fieldname, "id" ) ) {
-                    $classNameField = $fieldname;
-                    break;
-                }
-            }
-        }
+        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
         foreach ($fieldInfo as $fieldname=>$field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
@@ -97,8 +87,9 @@ class AutoCodeViewAdmin extends AutoCodeView
                         $edit_json_enums = substr($edit_json_enums, 0, strlen($edit_json_enums) - 3);
                         include("template" . DS . "admin.php");
                         $statusColumnDefs .= $js_sub_template_status;
-                        $fieldname{0}      = strtoupper($fieldname{0});
-                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"home/admin/data/" . $instancename . "$fieldname.json\", default_keyword_id, default_keyword_text);\r\n";
+                        $fieldname_u       = $fieldname;
+                        $fieldname_u{0}    = strtoupper($fieldname_u{0});
+                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"home/admin/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname}_id, select_{$fieldname}_text);\r\n";
                         $defineJsonFileContent = $edit_sub_json_template;
                         self::saveJsonDefineToDir( $instancename, $fieldname, $defineJsonFileContent );
                     }
@@ -166,6 +157,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $editApiRela = self::relationFieldShow($instancename, $classname, $fieldInfo);
             }
         }
+        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
         include("template" . DS . "admin.php");
         $result = $api_web_template;
         return $result;
@@ -291,8 +283,8 @@ class AutoCodeViewAdmin extends AutoCodeView
                         case "enum":
                           $edit_contents .= "                                  <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
                           $enumJsContent .= "    <script type=\"text/javascript\">\r\n".
-                                            "        var default_keyword_id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
-                                            "        var default_keyword_text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
+                                            "        var select_{$fieldname}_id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
+                                            "        var select_{$fieldname}_text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
                                             "    </script>\r\n";
                           break;
                         case "date":
@@ -359,17 +351,7 @@ UETC;
         $realId        = DataObjectSpec::getRealIDColumnName($classname);
         $showColumns   = "";
 
-        $classNameField = self::getShowFieldNameByClassname( $classname, true );
-        if ( empty($classNameField) ) {
-            $fieldNames = array_keys($fieldInfo);
-            foreach ($fieldNames as $fieldname)
-            {
-                if ( !contain( $fieldname, "id" ) ) {
-                    $classNameField = $fieldname;
-                    break;
-                }
-            }
-        }
+        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
         foreach ($fieldInfo as $fieldname => $field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
@@ -410,24 +392,6 @@ UETC;
                         }
                     }
                 }
-                // if ( array_key_exists($classname, self::$relation_all) ) {
-                //     $relationSpec = self::$relation_all[$classname];
-                //     if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
-                //     {
-                //         if ( array_key_exists("belong_has_one",$relationSpec) ) {
-                //             $belong_has_one = $relationSpec["belong_has_one"];
-                //             foreach ($belong_has_one as $key => $value)
-                //             {
-                //                 $field_comment  = str_replace( "标识", "", $field_comment );
-                //                 $field_comment  = str_replace( "编号", "", $field_comment );
-                //                 $classNameField = self::getShowFieldNameByClassname( $classname, true );
-                //                 if ( empty($classNameField) ) $classNameField = $realId;
-                //                 $showColName    = $value . "." . $classNameField;
-                //             }
-                //         }
-                //     }
-                //
-                // }
 
                 $showColumns .= "                    <dl>\r\n";
                 $showColumns .= "                      <dt><span>$field_comment</span></dt>\r\n";

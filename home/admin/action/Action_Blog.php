@@ -22,11 +22,6 @@ class Action_Blog extends ActionAdmin
     {
         $blogId = $this->data["id"];
         $blog = Blog::get_by_id($blogId);
-        $user_instance = null;
-        if ($blog->user_id) {
-            $user_instance = User::get_by_id($blog->user_id);
-            $blog['username'] = $user_instance->username;
-        }
         if (!empty($blog->icon_url)){
             $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
@@ -57,7 +52,7 @@ class Action_Blog extends ActionAdmin
                 $id = $blog->save();
             }
 
-            $blogTags = $this->data["tagsId"];
+            $blogTags = $this->data["tags_id"];
             Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
 
             if ($isRedirect){
@@ -69,13 +64,7 @@ class Action_Blog extends ActionAdmin
         $blog   = Blog::get_by_id($blogId);
         $this->view->set("blog", $blog);
         $categorys = Category::get("", "category_id asc");
-        $tags      = Tags::get();
         $this->view->set("categorys", $categorys);
-        $this->view->set("tags", $tags);
-        if ($blog) {
-            $blogTags = Blogtags::select( "tags_id", "blog_id = " . $blogId );
-            $this->view->set("blogTags", $blogTags);
-        }
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor('blog_content');
     }

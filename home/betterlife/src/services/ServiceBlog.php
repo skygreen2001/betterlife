@@ -253,6 +253,10 @@ class ServiceBlog extends Service implements IServiceBasic
                             $user_r=User::get_one("username='".$blog["user_id"]."'");
                             if ($user_r) $blog["user_id"]=$user_r->user_id;
                         }
+                        if (!is_numeric($blog["category_id"])){
+                            $category_r=Category::get_one("name='".$blog["category_id"]."'");
+                            if ($category_r) $blog["category_id"]=$category_r->category_id;
+                        }
                         $blog = new Blog($blog);
                 if (!EnumBlogStatus::isEnumValue($blog->status)){
                     $blog->status=EnumBlogStatus::statusByShow($blog->status);
@@ -303,6 +307,11 @@ class ServiceBlog extends Service implements IServiceBasic
             if ($blog->user_id){
                 $user_instance=User::get_by_id($blog->user_id);
                 $blog['user_id']=$user_instance->username;
+            }
+            $category_instance=null;
+            if ($blog->category_id){
+                $category_instance=Category::get_by_id($blog->category_id);
+                $blog['category_id']=$category_instance->category_name;
             }
         }
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
