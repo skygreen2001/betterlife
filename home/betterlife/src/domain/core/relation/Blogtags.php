@@ -1,14 +1,14 @@
 <?php
 /**
  +---------------------------------------<br/>
- * 博客所属分类<br/>
- * 博客所属分类<br/>
+ * 博客标签<br/>
+ * 博客标签<br/>
  +---------------------------------------
  * @category betterlife
  * @package core.relation
  * @author skygreen skygreen2001@gmail.com
  */
-class Blogcategory extends DataObject
+class Blogtags extends DataObject
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
@@ -16,7 +16,7 @@ class Blogcategory extends DataObject
      * @var int
      * @access public
      */
-    public $blogcategory_id;
+    public $blogtags_id;
     /**
      * 博客编号
      * @var int
@@ -24,11 +24,11 @@ class Blogcategory extends DataObject
      */
     public $blog_id;
     /**
-     * 分类编号
+     * 标签编号
      * @var int
      * @access public
      */
-    public $category_id;
+    public $tags_id;
     //</editor-fold>
     /**
      * 规格说明
@@ -39,7 +39,7 @@ class Blogcategory extends DataObject
         EnumDataSpec::REMOVE=>array(
             'commitTime',
             'updateTime'
-        )
+        ),
     );
 
 }
