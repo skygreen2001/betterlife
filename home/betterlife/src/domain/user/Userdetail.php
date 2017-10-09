@@ -87,7 +87,7 @@ class Userdetail extends DataObject
     public $sex;
     /**
      * 生日
-     * @var string
+     * @var date
      * @access public
      */
     public $birthday;
@@ -105,7 +105,7 @@ class Userdetail extends DataObject
      * 0：女-female<br/>
      * 1：男-male<br/>
      * -1：待确认-unknown<br/>
-     * 默认男<br/>
+     * 默认男
      */
     public function getSexShow()
     {
@@ -117,7 +117,7 @@ class Userdetail extends DataObject
      * 0：女-female<br/>
      * 1：男-male<br/>
      * -1：待确认-unknown<br/>
-     * 默认男<br/>
+     * 默认男
      */
     public static function sexShow($sex)
     {

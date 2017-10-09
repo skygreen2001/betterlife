@@ -30,6 +30,14 @@ class Rolefunctions extends DataObject
      */
     public $functions_id;
     //</editor-fold>
+
+    /**
+     * 从属一对一关系
+     */
+    static $belong_has_one=array(
+        "role"=>"Role",
+        "functions"=>"Functions"
+    );
     /**
      * 规格说明
      * 表中不存在的默认列定义:commitTime,updateTime
@@ -39,15 +47,7 @@ class Rolefunctions extends DataObject
         EnumDataSpec::REMOVE=>array(
             'commitTime',
             'updateTime'
-        )
-    );
-
-    /**
-     * 从属一对一关系
-     */
-    static $belong_has_one=array(
-        "role"=>"Role",
-        "functions"=>"Functions"
+        ),
     );
 
 }

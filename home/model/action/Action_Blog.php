@@ -22,7 +22,7 @@ class Action_Blog extends ActionModel
         $count = Blog::count();
         $this->view->countBlogs = $count;
         $this->view->set("blogs", NULL);
-        if ($count>0) {
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $blogs = Blog::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($blogs as $blog) {

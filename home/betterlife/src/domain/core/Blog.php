@@ -35,14 +35,24 @@ class Blog extends DataObject
      */
     public $sequenceNo;
     /**
+     * 分类编号
+     * @var int
+     * @access public
+     */
+    public $category_id;
+    /**
      * 封面
      * @var string
      * @access public
      */
     public $icon_url;
     /**
-     * 是否公开
-     * @var string
+     * 是否公开<br/>
+     * 0: 不公开<br/>
+     * 1: 公开<br/>
+     * 默认为1: 公开<br/>
+     * 
+     * @var bit
      * @access public
      */
     public $isPublic;
@@ -58,16 +68,16 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     *
+     * 
      * @var enum
      * @access public
      */
     public $status;
     /**
-    * 发布日期
-    * @var string
-    * @access public
-    */
+     * 发布日期
+     * @var date
+     * @access public
+     */
     public $publish_date;
     //</editor-fold>
 
@@ -75,7 +85,8 @@ class Blog extends DataObject
      * 从属一对一关系
      */
     static $belong_has_one=array(
-        "user"=>"User"
+        "user"=>"User",
+        "category"=>"Category"
     );
 
     /**
@@ -89,7 +100,7 @@ class Blog extends DataObject
      * 多对多关系
      */
     static $many_many=array(
-        "categorys"=>"Category"
+        "tags"=>"Tag"
     );
 
     /**
@@ -98,7 +109,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * <br/>
+     * 
      */
     public function getStatusShow()
     {
@@ -111,24 +122,27 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * <br/>
+     * 
      */
     public static function statusShow($status)
     {
         return EnumBlogStatus::statusShow($status);
     }
 
+
     /**
      * 是否公开<br/>
-     * 0:公开<br/>
-     * 1:不公开<br/>
-     * <br/>
+     * 0: 不公开<br/>
+     * 1: 公开<br/>
+     * 默认为1: 公开<br/>
+     * 
      */
     public function isPublicShow()
     {
-        if ($this->isPublic){
+        if ( $this->isPublic ) {
             return "是";
         }
         return "否";
     }
 }
+

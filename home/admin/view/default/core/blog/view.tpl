@@ -39,7 +39,7 @@
                     </dl>
                     <dl>
                       <dt><span>分类</span></dt>
-                      <dd><span>{foreach item=category from=$blog.categorys}{$category.name}&nbsp;{/foreach}</span></dd>
+                      <dd><span>{$blog.category.name}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>名称</span></dt>
@@ -47,7 +47,7 @@
                     </dl>
                     <dl>
                       <dt><span>作者</span></dt>
-                      <dd><span>{$blog.username}</span></dd>
+                      <dd><span>{$blog.user.username}</span></dd>
                     </dl>
                     <dl>
                       <dt><span>封面</span></dt>

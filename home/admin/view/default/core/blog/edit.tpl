@@ -66,7 +66,7 @@
                       <div class="form-group">
                           <label for="categoryIds" class="col-sm-2 control-label">博客类型</label>
                           <div class="col-sm-9">
-                              <select id="categoryIds" name="categoryId[]" class="form-control" multiple>
+                              <select id="categoryIds" name="categoryId" class="form-control">
                                   {foreach item=category from=$categorys}
                                   {if $category.category_id|in_array:$blogCategorys}
                                   <option value="{$category.category_id}" selected>{$category.name}</option>
@@ -75,6 +75,12 @@
                                   {/if}
                                   {/foreach}
                               </select>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="tagIds" class="col-sm-2 control-label">标签</label>
+                          <div class="col-sm-9">
+                              <select id="tagId" name="tagId[]" class="form-control" multiple></select>
                           </div>
                       </div>
                       <div class="form-group">

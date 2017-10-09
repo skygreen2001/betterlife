@@ -8,6 +8,12 @@ $(function(){
       if (((urlstr + '/').indexOf(link) > -1)&&(link!='')&&(link!='#')) {
         $(this).addClass('active');
         urlstatus = true;
+        
+        var parent = $(this).parent().parent();
+        if (parent.hasClass("sub-menu")) {
+          parent.slideToggle(200);
+          parent.parent().find("i.menu-right").toggleClass("rotated");
+        }
       } else {
         $(this).removeClass('active');
       }

@@ -39,6 +39,13 @@ class Loguser extends DataObject
      */
     public $log_content;
     //</editor-fold>
+
+    /**
+     * 从属一对一关系
+     */
+    static $belong_has_one=array(
+        "user"=>"User"
+    );
     /**
      * 规格说明
      * 表中不存在的默认列定义:updateTime
@@ -47,21 +54,14 @@ class Loguser extends DataObject
     public $field_spec=array(
         EnumDataSpec::REMOVE=>array(
             'updateTime'
-        )
-    );
-
-    /**
-     * 从属一对一关系
-     */
-    static $belong_has_one=array(
-        "user"=>"User"
+        ),
     );
 
     /**
      * 显示类型<br/>
      * 1:登录-LOGIN<br/>
      * 2:写日志-BLOG<br/>
-     * 3:写评论-COMMENT<br/>
+     * 3:写评论-COMMENT
      */
     public function getUserTypeShow()
     {
@@ -72,7 +72,7 @@ class Loguser extends DataObject
      * 显示类型<br/>
      * 1:登录-LOGIN<br/>
      * 2:写日志-BLOG<br/>
-     * 3:写评论-COMMENT<br/>
+     * 3:写评论-COMMENT
      */
     public static function userTypeShow($userType)
     {

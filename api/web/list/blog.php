@@ -1,6 +1,6 @@
 <?php
 // error_reporting(0);
-require_once ("../../init.php");
+require_once ("../../../init.php");
 
 $draw         = $_GET["draw"];
 $page         = $_GET["page"];
@@ -30,7 +30,7 @@ foreach ($columns as $key => $column) {
   }
 }
 
-$pageBlogs = Blog::queryPageByPageNo($page,$where_clause,$page_size,$orderDes);
+$pageBlogs = Blog::queryPageByPageNo($page, $where_clause, $page_size, $orderDes);
 $data      = $pageBlogs["data"];
 if ($data){
   foreach ($data as $key => $blog) {

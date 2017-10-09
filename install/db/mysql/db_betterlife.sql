@@ -35,15 +35,15 @@ CREATE TABLE `bb_core_category` (
 -- ----------------------------
 -- Records of bb_core_category
 -- ----------------------------
-INSERT INTO `bb_core_category` VALUES (1, 100, '科技', '', '科技', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (2, 100, '时尚', '', '时尚', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (3, 100, '新闻', '', '新闻', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (4, 100, '体育', '', '体育', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (5, 100, '军事', '', '军事', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (6, 100, '生活', '', '生活', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (7, 100, '音乐', '', '音乐', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (8, 100, '购物', '', '购物', 1, '2017-03-26 17:03:00', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (9, 100, '其他', '', '其他', 1, '2017-05-22 13:47:02', '2017-09-18 15:41:50');
+INSERT INTO `bb_core_category` VALUES (1, 100, '科技', '', '科技', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (2, 100, '时尚', '', '时尚', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (3, 100, '新闻', '', '新闻', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (4, 100, '体育', '', '体育', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (5, 100, '军事', '', '军事', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (6, 100, '生活', '', '生活', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (7, 100, '音乐', '', '音乐', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (8, 100, '购物', '', '购物', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_category` VALUES (9, 100, '其他', '', '其他', 1, '1331953386', '2017-09-18 15:41:50');
 
 -- ----------------------------
 -- Table structure for `bb_core_blog`
@@ -54,8 +54,9 @@ CREATE TABLE `bb_core_blog` (
   `user_id` int(11) NOT NULL COMMENT '用户标识',
   `blog_name` varchar(200) DEFAULT NULL COMMENT '博客标题',
   `sequenceNo` int(11) NOT NULL COMMENT '排序',
+  `category_id` int(11) NOT NULL COMMENT '分类编号',
   `icon_url` varchar(500) DEFAULT NULL COMMENT '封面',
-  `isPublic` bit(1) DEFAULT b'1' COMMENT '是否公开',
+  `isPublic` bit(1) DEFAULT b'1' COMMENT '是否公开\n0: 不公开\n1: 公开\n默认为1: 公开\n',
   `blog_content` longtext DEFAULT NULL COMMENT '博客内容',
   `status` enum('0','1','100','400') DEFAULT NULL COMMENT '状态\n0:待审核-pend\n1:进行中-run\n100:已结束-end\n400:已删除-del\n',
   `publish_date` date DEFAULT NULL COMMENT '发布日期',
@@ -68,24 +69,52 @@ CREATE TABLE `bb_core_blog` (
 -- ----------------------------
 -- Records of bb_core_blog
 -- ----------------------------
-INSERT INTO `bb_core_blog` VALUES ('1', '1', 'Web在线编辑器', 100, '', b'1', '搜索关键字：在线编辑器\r\n引自：<a href=\"http://paranimage.com/22-online-web-editor/\" target=\"_blank\">http://paranimage.com/22-online-web-editor/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('2', '1', '地图导航第三方库', 100, '', b'1', '百度地图:<a href=\"http://openapi.baidu.com/map/index.html\" target=\"_blank\">http://openapi.baidu.com/map/index.html</a><br />City8 &nbsp; &nbsp; :<a href=\"http://sh.city8.com/api.html\" target=\"_blank\">http://sh.city8.com/api.html</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('3', '1', 'PHPLinq', 100, '', b'1', 'PHPLinq:<a href=\"http://phplinq.codeplex.com/\" target=\"_blank\">http://phplinq.codeplex.com/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('4', '1', 'EditArea', 100, '', b'1', 'EditArea:<a href=\"http://www.cdolivet.com/index.php?page=editArea\" target=\"_blank\">http://www.cdolivet.com/index.php?page=editArea</a>&nbsp;\r\n提供给开发者和工作者的用于编辑源码或者样式模板的TextArea', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
-INSERT INTO `bb_core_blog` VALUES ('5', '1', '名校公开课', 100, '', b'1', '来自新浪、搜狐、网易和QQ的名校公开课。', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('1', '1', 'Web在线编辑器', 100, 1, '', b'1', '搜索关键字：在线编辑器\r\n引自：<a href=\"http://paranimage.com/22-online-web-editor/\" target=\"_blank\">http://paranimage.com/22-online-web-editor/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('2', '1', '地图导航第三方库', 100, 1, '', b'1', '百度地图:<a href=\"http://openapi.baidu.com/map/index.html\" target=\"_blank\">http://openapi.baidu.com/map/index.html</a><br />City8 &nbsp; &nbsp; :<a href=\"http://sh.city8.com/api.html\" target=\"_blank\">http://sh.city8.com/api.html</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('3', '1', 'PHPLinq', 100, 1, '', b'1', 'PHPLinq:<a href=\"http://phplinq.codeplex.com/\" target=\"_blank\">http://phplinq.codeplex.com/</a>', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('4', '1', 'EditArea', 100, 1, '', b'1', 'EditArea:<a href=\"http://www.cdolivet.com/index.php?page=editArea\" target=\"_blank\">http://www.cdolivet.com/index.php?page=editArea</a>&nbsp;\r\n提供给开发者和工作者的用于编辑源码或者样式模板的TextArea', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
+INSERT INTO `bb_core_blog` VALUES ('5', '1', '名校公开课', 100, 1, '', b'1', '来自新浪、搜狐、网易和QQ的名校公开课。', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
 
 -- ----------------------------
--- Table structure for `bb_core_re_blogcategory`
+-- Table structure for bb_core_tags
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_core_re_blogcategory`;
-CREATE TABLE `bb_core_re_blogcategory` (
-  `blogcategory_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
+DROP TABLE IF EXISTS `bb_core_tags`;
+CREATE TABLE `bb_core_tags` (
+  `tags_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
+  `sequence_no` int(11) DEFAULT NULL COMMENT '序号',
+  `title` varchar(255) NOT NULL COMMENT '名称',
+  `status` smallint(3) DEFAULT '1' COMMENT '状态',
+  `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`tags_id`),
+  UNIQUE KEY `id_UNIQUE` (`tags_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='标签';
+
+-- ----------------------------
+-- Records of bb_core_category
+-- ----------------------------
+INSERT INTO `bb_core_tags` VALUES (1, 100, '科技', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (2, 100, '地图', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (3, 100, 'IT', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (4, 100, 'PHP', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (5, 100, 'Java', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (6, 100, '名校', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (7, 100, '云技术', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (8, 100, '音乐', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_core_tags` VALUES (9, 100, '时尚', 1, '1331953386', '2017-09-18 15:41:50');
+
+-- ----------------------------
+-- Table structure for `bb_core_re_blogtags`
+-- ----------------------------
+DROP TABLE IF EXISTS `bb_core_re_blogtags`;
+CREATE TABLE `bb_core_re_blogtags` (
+  `blogtags_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `blog_id` int(11) NOT NULL COMMENT '博客编号',
-  `category_id` int(11) NOT NULL COMMENT '分类编号',
-  PRIMARY KEY (`blogcategory_id`,`blog_id`,`category_id`),
-  KEY `fk_blog_belongs_category` (`blog_id`),
-  KEY `fk_category_has_blog` (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客类型\n博客类型关系表';
+  `tags_id` int(11) NOT NULL COMMENT '标签编号',
+  PRIMARY KEY (`blogtags_id`, `blog_id`, `tags_id`),
+  KEY `fk_blog_belongs_tags` (`blog_id`),
+  KEY `fk_blog_has_blog` (`tags_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客标签\n博客标签关系表';
 
 -- ----------------------------
 -- Table structure for `bb_core_comment`

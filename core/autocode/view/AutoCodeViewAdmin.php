@@ -10,6 +10,12 @@
 class AutoCodeViewAdmin extends AutoCodeView
 {
     /**
+     * 后台关系显示
+     */
+    private static $admin_relation_view = array(
+
+    );
+    /**
      * 将表列定义转换成表示层js文件定义的内容
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
@@ -33,35 +39,31 @@ class AutoCodeViewAdmin extends AutoCodeView
         $editValidRules   = "";
         $editValidMsg     = "";
         $row_no           = 0;
+
+        $classNameField = self::getShowFieldNameByClassname( $classname, true );
+        if ( empty($classNameField) ) {
+            $fieldNames = array_keys($fieldInfo);
+            foreach ($fieldNames as $fieldname)
+            {
+                if ( !contain( $fieldname, "id" ) ) {
+                    $classNameField = $fieldname;
+                    break;
+                }
+            }
+        }
         foreach ($fieldInfo as $fieldname=>$field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
                 $column_contents .= "                { data: \"$fieldname\" },\r\n";
-                // $show_columns[]   = $fieldname;
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
                     $editImgColumn .= '        $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");';
+                    $altImgVal      = $classNameField;
+                    if ( empty($altImgVal) ) $altImgVal = $realId;
                     include("template" . DS . "admin.php");
-                    //todo: alt="' + row.$realId + '"
                     $imgColumnDefs .= $js_sub_template_img;
                 }
-                // todo:
-                // $editValidRules
-                // blog_name:{
-                //     required:true
-                // },
-                // sequenceNo: {
-                //     required:true,
-                //     number:true,
-                // }
-                //
-                // $editValidMsg
-                // blog_name:"此项为必填项",
-                // sequenceNo:{
-                //     required:"此项为必填项",
-                //     number:"此项必须为数字"
-                // }
                 $datatype = self::comment_type($field["Type"]);
                 switch ($datatype) {
                   case 'bit':
@@ -105,7 +107,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $editDateColumn .= "        \$.edit.datetimePicker('#$fieldname');\r\n";
                     break;
                   // todo:
-                  // $editMultiselectColumn
+                  // $editMulSelColumn
                   // $.edit.multiselect('#categoryIds');
                   default:
                     break;
@@ -113,7 +115,13 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $row_no ++;
             }
         }
-        $column_contents .= "                { data: \"$realId\" }";
+        if ( !empty($classNameField) ) {
+            $editValidRules = "                $classNameField: {\r\n".
+                              "                    required: true\r\n".
+                              "                }";
+            $editValidMsg   = "                $classNameField: \"此项为必填项\"";
+        }
+        $column_contents .= "                { data: \"$realId\" }\r\n";
         include("template" . DS . "admin.php");
         $idColumnDefs     = $js_sub_template_id;
         include("template" . DS . "admin.php");
@@ -140,7 +148,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
-                    $editApiImg  .= "    if (!empty(\${$instancename}->$fieldname)){\r\n".
+                    $editApiImg  .= "    if ( !empty(\${$instancename}->$fieldname) ) {\r\n".
                                     "      \${$instancename}->$fieldname = Gc::\$upload_url . \"images/\" . \${$instancename}->$fieldname;\r\n".
                                     "    }\r\n";
                 }
@@ -155,11 +163,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                   default:
                     break;
                 }
-                //TODO
-                // if (!empty($blog->user_id)){
-                //   $user = User::get_by_id($blog->user_id);
-                //   if ($user) $blog->user_name = $user->username;
-                // }
+                $editApiRela = self::relationFieldShow($instancename, $classname, $fieldInfo);
             }
         }
         include("template" . DS . "admin.php");
@@ -180,7 +184,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $filename      = $instantceName . $fieldname . Config_F::SUFFIX_FILE_JSON;
         $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
         AutoCodePreviewReport::$json_admin_files[$classname . $filename] = $relative_path;
-        return self::saveDefineToDir($dir, $filename, $defineJsonFileContent );
+        return self::saveDefineToDir( $dir, $filename, $defineJsonFileContent );
     }
 
     /**
@@ -212,7 +216,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 
         include("template" . DS . "admin.php");
         $result = $list_template;
-        $result = self::tableToViewTplDefine($result);
+        $result = self::tableToViewTplDefine( $result );
         return $result;
     }
 
@@ -224,10 +228,10 @@ class AutoCodeViewAdmin extends AutoCodeView
     public static function tpl_edit($tablename, $fieldInfo)
     {
         $appname       = self::$appName;
-        $table_comment = self::tableCommentKey($tablename);
+        $table_comment = self::tableCommentKey( $tablename );
         $appname       = self::$appName;
-        $classname     = self::getClassname($tablename);
-        $instancename  = self::getInstancename($tablename);
+        $classname     = self::getClassname( $tablename );
+        $instancename  = self::getInstancename( $tablename );
         $edit_contents = "";
         $enumJsContent = "";
         $realId        = "id";
@@ -238,16 +242,16 @@ class AutoCodeViewAdmin extends AutoCodeView
         $ueTextareacontents  = "";
         $ckeditor_prepare    = "    ";
         $ueEditor_prepare    = "";
-        foreach ( $fieldInfo as $fieldname => $field )
+        foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
+            if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
             {
                 $field_comment = preg_split("/[\s,]+/", $field_comment);
                 $field_comment = $field_comment[0];
             }
             $realId = DataObjectSpec::getRealIDColumnName( $classname );
-            if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+            if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $isImage = self::columnIsImage( $fieldname, $value );
                 if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
                     $edit_contents .= "                     <div class=\"form-group\">\r\n".
@@ -354,6 +358,18 @@ UETC;
         $instancename  = self::getInstancename($tablename);
         $realId        = DataObjectSpec::getRealIDColumnName($classname);
         $showColumns   = "";
+
+        $classNameField = self::getShowFieldNameByClassname( $classname, true );
+        if ( empty($classNameField) ) {
+            $fieldNames = array_keys($fieldInfo);
+            foreach ($fieldNames as $fieldname)
+            {
+                if ( !contain( $fieldname, "id" ) ) {
+                    $classNameField = $fieldname;
+                    break;
+                }
+            }
+        }
         foreach ($fieldInfo as $fieldname => $field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
@@ -375,14 +391,51 @@ UETC;
                       $showColName .= "|date_format:\"%Y-%m-%d\"";
                       break;
                 }
+
+                if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+                {
+                    if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                        $relationSpecs  = self::$relation_viewfield[$classname];
+                        if ( array_key_exists($fieldname, $relationSpecs) ) {
+                            $relationShow = $relationSpecs[$fieldname];
+                            foreach ( $relationShow as $key => $value ) {
+                                $talname_rela   = self::getTablename( $key );
+                                $insname_rela   = self::getInstancename( $talname_rela );
+                                $classNameField = self::getShowFieldNameByClassname( $key, true );
+                                if ( empty($classNameField) ) $classNameField = $realId;
+                                $showColName   = $insname_rela . "." . $classNameField;
+                                $field_comment = str_replace( "标识", "", $field_comment );
+                                $field_comment = str_replace( "编号", "", $field_comment );
+                            }
+                        }
+                    }
+                }
+                // if ( array_key_exists($classname, self::$relation_all) ) {
+                //     $relationSpec = self::$relation_all[$classname];
+                //     if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+                //     {
+                //         if ( array_key_exists("belong_has_one",$relationSpec) ) {
+                //             $belong_has_one = $relationSpec["belong_has_one"];
+                //             foreach ($belong_has_one as $key => $value)
+                //             {
+                //                 $field_comment  = str_replace( "标识", "", $field_comment );
+                //                 $field_comment  = str_replace( "编号", "", $field_comment );
+                //                 $classNameField = self::getShowFieldNameByClassname( $classname, true );
+                //                 if ( empty($classNameField) ) $classNameField = $realId;
+                //                 $showColName    = $value . "." . $classNameField;
+                //             }
+                //         }
+                //     }
+                //
+                // }
+
                 $showColumns .= "                    <dl>\r\n";
                 $showColumns .= "                      <dt><span>$field_comment</span></dt>\r\n";
                 if ( $isImage ) {
                     $showColumns .= "                      <dd>\r\n";
                     $showColumns .= "                        {if $$instancename.$showColName}\r\n";
-                    // todo
-                    // alt="{$blog.blog_name}"
-                    $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$realId}\" /></a></span><br>\r\n";
+                    if ( empty($classNameField) ) $classNameField = $realId;
+                    $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$classNameField}\" /></a></span><br>\r\n";
                     $showColumns .= "                        <span>存储路径:</span><br><span>{\$$instancename.$showColName}</span>\r\n";
                     $showColumns .= "                        {else}\r\n";
                     $showColumns .= "                        <span></span>\r\n";
@@ -402,6 +455,48 @@ UETC;
         include("template" . DS . "admin.php");
         $result = $view_template;
         $result = self::tableToViewTplDefine($result);
+        return $result;
+    }
+
+    /**
+     * 显示关系列
+     * @param mixed $instance_name 实体变量
+     * @param mixed $classname 数据对象列名
+     * @param mixed $fieldInfo 表列信息列表
+     */
+    protected static function relationFieldShow($instance_name, $classname, $fieldInfo)
+    {
+        $result = "";
+        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+        {
+            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                $relationSpecs  = self::$relation_viewfield[$classname];
+                foreach ( $fieldInfo as $fieldname => $field ) {
+                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                        $relationShow = $relationSpecs[$fieldname];
+                        foreach ( $relationShow as $key => $value ) {
+                            $realId         = DataObjectSpec::getRealIDColumnName($key);
+                            $show_fieldname = $value;
+                            if ( $realId != $fieldname ) {
+                                $show_fieldname .= "_" . $fieldname;
+                                if ( contain( $show_fieldname, "_id" ) ) {
+                                    $show_fieldname = str_replace("_id", "", $show_fieldname);
+                                }
+                            }
+                            if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
+                            $i_name      = $key;
+                            $i_name{0}   = strtolower($i_name{0});
+                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ){
+                                $result .= "    if ( !empty(\${$instance_name}->$fieldname) ) {\r\n".
+                                           "      \${$i_name}_i = $key::get_by_id(\${$instance_name}->$fieldname);\r\n".
+                                           "      if ( \${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;\r\n".
+                                           "    }\r\n";
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return $result;
     }
 }

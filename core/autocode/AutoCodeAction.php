@@ -121,9 +121,9 @@ class AutoCodeAction extends AutoCode
             }
             $definePhpFileContent      = self::tableToActionDefine($tablename,$fieldInfo);
             if ( !empty($definePhpFileContent) ) {
-                if (isset(self::$save_dir)&&!empty(self::$save_dir)&&isset($definePhpFileContent)){
-                    $classname         = self::saveActionDefineToDir($tablename,$definePhpFileContent);
-                    self::$showReport .= "生成导出完成:$tablename=>$classname!<br/>";
+                if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ){
+                    $classname         = self::saveActionDefineToDir( $tablename, $definePhpFileContent );
+                    self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
                 }else{
                     self::$showReport .= $definePhpFileContent."<br/>";
                 }
@@ -283,8 +283,6 @@ class AutoCodeAction extends AutoCode
                   "    {\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \${$instancename} = $classname::get_by_id(\${$instancename}Id);\r\n".
-                  //TODO
-                  //$user_instance = null;
                   $viewImgContent.
                   "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
                   "    }\r\n".
@@ -376,7 +374,7 @@ class AutoCodeAction extends AutoCode
         $result        = "";
         $appname_alias = strtolower(Gc::$appName_alias);
 
-        $relationField = self::relationFieldShow($instancename,$classname,$fieldInfo,"        ");
+        $relationField = self::relationFieldShow($instancename, $classname, $fieldInfo, "        ");
         $specialResult = "";
         if ( (!empty($relationField)) ) {
             $specialResult .= "            foreach (\${$instancename}s as \$$instancename) {\r\n".
@@ -396,7 +394,7 @@ class AutoCodeAction extends AutoCode
                    "        \$count = {$classname}::count();\r\n".
                    "        \$this->view->count{$classname}s = \$count;\r\n".
                    "        \$this->view->set(\"{$instancename}s\", NULL);\r\n".
-                   "        if (\$count>0) {\r\n".
+                   "        if ( \$count > 0 ) {\r\n".
                    "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());\r\n".
                    $specialResult.
@@ -405,10 +403,10 @@ class AutoCodeAction extends AutoCode
                    "    }\r\n";
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
-        $relationFieldTreeRecursive = self::relationFieldTreeRecursive($instancename, $classname, $fieldInfo);
-        if($relationFieldTreeRecursive) $relationFieldTreeRecursive = "\r\n".$relationFieldTreeRecursive;
+        $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
+        if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
         $result .= $relationFieldTreeRecursive;
-        $relationField = self::relationFieldShow($instancename,$classname,$fieldInfo);
+        $relationField = self::relationFieldShow( $instancename, $classname, $fieldInfo );
         $result .= "    /**\r\n".
                    "     * 查看{$table_comment}\r\n".
                    "     */\r\n".
@@ -453,7 +451,7 @@ class AutoCodeAction extends AutoCode
         if ( count($text_area_fieldname) == 1 ) {
             $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
                        "        \$this->load_onlineditor({$text_area_fieldname[0]});\r\n";
-        } else if (count($text_area_fieldname)>1){
+        } else if ( count($text_area_fieldname) > 1 ) {
             $fieldnames = implode(",", $text_area_fieldname);
             $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
                           "        \$this->load_onlineditor(array({$fieldnames}));\r\n";
@@ -478,26 +476,26 @@ class AutoCodeAction extends AutoCode
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
      */
-    public static function relationFieldTreeRecursive($instance_name,$classname,$fieldInfo)
+    public static function relationFieldTreeRecursive($instance_name, $classname, $fieldInfo)
     {
-        $result="";
-        if ( is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0) )
+        $result = "";
+        if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
         {
-            if ( array_key_exists($classname,self::$relation_viewfield) ) {
+            if ( array_key_exists($classname, self::$relation_viewfield) ) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
-                foreach ( $fieldInfo as $fieldname => $field ) {
-                    if ( array_key_exists($fieldname,$relationSpecs) ) {
+                foreach ($fieldInfo as $fieldname => $field) {
+                    if ( array_key_exists($fieldname, $relationSpecs) ) {
                         $relationShow  = $relationSpecs[$fieldname];
-                        foreach ( $relationShow as $key => $value ) {
+                        foreach ($relationShow as $key => $value) {
                             $i_name    = $key;
                             $i_name{0} = strtolower($i_name{0});
                             $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                             if ( !$isTreeLevelHad ) {
-                                if (array_key_exists("parent_id",$fieldInfo)&&array_key_exists("level",$fieldInfo)){
-                                    $classNameField = self::getShowFieldNameByClassname($key);                                    $classNameField=self::getShowFieldNameByClassname($key);
+                                if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {
+                                    $classNameField = self::getShowFieldNameByClassname( $key );
                                     $field_comment  = $field["Comment"];
-                                    $field_comment  = self::columnCommentKey($field_comment,$fieldname);
+                                    $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
                                     $result .= "    /**\r\n".
                                                "     * 显示{$field_comment}[全]\r\n".
                                                "     * 注:采用了递归写法\r\n".
@@ -581,7 +579,6 @@ class AutoCodeAction extends AutoCode
         }
         return $result;
     }
-
 
     /**
      * 是否需要在编辑页面上传图片

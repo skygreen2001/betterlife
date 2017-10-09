@@ -7,7 +7,7 @@ $(function(){
             "serverSide": true,
             "retrieve"  : true,
             "ajax": {
-                "url" : "api/web/blog.php",
+                "url" : "api/web/list/blog.php",
                 "data": function ( d ) {
                     d.query    = $("#input-search").val();
                     d.pageSize = d.length;
@@ -124,6 +124,7 @@ $(function(){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
         $.edit.datetimePicker('#publish_date');
         $.edit.multiselect('#categoryIds');
+        // $.edit.select2('#tagIds', );
         $.edit.select2("#status", "home/admin/data/blogStatus.json", default_keyword_id, default_keyword_text);
 
         $("input[name='isPublic']").bootstrapSwitch();
@@ -139,12 +140,12 @@ $(function(){
             focusInvalid: true,
             // debug:true,
             rules: {
-                blog_name:{
-                    required:true
+                blog_name: {
+                    required: true
                 },
                 sequenceNo: {
-                    required:true,
-                    number:true
+                    required: true,
+                    number: true
                 }
             },
             messages: {

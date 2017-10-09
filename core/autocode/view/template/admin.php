@@ -2,7 +2,7 @@
 $api_web_template = <<<API_WEB
 <?php
 // error_reporting(0);
-require_once ("../../init.php");
+require_once ("../../../init.php");
 
 \$draw         = \$_GET["draw"];
 \$page         = \$_GET["page"];
@@ -70,7 +70,7 @@ $(function(){
             "serverSide": true,
             "retrieve"  : true,
             "ajax": {
-                "url" : "api/web/{$instancename}.php",
+                "url" : "api/web/list/{$instancename}.php",
                 "data": function ( d ) {
                     d.query    = \$("#input-search").val();
                     d.pageSize = d.length;
@@ -125,10 +125,10 @@ $editBitColumn
             focusInvalid: true,
             // debug:true,
             rules: {
-                $editValidRules
+$editValidRules
             },
             messages: {
-                $editValidMsg
+$editValidMsg
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
                 $('.alert-danger', $('.login-form')).show();
@@ -158,7 +158,7 @@ $js_sub_template_img = <<<JS_IMG
                     // 该图片仅供测试
                     if ( data ) {
                         var $realId = row.$realId;
-                        var result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$realId + '" /></a>';
+                        var result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$altImgVal + '" /></a>';
 
                         \$("body").off('click', 'a#imgUrl' + $realId);
                         \$("body").on('click', 'a#imgUrl' + $realId, function(){
@@ -242,7 +242,7 @@ $list_template = <<<LIST_TPL
                 <div class="row">
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
-                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i> 首页</a></li>
+                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i>首页</a></li>
                       <li class="active">{$table_comment}</li>
                     </ul>
                   </div>
@@ -322,7 +322,7 @@ $view_template = <<<VIEW_TPL
                 <div class="row">
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
-                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i> 首页</a></li>
+                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i>首页</a></li>
                       <li><a href="{\$url_base}index.php?go={$appname}.{$instancename}.lists">{$table_comment}</a></li>
                       <li class="active">查看{$table_comment}</li>
                     </ul>
@@ -396,7 +396,7 @@ $edit_template = <<<EDIT_TPL
                 <div class="row">
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
-                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i> 首页</a></li>
+                      <li><a href="{\$url_base}index.php?go={$appname}.index.index"><i class="icon-home2 position-left"></i>首页</a></li>
                       <li><a href="{\$url_base}index.php?go={$appname}.{$instancename}.lists">{$table_comment}</a></li>
                       <li class="active">编辑{$table_comment}</li>
                     </ul>

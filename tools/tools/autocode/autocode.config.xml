@@ -4,18 +4,21 @@
         <conditions>
             <condition>blog_name</condition>
             <condition relation_class="User" show_name="username">user_id</condition>
+            <condition relation_class="Category" show_name="categoryName">category_id</condition>
         </conditions>
         <relationShows>
             <show local_key="user_id" relation_class="User">username</show>
+            <show local_key="category_id" relation_class="Category">categoryName</show>
         </relationShows>
         <belong_has_one>
             <relationclass name="User">user</relationclass>
+            <relationclass name="Category">category</relationclass>
         </belong_has_one>
         <has_many>
             <relationclass name="Comment">comments</relationclass>
         </has_many>
         <many_many>
-            <relationclass name="Category">categorys</relationclass>
+            <relationclass name="Tag">tags</relationclass>
         </many_many>
     </class>
     <class name="Comment">

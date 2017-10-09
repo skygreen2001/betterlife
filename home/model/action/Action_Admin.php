@@ -22,7 +22,7 @@ class Action_Admin extends ActionModel
         $count = Admin::count();
         $this->view->countAdmins = $count;
         $this->view->set("admins", NULL);
-        if ($count>0) {
+        if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $admins = Admin::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
             foreach ($admins as $admin) {
@@ -82,3 +82,4 @@ class Action_Admin extends ActionModel
         $this->redirect("admin", "lists", $this->data);
     }
 }
+
