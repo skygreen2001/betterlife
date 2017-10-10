@@ -4,7 +4,7 @@
     <div><h1>查看地区</h1></div>
     <table class="viewdoblock">
         <tr class="entry"><th class="head">标识</th><td class="content">{$region.region_id}</td></tr>
-        <tr class="entry"><th class="head">父地区</th><td class="content">{$region.region_name_parent}</td></tr>
+        <tr class="entry"><th class="head">父地区</th><td class="content">{$region.region.region_name}</td></tr>
         <tr class="entry"><th class="head">父地区[全]</th><td class="content">{$region.regionShowAll}</td></tr>
         <tr class="entry"><th class="head">父地区标识</th><td class="content">{$region.parent_id}</td></tr>
         <tr class="entry"><th class="head">地区名称</th><td class="content">{$region.region_name}</td></tr>

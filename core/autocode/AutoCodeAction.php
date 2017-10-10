@@ -405,14 +405,6 @@ class AutoCodeAction extends AutoCode
     {
         $result        = "";
         $appname_alias = strtolower(Gc::$appName_alias);
-
-        $relationField = self::relationFieldShow($instancename, $classname, $fieldInfo, "        ");
-        $specialResult = "";
-        if ( (!empty($relationField)) ) {
-            $specialResult .= "            foreach (\${$instancename}s as \$$instancename) {\r\n".
-                              $relationField.
-                              "            }\r\n";
-        }
         $result .= "    /**\r\n".
                    "     * {$table_comment}列表\r\n".
                    "     */\r\n".
@@ -429,7 +421,7 @@ class AutoCodeAction extends AutoCode
                    "        if ( \$count > 0 ) {\r\n".
                    "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());\r\n".
-                   $specialResult.
+                  //  $specialResult.
                    "            \$this->view->set(\"{$instancename}s\", \${$instancename}s);\r\n".
                    "        }\r\n".
                    "    }\r\n";
@@ -438,7 +430,6 @@ class AutoCodeAction extends AutoCode
         $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
         if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
         $result .= $relationFieldTreeRecursive;
-        $relationField = self::relationFieldShow( $instancename, $classname, $fieldInfo );
         $result .= "    /**\r\n".
                    "     * 查看{$table_comment}\r\n".
                    "     */\r\n".
@@ -446,7 +437,7 @@ class AutoCodeAction extends AutoCode
                    "    {\r\n".
                    "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                    "        \${$instancename} = {$classname}::get_by_id(\${$instancename}Id);\r\n".
-                   $relationField.
+                  //  $relationField.
                    "        \$this->view->set(\"{$instancename}\", \${$instancename});\r\n".
                    "    }\r\n".
                    "    /**\r\n".
@@ -545,62 +536,6 @@ class AutoCodeAction extends AutoCode
                                                "        }\r\n".
                                                "        return \${$i_name}ShowAll;\r\n".
                                                "    }\r\n\r\n";
-                                    $isTreeLevelHad = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * 显示关系列
-     * @param mixed $instance_name 实体变量
-     * @param mixed $classname 数据对象列名
-     * @param mixed $fieldInfo 表列信息列表
-     * @param string $blank_pre 空格字符串
-     */
-    protected static function relationFieldShow($instance_name, $classname, $fieldInfo, $blank_pre="")
-    {
-        $result="";
-        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield)>0 ) )
-        {
-            if ( array_key_exists($classname, self::$relation_viewfield) ) {
-                $relationSpecs  = self::$relation_viewfield[$classname];
-                $isTreeLevelHad = false;
-                foreach ( $fieldInfo as $fieldname => $field ) {
-                    if ( array_key_exists($fieldname,$relationSpecs) ) {
-                        $relationShow = $relationSpecs[$fieldname];
-                        foreach ( $relationShow as $key => $value ) {
-                            $realId         = DataObjectSpec::getRealIDColumnName($key);
-                            $show_fieldname = $value;
-                            if ( $realId != $fieldname ) {
-                                $show_fieldname .= "_" . $fieldname;
-                                if ( contain( $show_fieldname, "_id" ) ) {
-                                    $show_fieldname = str_replace("_id", "", $show_fieldname);
-                                }
-                            }
-                            if ( $show_fieldname == "name" )$show_fieldname = strtolower($key) . "_" . $value;
-                            $i_name      = $key;
-                            $i_name{0}   = strtolower($i_name{0});
-                            if (!array_key_exists("$show_fieldname", $fieldInfo)){
-                                $result .= $blank_pre."        \${$i_name}_instance = null;\r\n";
-                                $result .= $blank_pre."        if (\${$instance_name}->$fieldname) {\r\n";
-                                $result .= $blank_pre."            \${$i_name}_instance = $key::get_by_id(\${$instance_name}->$fieldname);\r\n";
-                                $result .= $blank_pre."            \$".$instance_name."['$show_fieldname'] = \${$i_name}_instance->$value;\r\n";
-                                $result .= $blank_pre."        }\r\n";
-                            }
-                            $fieldInfo = self::$fieldInfos[self::getTablename($key)];
-                            if ( !$isTreeLevelHad ) {
-                                if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level",$fieldInfo) ) {
-                                    $classNameField = self::getShowFieldName( $key );
-                                    $result        .= $blank_pre."        if (\${$i_name}_instance) {\r\n".
-                                                      $blank_pre."            \$level = \${$i_name}_instance->level;\r\n".
-                                                      $blank_pre."            \${$instance_name}[\"{$i_name}ShowAll\"] = \$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".
-                                                      $blank_pre."        }\r\n";
                                     $isTreeLevelHad = true;
                                 }
                             }

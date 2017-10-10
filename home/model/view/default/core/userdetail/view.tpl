@@ -4,12 +4,21 @@
     <div><h1>查看用户详细信息</h1></div>
     <table class="viewdoblock">
         <tr class="entry"><th class="head">标识</th><td class="content">{$userdetail.userdetail_id}</td></tr>
-        <tr class="entry"><th class="head">用户</th><td class="content">{$userdetail.username}</td></tr>
+        <tr class="entry"><th class="head">用户</th><td class="content">{$userdetail.user.username}</td></tr>
         <tr class="entry"><th class="head">用户标识</th><td class="content">{$userdetail.user_id}</td></tr>
         <tr class="entry"><th class="head">真实姓名</th><td class="content">{$userdetail.realname}</td></tr>
-        <tr class="entry"><th class="head">头像</th><td class="content">
-            <div class="wrap_2_inner"><img src="{$uploadImg_url|cat:$userdetail.profile}" alt="头像"></div>
-            <br/>存储相对路径:{$userdetail.profile}</td></tr>
+        <tr class="entry">
+            <th class="head">头像</th>
+            <td class="content">
+                {if $userdetail.profile}
+                <div class="wrap_2_inner"><img src="{$uploadImg_url|cat:$userdetail.profile}" alt="头像"></div><br/>
+                存储相对路径:{$userdetail.profile}
+                {else}
+                无上传图片
+                {/if}
+            </td>
+            </td>
+        </tr>
         <tr class="entry"><th class="head">国家</th><td class="content">{$userdetail.country}</td></tr>
         <tr class="entry"><th class="head">省</th><td class="content">{$userdetail.province}</td></tr>
         <tr class="entry"><th class="head">市</th><td class="content">{$userdetail.city}</td></tr>

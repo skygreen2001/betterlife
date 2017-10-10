@@ -56,6 +56,7 @@ class AutoCodeViewModel extends AutoCodeView
         $instancename  = self::getInstancename($tablename);
         $fieldNameAndComments = array();
         $enumColumns          = array();
+        $bitColumns           = array();
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
@@ -66,8 +67,15 @@ class AutoCodeViewModel extends AutoCodeView
             }
             $fieldNameAndComments[$fieldname] = $field_comment;
             $datatype = self::comment_type($field["Type"]);
-            if ( $datatype == 'enum' ) {
+            switch ($datatype) {
+              case 'bit':
+                $bitColumns[] = $fieldname;
+                break;
+              case 'enum':
                 $enumColumns[] = $fieldname;
+                break;
+              default:
+                break;
             }
         }
         $headers  = "";
@@ -102,29 +110,28 @@ class AutoCodeViewModel extends AutoCodeView
                                     if ($show_fieldname == "name") {
                                         $show_fieldname = strtolower($key_r) . "_" . $value_r;
                                     }
-                                    if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                        $field_comment  = $value;
-                                        $field_comment  = self::columnCommentKey( $field_comment, $key );
-                                        $headers       .= "            <th class=\"header\">$field_comment</th>\r\n";
-                                        $contents      .= "            <td class=\"content\">{\${$instancename}.$show_fieldname}</td>\r\n";
-                                        $is_no_relation = false;
-                                    }
-                                }else{
+                                } else {
                                     if ( $value_r == "name" ) {
                                         $show_fieldname = strtolower($key_r)."_".$value_r;
-                                        if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                            $field_comment  = $value;
-                                            $field_comment  = self::columnCommentKey( $field_comment, $key );
-                                            $headers       .= "            <th class=\"header\">$field_comment</th>\r\n";
-                                            $contents      .= "            <td class=\"content\">{\${$instancename}.$show_fieldname}</td>\r\n";
-                                            $is_no_relation = false;
-                                        }
                                     }
+                                }
+                                if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                                    $field_comment  = $value;
+                                    $field_comment  = self::columnCommentKey( $field_comment, $key );
+                                    $headers       .= "            <th class=\"header\">$field_comment</th>\r\n";
+
+                                    $talname_rela   = self::getTablename( $key_r );
+                                    $insname_rela   = self::getInstancename( $talname_rela );
+                                    $classNameField = self::getShowFieldNameByClassname( $key_r, true );
+                                    if ( empty($classNameField) ) $classNameField = $realId;
+                                    $showColName    = $insname_rela . "." . $classNameField;
+                                    $contents      .= "            <td class=\"content\">{\${$instancename}.$showColName}</td>\r\n";
+                                    $is_no_relation = false;
                                 }
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename( $key_r )];
                                 $key_r{0} = strtolower($key_r{0});
-                                if ( array_key_exists("parent_id",$fieldInfo_relationshow) ) {
+                                if ( array_key_exists("parent_id", $fieldInfo_relationshow) ) {
                                     $headers  .= "            <th class=\"header\">{$field_comment}[全]</th>\r\n";
                                     $contents .= "            <td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td>\r\n";
                                 }
@@ -132,14 +139,17 @@ class AutoCodeViewModel extends AutoCodeView
                         }
                     }
                 }
-                if ( $is_no_relation ) {
+                // if ( $is_no_relation ) {
                     $headers      .= "            <th class=\"header\">$value</th>\r\n";
+
                     if ( ( count($enumColumns) > 0 ) && ( in_array($key, $enumColumns) ) ) {
+                        $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
+                    } else if ( ( count($bitColumns) > 0 ) && ( in_array($key, $bitColumns) ) ) {
                         $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>\r\n";
                     } else {
                         $contents .= "            <td class=\"content\">{\${$instancename}.$key}</td>\r\n";
                     }
-                }
+                // }
             }
         }
 
@@ -260,6 +270,7 @@ UETC;
         $instancename  = self::getInstancename( $tablename );
         $fieldNameAndComments = array();
         $enumColumns          = array();
+        $bitColumns           = array();
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
@@ -270,8 +281,15 @@ UETC;
             }
             $fieldNameAndComments[$fieldname] = $field_comment;
             $datatype = self::comment_type($field["Type"]);
-            if ( $datatype == 'enum' ){
+            switch ($datatype) {
+              case 'bit':
+                $bitColumns[] = $fieldname;
+                break;
+              case 'enum':
                 $enumColumns[] = $fieldname;
+                break;
+              default:
+                break;
             }
         }
         $view_contents="";
@@ -279,9 +297,17 @@ UETC;
             if ( self::isNotColumnKeywork( $key ) ) {
                 $isImage = self::columnIsImage( $key, $value );
                 if ( $isImage ) {
-                    $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">\r\n".
-                                      "            <div class=\"wrap_2_inner\"><img src=\"{\$uploadImg_url|cat:\$$instancename.$key}\" alt=\"$value\"></div>\r\n".
-                                      "            <br/>存储相对路径:{\$$instancename.$key}</td></tr>\r\n";
+                    $view_contents .= "        <tr class=\"entry\">\r\n".
+                                      "            <th class=\"head\">$value</th>\r\n".
+                                      "            <td class=\"content\">\r\n".
+                                      "                {if \$$instancename.$key}\r\n".
+                                      "                <div class=\"wrap_2_inner\"><img src=\"{\$uploadImg_url|cat:\$$instancename.$key}\" alt=\"$value\"></div><br/>\r\n".
+                                      "                存储相对路径:{\$$instancename.$key}\r\n".
+                                      "                {else}\r\n".
+                                      "                无上传图片\r\n".
+                                      "                {/if}\r\n".
+                                      "            </td>\r\n".
+                                      "        </tr>\r\n";
                     continue;
                 }
 
@@ -310,22 +336,22 @@ UETC;
                                     if ( $show_fieldname == "name" ) {
                                         $show_fieldname = strtolower($key_r)."_".$value_r;
                                     }
-                                    if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                        $field_comment = $value;
-                                        $field_comment = self::columnCommentKey( $field_comment, $key );
-                                        $view_contents.= "        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$show_fieldname}</td></tr>\r\n";
-                                        // $is_no_relation=false;
-                                    }
                                 } else {
                                     if ( $value_r == "name" ) {
                                         $show_fieldname = strtolower($key_r) . "_" . $value_r;
-                                        if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                            $field_comment = $value;
-                                            $field_comment = self::columnCommentKey($field_comment,$key);
-                                            $view_contents.="        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$show_fieldname}</td></tr>\r\n";
-                                            // $is_no_relation=false;
-                                        }
                                     }
+                                }
+                                if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                                    $field_comment = $value;
+                                    $field_comment = self::columnCommentKey($field_comment,$key);
+
+                                    $talname_rela   = self::getTablename( $key_r );
+                                    $insname_rela   = self::getInstancename( $talname_rela );
+                                    $classNameField = self::getShowFieldNameByClassname( $key_r, true );
+                                    if ( empty($classNameField) ) $classNameField = $realId;
+                                    $showColName    = $insname_rela . "." . $classNameField;
+                                    $view_contents.="        <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$showColName}</td></tr>\r\n";
+
                                 }
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename($key_r)];
@@ -340,7 +366,9 @@ UETC;
 
                 if( ( count($enumColumns) > 0 ) && (in_array($key, $enumColumns)) ) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";
-                } else {
+                } else if ( ( count($bitColumns) > 0 ) && ( in_array($key, $bitColumns) ) ) {
+                    $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";
+                }  else {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.$key}</td></tr>\r\n";
                 }
             }

@@ -403,8 +403,6 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n";
                     switch ($datatype) {
-                        //todo
-                        //<select id="categoryIds" name="categoryId[]" class="form-control" multiple>
                         case "bit":
                           $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" {if \$" . $instancename . "." . $fieldname . "} checked {/if} data-on-text=\"是\" data-off-text=\"否\" />\r\n";
                           break;

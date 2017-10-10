@@ -6,9 +6,11 @@
         <tr class="entry">
             <th class="header">标识</th>
             <th class="header">用户</th>
+            <th class="header">用户标识</th>
             <th class="header">博客标题</th>
             <th class="header">排序</th>
             <th class="header">分类</th>
+            <th class="header">分类编号</th>
             <th class="header">是否公开</th>
             <th class="header">博客内容</th>
             <th class="header">状态</th>
@@ -18,11 +20,13 @@
         {foreach item=blog from=$blogs}
         <tr class="entry">
             <td class="content">{$blog.blog_id}</td>
-            <td class="content">{$blog.username}</td>
+            <td class="content">{$blog.user.username}</td>
+            <td class="content">{$blog.user_id}</td>
             <td class="content">{$blog.blog_name}</td>
             <td class="content">{$blog.sequenceNo}</td>
-            <td class="content">{$blog.category_name}</td>
-            <td class="content">{$blog.isPublic}</td>
+            <td class="content">{$blog.category.name}</td>
+            <td class="content">{$blog.category_id}</td>
+            <td class="content">{$blog.isPublicShow}</td>
             <td class="content">{$blog.blog_content}</td>
             <td class="content">{$blog.statusShow}</td>
             <td class="content">{$blog.publish_date}</td>

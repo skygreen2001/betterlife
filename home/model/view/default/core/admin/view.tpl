@@ -4,7 +4,7 @@
     <div><h1>查看系统管理人员</h1></div>
     <table class="viewdoblock">
         <tr class="entry"><th class="head">管理员标识</th><td class="content">{$admin.admin_id}</td></tr>
-        <tr class="entry"><th class="head">部门</th><td class="content">{$admin.department_name}</td></tr>
+        <tr class="entry"><th class="head">部门</th><td class="content">{$admin.department.department_name}</td></tr>
         <tr class="entry"><th class="head">部门标识</th><td class="content">{$admin.department_id}</td></tr>
         <tr class="entry"><th class="head">用户名</th><td class="content">{$admin.username}</td></tr>
         <tr class="entry"><th class="head">真实姓名</th><td class="content">{$admin.realname}</td></tr>

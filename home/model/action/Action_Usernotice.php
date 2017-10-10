@@ -25,18 +25,6 @@ class Action_Usernotice extends ActionModel
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $usernotices = Usernotice::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            foreach ($usernotices as $usernotice) {
-                $user_instance = null;
-                if ($usernotice->user_id) {
-                    $user_instance = User::get_by_id($usernotice->user_id);
-                    $usernotice['username'] = $user_instance->username;
-                }
-                $notice_instance = null;
-                if ($usernotice->notice_id) {
-                    $notice_instance = Notice::get_by_id($usernotice->notice_id);
-                    $usernotice['noticeType'] = $notice_instance->noticeType;
-                }
-            }
             $this->view->set("usernotices", $usernotices);
         }
     }
@@ -47,16 +35,6 @@ class Action_Usernotice extends ActionModel
     {
         $usernoticeId = $this->data["id"];
         $usernotice = Usernotice::get_by_id($usernoticeId);
-        $user_instance = null;
-        if ($usernotice->user_id) {
-            $user_instance = User::get_by_id($usernotice->user_id);
-            $usernotice['username'] = $user_instance->username;
-        }
-        $notice_instance = null;
-        if ($usernotice->notice_id) {
-            $notice_instance = Notice::get_by_id($usernotice->notice_id);
-            $usernotice['noticeType'] = $notice_instance->noticeType;
-        }
         $this->view->set("usernotice", $usernotice);
     }
     /**

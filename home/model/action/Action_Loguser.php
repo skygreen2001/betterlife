@@ -25,13 +25,6 @@ class Action_Loguser extends ActionModel
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            foreach ($logusers as $loguser) {
-                $user_instance = null;
-                if ($loguser->user_id) {
-                    $user_instance = User::get_by_id($loguser->user_id);
-                    $loguser['username'] = $user_instance->username;
-                }
-            }
             $this->view->set("logusers", $logusers);
         }
     }
@@ -42,11 +35,6 @@ class Action_Loguser extends ActionModel
     {
         $loguserId = $this->data["id"];
         $loguser = Loguser::get_by_id($loguserId);
-        $user_instance = null;
-        if ($loguser->user_id) {
-            $user_instance = User::get_by_id($loguser->user_id);
-            $loguser['username'] = $user_instance->username;
-        }
         $this->view->set("loguser", $loguser);
     }
     /**
