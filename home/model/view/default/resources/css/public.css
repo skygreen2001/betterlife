@@ -72,8 +72,8 @@ h2 {
 }
 
 h3 {
-    width: 80%;
-    margin: 30px auto 9px auto;
+    width: 100%;
+    margin: 8px 0px;
 }
 
 p#indexPage {
@@ -181,7 +181,7 @@ br {
     text-align: left;
 }
 
-.viewdoblock .entry .header:first-child, .viewdoblock .entry .content:first-child  {
+.viewdoblock .entry .header:first-child, .viewdoblock .entry .content:first-child {
     width: 36px;
     text-align: center;
 }
@@ -200,7 +200,15 @@ form .viewdoblock .entry .content {
     padding: 6px 12px;
 }
 
-.viewdoblock .edit{
+.viewdoblock .v_g_b {
+    border-top:1px solid #ccc;
+}
+
+.viewdoblock .v_g_t {
+    text-align:center;
+}
+
+.viewdoblock .edit {
     border-radius: 6px;
     padding-left: 10px;
     width: 88%;
