@@ -66,7 +66,8 @@
                       <div class="form-group">
                           <label for="categoryIds" class="col-sm-2 control-label">博客类型</label>
                           <div class="col-sm-9">
-                              <select id="categoryIds" name="categoryId" class="form-control">
+                              <select id="category_id" name="category_id" class="form-control">
+                                  <option value="-1">请选择</option>
                                   {foreach item=category from=$categorys}
                                   {if $category.category_id|in_array:$blogCategorys}
                                   <option value="{$category.category_id}" selected>{$category.name}</option>
@@ -138,6 +139,13 @@
 
     {include file="$templateDir/layout/normal/footer.tpl"}
     <script type="text/javascript">
+        var select_category = {};
+        {if $blog.category}
+        select_category.id   = "{$blog.category.category_id}";
+        select_category.text = "{$blog.category.name}";
+        select_category =  new Array(select_category);
+        {/if}
+
         var select_tags =  new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
