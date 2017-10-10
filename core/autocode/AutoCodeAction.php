@@ -224,9 +224,43 @@ class AutoCodeAction extends AutoCode
         $viewImgContent = "";
         $editImgContent = "";
         $editBitContent = "";
+        $rela_m2m_content    = "";
+        $relation_content    = "";
         $editTextareaContent = "";
         $text_area_fieldname = array();
-        foreach ($fieldInfo as $fieldname=>$field)
+
+        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //从属一对一关系规范定义(如果存在)
+            if ( array_key_exists("belong_has_one", $relationSpec) )
+            {
+                $belong_has_one        = $relationSpec["belong_has_one"];
+                foreach ($belong_has_one as $key => $value) {
+                    $realId            = DataObjectSpec::getRealIDColumnName($key);
+                    $relation_content .= "        \${$value}s = {$key}::get(\"\", \"$realId asc\");\r\n".
+                                         "        \$this->view->set(\"{$value}s\", \${$value}s);\r\n";
+                }
+            }
+
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many        = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId            = DataObjectSpec::getRealIDColumnName($classname);
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $tablename         = self::getTablename( $classname );
+                    $instancename      = self::getInstancename( $tablename );
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];\r\n".
+                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );\r\n";
+                }
+            }
+        }
+
+        foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
             if ( self::columnIsTextArea( $fieldname, $field["Type"] ) )
@@ -297,8 +331,7 @@ class AutoCodeAction extends AutoCode
                   "            \$isRedirect = true;\r\n".
                   $editImgContent.
                   $editBitContent.
-                  //TODO
-                  //$blogcategorys = $this->data["categoryId"];
+                  $rela_m2m_content.
                   "            if ( \$isRedirect ) {\r\n".
                   "                \$this->redirect(\"$$instancename\", \"view\", \"id = \$id\");\r\n".
                   "                exit;\r\n".
@@ -306,10 +339,9 @@ class AutoCodeAction extends AutoCode
                   "        }\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \$$instancename   = $classname::get_by_id(\${$$instancename}Id);\r\n".
-                  "        \$this->view->set(\"$$instancename\", \$$instancename);\r\n".
-                  //TODO
-                  //$categorys = Category::get();
-                  "$editTextareaContent".
+                  "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
+                  $relation_content.
+                  $editTextareaContent.
                   "    }\r\n".
                   "    /**\r\n".
                   "     * 删除{$table_comment}\r\n".
@@ -493,7 +525,7 @@ class AutoCodeAction extends AutoCode
                             $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                             if ( !$isTreeLevelHad ) {
                                 if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {
-                                    $classNameField = self::getShowFieldNameByClassname( $key );
+                                    $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
                                     $result .= "    /**\r\n".
@@ -564,7 +596,7 @@ class AutoCodeAction extends AutoCode
                             $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                             if ( !$isTreeLevelHad ) {
                                 if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level",$fieldInfo) ) {
-                                    $classNameField = self::getShowFieldNameByClassname($key);
+                                    $classNameField = self::getShowFieldName( $key );
                                     $result        .= $blank_pre."        if (\${$i_name}_instance) {\r\n".
                                                       $blank_pre."            \$level = \${$i_name}_instance->level;\r\n".
                                                       $blank_pre."            \${$instance_name}[\"{$i_name}ShowAll\"] = \$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".

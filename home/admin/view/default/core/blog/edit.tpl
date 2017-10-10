@@ -69,17 +69,13 @@
                               <select id="category_id" name="category_id" class="form-control">
                                   <option value="-1">请选择</option>
                                   {foreach item=category from=$categorys}
-                                  {if $category.category_id|in_array:$blogCategorys}
-                                  <option value="{$category.category_id}" selected>{$category.name}</option>
-                                  {else}
                                   <option value="{$category.category_id}">{$category.name}</option>
-                                  {/if}
                                   {/foreach}
                               </select>
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="tagIds" class="col-sm-2 control-label">标签</label>
+                          <label for="tags_id" class="col-sm-2 control-label">标签</label>
                           <div class="col-sm-9">
                               <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
                           </div>

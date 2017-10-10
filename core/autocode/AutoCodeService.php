@@ -557,81 +557,81 @@ class AutoCodeService extends AutoCode
             self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_ext_dir_href."'>".self::$ajax_dir_full."</a></font><br/><br/>";
 
             foreach (self::$relation_viewfield as $relation_viewfield) {
-                foreach ($relation_viewfield as $key=>$showClasses) {
-                    foreach ($showClasses as $key=>$value) {
+                foreach ($relation_viewfield as $key => $showClasses) {
+                    foreach ($showClasses as $key => $value) {
                         $key_i     = $key;
                         $key_i{0}  = strtolower($key_i{0});
                         $classname = $key;
                         $tablename = self::getTablename($key);
                         $fieldInfo = self::$fieldInfos[self::getTablename($key)];
-                        if (array_key_exists("parent_id",$fieldInfo)){
+                        if ( array_key_exists("parent_id",$fieldInfo) ) {
                             $filename = $key_i."Tree".Config_F::SUFFIX_FILE_PHP;
-                            if (!file_exists(self::$ajax_dir_full.$filename)){
-                                $realId = DataObjectSpec::getRealIDColumnName($classname);
-                                $showname = self::getShowFieldNameByClassname($key);
-                                $result =  "<?php \r\n".
-                                           "require_once (\"../../../../init.php\");\r\n".
-                                           "\$node=intval(\$_REQUEST[\"id\"]);\r\n".
-                                           "if (\$node){\r\n".
-                                           "  \$condition=array(\"parent_id\"=>\"\$node\");\r\n".
-                                           "}else{\r\n".
-                                           "  \$condition=array(\"parent_id\"=>'0');\r\n".
-                                           "}\r\n".
-                                           "\${$key_i}s={$key}::get(\$condition,\"$realId asc\");\r\n".
-                                           "echo \"[\";\r\n".
-                                           "if (!empty(\${$key_i}s)){\r\n".
-                                           "  \$trees=\"\";\r\n".
-                                           "  \$maxLevel={$key}::maxlevel();\r\n".
-                                           "  foreach (\${$key_i}s as \${$key_i}){\r\n".
-                                           "      \$trees.=\"{\r\n".
-                                           "          'text': '\${$key_i}->{$showname}',\r\n".
-                                           "          'id': '\${$key_i}->$realId',\r\n".
-                                           "          'level':'\${$key_i}->level',\";\r\n".
-                                           "      if (\${$key_i}->level==\$maxLevel){\r\n".
-                                           "          \$trees.=\"'leaf':true,'cls': 'file'\";\r\n".
-                                           "      }else{\r\n".
-                                           "          \$trees.=\"'cls': 'folder'\";\r\n".
-                                           "      }\r\n".
-                                           "      if (isset(\${$key_i}->countChild)){\r\n".
-                                           "          if (\${$key_i}->countChild==0){\r\n".
-                                           "              \$trees.=\",'leaf':true\";\r\n".
-                                           "          }\r\n".
-                                           "      }\r\n".
-                                           "      \$trees.=\"},\";\r\n".
-                                           "  }\r\n".
-                                           "  \$trees=substr(\$trees, 0, strlen(\$trees)-1);\r\n".
-                                           "  echo \$trees;\r\n".
-                                           "}\r\n".
-                                           "echo \"]\";\r\n\r\n";
-                                $ajaxName = self::saveoAjaxPhpDefineToDir($tablename,$filename,$result);
+                            if ( !file_exists(self::$ajax_dir_full.$filename) ) {
+                                $realId   = DataObjectSpec::getRealIDColumnName( $classname );
+                                $showname = self::getShowFieldName( $key );
+                                $result   =  "<?php \r\n".
+                                             "require_once (\"../../../../init.php\");\r\n".
+                                             "\$node=intval(\$_REQUEST[\"id\"]);\r\n".
+                                             "if (\$node){\r\n".
+                                             "  \$condition=array(\"parent_id\"=>\"\$node\");\r\n".
+                                             "}else{\r\n".
+                                             "  \$condition=array(\"parent_id\"=>'0');\r\n".
+                                             "}\r\n".
+                                             "\${$key_i}s={$key}::get(\$condition,\"$realId asc\");\r\n".
+                                             "echo \"[\";\r\n".
+                                             "if (!empty(\${$key_i}s)){\r\n".
+                                             "  \$trees=\"\";\r\n".
+                                             "  \$maxLevel={$key}::maxlevel();\r\n".
+                                             "  foreach (\${$key_i}s as \${$key_i}){\r\n".
+                                             "      \$trees.=\"{\r\n".
+                                             "          'text': '\${$key_i}->{$showname}',\r\n".
+                                             "          'id': '\${$key_i}->$realId',\r\n".
+                                             "          'level':'\${$key_i}->level',\";\r\n".
+                                             "      if (\${$key_i}->level==\$maxLevel){\r\n".
+                                             "          \$trees.=\"'leaf':true,'cls': 'file'\";\r\n".
+                                             "      }else{\r\n".
+                                             "          \$trees.=\"'cls': 'folder'\";\r\n".
+                                             "      }\r\n".
+                                             "      if (isset(\${$key_i}->countChild)){\r\n".
+                                             "          if (\${$key_i}->countChild==0){\r\n".
+                                             "              \$trees.=\",'leaf':true\";\r\n".
+                                             "          }\r\n".
+                                             "      }\r\n".
+                                             "      \$trees.=\"},\";\r\n".
+                                             "  }\r\n".
+                                             "  \$trees=substr(\$trees, 0, strlen(\$trees)-1);\r\n".
+                                             "  echo \$trees;\r\n".
+                                             "}\r\n".
+                                             "echo \"]\";\r\n\r\n";
+                                $ajaxName          = self::saveoAjaxPhpDefineToDir($tablename,$filename,$result);
                                 self::$showReport .= "生成导出Ajax目录树服务类PHP文件完成:$tablename=>$ajaxName".Config_F::SUFFIX_FILE_PHP."!<br/>";
                             }
                         }
 
                         $classname{0} = strtolower($classname{0});
-                        $filename =$classname.Config_F::SUFFIX_FILE_PHP;
-                        if (!file_exists(self::$ajax_dir_full.$filename)){
-                            $result = "<?php \r\n".
-                                       "require_once (\"../../../../init.php\");\r\n".
-                                       "\$pageSize=15;\r\n".
-                                       "\${$value} = !empty(\$_REQUEST['query'])&&(\$_REQUEST['query']!=\"?\")&&(\$_REQUEST['query']!=\"？\") ? trim(\$_REQUEST['query']) : \"\";\r\n".
-                                       "\$condition=array();\r\n".
-                                       "if (!empty(\${$value})){\r\n".
-                                       "  \$condition[\"{$value}\"]=\" like '%\${$value}%'\";\r\n".
-                                       "}\r\n".
-                                       "\$start=0;\r\n".
-                                       "if (isset(\$_REQUEST['start'])){\r\n".
-                                       "  \$start=\$_REQUEST['start']+1;\r\n".
-                                       "}\r\n".
-                                       "\$limit=\$pageSize;\r\n".
-                                       "if (isset(\$_REQUEST['limit'])){\r\n".
-                                       "  \$limit=\$_REQUEST['limit'];\r\n".
-                                       "  \$limit= \$start+\$limit-1;\r\n".
-                                       "}\r\n".
-                                       "\$arr['totalCount']= {$key}::count(\$condition);\r\n".
-                                       "\$arr['{$key_i}s']    = {$key}::queryPage(\$start,\$limit,\$condition);\r\n".
-                                       "echo json_encode(\$arr);\r\n\r\n";
-                            $key{0} = strtolower($key{0});
+                        $filename     = $classname.Config_F::SUFFIX_FILE_PHP;
+                        if ( !file_exists(self::$ajax_dir_full . $filename) ) {
+                            $result   = "<?php \r\n".
+                                        "require_once (\"../../../../init.php\");\r\n".
+                                        "\$pageSize=15;\r\n".
+                                        "\${$value} = !empty(\$_REQUEST['query'])&&(\$_REQUEST['query']!=\"?\")&&(\$_REQUEST['query']!=\"？\") ? trim(\$_REQUEST['query']) : \"\";\r\n".
+                                        "\$condition=array();\r\n".
+                                        "if (!empty(\${$value})){\r\n".
+                                        "  \$condition[\"{$value}\"]=\" like '%\${$value}%'\";\r\n".
+                                        "}\r\n".
+                                        "\$start=0;\r\n".
+                                        "if (isset(\$_REQUEST['start'])){\r\n".
+                                        "  \$start=\$_REQUEST['start']+1;\r\n".
+                                        "}\r\n".
+                                        "\$limit=\$pageSize;\r\n".
+                                        "if (isset(\$_REQUEST['limit'])){\r\n".
+                                        "  \$limit=\$_REQUEST['limit'];\r\n".
+                                        "  \$limit= \$start+\$limit-1;\r\n".
+                                        "}\r\n".
+                                        "\$arr['totalCount']= {$key}::count(\$condition);\r\n".
+                                        "\$arr['{$key_i}s']    = {$key}::queryPage(\$start,\$limit,\$condition);\r\n".
+                                        "echo json_encode(\$arr);\r\n\r\n";
+                            $key{0}   = strtolower($key{0});
                             $filename = $key.Config_F::SUFFIX_FILE_PHP;
                             $ajaxName = self::saveoAjaxPhpDefineToDir($tablename,$filename,$result);
                             self::$showReport .= "生成导出Ajax服务类PHP文件完成:$tablename=>$ajaxName".Config_F::SUFFIX_FILE_PHP."!<br/>";
@@ -639,7 +639,7 @@ class AutoCodeService extends AutoCode
                     }
                 }
             }
-            self::$showReport.= '</div>';
+            self::$showReport .= '</div>';
         }
     }
 
@@ -651,13 +651,13 @@ class AutoCodeService extends AutoCode
      */
     private static function redundancy_table_fields($classname,$instance_name,$fieldInfo)
     {
-        $result="";
-        $redundancy_table_fields=self::$redundancy_table_fields[$classname];
-        if ((is_array($redundancy_table_fields))&&(count($redundancy_table_fields)>0)) {
+        $result = "";
+        $redundancy_table_fields = self::$redundancy_table_fields[$classname];
+        if ( ( is_array($redundancy_table_fields) ) && ( count($redundancy_table_fields) > 0 ) ) {
             foreach ($redundancy_table_fields as $relation_classname => $redundancy_table_field) {
-                $relation_instance_name = $relation_classname;
+                $relation_instance_name    = $relation_classname;
                 $relation_instance_name{0} = strtolower($relation_instance_name{0});
-                $realId = DataObjectSpec::getRealIDColumnName($relation_classname);
+                $realId  = DataObjectSpec::getRealIDColumnName($relation_classname);
                 $result .= "        if (\${$instance_name}[\"{$realId}\"]){\r\n".
                            "            \${$relation_instance_name}=$relation_classname::get_by_id(\${$instance_name}[\"{$realId}\"]);\r\n".
                            "            if (\${$relation_instance_name}){\r\n";
@@ -677,52 +677,52 @@ class AutoCodeService extends AutoCode
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
      */
-    private static function relationFieldOutput($instance_name,$classname,$fieldInfo)
+    private static function relationFieldOutput($instance_name, $classname, $fieldInfo)
     {
-        $result="";
-        if (is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0))
+        $result = "";
+        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
         {
-            if (array_key_exists($classname,self::$relation_viewfield)){
-                $relationSpecs=self::$relation_viewfield[$classname];
-                $isTreeLevelHad=false;
-                foreach ($fieldInfo as $fieldname=>$field){
-                    if (array_key_exists($fieldname,$relationSpecs)){
-                        $relationShow=$relationSpecs[$fieldname];
-                        foreach ($relationShow as $key=>$value) {
-                            $realId=DataObjectSpec::getRealIDColumnName($key);
-                            $show_fieldname=$value;
-                            if ($realId!=$fieldname){
-                                $show_fieldname.="_".$fieldname;
-                                if (contain($show_fieldname,"_id")){
-                                    $show_fieldname=str_replace("_id","",$show_fieldname);
+            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                $relationSpecs  = self::$relation_viewfield[$classname];
+                $isTreeLevelHad = false;
+                foreach ($fieldInfo as $fieldname => $field) {
+                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                        $relationShow = $relationSpecs[$fieldname];
+                        foreach ($relationShow as $key => $value) {
+                            $realId         = DataObjectSpec::getRealIDColumnName( $key );
+                            $show_fieldname = $value;
+                            if ( $realId != $fieldname ) {
+                                $show_fieldname .= "_" . $fieldname;
+                                if ( contain($show_fieldname, "_id") ) {
+                                    $show_fieldname = str_replace("_id", "", $show_fieldname);
                                 }
                             }
-                            if ($show_fieldname=="name")$show_fieldname=strtolower($key)."_".$value;
-                            $i_name=$key;
-                            $i_name{0}=strtolower($i_name{0});
-                            if (!array_key_exists("$show_fieldname",$fieldInfo)){
-                                $result.="            \${$i_name}_instance=null;\r\n";
-                                $result.="            if (\${$instance_name}->$fieldname){\r\n";
-                                $result.="                \${$i_name}_instance=$key::get_by_id(\${$instance_name}->$fieldname);\r\n";
-                                $result.="                \${$instance_name}['$fieldname']=\${$i_name}_instance->$show_fieldname;\r\n";
-                                $result.="            }\r\n";
-                            }else{
-                                $result.="            unset(\$arr_output_header[\"$fieldname\"]);\r\n";
+                            if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
+                            $i_name    = $key;
+                            $i_name{0} = strtolower($i_name{0});
+                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                                $result .= "            \${$i_name}_instance=null;\r\n";
+                                $result .= "            if (\${$instance_name}->$fieldname){\r\n";
+                                $result .= "                \${$i_name}_instance=$key::get_by_id(\${$instance_name}->$fieldname);\r\n";
+                                $result .= "                \${$instance_name}['$fieldname']=\${$i_name}_instance->$show_fieldname;\r\n";
+                                $result .= "            }\r\n";
+                            } else {
+                                $result .= "            unset(\$arr_output_header[\"$fieldname\"]);\r\n";
                             }
-                            $fieldInfos=self::$fieldInfos[self::getTablename($key)];
-                            if (!$isTreeLevelHad){
-                                if (array_key_exists("parent_id",$fieldInfos)&&array_key_exists("level",$fieldInfos)){
-                                    $classNameField=self::getShowFieldNameByClassname($key);
-                                    $field_comment=$field["Comment"];
-                                    $field_comment=self::columnCommentKey($field_comment,$fieldname);
-                                    $result.="            if (\${$i_name}_instance){\r\n".
-                                             "                \$level=\${$i_name}_instance->level;\r\n".
-                                             "                \${$instance_name}[\"{$i_name}ShowAll\"]=\$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".
-                                             "                \$".$instance_name."['$fieldname']=\${$i_name}_instance->$value;\r\n".
-                                             "                \$pos=UtilArray::keyPosition(\$arr_output_header,\"$fieldname\");\r\n".
-                                             "                UtilArray::insert(\$arr_output_header,\$pos+1,array('{$i_name}ShowAll'=>\"{$field_comment}[全]\"));\r\n".
-                                             "            }\r\n";
-                                    $isTreeLevelHad=true;
+                            $fieldInfos = self::$fieldInfos[self::getTablename( $key )];
+                            if ( !$isTreeLevelHad ) {
+                                if ( array_key_exists("parent_id", $fieldInfos) && array_key_exists("level", $fieldInfos) ) {
+                                    $classNameField = self::getShowFieldName( $key );
+                                    $field_comment  = $field["Comment"];
+                                    $field_comment  = self::columnCommentKey($field_comment,$fieldname);
+                                    $result .= "            if (\${$i_name}_instance){\r\n".
+                                               "                \$level=\${$i_name}_instance->level;\r\n".
+                                               "                \${$instance_name}[\"{$i_name}ShowAll\"]=\$this->{$i_name}ShowAll(\${$instance_name}->parent_id,\$level);\r\n".
+                                               "                \$".$instance_name."['$fieldname']=\${$i_name}_instance->$value;\r\n".
+                                               "                \$pos=UtilArray::keyPosition(\$arr_output_header,\"$fieldname\");\r\n".
+                                               "                UtilArray::insert(\$arr_output_header,\$pos+1,array('{$i_name}ShowAll'=>\"{$field_comment}[全]\"));\r\n".
+                                               "            }\r\n";
+                                    $isTreeLevelHad = true;
                                 }
                             }
                         }
@@ -739,68 +739,67 @@ class AutoCodeService extends AutoCode
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
      */
-    private static function relationFieldImport($instance_name,$classname,$fieldInfo)
+    private static function relationFieldImport($instance_name, $classname, $fieldInfo)
     {
         $result = "";
-        if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield)>0))
+        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
         {
-            if (array_key_exists($classname, self::$relation_viewfield)){
-                $relationSpecs = self::$relation_viewfield[$classname];
+            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
                 foreach ($fieldInfo as $fieldname => $field){
-                    if (array_key_exists($fieldname,$relationSpecs)){
-                        $relationShow=$relationSpecs[$fieldname];
-                        foreach ($relationShow as $key=>$value) {
-                            $i_name=$key;
-                            $show_fieldname=self::getShowFieldNameByClassname($key);
-                            $i_name{0}=strtolower($i_name{0});
-                            $fieldInfo_relation=self::$fieldInfos[self::getTablename($key)];
-                            if (array_key_exists("parent_id",$fieldInfo_relation)&&array_key_exists("level",$fieldInfo_relation)){
-                                if (!$isTreeLevelHad){
-                                    $classNameField=self::getShowFieldNameByClassname($key);
-                                    $field_comment=$field["Comment"];
-                                    $field_comment=self::columnCommentKey($field_comment,$fieldname);
-                                    $result.="                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n".
-                                             "                            \${$i_name}_all=\${$instance_name}[\"{$field_comment}[全]\"];\r\n".
-                                             "                            if (\${$i_name}_all){\r\n".
-                                             "                                \${$i_name}_all_arr=explode(\"->\",\${$i_name}_all);\r\n".
-                                             "                                if (\${$i_name}_all_arr){\r\n".
-                                             "                                    \$level=count(\${$i_name}_all_arr);\r\n".
-                                             "                                    switch (\$level) {\r\n".
-                                             "                                        case 1:\r\n".
-                                             "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                             "                                            if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                             "                                            break;\r\n".
-                                             "                                        case 2:\r\n".
-                                             "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                             "                                            if (\${$i_name}_p){\r\n".
-                                             "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                             "                                                if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                             "                                            }\r\n".
-                                             "                                            break;\r\n".
-                                             "                                        case 3:\r\n".
-                                             "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                             "                                            if (\${$i_name}_p){\r\n".
-                                             "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                             "                                                if (\${$i_name}_p){\r\n".
-                                             "                                                    \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[2],\"level\"=>3,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                             "                                                    if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                             "                                                }\r\n".
-                                             "                                            }\r\n".
-                                             "                                            break;\r\n".
-                                             "                                       }\r\n".
-                                             "                                  }\r\n".
-                                             "                            }\r\n".
-                                             "                        }\r\n";
-                                    $isTreeLevelHad=true;
+                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                        $relationShow = $relationSpecs[$fieldname];
+                        foreach ($relationShow as $key => $value) {
+                            $i_name         = $key;
+                            $show_fieldname = self::getShowFieldName( $key );
+                            $i_name{0}      = strtolower($i_name{0});
+                            $fieldInfo_relation = self::$fieldInfos[self::getTablename($key)];
+                            if ( array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation) ) {
+                                if ( !$isTreeLevelHad ) {
+                                    $classNameField = self::getShowFieldName( $key );
+                                    $field_comment  = $field["Comment"];
+                                    $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
+                                    $result .= "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n".
+                                               "                            \${$i_name}_all=\${$instance_name}[\"{$field_comment}[全]\"];\r\n".
+                                               "                            if (\${$i_name}_all){\r\n".
+                                               "                                \${$i_name}_all_arr=explode(\"->\",\${$i_name}_all);\r\n".
+                                               "                                if (\${$i_name}_all_arr){\r\n".
+                                               "                                    \$level=count(\${$i_name}_all_arr);\r\n".
+                                               "                                    switch (\$level) {\r\n".
+                                               "                                        case 1:\r\n".
+                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               "                                            if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               "                                            break;\r\n".
+                                               "                                        case 2:\r\n".
+                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               "                                            if (\${$i_name}_p){\r\n".
+                                               "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               "                                                if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               "                                            }\r\n".
+                                               "                                            break;\r\n".
+                                               "                                        case 3:\r\n".
+                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               "                                            if (\${$i_name}_p){\r\n".
+                                               "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               "                                                if (\${$i_name}_p){\r\n".
+                                               "                                                    \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[2],\"level\"=>3,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               "                                                    if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               "                                                }\r\n".
+                                               "                                            }\r\n".
+                                               "                                            break;\r\n".
+                                               "                                       }\r\n".
+                                               "                                  }\r\n".
+                                               "                            }\r\n".
+                                               "                        }\r\n";
+                                    $isTreeLevelHad = true;
                                 }
-                            }else{
-                                $result.="                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n";
-                                $result.="                            \${$i_name}_r=$key::get_one(\"{$show_fieldname}='\".\${$instance_name}[\"$fieldname\"].\"'\");\r\n";
-                                $result.="                            if (\${$i_name}_r) \${$instance_name}[\"$fieldname\"]=\${$i_name}_r->$fieldname;\r\n";
-                                $result.="                        }\r\n";
+                            } else {
+                                $result .= "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n";
+                                $result .= "                            \${$i_name}_r=$key::get_one(\"{$show_fieldname}='\".\${$instance_name}[\"$fieldname\"].\"'\");\r\n";
+                                $result .= "                            if (\${$i_name}_r) \${$instance_name}[\"$fieldname\"]=\${$i_name}_r->$fieldname;\r\n";
+                                $result .= "                        }\r\n";
                             }
-
                         }
                     }
                 }
@@ -816,7 +815,7 @@ class AutoCodeService extends AutoCode
      * @param string $tablename 表名称
      * @param string $blankPre 空白字符
      */
-    private static function enumComment2KeyInExtService($instance_name,$fieldInfo,$tablename,$blankPre="")
+    private static function enumComment2KeyInExtService($instance_name, $fieldInfo, $tablename, $blankPre = "")
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
@@ -840,19 +839,19 @@ class AutoCodeService extends AutoCode
      */
     private static function enumKey2CommentInExtService($instance_name,$classname,$fieldInfo,$blankPre="")
     {
-        $result = array("normal"=>"","output"=>"");
+        $result      = array("normal"=>"","output"=>"");
         $enumColumns = array();
         foreach ($fieldInfo as $fieldname=>$field) {
             $datatype = self::comment_type($field["Type"]);
             if ($datatype == 'enum'){
-                $enumColumns[] = "'".$fieldname."'";
+                $enumColumns[]     = "'".$fieldname."'";
                 $result["output"] .= "            if (\${$instance_name}->{$fieldname}Show) {\r\n".
                                      "                \${$instance_name}['{$fieldname}'] = \${$instance_name}->{$fieldname}Show;\r\n".
                                      "            }\r\n";
             }
         }
         if (count($enumColumns)>0){
-            $enumColumns=implode(",",$enumColumns);
+            $enumColumns       = implode(",",$enumColumns);
             $result["normal"] .= $blankPre . "        if ((!empty(\$data)) && (count(\$data) > 0))\r\n".
                                  $blankPre . "        {\r\n".
                                  $blankPre . "            $classname::propertyShow(\$data, array($enumColumns));\r\n".
@@ -895,7 +894,7 @@ class AutoCodeService extends AutoCode
      */
     private static function datetimeShow($instance_name,$fieldInfo,$blankPre="")
     {
-        $result="";
+        $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
             if (self::isNotColumnKeywork($fieldname)){
                 $datatype = self::column_type($field["Type"]);
@@ -928,12 +927,12 @@ class AutoCodeService extends AutoCode
      */
     private static function saveServiceDefineToDir($tablename,$definePhpFileContent)
     {
-        $filename =self::getServiceClassname($tablename).".php";
+        $filename         = self::getServiceClassname($tablename).".php";
         $service_dir_full = self::$service_dir_full;
-        $relative_path = str_replace(self::$save_dir, "", $service_dir_full.$filename);
-        $classname = self::getClassname($tablename);
+        $relative_path    = str_replace(self::$save_dir, "", $service_dir_full.$filename);
+        $classname        = self::getClassname( $tablename );
         AutoCodePreviewReport::$service_files[$classname] = $relative_path;
-        return self::saveDefineToDir($service_dir_full, $filename, $definePhpFileContent);
+        return self::saveDefineToDir( $service_dir_full, $filename, $definePhpFileContent );
     }
 
     /**
@@ -941,12 +940,12 @@ class AutoCodeService extends AutoCode
      * @param string $tablename 表名称
      * @param string $defineAjaxPhpFileContent 生成的代码
      */
-    private static function saveoAjaxPhpDefineToDir($tablename,$filename,$defineAjaxPhpFileContent)
+    private static function saveoAjaxPhpDefineToDir($tablename, $filename, $defineAjaxPhpFileContent)
     {
-        $dir=self::$ajax_dir_full;
-        $classname=self::getClassname($tablename);
-        $relative_path=str_replace(self::$save_dir, "", $dir.$filename);
-        AutoCodePreviewReport::$bg_ajax_php_files[$classname]=$relative_path;
-        return self::saveDefineToDir($dir,$filename,$defineAjaxPhpFileContent);
+        $dir       = self::$ajax_dir_full;
+        $classname = self::getClassname($tablename);
+        $relative_path = str_replace(self::$save_dir, "", $dir.$filename);
+        AutoCodePreviewReport::$bg_ajax_php_files[$classname] = $relative_path;
+        return self::saveDefineToDir( $dir, $filename, $defineAjaxPhpFileContent );
     }
 }

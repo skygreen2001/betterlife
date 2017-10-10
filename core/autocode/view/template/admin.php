@@ -60,6 +60,49 @@ echo json_encode(\$result);
 ?>
 API_WEB;
 
+$select_web_template = <<<SELECT_WEB
+<?php
+// error_reporting(0);
+require_once ("../../../init.php");
+
+\$query        = \$_GET["term"];
+\$where_clause = "";
+if (!empty(\$query)){
+  \$where_clause  = "(";
+  \$search_atom = explode(" ", trim(\$query));
+  array_walk(\$search_atom, function(&\$value, \$key){
+    \$value = " ( title LIKE '%" . \$value . "%' ) ";
+  });
+  \$where_clause .= implode(" and ", \$search_atom);
+  \$where_clause .= ")";
+}
+\$page{$classname_rela} = {$classname_rela}::get(\$where_clause);
+\$data     = array();
+if (\$page{$classname_rela}){
+  foreach (\$page{$classname_rela} as \$key => \${$instancename_rela}) {
+    \${$instancename_rela}v         = array();
+    \${$instancename_rela}v["id"]   = \${$instancename_rela}->{$realId_m2m};
+    \${$instancename_rela}v["text"] = \${$instancename_rela}->title;
+    \$data[]        = \${$instancename_rela}v;
+  }
+}
+\$result   = array(
+  'code' => 1,
+  'description' => "",
+  'data' => \$data
+);
+
+//调试使用的信息
+\$result["debug"] = array(
+  'param' => array(
+    'term' => \$search
+  ),
+  'where' => \$where_clause
+);
+echo json_encode(\$result);
+
+SELECT_WEB;
+
 $js_template = <<<JS
 $(function(){
     //Datatables中文网[帮助]: http://datatables.club/
@@ -114,9 +157,10 @@ $idColumnDefs
 
     if( \$(".content-wrapper form").length ) {
 $editImgColumn
-$editEnumColumn
 $editDateColumn
+$editEnumColumn
 $editMulSelColumn
+$editM2MSelColumn
 $editBitColumn
         $('#edit{$classname}Form').validate({
             errorElement: 'div',
@@ -449,6 +493,7 @@ $edit_contents
     <script src="{\$template_url}js/normal/edit.js"></script>
     <script src="{\$template_url}js/core/{$instancename}.js"></script>
 $enumJsContent
+$rela_js_content
 $ueTextareacontents
 EDIT_TPL;
 

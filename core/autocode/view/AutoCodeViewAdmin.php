@@ -36,15 +36,54 @@ class AutoCodeViewAdmin extends AutoCodeView
         $editDateColumn   = "";
         $editBitColumn    = "";
         $editMulSelColumn = "";
+        $editM2MSelColumn = "";
         $editValidRules   = "";
         $editValidMsg     = "";
         $row_no           = 0;
 
-        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
-        foreach ($fieldInfo as $fieldname=>$field)
+        $classNameField   = self::getShowFieldName( $classname );
+        $belong_has_ones  = array();
+
+        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //从属一对一关系规范定义(如果存在)
+            if ( array_key_exists("belong_has_one", $relationSpec) )
+            {
+                $belong_has_one       = $relationSpec["belong_has_one"];
+                foreach ($belong_has_one as $key => $value) {
+                    $re_realId        = DataObjectSpec::getRealIDColumnName( $key );
+                    $classNameField   = self::getShowFieldName( $key );
+                    $belong_has_ones[$re_realId]["i"] = $value;
+                    $belong_has_ones[$re_realId]["s"] = $classNameField;
+                }
+            }
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $editM2MSelColumn .= "        \$.edit.select2('#$realId_m2m', \"api/web/select/{$instancename_rela}.php\", select_{$instancename_rela});\r\n";
+                }
+            }
+        }
+
+        foreach ($fieldInfo as $fieldname => $field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
-                $column_contents .= "                { data: \"$fieldname\" },\r\n";
+                if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
+                    $show_fieldname    = $belong_has_ones[$fieldname]["s"];
+                    $instancename_rela = $belong_has_ones[$fieldname]["i"];
+                    if ( $show_fieldname == "name" ) $show_fieldname = strtolower($instancename_rela) . "_" . $show_fieldname;
+                    $column_contents  .= "                { data: \"" . $show_fieldname . "\" },\r\n";
+                    $editMulSelColumn .= "        \$.edit.select2('#{$fieldname}', \"\", select_" . $instancename_rela . ");\r\n";
+                } else {
+                    $column_contents  .= "                { data: \"$fieldname\" },\r\n";
+                }
+
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
@@ -89,17 +128,14 @@ class AutoCodeViewAdmin extends AutoCodeView
                         $statusColumnDefs .= $js_sub_template_status;
                         $fieldname_u       = $fieldname;
                         $fieldname_u{0}    = strtoupper($fieldname_u{0});
-                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"home/admin/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname}_id, select_{$fieldname}_text);\r\n";
+                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"home/admin/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname});";
                         $defineJsonFileContent = $edit_sub_json_template;
                         self::saveJsonDefineToDir( $instancename, $fieldname, $defineJsonFileContent );
                     }
                     break;
                   case 'date':
-                    $editDateColumn .= "        \$.edit.datetimePicker('#$fieldname');\r\n";
+                    $editDateColumn .= "        \$.edit.datetimePicker('#$fieldname');";
                     break;
-                  // todo:
-                  // $editMulSelColumn
-                  // $.edit.multiselect('#categoryIds');
                   default:
                     break;
                 }
@@ -157,10 +193,38 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $editApiRela = self::relationFieldShow($instancename, $classname, $fieldInfo);
             }
         }
-        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
+        $classNameField = self::getShowFieldName( $classname );
         include("template" . DS . "admin.php");
         $result = $api_web_template;
         return $result;
+    }
+
+    /**
+     * 将表列定义转换成表示层js所需Select Web文件定义的内容
+     * @param string $tablename 表名
+     */
+    public static function save_select_web_admin($tablename)
+    {
+        $classname    = self::getClassname($tablename);
+        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $classname_rela    = self::getClassname($talname_rela);
+                    $instancename_rela = self::getInstancename( $talname_rela );
+
+                    include("template" . DS . "admin.php");
+                    $phpName          = self::saveApiSelectDefineToDir( $talname_rela, $select_web_template );
+                    self::$showReport.= "生成导出完成:$tablename => $phpName!<br/>";
+                }
+            }
+        }
     }
 
     /**
@@ -193,15 +257,17 @@ class AutoCodeViewAdmin extends AutoCodeView
         $realId        = DataObjectSpec::getRealIDColumnName($classname);
 
         $column_contents = "";
-        foreach ($fieldInfo as $fieldname=>$field)
+        foreach ($fieldInfo as $fieldname => $field)
         {
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
-                $field_comment=$field["Comment"];
-                if (contain($field_comment,"\r")||contain($field_comment,"\n"))
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+                $field_comment = $field["Comment"];
+                if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
                 {
-                    $field_comment=preg_split("/[\s,]+/", $field_comment);
-                    $field_comment=$field_comment[0];
+                    $field_comment = preg_split("/[\s,]+/", $field_comment);
+                    $field_comment = $field_comment[0];
                 }
+                $field_comment = str_replace( "标识", "", $field_comment );
+                $field_comment = str_replace( "编号", "", $field_comment );
                 $column_contents .= "                                    <th>$field_comment</th>\r\n";
             }
         }
@@ -234,6 +300,65 @@ class AutoCodeViewAdmin extends AutoCodeView
         $ueTextareacontents  = "";
         $ckeditor_prepare    = "    ";
         $ueEditor_prepare    = "";
+
+        $belong_has_ones     = array();
+        $rela_m2m_content    = "";
+        $rela_js_content     = "";
+
+        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //从属一对一关系规范定义(如果存在)
+            if ( array_key_exists("belong_has_one", $relationSpec) )
+            {
+                $belong_has_one       = $relationSpec["belong_has_one"];
+                foreach ($belong_has_one as $key => $value) {
+                    $realId           = DataObjectSpec::getRealIDColumnName($key);
+                    $classNameField   = self::getShowFieldName( $key );
+                    $relation_content = "                              <select id=\"$realId\" name=\"$realId\" class=\"form-control\">\r\n".
+                                        "                                  <option value=\"-1\">请选择</option>\r\n".
+                                        "                                  {foreach item=$value from=\${$value}s}\r\n".
+                                        "                                  <option value=\"{\${$value}.$realId}\">{\${$value}.{$classNameField}}</option>\r\n".
+                                        "                                  {/foreach}\r\n".
+                                        "                              </select>\r\n";
+                    $rela_js_content .= "        var select_{$value} = {};\r\n".
+                                        "        {if \${$instancename}.{$value}}\r\n".
+                                        "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$realId}}\";\r\n".
+                                        "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";\r\n".
+                                        "        select_{$value} =  new Array(select_{$value});\r\n".
+                                        "        {/if}\r\n\r\n";
+                    $belong_has_ones[$realId] = $relation_content;
+                }
+            }
+
+
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $m2m_table_comment = self::tableCommentKey($talname_rela);
+                    $classNameField    = self::getShowFieldName( $key );
+                    $rela_js_content  .= "        var select_{$instancename_rela} =  new Array({count(\${$instancename}.{$value})});\r\n".
+                                         "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
+                                         "        var $instancename_rela       = {};\r\n".
+                                         "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";\r\n".
+                                         "        $instancename_rela.text      = \"{\$$instancename_rela.$classNameField}\";\r\n".
+                                         "        select_{$instancename_rela}[{\${$instancename_rela}@index}] = $instancename_rela;\r\n".
+                                         "        {/foreach}\r\n\r\n";
+                    $rela_m2m_content .= "                      <div class=\"form-group\">\r\n".
+                                         "                          <label for=\"$realId_m2m\" class=\"col-sm-2 control-label\">$m2m_table_comment</label>\r\n".
+                                         "                          <div class=\"col-sm-9\">\r\n".
+                                         "                              <select id=\"$realId_m2m\" name=\"{$realId_m2m}[]\" class=\"form-control\" multiple ></select>\r\n".
+                                         "                          </div>\r\n".
+                                         "                      </div>\r\n";
+                }
+            }
+        }
+
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
@@ -245,33 +370,36 @@ class AutoCodeViewAdmin extends AutoCodeView
             $realId = DataObjectSpec::getRealIDColumnName( $classname );
             if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $isImage = self::columnIsImage( $fieldname, $value );
+                $edit_contents .= "                      <div class=\"form-group\">\r\n";
                 if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
-                    $edit_contents .= "                     <div class=\"form-group\">\r\n".
-                                      "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment . "</label>\r\n".
+                    $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment . "</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n".
                                       "                                  <textarea class=\"form-control\" id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment ."\">{\$" . $instancename . "." . $fieldname . "}</textarea>\r\n".
                                       "                              </div>\r\n".
-                                      "                          </div>\r\n".
-                                      "                      </div>\r\n";
+                                      "                          </div>\r\n";
                     $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
                     $ueEditor_prepare .= "pageInit_ue_$fieldname();";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = "enctype=\"multipart/form-data\"";
-                    $edit_contents .= "                      <div class=\"form-group\">\r\n".
-                                      "                          <label for=\"iconImage\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
+                    $edit_contents .= "                          <label for=\"iconImage\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"input-group col-sm-9\">\r\n".
                                       "                                  <input type=\"text\" id=\"iconImageTxt\" readonly=\"readonly\" class=\"form-control\" />\r\n".
                                       "                                  <span class=\"btn-file-browser btn-success input-group-addon\" id=\"iconImageDiv\">浏览 ...</span>\r\n".
                                       "                                  <input type=\"file\" id=\"iconImage\" name=\"icon_url\" style=\"display:none;\" accept=\"image/*\" />\r\n".
                                       "                              </div>\r\n".
-                                      "                          </div>\r\n".
-                                      "                      </div>\r\n";
+                                      "                          </div>\r\n";
+                } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
+                    $field_comment = str_replace( "标识", "", $field_comment );
+                    $field_comment = str_replace( "编号", "", $field_comment );
+                    $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
+                                      "                          <div class=\"col-sm-9\">\r\n".
+                                      $belong_has_ones[$fieldname].
+                                      "                          </div>\r\n";
                 } else {
                     $datatype = self::comment_type($field["Type"]);
-                    $edit_contents .= "                      <div class=\"form-group\">\r\n".
-                                      "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
+                    $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n";
                     switch ($datatype) {
@@ -283,8 +411,12 @@ class AutoCodeViewAdmin extends AutoCodeView
                         case "enum":
                           $edit_contents .= "                                  <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
                           $enumJsContent .= "    <script type=\"text/javascript\">\r\n".
-                                            "        var select_{$fieldname}_id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
-                                            "        var select_{$fieldname}_text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
+                                            "        var select_{$fieldname} = {};\r\n".
+                                            "        {if \${$instancename}.{$fieldname}}\r\n".
+                                            "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
+                                            "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
+                                            "        {/if}\r\n".
+                                            "        select_{$fieldname} =  new Array(select_{$fieldname});\r\n".
                                             "    </script>\r\n";
                           break;
                         case "date":
@@ -302,10 +434,16 @@ class AutoCodeViewAdmin extends AutoCodeView
                           break;
                     }
                     $edit_contents .= "                              </div>\r\n".
-                                      "                          </div>\r\n".
-                                      "                      </div>\r\n";
+                                      "                          </div>\r\n";
                 }
+                $edit_contents .= "                      </div>\r\n";
             }
+        }
+        $edit_contents .= $rela_m2m_content;
+        if ( !empty($rela_js_content) ) {
+            $rela_js_content = "    <script type=\"text/javascript\">\r\n".
+                               $rela_js_content.
+                               "    </script>\r\n";
         }
 
         if ( !empty($ueEditor_prepare) ) {
@@ -350,8 +488,31 @@ UETC;
         $instancename  = self::getInstancename($tablename);
         $realId        = DataObjectSpec::getRealIDColumnName($classname);
         $showColumns   = "";
+        $viewM2MCols   = "";
 
-        $classNameField = self::getShowFieldName( $fieldInfo, $classname );
+        $classNameField = self::getShowFieldName( $classname );
+
+        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $m2m_table_comment = self::tableCommentKey($talname_rela);
+                    $classNameField    = self::getShowFieldName( $key );
+                    $viewM2MCols      .= "                    <dl>\r\n".
+                                         "                      <dt><span>$m2m_table_comment</span></dt>\r\n".
+                                         "                      <dd>{foreach item=$instancename_rela from=\${$instancename}.{$value}}<span>{\${$instancename_rela}.{$classNameField}}</span> {/foreach}</dd>\r\n".
+                                         "                    </dl>\r\n";
+                }
+            }
+        }
+
         foreach ($fieldInfo as $fieldname => $field)
         {
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
@@ -409,11 +570,9 @@ UETC;
                     $showColumns .= "                      <dd><span>{\$$instancename.$showColName}</span></dd>\r\n";
                 }
                 $showColumns .= "                    </dl>\r\n";
-                // todo
-                // <dd><span>{foreach item=category from=$blog.categorys}{$category.name}&nbsp;{/foreach}</span></dd>
             }
         }
-
+        $showColumns  .= $viewM2MCols;
         $commitTimeStr = EnumColumnNameDefault::COMMITTIME;
         $updateTimeStr = EnumColumnNameDefault::UPDATETIME;
         include("template" . DS . "admin.php");

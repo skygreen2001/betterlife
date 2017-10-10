@@ -123,8 +123,8 @@ $(function(){
     if( $(".content-wrapper form").length ){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
         $.edit.datetimePicker('#publish_date');
-        $.edit.select2('#category_id', "", select_category);//, "api/web/select/tag.php"
-        $.edit.select2('#tags_id', "api/web/select/tag.php", select_tags);
+        $.edit.select2('#category_id', "", select_category);
+        $.edit.select2('#tags_id', "api/web/select/tags.php", select_tags);
         $.edit.select2("#status", "home/admin/data/blogStatus.json", select_status);
 
         $("input[name='isPublic']").bootstrapSwitch();

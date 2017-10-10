@@ -189,7 +189,7 @@ class AutoCodeConfig extends AutoCode
                         $relation_class = new $relation_classname();
                     }
                     if ( ( !in_array($fieldname, $exists_condition) ) && ( $relation_class instanceof DataObject ) ) {
-                        $showfieldname_relation = self::getShowFieldNameByClassname( $relation_classname );
+                        $showfieldname_relation = self::getShowFieldName( $relation_classname );
                         if ( !in_array($showfieldname_relation, $exists_condition) ) {
                             $conditions[] = array(
                                 '@attributes' => array(
@@ -224,7 +224,7 @@ class AutoCodeConfig extends AutoCode
                 $relation_classname    = str_replace("_id", "", $fieldname);
                 $relation_classname{0} = strtoupper($relation_classname{0});
                 if ( strtoupper($relation_classname) == "PARENT" ) {
-                    $showfieldname   = self::getShowFieldNameByClassname($classname);
+                    $showfieldname   = self::getShowFieldName($classname);
                     $relationShows[] = array(
                         '@attributes' => array(
                             "local_key"      => $fieldname,
@@ -238,7 +238,7 @@ class AutoCodeConfig extends AutoCode
                         $relation_class = new $relation_classname();
                     }
                     if ( $relation_class instanceof DataObject ) {
-                        $showfieldname = self::getShowFieldNameByClassname( $relation_classname );
+                        $showfieldname = self::getShowFieldName( $relation_classname );
                         $relationShows[] = array(
                             '@attributes' => array(
                                 "local_key"      => $fieldname,

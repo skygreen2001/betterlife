@@ -568,10 +568,11 @@ class AutoCode extends Object
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名
      */
-    protected static function getShowFieldName($fieldInfo, $classname)
+    protected static function getShowFieldName($classname)
     {
         $classNameField = self::getShowFieldNameByClassname( $classname, true );
         if ( empty($classNameField) ) {
+            $fieldInfo  = self::$fieldInfos[self::getTablename( $classname )];
             $fieldNames = array_keys($fieldInfo);
             foreach ($fieldNames as $fieldname)
             {

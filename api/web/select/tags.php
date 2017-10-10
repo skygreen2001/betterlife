@@ -7,7 +7,7 @@ $where_clause = "";
 if (!empty($query)){
   $where_clause  = "(";
   $search_atom = explode(" ", trim($query));
-  array_walk($search_atom,function(&$value, $key){
+  array_walk($search_atom, function(&$value, $key){
     $value = " ( title LIKE '%" . $value . "%' ) ";
   });
   $where_clause .= implode(" and ", $search_atom);
@@ -16,11 +16,11 @@ if (!empty($query)){
 $pageTags = Tags::get($where_clause);
 $data     = array();
 if ($pageTags){
-  foreach ($pageTags as $key => $tag) {
-    $tagv         = array();
-    $tagv["id"]   = $tag->tags_id;
-    $tagv["text"] = $tag->title;
-    $data[]       = $tagv;
+  foreach ($pageTags as $key => $tags) {
+    $tagsv         = array();
+    $tagsv["id"]   = $tags->tags_id;
+    $tagsv["text"] = $tags->title;
+    $data[]        = $tagsv;
   }
 }
 $result   = array(
