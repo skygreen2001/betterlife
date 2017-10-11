@@ -68,6 +68,8 @@ class Action_Blog extends ActionModel
         $blogId = $this->data["id"];
         $blog = Blog::get_by_id($blogId);
         $this->view->set("blog", $blog);
+        $categorys = Category::get("", "category_id asc");
+        $this->view->set("categorys", $categorys);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor('blog_content');
     }
@@ -81,4 +83,3 @@ class Action_Blog extends ActionModel
         $this->redirect("blog", "lists", $this->data);
     }
 }
-

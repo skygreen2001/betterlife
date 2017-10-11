@@ -8,7 +8,14 @@
         });
         </script>
     {/if}
-     <div class="block">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/bower/select2.min.css" />
+    <script type="text/javascript" src="{$template_url}js/bower/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
+
+    <div class="block">
         <div><h1>{if $blog}编辑{else}新增{/if}博客</h1><p><font color="red">{$message|default:''}</font></p></div>
         <form name="blogForm" method="post" enctype="multipart/form-data"><input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
         <table class="viewdoblock">
@@ -16,7 +23,27 @@
             <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$blog.user_id}"/></td></tr>
             <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
             <tr class="entry"><th class="head">排序</th><td class="content"><input type="text" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
-            <tr class="entry"><th class="head">分类编号</th><td class="content"><input type="text" class="edit" name="category_id" value="{$blog.category_id}"/></td></tr>
+            <tr class="entry">
+              <th class="head">分类编号</th>
+              <td class="content"><input type="text" class="edit" name="category_id" value="{$blog.category_id}"/></td>
+            </tr>
+            <tr class="entry">
+              <th class="head">分类</th>
+              <td class="content select">
+                  <select id="category_id" name="category_id" class="form-control">
+                      <option value="-1">请选择</option>
+                      {foreach item=category from=$categorys}
+                      <option value="{$category.category_id}">{$category.name}</option>
+                      {/foreach}
+                  </select>
+              </td>
+            </tr>
+            <tr class="entry">
+              <th class="head">标签</th>
+              <td class="content select">
+                  <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
+              </td>
+            </tr>
             <tr class="entry">
                 <th class="head">封面</th>
                 <td class="content">
@@ -28,7 +55,10 @@
                 </td>
             </tr>
             <tr class="entry"><th class="head">是否公开</th><td class="content"><input type="text" class="edit" name="isPublic" value="{$blog.isPublic}"/></td></tr>
-            <tr class="entry"><th class="head">状态</th><td class="content"><input type="text" class="edit" name="status" value="{$blog.status}"/></td></tr>
+            <tr class="entry">
+                <th class="head">状态</th>
+                <td class="content"><select id="status" name="status" class="form-control"></select></td>
+            </tr>
             <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" class="edit" name="publish_date" value="{$blog.publish_date}"/></td></tr>
             <tr class="entry"><th class="head">博客内容</th>
                 <td class="content">
@@ -51,6 +81,33 @@
     <script type="text/javascript">
     $(function() {
         $.edit.fileBrowser("#icon_url", "#icon_urlTxt", "#icon_urlDiv");
+        var select_category = {};
+        {if $blog.category}
+        select_category.id   = "{$blog.category.category_id}";
+        select_category.text = "{$blog.category.name}";
+        select_category =  new Array(select_category);
+        {/if}
+
+        var select_tags =  new Array({count($blog.tagss)});
+        {foreach $blog.tagss as $tags}
+
+        var tags       = {};
+        tags.id        = "{$tags.tags_id}";
+        tags.text      = "{$tags.title}";
+        select_tags[{$tags@index}] = tags;
+        {/foreach}
+
+        var select_status = {};
+        {if $blog.status}
+        select_status.id   = "{$blog.status}";
+        select_status.text = "{$blog.statusShow}";
+        select_status =  new Array(select_status);
+        {/if}
+
+        $.edit.select2('#category_id', "", select_category);
+        $.edit.select2('#tags_id', "api/web/select/tags.php", select_tags);
+        $.edit.select2("#status", "home/admin/data/blogStatus.json", select_status);
+
     });
     </script>
 

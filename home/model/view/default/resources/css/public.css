@@ -93,104 +93,6 @@ blockquote {
     padding:5px;
 }
 
-input {
-    border:1px solid #fff;
-    width:200px;
-    height:28px;
-    line-height:28px;
-    background:gray;
-    color:#fff;
-    background-color:gray;
-    padding-left: 10px;
-}
-
-.viewdoblock .content > .edui-default{
-    margin-left: -8px;
-}
-
-.viewdoblock .file-upload-container{
-    width: 100%;
-}
-
-.viewdoblock .file-show-path{
-    display: table-cell;
-    position: relative;
-    z-index: 2;
-    float: left;
-    width: 78%;
-    margin-left: -10px;
-    margin-bottom: 0;
-    background-color: #eee;
-    opacity: 1;
-    height: 36px;
-    line-height: 20px;
-    padding: 1px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.viewdoblock .btn-file-browser{
-    width: 22%;
-    background: #4caf50;
-    border: 1px solid #4caf50;
-    color: #fff;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 1px 16px;
-    font-weight: 400;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    display: table-cell;
-    border-collapse: separate;
-}
-
-@media (max-width: 800px){
-    .viewdoblock .head{
-        width: 12% !important;
-        min-width: 75px !important;
-    }
-    .viewdoblock .file-show-path{
-        width: 95%;
-    }
-    .viewdoblock .btn-file-browser{
-        width: 92%;
-        float: left;
-        margin-left: -10px;
-        margin-top: 10px;
-    }
-}
-
-@media (min-width: 800px) and (max-width: 1024px){
-    .viewdoblock .file-show-path{
-        width: 73%;
-    }
-}
-
-.btnSubmit{
-    margin-top: 15px;
-    width: 126px;
-    height: 38px;
-    color: #FFF;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: lighter;
-    background-color: #77cc6d;
-    border: 1px solid;
-    border-color: #fff;
-    border-radius: 6px;
-}
-
-.btnSubmit:hover {
-    color: #000;
-    background-color: #fff;
-    border: 1px solid #77cc6d;
-}
 
 label {
     vertical-align:middle;
@@ -262,10 +164,6 @@ br {
     text-align: center;
 }
 
-form .viewdoblock .entry .content {
-    padding: 6px 6% 6px 7%;
-}
-
 .viewdoblock .btnCol{
     width      : 105px;
     text-align : center;
@@ -284,14 +182,6 @@ form .viewdoblock .entry .content {
     text-align:center;
 }
 
-.viewdoblock .edit {
-    border-radius: 6px;
-    padding-left: 10px;
-    margin-left: -10px;
-    width: 100%;
-    height: 36px;
-}
-
 .footer{
     margin: 10px 0;
     line-height: 30px;
@@ -299,5 +189,9 @@ form .viewdoblock .entry .content {
 
 /* 图片自适应显示 table-cell方式 */
 .wrap_2_inner img { max-height:600px; max-width:600px; *bottom:50%;*right:50%;margin:0 auto;}
+
+
+
+
 
 /* END */

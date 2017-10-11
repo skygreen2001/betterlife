@@ -46,7 +46,7 @@ class UtilAjax extends Util
      * 默认使用的Ajax框架版本
      * @var string
      */
-    public static $ajax_fw_version_default="1.6.1"; //1.6.1
+    public static $ajax_fw_version_default="3.2.1"; //1.6.1
     /**
      * 推荐的Ajax框架和可使用的版本。<br/>
      * 选用Ajax框架和可使用的版本可参考该列表
@@ -54,7 +54,7 @@ class UtilAjax extends Util
      * @var array
      */
     public static $ajax_fw_list=array(
-        "jquery"=>"1.6.1",//JQuery可使用1.5.0以上版本。
+        "jquery"=>"3.2.1",//JQuery可使用1.5.0以上版本。
         "prototype"=>"1.7.0.0",//Prototype可使用1.6.0.2以上版本。
         "yui"=>"3.3.0",//YUI可使用3.3.0以上版本。
         "mootools"=>"1.3.2",//Mootools可使用1.3.2以上版本。

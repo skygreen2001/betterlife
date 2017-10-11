@@ -23,7 +23,7 @@ $contents
 LISTS;
 
 $edit_template = <<<EDIT
-     <div class="block">
+    <div class="block">
         <div><h1>{if \${$instancename}}编辑{else}新增{/if}{$table_comment}</h1><p><font color="red">{\$message|default:''}</font></p></div>
         <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>
         <table class="viewdoblock">
