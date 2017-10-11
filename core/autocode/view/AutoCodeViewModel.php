@@ -292,7 +292,8 @@ UETC;
                 break;
             }
         }
-        $view_contents="";
+        $view_contents = "";
+        $view_contents .= "        <tr class=\"entry\"><td colspan=\"2\" class=\"v_g_t\"><h3>¶ <span>基本信息</span></h3></td></tr>\r\n";
         foreach ($fieldNameAndComments as $key => $value) {
             if ( self::isNotColumnKeywork( $key ) ) {
                 $isImage = self::columnIsImage( $key, $value );
@@ -371,6 +372,41 @@ UETC;
                 }  else {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.$key}</td></tr>\r\n";
                 }
+            }
+        }
+
+        $classNameField = self::getShowFieldName( $classname );
+        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $m2m_table_comment = self::tableCommentKey($talname_rela);
+                    $classNameField    = self::getShowFieldName( $key );
+                    $view_contents    .= "        <tr class=\"entry\">\r\n".
+                                         "            <th class=\"head\">$m2m_table_comment</th>\r\n".
+                                         "            <td class=\"content\">{foreach item=$instancename_rela from=\${$instancename}.{$value}}<span>{\${$instancename_rela}.{$classNameField}}</span> {/foreach}\r\n".
+                                         "        </tr>\r\n";
+                }
+            }
+        }
+
+        $view_contents .= "        <tr class=\"entry v_g_b\"><td colspan=\"2\" class=\"v_g_t\"><h3>¶ <span>其他信息</span></h3></td></tr>\r\n";
+
+        foreach ($fieldInfo as $fieldname => $field)
+        {
+            $comment = $fieldNameAndComments[$fieldname];
+            $realId  = DataObjectSpec::getRealIDColumnName($classname);
+            if ( !self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+                $view_contents .= "        <tr class=\"entry\"><th class=\"head\">" . $comment . "</th><td class=\"content\">{\$$instancename.$fieldname|date_format:\"%Y-%m-%d %H:%M\"}</td></tr>\r\n";
+            } else if ( $realId == $fieldname ) {
+                $view_contents .= "        <tr class=\"entry\"><th class=\"head\">" . $comment . "</th><td class=\"content\">{\$$instancename.$fieldname}</td></tr>\r\n";
             }
         }
         if ( !empty($view_contents) && (strlen($view_contents)>2) ) {

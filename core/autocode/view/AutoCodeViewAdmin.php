@@ -73,7 +73,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 
         foreach ($fieldInfo as $fieldname => $field)
         {
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
                     $show_fieldname    = $belong_has_ones[$fieldname]["s"];
                     $instancename_rela = $belong_has_ones[$fieldname]["i"];
