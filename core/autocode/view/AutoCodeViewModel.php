@@ -200,31 +200,42 @@ class AutoCodeViewModel extends AutoCodeView
         $edit_contents  = "";
         $idColumnName   = "id";
         $hasImgFormFlag = "";
+        $edit_js_content= "";
         foreach ($fieldNameAndComments as $key => $value) {
             $idColumnName = DataObjectSpec::getRealIDColumnName( $classname );
             if ( self::isNotColumnKeywork( $key ) ){
                 $isImage = self::columnIsImage( $key, $value );
                 if ( $idColumnName == $key ) {
-                    $edit_contents .= "        {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\${$instancename}.$key}</td></tr>{/if}\r\n";
+                    $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\${$instancename}.$key}</td></tr>{/if}\r\n";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = " enctype=\"multipart/form-data\"";
-                    $edit_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"file\" class=\"edit\" name=\"{$key}Upload\" accept=\"image/png,image/gif,image/jpg,image/jpeg\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
+                    $edit_contents .= "            <tr class=\"entry\">\r\n".
+                                      "                <th class=\"head\">$value</th>\r\n".
+                                      "                <td class=\"content\">\r\n".
+                                      "                    <div class=\"file-upload-container\">\r\n".
+                                      "                        <input type=\"text\" id=\"{$key}Txt\" readonly=\"readonly\" class=\"file-show-path\" />\r\n".
+                                      "                        <span class=\"btn-file-browser\" id=\"{$key}Div\">浏览 ...</span>\r\n".
+                                      "                        <input type=\"file\" id=\"$key\" name=\"{$key}\" style=\"display:none;\" accept=\"image/*\" />\r\n".
+                                      "                    </div>\r\n".
+                                      "                </td>\r\n".
+                                      "            </tr>\r\n";
+                    $edit_js_content= "        \$.edit.fileBrowser(\"#icon_url\", \"#icon_urlTxt\", \"#icon_urlDiv\");\r\n";
                 } else {
-                    $edit_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$key\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
+                    $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$key\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
                 }
             }
         }
 
         $ueTextareacontents   = "";
         if ( count($text_area_fieldname) >= 1) {
-            $ckeditor_prepare = "    ";
+            $ckeditor_prepare = "";
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
-                $edit_contents   .= "        <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
-                                    "            <td class=\"content\">\r\n".
-                                    "                <textarea id=\"$key\" name=\"$key\" style=\"width:90%;height:300px;\">{\${$instancename}.$key}</textarea>\r\n".
-                                    "            </td>\r\n".
-                                    "        </tr>\r\n";
+                $edit_contents   .= "            <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
+                                    "                <td class=\"content\">\r\n".
+                                    "                    <textarea id=\"$key\" name=\"$key\">{\${$instancename}.$key}</textarea>\r\n".
+                                    "                </td>\r\n".
+                                    "            </tr>\r\n";
                 $ckeditor_prepare .= "ckeditor_replace_$key();";
                 $ueEditor_prepare .= "pageInit_ue_$key();";
             }
@@ -245,13 +256,20 @@ EDIT;
     {/if}
 UETC;
         }
+        if ( !empty($edit_js_content) ){
+            $edit_js_content= "    <script type=\"text/javascript\">\r\n".
+                              "    \$(function() {\r\n".
+                              $edit_js_content.
+                              "    });\r\n".
+                              "    </script>\r\n";
+        }
         if ( !empty($edit_contents) && (strlen($edit_contents)>2) ) {
             $edit_contents = substr($edit_contents, 0, strlen($edit_contents) - 2);
         }
         include("template" . DS . "default.php");
         $result = $edit_template;
         if ( count($text_area_fieldname) >= 1 ) {
-            $result = $textareapreparesentence."\r\n".$result;
+            $result = $textareapreparesentence . "\r\n" . $result;
         }
         $result = self::tableToViewTplDefine( $result );
         return $result;

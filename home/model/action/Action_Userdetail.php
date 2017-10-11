@@ -46,8 +46,8 @@ class Action_Userdetail extends ActionModel
             $userdetail = $this->model->Userdetail;
             $id = $userdetail->getId();
             $isRedirect=true;
-            if (!empty($_FILES)&&!empty($_FILES["profileUpload"]["name"])){
-                $result=$this->uploadImg($_FILES,"profileUpload","profile","userdetail");
+            if (!empty($_FILES)&&!empty($_FILES["profile"]["name"])){
+                $result=$this->uploadImg($_FILES, "profile", "profile", "userdetail");
                 if ($result&&($result['success']==true)){
                     if (array_key_exists('file_name',$result))$userdetail->profile = $result['file_name'];
                 }else{

@@ -87,7 +87,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
-                    $editImgColumn .= '        $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");';
+                    $editImgColumn .= "        $.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");";
                     $altImgVal      = $classNameField;
                     if ( empty($altImgVal) ) $altImgVal = $realId;
                     include("template" . DS . "admin.php");
@@ -298,7 +298,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $hasImgFormFlag      = "";
 
         $ueTextareacontents  = "";
-        $ckeditor_prepare    = "    ";
+        $ckeditor_prepare    = "";
         $ueEditor_prepare    = "";
 
         $belong_has_ones     = array();
@@ -382,12 +382,12 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $ueEditor_prepare .= "pageInit_ue_$fieldname();";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = "enctype=\"multipart/form-data\"";
-                    $edit_contents .= "                          <label for=\"iconImage\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
+                    $edit_contents .= "                          <label for=\"$fieldname\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"input-group col-sm-9\">\r\n".
-                                      "                                  <input type=\"text\" id=\"iconImageTxt\" readonly=\"readonly\" class=\"form-control\" />\r\n".
-                                      "                                  <span class=\"btn-file-browser btn-success input-group-addon\" id=\"iconImageDiv\">浏览 ...</span>\r\n".
-                                      "                                  <input type=\"file\" id=\"iconImage\" name=\"icon_url\" style=\"display:none;\" accept=\"image/*\" />\r\n".
+                                      "                                  <input type=\"text\" id=\"{$fieldname}Txt\" readonly=\"readonly\" class=\"form-control\" />\r\n".
+                                      "                                  <span class=\"btn-file-browser btn-success input-group-addon\" id=\"{$fieldname}Div\">浏览 ...</span>\r\n".
+                                      "                                  <input type=\"file\" id=\"$fieldname\" name=\"$fieldname\" style=\"display:none;\" accept=\"image/*\" />\r\n".
                                       "                              </div>\r\n".
                                       "                          </div>\r\n";
                 } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {

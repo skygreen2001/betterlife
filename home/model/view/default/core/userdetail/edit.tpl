@@ -4,18 +4,27 @@
         <div><h1>{if $userdetail}编辑{else}新增{/if}用户详细信息</h1><p><font color="red">{$message|default:''}</font></p></div>
         <form name="userdetailForm" method="post" enctype="multipart/form-data"><input type="hidden" name="userdetail_id" value="{$userdetail.userdetail_id}"/>
         <table class="viewdoblock">
-        {if $userdetail}<tr class="entry"><th class="head">标识</th><td class="content">{$userdetail.userdetail_id}</td></tr>{/if}
-        <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$userdetail.user_id}"/></td></tr>
-        <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$userdetail.realname}"/></td></tr>
-        <tr class="entry"><th class="head">头像</th><td class="content"><input type="file" class="edit" name="profileUpload" accept="image/png,image/gif,image/jpg,image/jpeg" value="{$userdetail.profile}"/></td></tr>
-        <tr class="entry"><th class="head">国家</th><td class="content"><input type="text" class="edit" name="country" value="{$userdetail.country}"/></td></tr>
-        <tr class="entry"><th class="head">省</th><td class="content"><input type="text" class="edit" name="province" value="{$userdetail.province}"/></td></tr>
-        <tr class="entry"><th class="head">市</th><td class="content"><input type="text" class="edit" name="city" value="{$userdetail.city}"/></td></tr>
-        <tr class="entry"><th class="head">区</th><td class="content"><input type="text" class="edit" name="district" value="{$userdetail.district}"/></td></tr>
-        <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address}"/></td></tr>
-        <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq}"/></td></tr>
-        <tr class="entry"><th class="head">会员性别</th><td class="content"><input type="text" class="edit" name="sex" value="{$userdetail.sex}"/></td></tr>
-        <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" class="edit" name="birthday" value="{$userdetail.birthday}"/></td></tr>
+            {if $userdetail}<tr class="entry"><th class="head">标识</th><td class="content">{$userdetail.userdetail_id}</td></tr>{/if}
+            <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$userdetail.user_id}"/></td></tr>
+            <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$userdetail.realname}"/></td></tr>
+            <tr class="entry">
+                <th class="head">头像</th>
+                <td class="content">
+                    <div class="file-upload-container">
+                        <input type="text" id="profileTxt" readonly="readonly" class="file-show-path" />
+                        <span class="btn-file-browser" id="profileDiv">浏览 ...</span>
+                        <input type="file" id="profile" name="profile" style="display:none;" accept="image/*" />
+                    </div>
+                </td>
+            </tr>
+            <tr class="entry"><th class="head">国家</th><td class="content"><input type="text" class="edit" name="country" value="{$userdetail.country}"/></td></tr>
+            <tr class="entry"><th class="head">省</th><td class="content"><input type="text" class="edit" name="province" value="{$userdetail.province}"/></td></tr>
+            <tr class="entry"><th class="head">市</th><td class="content"><input type="text" class="edit" name="city" value="{$userdetail.city}"/></td></tr>
+            <tr class="entry"><th class="head">区</th><td class="content"><input type="text" class="edit" name="district" value="{$userdetail.district}"/></td></tr>
+            <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address}"/></td></tr>
+            <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq}"/></td></tr>
+            <tr class="entry"><th class="head">会员性别</th><td class="content"><input type="text" class="edit" name="sex" value="{$userdetail.sex}"/></td></tr>
+            <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" class="edit" name="birthday" value="{$userdetail.birthday}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
         </form>
@@ -26,5 +35,11 @@
             {/if}
         </div>
     </div>
+
+    <script type="text/javascript">
+    $(function() {
+        $.edit.fileBrowser("#icon_url", "#icon_urlTxt", "#icon_urlDiv");
+    });
+    </script>
 
 {/block}

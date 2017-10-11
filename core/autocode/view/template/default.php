@@ -39,6 +39,7 @@ $edit_contents
         </div>
     </div>
 $ueTextareacontents
+$edit_js_content
 EDIT;
 
 $view_template = <<<VIEW

@@ -4,9 +4,9 @@
         <div><h1>{if $blogtags}编辑{else}新增{/if}博客标签</h1><p><font color="red">{$message|default:''}</font></p></div>
         <form name="blogtagsForm" method="post"><input type="hidden" name="blogtags_id" value="{$blogtags.blogtags_id}"/>
         <table class="viewdoblock">
-        {if $blogtags}<tr class="entry"><th class="head">标识</th><td class="content">{$blogtags.blogtags_id}</td></tr>{/if}
-        <tr class="entry"><th class="head">博客编号</th><td class="content"><input type="text" class="edit" name="blog_id" value="{$blogtags.blog_id}"/></td></tr>
-        <tr class="entry"><th class="head">标签编号</th><td class="content"><input type="text" class="edit" name="tags_id" value="{$blogtags.tags_id}"/></td></tr>
+            {if $blogtags}<tr class="entry"><th class="head">标识</th><td class="content">{$blogtags.blogtags_id}</td></tr>{/if}
+            <tr class="entry"><th class="head">博客编号</th><td class="content"><input type="text" class="edit" name="blog_id" value="{$blogtags.blog_id}"/></td></tr>
+            <tr class="entry"><th class="head">标签编号</th><td class="content"><input type="text" class="edit" name="tags_id" value="{$blogtags.tags_id}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
         </form>
@@ -17,5 +17,6 @@
             {/if}
         </div>
     </div>
+
 
 {/block}

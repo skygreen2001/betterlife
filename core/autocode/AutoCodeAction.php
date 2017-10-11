@@ -577,8 +577,8 @@ class AutoCodeAction extends AutoCode
 
         if ( count($img_fieldname>0) ) {
             foreach ( $img_fieldname as $fieldname ) {
-                $result .= "            if (!empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}Upload\"][\"name\"])){\r\n".
-                           "                \$result=\$this->uploadImg(\$_FILES,\"{$fieldname}Upload\",\"{$fieldname}\",\"$instancename\");\r\n".
+                $result .= "            if (!empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"])){\r\n".
+                           "                \$result=\$this->uploadImg(\$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\");\r\n".
                            "                if (\$result&&(\$result['success']==true)){\r\n".
                            "                    if (array_key_exists('file_name',\$result))\${$instancename}->$fieldname = \$result['file_name'];\r\n".
                            "                }else{\r\n".
