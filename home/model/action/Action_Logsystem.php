@@ -46,9 +46,9 @@ class Action_Logsystem extends ActionModel
             $logsystem = $this->model->Logsystem;
             $id = $logsystem->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $logsystem->update();
-            }else{
+            } else {
                 $id = $logsystem->save();
             }
             if ($isRedirect){

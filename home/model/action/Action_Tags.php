@@ -46,9 +46,9 @@ class Action_Tags extends ActionModel
             $tags = $this->model->Tags;
             $id = $tags->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $tags->update();
-            }else{
+            } else {
                 $id = $tags->save();
             }
             if ($isRedirect){

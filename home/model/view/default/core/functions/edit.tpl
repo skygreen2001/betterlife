@@ -1,6 +1,12 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-     <div class="block">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/bower/select2.min.css" />
+    <script type="text/javascript" src="{$template_url}js/bower/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
+    <div class="block">
         <div><h1>{if $functions}编辑{else}新增{/if}功能信息</h1><p><font color="red">{$message|default:''}</font></p></div>
         <form name="functionsForm" method="post"><input type="hidden" name="functions_id" value="{$functions.functions_id}"/>
         <table class="viewdoblock">

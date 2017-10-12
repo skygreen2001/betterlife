@@ -276,7 +276,7 @@ class AutoCodeViewAdmin extends AutoCodeView
             }
             $realId = DataObjectSpec::getRealIDColumnName( $classname );
             if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
-                $isImage = self::columnIsImage( $fieldname, $value );
+                $isImage = self::columnIsImage( $fieldname, $field_comment );
                 $edit_contents .= "                      <div class=\"form-group\">\r\n";
                 if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment . "</label>\r\n".

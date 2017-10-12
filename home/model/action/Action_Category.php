@@ -55,9 +55,9 @@ class Action_Category extends ActionModel
                     $this->view->set("message",$result["msg"]);
                 }
             }
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $category->update();
-            }else{
+            } else {
                 $id = $category->save();
             }
             if ($isRedirect){

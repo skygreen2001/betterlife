@@ -46,9 +46,9 @@ class Action_Admin extends ActionModel
             $admin = $this->model->Admin;
             $id = $admin->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $admin->update();
-            }else{
+            } else {
                 $id = $admin->save();
             }
             if ($isRedirect){
@@ -59,6 +59,8 @@ class Action_Admin extends ActionModel
         $adminId = $this->data["id"];
         $admin = Admin::get_by_id($adminId);
         $this->view->set("admin", $admin);
+        $departments = Department::get("", "department_id asc");
+        $this->view->set("departments", $departments);
     }
     /**
      * 删除系统管理人员

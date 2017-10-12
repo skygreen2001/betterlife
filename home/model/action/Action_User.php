@@ -46,11 +46,15 @@ class Action_User extends ActionModel
             $user = $this->model->User;
             $id = $user->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $user->update();
-            }else{
+            } else {
                 $id = $user->save();
             }
+            $userNotice = $this->data["notice_id"];
+            Usernotice::saveDeleteRelateions( "user_id", $id, "notice_id", $userNotice );
+            $userRole = $this->data["role_id"];
+            Userrole::saveDeleteRelateions( "user_id", $id, "role_id", $userRole );
             if ($isRedirect){
                 $this->redirect("user", "view", "id=$id");
                 exit;

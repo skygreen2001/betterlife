@@ -46,11 +46,13 @@ class Action_Role extends ActionModel
             $role = $this->model->Role;
             $id = $role->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $role->update();
-            }else{
+            } else {
                 $id = $role->save();
             }
+            $roleFunctions = $this->data["functions_id"];
+            Rolefunctions::saveDeleteRelateions( "role_id", $id, "functions_id", $roleFunctions );
             if ($isRedirect){
                 $this->redirect("role", "view", "id=$id");
                 exit;

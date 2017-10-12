@@ -46,9 +46,9 @@ class Action_Functions extends ActionModel
             $functions = $this->model->Functions;
             $id = $functions->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $functions->update();
-            }else{
+            } else {
                 $id = $functions->save();
             }
             if ($isRedirect){

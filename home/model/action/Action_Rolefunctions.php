@@ -46,9 +46,9 @@ class Action_Rolefunctions extends ActionModel
             $rolefunctions = $this->model->Rolefunctions;
             $id = $rolefunctions->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $rolefunctions->update();
-            }else{
+            } else {
                 $id = $rolefunctions->save();
             }
             if ($isRedirect){
@@ -59,6 +59,10 @@ class Action_Rolefunctions extends ActionModel
         $rolefunctionsId = $this->data["id"];
         $rolefunctions = Rolefunctions::get_by_id($rolefunctionsId);
         $this->view->set("rolefunctions", $rolefunctions);
+        $roles = Role::get("", "role_id asc");
+        $this->view->set("roles", $roles);
+        $functionss = Functions::get("", "functions_id asc");
+        $this->view->set("functionss", $functionss);
     }
     /**
      * 删除角色拥有功能

@@ -55,9 +55,9 @@ class Action_Userdetail extends ActionModel
                     $this->view->set("message",$result["msg"]);
                 }
             }
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $userdetail->update();
-            }else{
+            } else {
                 $id = $userdetail->save();
             }
             if ($isRedirect){
@@ -68,6 +68,8 @@ class Action_Userdetail extends ActionModel
         $userdetailId = $this->data["id"];
         $userdetail = Userdetail::get_by_id($userdetailId);
         $this->view->set("userdetail", $userdetail);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
     }
     /**
      * 删除用户详细信息

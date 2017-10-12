@@ -46,9 +46,9 @@ class Action_Department extends ActionModel
             $department = $this->model->Department;
             $id = $department->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $department->update();
-            }else{
+            } else {
                 $id = $department->save();
             }
             if ($isRedirect){

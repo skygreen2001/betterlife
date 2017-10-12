@@ -46,9 +46,9 @@ class Action_Msg extends ActionModel
             $msg = $this->model->Msg;
             $id = $msg->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $msg->update();
-            }else{
+            } else {
                 $id = $msg->save();
             }
             if ($isRedirect){

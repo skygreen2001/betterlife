@@ -431,7 +431,7 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = true; else \$$instancename->$fieldname = false;\r\n";
+                // $editBitContent .= "\r\n";
                 break;
             }
         }

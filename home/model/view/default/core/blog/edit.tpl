@@ -14,35 +14,34 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/bower/select2.min.css" />
     <script type="text/javascript" src="{$template_url}js/bower/select2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
-
     <div class="block">
         <div><h1>{if $blog}编辑{else}新增{/if}博客</h1><p><font color="red">{$message|default:''}</font></p></div>
         <form name="blogForm" method="post" enctype="multipart/form-data"><input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
         <table class="viewdoblock">
             {if $blog}<tr class="entry"><th class="head">标识</th><td class="content">{$blog.blog_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">用户标识</th><td class="content"><input type="text" class="edit" name="user_id" value="{$blog.user_id}"/></td></tr>
+            <tr class="entry">
+                <th class="head">用户</th>
+                <td class="content select">
+                    <select id="user_id" name="user_id" class="form-control">
+                        <option value="-1">请选择</option>
+                        {foreach item=user from=$users}
+                        <option value="{$user.user_id}">{$user.username}</option>
+                        {/foreach}
+                    </select>
+                </td>
+            </tr>
             <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-            <tr class="entry"><th class="head">排序</th><td class="content"><input type="text" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
+            <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
             <tr class="entry">
-              <th class="head">分类编号</th>
-              <td class="content"><input type="text" class="edit" name="category_id" value="{$blog.category_id}"/></td>
-            </tr>
-            <tr class="entry">
-              <th class="head">分类</th>
-              <td class="content select">
-                  <select id="category_id" name="category_id" class="form-control">
-                      <option value="-1">请选择</option>
-                      {foreach item=category from=$categorys}
-                      <option value="{$category.category_id}">{$category.name}</option>
-                      {/foreach}
-                  </select>
-              </td>
-            </tr>
-            <tr class="entry">
-              <th class="head">标签</th>
-              <td class="content select">
-                  <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
-              </td>
+                <th class="head">分类</th>
+                <td class="content select">
+                    <select id="category_id" name="category_id" class="form-control">
+                        <option value="-1">请选择</option>
+                        {foreach item=category from=$categorys}
+                        <option value="{$category.category_id}">{$category.name}</option>
+                        {/foreach}
+                    </select>
+                </td>
             </tr>
             <tr class="entry">
                 <th class="head">封面</th>
@@ -54,15 +53,30 @@
                     </div>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">是否公开</th><td class="content"><input type="text" class="edit" name="isPublic" value="{$blog.isPublic}"/></td></tr>
             <tr class="entry">
-                <th class="head">状态</th>
-                <td class="content"><select id="status" name="status" class="form-control"></select></td>
+                <th class="head">是否公开</th>
+                <td class="content">
+                    <input type="radio" id="isPublic1" name="isPublic" value="1" {if $blog.isPublic} checked {/if} /><label for="isPublic1" class="radio_label">是</label>
+                    <input type="radio" id="isPublic0" name="isPublic" value="0" {if !$blog.isPublic} checked {/if}/><label for="isPublic0" class="radio_label">否</label>
+                </td>
             </tr>
-            <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" class="edit" name="publish_date" value="{$blog.publish_date}"/></td></tr>
-            <tr class="entry"><th class="head">博客内容</th>
+            <tr class="entry">
+                <th class="head">博客内容</th>
                 <td class="content">
                     <textarea id="blog_content" name="blog_content">{$blog.blog_content}</textarea>
+                </td>
+            </tr>
+            <tr class="entry">
+                <th class="head">状态</th>
+                <td class="content select">
+                    <select id="status" name="status" class="form-control"></select>
+                </td>
+            </tr>
+            <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="publish_date" value="{$blog.publish_date}"/></td></tr>
+            <tr class="entry">
+                <th class="head">标签</th>
+                <td class="content select">
+                    <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
                 </td>
             </tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
@@ -81,6 +95,13 @@
     <script type="text/javascript">
     $(function() {
         $.edit.fileBrowser("#icon_url", "#icon_urlTxt", "#icon_urlDiv");
+        var select_user = {};
+        {if $blog.user}
+        select_user.id   = "{$blog.user.user_id}";
+        select_user.text = "{$blog.user.username}";
+        select_user =  new Array(select_user);
+        {/if}
+
         var select_category = {};
         {if $blog.category}
         select_category.id   = "{$blog.category.category_id}";
@@ -104,10 +125,10 @@
         select_status =  new Array(select_status);
         {/if}
 
+        $.edit.select2('#user_id', "", select_user);
         $.edit.select2('#category_id', "", select_category);
         $.edit.select2('#tags_id', "api/web/select/tags.php", select_tags);
-        $.edit.select2("#status", "api/web/data/blogStatus.json", select_status);
-
+        $.edit.select2('#status', "api/web/data/blogStatus.json", select_status);
     });
     </script>
 

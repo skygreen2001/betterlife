@@ -175,9 +175,75 @@ class AutoCodeViewModel extends AutoCodeView
         $appname       = self::$appName;
         $classname     = self::getClassname( $tablename );
         $instancename  = self::getInstancename( $tablename );
-        $fieldNameAndComments = array();
         $text_area_fieldname  = array();
-        $enumColumns          = array();
+
+        $enumJsContent    = "";
+        $belong_has_ones  = array();
+        $rela_m2m_content = "";
+        $rela_js_content  = "";
+        $editMulSelColumn = "";
+        $editM2MSelColumn = "";
+
+        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //从属一对一关系规范定义(如果存在)
+            if ( array_key_exists("belong_has_one", $relationSpec) )
+            {
+                $belong_has_one       = $relationSpec["belong_has_one"];
+                foreach ($belong_has_one as $key => $value) {
+                    $re_realId         = DataObjectSpec::getRealIDColumnName($key);
+                    $classNameField    = self::getShowFieldName( $key );
+                    $relation_content  = "                    <select id=\"$re_realId\" name=\"$re_realId\" class=\"form-control\">\r\n".
+                                         "                        <option value=\"-1\">请选择</option>\r\n".
+                                         "                        {foreach item=$value from=\${$value}s}\r\n".
+                                         "                        <option value=\"{\${$value}.$re_realId}\">{\${$value}.{$classNameField}}</option>\r\n".
+                                         "                        {/foreach}\r\n".
+                                         "                    </select>\r\n";
+                    $rela_js_content .= "        var select_{$value} = {};\r\n".
+                                        "        {if \${$instancename}.{$value}}\r\n".
+                                        "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$re_realId}}\";\r\n".
+                                        "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";\r\n".
+                                        "        select_{$value} =  new Array(select_{$value});\r\n".
+                                        "        {/if}\r\n\r\n";
+                    $belong_has_ones[$re_realId]["i"] = $value;
+                    $belong_has_ones[$re_realId]["c"] = $relation_content;
+
+                }
+            }
+
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many             = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $m2m_table_comment = self::tableCommentKey($talname_rela);
+                    $classNameField    = self::getShowFieldName( $key );
+                    $rela_js_content  .= "        var select_{$instancename_rela} =  new Array({count(\${$instancename}.{$value})});\r\n".
+                                         "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
+                                         "        var $instancename_rela       = {};\r\n".
+                                         "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";\r\n".
+                                         "        $instancename_rela.text      = \"{\$$instancename_rela.$classNameField}\";\r\n".
+                                         "        select_{$instancename_rela}[{\${$instancename_rela}@index}] = $instancename_rela;\r\n".
+                                         "        {/foreach}\r\n\r\n";
+                    $rela_m2m_content .= "            <tr class=\"entry\">\r\n".
+                                         "                <th class=\"head\">$m2m_table_comment</th>\r\n".
+                                         "                <td class=\"content select\">\r\n".
+                                         "                    <select id=\"$realId_m2m\" name=\"{$realId_m2m}[]\" class=\"form-control\" multiple ></select>\r\n".
+                                         "                </td>\r\n".
+                                         "            </tr>\r\n";
+                    $editM2MSelColumn .= "        \$.edit.select2('#$realId_m2m', \"api/web/select/{$instancename_rela}.php\", select_{$instancename_rela});\r\n";
+                }
+            }
+        }
+
+        $edit_contents   = "";
+        $idColumnName    = "id";
+        $hasImgFormFlag  = "";
+        $edit_js_content = "";
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
@@ -189,53 +255,99 @@ class AutoCodeViewModel extends AutoCodeView
             if ( self::columnIsTextArea( $fieldname, $field["Type"] ) )
             {
                 $text_area_fieldname[$fieldname]  = $field_comment;
-            } else {
-                $fieldNameAndComments[$fieldname] = $field_comment;
             }
-            $datatype = self::comment_type( $field["Type"] );
-            if ( $datatype == 'enum' ) {
-                $enumColumns[] = $fieldname;
-            }
-        }
-        $edit_contents  = "";
-        $idColumnName   = "id";
-        $hasImgFormFlag = "";
-        $edit_js_content= "";
-        foreach ($fieldNameAndComments as $key => $value) {
+
             $idColumnName = DataObjectSpec::getRealIDColumnName( $classname );
-            if ( self::isNotColumnKeywork( $key ) ){
-                $isImage = self::columnIsImage( $key, $value );
-                if ( $idColumnName == $key ) {
-                    $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\${$instancename}.$key}</td></tr>{/if}\r\n";
+            if ( self::isNotColumnKeywork( $fieldname ) ){
+                $isImage = self::columnIsImage( $fieldname, $field_comment );
+                $isImage = self::columnIsImage( $fieldname, $field_comment );
+                if ( $idColumnName == $fieldname ) {
+                    $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$fieldname}</td></tr>{/if}\r\n";
+                } else if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
+                    $edit_contents .= "            <tr class=\"entry\">\r\n".
+                                      "                <th class=\"head\">$field_comment</th>\r\n".
+                                      "                <td class=\"content\">\r\n".
+                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\">{\${$instancename}.$fieldname}</textarea>\r\n".
+                                      "                </td>\r\n".
+                                      "            </tr>\r\n";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = " enctype=\"multipart/form-data\"";
                     $edit_contents .= "            <tr class=\"entry\">\r\n".
-                                      "                <th class=\"head\">$value</th>\r\n".
+                                      "                <th class=\"head\">$field_comment</th>\r\n".
                                       "                <td class=\"content\">\r\n".
                                       "                    <div class=\"file-upload-container\">\r\n".
-                                      "                        <input type=\"text\" id=\"{$key}Txt\" readonly=\"readonly\" class=\"file-show-path\" />\r\n".
-                                      "                        <span class=\"btn-file-browser\" id=\"{$key}Div\">浏览 ...</span>\r\n".
-                                      "                        <input type=\"file\" id=\"$key\" name=\"{$key}\" style=\"display:none;\" accept=\"image/*\" />\r\n".
+                                      "                        <input type=\"text\" id=\"{$fieldname}Txt\" readonly=\"readonly\" class=\"file-show-path\" />\r\n".
+                                      "                        <span class=\"btn-file-browser\" id=\"{$fieldname}Div\">浏览 ...</span>\r\n".
+                                      "                        <input type=\"file\" id=\"$fieldname\" name=\"{$fieldname}\" style=\"display:none;\" accept=\"image/*\" />\r\n".
                                       "                    </div>\r\n".
                                       "                </td>\r\n".
                                       "            </tr>\r\n";
                     $edit_js_content= "        \$.edit.fileBrowser(\"#icon_url\", \"#icon_urlTxt\", \"#icon_urlDiv\");\r\n";
+                } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
+                    $field_comment  = str_replace( "标识", "", $field_comment );
+                    $field_comment  = str_replace( "编号", "", $field_comment );
+                    $re_content     = $belong_has_ones[$fieldname]["c"];
+                    $edit_contents .= "            <tr class=\"entry\">\r\n".
+                                      "                <th class=\"head\">$field_comment</th>\r\n".
+                                      "                <td class=\"content select\">\r\n".
+                                      $re_content.
+                                      "                </td>\r\n".
+                                      "            </tr>\r\n";
+                    $editMulSelColumn .= "        \$.edit.select2('#{$fieldname}', \"\", select_" . $belong_has_ones[$fieldname]["i"] . ");\r\n";
                 } else {
-                    $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$key\" value=\"{\${$instancename}.$key}\"/></td></tr>\r\n";
+                    $datatype = self::comment_type( $field["Type"] );
+
+                    switch ($datatype) {
+                        case "bit":
+                          $edit_contents .= "            <tr class=\"entry\">\r\n".
+                                            "                <th class=\"head\">$field_comment</th>\r\n".
+                                            "                <td class=\"content\">\r\n".
+                                            "                    <input type=\"radio\" id=\"{$fieldname}1\" name=\"{$fieldname}\" value=\"1\" {if \${$instancename}.{$fieldname}} checked {/if} /><label for=\"{$fieldname}1\" class=\"radio_label\">是</label>\r\n".
+                                            "                    <input type=\"radio\" id=\"{$fieldname}0\" name=\"{$fieldname}\" value=\"0\" {if !\${$instancename}.{$fieldname}} checked {/if}/><label for=\"{$fieldname}0\" class=\"radio_label\">否</label>\r\n".
+                                            "                </td>\r\n".
+                                            "            </tr>\r\n";
+                          break;
+                        case "date":
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" placeholder=\"yyyy-mm-dd\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          break;
+                        case "enum":
+                          $edit_contents .= "            <tr class=\"entry\">\r\n".
+                                            "                <th class=\"head\">$field_comment</th>\r\n".
+                                            "                <td class=\"content select\">\r\n".
+                                            "                    <select id=\"$fieldname\" name=\"$fieldname\" class=\"form-control\"></select>\r\n".
+                                            "                </td>\r\n".
+                                            "            </tr>\r\n";
+                          $fieldname_u       = $fieldname;
+                          $fieldname_u{0}    = strtoupper($fieldname_u{0});
+                          $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"api/web/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname});\r\n";
+                          break;
+                        case "int":
+                        case "bigint":
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          break;
+                        default:
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          break;
+                    }
+
+                    if ( $datatype == 'enum' ) {
+                        $enumJsContent .= "        var select_{$fieldname} = {};\r\n".
+                                          "        {if \${$instancename}.{$fieldname}}\r\n".
+                                          "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
+                                          "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
+                                          "        select_{$fieldname} =  new Array(select_{$fieldname});\r\n".
+                                          "        {/if}\r\n";
+                    }
                 }
             }
         }
+        $edit_contents .= $rela_m2m_content;
 
         $ueTextareacontents   = "";
         if ( count($text_area_fieldname) >= 1) {
             $ckeditor_prepare = "";
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
-                $edit_contents   .= "            <tr class=\"entry\"><th class=\"head\">$value</th>\r\n".
-                                    "                <td class=\"content\">\r\n".
-                                    "                    <textarea id=\"$key\" name=\"$key\">{\${$instancename}.$key}</textarea>\r\n".
-                                    "                </td>\r\n".
-                                    "            </tr>\r\n";
                 $ckeditor_prepare .= "ckeditor_replace_$key();";
                 $ueEditor_prepare .= "pageInit_ue_$key();";
             }
@@ -256,10 +368,14 @@ EDIT;
     {/if}
 UETC;
         }
+        $edit_js_content .= $rela_js_content . $enumJsContent;
         if ( !empty($edit_js_content) ){
             $edit_js_content= "    <script type=\"text/javascript\">\r\n".
                               "    \$(function() {\r\n".
-                              $edit_js_content.
+                              $edit_js_content . "\r\n".
+                              $editMulSelColumn.
+                              $editM2MSelColumn.
+                              $editEnumColumn.
                               "    });\r\n".
                               "    </script>\r\n";
         }

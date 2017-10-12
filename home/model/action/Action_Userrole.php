@@ -46,9 +46,9 @@ class Action_Userrole extends ActionModel
             $userrole = $this->model->Userrole;
             $id = $userrole->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $userrole->update();
-            }else{
+            } else {
                 $id = $userrole->save();
             }
             if ($isRedirect){
@@ -59,6 +59,10 @@ class Action_Userrole extends ActionModel
         $userroleId = $this->data["id"];
         $userrole = Userrole::get_by_id($userroleId);
         $this->view->set("userrole", $userrole);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
+        $roles = Role::get("", "role_id asc");
+        $this->view->set("roles", $roles);
     }
     /**
      * 删除用户角色

@@ -23,6 +23,12 @@ $contents
 LISTS;
 
 $edit_template = <<<EDIT
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="{\$template_url}resources/css/bower/select2.min.css" />
+    <script type="text/javascript" src="{\$template_url}js/bower/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{\$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if \${$instancename}}编辑{else}新增{/if}{$table_comment}</h1><p><font color="red">{\$message|default:''}</font></p></div>
         <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>

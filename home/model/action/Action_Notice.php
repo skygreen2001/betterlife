@@ -46,9 +46,9 @@ class Action_Notice extends ActionModel
             $notice = $this->model->Notice;
             $id = $notice->getId();
             $isRedirect=true;
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $notice->update();
-            }else{
+            } else {
                 $id = $notice->save();
             }
             if ($isRedirect){

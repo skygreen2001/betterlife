@@ -55,11 +55,13 @@ class Action_Blog extends ActionModel
                     $this->view->set("message",$result["msg"]);
                 }
             }
-            if (!empty($id)){
+            if ( !empty($id) ) {
                 $blog->update();
-            }else{
+            } else {
                 $id = $blog->save();
             }
+            $blogTags = $this->data["tags_id"];
+            Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
             if ($isRedirect){
                 $this->redirect("blog", "view", "id=$id");
                 exit;
@@ -68,6 +70,8 @@ class Action_Blog extends ActionModel
         $blogId = $this->data["id"];
         $blog = Blog::get_by_id($blogId);
         $this->view->set("blog", $blog);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
         $categorys = Category::get("", "category_id asc");
         $this->view->set("categorys", $categorys);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
@@ -83,3 +87,4 @@ class Action_Blog extends ActionModel
         $this->redirect("blog", "lists", $this->data);
     }
 }
+
