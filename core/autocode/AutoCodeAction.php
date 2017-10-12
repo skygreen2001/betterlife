@@ -229,37 +229,10 @@ class AutoCodeAction extends AutoCode
         $editTextareaContent = "";
         $text_area_fieldname = array();
 
-        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
-        {
-            //从属一对一关系规范定义(如果存在)
-            if ( array_key_exists("belong_has_one", $relationSpec) )
-            {
-                $belong_has_one        = $relationSpec["belong_has_one"];
-                foreach ($belong_has_one as $key => $value) {
-                    $realId            = DataObjectSpec::getRealIDColumnName($key);
-                    $relation_content .= "        \${$value}s = {$key}::get(\"\", \"$realId asc\");\r\n".
-                                         "        \$this->view->set(\"{$value}s\", \${$value}s);\r\n";
-                }
-            }
+        $relation_data = self::relationData( $fieldInfo, $classname );
 
-            //多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
-            {
-                $many_many        = $relationSpec["many_many"];
-                foreach ($many_many as $key => $value) {
-                    $realId            = DataObjectSpec::getRealIDColumnName($classname);
-                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
-                    $tablename         = self::getTablename( $classname );
-                    $instancename      = self::getInstancename( $tablename );
-                    $talname_rela      = self::getTablename( $key );
-                    $instancename_rela = self::getInstancename( $talname_rela );
-                    $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];\r\n".
-                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );\r\n";
-                }
-            }
-        }
-
+        $relation_content = $relation_data["relation_content"];
+        $rela_m2m_content = $relation_data["rela_m2m_content"];
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
@@ -287,15 +260,16 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "            if ( !empty(\$id) ) {\r\n".
-                                   "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = true; else \$$instancename->$fieldname = false;\r\n".
-                                   "                \${$instancename}->update();\r\n".
-                                   "            } else {\r\n".
-                                   "                \$id = \${$instancename}->save();\r\n".
-                                   "            }\r\n";
+                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = true; else \$$instancename->$fieldname = false;\r\n";
                 break;
             }
         }
+        $editBitContent = "            if ( !empty(\$id) ) {\r\n".
+                          $editBitContent.
+                          "                \${$instancename}->update();\r\n".
+                          "            } else {\r\n".
+                          "                \$id = \${$instancename}->save();\r\n".
+                          "            }\r\n";
 
         if ( count($text_area_fieldname) == 1 ) {
             $editTextareaContent .= "        \$this->load_onlineditor({$text_area_fieldname[0]});\r\n";
@@ -421,7 +395,6 @@ class AutoCodeAction extends AutoCode
                    "        if ( \$count > 0 ) {\r\n".
                    "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());\r\n".
-                  //  $specialResult.
                    "            \$this->view->set(\"{$instancename}s\", \${$instancename}s);\r\n".
                    "        }\r\n".
                    "    }\r\n";
@@ -430,6 +403,7 @@ class AutoCodeAction extends AutoCode
         $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
         if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
         $result .= $relationFieldTreeRecursive;
+
         $result .= "    /**\r\n".
                    "     * 查看{$table_comment}\r\n".
                    "     */\r\n".
@@ -439,8 +413,36 @@ class AutoCodeAction extends AutoCode
                    "        \${$instancename} = {$classname}::get_by_id(\${$instancename}Id);\r\n".
                   //  $relationField.
                    "        \$this->view->set(\"{$instancename}\", \${$instancename});\r\n".
-                   "    }\r\n".
-                   "    /**\r\n".
+                   "    }\r\n";
+
+
+        $editBitContent = "";
+
+        $rela_m2m_content    = "";
+        $relation_content    = "";
+        $relation_data = self::relationData( $fieldInfo, $classname );
+
+        $relation_content = $relation_data["relation_content"];
+        $rela_m2m_content = $relation_data["rela_m2m_content"];
+
+        foreach ($fieldInfo as $fieldname => $field)
+        {
+            $field_comment = $field["Comment"];
+            $datatype = self::comment_type($field["Type"]);
+            switch ($datatype) {
+              case 'bit':
+                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = true; else \$$instancename->$fieldname = false;\r\n";
+                break;
+            }
+        }
+        $editBitContent = "            if ( !empty(\$id) ) {\r\n".
+                          $editBitContent.
+                          "                \${$instancename}->update();\r\n".
+                          "            } else {\r\n".
+                          "                \$id = \${$instancename}->save();\r\n".
+                          "            }\r\n";
+
+        $result .= "    /**\r\n".
                    "     * 编辑{$table_comment}\r\n".
                    "     */\r\n".
                    "    public function edit()\r\n".
@@ -450,11 +452,8 @@ class AutoCodeAction extends AutoCode
                    "            \$id = \${$instancename}->getId();\r\n".
                    "            \$isRedirect=true;\r\n".
                    self::uploadImgInEdit($instancename,$fieldInfo).
-                   "            if (!empty(\$id)){\r\n".
-                   "                \${$instancename}->update();\r\n".
-                   "            }else{\r\n".
-                   "                \$id = \${$instancename}->save();\r\n".
-                   "            }\r\n".
+                   $editBitContent.
+                   $rela_m2m_content.
                    "            if (\$isRedirect){\r\n".
                    "                \$this->redirect(\"{$instancename}\", \"view\", \"id=\$id\");\r\n".
                    "                exit;\r\n".
@@ -462,7 +461,8 @@ class AutoCodeAction extends AutoCode
                    "        }\r\n".
                    "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                    "        \${$instancename} = {$classname}::get_by_id(\${$instancename}Id);\r\n".
-                   "        \$this->view->set(\"{$instancename}\", \${$instancename});\r\n";
+                   "        \$this->view->set(\"{$instancename}\", \${$instancename});\r\n".
+                   $relation_content;
         $text_area_fieldname = array();
         foreach ($fieldInfo as $fieldname => $field)
         {
@@ -492,6 +492,44 @@ class AutoCodeAction extends AutoCode
         return $result;
     }
 
+    private static function relationData($fieldInfo, $classname) {
+        $relation_content = "";
+        $rela_m2m_content = "";
+        $relation_data    = array();
+        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        {
+            //从属一对一关系规范定义(如果存在)
+            if ( array_key_exists("belong_has_one", $relationSpec) )
+            {
+                $belong_has_one        = $relationSpec["belong_has_one"];
+                foreach ($belong_has_one as $key => $value) {
+                    $realId            = DataObjectSpec::getRealIDColumnName($key);
+                    $relation_content .= "        \${$value}s = {$key}::get(\"\", \"$realId asc\");\r\n".
+                                         "        \$this->view->set(\"{$value}s\", \${$value}s);\r\n";
+                }
+            }
+
+            //多对多关系规范定义(如果存在)
+            if ( array_key_exists("many_many", $relationSpec) )
+            {
+                $many_many        = $relationSpec["many_many"];
+                foreach ($many_many as $key => $value) {
+                    $realId            = DataObjectSpec::getRealIDColumnName($classname);
+                    $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
+                    $tablename         = self::getTablename( $classname );
+                    $instancename      = self::getInstancename( $tablename );
+                    $talname_rela      = self::getTablename( $key );
+                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];\r\n".
+                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );\r\n";
+                }
+            }
+        }
+        $relation_data["relation_content"] = $relation_content;
+        $relation_data["rela_m2m_content"] = $rela_m2m_content;
+        return $relation_data;
+    }
     /**
      * 目录树递归函数:显示父目录[全]
      * 如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
