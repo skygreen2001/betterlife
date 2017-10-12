@@ -31,6 +31,7 @@ class AutoCodePreviewReport extends AutoCode
     public static $js_admin_files      = array();
     public static $json_admin_files    = array();
     public static $api_admin_files     = array();
+    public static $api_select_files    = array();
     public static $manage_service_file = "";
 
     private static $url_base           = "";
@@ -105,6 +106,12 @@ MODEL;
             $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>列表所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
             $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "admin" );
+        }
+
+        if( self::$api_select_files && ( count(self::$api_select_files) > 0 ) ){
+            $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>编辑所需Api Web文件</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+            $moreContent .= self::groupFileContentsStatus( self::$api_select_files, "admin" );
         }
 
         if( Config_AutoCode::ONLY_DOMAIN ){

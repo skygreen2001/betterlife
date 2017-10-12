@@ -121,7 +121,7 @@ class AutoCodeAjax extends AutoCodeView
         }
         return $result;
     }
-    
+
     /**
      * 保存生成的api web代码到指定命名规范的文件中
      * @param string $tablename 表名称
@@ -150,7 +150,7 @@ class AutoCodeAjax extends AutoCodeView
         $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "select" . DS;
         $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
         $relative_path = "api" . DS . "web" . DS . "select" . DS . $filename;
-        AutoCodePreviewReport::$api_admin_files[$classname . $filename] = $relative_path;
+        AutoCodePreviewReport::$api_select_files[$classname . $filename] = $relative_path;
         return self::saveDefineToDir( $dir, $filename, $defineApiSelectFileContent );
     }
 
