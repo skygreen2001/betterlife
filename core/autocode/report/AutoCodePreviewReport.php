@@ -24,16 +24,15 @@ class AutoCodePreviewReport extends AutoCode
     public static $action_model_files  = array();
     public static $action_admin_files  = array();
     public static $service_files       = array();
-    public static $service_bg_files    = array();
     public static $view_front_files    = array();
     public static $view_model_files    = array();
     public static $view_admin_files    = array();
     public static $js_admin_files      = array();
     public static $json_admin_files    = array();
     public static $api_admin_files     = array();
+    public static $admin_layout_menu   = array();
     public static $api_select_files    = array();
     public static $manage_service_file = "";
-
     private static $url_base           = "";
 
     /**
@@ -133,13 +132,6 @@ MODEL;
                 $moreContent .= self::groupFileContentsStatus( self::$service_files, "front" );
             }
 
-            //生成前台管理服务类
-            $title            = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
-            $moreContent     .= str_replace("[title]", $title, $title_model);
-            $manage_file      = self::$manage_service_file;
-            $arr_manage_files = array($service_manage_file);
-            $moreContent     .= self::groupFileContentsStatus( $arr_service_manage_files, "front" );
-
             // 生成前端Action，继承基本Action
             if ( self::$action_front_files&&(count(self::$action_front_files)>0) ) {
                 $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>前端控制器</a>";
@@ -170,6 +162,12 @@ MODEL;
             }
 
             // 生成后台管理表示层页面
+            if( self::$admin_layout_menu && ( count(self::$admin_layout_menu) > 0 ) ){
+                $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>布局菜单页面</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+                $moreContent .= self::groupFileContentsStatus( self::$admin_layout_menu, "admin" );
+            }
+
             if( self::$view_admin_files && ( count(self::$view_admin_files) > 0 ) ){
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);

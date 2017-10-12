@@ -10,6 +10,116 @@
 class AutoCodeViewAdmin extends AutoCodeView
 {
     /**
+     * 后台管理左侧菜单图标<br>
+     * 源自:icomoon
+     */
+    const ADMIN_SIDEBAR_MENU_ICONS = array(
+        "icon-life-ring",
+        "icon-book",
+        "icon-user",
+        "icon-music",
+        "icon-arrow-circle-o-right",
+        "icon-film",
+        "icon-opera",
+        "icon-star",
+        "icon-pencil"
+    );
+    /**
+     * 将表列定义转换成表示层布局菜单文件定义的内容
+     */
+    public static function save_layout()
+    {
+        $group_tables = array();
+        if ( !empty(self::$tableList) ) {
+            foreach (self::$tableList as $tablename) {
+                if ( !contain($tablename, Config_Db::TABLENAME_RELATION . "_") ) {
+                    $group = str_replace(Config_Db::$table_prefix, "", $tablename);
+                    $group = substr($group, 0, strpos($group, "_"));
+                    if ( !empty( $group ) ) {
+                        $group_tables[$group][] = $tablename;
+                    }
+                }
+            }
+            // print_r($group_tables);die();
+        }
+        $sidebar_menus = "";
+        $navbar_menus  = "";
+        $sidebar_ones  = "";
+
+        $groups     = array_keys($group_tables);
+        $icon_count = 0;
+        foreach ($groups as $group) {
+            $tables = $group_tables[$group];
+            if ( $icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS) ) {
+                $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[$icon_count];
+            } else {
+                $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
+            }
+            if ( $group == Config_AutoCode::GROUP_ADMIN_MENU_CORE ) {
+                foreach ($tables as $tablename) {
+                    $table_comment  = self::tableCommentKey( $tablename );
+                    $instancename   = self::getInstancename($tablename);
+                    $sidebar_menus .= "          <li>\r\n".
+                                      "            <a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"$icon_class\"></i> <span>$table_comment</span></a>\r\n".
+                                      "          </li>\r\n";
+                    $navbar_menus  .= "            <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
+                }
+            } else if ( count($tables) == 1 ) {
+                $tablename     = $tables[0];
+                $instancename   = self::getInstancename($tablename);
+                $table_comment  = self::tableCommentKey( $tablename );
+                $sidebar_ones .= "          <li>\r\n".
+                                 "            <a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"$icon_class\"></i> <span>$table_comment</span></a>\r\n".
+                                 "          </li>\r\n";
+            } else {
+                $gts = Config_AutoCode::GROUP_ADMIN_MENU_TEXT;
+                $gvn = $group;
+                if ( array_key_exists($group, $gts) ) $gvn = $gts[$group];
+                $sidebar_menus .= "          <li data-role=\"dropdown\">\r\n".
+                                  "            <a class=\"has-ul\" href=\"#collapse-$group\" aria-expanded=\"false\" aria-controls=\"collapse-$group\"><i class=\"$icon_class\"></i> <span>$gvn</span><i class=\"glyphicon glyphicon-menu-right menu-right\"></i></a>\r\n".
+                                  "            <ul class=\"sub-menu\" id=\"collapse-$group\">\r\n";
+                foreach ($tables as $tablename) {
+                    $instancename   = self::getInstancename($tablename);
+                    $table_comment  = self::tableCommentKey( $tablename );
+                    $sidebar_menus .= "              <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
+                }
+                $sidebar_menus .= "            </ul>\r\n".
+                                  "          </li>\r\n";
+
+                $navbar_menus  .= "            <li class=\"dropdown\">\r\n".
+                                  "              <a href=\"#\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n".
+                                  "                $gvn<span class=\"caret\"></span>\r\n".
+                                  "              </a>\r\n".
+                                  "              <ul class=\"dropdown-menu\" aria-labelledby=\"dLabel\">\r\n";
+
+                foreach ($tables as $tablename) {
+                    $instancename  = self::getInstancename($tablename);
+                    $table_comment = self::tableCommentKey( $tablename );
+                    $navbar_menus .= "                <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
+                }
+                $navbar_menus  .= "              </ul>\r\n".
+                                  "            </li>\r\n";
+            }
+            $icon_count++;
+        }
+
+        $sidebar_menus .= $sidebar_ones;
+        include("template" . DS . "admin.php");
+
+        $dir           = dirname(self::$view_dir_full) . DS . "layout" . DS . "normal" . DS;
+        $filename      = "navbar" . Config_F::SUFFIX_FILE_TPL;
+        $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
+        AutoCodePreviewReport::$admin_layout_menu[$filename] = $relative_path;
+        self::saveDefineToDir( $dir, $filename, $navbar_template );
+
+        $dir           = dirname(self::$view_dir_full) . DS . "layout" . DS . "normal" . DS;
+        $filename      = "sidebar" . Config_F::SUFFIX_FILE_TPL;
+        $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
+        AutoCodePreviewReport::$admin_layout_menu[$filename] = $relative_path;
+        self::saveDefineToDir( $dir, $filename, $sidebar_template );
+    }
+
+    /**
      * 将表列定义转换成表示层js文件定义的内容
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表

@@ -33,19 +33,32 @@ class Config_AutoCode extends ConfigBB
     /**
      * 显示前期报告
      */
-    const SHOW_PREVIEW_REPORT = true;
+    const SHOW_PREVIEW_REPORT   = true;
     /**
      * 显示前台生成报告
      */
-    const SHOW_REPORT_FRONT   = true;
+    const SHOW_REPORT_FRONT     = true;
     /**
      * 显示后台生成报告
      */
-    const SHOW_REPORT_ADMIN  = true;
+    const SHOW_REPORT_ADMIN     = true;
     /**
      * 工程重用为MINI后,只需要生成实体类
      */
-    const ONLY_DOMAIN = false;
-
+    const ONLY_DOMAIN           = false;
+    /**
+     * 后台管理菜单表分组对应菜单组名称
+     */
+    const GROUP_ADMIN_MENU_TEXT = array(
+        // "core" => "核心业务",
+        "user" => "用户管理",
+        "dic"  => "字典管理",
+        "log"  => "日志管理",
+        "msg"  => "消息管理"
+    );
+    /**
+     * 工程核心表分组
+     */
+    const GROUP_ADMIN_MENU_CORE = "core";
 }
 ?>

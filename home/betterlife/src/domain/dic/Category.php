@@ -1,13 +1,13 @@
 <?php
 /**
  +---------------------------------------<br/>
- * 标签<br/>
+ * 博客分类<br/>
  +---------------------------------------
  * @category betterlife
- * @package core
+ * @package dic
  * @author skygreen skygreen2001@gmail.com
  */
-class Tags extends DataObject
+class Category extends DataObject
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
@@ -15,7 +15,7 @@ class Tags extends DataObject
      * @var int
      * @access public
      */
-    public $tags_id;
+    public $category_id;
     /**
      * 序号
      * @var int
@@ -27,7 +27,19 @@ class Tags extends DataObject
      * @var string
      * @access public
      */
-    public $title;
+    public $name;
+    /**
+     * 图标
+     * @var string
+     * @access public
+     */
+    public $icon_url;
+    /**
+     * 说明
+     * @var string
+     * @access public
+     */
+    public $intro;
     /**
      * 状态
      * @var string
@@ -40,13 +52,6 @@ class Tags extends DataObject
      * 一对多关系
      */
     static $has_many=array(
-        "blogtagss"=>"Blogtags"
-    );
-
-    /**
-     * 从属于多对多关系
-     */
-    static $belongs_many_many=array(
         "blogs"=>"Blog"
     );
 

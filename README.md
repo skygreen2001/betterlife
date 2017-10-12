@@ -70,3 +70,6 @@ Betterlife Core with minimize project size from betterlife cms framework.
   > https://github.com/PHPOffice/PHPExcel
 * **安装UEditor**
   > http://ueditor.baidu.com/website/download.html
+
+* **本框架帮助文档**
+  > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html

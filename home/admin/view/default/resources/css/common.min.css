@@ -15354,6 +15354,7 @@ div.dataTables_wrapper div.dataTables_info {
 .select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
   height: 30px;
   line-height: 30px;
+  margin-top: 4px;
 }
 
 .select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__clear {

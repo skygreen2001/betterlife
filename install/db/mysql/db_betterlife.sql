@@ -16,10 +16,10 @@ Date: 2014-04-27 22:31:35
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for bb_core_category
+-- Table structure for bb_dic_category
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_core_category`;
-CREATE TABLE `bb_core_category` (
+DROP TABLE IF EXISTS `bb_dic_category`;
+CREATE TABLE `bb_dic_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `sequence_no` int(11) DEFAULT NULL COMMENT '序号',
   `name` varchar(255) NOT NULL COMMENT '名称',
@@ -33,17 +33,17 @@ CREATE TABLE `bb_core_category` (
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='博客分类';
 
 -- ----------------------------
--- Records of bb_core_category
+-- Records of bb_dic_category
 -- ----------------------------
-INSERT INTO `bb_core_category` VALUES (1, 100, '科技', '', '科技', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (2, 100, '时尚', '', '时尚', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (3, 100, '新闻', '', '新闻', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (4, 100, '体育', '', '体育', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (5, 100, '军事', '', '军事', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (6, 100, '生活', '', '生活', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (7, 100, '音乐', '', '音乐', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (8, 100, '购物', '', '购物', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_category` VALUES (9, 100, '其他', '', '其他', 1, '1331953386', '2017-09-18 15:41:50');
+INSERT INTO `bb_dic_category` VALUES (1, 100, '科技', '', '科技', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (2, 100, '时尚', '', '时尚', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (3, 100, '新闻', '', '新闻', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (4, 100, '体育', '', '体育', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (5, 100, '军事', '', '军事', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (6, 100, '生活', '', '生活', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (7, 100, '音乐', '', '音乐', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (8, 100, '购物', '', '购物', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_category` VALUES (9, 100, '其他', '', '其他', 1, '1331953386', '2017-09-18 15:41:50');
 
 -- ----------------------------
 -- Table structure for `bb_core_blog`
@@ -76,10 +76,10 @@ INSERT INTO `bb_core_blog` VALUES ('4', '1', 'EditArea', 100, 1, '', b'1', 'Edit
 INSERT INTO `bb_core_blog` VALUES ('5', '1', '名校公开课', 100, 1, '', b'1', '来自新浪、搜狐、网易和QQ的名校公开课。', '1', '2017-09-21', '1331953386', '2013-12-26 15:27:05');
 
 -- ----------------------------
--- Table structure for bb_core_tags
+-- Table structure for bb_dic_tags
 -- ----------------------------
-DROP TABLE IF EXISTS `bb_core_tags`;
-CREATE TABLE `bb_core_tags` (
+DROP TABLE IF EXISTS `bb_dic_tags`;
+CREATE TABLE `bb_dic_tags` (
   `tags_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `sequence_no` int(11) DEFAULT NULL COMMENT '序号',
   `title` varchar(255) NOT NULL COMMENT '名称',
@@ -91,17 +91,17 @@ CREATE TABLE `bb_core_tags` (
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='标签';
 
 -- ----------------------------
--- Records of bb_core_category
+-- Records of bb_dic_category
 -- ----------------------------
-INSERT INTO `bb_core_tags` VALUES (1, 100, '科技', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (2, 100, '地图', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (3, 100, 'IT', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (4, 100, 'PHP', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (5, 100, 'Java', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (6, 100, '名校', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (7, 100, '云技术', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (8, 100, '音乐', 1, '1331953386', '2017-09-18 15:42:21');
-INSERT INTO `bb_core_tags` VALUES (9, 100, '时尚', 1, '1331953386', '2017-09-18 15:41:50');
+INSERT INTO `bb_dic_tags` VALUES (1, 100, '科技', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (2, 100, '地图', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (3, 100, 'IT', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (4, 100, 'PHP', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (5, 100, 'Java', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (6, 100, '名校', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (7, 100, '云技术', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (8, 100, '音乐', 1, '1331953386', '2017-09-18 15:42:21');
+INSERT INTO `bb_dic_tags` VALUES (9, 100, '时尚', 1, '1331953386', '2017-09-18 15:41:50');
 
 -- ----------------------------
 -- Table structure for `bb_core_re_blogtags`

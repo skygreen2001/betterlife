@@ -103,7 +103,7 @@ class AutoCodeViewModel extends AutoCodeView
                                     $show_fieldname = $value_r;
                                     if ( $realId != $key ) {
                                         if ( contain( $key, "_id" ) ) {
-                                            $key = str_replace("_id","",$key);
+                                            $key = str_replace("_id", "", $key);
                                         }
                                         $show_fieldname .= "_" . $key;
                                     }
