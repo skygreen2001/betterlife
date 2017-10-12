@@ -133,11 +133,11 @@ class AutoCodeView extends AutoCode
                     $jsName           = self::saveJsDefineToDir( $tablename, $tpl_editContent );
                     self::$showReport.= "生成导出完成:$tablename => $jsName!<br/>";
 
-                    $api_editContent  = AutoCodeViewAdmin::api_web_admin( $tablename, $fieldInfo );
-                    $phpName          = self::saveApiWebDefineToDir( $tablename, $api_editContent );
+                    $api_editContent  = AutoCodeAjax::api_web_admin( $tablename, $fieldInfo );
+                    $phpName          = AutoCodeAjax::saveApiWebDefineToDir( $tablename, $api_editContent );
                     self::$showReport.= "生成导出完成:$tablename => $phpName!<br/>";
 
-                    AutoCodeViewAdmin::save_select_web_admin( $tablename );
+                    AutoCodeAjax::save_select_web_admin( $tablename );
                 }
                 self::$showReport .= "</div><br>";
                 break;
@@ -233,38 +233,6 @@ class AutoCodeView extends AutoCode
                 break;
         }
         return self::saveDefineToDir( $dir, $filename, $defineTplFileContent );
-    }
-
-    /**
-     * 保存生成的api web代码到指定命名规范的文件中
-     * @param string $tablename 表名称
-     * @param string $defineApiWebFileContent 生成的代码
-     */
-    private static function saveApiWebDefineToDir($tablename, $defineApiWebFileContent)
-    {
-        $classname     = self::getClassname( $tablename );
-        $instancename  = self::getInstancename( $tablename );
-        $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "list" . DS;
-        $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
-        $relative_path = "api" . DS . "web" . DS . "list" . DS . $filename;
-        AutoCodePreviewReport::$api_admin_files[$classname . $filename] = $relative_path;
-        return self::saveDefineToDir( $dir, $filename, $defineApiWebFileContent );
-    }
-
-    /**
-     * 保存生成的api select代码到指定命名规范的文件中
-     * @param string $instantceName 对象实例名称
-     * @param string $defineJsFileContent 生成的代码
-     */
-    protected static function saveApiSelectDefineToDir($tablename, $defineApiSelectFileContent)
-    {
-        $classname     = self::getClassname( $tablename );
-        $instancename  = self::getInstancename( $tablename );
-        $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "select" . DS;
-        $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
-        $relative_path = "api" . DS . "web" . DS . "select" . DS . $filename;
-        AutoCodePreviewReport::$api_admin_files[$classname . $filename] = $relative_path;
-        return self::saveDefineToDir( $dir, $filename, $defineApiSelectFileContent );
     }
 
     /**

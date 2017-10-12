@@ -26,10 +26,6 @@ class AutoCodeService extends AutoCode
     */
     public static $service_dir_full;
     /**
-     * 关系列显示发送ajax请求的配置完整的保存路径
-     */
-    public static $ajax_dir_full;
-    /**
      * 服务类生成定义的方式<br/>
      * 1.继承具有标准方法的Service。<br/>
      * 2.生成标准方法的Service。<br/>
@@ -82,8 +78,6 @@ class AutoCodeService extends AutoCode
         }
         self::$showReport .= '</div><br>';
 
-        self::$ajax_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$dir_src . DS . "httpdata" . DS;
-        self::tableToAjaxPhpDefine();
 
         $category  = Gc::$appName;
         $author    = self::$author;
@@ -519,129 +513,6 @@ class AutoCodeService extends AutoCode
         return $result;
     }
 
-    /**
-     * 生成关系列Ajax请求php文件。
-     */
-    public static function tableToAjaxPhpDefine()
-    {
-        $isNeedCreate=false;
-        if (is_array(self::$relation_viewfield)&&(count(self::$relation_viewfield)>0)) {
-            foreach (self::$relation_viewfield as $relation_viewfield) {
-                foreach ($relation_viewfield as $showClasses) {
-                    foreach ($showClasses as $key=>$value) {
-                        $fieldInfo=self::$fieldInfos[self::getTablename($key)];
-                        $key{0}=strtolower($key{0});
-                        $filename =$key.Config_F::SUFFIX_FILE_PHP;
-                        if (!file_exists(self::$ajax_dir_full.$filename)){
-                            $isNeedCreate=true;
-                            break 3;
-                        }
-                        if (array_key_exists("parent_id",$fieldInfo)){
-                            $filename =$key."Tree".Config_F::SUFFIX_FILE_PHP;
-                            if (!file_exists(self::$ajax_dir_full.$filename)){
-                                $isNeedCreate=true;
-                                break 3;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($isNeedCreate){
-            self::$showReport .= "<br />";
-            self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_23");
-            self::$showReport .= "<font color='#237319'>生成关系列Ajax请求php文件↓</font></a>";
-            self::$showReport .= '<div id="Content_23" style="display:none;">';
-            $link_view_ext_dir_href = "file:///".str_replace("\\", "/", self::$ajax_dir_full);
-            self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_view_ext_dir_href."'>".self::$ajax_dir_full."</a></font><br/><br/>";
-
-            foreach (self::$relation_viewfield as $relation_viewfield) {
-                foreach ($relation_viewfield as $key => $showClasses) {
-                    foreach ($showClasses as $key => $value) {
-                        $key_i     = $key;
-                        $key_i{0}  = strtolower($key_i{0});
-                        $classname = $key;
-                        $tablename = self::getTablename($key);
-                        $fieldInfo = self::$fieldInfos[self::getTablename($key)];
-                        if ( array_key_exists("parent_id",$fieldInfo) ) {
-                            $filename = $key_i."Tree".Config_F::SUFFIX_FILE_PHP;
-                            if ( !file_exists(self::$ajax_dir_full.$filename) ) {
-                                $realId   = DataObjectSpec::getRealIDColumnName( $classname );
-                                $showname = self::getShowFieldName( $key );
-                                $result   =  "<?php \r\n".
-                                             "require_once (\"../../../../init.php\");\r\n".
-                                             "\$node=intval(\$_REQUEST[\"id\"]);\r\n".
-                                             "if (\$node){\r\n".
-                                             "  \$condition=array(\"parent_id\"=>\"\$node\");\r\n".
-                                             "}else{\r\n".
-                                             "  \$condition=array(\"parent_id\"=>'0');\r\n".
-                                             "}\r\n".
-                                             "\${$key_i}s={$key}::get(\$condition,\"$realId asc\");\r\n".
-                                             "echo \"[\";\r\n".
-                                             "if (!empty(\${$key_i}s)){\r\n".
-                                             "  \$trees=\"\";\r\n".
-                                             "  \$maxLevel={$key}::maxlevel();\r\n".
-                                             "  foreach (\${$key_i}s as \${$key_i}){\r\n".
-                                             "      \$trees.=\"{\r\n".
-                                             "          'text': '\${$key_i}->{$showname}',\r\n".
-                                             "          'id': '\${$key_i}->$realId',\r\n".
-                                             "          'level':'\${$key_i}->level',\";\r\n".
-                                             "      if (\${$key_i}->level==\$maxLevel){\r\n".
-                                             "          \$trees.=\"'leaf':true,'cls': 'file'\";\r\n".
-                                             "      }else{\r\n".
-                                             "          \$trees.=\"'cls': 'folder'\";\r\n".
-                                             "      }\r\n".
-                                             "      if (isset(\${$key_i}->countChild)){\r\n".
-                                             "          if (\${$key_i}->countChild==0){\r\n".
-                                             "              \$trees.=\",'leaf':true\";\r\n".
-                                             "          }\r\n".
-                                             "      }\r\n".
-                                             "      \$trees.=\"},\";\r\n".
-                                             "  }\r\n".
-                                             "  \$trees=substr(\$trees, 0, strlen(\$trees)-1);\r\n".
-                                             "  echo \$trees;\r\n".
-                                             "}\r\n".
-                                             "echo \"]\";\r\n\r\n";
-                                $ajaxName          = self::saveoAjaxPhpDefineToDir($tablename,$filename,$result);
-                                self::$showReport .= "生成导出Ajax目录树服务类PHP文件完成:$tablename=>$ajaxName".Config_F::SUFFIX_FILE_PHP."!<br/>";
-                            }
-                        }
-
-                        $classname{0} = strtolower($classname{0});
-                        $filename     = $classname.Config_F::SUFFIX_FILE_PHP;
-                        if ( !file_exists(self::$ajax_dir_full . $filename) ) {
-                            $result   = "<?php \r\n".
-                                        "require_once (\"../../../../init.php\");\r\n".
-                                        "\$pageSize=15;\r\n".
-                                        "\${$value} = !empty(\$_REQUEST['query'])&&(\$_REQUEST['query']!=\"?\")&&(\$_REQUEST['query']!=\"？\") ? trim(\$_REQUEST['query']) : \"\";\r\n".
-                                        "\$condition=array();\r\n".
-                                        "if (!empty(\${$value})){\r\n".
-                                        "  \$condition[\"{$value}\"]=\" like '%\${$value}%'\";\r\n".
-                                        "}\r\n".
-                                        "\$start=0;\r\n".
-                                        "if (isset(\$_REQUEST['start'])){\r\n".
-                                        "  \$start=\$_REQUEST['start']+1;\r\n".
-                                        "}\r\n".
-                                        "\$limit=\$pageSize;\r\n".
-                                        "if (isset(\$_REQUEST['limit'])){\r\n".
-                                        "  \$limit=\$_REQUEST['limit'];\r\n".
-                                        "  \$limit= \$start+\$limit-1;\r\n".
-                                        "}\r\n".
-                                        "\$arr['totalCount']= {$key}::count(\$condition);\r\n".
-                                        "\$arr['{$key_i}s']    = {$key}::queryPage(\$start,\$limit,\$condition);\r\n".
-                                        "echo json_encode(\$arr);\r\n\r\n";
-                            $key{0}   = strtolower($key{0});
-                            $filename = $key.Config_F::SUFFIX_FILE_PHP;
-                            $ajaxName = self::saveoAjaxPhpDefineToDir($tablename,$filename,$result);
-                            self::$showReport .= "生成导出Ajax服务类PHP文件完成:$tablename=>$ajaxName".Config_F::SUFFIX_FILE_PHP."!<br/>";
-                        }
-                    }
-                }
-            }
-            self::$showReport .= '</div>';
-        }
-    }
 
     /**
      * 数据对象冗余字段在服务端通过关联查询获取，界面不再提供输入
@@ -933,19 +804,5 @@ class AutoCodeService extends AutoCode
         $classname        = self::getClassname( $tablename );
         AutoCodePreviewReport::$service_files[$classname] = $relative_path;
         return self::saveDefineToDir( $service_dir_full, $filename, $definePhpFileContent );
-    }
-
-    /**
-     * 保存生成的Ajax服务代码到指定命名规范的文件中
-     * @param string $tablename 表名称
-     * @param string $defineAjaxPhpFileContent 生成的代码
-     */
-    private static function saveoAjaxPhpDefineToDir($tablename, $filename, $defineAjaxPhpFileContent)
-    {
-        $dir       = self::$ajax_dir_full;
-        $classname = self::getClassname($tablename);
-        $relative_path = str_replace(self::$save_dir, "", $dir.$filename);
-        AutoCodePreviewReport::$bg_ajax_php_files[$classname] = $relative_path;
-        return self::saveDefineToDir( $dir, $filename, $defineAjaxPhpFileContent );
     }
 }

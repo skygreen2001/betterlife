@@ -31,7 +31,6 @@ class AutoCodePreviewReport extends AutoCode
     public static $js_admin_files      = array();
     public static $json_admin_files    = array();
     public static $api_admin_files     = array();
-    public static $bg_ajax_php_files   = array();
     public static $manage_service_file = "";
 
     private static $url_base           = "";
@@ -92,16 +91,25 @@ MODEL;
             $moreContent .= self::groupFileContentsStatus( self::$enum_files, "domain", true );
         }
 
+        $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>Ajax请求数据<Domain|Model></a>";
+        $moreContent .= str_replace("[title]", $title, $module_model);
+        $moreContent  = str_replace("[module_name]", "domain", $moreContent);
+
+        if( self::$json_admin_files && ( count(self::$json_admin_files) > 0 ) ){
+            $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>枚举所需数据Json文件</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+            $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "admin" );
+        }
+
+        if( self::$api_admin_files && ( count(self::$api_admin_files) > 0 ) ){
+            $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>列表所需Api Web文件</a>";
+            $moreContent .= str_replace("[title]", $title, $title_model);
+            $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "admin" );
+        }
+
         if( Config_AutoCode::ONLY_DOMAIN ){
             $showResult = self::modelShowDetailReport( $table_names, $moreContent );
             return $showResult;
-        }
-
-        //[后台]生成Ajax请求php文件:
-        if( self::$bg_ajax_php_files && ( count(self::$bg_ajax_php_files) > 0 ) ) {
-            $title        = "<a href='$layer_autocode/view/db_view_ext.php' target='_blank'>Ajax请求php文件</a>";
-            $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$bg_ajax_php_files, "bg", true );
         }
 
         if (Config_AutoCode::SHOW_REPORT_FRONT)
@@ -167,17 +175,6 @@ MODEL;
                 $moreContent .= self::groupFileContentsStatus( self::$js_admin_files, "admin" );
             }
 
-            if( self::$json_admin_files && ( count(self::$json_admin_files) > 0 ) ){
-                $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>枚举所需数据Json文件</a>";
-                $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "admin" );
-            }
-
-            if( self::$api_admin_files && ( count(self::$api_admin_files) > 0 ) ){
-                $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>列表所需Api Web文件</a>";
-                $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "admin" );
-            }
         }
 
         $model_module = Gc::$nav_root_path . Gc::$module_root . DS . self::$m_model . DS;

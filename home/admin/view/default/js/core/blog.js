@@ -125,7 +125,7 @@ $(function(){
         $.edit.datetimePicker('#publish_date');
         $.edit.select2('#category_id', "", select_category);
         $.edit.select2('#tags_id', "api/web/select/tags.php", select_tags);
-        $.edit.select2("#status", "home/admin/data/blogStatus.json", select_status);
+        $.edit.select2("#status", "api/web/data/blogStatus.json", select_status);
 
         $("input[name='isPublic']").bootstrapSwitch();
 
