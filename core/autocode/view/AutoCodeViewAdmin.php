@@ -191,7 +191,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
-                    $editImgColumn .= "        $.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");";
+                    $editImgColumn .= "        $.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");\r\n";
                     $altImgVal      = $classNameField;
                     if ( empty($altImgVal) ) $altImgVal = $realId;
                     include("template" . DS . "admin.php");
@@ -416,7 +416,10 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                          </div>\r\n";
                 } else {
                     $datatype = self::comment_type($field["Type"]);
-                    if ( in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN) ) continue;
+                    if ( in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN) ) {
+                        $edit_contents .= "                      </div>\r\n";
+                        continue;
+                    }
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n";
