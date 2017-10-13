@@ -36,7 +36,7 @@
             <li data-role="dropdown">
               <a class="has-ul" href="#collapse-art" aria-expanded="false" aria-controls="collapse-art"><i class="icon-music"></i> <span>艺术类</span><i class="glyphicon glyphicon-menu-right menu-right"></i></a>
               <ul class="sub-menu" id="collapse-art">
-                <li><a href="{$url_base}index.php?go=admin.comment.lists"><span>生活</span></a></li>
+                <li><a href="http://www.pengfu.com/" target="_blank"><span>生活</span></a></li>
                 <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
                 <li><a href="http://www.iqiyi.com/" target="_blank">电影</a></li>
                 <li><a href="https://www.douban.com/" target="_blank">文学</a></li>

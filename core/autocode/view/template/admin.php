@@ -199,10 +199,10 @@ JS;
 $js_sub_template_img = <<<JS_IMG
                 {"orderable": false, "targets": $row_no,
                  "render"   : function(data, type, row) {
-                    // 该图片仅供测试
+                    var result = "";
                     if ( data ) {
                         var $realId = row.$realId;
-                        var result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$altImgVal + '" /></a>';
+                        result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$altImgVal + '" /></a>';
 
                         \$("body").off('click', 'a#imgUrl' + $realId);
                         \$("body").on('click', 'a#imgUrl' + $realId, function(){

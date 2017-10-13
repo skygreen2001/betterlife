@@ -296,7 +296,7 @@ class AutoCodeViewModel extends AutoCodeView
                     $editMulSelColumn .= "        \$.edit.select2('#{$fieldname}', \"\", select_" . $belong_has_ones[$fieldname]["i"] . ");\r\n";
                 } else {
                     $datatype = self::comment_type( $field["Type"] );
-
+                    if ( in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN) ) continue;
                     switch ($datatype) {
                         case "bit":
                           $edit_contents .= "            <tr class=\"entry\">\r\n".
@@ -323,7 +323,7 @@ class AutoCodeViewModel extends AutoCodeView
                           break;
                         case "int":
                         case "bigint":
-                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:100}\"/></td></tr>\r\n";
                           break;
                         default:
                           $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";

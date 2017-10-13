@@ -307,12 +307,12 @@ class AutoCodeAction extends AutoCode
                   $editBitContent.
                   $rela_m2m_content.
                   "            if ( \$isRedirect ) {\r\n".
-                  "                \$this->redirect(\"$$instancename\", \"view\", \"id = \$id\");\r\n".
+                  "                \$this->redirect(\"$instancename\", \"view\", \"id=\$id\");\r\n".
                   "                exit;\r\n".
                   "            }\r\n".
                   "        }\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \$$instancename   = $classname::get_by_id(\${$$instancename}Id);\r\n".
+                  "        \$$instancename   = $classname::get_by_id(\${$instancename}Id);\r\n".
                   "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
                   $relation_content.
                   $editTextareaContent.

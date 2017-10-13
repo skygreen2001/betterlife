@@ -416,6 +416,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                          </div>\r\n";
                 } else {
                     $datatype = self::comment_type($field["Type"]);
+                    if ( in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN) ) continue;
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n";
@@ -442,7 +443,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                           break;
                         case "int":
                         case "bigint":
-                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "|default:100}\"/>\r\n";
                           break;
                         default:
                           $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
