@@ -21,12 +21,12 @@ class Action_Admin extends ActionModel
         }
         $count = Admin::count();
         $this->view->countAdmins = $count;
-        $this->view->set("admins", NULL);
+        $admins = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $admins = Admin::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("admins", $admins);
         }
+        $this->view->set("admins", $admins);
     }
     /**
      * 查看系统管理人员

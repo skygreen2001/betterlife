@@ -1,7 +1,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle  collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only"></span>
             <i class="glyphicon glyphicon-briefcase"></i>
           </button>

@@ -391,12 +391,12 @@ class AutoCodeAction extends AutoCode
                    "        }\r\n".
                    "        \$count = {$classname}::count();\r\n".
                    "        \$this->view->count{$classname}s = \$count;\r\n".
-                   "        \$this->view->set(\"{$instancename}s\", NULL);\r\n".
+                   "        \${$instancename}s = null;\r\n".
                    "        if ( \$count > 0 ) {\r\n".
                    "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());\r\n".
-                   "            \$this->view->set(\"{$instancename}s\", \${$instancename}s);\r\n".
                    "        }\r\n".
+                   "        \$this->view->set(\"{$instancename}s\", \${$instancename}s);\r\n".
                    "    }\r\n";
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]

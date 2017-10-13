@@ -21,12 +21,12 @@ class Action_Category extends ActionModel
         }
         $count = Category::count();
         $this->view->countCategorys = $count;
-        $this->view->set("categorys", NULL);
+        $categorys = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $categorys = Category::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("categorys", $categorys);
         }
+        $this->view->set("categorys", $categorys);
     }
     /**
      * 查看博客分类

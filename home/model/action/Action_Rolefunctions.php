@@ -21,12 +21,12 @@ class Action_Rolefunctions extends ActionModel
         }
         $count = Rolefunctions::count();
         $this->view->countRolefunctionss = $count;
-        $this->view->set("rolefunctionss", NULL);
+        $rolefunctionss = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $rolefunctionss = Rolefunctions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("rolefunctionss", $rolefunctionss);
         }
+        $this->view->set("rolefunctionss", $rolefunctionss);
     }
     /**
      * 查看角色拥有功能

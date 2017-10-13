@@ -21,12 +21,12 @@ class Action_Loguser extends ActionModel
         }
         $count = Loguser::count();
         $this->view->countLogusers = $count;
-        $this->view->set("logusers", NULL);
+        $logusers = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("logusers", $logusers);
         }
+        $this->view->set("logusers", $logusers);
     }
     /**
      * 查看用户日志

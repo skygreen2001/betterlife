@@ -21,12 +21,12 @@ class Action_Department extends ActionModel
         }
         $count = Department::count();
         $this->view->countDepartments = $count;
-        $this->view->set("departments", NULL);
+        $departments = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $departments = Department::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("departments", $departments);
         }
+        $this->view->set("departments", $departments);
     }
     /**
      * 查看用户所属部门

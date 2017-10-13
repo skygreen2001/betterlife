@@ -21,12 +21,12 @@ class Action_Role extends ActionModel
         }
         $count = Role::count();
         $this->view->countRoles = $count;
-        $this->view->set("roles", NULL);
+        $roles = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $roles = Role::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("roles", $roles);
         }
+        $this->view->set("roles", $roles);
     }
     /**
      * 查看角色

@@ -3,11 +3,11 @@
     <div><h1>这是首页列表(共计数据对象19个)</h1></div>
     <table class="viewdoblock" style="width: 500px;">
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.blog.lists">博客</a></td></tr>
-        <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.category.lists">博客分类</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.comment.lists">评论</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.blogtags.lists">博客标签</a></td></tr>
-        <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.tags.lists">标签</a></td></tr>
+        <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.category.lists">博客分类</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.region.lists">地区</a></td></tr>
+        <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.tags.lists">标签</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.logsystem.lists">系统日志</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.loguser.lists">用户日志</a></td></tr>
         <tr class="entry"><td class="content"><a href="{$url_base}index.php?go=model.msg.lists">消息</a></td></tr>

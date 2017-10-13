@@ -21,12 +21,12 @@ class Action_Logsystem extends ActionModel
         }
         $count = Logsystem::count();
         $this->view->countLogsystems = $count;
-        $this->view->set("logsystems", NULL);
+        $logsystems = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $logsystems = Logsystem::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("logsystems", $logsystems);
         }
+        $this->view->set("logsystems", $logsystems);
     }
     /**
      * 查看系统日志

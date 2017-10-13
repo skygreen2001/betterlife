@@ -21,12 +21,12 @@ class Action_User extends ActionModel
         }
         $count = User::count();
         $this->view->countUsers = $count;
-        $this->view->set("users", NULL);
+        $users = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $users = User::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("users", $users);
         }
+        $this->view->set("users", $users);
     }
     /**
      * 查看用户

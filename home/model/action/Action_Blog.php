@@ -21,12 +21,12 @@ class Action_Blog extends ActionModel
         }
         $count = Blog::count();
         $this->view->countBlogs = $count;
-        $this->view->set("blogs", NULL);
+        $blogs = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $blogs = Blog::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("blogs", $blogs);
         }
+        $this->view->set("blogs", $blogs);
     }
     /**
      * 查看博客

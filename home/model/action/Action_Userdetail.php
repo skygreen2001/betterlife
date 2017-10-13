@@ -21,12 +21,12 @@ class Action_Userdetail extends ActionModel
         }
         $count = Userdetail::count();
         $this->view->countUserdetails = $count;
-        $this->view->set("userdetails", NULL);
+        $userdetails = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $userdetails = Userdetail::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("userdetails", $userdetails);
         }
+        $this->view->set("userdetails", $userdetails);
     }
     /**
      * 查看用户详细信息

@@ -21,12 +21,12 @@ class Action_Region extends ActionModel
         }
         $count = Region::count();
         $this->view->countRegions = $count;
-        $this->view->set("regions", NULL);
+        $regions = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
             $regions = Region::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
-            $this->view->set("regions", $regions);
         }
+        $this->view->set("regions", $regions);
     }
 
     /**
