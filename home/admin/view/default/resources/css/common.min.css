@@ -13996,6 +13996,12 @@ body.login .login-container main .content-wrapper .content .login-form .has-feed
   border: 1px solid #77cc6d;
 }
 
+body.login .login-container main .content-wrapper .content .login-form .has-feedback-left .message {
+  color: #c52121;
+  text-align: center;
+  margin-top: 10px;
+}
+
 body.login .login-container main .content-wrapper .content .login-form .form-control-feedback {
   position: absolute;
   top: 0;

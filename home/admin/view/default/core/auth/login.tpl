@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="col-sm-6 text-right">
-                      <a href="index.html">忘记密码? </a>
+                      <a href="#">忘记密码? </a>
                     </div>
                   </div>
                 </div>

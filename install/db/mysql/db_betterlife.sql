@@ -3690,6 +3690,7 @@ CREATE TABLE `bb_user_admin` (
 -- Records of bb_user_admin
 -- ----------------------------
 INSERT INTO `bb_user_admin` VALUES ('1', '1', 'admin', 'admin', 'admin', '0', '1', '0', '1334818587', '2013-12-26 14:56:44');
+INSERT INTO `bb_user_admin` VALUES ('2', '1', 'skygreen', 'pupu', 'iloveu', '0', '1', '0', '1334818587', '2013-12-26 14:56:44');
 
 -- ----------------------------
 -- Table structure for `bb_user_department`
