@@ -1,0 +1,183 @@
+/************************* bb:start ************************/
+
+input {
+    border:1px solid #fff;
+    width:200px;
+    height:28px;
+    line-height:28px;
+    background:gray;
+    color:#fff;
+    background-color:gray;
+    padding-left: 10px;
+    outline: none;
+}
+input[type='radio']{
+    width: 16px;
+}
+.viewdoblock .edit {
+    border-radius: 6px;
+    padding-left: 10px;
+    margin-left: -10px;
+    font-size: 13px;
+    width: 100%;
+    height: 36px;
+}
+.viewdoblock .radio_label{
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 0px;
+    margin-right: 10px;
+    margin: -8px 10px 6px 0;
+    width: 10px;
+    height: 20px;
+}
+
+.viewdoblock .content > .edui-default{
+    margin-left: -8px;
+}
+
+.viewdoblock .file-upload-container{
+    width: 100%;
+}
+
+.viewdoblock .file-show-path{
+    display: table-cell;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 78%;
+    margin-left: -10px;
+    margin-bottom: 0;
+    background-color: #eee;
+    opacity: 1;
+    height: 36px;
+    line-height: 20px;
+    padding: 1px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.viewdoblock .btn-file-browser{
+    width: 22%;
+    background: #4caf50;
+    border: 1px solid #4caf50;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 1px 16px;
+    font-weight: 400;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+    border-collapse: separate;
+}
+
+
+
+form .viewdoblock .entry .content.select{
+    padding-left: 6%;
+}
+
+@media (max-width: 800px){
+    .viewdoblock .head{
+        width: 12% !important;
+        min-width: 75px !important;
+    }
+    .viewdoblock .file-show-path{
+        width: 95%;
+    }
+    .viewdoblock .btn-file-browser{
+        width: 92%;
+        float: left;
+        margin-left: -10px;
+        margin-top: 10px;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1024px){
+    .viewdoblock .file-show-path{
+        width: 73%;
+    }
+}
+
+.btnSubmit{
+    margin-top: 15px;
+    width: 126px;
+    height: 38px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: lighter;
+    background-color: #77cc6d;
+    border: 1px solid;
+    border-color: #fff;
+    border-radius: 6px;
+}
+
+.btnSubmit:hover {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #77cc6d;
+}
+
+form .viewdoblock .entry .content {
+    padding: 6px 6% 6px 7%;
+}
+
+/************************* bb:end ************************/
+/************************* select2:start ************************/
+.select2-container {
+  width: 100% !important;
+  z-index: 10000;
+  /*margin-left: -10px;*/
+}
+
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple {
+  outline: none;
+  height: 36px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered,
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  line-height: 36px;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  margin-top: 3px;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow,
+.select2-container .select2-selection--multiple .select2-selection__arrow {
+  height: 36px;
+}
+
+.select2-container .select2-selection--multiple {
+  height: 40px;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  height: 30px;
+  line-height: 30px;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__clear {
+  margin-top: 2px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: 1px solid #4caf50 !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+  background-color: #4caf50;
+}
+/************************* select2:end ************************/
