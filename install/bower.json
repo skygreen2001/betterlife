@@ -4,8 +4,7 @@
   "private": true,
   "directory": "misc/js",
   "dependencies": {
-    "jquery": "1.11.1",
-
+    "jquery": "^3.1.1",
     "ueditor": "v1.4.3.3",
     "ckeditor": "#full/4.5.x"
   }
