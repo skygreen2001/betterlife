@@ -1,99 +1,42 @@
-/* jshint node: true, strict: true */
 'use strict';
 
 /*=====================================
 =        Default Configuration        =
 =====================================*/
-
-// Please use config.js to override these selectively:
-
 var config = {
-  dest: '../bin',
-  clean: {
-    template_cache_dir: "../home/**/tmp/templates_c/**",
-    mac_ignore_file: "../**/.DS_Store"
+  dest   : '../bin',
+  ueditor: {
+    src  : 'bower_components/ueditor/',
+    dist : 'bower_components/ueditor/dist/utf8-php',
+    dest : '../misc/js/onlineditor/'
+  },
+  clean  : {
+    template_cache_dir: '../home/**/tmp/templates_c/**',
+    mac_ignore_file   : '../**/.DS_Store'
   }
 };
-
-if (require('fs').existsSync('../config.js')) {
-  var configFn = require('../config');
-  configFn(config);
-}
 /*-----  End of Configuration  ------*/
-
 
 /*========================================
 =            Requiring stuffs            =
 ========================================*/
 
-var gulp           = require('gulp'),
-
-    bower          = require('gulp-bower'),
-    composer       = require('gulp-composer'),
-
-    seq            = require('run-sequence'),
-    connect        = require('gulp-connect'),
-    less           = require('gulp-less'),
-    uglify         = require('gulp-uglify'),
-    sourcemaps     = require('gulp-sourcemaps'),
-    cssmin         = require('gulp-cssmin'),
-    order          = require('gulp-order'),
-    concat         = require('gulp-concat'),
-    ignore         = require('gulp-ignore'),
-    clean         = require('gulp-clean'),
-    mobilizer      = require('gulp-mobilizer'),
-    replace        = require('gulp-replace'),
-    streamqueue    = require('streamqueue'),
-    rename         = require('gulp-rename'),
-    path           = require('path');
-
-
-/*================================================
-=            Report Errors to Console            =
-================================================*/
-
-gulp.on('error', function(e) {
-  throw(e);
-});
-
-/*=========================================
-=          Build            =
-=========================================*/
-
-gulp.task('build', function (cb) {
-
-});
-
-
-/*=========================================
-=         Setup Composer Library          =
-=========================================*/
-// 可在install下的composer.json里配置安装的路径
-// {
-//     "config": {
-//         "vendor-dir": "../vendor"
-//     }
-// }
-gulp.task('composer', function (cb) {
-  return composer({
-    'self-install': false,
-    'no-ansi'     : true,
-    'working-dir' : '../install'
-  });
-});
-
+var gulp   = require('gulp'),
+    run    = require('gulp-run'),
+    bower  = require('gulp-bower'),
+    seq    = require('run-sequence'),
+    ignore = require('gulp-ignore'),
+    clean  = require('gulp-clean'),
+    rename = require('gulp-rename'),
+    path   = require('path');
 
 /*=========================================
 =          Setup Bower Library            =
 =========================================*/
 
 gulp.task('bower', function (cb) {
-  return bower({
-    directory: '../install/bower_components',
-    cwd: '../install'
-  });
+  return bower();
 });
-
 
 /*=========================================
 =            Clean dest folder            =
@@ -108,19 +51,69 @@ gulp.task('clean', function (cb) {
 });
 
 /*======================================
-=            Install Sequence          =
+=            Install ueditor           =
+======================================*/
+
+gulp.task('ueditor_cp', ['ueditor_bak'], function() {
+  // console.log('ueditor work!');
+  // 复制粘贴 install/bower_components/ueditor/dist -> misc/js/onlineditor/ueditor 目录下
+  gulp.src(config.ueditor.dist + '/**/*')
+      .pipe(gulp.dest(path.join(config.ueditor.dest, "ueditor")));
+});
+
+gulp.task('ueditor', function() {
+  // console.log('ueditor_end work!');
+  // 复制粘贴 misc/js/onlineditor/ueditor_bak -> misc/js/onlineditor/ueditor 即可.
+  gulp.src(config.ueditor.dest + '/ueditor_bak/**/*')
+      .pipe(gulp.dest(path.join(config.ueditor.dest, "ueditor")));
+});
+
+gulp.task('ueditor_bak', function() {
+  // console.log('ueditor_bak work!');
+  // // 先备份misc/js/onlineditor/ueditor 目录下的文件 到 misc/js/onlineditor/ueditor_bak 下
+  // gulp.src(config.ueditor.dest + '/ueditor/**/*')
+  //     .pipe(gulp.dest(path.join(config.ueditor.dest, 'ueditor_bak')));
+});
+
+//编译ueditor库
+gulp.task('ueditor_grunt', function() {
+  // console.log('ueditor_grunt work!');
+  new run.Command('sudo npm install', {
+    cwd: config.ueditor.src
+  }).exec();
+
+  new run.Command('sudo npm install -g grunt', {
+    cwd: config.ueditor.src
+  }).exec();
+
+  new run.Command('sudo grunt default', {
+    cwd: config.ueditor.src
+  }).exec();
+
+});
+
+/*======================================
+=           Install Js Library         =
 ======================================*/
 
 gulp.task('install', function(done) {
   var tasks = ['bower'];
-  seq('composer', tasks, done);
+  seq(tasks, done);
 });
 
+
+/*=========================================
+=          Build            =
+=========================================*/
+
+gulp.task('build', function (done) {
+  seq('ueditor_grunt', done);
+});
 
 /*====================================
 =            Default Task            =
 ====================================*/
-gulp.task('default', ['clean'], function(done){
+gulp.task('default', function(done){ // ['clean'],
   var tasks = [];
   tasks.push('build');
   seq('install', tasks, done);

@@ -94,7 +94,7 @@ class Project_Refactor
      */
     public static $ignore_files  = array(
         ".DS_Store",
-        ".gitignore",
+        // ".gitignore",
         ".project",
     );
 
@@ -223,60 +223,61 @@ class Project_Refactor
      */
     public static function Run()
     {
-        if(isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"])) self::$save_dir = $_REQUEST["save_dir"];
-        if(isset($_REQUEST["pj_name_cn"])&&!empty($_REQUEST["pj_name_cn"]))
+        if ( isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) ) self::$save_dir = $_REQUEST["save_dir"];
+        if ( isset($_REQUEST["pj_name_cn"]) && !empty($_REQUEST["pj_name_cn"]) )
         {
-            self::$pj_name_cn=$_REQUEST["pj_name_cn"];
-        }else{
+            self::$pj_name_cn = $_REQUEST["pj_name_cn"];
+        } else {
             self::UserInput();
             die("<div align='center'><font color='red'>不能为空:新Web项目名称【中文】</font></div>");
         }
-        if(isset($_REQUEST["pj_name_en"])&&!empty($_REQUEST["pj_name_en"]))
+        if ( isset($_REQUEST["pj_name_en"]) && !empty($_REQUEST["pj_name_en"]) )
         {
-            self::$pj_name_en=$_REQUEST["pj_name_en"];
-        }else{
+            self::$pj_name_en = $_REQUEST["pj_name_en"];
+        } else {
             self::UserInput();
             die("<div align='center'><font color='red'>不能为空:新Web项目名称【英文】</font></div>");
         }
-        if(isset($_REQUEST["pj_name_alias"])&&!empty($_REQUEST["pj_name_alias"]))
+        if ( isset($_REQUEST["pj_name_alias"]) && !empty($_REQUEST["pj_name_alias"]) )
         {
-            self::$pj_name_alias=$_REQUEST["pj_name_alias"];
-        }else{
+            self::$pj_name_alias = $_REQUEST["pj_name_alias"];
+        } else {
             self::UserInput();
             die("<div align='center'><font color='red'>不能为空:新Web项目名称别名</font></div>");
         }
-        if(isset($_REQUEST["dbname"])&&!empty($_REQUEST["dbname"]))
+        if( isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"]) )
         {
-            self::$db_name=$_REQUEST["dbname"];
-        }else{
+            self::$db_name = $_REQUEST["dbname"];
+        } else {
             self::UserInput();
             die("<div align='center'><font color='red'>不能为空:数据库名称</font></div>");
         }
 
-        if(isset($_REQUEST["table_prefix"])&&!empty($_REQUEST["table_prefix"]))
+        if ( isset($_REQUEST["table_prefix"]) && !empty($_REQUEST["table_prefix"]) )
         {
-            self::$table_prefix=$_REQUEST["table_prefix"];
+            self::$table_prefix = $_REQUEST["table_prefix"];
         }
 
-        if(isset($_REQUEST["reuse_type"])&&!empty($_REQUEST["reuse_type"]))
-            self::$reuse_type=$_REQUEST["reuse_type"];
+        if ( isset($_REQUEST["reuse_type"])&&!empty($_REQUEST["reuse_type"]) )
+            self::$reuse_type   = $_REQUEST["reuse_type"];
 
-        if(isset($_REQUEST["git_name"])&&!empty($_REQUEST["git_name"]))
-            self::$git_name=$_REQUEST["git_name"];
+        if ( isset($_REQUEST["git_name"])&&!empty($_REQUEST["git_name"]) )
+            self::$git_name     = $_REQUEST["git_name"];
 
-        $default_dir=Gc::$nav_root_path;
-        $domain_root=str_replace(Gc::$appName . DS, "", $default_dir);
-        $domain_root=str_replace(Gc::$appName_alias . DS, "", $domain_root);
-        $save_dir=self::$save_dir;
-        self::$save_dir=$domain_root.self::$save_dir.DS;
+        $default_dir    = Gc::$nav_root_path;
+        $domain_root    = str_replace(Gc::$appName . DS, "", $default_dir);
+        $domain_root    = str_replace(Gc::$appName_alias . DS, "", $domain_root);
+        $save_dir       = self::$save_dir;
+        self::$save_dir = $domain_root.self::$save_dir.DS;
 
-        if(is_dir(self::$save_dir."core".DS)){
-            self::$save_dir=$save_dir;
+        if( is_dir(self::$save_dir . "core" . DS) )
+        {
+            self::$save_dir = $save_dir;
             self::UserInput();
             die("<div align='center'><font color='red'>该目录已存在!为防止覆盖您现有的代码,请更名!</font></div>");
         }
 
-        if(self::$reuse_type==EnumReusePjType::MINI)
+        if( self::$reuse_type == EnumReusePjType::MINI )
         {
             $include_dirs=array(
                 "install",
@@ -347,87 +348,92 @@ class Project_Refactor
             self::IgnoreAllDbEngineExceptMysql();
 
             //修改Config_AutoCode.php配置文件
-            $config_autocode_file=self::$save_dir."config".DS."config".DS."Config_AutoCode.php";
-            $content=file_get_contents($config_autocode_file);
-            $content=str_replace("const ONLY_DOMAIN=false;", "const ONLY_DOMAIN=true;", $content);
+            $config_autocode_file = self::$save_dir."config".DS."config".DS."Config_AutoCode.php";
+            $content = file_get_contents($config_autocode_file);
+            $content = str_replace("const ONLY_DOMAIN=false;", "const ONLY_DOMAIN=true;", $content);
             file_put_contents($config_autocode_file, $content);
 
             //修改数据库脚本表前缀
-            $db_bak_file=self::$save_dir."db".DS."mysql".DS."db_".Gc::$appName.".sql";
-            if(file_exists($db_bak_file)){
-                $content=file_get_contents($db_bak_file);
-                $content=str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
+            $db_bak_file = self::$save_dir . "db" . DS ."mysql" . DS . "db_" . Gc::$appName . ".sql";
+            if ( file_exists($db_bak_file) ) {
+                $content = file_get_contents($db_bak_file);
+                $content = str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
                 file_put_contents($db_bak_file, $content);
             }
 
-        }else{
+        } else {
             //生成新项目目录
-            UtilFileSystem::createDir(self::$save_dir);
-            if (!is_dir(self::$save_dir)) {
-                system_dir_info(self::$save_dir);
+            UtilFileSystem::createDir( self::$save_dir );
+            if ( !is_dir(self::$save_dir) ) {
+                system_dir_info( self::$save_dir );
             }
             smartCopy(Gc::$nav_root_path,self::$save_dir);
 
             //修改Gc.php配置文件
-            $gc_file=self::$save_dir."Gc.php";
-            $content=file_get_contents($gc_file);
-            $content=str_replace(Gc::$site_name, self::$pj_name_cn, $content);
-            $content=str_replace(Gc::$appName, self::$pj_name_en, $content);
-            $content=str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
+            $gc_file = self::$save_dir."Gc.php";
+            $content = file_get_contents($gc_file);
+            $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
+            $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
+            $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             if ( ( self::$reuse_type != EnumReusePjType::FULL ) ) {
-                $content=str_replace("\"model\",", "", $content);
+                $content = str_replace("\"model\",", "", $content);
             }
             file_put_contents($gc_file, $content);
 
             //修改Config_Db.php配置文件
-            $conf_db_file=self::$save_dir."config".DS."config".DS."Config_Db.php";
-            $content=file_get_contents($conf_db_file);
-            $content=str_replace("\$dbname=\"".Config_Db::$dbname."\"", "\$dbname=\"".self::$db_name."\"", $content);
-            $content=str_replace("\$table_prefix=\"".Config_Db::$table_prefix."\"", "\$table_prefix=\"".self::$table_prefix."\"", $content);
+            $conf_db_file = self::$save_dir . "config" . DS . "config" . DS . "Config_Db.php";
+            $content      = file_get_contents($conf_db_file);
+            $content      = str_replace("\$dbname=\"" . Config_Db::$dbname . "\"", "\$dbname=\"" . self::$db_name . "\"", $content);
+            $content      = str_replace("\$table_prefix=\"" . Config_Db::$table_prefix . "\"", "\$table_prefix=\"" . self::$table_prefix . "\"", $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
-            if(!empty(self::$git_name)){
-                $welcome_file=self::$save_dir."welcome.php";
-                $content=file_get_contents($welcome_file);
+            if ( !empty(self::$git_name) ) {
+                $welcome_file = self::$save_dir . "welcome.php";
+                $content = file_get_contents($welcome_file);
 
-                $ctrl=substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
-                $ctrr=substr($content,strpos($content,"<?php \$help_url=\"")+18);
-                $ctrr=substr($ctrr,strpos($ctrr,"\""));
-                $content=$ctrl.self::$git_name.$ctrr;
-                if(self::$reuse_type!=EnumReusePjType::FULL){
-                    $content=str_replace("通用模版", "", $content);
+                $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
+                $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
+                $ctrr    = substr($ctrr,strpos($ctrr,"\""));
+                $content = $ctrl.self::$git_name.$ctrr;
+                if ( self::$reuse_type != EnumReusePjType::FULL ) {
+                    $content = str_replace("通用模版", "", $content);
                 }
 
                 file_put_contents($welcome_file, $content);
             }
 
             //修改应用文件夹名称
-            $old_name=self::$save_dir.Gc::$module_root.DS.Gc::$appName.DS;
-            $new_name=self::$save_dir.Gc::$module_root.DS.self::$pj_name_en.DS;
-            if(is_dir($old_name)){
-                $toDeleteDir=$old_name."view".DS."default".DS."tmp".DS."templates_c".DS;
-                UtilFileSystem::deleteDir($toDeleteDir);
-                UtilFileSystem::createDir($toDeleteDir);
-                rename($old_name,$new_name);
+            $old_name = self::$save_dir . Gc::$module_root . DS . Gc::$appName . DS;
+            $new_name = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS;
+            if ( is_dir($old_name) ) {
+                $toDeleteDir = $old_name . "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS;
+                UtilFileSystem::deleteDir( $toDeleteDir );
+                UtilFileSystem::createDir( $toDeleteDir );
+                rename($old_name, $new_name);
             }
 
+            //删除 admin 模块里的临时生成文件
+            $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "admin" . DS . "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS;
+            UtilFileSystem::deleteDir( $toDeleteDir );
+            UtilFileSystem::createDir( $toDeleteDir );
+
             //修改前台的注释:* @category 应用名称
-            $frontActionDir=self::$save_dir.Gc::$module_root.DS.self::$pj_name_en.DS."action".DS;
-            $actionFiles=UtilFileSystem::getAllFilesInDirectory($frontActionDir,array("php"));
+            $frontActionDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS . "action" . DS;
+            $actionFiles    = UtilFileSystem::getAllFilesInDirectory( $frontActionDir, array("php") );
 
             foreach ($actionFiles as $actionFile) {
-                $content=file_get_contents($actionFile);
-                $content=str_replace("* @category ".Gc::$appName, "* @category ".self::$pj_name_en, $content);
+                $content = file_get_contents($actionFile);
+                $content = str_replace("* @category " . Gc::$appName, "* @category " . self::$pj_name_en, $content);
                 file_put_contents($actionFile, $content);
             }
 
-            $frontSrcDir=self::$save_dir.Gc::$module_root.DS.self::$pj_name_en.DS."src".DS;
-            $srcFiles=UtilFileSystem::getAllFilesInDirectory($frontSrcDir,array("php"));
+            $frontSrcDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS . "src" . DS;
+            $srcFiles    = UtilFileSystem::getAllFilesInDirectory( $frontSrcDir, array("php") );
 
             foreach ($srcFiles as $srcFile) {
-                $content=file_get_contents($srcFile);
-                $content=str_replace("* @category ".Gc::$appName, "* @category ".self::$pj_name_en, $content);
+                $content = file_get_contents($srcFile);
+                $content = str_replace("* @category " . Gc::$appName, "* @category " . self::$pj_name_en, $content);
                 file_put_contents($srcFile, $content);
             }
 
@@ -447,8 +453,8 @@ class Project_Refactor
                     $actionFiles    = UtilFileSystem::getAllFilesInDirectory( $modelActionDir, array("php") );
 
                     foreach ($actionFiles as $actionFile) {
-                        $content=file_get_contents($actionFile);
-                        $content=str_replace("* @category ".Gc::$appName, "* @category ".self::$pj_name_en, $content);
+                        $content = file_get_contents($actionFile);
+                        $content = str_replace("* @category " . Gc::$appName, "* @category " . self::$pj_name_en, $content);
                         file_put_contents($actionFile, $content);
                     }
                     break;
@@ -457,19 +463,19 @@ class Project_Refactor
         self::$save_dir = $save_dir;
         self::UserInput();
         $default_dir    = Gc::$url_base;
-        $domain_url     = str_replace(Gc::$appName."/", "", $default_dir);
+        $domain_url     = str_replace(Gc::$appName . "/", "", $default_dir);
 
-        if (contain(strtolower(php_uname()),"darwin")){
+        if ( contain( strtolower(php_uname()), "darwin") ) {
             $domain_url   = UtilNet::urlbase();
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
             if ( contain( $file_sub_dir, "tools" . DS ) )
-                $file_sub_dir = substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
-            $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);;
+                $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
+            $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
             if ( !endwith($domain_url,$domainSubDir) ) $domain_url .= $domainSubDir;
             $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
-        die("<div align='center'><font color='green'><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='".$domain_url.self::$pj_name_en."/' target='_blank'>新地址</a></div><br><br><br><br><br><br><br><br>");
+        die("<div align='center'><font color='green'><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div><br><br><br><br><br><br><br><br>");
     }
 
     /**
