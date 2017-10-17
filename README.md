@@ -4,18 +4,24 @@
 
 它包括一套实用的通用模版、后台管理模版、手机模版，并根据项目的需要，按照数据库的设计一键生成定制化的代码框架。
 
+## 帮助文档
+
+* [帮助说明文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
+
+* [本地说明文档](docs/)
+
 ## 安装说明
 
 ### 推荐方式
 
 * **通过Github官网下载**
 
-    官网地址: https://github.com/skygreen2001/betterlife.core
+  官网地址: https://github.com/skygreen2001/betterlife.core
 
-    ```
-    > git clone https://github.com/skygreen2001/betterlife.core.git
-    > git clone git@github.com:skygreen2001/betterlife.core.git
-    ```
+  ```
+  > git clone https://github.com/skygreen2001/betterlife.core.git
+  > git clone git@github.com:skygreen2001/betterlife.core.git
+  ```
 * **安装NodeJs**
 
   下载地址: https://nodejs.org/en/download/
@@ -63,6 +69,37 @@
 ### 手动方式
 
 * [手动方式安装](install/README.md)
+
+## 运行环境安装
+
+  以下工具任选一种即可
+
+  - [ampps](http://www.ampps.com)
+
+    可以直接在它上面下载安装(Wamp|Lamp|Mamp)
+
+  - [Wamp](http://www.wampserver.com/en/)
+
+    Windows下的Apache + Mysql + PHP
+    [PhpStudy]: http://www.phpstudy.net/
+
+  - [Lamp](https://lamp.sh/)
+
+    LAMP指的Linux、Apache，MySQL和PHP的第一个字母
+    [安装详细说明]: http://blog.csdn.net/skygreen_2001/article/details/19912159
+
+  - [Mamp](http://www.mamp.info/en/)
+
+    Mac环境下搭建 Apache/Nginx、MySQL、Perl/PHP/Python 平台。
+
+  - [Xampp](https://www.apachefriends.org/zh_cn/index.html)
+
+    XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
+
+## 开发工具
+
+* [Atom](https://atom.io)
+* [Sublime](http://www.sublimetext.com)
 
 ## 框架目录定义
   - core   : 框架核心支持文件
