@@ -60,7 +60,9 @@
     > sudo gulp ueditor_cp && sudo gulp ueditor
     ```
 
-### [手动方式](install/README.md)
+### 手动方式
+
+* [手动方式安装](install/README.md)
 
 ## 框架目录定义
   - core   : 框架核心支持文件
