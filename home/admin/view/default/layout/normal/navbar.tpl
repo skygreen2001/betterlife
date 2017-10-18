@@ -19,7 +19,6 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{$url_base}index.php?go=admin.index.index">首页</a></li>
             <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
-            <li><a href="http://www.iqiyi.com/" target="_blank">电影</a></li>
             <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
             <li><a href="http://36kr.com/" target="_blank">研发</a></li>
             <li class="dropdown">
@@ -28,6 +27,7 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li><a href="http://www.iqiyi.com/" target="_blank">电影</a></li>
                 <li><a href="https://www.jd.com/" target="_blank">购物</a></li>
                 <li><a href="http://weibo.com/" target="_blank">话题</a></li>
                 <li><a href="https://www.pengfu.com/" target="_blank">幽默</a></li>
@@ -35,7 +35,8 @@
             </li>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="icon-user"></span>
+                <span class="username"></span>
+                <span class="icon-user">13917320293</span>
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
