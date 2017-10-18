@@ -33,11 +33,4 @@
     </div>
 
     {include file="$templateDir/layout/normal/footer.tpl"}
-
-    <script type="text/javascript">
-      $(function(){
-        var offset = $(window).height() - $(".navbar-container").height() - $(".breadcrumb-line").height() -$("footer").height();
-        $(".home .container-fluid").css("height", offset);
-      });
-    </script>
 {/block}

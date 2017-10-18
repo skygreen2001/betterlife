@@ -391,16 +391,24 @@ class Project_Refactor
             if ( !empty(self::$git_name) ) {
                 $welcome_file = self::$save_dir . "welcome.php";
                 $content = file_get_contents($welcome_file);
-
-                $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
-                $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
-                $ctrr    = substr($ctrr,strpos($ctrr,"\""));
-                $content = $ctrl.self::$git_name.$ctrr;
-                if ( self::$reuse_type != EnumReusePjType::FULL ) {
-                    $content = str_replace("通用模版", "", $content);
+                if ( file_exists($welcome_file) ) {
+                    $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
+                    $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
+                    $ctrr    = substr($ctrr,strpos($ctrr,"\""));
+                    $content = $ctrl.self::$git_name.$ctrr;
+                    if ( self::$reuse_type != EnumReusePjType::FULL ) {
+                        $content = str_replace("通用模版", "", $content);
+                    }
+                    file_put_contents($welcome_file, $content);
                 }
+            }
 
-                file_put_contents($welcome_file, $content);
+            //修改.gitignore文件
+            $gitignore_file = self::$save_dir . ".gitignore";
+            if ( file_exists($gitignore_file) ) {
+                $content = file_get_contents($gitignore_file);
+                $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
+                file_put_contents($gitignore_file, $content);
             }
 
             //修改应用文件夹名称
@@ -518,16 +526,16 @@ class Project_Refactor
             $git_name      = self::$git_name;
         }
         $inputArr=array(
-            "1"=>"完整版",
-            "2"=>"精简版",
-            "3"=>"MINI版"
+            EnumReusePjType::SIMPLE => "精简版",
+            EnumReusePjType::FULL   => "完整版",
+            EnumReusePjType::MINI   => "MINI版"
         );
 
         echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\r\n
                 <html lang='zh-CN' xml:lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml'>\r\n";
         echo "<head>\r\n";
-        echo UtilCss::form_css()."\r\n";
-        $url_base=UtilNet::urlbase();
+        echo UtilCss::form_css() . "\r\n";
+        $url_base = UtilNet::urlbase();
         echo "";
         echo "";
         echo "";
@@ -548,12 +556,12 @@ class Project_Refactor
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
-        $selectd_str="";
+        $selectd_str = "";
         if (!empty($inputArr)){
             echo "<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重用类型:</label><select name='reuse_type'>\r\n";
             foreach ($inputArr as $key=>$value) {
-                if(isset($reuse_type)){
-                    if($key==$reuse_type)$selectd_str=" selected";else $selectd_str="";
+                if ( isset($reuse_type) ) {
+                    if ( $key == $reuse_type ) $selectd_str = " selected"; else $selectd_str = "";
                 }
                 echo "        <option value='$key'$selectd_str>$value</option>\r\n";
             }
@@ -589,72 +597,72 @@ class Project_Refactor
  * @param $options //folderPermission,filePermission
  * @return boolean
  */
-function smartCopy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755))
+function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 'filePermission' => 0755))
 {
-    $result=false;
+    $result = false;
 
-    if (is_file($source)) {
-        if ($dest[strlen($dest)-1]=='/') {
-            if (!file_exists($dest)) {
-                cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
+    if ( is_file($source) ) {
+        if ( $dest[strlen($dest)-1] == '/' ) {
+            if ( !file_exists($dest) ) {
+                cmfcDirectory::makeAll($dest, $options['folderPermission'], true);
             }
-            $__dest=$dest."/".basename($source);
+            $__dest = $dest . "/" . basename($source);
         } else {
-            $__dest=$dest;
+            $__dest = $dest;
         }
-        $dest_dir=dirname($__dest);
-        UtilFileSystem::createDir($dest_dir);
-        $result=copy($source, $__dest);
-        chmod($__dest,$options['filePermission']);
+        $dest_dir = dirname($__dest);
+        UtilFileSystem::createDir( $dest_dir );
+        $result = copy($source, $__dest);
+        chmod($__dest, $options['filePermission']);
 
-    } elseif(is_dir($source)) {
-        if ($dest[strlen($dest)-1]=='/') {
-            if ($source[strlen($source)-1]=='/') {
+    } elseif ( is_dir($source) ) {
+        if ( $dest[strlen($dest)-1]=='/' ) {
+            if ( $source[strlen($source)-1]=='/' ) {
                 //Copy only contents
             } else {
                 //Change parent itself and its contents
-                $dest=$dest.basename($source);
+                $dest = $dest . basename($source);
                 @mkdir($dest);
                 chmod($dest,$options['filePermission']);
             }
         } else {
-            if ($source[strlen($source)-1]=='/') {
+            if ( $source[strlen($source)-1] == '/' ) {
                 //Copy parent directory with new name and all its content
-                @mkdir($dest,$options['folderPermission']);
-                chmod($dest,$options['filePermission']);
+                @mkdir($dest, $options['folderPermission']);
+                chmod($dest, $options['filePermission']);
             } else {
                 //Copy parent directory with new name and all its content
-                @mkdir($dest,$options['folderPermission']);
-                chmod($dest,$options['filePermission']);
+                @mkdir($dest, $options['folderPermission']);
+                chmod($dest, $options['filePermission']);
             }
         }
 
-        $dirHandle=opendir($source);
-        while($file=readdir($dirHandle))
+        $dirHandle   = opendir($source);
+        while ($file = readdir($dirHandle))
         {
-            if($file!="." && $file!=".."&& $file!=".git"&& $file!=".svn"&& $file!=".DS_Store")
+            if ( $file != "." && $file != ".." && $file != ".git" && $file != ".svn" && $file != ".DS_Store" )
             {
-                 if(!is_dir($source."/".$file)) {
-                    $__dest=$dest."/".$file;
+                if ( !is_dir($source . "/" . $file) ) {
+                    $__dest = $dest . "/" . $file;
                 } else {
-                    $__dest=$dest."/".$file;
+                    $__dest = $dest . "/" . $file;
                 }
                 //echo "$source/$file ||| $__dest<br />";
-                $result=smartCopy($source."/".$file, $__dest, $options);
+                $result = smartCopy($source . "/" . $file, $__dest, $options);
             }
         }
         closedir($dirHandle);
 
     } else {
-        $result=false;
+        $result = false;
     }
     return $result;
 }
 
 
 //控制器:运行Web项目代码重用
-if(isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"])){
+if ( isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) ) {
     Project_Refactor::Run();
-}else{
+} else {
     Project_Refactor::UserInput();
 }
