@@ -167,15 +167,12 @@ class Project_Refactor
     /**
      * 清除common大部分工程无需的文件
      * 1.去除js框架
-     * 2.去除在线编辑器
-     * 3.去除ext-all-debug.js文件
-     * 4.去除jquery下除1.7.1版本之外其他的文件
      */
     private static function IgnoreCommons()
     {
-        $root_commons="common";
+        $root_commons   = "misc";
         //1.去除js框架
-        $ignore_js_dirs=array(
+        $ignore_js_dirs = array(
             "dojo",
             "ext4",
             "mootools",
@@ -184,37 +181,8 @@ class Project_Refactor
             "yui"
         );
         foreach ($ignore_js_dirs as $ignore_js_dir) {
-            $toDeleteDir=self::$save_dir.$root_commons.DS."js".DS."ajax".DS.$ignore_js_dir;
-            if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        }
-        //2.去除在线编辑器
-        $ignore_oe_dirs=array(
-            "ckeditor",
-            "ckfinder",
-            "kindeditor",
-            "xheditor"
-        );
-        foreach ($ignore_oe_dirs as $ignore_oe_dir) {
-            $toDeleteDir=self::$save_dir.$root_commons.DS."js".DS."onlineditor".DS.$ignore_oe_dir;
-            if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        }
-        //3.去除ext-all-debug.js文件
-        unlink(self::$save_dir.$root_commons.DS."js".DS."ajax".DS."ext".DS."ext-all-debug.js");
-        //4.去除jquery下除1.7.1版本之外其他的文件
-        $ignore_files=array(
-            "jquery-1.11.0.js",
-            "jquery-1.11.0.min.js",
-            "jquery-1.4.4.js",
-            "jquery-1.4.4.min.js",
-            "jquery-1.6.1.js",
-            "jquery-1.6.1.min.js",
-            "jquery.js",
-            "jquery.min.js",
-            "microsoft-jquery-1.4.4.min.js",
-        );
-        foreach ($ignore_files as $ignore_file) {
-            $toDeleteFile=self::$save_dir.$root_commons.DS."js".DS."ajax".DS."jquery".DS.$ignore_file;
-            if(file_exists($toDeleteFile))unlink($toDeleteFile);
+            $toDeleteDir = self::$save_dir . $root_commons . DS . "js" . DS . "ajax" . DS . $ignore_js_dir;
+            if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
         }
     }
 
@@ -421,10 +389,7 @@ class Project_Refactor
                 rename($old_name, $new_name);
             }
 
-            //删除 admin 模块里的临时生成文件
-            $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "admin" . DS . "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS;
-            UtilFileSystem::deleteDir( $toDeleteDir );
-            UtilFileSystem::createDir( $toDeleteDir );
+            self::IgnoreInAdmin();
 
             //修改前台的注释:* @category 应用名称
             $frontActionDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS . "action" . DS;
@@ -484,6 +449,54 @@ class Project_Refactor
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
         die("<div align='center'><font color='green'><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div><br><br><br><br><br><br><br><br>");
+    }
+
+
+    /**
+     * 多数情况下在admin模块里都会清除的内容
+     */
+    private static function IgnoreInAdmin()
+    {
+        $admin_root_path = self::$save_dir . Gc::$module_root . DS . "admin" . DS;
+        $admin_view_path = $admin_root_path . "view" . DS . "default" . DS;
+
+        //删除 admin 模块里的临时生成文件
+        $toDeleteDir = $admin_view_path . "tmp" . DS . "templates_c" . DS;
+        UtilFileSystem::deleteDir( $toDeleteDir );
+        UtilFileSystem::createDir( $toDeleteDir );
+
+        //删除Action业务逻辑文件
+        $action_needs = array(
+            "Action_Auth",
+            "Action_Index",
+            "ActionAdmin"
+        );
+
+        $admin_action_path = $admin_root_path . "action" . DS;
+        $ignore_files      = UtilFileSystem::getFilesInDirectory( $admin_action_path );
+
+        foreach ($ignore_files as $ignore_file) {
+            $compare_name = basename($ignore_file, Config_F::SUFFIX_FILE_PHP);
+            if ( !in_array($compare_name, $action_needs) ) unlink($ignore_file);
+        }
+
+        //删除 admin 模块里的业务页面文件
+        $require_dirs = array(
+            "auth",
+            "index"
+        );
+        $ignore_dirs      = UtilFileSystem::getSubDirsInDirectory( $admin_view_path . "core" . DS );
+        $ignore_dirs_keys = array();
+        if ( $ignore_dirs) $ignore_dirs_keys = array_keys($ignore_dirs);
+
+        foreach ($ignore_dirs_keys as $ignore_dir) {
+            if ( !in_array($ignore_dir, $require_dirs) ) UtilFileSystem::deleteDir( $ignore_dirs[$ignore_dir] );
+        }
+
+        //删除 admin 模块里的业务js文件
+        $toDeleteDir = $admin_view_path . "js" . DS . "core" . DS;
+        UtilFileSystem::deleteDir( $toDeleteDir );
+        UtilFileSystem::createDir( $toDeleteDir );
     }
 
     /**

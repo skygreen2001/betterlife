@@ -7,29 +7,29 @@
  */
 function load_module($moduleName,$module_dir,$excludes=null)
 {
-    $require_dirs=UtilFileSystem::getSubDirsInDirectory($module_dir);
+    $require_dirs = UtilFileSystem::getSubDirsInDirectory( $module_dir );
     ///需要包含本目录下的文件。
 
-    $tmps=UtilFileSystem::getFilesInDirectory($module_dir);
+    $tmps = UtilFileSystem::getFilesInDirectory( $module_dir );
     foreach ($tmps as $tmp) {
-        Initializer::$moduleFiles[$moduleName][basename($tmp,".php")]=$tmp;
+        Initializer::$moduleFiles[$moduleName][basename($tmp, ".php")] = $tmp;
     }
 
-    if (!empty($excludes)) {
-        if (is_array($excludes)){
+    if ( !empty($excludes) ) {
+        if ( is_array($excludes) ) {
             foreach ($excludes as $exclude) {
-                if (array_key_exists($exclude, $require_dirs)) {
+                if ( array_key_exists($exclude, $require_dirs) ) {
                     unset ($require_dirs[$exclude]);
                 }
             }
-        }else if (is_string($excludes)){
+        } else if ( is_string($excludes) ) {
             unset ($require_dirs[$excludes]);
         }
     }
     foreach ($require_dirs as $dir) {
-        $tmps=UtilFileSystem::getAllFilesInDirectory($dir);
+        $tmps = UtilFileSystem::getAllFilesInDirectory( $dir );
         foreach ($tmps as $tmp) {
-            Initializer::$moduleFiles[$moduleName][basename($tmp,".php")]=$tmp;
+            Initializer::$moduleFiles[$moduleName][basename($tmp, ".php")] = $tmp;
         }
     }
 }
@@ -42,13 +42,13 @@ function load_module($moduleName,$module_dir,$excludes=null)
  */
 function object_reflection($object)
 {
-    $class=null;
-    if (is_object($object)) {
-        $class=new ReflectionClass($object);
-    }else{
-        if (is_string($object)){
-            if (class_exists($object)) {
-                $class=new ReflectionClass($object);
+    $class = null;
+    if ( is_object($object) ) {
+        $class = new ReflectionClass($object);
+    } else {
+        if ( is_string($object) ) {
+            if ( class_exists($object) ) {
+                $class = new ReflectionClass($object);
             }
         }
     }
@@ -60,35 +60,35 @@ function object_reflection($object)
  * @param mixed $url
  * @param mixed $data
  */
-function ping_url($url,$data=null)
+function ping_url($url, $data = null)
 {
     $url = parse_url($url);
-    if (array_key_exists('query',$url)){
-        parse_str($url['query'],$out);
+    if ( array_key_exists('query', $url) ) {
+        parse_str($url['query'], $out);
     }
-    if (($data!=null)&&(is_array($data))){
-        $out=array_merge($out,$data);
+    if ( ($data != null) && ( is_array($data) ) ) {
+        $out = array_merge($out, $data);
     }
-    if (isset($out)){
-        $url['query'] = '?'.http_build_query($out);
+    if ( isset($out) ) {
+        $url['query'] = '?' . http_build_query($out);
     }
-    $host=gethostbyname($url['host']);
-    $fp = fsockopen($host, isset($url['port'])?$url['port']:80, $errno, $errstr, 2);
-    if (!$fp) {
+    $host = gethostbyname($url['host']);
+    $fp   = fsockopen($host, isset($url['port'])?$url['port']:80, $errno, $errstr, 2);
+    if ( !$fp ) {
         return false;
     } else {
-        if (array_key_exists('query',$url)){
-            $fullUrl="{$url['path']}{$url['query']}";
-        }else{
-            $fullUrl="{$url['path']}";
+        if ( array_key_exists('query', $url) ) {
+            $fullUrl = "{$url['path']}{$url['query']}";
+        } else {
+            $fullUrl = "{$url['path']}";
         }
-        $out = "GET $fullUrl HTTP/1.1\r\n";
+        $out  = "GET $fullUrl HTTP/1.1\r\n";
         $out .= "Host: {$url['host']}\r\n";
         $out .= "Connection: Close\r\n\r\n";
         fwrite($fp, $out);
-        $content="";
+        $content = "";
         while (!feof($fp)) {
-            $content.=fgets($fp, 128);
+            $content .= fgets($fp, 128);
         }
         return $content;
     }
@@ -109,9 +109,9 @@ function ping_url($url,$data=null)
  * @return string
  +----------------------------------------------------------
  */
-function parse_name($name,$type=0)
+function parse_name($name, $type = 0)
 {
-    if($type) {
+    if( $type ) {
         return ucfirst(preg_replace("/_([a-zA-Z])/e", "strtoupper('\\1')", $name));
     }else {
         $name = preg_replace("/[A-Z]/", "_\\0", $name);
@@ -128,25 +128,25 @@ function parse_name($name,$type=0)
  */
 function alphatonumber($alphabet)
 {
-    if (!empty($alphabet)){
-        if (!preg_match("/^[a-zA-Z]*$/", $alphabet)) {
+    if ( !empty($alphabet) ) {
+        if ( !preg_match("/^[a-zA-Z]*$/", $alphabet) ) {
             return 0;
         }
-        $count=strlen($alphabet);
-        $result=0;$base=26;
-        for($j=1;$j<=$count;$j++){
-            $number=1;
-            $alphabet[$j-1]=strtoupper($alphabet[$j-1]);
-            for($i='A';$i<='Z';$i++){
-                if ($alphabet[$j-1]==$i){
+        $count  = strlen($alphabet);
+        $result = 0;$base = 26;
+        for ($j = 1; $j <= $count; $j++) {
+            $number = 1;
+            $alphabet[$j-1] = strtoupper($alphabet[$j-1]);
+            for($i = 'A'; $i <= 'Z'; $i++){
+                if ( $alphabet[$j-1] == $i ) {
                     break;
                 }
                 ++$number;
             }
-            $result+=pow($base,$count-$j)*$number;
+            $result += pow($base, $count - $j) * $number;
         }
         return $result;
-    }else{
+    } else {
         return 0;
     }
 }
@@ -156,7 +156,7 @@ function alphatonumber($alphabet)
  */
 function is_server_windows()
 {
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+    if ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ) {
         return true;
     } else {
         return false;
@@ -195,72 +195,72 @@ function getbrowser()
 {
     global $_SERVER;
 
-    $agent= $_SERVER['HTTP_USER_AGENT'];
-    $browser= '';
-    $browser_ver= '';
+    $agent   = $_SERVER['HTTP_USER_AGENT'];
+    $browser = '';
+    $browser_ver = '';
 
-    if (preg_match('/OmniWeb\/(v*)([^\s|;]+)/i', $agent, $regs))
+    if ( preg_match('/OmniWeb\/(v*)([^\s|;]+)/i', $agent, $regs) )
     {
-        $browser='OmniWeb';
-        $browser_ver= $regs[2];
+        $browser     = 'OmniWeb';
+        $browser_ver = $regs[2];
     }
 
-    if (preg_match('/Netscape([\d]*)\/([^\s]+)/i', $agent, $regs))
+    if ( preg_match('/Netscape([\d]*)\/([^\s]+)/i', $agent, $regs) )
     {
-        $browser='Netscape';
-        $browser_ver= $regs[2];
+        $browser     = 'Netscape';
+        $browser_ver = $regs[2];
     }
 
-    if (preg_match('/safari\/([^\s]+)/i', $agent, $regs))
+    if ( preg_match('/safari\/([^\s]+)/i', $agent, $regs) )
     {
-        $browser='Safari';
-        $browser_ver=$regs[1];
+        $browser     = 'Safari';
+        $browser_ver = $regs[1];
     }
 
     if (preg_match('/MSIE\s([^\s|;]+)/i', $agent, $regs))
     {
-        $browser='Internet Explorer';
-        $browser_ver= $regs[1];
+        $browser     = 'Internet Explorer';
+        $browser_ver = $regs[1];
     }
 
     if (preg_match('/Opera[\s|\/]([^\s]+)/i', $agent, $regs))
     {
-        $browser='Opera';
-        $browser_ver=$regs[1];
+        $browser     = 'Opera';
+        $browser_ver = $regs[1];
     }
 
     if (preg_match('/NetCaptor\s([^\s|;]+)/i', $agent, $regs))
     {
-        $browser='(Internet Explorer ' .$browser_ver. ') NetCaptor';
-        $browser_ver= $regs[1];
+        $browser     = '(Internet Explorer ' .$browser_ver. ') NetCaptor';
+        $browser_ver = $regs[1];
     }
 
     if (preg_match('/Maxthon/i', $agent, $regs))
     {
-        $browser='(Internet Explorer ' .$browser_ver. ') Maxthon';
-        $browser_ver='';
+        $browser     = '(Internet Explorer ' .$browser_ver. ') Maxthon';
+        $browser_ver = '';
     }
 
     if (preg_match('/FireFox\/([^\s]+)/i', $agent, $regs))
     {
-        $browser='FireFox';
-        $browser_ver=$regs[1];
+        $browser     = 'FireFox';
+        $browser_ver = $regs[1];
     }
 
     if (preg_match('/Lynx\/([^\s]+)/i', $agent, $regs))
     {
-        $browser='Lynx';
-        $browser_ver=$regs[1];
+        $browser     = 'Lynx';
+        $browser_ver = $regs[1];
     }
     if (preg_match('/Chrome\/([^\s]+)/i', $agent, $regs))
     {
-        $browser='Chrome';
-        $browser_ver=$regs[1];
+        $browser     = 'Chrome';
+        $browser_ver = $regs[1];
     }
     //echo $agent."<br/>";
     if ($browser != '')
     {
-        return $browser.' '.$browser_ver;
+        return $browser . ' ' . $browser_ver;
     }
     else
     {
@@ -277,109 +277,109 @@ function getbrowser()
 function client_os()
 {
     $agent = $_SERVER['HTTP_USER_AGENT'];
-    $os = false;
+    $os    = false;
 
-    if (eregi('win', $agent) && strpos($agent, '95'))
+    if ( eregi('win', $agent) && strpos($agent, '95'))
     {
         $os = 'Windows 95';
     }
-    else if (eregi('win 9x', $agent) && strpos($agent, '4.90'))
+    else if ( eregi('win 9x', $agent) && strpos($agent, '4.90'))
     {
         $os = 'Windows ME';
     }
-    else if (eregi('win', $agent) && ereg('98', $agent))
+    else if ( eregi('win', $agent) && ereg('98', $agent) )
     {
         $os = 'Windows 98';
     }
-    else if (eregi('win', $agent) && eregi('nt 6.0', $agent))
+    else if ( eregi('win', $agent) && eregi('nt 6.0', $agent) )
     {
         $os = 'Windows Vista';
     }
-    else if (eregi('win', $agent) && eregi('nt 6.1', $agent))
+    else if ( eregi('win', $agent) && eregi('nt 6.1', $agent) )
     {
         $os = 'Windows 7';
     }
-    else if (eregi('win', $agent) && eregi('nt 5.1', $agent))
+    else if ( eregi('win', $agent) && eregi('nt 5.1', $agent) )
     {
         $os = 'Windows XP';
     }
-    else if (eregi('win', $agent) && eregi('nt 5', $agent))
+    else if ( eregi('win', $agent) && eregi('nt 5', $agent) )
     {
         $os = 'Windows 2000';
     }
-    else if (eregi('win', $agent) && eregi('nt', $agent))
+    else if ( eregi('win', $agent) && eregi('nt', $agent) )
     {
         $os = 'Windows NT';
     }
-    else if (eregi('win', $agent) && ereg('32', $agent))
+    else if ( eregi('win', $agent) && ereg('32', $agent) )
     {
         $os = 'Windows 32';
     }
-    else if (eregi('linux', $agent))
+    else if ( eregi('linux', $agent) )
     {
         $os = 'Linux';
     }
-    else if (eregi('unix', $agent))
+    else if ( eregi('unix', $agent) )
     {
         $os = 'Unix';
     }
-    else if (eregi('sun', $agent) && eregi('os', $agent))
+    else if ( eregi('sun', $agent) && eregi('os', $agent) )
     {
         $os = 'SunOS';
     }
-    else if (eregi('ibm', $agent) && eregi('os', $agent))
+    else if ( eregi('ibm', $agent) && eregi('os', $agent) )
     {
         $os = 'IBM OS/2';
     }
-    else if (eregi('Mac', $agent) && eregi('PC', $agent))
+    else if ( eregi('Mac', $agent) && eregi('PC', $agent) )
     {
         $os = 'Macintosh';
     }
-    else if (eregi('PowerPC', $agent))
+    else if ( eregi('PowerPC', $agent) )
     {
         $os = 'PowerPC';
     }
-    else if (eregi('AIX', $agent))
+    else if ( eregi('AIX', $agent) )
     {
         $os = 'AIX';
     }
-    else if (eregi('HPUX', $agent))
+    else if ( eregi('HPUX', $agent) )
     {
         $os = 'HPUX';
     }
-    else if (eregi('NetBSD', $agent))
+    else if ( eregi('NetBSD', $agent) )
     {
         $os = 'NetBSD';
     }
-    else if (eregi('BSD', $agent))
+    else if ( eregi('BSD', $agent) )
     {
         $os = 'BSD';
     }
-    else if (ereg('OSF1', $agent))
+    else if (ereg('OSF1', $agent) )
     {
         $os = 'OSF1';
     }
-    else if (ereg('IRIX', $agent))
+    else if (ereg('IRIX', $agent) )
     {
         $os = 'IRIX';
     }
-    else if (eregi('FreeBSD', $agent))
+    else if ( eregi('FreeBSD', $agent) )
     {
         $os = 'FreeBSD';
     }
-    else if (eregi('teleport', $agent))
+    else if ( eregi('teleport', $agent) )
     {
         $os = 'teleport';
     }
-    else if (eregi('flashget', $agent))
+    else if ( eregi('flashget', $agent) )
     {
         $os = 'flashget';
     }
-    else if (eregi('webzip', $agent))
+    else if ( eregi('webzip', $agent) )
     {
         $os = 'webzip';
     }
-    else if (eregi('offline', $agent))
+    else if ( eregi('offline', $agent) )
     {
         $os = 'offline';
     }
