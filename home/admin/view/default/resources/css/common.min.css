@@ -15235,11 +15235,25 @@ div.dataTables_wrapper div.dataTables_info {
   color: #fff;
 }
 
-.edit .form-group {
+.edit form .form-group {
   margin-bottom: 6px;
+  /* textarea在线编辑器ueditor显示 */
 }
 
-.edit .btn-file-browser {
+.edit form .form-group .edit-view {
+  padding: 8px 16px;
+  min-height: 22px;
+}
+
+.edit form .form-group.has-error .help-block {
+  margin-bottom: 0px;
+}
+
+.edit form .form-group .error-msg {
+  color: #c30c0c;
+}
+
+.edit form .form-group .btn-file-browser {
   background: #4caf50 none repeat scroll 0 0;
   border: 1px solid #4caf50;
   color: #fff;
@@ -15248,8 +15262,34 @@ div.dataTables_wrapper div.dataTables_info {
   margin-top: 2px;
 }
 
-.edit .bootstrap-datetimepicker-widget.dropdown-menu {
+.edit form .form-group .bootstrap-datetimepicker-widget.dropdown-menu {
   z-index: 10000;
+}
+
+.edit form .form-group .form-control.edui-default {
+  display: inline-table;
+  width: 98%;
+  border: 0px;
+  padding: 0px;
+  box-shadow: inset 0 0px 0px #fff;
+}
+
+.edit form .form-group .edui-default .edui-editor-bottomContainer td {
+  padding-right: 5px;
+}
+
+.edit form .form-group .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.edit form .form-group .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+  background-color: #4caf50;
+}
+
+.edit form .form-actions {
+  display: block;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 19px 20px 20px;
 }
 
 .edit select + .btn-group {
@@ -15312,26 +15352,7 @@ div.dataTables_wrapper div.dataTables_info {
   background-color: #4caf50;
 }
 
-.edit .error-msg {
-  color: #c30c0c;
-}
-
-.edit .has-error .help-block {
-  margin-bottom: 0px;
-}
-
-.edit .form-actions {
-  display: block;
-  text-align: center;
-  border-top: 1px solid #e5e5e5;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  padding: 19px 20px 20px;
-}
-
-.edit .input-group.col-sm-9 {
-  width: 100%;
-}
+/************************* select2:start ************************/
 
 .select2-container {
   width: 100% !important;
@@ -15376,11 +15397,11 @@ div.dataTables_wrapper div.dataTables_info {
   border: 1px solid #4caf50 !important;
 }
 
-.select2-container--default .select2-results__option--highlighted[aria-selected],
-.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
-.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: #4caf50;
 }
+
+/************************* select2:end ************************/
 
 @media (min-width: 768px) {
   .edit .input-group.col-sm-9 {
