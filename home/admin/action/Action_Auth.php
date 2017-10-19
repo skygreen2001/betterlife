@@ -35,6 +35,7 @@ class Action_Auth extends ActionAdmin
                 $this->view->set("message","用户名或者密码错误");
             }else {
                 HttpSession::set('user_id',$userdata->admin_id);
+                HttpSession::set('username',$user->username);
                 $this->redirect("index","index");
             }
         }
