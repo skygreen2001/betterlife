@@ -395,7 +395,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                                  <textarea class=\"form-control\" id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment ."\">{\$" . $instancename . "." . $fieldname . "}</textarea>\r\n".
                                       "                              </div>\r\n".
                                       "                          </div>\r\n";
-                    $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
+                    // $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
                     $ueEditor_prepare .= "pageInit_ue_$fieldname();";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = "enctype=\"multipart/form-data\"";
@@ -466,16 +466,17 @@ class AutoCodeViewAdmin extends AutoCodeView
         }
 
         if ( !empty($ueEditor_prepare) ) {
-            $textareapreparesentence = <<<EDIT
-    {if (\$online_editor=="CKEditor")}
-        {\$editorHtml}
-        <script>
-        $(function(){
-            $ckeditor_prepare
-        });
-        </script>
-    {/if}
-EDIT;
+            $textareapreparesentence = "";
+//             $textareapreparesentence = <<<EDIT
+//     {if (\$online_editor=="CKEditor")}
+//         {\$editorHtml}
+//         <script>
+//         $(function(){
+//             $ckeditor_prepare
+//         });
+//         </script>
+//     {/if}
+// EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == "UEditor")}
         <script>$ueEditor_prepare</script>

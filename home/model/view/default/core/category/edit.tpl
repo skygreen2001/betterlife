@@ -1,13 +1,6 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-    {if ($online_editor=='CKEditor')}
-        {$editorHtml}
-        <script>
-        $(function(){
-            ckeditor_replace_intro();
-        });
-        </script>
-    {/if}
+
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
 
@@ -19,7 +12,7 @@
         <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category.category_id}"/>
         <table class="viewdoblock">
             {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category.category_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no}"/></td></tr>
+            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no|default:100}"/></td></tr>
             <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category.name}"/></td></tr>
             <tr class="entry">
                 <th class="head">图标</th>
@@ -37,7 +30,6 @@
                     <textarea id="intro" name="intro">{$category.intro}</textarea>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">状态</th><td class="content"><input type="text" class="edit" name="status" value="{$category.status}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
         </form>

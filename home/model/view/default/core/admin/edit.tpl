@@ -37,7 +37,7 @@
                     <select id="seescope" name="seescope" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$admin.loginTimes}"/></td></tr>
+            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$admin.loginTimes|default:100}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
         </form>

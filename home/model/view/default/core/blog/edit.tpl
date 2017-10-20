@@ -1,13 +1,6 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-    {if ($online_editor=='CKEditor')}
-        {$editorHtml}
-        <script>
-        $(function(){
-            ckeditor_replace_blog_content();
-        });
-        </script>
-    {/if}
+
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script> -->
 
@@ -31,7 +24,7 @@
                 </td>
             </tr>
             <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-            <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
+            <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo|default:100}"/></td></tr>
             <tr class="entry">
                 <th class="head">分类</th>
                 <td class="content select">
@@ -64,12 +57,6 @@
                 <th class="head">博客内容</th>
                 <td class="content">
                     <textarea id="blog_content" name="blog_content">{$blog.blog_content}</textarea>
-                </td>
-            </tr>
-            <tr class="entry">
-                <th class="head">状态</th>
-                <td class="content select">
-                    <select id="status" name="status" class="form-control"></select>
                 </td>
             </tr>
             <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="publish_date" value="{$blog.publish_date}"/></td></tr>
@@ -118,17 +105,10 @@
         select_tags[{$tags@index}] = tags;
         {/foreach}
 
-        var select_status = {};
-        {if $blog.status}
-        select_status.id   = "{$blog.status}";
-        select_status.text = "{$blog.statusShow}";
-        select_status =  new Array(select_status);
-        {/if}
 
         $.edit.select2('#user_id', "", select_user);
         $.edit.select2('#category_id', "", select_category);
         $.edit.select2('#tags_id', "api/web/select/tags.php", select_tags);
-        $.edit.select2('#status', "api/web/data/blogStatus.json", select_status);
     });
     </script>
 

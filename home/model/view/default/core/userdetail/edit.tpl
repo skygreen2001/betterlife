@@ -33,10 +33,10 @@
                     </div>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">国家</th><td class="content"><input type="number" class="edit" name="country" value="{$userdetail.country}"/></td></tr>
-            <tr class="entry"><th class="head">省</th><td class="content"><input type="number" class="edit" name="province" value="{$userdetail.province}"/></td></tr>
-            <tr class="entry"><th class="head">市</th><td class="content"><input type="number" class="edit" name="city" value="{$userdetail.city}"/></td></tr>
-            <tr class="entry"><th class="head">区</th><td class="content"><input type="number" class="edit" name="district" value="{$userdetail.district}"/></td></tr>
+            <tr class="entry"><th class="head">国家</th><td class="content"><input type="number" class="edit" name="country" value="{$userdetail.country|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">省</th><td class="content"><input type="number" class="edit" name="province" value="{$userdetail.province|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">市</th><td class="content"><input type="number" class="edit" name="city" value="{$userdetail.city|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">区</th><td class="content"><input type="number" class="edit" name="district" value="{$userdetail.district|default:100}"/></td></tr>
             <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address}"/></td></tr>
             <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq}"/></td></tr>
             <tr class="entry">
@@ -59,7 +59,7 @@
 
     <script type="text/javascript">
     $(function() {
-        $.edit.fileBrowser("#icon_url", "#icon_urlTxt", "#icon_urlDiv");
+        $.edit.fileBrowser("#profile", "#profileTxt", "#profileDiv");
         var select_user = {};
         {if $userdetail.user}
         select_user.id   = "{$userdetail.user.user_id}";

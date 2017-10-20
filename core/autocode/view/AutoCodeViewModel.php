@@ -282,7 +282,7 @@ class AutoCodeViewModel extends AutoCodeView
                                       "                    </div>\r\n".
                                       "                </td>\r\n".
                                       "            </tr>\r\n";
-                    $edit_js_content= "        \$.edit.fileBrowser(\"#icon_url\", \"#icon_urlTxt\", \"#icon_urlDiv\");\r\n";
+                    $edit_js_content= "        \$.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");\r\n";
                 } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
                     $field_comment  = str_replace( "标识", "", $field_comment );
                     $field_comment  = str_replace( "编号", "", $field_comment );
@@ -348,20 +348,20 @@ class AutoCodeViewModel extends AutoCodeView
             $ckeditor_prepare = "";
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
-                $ckeditor_prepare .= "ckeditor_replace_$key();";
+                // $ckeditor_prepare .= "ckeditor_replace_$key();";
                 $ueEditor_prepare .= "pageInit_ue_$key();";
             }
-
-            $textareapreparesentence = <<<EDIT
-    {if (\$online_editor=='CKEditor')}
-        {\$editorHtml}
-        <script>
-        $(function(){
-            $ckeditor_prepare
-        });
-        </script>
-    {/if}
-EDIT;
+            $textareapreparesentence = "";
+//             $textareapreparesentence = <<<EDIT
+//     {if (\$online_editor=='CKEditor')}
+//         {\$editorHtml}
+//         <script>
+//         $(function(){
+//             $ckeditor_prepare
+//         });
+//         </script>
+//     {/if}
+// EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == 'UEditor')}
         <script>$ueEditor_prepare</script>
