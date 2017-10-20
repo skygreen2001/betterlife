@@ -6,7 +6,7 @@
 
 ## 帮助文档
 
-* [帮助说明文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
+* [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
 
 * [本地说明文档](docs/)
 

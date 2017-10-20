@@ -45,9 +45,9 @@
     列名称为：image|img|ico|logo|pic
 
 *.需TextArea输入大文本列定义规则:
-        列名称为：intro|memo
+        列名称为：intro|memo|content
         列类型为：text|longtext
-        特殊情况：列长度>=500并且名称不能为images|link|ico
+        特殊情况：列长度 >= 500并且名称不能为images|link|ico
 
 *.邮箱列定义规则:
   列名称含有:email
