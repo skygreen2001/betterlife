@@ -524,7 +524,7 @@ class Project_Refactor
             $default_dir   = $pj_name_en;
             $dbname        = Config_Db::$dbname;
             $table_prefix  = Config_Db::$table_prefix;
-            $git_name      = "http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html";
+            $git_name      = "https://www.gitbook.com/book/skygreen2001/betterlife/";
         }else{
             $reuse_type    = self::$reuse_type;
             $pj_name_cn    = self::$pj_name_cn;

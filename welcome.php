@@ -148,7 +148,7 @@ footer a:hover{
           <p id="current-time"></p>
         </div>
     </div>
-    <footer><?php $help_url="http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html" ?>
+    <footer><?php $help_url="https://www.gitbook.com/book/skygreen2001/betterlife/" ?>
         <div>
             <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
         </div>
