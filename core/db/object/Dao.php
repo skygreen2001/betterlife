@@ -50,12 +50,12 @@ abstract class Dao
      * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考：EnumDbSource}
      *                      需要在实现里重载 setdbType方法以传入数据库类型参数
      */
-    public function __construct($host=null,$port=null,$username=null,$password=null,$dbname=null,$dbtype=null)
+    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null,$dbtype=null)
     {
         if (isset($dbtype)){
             $this->setdbType($dbtype);
         }
-        $this->connect($host,$port,$username,$password,$dbname);
+        $this->connect($host, $port, $username, $password, $dbname);
     }
 
     /**
@@ -63,9 +63,9 @@ abstract class Dao
      */
     public function isCanConnect()
     {
-        if($this->connection && ($this->connection->connect_errno==0)){
+        if ( $this->connection && ($this->connection->connect_errno == 0) ) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -88,7 +88,7 @@ abstract class Dao
      * @param string $dbname
      * @return mixed 数据库连接
      */
-    abstract protected function connect($host=null,$port=null,$username=null,$password=null,$dbname=null);
+    abstract protected function connect($host = null, $port = null, $username = null, $password = null, $dbname = null);
 
     /**
      * 获取数据库连接
@@ -99,10 +99,10 @@ abstract class Dao
      * @param string $dbname
      * @return mixed 数据库连接
      */
-    public function getConnection($host=null,$port=null,$username=null,$password=null,$dbname=null)
+    public function getConnection($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        if ($this->connection==null) {
-            $this->connect($host,$port,$username,$password,$dbname);
+        if ( $this->connection == null ) {
+            $this->connect($host, $port, $username, $password, $dbname);
         }
         return $this->connection;
     }
@@ -114,15 +114,15 @@ abstract class Dao
      */
     protected function sql_id($object)
     {
-        if (is_string($object)) {
-            if (class_exists($object)) {
-                $object=new $object();
+        if ( is_string($object) ) {
+            if ( class_exists($object) ) {
+                $object = new $object();
             }
         }
-        if ($object instanceof DataObject){
-            return DataObjectSpec::getRealIDColumnName($object);
+        if ( $object instanceof DataObject ) {
+            return DataObjectSpec::getRealIDColumnName( $object );
         }
-        e(Wl::ERROR_INFO_EXTENDS_CLASS);
+        e( Wl::ERROR_INFO_EXTENDS_CLASS );
     }
 
     /**
@@ -132,18 +132,18 @@ abstract class Dao
      */
     protected function validParameter($object)
     {
-        if (is_string($object)) {
-            if (class_exists($object)) {
-                if ((new $object()) instanceof DataObject) {
-                    $this->classname=$object;
+        if ( is_string($object) ) {
+            if ( class_exists($object) ) {
+                if ( (new $object()) instanceof DataObject ) {
+                    $this->classname = $object;
                     return true;
                 }else {
-                    e(Wl::ERROR_INFO_EXTENDS_CLASS,$this);
+                    e( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
                     return false;
                 }
             }
         }else {
-            return $this->validObjectParameter($object);
+            return $this->validObjectParameter( $object );
         }
     }
 
@@ -154,10 +154,10 @@ abstract class Dao
      */
     protected function filterViewProperties($saParams)
     {
-        if (isset($saParams)&&is_array($saParams)) {
-            $keys=array_keys($saParams);
+        if ( isset($saParams) && is_array($saParams) ) {
+            $keys = array_keys($saParams);
             foreach ($keys as $key){
-                if (strpos((substr($key,0,2)),"v_")!==false){
+                if ( strpos((substr($key,0,2)),"v_") !== false ) {
                     unset($saParams[$key]);
                 }
             }
@@ -172,15 +172,15 @@ abstract class Dao
      */
     protected function validObjectParameter($object)
     {
-        if (is_object($object)) {
-            if ($object instanceof DataObject) {
-                $this->classname=$object->classname();
-            }else {
-                e(Wl::ERROR_INFO_EXTENDS_CLASS,$this);
+        if ( is_object($object) ) {
+            if ( $object instanceof DataObject ) {
+                $this->classname = $object->classname();
+            } else {
+                e( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
                 return false;
             }
         }else {
-            e(Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME,$this);
+            e( Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME, $this );
             return false;
         }
         return true;
@@ -191,7 +191,7 @@ abstract class Dao
      * @param string $character_code 字符集
      */
     public function change_character_set($character_code = "utf8mb4") {
-        $sql = "SET NAMES ".$character_code;
+        $sql = "SET NAMES " . $character_code;
         $this->connection->query($sql);
     }
 
@@ -204,11 +204,11 @@ abstract class Dao
      *      1:PHP定义的数据类型标识，暂未实现。<br/>
      * @return array 获取插入或者更新的数据的field和field值类型键值对
      */
-    public function getColumnTypes($object,$saParams,$typeOf=1)
+    public function getColumnTypes($object, $saParams, $typeOf = 1)
     {
-        $type=array();
+        $type = array();
         foreach ($saParams as $key => $value) {
-            $type[$key]="s";
+            $type[$key] = "s";
         }
         return $type;
     }
@@ -220,15 +220,15 @@ abstract class Dao
      */
     protected function getValueIfOneValue($result)
     {
-        if (($result!=null)&&(count($result)==1)){
-            if($result[0] instanceof stdClass){
-                $tmp=UtilObject::object_to_array($result[0]);
-                if (count($tmp)==1){
-                    $tmp_values= array_values($tmp);
-                    $result=$tmp_values[0];
+        if ( ($result != null) && (count($result) == 1) ) {
+            if ( $result[0] instanceof stdClass ) {
+                $tmp = UtilObject::object_to_array( $result[0] );
+                if ( count($tmp) == 1 ) {
+                    $tmp_values = array_values($tmp);
+                    $result     = $tmp_values[0];
                 }
-            }else{
-                if (!($result[0] instanceof DataObject))$result=$result[0];
+            } else {
+                if ( !( $result[0] instanceof DataObject ) ) $result = $result[0];
             }
         }
         return $result;

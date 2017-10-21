@@ -8,7 +8,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class DbInfo_Mysql extends  DbInfo implements IDbInfo
+class DbInfo_Mysqli extends  DbInfo implements IDbInfo
 {
     /**
     * Mysql的版本号
@@ -32,7 +32,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * @return TRUE/FALSE 是否已打开.
      */
     public static function extension_is_available()
-    { return function_exists('mysql_connect'); }
+    { return function_exists('mysqli_prepare'); }
 
     /**
      * 在mysql数据库中执行SQL脚本
@@ -129,7 +129,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        $this->connection = Manager_Db::newInstance()->object_mysql_php5($host, $port, $username, $password, $dbname)->getConnection();
+        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli($host, $port, $username, $password, $dbname)->getConnection();
     }
 
     /**

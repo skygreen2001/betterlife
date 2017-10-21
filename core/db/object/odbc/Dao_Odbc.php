@@ -221,33 +221,33 @@ class Dao_Odbc extends Dao implements IDaoNormal
      */
     private function getResultToObjects($object)
     {
-        $rows=array();
-        $row = array();
+        $rows = array();
+        $row  = array();
 //        $odbc_num=odbc_num_rows($this->stmt);
-        while (odbc_fetch_into($this->stmt, &$row)) {//, $odbc_num
-            array_push($rows,$row);
+        while (odbc_fetch_into($this->stmt, $row)) {
+            array_push($rows, $row);
         }
 
-        $fieldCount=odbc_num_fields($this->stmt);
-        $columnNames=array();
-        for ($i=1; $i <= $fieldCount; $i++) {
-            $columnNames[]=odbc_field_name( $this->stmt,$i);
+        $fieldCount  = odbc_num_fields($this->stmt);
+        $columnNames = array();
+        for ($i = 1; $i <= $fieldCount; $i++) {
+            $columnNames[] = odbc_field_name($this->stmt, $i);
         }
-        $result=array();
+        $result = array();
         foreach($rows as $row) {
-            $row=array_combine($columnNames, $row);
-            if (!empty($object)) {
-                if ($this->validParameter($object)) {
+            $row = array_combine($columnNames, $row);
+            if ( !empty($object) ) {
+                if ($this->validParameter( $object )) {
                     $c = UtilObject::array_to_object($row, $this->classname);
-                    $result[]=$c;
+                    $result[] = $c;
                 }
-            }else {
-                if (count($row)==1){
+            } else {
+                if ( count($row) == 1 ) {
                     foreach($row as $key => $val) {
                         $result[] = $val;
                     }
-                }else{
-                    $c=new stdClass();
+                } else {
+                    $c = new stdClass();
                     foreach($row as $key => $val) {
                         $c->{$key} = $val;
                     }
@@ -255,10 +255,9 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 }
             }
         }
-        $result=  $this->getValueIfOneValue($result);
+        $result = $this->getValueIfOneValue($result);
         return $result;
     }
-
 
     /**
      * 根据对象实体查询对象列表
