@@ -66,38 +66,33 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         }
 
         // Test connecting to the database.
-        $connection = @mysql_connect($host, $user, $password, TRUE, 2);
+        $connecturl = Config_Mysql::connctionurl( $host, $port );
 
-        if ( !$connection )
+        if ( !isset($username) ) {
+            $username = Config_Mysql::$username;
+        }
+        if ( !isset($password) ) {
+            $password = Config_Mysql::$password;
+        }
+        if ( !isset($dbname) ) {
+            $dbname   = Config_Mysql::$dbname;
+        }
+        $this->connection = new mysqli($connecturl, $username, $password, $dbname);
+        if ( !$this->$connection )
         {
             LogMe::log(
-                '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysql_error()
+                '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysqli_error($this->connection)
                     . '.<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
-            return FALSE;
+            return false;
         }
 
         // Test selecting the database.
-        if ( !mysql_select_db($dbname) )
-        {
-            if ( mysql_query("CREATE DATABASE $dbname", $connection) )
-            {
-                LogMe::log( "指定数据库不存在，创建数据库$dbname成功！<br/>" );
-                if ( !mysql_select_db($dbname) )
-                {
-                   LogMe::log( "无法指定数据库，数据库报告错误信息: " . mysql_error() );
-                   return FALSE;
-                }
-            } else {
-              LogMe::log( "指定数据库不存在，创建数据库失败错误信息: " . mysql_error() );
-              return FALSE;
-            }
+        if ( mysqli_connect_errno() ) {
+            Exception_Mysqli::record();
+            return false;
         }
-        $isSetcharset = mysql_set_charset(Config_C::CHARACTER_UTF8, $connection);
-        if ( !$isSetcharset ) {
-            $error = mysql_error();
-            LogMe::log( '执行字符集操作命令发生错误脚本: ' . $v
-                                   . '.<br/> MySQL报告错误信息:' . $error."<br/>" );
-        }
+
+        $this->change_character_set( Config_Db::$character );
         if ( file_exists($script_filename) ) {
             $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
             $query = implode("\n", $query);
@@ -108,14 +103,21 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             {
                 $v = str_replace("--&nbsp--", "&nbsp;", $v);
                 if ( !empty($v) && ( $v != "\r") ) {
-                    $result = mysql_query($v);
-                    if ( !$result ) {
-                        $error = mysql_error();
-                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v
-                                       . '.<br/> MySQL报告错误信息:' . $error );
-                        return FALSE;
+                    $this->stmt = $this->connection->prepare($v);
+                    if ( $this->stmt ) {
+                        $this->stmt->execute();
+                    }
+
+                    if ( mysqli_connect_errno() ) {
+                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v . '.<br/> MySQL报告错误信息:' . $error );
+                        Exception_Mysqli::record();
+                        return false;
                     }
                 }
+            }
+            if ( $this->stmt ) {
+                $this->stmt->free_result();
+                $this->stmt->close();
             }
             LogMe::log( "数据库操作成功，无异常！" );
         } else {
@@ -144,8 +146,8 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      */
     public function change_character_set($character_code = "utf8mb4")
     {
-        $sql    = "set names " . $character_code;
-        $result =  mysql_query($sql, $this->connection);
+        $sql = "SET NAMES " . Config_C::CHARACTER_UTF ;
+        $this->connection->query($sql);
     }
 
     /**
@@ -154,15 +156,15 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
     public function character_set()
     {
         $sql    = "SHOW VARIABLES LIKE '%character%'";
-        $result =  mysql_query($sql,$this->connection);
+        $result = $this->connection->query($sql);
         if ( !$result ) {
-            echo "ERROR : " . mysql_error($this->connection) . "<br>";
+            echo "ERROR : " . mysqli_error($this->connection) . "<br>";
             return;
         } else {
             UtilCss::report_info();
             echo "SQL> {$sql}; <br>";
             echo "<table class='" . UtilCss::CSS_REPORT_TABLE . "' border=1><thead><tr><th> Variable_name</th>" . "<th> Value</th></tr></thead>";
-            while ($row = mysql_fetch_assoc($result)) {
+            while ($row = fetch_row($result)) {
                 echo "<tr><td>{$row['Variable_name']}</td><td>{$row['Value']}</td></tr>";
             }
             echo "</table><br>";
