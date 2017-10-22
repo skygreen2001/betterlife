@@ -338,8 +338,8 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal {
             $this->sQuery=$sqlstring;
             $this->executeSQL();
 
-            $parts = split(" ",trim($sqlstring));
-            $type = strtolower($parts[0]);
+            $parts = explode(" ",trim($sqlstring));
+            $type  = strtolower($parts[0]);
             if((Crud_Sql_Update::SQL_KEYWORD_UPDATE==$type)||(Crud_Sql_Delete::SQL_KEYWORD_DELETE==$type)) {
                 return true;
             }elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT==$type) {

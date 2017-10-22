@@ -123,8 +123,8 @@ class Dal_Mdb2 extends Dal implements IDal
     {
         $result=null;
         try {
-            $parts = split(" ",trim($sql));
-            $type = strtolower($parts[0]);
+            $parts = explode(" ",trim($sql));
+            $type  = strtolower($parts[0]);
 
             if (Config_Db::$debug_show_sql){
                 LogMe::log("SQL:".$sql);

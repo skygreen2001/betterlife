@@ -506,8 +506,8 @@ class Dal_Adodb extends Dal implements IDal
             if (Config_Db::$debug_show_sql){
                 LogMe::log("SQL:".$sqlstring);
             }
-            $parts = split(" ",trim($sqlstring));
-            $type = strtolower($parts[0]);
+            $parts = explode(" ",trim($sqlstring));
+            $type  = strtolower($parts[0]);
             if((Crud_Sql_Update::SQL_KEYWORD_UPDATE==$type)||(Crud_Sql_Delete::SQL_KEYWORD_DELETE==$type)) {
                 $this->stmt= $this->connection->Execute($sqlstring);
                 return true;
