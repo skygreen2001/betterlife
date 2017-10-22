@@ -30,7 +30,7 @@ $(function(){
             "aLengthMenu"  : [[10, 25, 50, 100,-1],[10, 25, 50, 100,'全部']],
             "columns": [
                 { data:"blog_name" },
-                { data:"user_name" },
+                { data:"username" },
                 { data:"icon_url" },
                 { data:"isPublic" },
                 { data:"status" },

@@ -177,6 +177,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 
         foreach ($fieldInfo as $fieldname => $field)
         {
+            $field_comment = $field["Comment"];
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
                     $show_fieldname    = $belong_has_ones[$fieldname]["s"];
@@ -188,7 +189,6 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $column_contents  .= "                { data: \"$fieldname\" },\r\n";
                 }
 
-                $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
                     $editImgColumn .= "        $.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");\r\n";

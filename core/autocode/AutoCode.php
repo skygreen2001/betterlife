@@ -251,7 +251,7 @@ class AutoCode extends Object
     protected static function column_type($type)
     {
         if ( UtilString::contain( $type, "(" ) ) {
-            list($typep,$length) = split('[()]', $type);
+            list($typep, $length) = preg_split('[()]', $type);
         }else{
             $typep = $type;
         }
@@ -293,7 +293,7 @@ class AutoCode extends Object
     protected static function column_length($type)
     {
         if ( UtilString::contain( $type, "(") ) {
-            list($typep,$length) = split('[()]', $type);
+            list($typep,$length) = preg_split('[()]', $type);
         }else{
             $length = 1;
         }
@@ -565,7 +565,6 @@ class AutoCode extends Object
 
     /**
      * 根据类名和表信息获取表代表列显示名称
-     * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名
      */
     protected static function getShowFieldName($classname)

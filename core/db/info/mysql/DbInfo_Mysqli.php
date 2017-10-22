@@ -27,6 +27,12 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
     public static $isUseDbInfoDatabase = false;
 
     private static $showtables;
+
+    /**
+     * @var mixed 预编译准备SQL表达式容器
+     */
+    protected $stmt;
+
     /**
      * 检查 操作Db的 Php Extensions驱动 是否已打开.
      * @return TRUE/FALSE 是否已打开.
@@ -195,6 +201,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $tables = array();
         foreach(self::$showtables as $record) {
             $table = reset($record);
+            if ( empty($table) ) $table = $record;
             $tables[strtolower($table)] = $table;
         }
         return $tables;
@@ -209,6 +216,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $tableInfos = $this->query("show table status");
         if ( $tableInfos ) {
             foreach ($tableInfos as $tableInfo) {
+                $tableInfo = UtilObject::object_to_array($tableInfo);
                 $tableInfoList[$tableInfo['Name']] = $tableInfo;
             }
         }
@@ -228,6 +236,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $fields = $this->query("SHOW FULL FIELDS IN $table");
 
         foreach ($fields as $field) {
+            $field = UtilObject::object_to_array($field);
             $fieldList[$field['Field']] = $field;
         }
         if (isset ($fieldList)) return $fieldList;
@@ -370,22 +379,68 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      * @param bool $showqueries 是否显示profile信息
      * @return Query_Mysql
      */
-    private function query($sql, $errorLevel = E_USER_ERROR,$showqueries=false)
+    private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries=false)
     {
-        $handle = NULL;
         if ( isset($_REQUEST['showqueries']) ) {
             $starttime = microtime(true);
         }
-        if ( $this->connection ) $handle = mysql_query($sql, $this->connection);
+        if ( $this->connection ) {
+            $this->stmt = $this->connection->prepare($sqlstring);
+            if ( $this->stmt ) {
+                $this->stmt->execute();
+                $result = $this->getQueryResult($object);
+                Exception_Mysqli::record();
+
+            }
+        }
 
         if( isset($_REQUEST['showqueries']) ) {
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }
-        if ( !$handle && $errorLevel && $this->connection ) e( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
-        if ( $handle ) return new Query_Mysql($handle);
+        if ( !$this->stmt && $errorLevel && $this->connection ) e( "无法运行查询语句: $sql | " . mysqli_error($this->connection), $this );
+        if ( $this->stmt ) return $result;
         return null;
     }
+
+
+    /**
+     * 获取查询结果
+     * @return 查询结果
+     */
+    private function getQueryResult()
+    {
+        $result = null;
+        if ( is_object($this->stmt) ) {
+            $this->stmt->store_result();
+            if ( $this->stmt->num_rows>0 ) {
+                /* get resultset for metadata */
+                $meta = $this->stmt->result_metadata();
+                while ($field = $meta->fetch_field()) {
+                    $params[] = &$row[$field->name];
+                }
+                call_user_func_array(array($this->stmt, 'bind_result'), $params);
+                $result=array();
+                while ($this->stmt->fetch()) {
+                    if ( count($row) == 1 ) {
+                        foreach($row as $key => $val) {
+                            $result[] = $val;
+                        }
+                    }else{
+                        $c = new stdClass();
+                        foreach ($row as $key => $val) {
+                            $c->{$key} = $val;
+                        }
+                        $result[] = $c;
+                    }
+                }
+            }
+            $this->stmt->free_result();
+            $this->stmt->close();
+        }
+        return $result;
+    }
+
 
 }
 

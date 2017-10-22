@@ -370,7 +370,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * @param bool $showqueries 是否显示profile信息
      * @return Query_Mysql
      */
-    private function query($sql, $errorLevel = E_USER_ERROR,$showqueries=false)
+    private function query($sql, $errorLevel = E_USER_ERROR, $showqueries=false)
     {
         $handle = NULL;
         if ( isset($_REQUEST['showqueries']) ) {

@@ -8,7 +8,8 @@
  * @subpackage info
  * @author skygreen
  */
-abstract class DbInfo extends Object{
+abstract class DbInfo extends Object
+{
     protected $connection;//数据库连接
 
     /**

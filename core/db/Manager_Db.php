@@ -209,7 +209,11 @@ class Manager_Db extends Manager {
             switch (Config_Db::$db ) {
                 case EnumDbSource::DB_MYSQL:
                     DbInfo_Mysql::$isUseDbInfoDatabase = $isUseDbInfoDatabase;
-                    $this->dbinfo_static = new DbInfo_Mysql($host, $port, $username, $password, $dbname, $engine);
+                    if ( function_exists('mysql_connect') ) {
+                        $this->dbinfo_static = new DbInfo_Mysql($host, $port, $username, $password, $dbname, $engine);
+                    } else {
+                        $this->dbinfo_static = new DbInfo_Mysqli($host, $port, $username, $password, $dbname, $engine);
+                    }
                     DbInfo_Mysql::$isUseDbInfoDatabase = false;
                     break;
             }
