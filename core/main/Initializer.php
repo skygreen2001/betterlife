@@ -9,9 +9,9 @@
  */
 class Initializer
 {
-    public static $IS_CGI=false;
-    public static $IS_WIN=true;
-    public static $IS_CLI=false;
+    public static $IS_CGI = false;
+    public static $IS_WIN = true;
+    public static $IS_CLI = false;
     public static $NAV_CORE_PATH;
     /**
      * PHP文件名后缀
@@ -36,7 +36,7 @@ class Initializer
      * 框架核心类之外可直接加载加载类的路径
      *［在core之外的其他根路径下的路径需autoload自动认知的］
      */
-    public static $core_include_paths=array(
+    public static $core_include_paths = array(
     );
     /**
     * 初始化错误，网站应用的设置路径有误提示信息。
@@ -142,16 +142,17 @@ class Initializer
      */
     private static function is_can_run()
     {
-        $is_not_run_betterlife=false;
+        $is_not_run_betterlife = false;
         //if (ini_get('register_globals') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置register_globals = On<br/></p>";$is_not_run_betterlife=true;}
         //if (ini_get('allow_call_time_pass_reference') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置allow_call_time_pass_reference = On<br/></p>";$is_not_run_betterlife=true;}
-        if(!function_exists("imagecreate")){echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-gd<br/></p>";$is_not_run_betterlife=true;}
-        if(!function_exists("curl_init")) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-curl<br/></p>";$is_not_run_betterlife=true;}
-        if(!function_exists("mb_check_encoding")) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/></p>";$is_not_run_betterlife=true;}
-        if(version_compare(phpversion(), 5.3, '<')) {
-            if(!function_exists("mysqli_stmt_fetch")) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/></p>";$is_not_run_betterlife=true;}
+        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-gd<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-curl<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/></p>";$is_not_run_betterlife = true; }
+        if ( version_compare(phpversion(), 5.3, '<') ) {
+            if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/></p>";$is_not_run_betterlife = true; }
         }
-        if ($is_not_run_betterlife)die();
+        if ( $is_not_run_betterlife ) die();
     }
 
     /**
@@ -159,12 +160,12 @@ class Initializer
      */
     private static function init()
     {
-        $root_core="core";
-        self::$NAV_CORE_PATH=Gc::$nav_framework_path.$root_core.DS;
+        $root_core           = "core";
+        self::$NAV_CORE_PATH = Gc::$nav_framework_path.$root_core.DS;
         //设置时区为中国时区
         date_default_timezone_set('PRC');
         //初始化PHP版本校验
-        if(version_compare(phpversion(), 5, '<')) {
+        if ( version_compare(phpversion(), 5, '<') ) {
             header("HTTP/1.1 500 Server Error");
             echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>".phpversion()."</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
             die();
@@ -174,9 +175,9 @@ class Initializer
          */
         self::is_can_run();
         //定义异常报错信息
-        if (Gc::$dev_debug_on){
-            if(defined('E_DEPRECATED')) {
-                if (Gc::$dev_php_debug_on){
+        if ( Gc::$dev_debug_on ) {
+            if ( defined('E_DEPRECATED') ) {
+                if ( Gc::$dev_php_debug_on ) {
                     error_reporting( E_ALL ^ E_DEPRECATED);
                 }else{
                     error_reporting( E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
@@ -186,20 +187,20 @@ class Initializer
         }else{
             error_reporting(0);
         }
-        self::$IS_CGI=substr(PHP_SAPI, 0,3)=='cgi'?1:0;
-        self::$IS_WIN=strstr(PHP_OS, 'WIN')?1:0;
-        self::$IS_CLI=PHP_SAPI=='cli'?1:0;
+        self::$IS_CGI = substr(PHP_SAPI, 0,3) == 'cgi' ? 1 : 0;
+        self::$IS_WIN = strstr(PHP_OS, 'WIN')?1 : 0;
+        self::$IS_CLI = PHP_SAPI == 'cli' ? 1 : 0;
 
         /**
          * class_alias需要PHP 版本>=5.3低于5.3需要以下方法方可以使用
          */
-        if (!function_exists('class_alias')) {
+        if ( !function_exists('class_alias') ) {
             function class_alias($original, $alias) {
                 eval('class ' . $alias . ' extends ' . $original . ' {}');
             }
         }
 
-        if (function_exists('mb_http_output')) {
+        if ( function_exists('mb_http_output') ) {
             mb_http_output(Gc::$encoding);
             mb_internal_encoding(Gc::$encoding);
         }
@@ -212,11 +213,11 @@ class Initializer
     public static function loadCommonFunctionLibrarys()
     {
         $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
-        $files = UtilFileSystem::getAllFilesInDirectory($dir_include_function);
-        if (!class_exists("PEAR")) {
+        $files = UtilFileSystem::getAllFilesInDirectory( $dir_include_function );
+        if ( !class_exists("PEAR") ) {
             require_once("helper/PEAR.php");
         }
-        if (ini_get('allow_call_time_pass_reference') === 1) require_once("helper/PEAR5.php");
+        if ( ini_get('allow_call_time_pass_reference') === 1 ) require_once("helper/PEAR5.php");
         foreach ($files as $file) {
             require_once($file);
         }

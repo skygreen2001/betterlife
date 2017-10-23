@@ -77,6 +77,7 @@ APACHECONFIG;
     echo "* . 服务器下执行:<br/>" . str_repeat("&nbsp;",30);
     echo "sudo apt-get install php5-gd<br/>" . str_repeat("&nbsp;",30);
     echo "sudo apt-get install php5-curl<br/>" . str_repeat("&nbsp;",12);
+    echo "sudo apt-get install php5-mysql<br/>" . str_repeat("&nbsp;",12);
     echo "* . 因为安全原因，需要手动在服务器上创建以下目录能够读写<br/>" . str_repeat("&nbsp;",30);
     echo "log|upload|templates_c<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要手动在服务器上执行脚本:<br/>" . str_repeat("&nbsp;",30);
