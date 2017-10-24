@@ -157,9 +157,9 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $belong_has_one       = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
                     $re_realId        = DataObjectSpec::getRealIDColumnName( $key );
-                    $classNameField   = self::getShowFieldName( $key );
+                    $re_classNameField= self::getShowFieldName( $key );
                     $belong_has_ones[$re_realId]["i"] = $value;
-                    $belong_has_ones[$re_realId]["s"] = $classNameField;
+                    $belong_has_ones[$re_realId]["s"] = $re_classNameField;
                 }
             }
             //多对多关系规范定义(如果存在)
