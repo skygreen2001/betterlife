@@ -96,6 +96,13 @@
 
     XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
 
+## 云部署
+
+* [阿里云](https://market.aliyun.com/developer)
+* [Heroku](https://devcenter.heroku.com/categories/php)
+* [docker](https://docs.docker.com): https://segmentfault.com/a/1190000006802383
+* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
+
 ## 开发工具
 
 * [Atom](https://atom.io)
