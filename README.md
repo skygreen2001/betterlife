@@ -7,7 +7,7 @@
 ## 帮助文档
 
 * [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
-
+* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
 * [本地说明文档](docs/)
 
 ## 安装说明

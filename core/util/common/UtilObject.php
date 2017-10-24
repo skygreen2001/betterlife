@@ -151,7 +151,7 @@ class UtilObject extends Util
                 }else {
                     if (isset($rtn['source_keys'][$key])||is_bool($rtn['source_keys'][$key])) {
                         $rtn[$newkey] = $rtn['source_keys'][$key];
-                        if ($rtn[$newkey] == false) $rtn[$newkey] = 0;
+                        if ($rtn[$newkey] == false) if ($rtn[$newkey] != "") $rtn[$newkey] = 0;
                     }
                 }
             }
