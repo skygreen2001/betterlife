@@ -228,11 +228,12 @@ class UtilFileSystem extends Util
                     $temp_name = date("YmdHis").'.'.$tmptail;
                     self::createDir($uploadPath);
                 }
-                system_dir_info(dirname($uploadPath));
+                system_dir_info( dirname($uploadPath), GC::$upload_path );
                 if ( file_exists($uploadPath.$temp_name) ) {
                     return array('success' => false, 'msg' => '文件重名!');
                 } else {
-                    $IsUploadSucc = move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath.$temp_name);
+                    LogMe::log( "[upload before]:" . $files[$uploadFieldName]["tmp_name"] . "\r\n[upload after]:" . $uploadPath . $temp_name);
+                    $IsUploadSucc = move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath . $temp_name);
                     if ( !$IsUploadSucc ){
                         return array('success' => false, 'msg' => '文件上传失败，通知系统管理员!');
                     }
