@@ -7,11 +7,11 @@ class EnumOnlineEditorType extends Enum
     /**
      * @link http://ckeditor.com/
      */
-    const CKEDITOR=1;
+    const CKEDITOR = 1;
     /**
      * @link http://ueditor.baidu.com/
      */
-    const UEDITOR=4;
+    const UEDITOR  = 4;
 }
 
 /**
@@ -73,7 +73,7 @@ class ActionBasic extends Object
      * 是否在请求内部重导向->跳转
      * @var bool
      */
-    public $isRedirected=false;
+    public $isRedirected = false;
 
     /**
      * 构造器
