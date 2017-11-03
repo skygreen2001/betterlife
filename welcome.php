@@ -139,7 +139,7 @@ footer a:hover{
                 <div class="content" align="center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
-                    <p><a target="_blank" href="#">手机应用</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>app/index.php">手机应用</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模版</a></p>
                 </div>
             </div>

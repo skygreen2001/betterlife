@@ -1,0 +1,74 @@
+/*! normalize.css v0.0.1 | Apache License 2.0 | github.com/skygreen2001/betterlife.front/src/less/normalize.css */
+
+html {
+  font-family: @font-family;
+}
+
+body {
+  background-color: @background-color;
+  color: @color-font-content;
+}
+
+h1 {
+  padding: 0;
+  margin: 10px 0;
+}
+
+a, .navbar-app, .navbar-app .btn, .navbar-app .btn-navbar {
+    color: @color-main;
+    text-decoration: none;
+}
+
+a:hover,a:focus,a:active {
+  color: @color-main;
+  text-decoration: none;
+}
+
+.navbar-app .btn-navbar:hover, .navbar-app .btn:hover {
+    color: @color-main;
+}
+
+.list-group-item.active, .list-group-item.active:focus {
+  background-color: @color-main;
+  border-color: @color-main;
+}
+
+a.list-group-item:focus, button.list-group-item:focus {
+    color: @color-main;
+    background-color: @background-color;
+}
+
+.app-content{
+  background-color: @background-color;
+}
+
+.weui-tab {
+  .app-body {
+    padding-bottom: 30px;
+  }
+  .weui-tabbar {
+    p {
+      margin: 0;
+    }
+    .weui-badge {
+      position: absolute;
+      margin-left:-6px;
+      margin-top: -3px;
+    }
+    .weui-bar__item--on .weui-tabbar__icon>i, .weui-bar__item--on i.weui-tabbar__icon {
+      color: @color-main;
+    }
+    a:hover,a:active,a:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.weui-footer a {
+  color: #2f2f2f;
+  text-decoration: none;
+  &:hover,&:active {
+    color: @color-main;
+    text-decoration: none;
+  }
+}
