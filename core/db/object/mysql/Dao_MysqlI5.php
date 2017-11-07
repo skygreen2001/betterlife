@@ -214,6 +214,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $row    = $object_arr->fetch_row();
                 $result = $row[0];
             }
+            if ( is_string($result) ) $result = floatval($result);
             return $result;
         } catch (Exception $exc) {
             Exception_Mysqli::record( $exc->getTraceAsString() );

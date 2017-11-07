@@ -3,7 +3,7 @@
  +---------------------------------------<br/>
  * 批量生成代码的配置<br/>
  +---------------------------------------
- * @category ele
+ * @category betterlife
  * @package core.config.common
  * @author skygreen
  */

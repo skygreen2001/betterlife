@@ -41,7 +41,7 @@ $editApiImg
   }
 }
 \$recordsFiltered = \$page{$classname}s["count"];
-\$recordsTotal    = \$recordsFiltered;
+\$recordsTotal    = {$classname}::count();
 \$result = array(
   'data' => \$data,
   'draw' => \$draw,

@@ -50,7 +50,7 @@ if ($data){
   }
 }
 $recordsFiltered = $pageBlogs["count"];
-$recordsTotal    = $recordsFiltered;
+$recordsTotal    = Blog::count();
 $result = array(
   'data' => $data,
   'draw' => $draw,

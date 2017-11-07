@@ -24,6 +24,20 @@ a:hover,a:focus,a:active {
   text-decoration: none;
 }
 
+.nav>li>a:focus, .nav>li>a:hover{
+  color: #fff;
+  background-color: @color-main;
+}
+.nav-tabs {
+  a {
+    color: #333;
+  }
+  &>li.active>a, &>li.active>a:focus, &>li.active>a:hover {
+    color: #fff;
+    background-color: @color-main;
+  }
+}
+
 .navbar-app .btn-navbar:hover, .navbar-app .btn:hover {
     color: @color-main;
 }
@@ -71,4 +85,31 @@ a.list-group-item:focus, button.list-group-item:focus {
     color: @color-main;
     text-decoration: none;
   }
+}
+
+.feature-icon {
+  font-size: 44px;
+  padding: 0;
+  line-height: 68px;
+  width: 72px;
+  text-align: center;
+  opacity: .8;
+  border: 3px solid;
+  border-radius: 200px;
+  height: 72px;
+  margin-bottom: 20px;
+}
+
+.list-group-item-home {
+    padding: 20px;
+}
+
+.text-primary {
+  color: @color-main;
+}
+
+
+.main-content {
+  background-color: #fff;
+  padding: 12px;
 }
