@@ -18,7 +18,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1","localhost") ) ) {
 <meta name="keywords" content="<?php echo Gc::$site_name?>">
 <meta name="creation-date" content="08/08/2017">
 <meta name="revisit-after" content="15 days">
-<link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="<?php echo Gc::$url_base?>favicon.ico" mce_href="favicon.ico" type="image/x-icon">
 <title><?php echo Gc::$site_name ?></title>
 
 <style type="text/css">

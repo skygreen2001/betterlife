@@ -100,7 +100,7 @@
             </div>
             <div class="col-md-4" data-id="2">
               <div>
-                <i><img src="{$template_url}resources/images/wechat.png" width="64" alt="微信"></i>
+                <i class="fa fa-weixin" aria-hidden="true"></i>
                 <span>可嵌入微信</span>
                 <span>PC Web端优先</span>
               </div>
