@@ -20,9 +20,9 @@ class Gc {
         'port'     => '',//数据库端口
         'database' => 'betterlife',//数据库名称
         'username' => 'root',//数据库用户名
-        'password' => '',//数据库密码
+        'password' => 'itaskTour2006',//数据库密码
         'prefix'   => 'bb_',//数据库表名前缀
-        'debug'    => true//显示数据库sql查询语句
+        'debug'    => true//记录日志:数据库sql查询语句
     );
     /**
      * 是否打开Debug模式
