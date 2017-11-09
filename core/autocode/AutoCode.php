@@ -320,7 +320,7 @@ class AutoCode extends Object
      * @param $default_value 默认值
      * @param $more_content 更多个性化内容
      */
-    protected static function UserInput($title="", $inputArr=null, $default_value = "", $more_content = "")
+    protected static function UserInput($title = "", $inputArr = null, $default_value = "", $more_content = "")
     {
         ob_clean();
         include("view" . DS . "form" . DS . "userinput.php");

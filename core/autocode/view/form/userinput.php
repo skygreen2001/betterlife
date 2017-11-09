@@ -24,6 +24,7 @@ $userinput_model = <<<USERINPUT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
     <head>
+        <link rel="icon" href="{$url_base}favicon.ico" mce_href="favicon.ico" type="image/x-icon">
         $form_css
     </head>
     <body>

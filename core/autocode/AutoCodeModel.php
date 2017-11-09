@@ -80,16 +80,16 @@ class AutoCodeModel extends AutoCode
     /**
      * 用户输入需求
      */
-    public static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
+    public static function UserInput($title = "", $inputArr = null, $default_value = "", $more_content = "" )
     {
-        $default_dir=Gc::$nav_root_path."model".DS;
-        self::$save_dir=$default_dir;
+        $default_dir    = Gc::$nav_root_path . "model" . DS;
+        self::$save_dir = $default_dir;
 
         self::init();
         $inputArr = array();
-        if (self::$tableList){
+        if ( self::$tableList ) {
             foreach (self::$tableList as $tablename) {
-                $inputArr[$tablename]=$tablename;
+                $inputArr[$tablename] = $tablename;
             }
         }
         include("view" . DS . "form" . DS . "model.php");
