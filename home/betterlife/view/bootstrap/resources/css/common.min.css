@@ -16692,7 +16692,7 @@ footer #footer-inner a:hover {
   padding-top: 260px;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 319px) {
   .navbar .navbar-container .navbar-header a.navbar-brand {
     width: 100%;
   }
@@ -17361,7 +17361,7 @@ body.login .login-container footer #footer-inner a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  margin-top: 200px;
+  margin-top: 108px;
 }
 
 .index #page1 .starfield {
@@ -17412,7 +17412,7 @@ body.login .login-container footer #footer-inner a:hover {
 }
 
 .index .section {
-  padding: 70px 0;
+  padding: 0px;
   background: #f2f2f2;
   overflow: hidden;
 }
@@ -17422,9 +17422,9 @@ body.login .login-container footer #footer-inner a:hover {
   -webkit-font-smoothing: antialiased;
   line-height: 1.4;
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 20px;
   opacity: 0;
-  font-size: 40px;
+  font-size: 27px;
   color: #333;
   font-weight: normal;
   -webkit-transition: all 0.6s ease;
@@ -17449,9 +17449,9 @@ body.login .login-container footer #footer-inner a:hover {
   word-spacing: 12px;
 }
 
-.index .section .title small {
+.index .section .title font {
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   color: #999;
   margin-top: 5px;
   line-height: 1.7;
@@ -17464,17 +17464,21 @@ body.login .login-container footer #footer-inner a:hover {
   transform: translate(0%, 10px);
 }
 
-.index .section .title small.flag {
+.index .section .title font.flag {
   color: #77cc6d;
   font-family: Helvetica, Tahoma, Arial;
-  font-weight: 100;
-  font-size: 40px;
+  font-weight: 500;
+  font-size: 20px;
   word-spacing: 20px;
 }
 
 .index .section#page4 .section-container {
   width: 100%;
   margin: 0 !important;
+}
+
+.index .section#page4 .section-container .title {
+  font-size: 23px;
 }
 
 .index .section#page4 .section-container .content-box {
@@ -17662,13 +17666,14 @@ body.login .login-container footer #footer-inner a:hover {
   word-spacing: 3px;
   margin-top: 90px;
   line-height: 16px;
-  color: #888;
+  color: #333;
 }
 
 .index .section#page3 .page-over-header .slogan-bottom div {
   font-size: 5px;
-  font-weight: 600;
   font-family: arial;
+  margin-top: 36px;
+  color: #ccc;
 }
 
 .index .section#page3 .content-head {
@@ -17684,31 +17689,37 @@ body.login .login-container footer #footer-inner a:hover {
 .index .section#page3 .content-head .page-detail h2 {
   margin: 0 auto;
   text-align: center;
-  font-size: 34px;
+  font-size: 27px;
 }
 
 .index .section#page3 .content-head .page-detail i {
   position: absolute;
-  font-size: 32px;
+  font-size: 16px;
 }
 
 .index .section#page3 .content-head .page-detail i.icon-quote-left {
-  margin-top: 60px;
-  left: 40px;
+  margin-top: 40px;
+  left: 20px;
+  float: left;
 }
 
 .index .section#page3 .content-head .page-detail i.icon-quote-right {
-  margin-top: 270px;
-  right: 40px;
+  float: right;
+  right: 20px;
 }
 
 .index .section#page3 .content-head .page-detail p {
-  margin: 60px 60px 0;
+  margin: 60px 0px 0 20px;
   color: #fff;
-  font-size: 18px;
-  line-height: 48px;
-  min-height: 240px;
+  font-size: 13px;
+  line-height: 30px;
+  min-height: 200px;
   display: none;
+}
+
+.index .section#page3 .content-head .page-detail p span {
+  display: block;
+  text-indent: 25px;
 }
 
 .index .section#page3 .content-head .col-md-4 {
@@ -17725,6 +17736,7 @@ body.login .login-container footer #footer-inner a:hover {
   padding: 45px 0;
 }
 
+.index .section#page3 .content-head .col-md-4.active,
 .index .section#page3 .content-head .col-md-4:hover,
 .index .section#page3 .content-head .col-md-4:active {
   color: #fff;
@@ -17734,6 +17746,7 @@ body.login .login-container footer #footer-inner a:hover {
   transition: all 0.5s ease;
 }
 
+.index .section#page3 .content-head .col-md-4.active i,
 .index .section#page3 .content-head .col-md-4:hover i,
 .index .section#page3 .content-head .col-md-4:active i {
   border-color: #fff;
@@ -17763,7 +17776,7 @@ body.login .login-container footer #footer-inner a:hover {
   margin-left: 0px;
   display: block;
   line-height: 36px;
-  font-size: 16px;
+  font-size: 13px;
   text-align: center;
 }
 
@@ -17775,6 +17788,16 @@ body.login .login-container footer #footer-inner a:hover {
   height: 2px;
   background: #fff;
   z-index: 1000;
+}
+
+@media (min-width: 360px) {
+  .index #page1 .section-header-container {
+    margin-top: 200px;
+  }
+
+  .index .section#page4 .section-container .title {
+    font-size: 27px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -17798,20 +17821,56 @@ body.login .login-container footer #footer-inner a:hover {
     color: #333;
   }
 
+  .index .section {
+    padding: 70px 0;
+  }
+
+  .index .section .title {
+    margin-bottom: 70px;
+    font-size: 40px;
+  }
+
+  .index .section .title font.flag {
+    font-size: 30px;
+  }
+
   .index .section .content-list {
     width: 48%;
   }
 
+  .index .section small {
+    font-size: 16px;
+  }
+
+  .index .section small.flag {
+    font-size: 40px;
+  }
+
+  .index .section#page3 .content-head .page-detail {
+    margin-bottom: 60px;
+  }
+
+  .index .section#page3 .content-head .page-detail h2 {
+    font-size: 34px;
+  }
+
   .index .section#page3 .content-head .page-detail p {
     font-size: 22px;
+    margin: 60px 120px 0;
+    line-height: 48px;
+    min-height: 240px;
   }
 
   .index .section#page3 .content-head .page-detail i {
     font-size: 40px;
   }
 
+  .index .section#page3 .content-head .page-detail i.icon-quote-left {
+    left: 80px;
+  }
+
   .index .section#page3 .content-head .page-detail i.icon-quote-right {
-    margin-top: 170px;
+    right: 80px;
   }
 
   .index .section#page3 .content-head .col-md-4 div {
@@ -17835,6 +17894,14 @@ body.login .login-container footer #footer-inner a:hover {
   .index #page1 .lead {
     width: 80%;
     font-size: 30px;
+  }
+
+  .index .section#page4 .section-container .title {
+    font-size: 32px;
+  }
+
+  .index .section .title font {
+    font-size: 18px;
   }
 
   .index .section .content-list {

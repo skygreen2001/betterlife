@@ -61,7 +61,7 @@
 
       <div class="section page" id="page2">
           <div class="container section-container">
-              <h2 class="title slogan">I'm <span>BB</span>, 每一天<small class="flag">只 · 为 · 更 · 好</small></h2>
+              <h2 class="title slogan">I'm <span>BB</span>, 每一天<font class="flag">只 · 为 · 更 · 好</font></h2>
           </div>
       </div>
 
@@ -69,33 +69,46 @@
         <div class="page-over-header text-center">
           <div class="slogan-top">Betterlife Front UI</div>
           <div class="title slogan-bottom">
-            Just Do It
-            <div>No Best → Go Better</div>
+            Action → Better
+            <div>Just Do It</div>
           </div>
         </div>
         <div class="container content-head">
           <div class="container page-detail">
-            <h2>最佳方案设计</h2><i class="icon-quote-left"></i><i class="icon-quote-right"></i>
+            <h2>最佳方案设计</h2>
+            <i class="icon-quote-left"></i>
             <p style="display:block;" data-id="1">
-              专用于移动APP开发的html5 UI界面，可发布成原生应用[iOS,Andriod]<br>也可用于html5 web页面；可嵌入微信；手机端优先。<br>
-              实现框架底层采用: [ Angular1 + Angular Material ] 或者 [ React    + React Material ]
+              专用于移动APP的html5 UI界面，可发布成原生应用。<br>
+              也可用于html5 web页面；可嵌入微信；手机端优先。<br>
+              实现框架底层采用: <br>
+                  <span> - [ jQuery + Bootstrap3 Css Only ] </span>
+                  <span> - [ jQuery + PureCss ] </span>
+                  <span> - [ AngularJS + jQuery WeUI ] </span>
             </p>
             <p data-id="2">
               Html5开发生成Native原生应用[iOS,Andriod]<br>
-                - `NativeScript` [Angular2 + Typescript + Javascript]<br>
-                - `React Native` [React + Javascript]
+                  <span> - `AngularJS`</span>
+                  <span> [ Mobile Angular UI + jQuery WeUI ]</span>
+                  <span> - `Angular` </span>
+                  <span> [ Angular + Ionic ]</span>
+                  <span> - `React Native` </span>
             </p>
             <p data-id="3">
-              专用于Web开发的html5自适应界面，可用于pc电脑端<br>也可嵌入原生应用[iOS,Andriod]的html5页面；可嵌入微信；Pc Web端优先。<br>
-              实现框架底层采用: [ Jquery + Bootstrap3 ] 或者 [ Angular1 + [Angular Material | Bootstrap3 ]
+              专用于Web开发的html5自适应界面，可用于pc电脑端<br>
+              也可嵌入原生应用；可嵌入微信；Pc Web端优先。<br>
+              实现框架底层采用: <br>
+                  <span> - [ Jquery + Bootstrap3 ] </span>
+                  <span> - [ AngularJS + Semantic-UI ] </span>
+                  <span> - [ jQuery + Layui ] </span>
             </p>
+            <i class="icon-quote-right"></i>
           </div>
           <div class="row">
-            <div class="col-md-4" data-id="1">
+            <div class="col-md-4 active" data-id="1">
               <div>
-                <i class="icon-laptop"></i>
+                <i class="fa fa-desktop" aria-hidden="true"></i>
                 <span>Web自适应界面</span>
-                <span>可用于PC端的Web页面</span>
+                <span>可用于PC端</span>
               </div>
             </div>
             <div class="col-md-4" data-id="2">
@@ -107,9 +120,9 @@
             </div>
             <div class="col-md-4" data-id="3">
               <div>
-                <i class="glyphicon glyphicon-phone"></i>
-                <span>可嵌入手机原生应用</span>
-                <span>iOS, Andriod内嵌html5页面</span>
+                <i class="glyphicon glyphicon-phone" aria-hidden="true"></i>
+                <span>手机原生应用</span>
+                <span>内嵌html5页面</span>
               </div>
             </div>
           </div>
@@ -117,7 +130,7 @@
       </div>
       <div class="section page" id="page4">
           <div class="container section-container">
-              <h2 class="title">四大前端框架 完美快速开发<small>四大前端框架始终坚持在技术创新中前行，引领行业重新定义前端开发时尚潮流</small></h2>
+              <h2 class="title">四大前端框架 完美快速开发<font>四大前端框架始终坚持在技术创新中前行，引领行业重新定义前端开发时尚潮流</font></h2>
               <div class="content-box" id="page-four-framework">
                   <div class="content-list">
                       <div class="content-list-bg">
