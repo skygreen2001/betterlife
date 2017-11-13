@@ -39,32 +39,33 @@ class UtilUeditor extends Util
      * @param string form_id  在线编辑器所在的Form的ID
      * @param string $configString 配置字符串
      */
-    public static function loadJsFunction($textarea_id,$viewObject=null,$form_id=null,$configString="")
+    public static function loadJsFunction($textarea_id, $viewObject = null, $form_id = null, $configString = "")
     {
-        $is_toolbar_full=false;
-        if ($is_toolbar_full){
-            UtilJavascript::loadJsContentReady($viewObject,"
+        $is_toolbar_full = false;
+        if ( $is_toolbar_full ) {
+            UtilJavascript::loadJsContentReady( $viewObject, "
                 var ue_{$textarea_id};
                 function pageInit_ue_{$textarea_id}()
                 {
-                    ue_{$textarea_id}=UE.getEditor('{$textarea_id}',{
+                    ue_{$textarea_id} = UE.getEditor('{$textarea_id}',{
                         allowDivTransToP: false
                     });
                 }
                 "
             );
-        }else{
+        } else {
             if (empty($configString)){
-                $configString=self::toolbar_normal();
+                $configString = self::toolbar_normal();
             }
-            UtilJavascript::loadJsContentReady($viewObject,"
+            UtilJavascript::loadJsContentReady($viewObject, "
                 var ue_{$textarea_id};
                 function pageInit_ue_{$textarea_id}()
                 {
-                    ue_{$textarea_id}=UE.getEditor('{$textarea_id}',{
-                        toolbars:$configString,
+                    ue_{$textarea_id} = UE.getEditor('{$textarea_id}', {
+                        toolbars: $configString,
                         allowDivTransToP: false
                     });
+                    $.edit.ueditorFullscreen('$textarea_id');
                 }
                 "
             );

@@ -479,7 +479,11 @@ class AutoCodeViewAdmin extends AutoCodeView
 // EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == "UEditor")}
-        <script>$ueEditor_prepare</script>
+        <script>
+          $(function(){
+            $ueEditor_prepare
+          });
+        </script>
     {/if}
 UETC;
         }

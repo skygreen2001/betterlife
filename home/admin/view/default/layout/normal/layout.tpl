@@ -14,7 +14,6 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     {$viewObject->css_ready|default:""}
-    {$viewObject->js_ready|default:""}
   </head>
   {php}
      flush();
@@ -22,5 +21,6 @@
   <body>
     {include file="$templateDir/layout/normal/navbar.tpl"}
     {block name=body}{/block}
+    {$viewObject->js_ready|default:""}
   </body>
 </html>
