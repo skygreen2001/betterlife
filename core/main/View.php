@@ -51,16 +51,21 @@ class View {
      */
     protected static $view_global=array();
     private function init_view_global(){
-        self::$view_global=array(
-            "url_base" => Gc::$url_base,
-            "site_name" => Gc::$site_name,
-            "appName" => Gc::$appName,
-            "template_url" =>$this->template_url_dir(),
-            "upload_url" => Gc::$upload_url,
+        self::$view_global = array(
+            "isDev"         => Gc::$dev_debug_on,
+            "url_base"      => Gc::$url_base,
+            "site_name"     => Gc::$site_name,
+            "appName"       => Gc::$appName,
+            "template_url"  =>$this->template_url_dir(),
+            "upload_url"    => Gc::$upload_url,
             "uploadImg_url" => Gc::$upload_url . "images/",
-            "templateDir" => Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName),
-            "encoding" => Gc::$encoding
+            "templateDir"   => Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName),
+            "encoding"      => Gc::$encoding
         );
+
+        if( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+          self::$view_global["isDev"] = true;
+        }
     }
     /**
     * @param mixed $moduleName 访问应用名
