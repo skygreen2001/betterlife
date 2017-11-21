@@ -8,7 +8,7 @@ angular.
     'App_Version' : '1.0.0',
     'PAGE_SIZE'   : 10,
     'CURRENT_PAGE': 1,
-    'SERVER_RUN'  : '',
-    'SERVER_TEST' : '',
+    'SERVER_RUN'  : 'http://127.0.0.1/bb/',
+    'SERVER_TEST' : 'http://127.0.0.1/bb/',
     'USERNAME'    : 'skygreen2001'
   });
