@@ -19,7 +19,7 @@ $total        = 1;
 $page_size    = Config_Mobile::$api_page_size;
 
 $pageBlogs = Blog::queryPageByPageNo( $page, $where_clause, $page_size, $orderDes );
-if ($pageTrips) {
+if ($pageBlogs) {
   $total = $pageBlogs["pageCount"];//总页数
   $count = Blog::count();//$pageTrips["count"];//总记录数
   if ($page == $total || $total==0) $data["code"] = 999;

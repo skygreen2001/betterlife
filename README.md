@@ -106,6 +106,7 @@
 ## 开发工具
 
 * [Atom](https://atom.io)
+* [Atom IDE](https://ide.atom.io/)
 * [Sublime](http://www.sublimetext.com)
 
 ## 框架目录定义

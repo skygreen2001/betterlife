@@ -24,6 +24,11 @@ angular.
 
       this.nickName     = ShareObject.getUserName();
 
+
+      this.listBlogs = ServerService.blogs().then(function(response) {
+          ctrl.blogs   =  response.data.result.data;
+      });
+
       this.showBlog = function(){
         location.href = "#blog/view";
       };
