@@ -16504,7 +16504,7 @@ a:hover {
   z-index: 20050;
 }
 
-.navbar.navbar-fixed-top {
+.navbar.navbar-inverse {
   border-bottom: 1px solid #222;
   z-index: 20000;
 }
@@ -16922,7 +16922,7 @@ footer #footer-inner a:hover {
 }
 
 @media (min-width: 768px) {
-  .navbar.navbar-fixed-top {
+  .navbar.navbar-inverse {
     border: 0px;
   }
 
@@ -17974,7 +17974,8 @@ body.login .login-container footer #footer-inner a:hover {
 }
 
 .index .navbar {
-  background-color: transparent;
+  border-radius: 0px;
+  margin-bottom: 0px;
   -webkit-transition: all 0.15s ease-in-out;
   -moz-transition: all 0.15s ease-in-out;
   -ms-transition: all 0.15s ease-in-out;
@@ -17982,6 +17983,10 @@ body.login .login-container footer #footer-inner a:hover {
 }
 
 .index .navbar.navbar-fixed-top {
+  background-color: transparent;
+}
+
+.index .navbar.navbar-inverse {
   border-bottom-color: transparent;
 }
 
@@ -18009,7 +18014,6 @@ body.login .login-container footer #footer-inner a:hover {
 }
 
 .index .navbar.nav-scroll {
-  background-color: rgba(0, 0, 0, 0.6) !important;
   -webkit-transition: all 0.15s ease-in-out;
   -moz-transition: all 0.15s ease-in-out;
   -ms-transition: all 0.15s ease-in-out;
@@ -18018,6 +18022,10 @@ body.login .login-container footer #footer-inner a:hover {
 }
 
 .index .navbar.nav-scroll.navbar-fixed-top {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.index .navbar.nav-scroll.navbar-inverse {
   border-bottom-color: #222;
 }
 
@@ -18097,8 +18105,8 @@ body.login .login-container footer #footer-inner a:hover {
   border: 2px solid #fff;
   width: 144px;
   height: 144px;
+  line-height: 144px;
   font-size: 108px;
-  line-height: 140px;
   display: block;
   font-weight: 500;
   color: #fff;
@@ -18390,7 +18398,7 @@ body.login .login-container footer #footer-inner a:hover {
 .index .section#page3 .page-over-header .slogan-bottom div {
   font-size: 5px;
   font-family: arial;
-  margin-top: 48px;
+  margin-top: 44px;
   color: #999;
 }
 
