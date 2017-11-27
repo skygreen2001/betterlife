@@ -236,28 +236,28 @@ class Project_Refactor
         $domain_root    = str_replace(Gc::$appName . DS, "", $default_dir);
         $domain_root    = str_replace(Gc::$appName_alias . DS, "", $domain_root);
         $save_dir       = self::$save_dir;
-        self::$save_dir = $domain_root.self::$save_dir.DS;
+        self::$save_dir = $domain_root . self::$save_dir . DS;
 
-        if( is_dir(self::$save_dir . "core" . DS) )
+        if ( is_dir(self::$save_dir . "core" . DS) )
         {
             self::$save_dir = $save_dir;
             self::UserInput();
             die("<div align='center'><font color='red'>该目录已存在!为防止覆盖您现有的代码,请更名!</font></div>");
         }
 
-        if( self::$reuse_type == EnumReusePjType::MINI )
+        if ( self::$reuse_type == EnumReusePjType::MINI )
         {
-            $include_dirs=array(
+            $include_dirs = array(
                 "install",
                 "core",
                 "include",
                 "tools"
             );
 
-            UtilFileSystem::createDir(self::$save_dir);
+            UtilFileSystem::createDir( self::$save_dir );
             foreach ($include_dirs as $include_dir) {
-                if(is_dir(Gc::$nav_root_path.$include_dir.DS)){
-                    smartCopy(Gc::$nav_root_path.$include_dir.DS,self::$save_dir.$include_dir.DS);
+                if( is_dir( Gc::$nav_root_path . $include_dir . DS ) ) {
+                    smartCopy(Gc::$nav_root_path . $include_dir . DS, self::$save_dir . $include_dir . DS);
                 }
             }
 
@@ -266,7 +266,7 @@ class Project_Refactor
 
             //修改Initializer.php初始化文件
             $init_file = self::$save_dir . "core" . DS . "main" . DS . "Initializer.php";
-            $content   = file_get_contents( $init_file );
+            $content   = file_get_contents($init_file);
             file_put_contents($init_file, $content);
 
             $include_files = array(
@@ -328,7 +328,6 @@ class Project_Refactor
                 $content = str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
                 file_put_contents($db_bak_file, $content);
             }
-
         } else {
             //生成新项目目录
             UtilFileSystem::createDir( self::$save_dir );
@@ -343,9 +342,6 @@ class Project_Refactor
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
             $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
-            if ( ( self::$reuse_type != EnumReusePjType::FULL ) ) {
-                $content = str_replace("\"model\",", "", $content);
-            }
             file_put_contents($gc_file, $content);
 
             //修改Config_Db.php配置文件
@@ -383,9 +379,29 @@ class Project_Refactor
             $old_name = self::$save_dir . Gc::$module_root . DS . Gc::$appName . DS;
             $new_name = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS;
             if ( is_dir($old_name) ) {
-                $toDeleteDir = $old_name . "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS;
-                UtilFileSystem::deleteDir( $toDeleteDir );
-                UtilFileSystem::createDir( $toDeleteDir );
+                $to_delet_subdirs = array(
+                    "src" . DS . "domain" . DS,
+                    "src" . DS . "services" . DS,
+                    "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS
+                );
+
+                foreach ($to_delet_subdirs as $to_delet_subdir) {
+                    $toDeleteDir = $old_name . $to_delet_subdir;
+                    UtilFileSystem::deleteDir( $toDeleteDir );
+                    UtilFileSystem::createDir( $toDeleteDir );
+                }
+
+                $del_model_action_files = UtilFileSystem::getAllFilesInDirectory( $old_name . DS . "action" . DS, array("php") );
+                foreach ($del_model_action_files as $del_model_action_file) {
+                  if ( !endWith($del_model_action_file, 'Action.php')
+                    && !endWith($del_model_action_file, 'Action_Auth.php')
+                    && !endWith($del_model_action_file, 'Action_Index.php')
+                    && !endWith($del_model_action_file, 'Action_Ajax.php')
+                  ) {
+                    @unlink($del_model_action_file);
+                  }
+                }
+
                 rename($old_name, $new_name);
             }
 
@@ -414,8 +430,15 @@ class Project_Refactor
                 case EnumReusePjType::SIMPLE:
                     self::IgnoreInCommon();
                     $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "model";
-                    if( is_dir( $toDeleteDir ) ) UtilFileSystem::deleteDir( $toDeleteDir );
-                    UtilFileSystem::createDir( $toDeleteDir );
+                    $del_model_action_files = UtilFileSystem::getAllFilesInDirectory( $toDeleteDir . DS . "action" . DS, array("php") );
+                    foreach ($del_model_action_files as $del_model_action_file) {
+                      if ( !endWith($del_model_action_file, 'ActionModel.php') && !endWith($del_model_action_file, 'Action_Index.php') ) {
+                        @unlink($del_model_action_file);
+                      }
+                    }
+                    $del_model_view_dir = $toDeleteDir . DS . "view" . DS . "default" . DS . "core";
+                    if( is_dir( $del_model_view_dir ) ) UtilFileSystem::deleteDir( $del_model_view_dir);
+                    UtilFileSystem::createDir( $del_model_view_dir );
 
                     self::IgnoreAllDbEngineExceptMysql();
                     self::IgnoreCommons();

@@ -21,100 +21,105 @@ class Dispatcher
      */
     public static function dispatch($router)
     {
-        if (Gc::$dev_profile_on) Profiler::mark(Wl::LOG_INFO_PROFILE_WEBURL);
-        $isValidRequet=false;
-        $controller = $router->getController();
-        if ($controller==Router::URL_DEFAULT_CONTROLLER){
-          include_once(Gc::$nav_root_path.Router::URL_DEFAULT_CONTROLLER.Config_F::SUFFIX_FILE_PHP);
+        if ( Gc::$dev_profile_on ) Profiler::mark( Wl::LOG_INFO_PROFILE_WEBURL );
+        $isValidRequet = false;
+        $controller    = $router->getController();
+        if ( $controller == Router::URL_DEFAULT_CONTROLLER ) {
+          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;
         }
-        $moduleName=$router->getModule();
-        if (array_key_exists($moduleName,Initializer::$moduleFiles)) {
-          $moduleFile=Initializer::$moduleFiles[$moduleName];
+        $moduleName = $router->getModule();
+        if ( array_key_exists($moduleName, Initializer::$moduleFiles) ) {
+          $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
-          include_once(Gc::$nav_root_path.Router::URL_DEFAULT_CONTROLLER.Config_F::SUFFIX_FILE_PHP);
+          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;
         }
-        $action_controller=Action::ROUTINE_CLASS_PREFIX.ucfirst($controller);
-        if (array_key_exists($action_controller,$moduleFile)) {
+        $action_controller = Action::ROUTINE_CLASS_PREFIX . ucfirst($controller);
+        if ( array_key_exists($action_controller, $moduleFile) ) {
             require_once($moduleFile[$action_controller]);
             /**
              * 当前运行的控制器Action Controller
              */
             $current_action = new $action_controller($moduleName);
 
-            $view=self::modelBindView($moduleName,$router,$current_action);
-            if ($current_action->isRedirected) {
-                $isValidRequet=true;
+            $view = self::modelBindView( $moduleName, $router, $current_action );
+            if ( $current_action->isRedirected ) {
+                $isValidRequet = true;
                 //break;
-            }else{
-                $output=self::output($moduleName,$router,$current_action);
-                if (self::$isOutputStatic){
-                    $output=render_tag($output);
+            } else {
+                $output = self::output( $moduleName, $router, $current_action );
+                if ( self::$isOutputStatic ) {
+                    $output = render_tag($output);
                     return $output;
-                }else{
+                } else {
                     echo $output;
                 }
-                $isValidRequet=true;
+                $isValidRequet = true;
             }
         }else {
-          include_once(Gc::$nav_root_path.Router::URL_DEFAULT_CONTROLLER.Config_F::SUFFIX_FILE_PHP);
+          if ( !is_dir($index_dir . "action") && file_exists($index_dir . "index.php") ) {
+            header("location:" . Gc::$url_base . Gc::$module_root . "/" . $moduleName . "/index.php");
+            die();
+          }
+
+          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;
         }
-        if (!$isValidRequet) {
+        if ( !$isValidRequet ) {
             LogMe::record(Wl::ERROR_INFO_CONTROLLER_UNKNOWN);
         }
-        if (Gc::$dev_profile_on) Profiler::unmark(Wl::LOG_INFO_PROFILE_WEBURL);
-        if (Gc::$dev_profile_on) {
-            Profiler::unmark(Wl::LOG_INFO_PROFILE_RUN);
-            Profiler::show(true);
+        if ( Gc::$dev_profile_on ) Profiler::unmark( Wl::LOG_INFO_PROFILE_WEBURL );
+        if ( Gc::$dev_profile_on ) {
+            Profiler::unmark( Wl::LOG_INFO_PROFILE_RUN );
+            Profiler::show( true );
         }
     }
 
     /**
      * 将控制器与视图进行绑定
      */
-    public static function modelBindView($moduleName,$router,&$current_action)
+    public static function modelBindView($moduleName, $router, &$current_action)
     {
         UnitTest::setUp();
         ob_start();
         $controller = $router->getController();
         $action = $router->getAction();
         $extras = $router->getExtras();
-        $data=$router->getData();
-        if (method_exists($current_action,"setData")){
-            $current_action->setData($data);
-        }else{
-            die ("请检查控制器定义类是否继承了Action!");
+        $data   = $router->getData();
+        if ( method_exists($current_action, "setData") ) {
+            $current_action->setData( $data );
+        } else {
+            die("请检查控制器定义类是否继承了Action!");
         }
-        $current_action->setExtras($extras);
+        $current_action->setExtras( $extras );
         /**
          * 将控制器与视图进行绑定
          */
-        $templateFile=$controller.DS.$action;
-        $view = Loader::load(Loader::CLASS_VIEW,$moduleName,$templateFile);
+        $templateFile = $controller . DS . $action;
+        $view         = Loader::load( Loader::CLASS_VIEW, $moduleName, $templateFile );
 
-        if (self::$isOutputStatic){
-            if (($view!=null)&&($view->viewObject!=null)){
-                $view->viewObject->css_ready="";
-                $view->viewObject->js_ready="";
+        if ( self::$isOutputStatic ) {
+            if ( ($view != null ) && ( $view->viewObject != null ) ) {
+                $view->viewObject->css_ready = "";
+                $view->viewObject->js_ready  = "";
             }
-            UtilAjax::$JsLoaded=array();
-            UtilCss::$CssLoaded=array();
+            UtilAjax::$JsLoaded = array();
+            UtilCss::$CssLoaded = array();
         }
-        $current_action->setView($view);
+        $current_action->setView( $view );
         ob_end_clean();
-        if (method_exists($current_action,$action)){
-            if (method_exists($current_action,"beforeAction")){
+        if ( method_exists($current_action, $action) ) {
+            if ( method_exists($current_action, "beforeAction") ) {
                 $current_action->beforeAction();
             }
             $current_action->$action();
-            if (get_class($current_action)=="Action_Ajax")die();
-            if (method_exists($current_action,"afterAction")){
+            if ( get_class($current_action) == "Action_Ajax" ) die();
+            if ( method_exists($current_action, "afterAction") ) {
                 $current_action->afterAction();
             }
-        }else{
-          include_once(Gc::$nav_root_path.Router::URL_DEFAULT_CONTROLLER.Config_F::SUFFIX_FILE_PHP);
+        } else {
+          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;
         }
         UnitTest::tearDown();
@@ -125,25 +130,25 @@ class Dispatcher
      * 管理视图：输出结果
      * @var View $view 视图
      */
-    public static function output($moduleName,$router,$current_action)
+    public static function output($moduleName, $router, $current_action)
     {
         ob_start();
-        $view=$current_action->getView();
+        $view       = $current_action->getView();
         $controller = $router->getController();
-        $action = $router->getAction();
-        $templateFile=$controller.DS.$action;//模板文件路径名称
-        $controller_path=$router->getController_path();
-        if (!empty($controller_path)){
-            if (endWith($controller_path,DIRECTORY_SEPARATOR)){
-                $templateFile=$controller_path.$templateFile;
-            }else{
-                $templateFile=$controller_path.DS.$templateFile;
+        $action     = $router->getAction();
+        $templateFile    = $controller.DS.$action;//模板文件路径名称
+        $controller_path = $router->getController_path();
+        if ( !empty($controller_path) ) {
+            if ( endWith( $controller_path, DS ) ) {
+                $templateFile = $controller_path . $templateFile;
+            } else {
+                $templateFile = $controller_path . DS . $templateFile;
             }
         }
-        if (!file_exists(Gc::$nav_root_path.$view->template_dir().$templateFile.$view->template_suffix_name())) {
-            throw new Exception(" view/{$controller}".Wl::ERROR_INFO_VIEW_UNKNOWN." '".$action.$view->template_suffix_name()."'");
+        if ( !file_exists(Gc::$nav_root_path . $view->template_dir() . $templateFile . $view->template_suffix_name()) ) {
+            throw new Exception(" view/{$controller}" . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $action . $view->template_suffix_name() . "'");
         }
-        $view->output($templateFile,$view->templateMode(),$current_action);
+        $view->output($templateFile, $view->templateMode(), $current_action);
         $output = ob_get_clean();
         return $output;
     }
@@ -156,26 +161,26 @@ class Dispatcher
      * @param <type> $time 定时
      * @param <type> $msg 显示信息
      */
-    public static function redirect($url,$time=0,$msg='')
+    public static function redirect($url, $time = 0, $msg = '')
     {
         //多行URL地址支持
         $url = str_replace(array("\n", "\r"), '', $url);
-        if(empty($msg))
-            $msg =  Wl::INFO_REDIRECT_PART1.$time.Wl::INFO_REDIRECT_PART2.$url;
-        if (!headers_sent()) {
+        if ( empty($msg) )
+            $msg =  Wl::INFO_REDIRECT_PART1 . $time . Wl::INFO_REDIRECT_PART2 . $url;
+        if ( !headers_sent() ) {
             // redirect
-            if(0 === $time) {
+            if (0 === $time) {
                 header("Location: ".$url);
-            }else {
+            } else {
                 header("refresh:{$time};url={$url}");
                 echo($msg);
             }
             exit();
         }else {
             $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
-            if($time!=0)
+            if ( $time != 0 )
                 $str .= $msg;
-            exit($str);
+            exit ($str);
         }
     }
 }

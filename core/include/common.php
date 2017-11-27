@@ -5,22 +5,22 @@
  * @param string|class|bool $object 需要生成注入的对象实体|类名称
  * @return array 默认返回数组,如果$object指定数据对象，返回指定数据对象列表，$object=true，返回stdClass列表。
  */
-function sqlExecute( $sqlstring, $object=null )
+function sqlExecute($sqlstring, $object = null)
 {
-    if (empty($sqlstring)) {
+    if ( empty($sqlstring) ) {
         return null;
     }
-    if ($object){
-        if (is_bool($object))$object=null;
-        return Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring,$object);
-    }else{
-        $lists=Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring,$object);
-        if ($lists){
-            if (is_array($lists)){
-                if (count($lists)>0){
-                    foreach ($lists as $key=>$data) {
-                        if (is_object($data)){
-                            $lists[$key]=(array) $data;
+    if ( $object ){
+        if ( is_bool($object) )$object = null;
+        return Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+    } else {
+        $lists=Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+        if ( $lists ) {
+            if ( is_array($lists) ) {
+                if ( count($lists) > 0 ) {
+                    foreach ($lists as $key => $data) {
+                        if ( is_object($data) ) {
+                            $lists[$key] = (array) $data;
                         }
                     }
                 }
@@ -33,9 +33,9 @@ function sqlExecute( $sqlstring, $object=null )
 /**
  * 设置处理所有未捕获异常的用户定义函数
  */
-function e_me( $exception )
+function e_me($exception)
 {
-    ExceptionMe::recordUncatchedException($exception);
+    ExceptionMe::recordUncatchedException( $exception );
     e_view();
 }
 
@@ -44,8 +44,8 @@ function e_me( $exception )
  */
 function e_view()
 {
-    if (Gc::$dev_debug_on) {
-        echo ExceptionMe::showMessage(ExceptionMe::VIEW_TYPE_HTML_TABLE);
+    if ( Gc::$dev_debug_on ) {
+        echo ExceptionMe::showMessage( ExceptionMe::VIEW_TYPE_HTML_TABLE );
     }
 }
 
@@ -54,12 +54,12 @@ function e_view()
  * @param mixed $subject
  * @param mixed $needle
  */
-function contain( $subject, $needle )
+function contain($subject, $needle)
 {
-    if (empty($subject))return false;
-    if (strpos(strtolower($subject),strtolower($needle))!== false) {
+    if ( empty($subject) ) return false;
+    if ( strpos(strtolower($subject), strtolower($needle))!== false ) {
         return true;
-    }else {
+    } else {
         return false;
     }
 }
@@ -69,12 +69,12 @@ function contain( $subject, $needle )
  * @param mixed $subject
  * @param mixed $array
  */
-function contains( $subject, $array )
+function contains($subject, $array)
 {
-    $result=false;
-    if (!empty($array)&&is_array($array)){
-        foreach ($array as $element){
-            if (contain($subject,$element)){
+    $result = false;
+    if ( !empty($array) && is_array($array) ) {
+        foreach ($array as $element) {
+            if (contain($subject, $element)) {
                 return true;
             }
         }
@@ -89,11 +89,11 @@ function contains( $subject, $array )
  * @param bool $strict 是否严格区分字母大小写
  * @return bool true:是，false:否。
  */
-function startWith( $haystack, $needle, $strict=true )
+function startWith($haystack, $needle, $strict=true)
 {
-    if (!$strict){
-        $haystack=strtoupper($haystack);
-        $needle=strtoupper($needle);
+    if ( !$strict ) {
+        $haystack = strtoupper($haystack);
+        $needle   = strtoupper($needle);
     }
     return strpos($haystack, $needle) === 0;
 }
@@ -105,11 +105,11 @@ function startWith( $haystack, $needle, $strict=true )
  * @param bool $strict 是否严格区分字母大小写
  * @return bool true:是，false:否。
  */
-function endWith( $haystack, $needle, $strict=true )
+function endWith($haystack, $needle, $strict = true)
 {
-    if (!$strict){
-        $haystack=strtoupper($haystack);
-        $needle=strtoupper($needle);
+    if ( !$strict ) {
+        $haystack = strtoupper($haystack);
+        $needle   = strtoupper($needle);
     }
     return (strpos(strrev($haystack), strrev($needle)) === 0);
 }
@@ -121,16 +121,16 @@ function endWith( $haystack, $needle, $strict=true )
  * @param $in_encoding
  * @param $out_encoding
  */
-function escape( $string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2' )
+function escape($string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
 {
     $return = '';
-    if (function_exists('mb_get_info')) {
-        for($x = 0; $x < mb_strlen ( $string, $in_encoding ); $x ++) {
-            $str = mb_substr ( $string, $x, 1, $in_encoding );
-            if (strlen ( $str ) > 1) { // 多字节字符
-                $return .= '%u' . strtoupper ( bin2hex ( mb_convert_encoding ( $str, $out_encoding, $in_encoding ) ) );
+    if ( function_exists('mb_get_info') ) {
+        for ($x = 0; $x < mb_strlen($string, $in_encoding); $x++) {
+            $str = mb_substr($string, $x, 1, $in_encoding);
+            if (strlen($str) > 1) { // 多字节字符
+                $return .= '%u' . strtoupper(bin2hex(mb_convert_encoding($str, $out_encoding, $in_encoding)));
             } else {
-                $return .= '%' . strtoupper ( bin2hex ( $str ) );
+                $return .= '%' . strtoupper(bin2hex($str));
             }
         }
     }
@@ -144,11 +144,11 @@ function escape( $string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2' )
  * @param $in_encoding
  * @param $out_encoding
  */
-function unescape( $str )
+function unescape($str)
 {
     $ret = '';
     $len = strlen($str);
-    for ($i = 0; $i < $len; $i ++)
+    for ($i = 0; $i < $len; $i++)
     {
         if ($str[$i] == '%' && $str[$i + 1] == 'u')
         {
@@ -177,7 +177,7 @@ function unescape( $str )
  * @link http://www.adobe.com/cn/devnet/flex/articles/flex_php_05.html
  * @param mixed $var
  */
-function logMe( $var )
+function logMe($var)
 {
     $filename = dirname(__FILE__) . '/__log.txt';
     if (!$handle = fopen($filename, 'a')) {
@@ -198,12 +198,12 @@ function logMe( $var )
  * @param type $s
  * @param type $isEcho
  */
-function print_pre( $s, $isEcho=false )
+function print_pre($s, $isEcho = false)
 {
-    if ($isEcho){
-        print "<pre>";print_r($s);print "</pre>";
-    }else{
-        return "<pre>".var_export($s,true)."</pre>";
+    if ( $isEcho ) {
+        print "<pre>"; print_r($s); print "</pre>";
+    } else {
+        return "<pre>" . var_export($s,true) . "</pre>";
     }
 }
 
@@ -212,14 +212,14 @@ function print_pre( $s, $isEcho=false )
  * @param string $str 原内容
  * @return string 新内容
  */
-function unicode2utf8( $str )
+function unicode2utf8($str)
 {
-    if(!$str) return $str;
+    if ( !$str ) return $str;
     $decode = json_decode($str);
-    if($decode) return $decode;
-    $str = '["' . $str . '"]';
+    if ( $decode ) return $decode;
+    $str    = '["' . $str . '"]';
     $decode = json_decode($str);
-    if(count($decode) == 1){
+    if( count($decode) == 1 ) {
         return $decode[0];
     }
     return $str;
