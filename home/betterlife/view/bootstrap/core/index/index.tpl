@@ -188,15 +188,9 @@
           </div>
       </div>
 
-      <footer>
-        <div id="footer-inner" class="container clr">
-          <div id="copyright" class="clr" role="contentinfo">© 2017-2020 Betterlife - All Rights Reserved.&nbsp;<a title="License" href="https://github.com/skygreen2001/betterlife.core/blob/master/LICENSE" target="_blank">License</a>&nbsp;| <a title="Help" href="https://github.com/skygreen2001/betterlife.front" target="_blank">Help</a></div>
-        </div>
-      </footer>
+      {include file="$templateDir/layout/normal/footer.tpl"}
     </div>
 
-    <script src="{$template_url}js/common/bower/bower.min.js"></script>
-    <script src="{$template_url}js/normal/common.js"></script>
     <script src="{$template_url}js/common/bower/index.bower.min.js"></script>
     <script src="{$template_url}js/index.js"></script>
 </body>
