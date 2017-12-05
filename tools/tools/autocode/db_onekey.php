@@ -7,7 +7,7 @@ if ( isset($_REQUEST["model_save_dir"]) && !empty($_REQUEST["model_save_dir"]) )
 
     $overwrite  = array();
     $ow_modules = array(
-        "domain", "front", "model", "admin"
+        "domain", "ajax", "front", "model", "admin"
     );
     foreach ($ow_modules as $module) {
         if ( isset($_REQUEST["overwrite$module"] ) && !empty($_REQUEST["overwrite$module"]) )$overwrite = array_merge($overwrite, $_REQUEST["overwrite$module"]);

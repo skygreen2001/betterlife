@@ -5,7 +5,7 @@ $(function(){
     var urlstr    = location.href;
     $(linkName).each(function () {
       var link = $(this).attr('href').replace(/\.\.\//g, "");
-      link     = link.substring(0, link.lastIndexOf("."));
+      link     = link.substring(0, link.lastIndexOf(".")+1);
       if ( link && ( (urlstr + '/').indexOf(link) > -1) && ( link != '' ) && ( link != '#' ) ) {
         $(this).addClass('active');
         urlstatus = true;

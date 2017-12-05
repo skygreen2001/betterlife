@@ -91,26 +91,26 @@ MODEL;
             $moreContent .= self::groupFileContentsStatus( self::$enum_files, "domain", true );
         }
 
-        $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>Ajax请求数据<Domain|Model></a>";
+        $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>Ajax请求数据</a>";
         $moreContent .= str_replace("[title]", $title, $module_model);
-        $moreContent  = str_replace("[module_name]", "domain", $moreContent);
+        $moreContent  = str_replace("[module_name]", "ajax", $moreContent);
 
         if( self::$json_admin_files && ( count(self::$json_admin_files) > 0 ) ){
-            $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>枚举所需数据Json文件</a>";
+            $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>枚举后台所需数据Json文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "admin" );
+            $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "ajax" );
         }
 
         if( self::$api_admin_files && ( count(self::$api_admin_files) > 0 ) ){
-            $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>列表所需Api Web文件</a>";
+            $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>列表后台所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "admin" );
+            $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "ajax" );
         }
 
         if( self::$api_select_files && ( count(self::$api_select_files) > 0 ) ){
             $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>编辑所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$api_select_files, "admin" );
+            $moreContent .= self::groupFileContentsStatus( self::$api_select_files, "ajax" );
         }
 
         if( Config_AutoCode::ONLY_DOMAIN ){
@@ -307,6 +307,7 @@ MODEL;
     function toggle(source)
     {
         toggleGroup(source, 'domain');
+        toggleGroup(source, 'ajax');
         toggleGroup(source, 'bg');
         toggleGroup(source, 'front');
         toggleGroup(source, 'model');

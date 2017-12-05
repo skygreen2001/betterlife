@@ -1,21 +1,33 @@
 $(function(){
   //自动高亮当前页面链接地址对应的导航菜单
-  var urlstr = location.href;
-  var urlstatus=false;
-  $(".sidebar-nav li a").each(function () {
-    if (((urlstr + '/').indexOf($(this).attr('href')) > -1)&&($(this).attr('href')!='')&&($(this).attr('href')!='#')) {
-      $(this).addClass('active');
-      urlstatus = true;
-    } else {
-      $(this).removeClass('active');
+  function showLayoutMenuActive(linkName){
+    var urlstatus = false;
+    var urlstr    = location.href;
+    $(linkName).each(function () {
+      var link = $(this).attr('href').replace(/\.\.\//g, "");
+      link     = link.substring(0, link.lastIndexOf(".")+1);
+      if ( link && ( (urlstr + '/').indexOf(link) > -1) && ( link != '' ) && ( link != '#' ) ) {
+        $(this).addClass('active');
+        urlstatus = true;
+        var parent = $(this).parent().parent();
+        if (parent.hasClass("sub-menu")) {
+          parent.parent().find("a.has-ul").addClass('hover');
+          parent.slideToggle(200);
+          parent.parent().find("i.menu-right").toggleClass("rotated");
+        }
+      } else {
+        $(this).removeClass('active');
+      }
+      if($(linkName + ".active").length>1){
+        $(linkName).eq(0).removeClass('active');
+      }
+    });
+    if (!urlstatus) {
+      $(linkName).eq(0).addClass('active');
     }
-    if($(".sidebar-nav li a.active").length>1){
-      $(".sidebar-nav li a").eq(0).removeClass('active');
-    }
-  });
-  if (!urlstatus) {
-    $(".sidebar-nav li a").eq(0).addClass('active');
   }
+  showLayoutMenuActive(".sidebar-nav li a");
+  showLayoutMenuActive("#navbar .navbar-nav li a");
 
   //左侧导航条有子菜单点选
   $(".sidebar-nav >li > a.has-ul").click(function(e){
@@ -40,8 +52,10 @@ $(function(){
     $(".sidebar").toggle();
   })
 
+  if ( ($(window).width() > 755) && ($(window).width() < 826) ) collapse_sidebar();
   $(window).resize(function(){
-    if($(window).width()>752)$(".sidebar").removeAttr("style");
+    if ( $(window).width() > 752 ) $(".sidebar").removeAttr("style");
+
   });
 
   //左侧导航条顶部切换按钮提示
@@ -52,41 +66,7 @@ $(function(){
 
   //左侧导航条点选是否折叠
   $(".navigation-header").click(function(){
-    $(".page-sidebar .sidebar-nav ul").removeAttr("style");
-    $(".page-sidebar").toggleClass("pin");
-    $(".content-wrapper").toggleClass("pin");
-    $('.page-sidebar.pin .sidebar-nav > li > a span').removeAttr("style");
-
-    // 左侧导航条折叠后
-    if($('.page-sidebar').hasClass('pin')){
-      //鼠标移动到图标上
-      $(".page-content").off('mouseenter', '.page-sidebar.pin .sidebar-nav > li > a');
-
-      $(".page-content").on('mouseenter','.page-sidebar.pin .sidebar-nav > li > a', function(){
-        $(".page-sidebar .sidebar-nav ul").css("display","none");
-        $('.page-sidebar.pin .sidebar-nav > li > a span i').remove();
-        $('.page-sidebar.pin .sidebar-nav > li > a span').css("display","none");
-
-        $(this).find("span").prepend("<i class='glyphicon glyphicon-triangle-left'></i>");
-        $(this).find("span").css("top",$(this).position().top);
-        $(this).find("span").css("display","block");
-        $(this).find("span").css("pointer-events","auto");
-
-        if($(this).hasClass('has-ul')){
-          $(this).next("ul").css("top",$(this).position().top+40);
-          $(this).next("ul").css("display","block");
-        }
-      });
-
-      $(".content-wrapper,.navigation-header").hover(function(){
-        $(".page-sidebar .sidebar-nav ul").css("display","none");
-        if($('.page-sidebar').hasClass('pin'))$('.sidebar-nav > li > a').find("span").css("display","none");
-      });
-    }else{
-      $('.page-sidebar .sidebar-nav > li > a span').removeAttr("style");
-      $(".page-sidebar .sidebar-nav ul").removeAttr("style");
-      $('.page-sidebar .sidebar-nav > li > a span i').remove();
-    }
+    collapse_sidebar();
   });
 
   // 顶部导航条搜索展开
@@ -100,17 +80,56 @@ $(function(){
 
   // 页面整体布局宽窄屏切换
   $("#btn-layout-container").click(function(){
-    if ($(this).find("i").hasClass("glyphicon-resize-full")){
+    if ($(this).find("i").hasClass("glyphicon-resize-full")) {
       $(this).find("i").removeClass("glyphicon-resize-full").addClass("glyphicon-resize-small");
       $(".navbar .navbar-container").removeClass("container");
       $(".page-container").removeClass("container");
-    }else{
+    } else {
       $(this).find("i").removeClass("glyphicon-resize-small").addClass("glyphicon-resize-full");
       $(".navbar .navbar-container").addClass("container");
       $(".page-container").addClass("container");
       $(window).resize();
     }
   });
+
+  /** 切换折叠左侧导航条 */
+  function collapse_sidebar(){
+    $(".page-sidebar .sidebar-nav ul").removeAttr("style");
+    $(".page-sidebar").toggleClass("pin");
+    $(".content-wrapper").toggleClass("pin");
+    $('.page-sidebar.pin .sidebar-nav > li > a span').removeAttr("style");
+
+    // 左侧导航条折叠后
+    if ($('.page-sidebar').hasClass('pin')) {
+      //鼠标移动到图标上
+      $(".page-content").off('mouseenter', '.page-sidebar.pin .sidebar-nav > li > a');
+
+      $(".page-content").on('mouseenter','.page-sidebar.pin .sidebar-nav > li > a', function(){
+        $(".page-sidebar .sidebar-nav ul").css("display","none");
+        $('.page-sidebar.pin .sidebar-nav > li > a span i').remove();
+        $('.page-sidebar.pin .sidebar-nav > li > a span').css("display","none");
+
+        $(this).find("span").prepend("<i class='glyphicon glyphicon-triangle-left'></i>");
+        $(this).find("span").css("top",$(this).position().top);
+        $(this).find("span").css("display","block");
+        $(this).find("span").css("pointer-events","auto");
+
+        if ($(this).hasClass('has-ul')) {
+          $(this).next("ul").css("top",$(this).position().top+40);
+          $(this).next("ul").css("display","block");
+        }
+      });
+
+      $(".content-wrapper,.navigation-header").hover(function(){
+        $(".page-sidebar .sidebar-nav ul").css("display","none");
+        if($('.page-sidebar').hasClass('pin'))$('.sidebar-nav > li > a').find("span").css("display","none");
+      });
+    } else {
+      $('.page-sidebar .sidebar-nav > li > a span').removeAttr("style");
+      $(".page-sidebar .sidebar-nav ul").removeAttr("style");
+      $('.page-sidebar .sidebar-nav > li > a span i').remove();
+    }
+  }
 
   //布局自适应高度，确保footer始终显示在页面底部
   var offset = $(window).height() - $(".navbar-container").height() - $(".breadcrumb-line").height() -$("footer").height();

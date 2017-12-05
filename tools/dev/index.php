@@ -95,7 +95,7 @@ class Project_Refactor
     public static $ignore_files  = array(
         ".DS_Store",
         // ".gitignore",
-        ".project",
+        ".project"
     );
 
     /**
@@ -456,10 +456,16 @@ class Project_Refactor
                     break;
             }
         }
+
+        // 删除原来的代码生成配置文件
+        $del_autocode_config_xml_file = self::$save_dir . "tools" . DS . "tools" . DS . "autocode". DS ."autocode.config.xml";
+        @unlink($del_autocode_config_xml_file);
+        
         self::$save_dir = $save_dir;
         self::UserInput();
         $default_dir    = Gc::$url_base;
         $domain_url     = str_replace(Gc::$appName . "/", "", $default_dir);
+
 
         if ( contain( strtolower(php_uname()), "darwin") ) {
             $domain_url   = UtilNet::urlbase();
