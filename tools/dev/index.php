@@ -382,9 +382,10 @@ class Project_Refactor
                 $to_delet_subdirs = array(
                     "src" . DS . "domain" . DS,
                     "src" . DS . "services" . DS,
-                    "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS
+                    "view" . DS . "bootstrap" . DS . "js" . DS . "core" . DS,
+                    "view" . DS . "default" . DS . "tmp" . DS . "templates_c" . DS,
+                    "view" . DS . "bootstrap" . DS . "tmp" . DS . "templates_c" . DS
                 );
-
                 foreach ($to_delet_subdirs as $to_delet_subdir) {
                     $toDeleteDir = $old_name . $to_delet_subdir;
                     UtilFileSystem::deleteDir( $toDeleteDir );
@@ -460,7 +461,7 @@ class Project_Refactor
         // 删除原来的代码生成配置文件
         $del_autocode_config_xml_file = self::$save_dir . "tools" . DS . "tools" . DS . "autocode". DS ."autocode.config.xml";
         @unlink($del_autocode_config_xml_file);
-        
+
         self::$save_dir = $save_dir;
         self::UserInput();
         $default_dir    = Gc::$url_base;
