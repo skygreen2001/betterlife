@@ -1,4 +1,9 @@
+
     <meta http-equiv="Content-Type" content="text/html; charset={$encoding}" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    
     <meta http-equiv="Lang" content="zh_CN" />
     <meta name="author" content="skygreen" />
     <meta http-equiv="Reply-to" content="skygreen2001@gmail.com" />

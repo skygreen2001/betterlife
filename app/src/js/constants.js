@@ -10,6 +10,7 @@ angular.
     'CURRENT_PAGE': 1,
     'SERVER_RUN'  : '../../',
     'SERVER_TEST' : 'http://127.0.0.1/bb/',
+    'IMG_URL'     : 'http://127.0.0.1/bb/app/www',
     'PORT'        : '9000',//gulp运行的端口号
     'USERNAME'    : 'skygreen2001'
   });

@@ -1,20 +1,35 @@
 $(function(){
-  // 顶部导航滚动显示底部挡板效果
-  $(document).scrollTop() <= 0 ? $(".navbar").removeClass("nav-scroll") : $(".navbar").addClass("nav-scroll");
-  $(document).on("scroll", function() {
-      if ($(window).width() >= 768){
-        $(document).scrollTop() <= 0 ? $(".navbar").removeClass("nav-scroll") : $(".navbar").addClass("nav-scroll");
-      }
-  });
-  if ($(window).width() < 768) $(".navbar").addClass("nav-scroll");
-  $("nav").hover(function() {
-      $(".navbar").addClass("nav-scroll");
-  },function(){
-      if ($(window).width() >= 768) $(".navbar").removeClass("nav-scroll");
-  });
 
   // 第一屏满屏显示
   $("html").css("height", "100%");
+
+  // 第一屏内容垂直居中显示
+  var lead_core_height = $(window).height() - $(".index #page1 .bb-lead-core").height();
+  if (lead_core_height>0) {
+    $(".index #page1 .section-header-container").css("margin-top", lead_core_height/2);
+  }
+  $("#btn-toggle-sidebar").css("display","none");
+  if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
+
+  // 顶部导航滚动显示底部挡板效果
+  $(document).scrollTop() <= 0 ? $(".navbar").removeClass("nav-scroll") : $(".navbar").addClass("nav-scroll");
+  $(document).on("scroll", function() {
+    if ($(document).scrollTop() <= 0) {
+      $(".navbar").removeClass("nav-scroll");
+      if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
+    } else {
+      $(".navbar").addClass("nav-scroll");
+      if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","block");
+    }
+  });
+
+  $("nav").hover(function() {
+    $(".navbar").addClass("nav-scroll");
+    if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","block");
+  },function(){
+    $(".navbar").removeClass("nav-scroll");
+    if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
+  });
 
   // 顶部导航条搜索展开
   $(".search-toggle").click(function(){
@@ -41,6 +56,8 @@ $(function(){
       $('#page3 .content-head .page-detail').find("p[data-id='"+dataId+"']").css("display","block");
     });
   });
+
+  $(".content-list-bg").click(function(){});
 
   //上下滑屏逐个出现
   if($(".section")){

@@ -3,7 +3,7 @@
 angular.
   module('bb.controllers').
   controller('MainController',
-    function($scope, $location, ShareObject, Constants) {
+    function($scope, $location, ServerService, ShareObject, Constants) {
       var queryParams = $location.search();
       if (queryParams.userId) {
         ShareObject.setUserId(queryParams.userId);
@@ -11,6 +11,9 @@ angular.
 
       $scope.appName    = Constants.APP_NAME;
       $scope.appVersion = Constants.App_Version;
+
+      ServerService.init();
+      $scope.IMG_URL = Constants.IMG_URL;
 
       // User agent displayed in home page
       $scope.userAgent = navigator.userAgent;

@@ -1,59 +1,15 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-<body class="index">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">
-            <i class="glyphicon glyphicon-grain"></i> Betterlife Front UI
-          </a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">首页</a></li>
-            <li><a href="html/blog/list.html">读书</a></li>
-            <li><a href="#movie">电影</a></li>
-            <li><a href="#music">音乐</a></li>
-            <li><a href="#dev">研发</a></li>
-            <li class="dropdown">
-              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                其它
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="dLabel">
-                <li><a href="#ebuy">购物</a></li>
-                <li><a href="#topic">话题</a></li>
-                <li><a href="html/model/preview.html">幽默</a></li>
-              </ul>
-            </li>
-            <li><a href="{$url_base}index.php?go=betterlife.auth.login"><span class="glyphicon glyphicon-log-in"></span>登录</a></li>
-            <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
-          </ul>
-        </div>
-        <div id="searchform-header" class="hidden">
-          <div id="searchform-header-inner">
-            <form method="get" action="" class="header-searchform">
-              <input type="search" class="form-control" name="s" autocomplete="off" autofocus="autofocus" placeholder="搜索">
-            </form>
-            <span id="searchform-header-close" class="glyphicon glyphicon-remove search-toggle"></span>
-          </div>
-        </div>
-      </div>
-    </nav>
 
     <div id="main-content-container" class="container-fluid">
       <div class="page" id="page1">
         <div class="container section-header-container">
-          <span class="bb-icon">B</span>
-          <p class="lead">Betterlife Front UI is the most popular front-end framework for developing responsive, web first projects on the web browser.</p>
-          <p class="lead"><a href="https://github.com/skygreen2001/betterlife.front/archive/master.zip" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Front UI</a></p>
-          <p class="version">版本 v1.0.0</p>
+          <div class="bb-lead-core">
+            <span class="bb-icon">B</span>
+            <p class="lead">Betterlife Front UI is the most popular front-end framework for developing responsive, web first projects on the web browser.</p>
+            <p class="lead"><a href="https://github.com/skygreen2001/betterlife.front/archive/master.zip" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Front UI</a></p>
+            <p class="version">版本 v1.0.0</p>
+          </div>
         </div>
         <div class="starfield"></div>
       </div>
@@ -193,5 +149,5 @@
 
     <script src="{$template_url}js/common/bower/index.bower.min.js"></script>
     <script src="{$template_url}js/index.js"></script>
-</body>
+
 {/block}

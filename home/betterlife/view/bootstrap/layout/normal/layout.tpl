@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" id="index">
   <head>
     {include file="$templateDir/layout/normal/header.tpl"}
     <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
@@ -23,7 +23,8 @@
   {php}
      flush();
   {/php}
-  <body>
+  <body class="index">
+    {include file="$templateDir/layout/normal/navbar.tpl"}
     {block name=body}{/block}
   </body>
 </html>

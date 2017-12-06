@@ -17,7 +17,10 @@ angular.
         return url;
       };
 
-      Constants.SERVER_RUN = this.server_config();
+      this.init = function(){
+        Constants.SERVER_RUN = this.server_config();
+        Constants.IMG_URL    = Constants.SERVER_RUN + "app/src";
+      };
 
       // 退出登录
       this.exit = function() {
