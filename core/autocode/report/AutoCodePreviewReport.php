@@ -257,6 +257,8 @@ MODEL;
             } else {
                 $file_content = str_replace("[status]", $status[1], $file_content);
                 $file_content = str_replace("[checked]", "checked", $file_content);
+                //新生成代码文件无旧代码文件就直接显示新生成代码文件
+                $file_content = str_replace("old_file=" . $origin_file, "old_file=" . $save_dir . $file, $file_content);
             }
 
             if ( $only_once ) {

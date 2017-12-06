@@ -508,6 +508,8 @@ class AutoCode extends Object
                 $table_comment = preg_split("/[\s,]+/", $table_comment);
                 $table_comment = $table_comment[0];
             }
+
+            if (empty($table_comment)) $table_comment = self::getInstancename( $tablename );
         }else{
             $table_comment = self::getClassname( $tablename );
         }
