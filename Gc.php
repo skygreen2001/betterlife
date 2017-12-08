@@ -300,22 +300,23 @@ class Gc {
      * 无需配置自动注入网站的网络地址和物理地址。
      */
     //<editor-fold defaultstate='collapsed' desc='初始化设置'>
+    public static $is_port = true;
     public static function init()
     {
-        if (empty(Gc::$nav_root_path)) Gc::$nav_root_path = __DIR__.DS;
-        if (empty(Gc::$nav_framework_path)) Gc::$nav_framework_path = __DIR__.DS;
-        if (empty(Gc::$upload_path)) Gc::$upload_path = Gc::$nav_root_path.'upload'.DS;
-        if (empty(Gc::$attachment_path)) Gc::$attachment_path = Gc::$upload_path.'attachment'.DS;
-        if (empty(Gc::$url_base)){
+        if ( empty(Gc::$nav_root_path) ) Gc::$nav_root_path = __DIR__ . DS;
+        if ( empty(Gc::$nav_framework_path) ) Gc::$nav_framework_path = __DIR__ . DS;
+        if ( empty(Gc::$upload_path) ) Gc::$upload_path = Gc::$nav_root_path . 'upload' . DS;
+        if ( empty(Gc::$attachment_path) ) Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
+        if ( empty(Gc::$url_base) ) {
             $baseurl = '';
-            if(isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS'])){
+            if ( isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS']) ) {
                 $baseurl = 'https://'.$_SERVER['HTTP_HOST'];
-                if($_SERVER['SERVER_PORT'] != 443) $baseurl .= ':'.$_SERVER['SERVER_PORT'];
-            }else{
-                if(array_key_exists('HTTP_HOST', $_SERVER)) $baseurl = 'http://'.$_SERVER['HTTP_HOST'];
-                if(array_key_exists('SERVER_PORT', $_SERVER)) {
-                    if (!(strpos($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']) !== false)) {
-                        if($_SERVER['SERVER_PORT'] !=80) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                if ( self::$is_port && ( $_SERVER['SERVER_PORT'] != 443 ) ) $baseurl .= ':'.$_SERVER['SERVER_PORT'];
+            } else {
+                if ( array_key_exists('HTTP_HOST', $_SERVER) ) $baseurl = 'http://'.$_SERVER['HTTP_HOST'];
+                if ( array_key_exists('SERVER_PORT', $_SERVER) ) {
+                    if ( !(strpos($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']) !== false) ) {
+                        if ( self::$is_port && $_SERVER['SERVER_PORT'] != 80 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
                     }
                 }
             }
@@ -326,24 +327,24 @@ class Gc {
             $file_sub_dir = str_replace(DS, "/", $file_sub_dir);
             Gc::$url_base = str_replace(strtolower($file_sub_dir), "", strtolower($baseurl));
         }
-        if (empty(Gc::$upload_url)) {
+        if ( empty(Gc::$upload_url) ) {
             Gc::$upload_url = Gc::$url_base;
             $same_part = explode(DS,Gc::$nav_root_path);
-            if ($same_part && (count($same_part) > 2)) {
+            if ( $same_part && (count($same_part) > 2) ) {
                 $same_part = $same_part[count($same_part)-2];
-                if (strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false) {
+                if ( strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false ) {
                     Gc::$upload_url = substr(Gc::$upload_url, 0, (strrpos(Gc::$upload_url, $same_part . "/") + strlen($same_part) + 1)) . "upload/";
-                }else{
+                } else {
                     $parse_url = parse_url(Gc::$upload_url);
-                    if(array_key_exists("scheme", $parse_url)) {
-                        if ($parse_url) Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
-                        if (!empty($parse_url["port"])) Gc::$upload_url .= ":" . $parse_url["port"];
+                    if ( array_key_exists("scheme", $parse_url) ) {
+                        if ( $parse_url ) Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
+                        if (  self::$is_port && !empty($parse_url["port"]) ) Gc::$upload_url .= ":" . $parse_url["port"];
                     }
                     Gc::$upload_url .= "/upload/";
                 }
             }
         }
-        if (empty(Gc::$attachment_url)) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
+        if ( empty(Gc::$attachment_url) ) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
     }
     //</editor-fold>
 }
