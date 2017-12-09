@@ -19,17 +19,17 @@
  * @author silverstripe
  * @author skygreen
  */
-class UtilEmailPhp extends Util 
+class UtilEmailPhp extends Util
 {
     /**
      * @desc Validates the email address. Returns true of false
      */
-    public static function validEmailAddress($address) 
+    public static function validEmailAddress($address)
     {
         return ereg('^([a-zA-Z0-9_+\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$', $address);
     }
-    
-    
+
+
     /**
      * 验证输入的邮件地址是否合法
      * @param string $email 需要验证的邮件地址
@@ -44,7 +44,7 @@ class UtilEmailPhp extends Util
         }
         else return false;
     }
-    
+
     /**
      * Checks for RFC822-valid email format.
      *
@@ -56,7 +56,7 @@ class UtilEmailPhp extends Util
      *     This code is licensed under a Creative Commons Attribution-ShareAlike 2.5 License
      *     http://creativecommons.org/licenses/by-sa/2.5/
      */
-    public static function is_valid_address($email) 
+    public static function is_valid_address($email)
     {
         $qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
         $dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
@@ -86,7 +86,7 @@ class UtilEmailPhp extends Util
      * @param array $customheaders
      * @return bool
      */
-    public static function sendPlain($from, $to, $subject, $plainContent, $attachedFiles = false, $customheaders = false) 
+    public static function sendPlain($from, $to, $subject, $plainContent, $attachedFiles = false, $customheaders = false)
     {
         return self::plaintextEmail($to, $from, $subject, $plainContent, $attachedFiles, $customheaders);
     }
@@ -96,7 +96,7 @@ class UtilEmailPhp extends Util
      *
      * @return bool
      */
-    public static function sendHTML($from, $to, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false) 
+    public static function sendHTML($from, $to, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
         return self::htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles, $customheaders, $plainContent, $inlineImages);
     }
@@ -109,7 +109,7 @@ class UtilEmailPhp extends Util
      *
      * @return bool
      */
-    private static function htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false) 
+    private static function htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
         if ($customheaders && is_array($customheaders) == false) {
             echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
@@ -247,7 +247,7 @@ class UtilEmailPhp extends Util
     /**
       * Send a plain text e-mail
      */
-    private static function plaintextEmail($to, $from, $subject, $plainContent, $attachedFiles, $customheaders = false) 
+    private static function plaintextEmail($to, $from, $subject, $plainContent, $attachedFiles, $customheaders = false)
     {
         $subjectIsUnicode = false;
         $plainEncoding = false; // Not ensurely where this is supposed to be set, but defined it false for now to remove php notices
@@ -262,7 +262,7 @@ class UtilEmailPhp extends Util
         // If the subject line contains extended characters, we must encode it
         $subject = self::xml2raw($subject);
         if($subjectIsUnicode)
-            $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";     
+            $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
         // Make the plain text part
         $headers["Content-Type"] = "text/plain; charset=\"utf-8\"";
@@ -295,8 +295,8 @@ class UtilEmailPhp extends Util
         }
 
         // Email headers
-        $headers["From"]         = self::validEmailAddr($from);   
-        $bounceAddress = $from;      
+        $headers["From"]         = self::validEmailAddr($from);
+        $bounceAddress = $from;
 
         // $headers["Sender"]         = $from;
         $headers["X-Mailer"]    = X_MAILER;
@@ -346,10 +346,10 @@ class UtilEmailPhp extends Util
             else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
         }
     }
-    
-    private static function encodeMultipart($parts, $contentType, $headers = false) 
+
+    private static function encodeMultipart($parts, $contentType, $headers = false)
     {
-        $separator = "----=_NextPart_" . ereg_replace('[^0-9]','',rand() * 10000000000);
+        $separator = "----=_NextPart_" . preg_replace('/[^0-9]/','',rand() * 10000000000);
 
 
         $headers["MIME-Version"] = "1.0";
@@ -376,7 +376,7 @@ class UtilEmailPhp extends Util
      * Return a multipart/related e-mail chunk for the given HTML message and its linked images
      * Decodes absolute URLs, accessing the appropriate local images
      */
-    private static  function wrapImagesInline($htmlContent) 
+    private static  function wrapImagesInline($htmlContent)
     {
         global $_INLINED_IMAGES;
         $_INLINED_IMAGES = null;
@@ -400,7 +400,7 @@ class UtilEmailPhp extends Util
     /**
       * Combine headers w/ the body into a single string.
      */
-    private static function processHeaders($headers, $body = false) 
+    private static function processHeaders($headers, $body = false)
     {
         $res = '';
         if(is_array($headers)) while(list($k, $v) = each($headers))
@@ -447,7 +447,7 @@ class UtilEmailPhp extends Util
      *   );
      *
      */
-    private static function encodeFileForEmail($file, $destFileName = false, $disposition = NULL, $extraHeaders = "") 
+    private static function encodeFileForEmail($file, $destFileName = false, $disposition = NULL, $extraHeaders = "")
     {
         if(!$file) {
             user_error("encodeFileForEmail: not passed a filename and/or data", E_USER_WARNING);
@@ -495,7 +495,7 @@ class UtilEmailPhp extends Util
         return $headers . $file['contents'];
     }
 
-    private static function QuotedPrintable_encode($quotprint) 
+    private static function QuotedPrintable_encode($quotprint)
     {
         $quotprint = (string) str_replace('\r\n',chr(13).chr(10),$quotprint);
         $quotprint = (string) str_replace('\n',  chr(13).chr(10),$quotprint);
@@ -508,7 +508,7 @@ class UtilEmailPhp extends Util
         return (string) $quotprint;
     }
 
-    private static function validEmailAddr($emailAddress) 
+    private static function validEmailAddr($emailAddress)
     {
         $emailAddress = trim($emailAddress);
         $angBrack = strpos($emailAddress, '<');
@@ -527,7 +527,7 @@ class UtilEmailPhp extends Util
     /**
       * Get mime type based on extension
      */
-    private static function getMimeType($filename) 
+    private static function getMimeType($filename)
     {
         global $global_mimetypes;
         if(!$global_mimetypes) self::loadMimeTypes();
@@ -538,7 +538,7 @@ class UtilEmailPhp extends Util
     /**
      * Load the mime-type data from the system file
      */
-    private static function loadMimeTypes() 
+    private static function loadMimeTypes()
     {
         $mimetypePathCustom = '/etc/mime.types';
         $mimetypePathGeneric = Director::baseFolder() . '/sapphire/email/mime.types';

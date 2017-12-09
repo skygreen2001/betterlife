@@ -1,5 +1,5 @@
 <?php
-/**      
+/**
  +---------------------------------------<br/>
  * 发邮件的类<br/>
  * 调用UtilEmailSmtp()发邮件<br/>
@@ -18,14 +18,14 @@
  * @package util.email
  * @author skygreen
  */
-class UtilEmailSmtp extends Util 
+class UtilEmailSmtp extends Util
 {
    //private static  $auth=false;
 
     /* Private static Variables */
     private static $smtp_port = 25;
     private static $time_out = 30;
-    private static $host_name;       
+    private static $host_name;
     private static $relay_host = "smtp.163.com";
     private static $debug = false;
     private static $auth = true;
@@ -52,10 +52,10 @@ class UtilEmailSmtp extends Util
      * @param string $isHtml_mailtype 邮件内容是否html格式，如果不是就是纯文本
      * @param string $additional_headers 附加的邮件头信息
      */
-    public function sendmail($fromaddress,$toaddress,$subject="",$content ="",$isHtml_mailtype=true,$cc ="",$bcc ="",$additional_headers = "") 
+    public function sendmail($fromaddress,$toaddress,$subject="",$content ="",$isHtml_mailtype=true,$cc ="",$bcc ="",$additional_headers = "")
     {
         $mail_from = $this->get_address($this->strip_comment($fromaddress));
-        $content = ereg_replace("(^|(\r\n))(\\.)", "\\1.\\3", $content);         
+        $content = preg_replace('/(^|(\r\n))(\\.)/', '\\1.\\3', $content);
         if (!self::$is_utf8){
             if (UtilString::is_utf8($content))$content=UtilString::utf82gbk($content);
         }
@@ -183,7 +183,7 @@ class UtilEmailSmtp extends Util
     }
 
     public function smtp_sockopen_mx($address) {
-        $domain = ereg_replace("^.+@([^@]+)$", "\\1", $address);
+        $domain = preg_replace('/^.+@([^@]+)$/', '\\1', $address);
         if (!@getmxrr($domain, $MXHOSTS)) {
             $this->log_write("Error: Cannot resolve MX \"".$domain);
             return FALSE;
@@ -248,22 +248,22 @@ class UtilEmailSmtp extends Util
     }
 
     public function log_write($message) {
-        $this->smtp_debug($message);                                                     
-        LogMe::log($message,EnumLogLevel::ALERT);  
+        $this->smtp_debug($message);
+        LogMe::log($message,EnumLogLevel::ALERT);
     }
 
     public function strip_comment($address) {
         $comment = "\\([^()]*\\)";
         while (ereg($comment, $address)) {
-            $address = ereg_replace($comment, "", $address);
+            $address = preg_replace($comment, '', $address);
         }
 
         return $address;
     }
 
     public function get_address($address) {
-        $address = ereg_replace("([ \t\r\n])+", "", $address);
-        $address = ereg_replace("^.*<(.+)>.*$", "\\1", $address);
+        $address = preg_replace('/([ \t\r\n])+/', '', $address);
+        $address = preg_replace('/^.*<(.+)>.*$/', '\\1', $address);
 
         return $address;
     }

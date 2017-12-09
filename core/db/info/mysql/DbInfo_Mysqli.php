@@ -178,7 +178,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
     public function getVersion()
     {
         if ( !$this->mysqlVersion ) {
-            $this->mysqlVersion = (float)substr(trim(ereg_replace("([A-Za-z-])", "", $this->query("SELECT VERSION()")->value())), 0, 3);
+            $this->mysqlVersion = (float)substr(trim(preg_replace('/([A-Za-z-])/', '', $this->query("SELECT VERSION()")->value())), 0, 3);
         }
         return $this->mysqlVersion;
     }
