@@ -35,7 +35,7 @@
             </li>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="icon-user"></span>
+                <span class="fa fa-user"></span>
                 <span class="username">{$smarty.session.username}</span>
                 <span class="caret"></span>
               </a>

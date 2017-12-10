@@ -129,7 +129,8 @@ class UtilFileSystem extends Util
     {
         $handle = @opendir($dir);
         if(!$handle){
-            die("目录不存在");
+            return false;
+            // die("目录不存在:" . $dir);
         }
         while (false !== ($file = readdir($handle))) {
             if($file != "." && $file != ".."){
