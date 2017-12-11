@@ -27,7 +27,7 @@ CREATE TABLE `bb_dic_category` (
   `intro` varchar(1000) DEFAULT NULL COMMENT '说明',
   `status` smallint(3) DEFAULT '1' COMMENT '状态',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `id_UNIQUE` (`category_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='博客分类';
@@ -61,7 +61,7 @@ CREATE TABLE `bb_core_blog` (
   `status` enum('0','1','100','400') DEFAULT NULL COMMENT '状态\n0:待审核-pend\n1:进行中-run\n100:已结束-end\n400:已删除-del\n',
   `publish_date` date DEFAULT NULL COMMENT '发布日期',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`blog_id`,`user_id`),
   KEY `fk_bb_core_blog_bb_user_user1` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='博客';
@@ -85,7 +85,7 @@ CREATE TABLE `bb_dic_tags` (
   `title` varchar(255) NOT NULL COMMENT '名称',
   `status` smallint(3) DEFAULT '1' COMMENT '状态',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`tags_id`),
   UNIQUE KEY `id_UNIQUE` (`tags_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='标签';
@@ -126,7 +126,7 @@ CREATE TABLE `bb_core_comment` (
   `comment` longtext COMMENT '评论',
   `blog_id` int(11) NOT NULL COMMENT '博客标识',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`comment_id`,`user_id`),
   KEY `fk_bb_core_comment_bb_user_user1` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='评论';
@@ -3579,7 +3579,7 @@ INSERT INTO `bb_dic_region` VALUES ('3408', '3401', '肥西县', '3', '4');
 DROP TABLE IF EXISTS `bb_log_logsystem`;
 CREATE TABLE `bb_log_logsystem` (
   `logsystem_id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
-  `logtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '日志记录时间',
+  `logtime` datetime DEFAULT NULL COMMENT '日志记录时间',
   `ident` char(1) DEFAULT NULL COMMENT '分类\n标志或者分类',
   `priority` enum('0','1','2','3','4','5','6','7','8') NOT NULL COMMENT '优先级\n0:严重错误-EMERG\n1:警戒性错误-ALERT\n2:临界值错误-CRIT\n3:一般错误-ERR\n4:警告性错误-WARN\n5:通知-NOTICE\n6:信息-INFO\n7:调试-DEBUG\n8:SQL-SQL',
   `message` varchar(200) DEFAULT NULL COMMENT '日志内容',
@@ -3621,7 +3621,7 @@ CREATE TABLE `bb_msg_msg` (
   `content` varchar(500) DEFAULT NULL COMMENT '发送内容',
   `status` enum('0','1') DEFAULT '0' COMMENT '消息状态\n枚举类型。\n0:未读-unread\n1:已读-read',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`msg_id`,`senderId`,`receiverId`),
   KEY `fk_bb_msg_msg_bb_user_user1` (`senderId`),
   KEY `fk_bb_msg_msg_bb_user_user2` (`receiverId`)
@@ -3641,7 +3641,7 @@ CREATE TABLE `bb_msg_notice` (
   `title` varchar(200) DEFAULT NULL COMMENT '标题',
   `notice_content` varchar(1000) DEFAULT NULL COMMENT '通知内容',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`notice_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='通知';
 
@@ -3658,7 +3658,7 @@ CREATE TABLE `bb_msg_re_usernotice` (
   `user_id` int(11) NOT NULL COMMENT '用户编号',
   `notice_id` int(11) NOT NULL COMMENT '通知编号',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`usernotice_id`,`user_id`,`notice_id`),
   KEY `fk_notice_belongs_user` (`user_id`),
   KEY `fk_user_has_notice` (`notice_id`)
@@ -3682,7 +3682,7 @@ CREATE TABLE `bb_user_admin` (
   `seescope` enum('0','1') DEFAULT NULL COMMENT '视野\n0:只能查看自己的信息-self\n1:查看所有的信息-all',
   `loginTimes` int(10) DEFAULT '0' COMMENT '登录次数',
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`admin_id`,`department_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统管理人员';
 
@@ -3705,7 +3705,7 @@ CREATE TABLE `bb_user_department` (
   `estsalary` int(11) DEFAULT NULL COMMENT '预估平均工资\n部门人员预估平均工资',
   `actualsalary` int(11) DEFAULT NULL COMMENT '实际工资\n部门人员实际平均工资',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`department_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户所属部门';
 
@@ -3722,7 +3722,7 @@ CREATE TABLE `bb_user_functions` (
   `functions_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识\n权限编号',
   `url` varchar(500) DEFAULT NULL COMMENT '允许访问的URL权限',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`functions_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='功能信息';
 
@@ -3778,7 +3778,7 @@ CREATE TABLE `bb_user_role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色标识',
   `role_name` varchar(200) DEFAULT NULL COMMENT '角色名称',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色';
 
@@ -3803,7 +3803,7 @@ CREATE TABLE `bb_user_user` (
   `cellphone` varchar(500) DEFAULT NULL COMMENT '手机电话',
   `loginTimes` int(11) DEFAULT '0' COMMENT '访问次数',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户';
 
@@ -3831,7 +3831,7 @@ CREATE TABLE `bb_user_userdetail` (
   `sex` enum('-1','0','1') DEFAULT NULL COMMENT '会员性别\n0：女-female\n1：男-male\n-1：待确认-unknown\n默认男',
   `birthday` date DEFAULT NULL COMMENT '生日',
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
-  `updateTime` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updateTime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`userdetail_id`,`user_id`),
   UNIQUE KEY `fk_userdetail_user_user_id` (`user_id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户详细信息';

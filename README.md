@@ -135,7 +135,7 @@
 ## 参考资料
 
 * **安装NodeJs**
-  > https://nodejs.org/en/download/
+  > [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/)
 * **安装Gulp**
   > 中文说明: http://www.gulpjs.com.cn/docs/getting-started/
   > 英文说明: http://www.gulpjs.com
