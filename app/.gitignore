@@ -2,3 +2,7 @@
 /node_modules
 /platforms
 /plugins
+
+# www/fonts/*
+# www/img/favicon.ico
+# www/favicon.ico
