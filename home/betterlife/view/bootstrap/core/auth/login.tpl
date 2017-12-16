@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$templateDir/layout/layout_login.tpl"}
 {block name=body}
 <body class="login">
     <!--content begin-->
@@ -18,14 +18,14 @@
                 <div class="form-group has-feedback has-feedback-left">
                   <input type="text" class="form-control" placeholder="用户名">
                   <div class="form-control-feedback">
-                    <i class="icon-user text-muted"></i>
+                    <i class="fa fa-user text-muted"></i>
                   </div>
                 </div>
 
                 <div class="form-group has-feedback has-feedback-left">
                   <input type="password" class="form-control" placeholder="密码">
                   <div class="form-control-feedback">
-                    <i class="icon-lock2 text-muted"></i>
+                    <i class="fa fa-lock text-muted"></i>
                   </div>
                 </div>
 
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button type="submit" class="btn bg-blue btn-block">登录 <i class="icon-circle-right2 position-right"></i></button>
+                  <button type="submit" class="btn bg-blue btn-block">登录 <i class="fa fa-chevron-circle-right position-right"></i></button>
                 </div>
 
                 <div class="content-divider text-muted form-group"><span>测试账户</span></div>

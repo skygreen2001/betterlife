@@ -11,14 +11,14 @@
             <span class="sr-only"></span>
             <i class="glyphicon glyphicon-briefcase"></i>
           </button>
-          <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
+          <a class="navbar-brand" href="{$url_base}index.php?go={$appName}.index.index">
             <i class="glyphicon glyphicon-grain"></i> {$site_name}
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{$url_base}index.php?go=admin.index.index">首页</a></li>
-            <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
+            <li><a href="{$url_base}index.php?go={$appName}.index.index">首页</a></li>
+            <li><a href="{$url_base}index.php?go={$appName}.blog.lists">博客</a></li>
             <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
             <li><a href="http://36kr.com/" target="_blank">研发</a></li>
             <li class="dropdown">
@@ -41,7 +41,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
                 <li><a href="#reset"><span class="glyphicon glyphicon-edit"></span>修改密码</a></li>
-                <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+                <li><a href="{$url_base}index.php?go={$appName}.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
             <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
