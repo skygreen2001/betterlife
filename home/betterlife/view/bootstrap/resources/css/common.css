@@ -13368,7 +13368,7 @@ footer #footer-inner a:hover {
 }
 
 @media (max-width: 480px) {
-  footer .rainbow {
+  .footer-rainbow {
     display: none;
   }
 }
