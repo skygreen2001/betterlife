@@ -8,7 +8,7 @@
           <div class="content">
             <form method="POST">
               <div class="panel panel-body login-form">
-                <div class="bb-icon">B</div>
+                <div class="bb-icon">BB</div>
 
                 <div class="text-center">
                   <div class="icon-object border-warning-400 text-warning-400"><i class="icon-people"></i></div>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button type="submit" class="btn bg-blue btn-block">登录 <i class="fa fa-chevron-circle-right position-right"></i></button>
+                  <button type="submit" class="btn bg-blue btn-block">登录 <i class="fa fa-chevron-circle-right"></i></button>
                 </div>
 
                 <div class="content-divider text-muted form-group"><span>测试账户</span></div>
