@@ -5,6 +5,7 @@ var commonLibrary = {
     url_province: '/address/selectProvinces',
     url_city    : '/address/selectCitys',
     url_district: '/address/selectDistricts',
+    url_img_crossdomain: 'api/common/crossdominimg.php?src=',
     init        : function(){
         this.bootboxInit();
     },
@@ -25,6 +26,17 @@ var commonLibrary = {
         } else {
            return results[1] || 0;
         }
+    },
+    //跨域名图片显示问题的解决，如果不是https的跨域图片是不能正常显示的，可使用该方案正常显示图片
+    //服务端实现参考: https://github.com/skygreen2001/betterlife.core
+    remoteImgShow: function(imgContainer){
+        var ctrl = this;
+        $(imgContainer+" img").each(function(){
+            var img_src = $(this).attr("src");
+            if (img_src.indexOf("http://") > -1){
+                $(this).attr("src", ctrl.url_img_crossdomain+img_src);
+            }
+        });
     },
     /** JSON提交POST请求 */
     post: function(url,data,func) {
