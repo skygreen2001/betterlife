@@ -3,6 +3,6 @@
 /platforms
 /plugins
 
-# /www/fonts/*
-# /www/img/favicon.ico
-# /www/favicon.ico
+/www/fonts/*
+/www/img/favicon.ico
+/www/favicon.ico

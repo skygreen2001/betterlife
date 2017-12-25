@@ -10,6 +10,13 @@
 class Action_Blog extends Action
 {
     /**
+     * 博客列表
+     */
+    public function index(){
+
+    }
+
+    /**
      * 显示博客列表
      */
     public function display()

@@ -11,6 +11,10 @@
             <span class="sr-only"></span>
             <i class="glyphicon glyphicon-briefcase"></i>
           </button>
+          <button type="button" class="navbar-toggle collapsed" id="btn-toggle-searchbar" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
+            <span class="sr-only"></span>
+            <i class="fa fa-search"></i>
+          </button>
           <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
             <i class="glyphicon glyphicon-grain"></i> {$site_name}
           </a>
@@ -44,17 +48,20 @@
                 <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
-            <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
-
+            <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
+              <a>
+                <span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+              </a>
+            </li>
             <li><a id="btn-layout-container" href="#"><i class="glyphicon glyphicon-resize-small"></i></a></li>
           </ul>
         </div>
-        <div id="searchform-header" class="hidden">
-          <div id="searchform-header-inner">
-            <form method="get" action="" class="header-searchform">
-              <input type="search" class="form-control" name="s" autocomplete="off" autofocus="autofocus" placeholder="搜索">
+        <div id="searchbar" class="collapse">
+          <div id="searchbar-inner">
+            <form method="get" action="" class="searchbar-form">
+              <input type="search" class="form-control" name="search" autocomplete="off" autofocus="autofocus" placeholder="搜你所想">
             </form>
-            <span id="searchform-header-close" class="glyphicon glyphicon-remove search-toggle"></span>
+            <i id="searchbar-close" class="fa fa-remove search-toggle"></i>
           </div>
         </div>
       </div>
