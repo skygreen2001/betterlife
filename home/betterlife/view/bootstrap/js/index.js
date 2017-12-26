@@ -9,8 +9,10 @@ $(function(){
     $(".index #page1 .section-header-container").css("margin-top", lead_core_height/2);
   }
   $("#btn-toggle-sidebar").css("display","none");
-  $(".navbar-fixed-top").css("opacity","0");
   // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
+  $(".navbar-fixed-top").css("opacity","0");
+  // 隐藏toggle精简布局设置按钮
+  $("#btn-layout-small").css("display","none");
 
   // 顶部导航滚动显示底部挡板效果
   $(document).scrollTop() <= 0 ? $(".navbar").removeClass("nav-scroll") : $(".navbar").addClass("nav-scroll");

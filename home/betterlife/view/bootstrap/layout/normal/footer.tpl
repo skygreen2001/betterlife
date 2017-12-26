@@ -5,6 +5,14 @@
         </div>
     </footer>
 
+    <div class="return-top">
+        <span class="icon-stack fa-3x">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-minus fa-inverse fa-stack-1x up"></i>
+          <i class="fa fa-arrow-up fa-inverse fa-stack-1x down"></i>
+        </span>
+    </div>
+    
     <script type="text/javascript" src="{$template_url}js/common/bower/bower.min.js"></script>
     <script type="text/javascript" src="{$template_url}js/normal/common.js"></script>
     <script type="text/javascript" src="{$template_url}js/normal/layout.js"></script>
