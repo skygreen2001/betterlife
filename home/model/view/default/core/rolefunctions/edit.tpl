@@ -39,7 +39,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.rolefunctions.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $rolefunctions}
-            |<my:a href='{$url_base}index.php?go=model.rolefunctions.view&amp;id={$rolefunctions.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色拥有功能</my:a>
+            <my:a href='{$url_base}index.php?go=model.rolefunctions.view&amp;id={$rolefunctions.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色拥有功能</my:a>
             {/if}
         </div>
     </div>

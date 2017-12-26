@@ -26,10 +26,9 @@
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.department.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.department.lists' /></div>
-        <my:a href='{$url_base}index.php?go=model.department.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
+        <my:a href='{$url_base}index.php?go=model.department.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>
 {/block}

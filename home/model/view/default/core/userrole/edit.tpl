@@ -39,7 +39,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.userrole.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $userrole}
-            |<my:a href='{$url_base}index.php?go=model.userrole.view&amp;id={$userrole.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户角色</my:a>
+            <my:a href='{$url_base}index.php?go=model.userrole.view&amp;id={$userrole.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户角色</my:a>
             {/if}
         </div>
     </div>

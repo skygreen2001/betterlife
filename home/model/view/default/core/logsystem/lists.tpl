@@ -16,16 +16,15 @@
             <td class="content">{$logsystem.logsystem_id}</td>
             <td class="content">{$logsystem.logtime}</td>
             <td class="content">{$logsystem.ident}</td>
-            <td class="content">{$logsystem.priorityShow}</td>
+            <td class="content">{$logsystem.priority}</td>
             <td class="content">{$logsystem.message}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.logsystem.view&amp;id={$logsystem.logsystem_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.logsystem.edit&amp;id={$logsystem.logsystem_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.logsystem.delete&amp;id={$logsystem.logsystem_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.logsystem.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.logsystem.lists' /></div>
-        <my:a href='{$url_base}index.php?go=model.logsystem.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
+        <my:a href='{$url_base}index.php?go=model.logsystem.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>
 {/block}

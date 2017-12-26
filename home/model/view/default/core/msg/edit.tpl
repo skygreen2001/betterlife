@@ -12,8 +12,8 @@
         <form name="msgForm" method="post"><input type="hidden" name="msg_id" value="{$msg.msg_id}"/>
         <table class="viewdoblock">
             {if $msg}<tr class="entry"><th class="head">标识</th><td class="content">{$msg.msg_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">发送者</th><td class="content"><input type="number" class="edit" name="senderId" value="{$msg.senderId|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">接收者</th><td class="content"><input type="number" class="edit" name="receiverId" value="{$msg.receiverId|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">发送者</th><td class="content"><input type="text" class="edit" name="senderId" value="{$msg.senderId}"/></td></tr>
+            <tr class="entry"><th class="head">接收者</th><td class="content"><input type="text" class="edit" name="receiverId" value="{$msg.receiverId}"/></td></tr>
             <tr class="entry"><th class="head">发送者名称</th><td class="content"><input type="text" class="edit" name="senderName" value="{$msg.senderName}"/></td></tr>
             <tr class="entry"><th class="head">接收者名称</th><td class="content"><input type="text" class="edit" name="receiverName" value="{$msg.receiverName}"/></td></tr>
             <tr class="entry">
@@ -28,7 +28,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.msg.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $msg}
-            |<my:a href='{$url_base}index.php?go=model.msg.view&amp;id={$msg.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看消息</my:a>
+            <my:a href='{$url_base}index.php?go=model.msg.view&amp;id={$msg.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看消息</my:a>
             {/if}
         </div>
     </div>

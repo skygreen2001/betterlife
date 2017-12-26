@@ -26,18 +26,17 @@
             <td class="content">{$blog.sequenceNo}</td>
             <td class="content">{$blog.category.name}</td>
             <td class="content">{$blog.category_id}</td>
-            <td class="content">{$blog.isPublicShow}</td>
+            <td class="content">{$blog.isPublic}</td>
             <td class="content">{$blog.blog_content}</td>
-            <td class="content">{$blog.statusShow}</td>
+            <td class="content">{$blog.status}</td>
             <td class="content">{$blog.publish_date}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.blog.view&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.blog.edit&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.blog.delete&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.blog.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.blog.lists' /></div>
-        <my:a href='{$url_base}index.php?go=model.blog.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
+        <my:a href='{$url_base}index.php?go=model.blog.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>
 {/block}

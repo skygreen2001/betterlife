@@ -22,9 +22,9 @@
                 {/if}
             </td>
         </tr>
-        <tr class="entry"><th class="head">是否公开</th><td class="content">{$blog.isPublicShow}</td></tr>
+        <tr class="entry"><th class="head">是否公开</th><td class="content">{$blog.isPublic}</td></tr>
         <tr class="entry"><th class="head">博客内容</th><td class="content">{$blog.blog_content}</td></tr>
-        <tr class="entry"><th class="head">状态</th><td class="content">{$blog.statusShow}</td></tr>
+        <tr class="entry"><th class="head">状态</th><td class="content">{$blog.status}</td></tr>
         <tr class="entry"><th class="head">发布日期</th><td class="content">{$blog.publish_date}</td></tr>
         <tr class="entry">
             <th class="head">标签</th>
@@ -35,6 +35,6 @@
         <tr class="entry"><th class="head">创建时间</th><td class="content">{$blog.commitTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
         <tr class="entry"><th class="head">更新时间</th><td class="content">{$blog.updateTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
     </table>
-    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.blog.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{$url_base}index.php?go=model.blog.edit&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改博客</my:a></div>
+    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.blog.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{$url_base}index.php?go=model.blog.edit&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改博客</my:a></div>
 </div>
 {/block}

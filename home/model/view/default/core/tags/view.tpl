@@ -13,6 +13,6 @@
         <tr class="entry"><th class="head">创建时间</th><td class="content">{$tags.commitTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
         <tr class="entry"><th class="head">更新时间</th><td class="content">{$tags.updateTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
     </table>
-    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.tags.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{$url_base}index.php?go=model.tags.edit&amp;id={$tags.tags_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改标签</my:a></div>
+    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.tags.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{$url_base}index.php?go=model.tags.edit&amp;id={$tags.tags_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改标签</my:a></div>
 </div>
 {/block}

@@ -23,6 +23,6 @@
         <tr class="entry"><th class="head">提交时间</th><td class="content">{$user.commitTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
         <tr class="entry"><th class="head">更新时间</th><td class="content">{$user.updateTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
     </table>
-    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.user.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{$url_base}index.php?go=model.user.edit&amp;id={$user.user_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改用户</my:a></div>
+    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.user.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{$url_base}index.php?go=model.user.edit&amp;id={$user.user_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改用户</my:a></div>
 </div>
 {/block}

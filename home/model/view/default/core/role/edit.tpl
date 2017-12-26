@@ -24,7 +24,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.role.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $role}
-            |<my:a href='{$url_base}index.php?go=model.role.view&amp;id={$role.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色</my:a>
+            <my:a href='{$url_base}index.php?go=model.role.view&amp;id={$role.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色</my:a>
             {/if}
         </div>
     </div>

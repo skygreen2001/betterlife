@@ -25,26 +25,16 @@
             <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$admin.username}"/></td></tr>
             <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$admin.realname}"/></td></tr>
             <tr class="entry"><th class="head">密码</th><td class="content"><input type="text" class="edit" name="password" value="{$admin.password}"/></td></tr>
-            <tr class="entry">
-                <th class="head">扮演角色</th>
-                <td class="content select">
-                    <select id="roletype" name="roletype" class="form-control"></select>
-                </td>
-            </tr>
-            <tr class="entry">
-                <th class="head">视野</th>
-                <td class="content select">
-                    <select id="seescope" name="seescope" class="form-control"></select>
-                </td>
-            </tr>
-            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$admin.loginTimes|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">扮演角色</th><td class="content"><input type="text" class="edit" name="roletype" value="{$admin.roletype}"/></td></tr>
+            <tr class="entry"><th class="head">视野</th><td class="content"><input type="text" class="edit" name="seescope" value="{$admin.seescope}"/></td></tr>
+            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="text" class="edit" name="loginTimes" value="{$admin.loginTimes}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
         </form>
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.admin.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $admin}
-            |<my:a href='{$url_base}index.php?go=model.admin.view&amp;id={$admin.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看系统管理人员</my:a>
+            <my:a href='{$url_base}index.php?go=model.admin.view&amp;id={$admin.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看系统管理人员</my:a>
             {/if}
         </div>
     </div>
@@ -58,22 +48,8 @@
         select_department =  new Array(select_department);
         {/if}
 
-        var select_roletype = {};
-        {if $admin.roletype}
-        select_roletype.id   = "{$admin.roletype}";
-        select_roletype.text = "{$admin.roletypeShow}";
-        select_roletype =  new Array(select_roletype);
-        {/if}
-        var select_seescope = {};
-        {if $admin.seescope}
-        select_seescope.id   = "{$admin.seescope}";
-        select_seescope.text = "{$admin.seescopeShow}";
-        select_seescope =  new Array(select_seescope);
-        {/if}
 
         $.edit.select2('#department_id', "", select_department);
-        $.edit.select2('#roletype', "api/web/data/adminRoletype.json", select_roletype);
-        $.edit.select2('#seescope', "api/web/data/adminSeescope.json", select_seescope);
     });
     </script>
 

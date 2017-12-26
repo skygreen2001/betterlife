@@ -15,7 +15,7 @@
             <tr class="entry"><th class="head">用户密码</th><td class="content"><input type="text" class="edit" name="password" value="{$user.password}"/></td></tr>
             <tr class="entry"><th class="head">邮箱地址</th><td class="content"><input type="text" class="edit" name="email" value="{$user.email}"/></td></tr>
             <tr class="entry"><th class="head">手机电话</th><td class="content"><input type="text" class="edit" name="cellphone" value="{$user.cellphone}"/></td></tr>
-            <tr class="entry"><th class="head">访问次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$user.loginTimes|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">访问次数</th><td class="content"><input type="text" class="edit" name="loginTimes" value="{$user.loginTimes}"/></td></tr>
             <tr class="entry">
                 <th class="head">通知</th>
                 <td class="content select">
@@ -34,7 +34,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.user.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $user}
-            |<my:a href='{$url_base}index.php?go=model.user.view&amp;id={$user.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户</my:a>
+            <my:a href='{$url_base}index.php?go=model.user.view&amp;id={$user.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户</my:a>
             {/if}
         </div>
     </div>

@@ -46,7 +46,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.comment.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $comment}
-            |<my:a href='{$url_base}index.php?go=model.comment.view&amp;id={$comment.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看评论</my:a>
+            <my:a href='{$url_base}index.php?go=model.comment.view&amp;id={$comment.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看评论</my:a>
             {/if}
         </div>
     </div>

@@ -11,6 +11,12 @@ input {
     padding-left: 10px;
     outline: none;
 }
+
+input{
+    color: #484747;
+    background-color: #ececec;
+    border-color: #aaa;
+}
 input[type='radio']{
     width: 16px;
 }

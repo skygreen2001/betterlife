@@ -14,6 +14,6 @@
         <tr class="entry"><th class="head">创建时间</th><td class="content">{$usernotice.commitTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
         <tr class="entry"><th class="head">更新时间</th><td class="content">{$usernotice.updateTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>
     </table>
-    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.usernotice.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{$url_base}index.php?go=model.usernotice.edit&amp;id={$usernotice.usernotice_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改用户收到通知</my:a></div>
+    <div class="footer" align="center"><my:a href='{$url_base}index.php?go=model.usernotice.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{$url_base}index.php?go=model.usernotice.edit&amp;id={$usernotice.usernotice_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>修改用户收到通知</my:a></div>
 </div>
 {/block}

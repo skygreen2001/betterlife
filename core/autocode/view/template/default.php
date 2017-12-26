@@ -14,10 +14,9 @@ $contents
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{\$url_base}index.php?go={$appname}.{$instancename}.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{\$url_base}index.php?go={$appname}.{$instancename}.lists' /></div>
-        <my:a href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a>
+        <my:a href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a>
     </div>
 </div>
 LISTS;
@@ -40,7 +39,7 @@ $edit_contents
         <div class="footer" align="center">
             <my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if \${$instancename}}
-            |<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.view&amp;id={\${$instancename}.id}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>查看{$table_comment}</my:a>
+            <my:a href='{\$url_base}index.php?go=$appname.{$instancename}.view&amp;id={\${$instancename}.id}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>查看{$table_comment}</my:a>
             {/if}
         </div>
     </div>
@@ -54,7 +53,7 @@ $view_template = <<<VIEW
     <table class="viewdoblock">
 $view_contents
     </table>
-    <div class="footer" align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a>|<my:a href='{\$url_base}index.php?go=$appname.{$instancename}.edit&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>修改{$table_comment}</my:a></div>
+    <div class="footer" align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.edit&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>修改{$table_comment}</my:a></div>
 </div>
 VIEW;
 ?>

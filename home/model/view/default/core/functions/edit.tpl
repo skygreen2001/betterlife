@@ -18,7 +18,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.functions.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $functions}
-            |<my:a href='{$url_base}index.php?go=model.functions.view&amp;id={$functions.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看功能信息</my:a>
+            <my:a href='{$url_base}index.php?go=model.functions.view&amp;id={$functions.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看功能信息</my:a>
             {/if}
         </div>
     </div>

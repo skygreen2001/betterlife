@@ -16,16 +16,15 @@
             <td class="content">{$loguser.loguser_id}</td>
             <td class="content">{$loguser.user.username}</td>
             <td class="content">{$loguser.user_id}</td>
-            <td class="content">{$loguser.userTypeShow}</td>
+            <td class="content">{$loguser.userType}</td>
             <td class="content">{$loguser.log_content}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.loguser.view&amp;id={$loguser.loguser_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.loguser.edit&amp;id={$loguser.loguser_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.loguser.delete&amp;id={$loguser.loguser_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.loguser.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.loguser.lists' /></div>
-        <my:a href='{$url_base}index.php?go=model.loguser.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
+        <my:a href='{$url_base}index.php?go=model.loguser.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>
 {/block}

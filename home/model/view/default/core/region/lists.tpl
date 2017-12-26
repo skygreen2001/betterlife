@@ -20,16 +20,15 @@
             <td class="content">{$region.regionShowAll}</td>
             <td class="content">{$region.parent}</td>
             <td class="content">{$region.region_name}</td>
-            <td class="content">{$region.region_typeShow}</td>
+            <td class="content">{$region.region_type}</td>
             <td class="content">{$region.level}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.region.view&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.region.edit&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.region.delete&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.region.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.region.lists' /></div>
-        <my:a href='{$url_base}index.php?go=model.region.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a>|<my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
+        <my:a href='{$url_base}index.php?go=model.region.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>
 {/block}

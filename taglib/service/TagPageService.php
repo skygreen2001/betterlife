@@ -146,6 +146,7 @@ class TagPageService {
                 $stb.="首页</a> ";
             } else {
                 $stb.="首页";
+                $stb.="&nbsp;";
             }
 
             // 上一页
@@ -154,6 +155,7 @@ class TagPageService {
                 $stb.="上一页</a> ";
             } else {
                 $stb.="上一页";
+                $stb.="&nbsp;";
             }
 
             // 显示页码
@@ -161,6 +163,7 @@ class TagPageService {
             if ($this->allPageCount > $showNo) {
                 if ($this->nowpage > floor($showNo / 2)) {
                     $stb.="...";
+                    $stb.="&nbsp;";
                 }
             }
             if ($this->allPageCount > 1) {
@@ -195,7 +198,7 @@ class TagPageService {
 
             if ($this->allPageCount > $showNo)
                 if ($this->nowpage<($this->allPageCount-floor($showNo / 2)))
-                    $stb.="...";
+                    $stb.="..."."&nbsp;";
 
             // 下一页
             if ($this->nowpage < floor(($this->count + $this->pageSize - 1) / $this->pageSize)) {
@@ -203,6 +206,7 @@ class TagPageService {
                 $stb.="下一页</a>";
             } else {
                 $stb.="下一页 ";
+                $stb.="&nbsp;";
             }
 
             // 末页
@@ -211,6 +215,7 @@ class TagPageService {
                 $stb.="末页</a> "; // 共x页
             } else {
                 $stb.="末页 ";
+                $stb.="&nbsp;";
             }
         }
         return $stb;

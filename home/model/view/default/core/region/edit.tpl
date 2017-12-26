@@ -13,12 +13,7 @@
             {if $region}<tr class="entry"><th class="head">标识</th><td class="content">{$region.region_id}</td></tr>{/if}
             <tr class="entry"><th class="head">父地区标识</th><td class="content"><input type="text" class="edit" name="parent_id" value="{$region.parent_id}"/></td></tr>
             <tr class="entry"><th class="head">地区名称</th><td class="content"><input type="text" class="edit" name="region_name" value="{$region.region_name}"/></td></tr>
-            <tr class="entry">
-                <th class="head">地区类型</th>
-                <td class="content select">
-                    <select id="region_type" name="region_type" class="form-control"></select>
-                </td>
-            </tr>
+            <tr class="entry"><th class="head">地区类型</th><td class="content"><input type="text" class="edit" name="region_type" value="{$region.region_type}"/></td></tr>
             <tr class="entry"><th class="head">目录层级</th><td class="content"><input type="text" class="edit" name="level" value="{$region.level}"/></td></tr>
             <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
         </table>
@@ -26,7 +21,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.region.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $region}
-            |<my:a href='{$url_base}index.php?go=model.region.view&amp;id={$region.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看地区</my:a>
+            <my:a href='{$url_base}index.php?go=model.region.view&amp;id={$region.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看地区</my:a>
             {/if}
         </div>
     </div>
@@ -40,14 +35,7 @@
         select_region_p =  new Array(select_region_p);
         {/if}
 
-        var select_region_type = {};
-        {if $region.region_type}
-        select_region_type.id   = "{$region.region_type}";
-        select_region_type.text = "{$region.region_typeShow}";
-        select_region_type =  new Array(select_region_type);
-        {/if}
 
-        $.edit.select2('#region_type', "api/web/data/regionRegion_type.json", select_region_type);
     });
     </script>
 

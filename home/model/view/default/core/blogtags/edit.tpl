@@ -39,7 +39,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.blogtags.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $blogtags}
-            |<my:a href='{$url_base}index.php?go=model.blogtags.view&amp;id={$blogtags.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客标签</my:a>
+            <my:a href='{$url_base}index.php?go=model.blogtags.view&amp;id={$blogtags.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客标签</my:a>
             {/if}
         </div>
     </div>

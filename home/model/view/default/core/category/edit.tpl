@@ -12,7 +12,7 @@
         <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category.category_id}"/>
         <table class="viewdoblock">
             {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category.category_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">序号</th><td class="content"><input type="text" class="edit" name="sequence_no" value="{$category.sequence_no}"/></td></tr>
             <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category.name}"/></td></tr>
             <tr class="entry">
                 <th class="head">图标</th>
@@ -36,7 +36,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.category.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $category}
-            |<my:a href='{$url_base}index.php?go=model.category.view&amp;id={$category.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客分类</my:a>
+            <my:a href='{$url_base}index.php?go=model.category.view&amp;id={$category.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客分类</my:a>
             {/if}
         </div>
     </div>

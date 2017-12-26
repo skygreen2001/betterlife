@@ -23,12 +23,7 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry">
-                <th class="head">类型</th>
-                <td class="content select">
-                    <select id="userType" name="userType" class="form-control"></select>
-                </td>
-            </tr>
+            <tr class="entry"><th class="head">类型</th><td class="content"><input type="text" class="edit" name="userType" value="{$loguser.userType}"/></td></tr>
             <tr class="entry">
                 <th class="head">日志详情</th>
                 <td class="content">
@@ -41,7 +36,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.loguser.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $loguser}
-            |<my:a href='{$url_base}index.php?go=model.loguser.view&amp;id={$loguser.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户日志</my:a>
+            <my:a href='{$url_base}index.php?go=model.loguser.view&amp;id={$loguser.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户日志</my:a>
             {/if}
         </div>
     </div>
@@ -57,15 +52,8 @@
         select_user =  new Array(select_user);
         {/if}
 
-        var select_userType = {};
-        {if $loguser.userType}
-        select_userType.id   = "{$loguser.userType}";
-        select_userType.text = "{$loguser.userTypeShow}";
-        select_userType =  new Array(select_userType);
-        {/if}
 
         $.edit.select2('#user_id', "", select_user);
-        $.edit.select2('#userType', "api/web/data/loguserUserType.json", select_userType);
     });
     </script>
 

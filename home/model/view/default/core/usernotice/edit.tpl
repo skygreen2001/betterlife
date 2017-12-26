@@ -39,7 +39,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.usernotice.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $usernotice}
-            |<my:a href='{$url_base}index.php?go=model.usernotice.view&amp;id={$usernotice.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户收到通知</my:a>
+            <my:a href='{$url_base}index.php?go=model.usernotice.view&amp;id={$usernotice.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户收到通知</my:a>
             {/if}
         </div>
     </div>

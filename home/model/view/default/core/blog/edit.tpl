@@ -24,7 +24,7 @@
                 </td>
             </tr>
             <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-            <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">排序</th><td class="content"><input type="text" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
             <tr class="entry">
                 <th class="head">分类</th>
                 <td class="content select">
@@ -46,13 +46,7 @@
                     </div>
                 </td>
             </tr>
-            <tr class="entry">
-                <th class="head">是否公开</th>
-                <td class="content">
-                    <input type="radio" id="isPublic1" name="isPublic" value="1" {if $blog.isPublic} checked {/if} /><label for="isPublic1" class="radio_label">是</label>
-                    <input type="radio" id="isPublic0" name="isPublic" value="0" {if !$blog.isPublic} checked {/if}/><label for="isPublic0" class="radio_label">否</label>
-                </td>
-            </tr>
+            <tr class="entry"><th class="head">是否公开</th><td class="content"><input type="text" class="edit" name="isPublic" value="{$blog.isPublic}"/></td></tr>
             <tr class="entry">
                 <th class="head">博客内容</th>
                 <td class="content">
@@ -72,7 +66,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.blog.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $blog}
-            |<my:a href='{$url_base}index.php?go=model.blog.view&amp;id={$blog.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客</my:a>
+            <my:a href='{$url_base}index.php?go=model.blog.view&amp;id={$blog.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客</my:a>
             {/if}
         </div>
     </div>
