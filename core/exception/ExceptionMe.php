@@ -8,14 +8,14 @@
  * @author zhouyuepu
  */
 abstract class ExceptionMe extends Exception {
-    const CLASSNAME=__CLASS__;
+    const CLASSNAME = __CLASS__;
 
-    public static $messages=array();
+    public static $messages = array();
 
-    const VIEW_TYPE_TEXT=1;
-    const VIEW_TYPE_HTML_TABLE=2;
-    const VIEW_TYPE_HTML_TREE=3;
-    const VIEW_TYPE_HTML_XML=4;
+    const VIEW_TYPE_TEXT       = 1;
+    const VIEW_TYPE_HTML_TABLE = 2;
+    const VIEW_TYPE_HTML_TREE  = 3;
+    const VIEW_TYPE_HTML_XML   = 4;
 
     /**
      * 倒退跟踪调用
@@ -34,14 +34,14 @@ abstract class ExceptionMe extends Exception {
      * @param string $extra  补充存在多余调试信息
      *
      */
-    public static function recordException($errorInfo,$object=null,$code=0,$extra=null) {
+    public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
         //记录系统日志
-        $exception=new Exception_Customize($errorInfo,$code,$extra);
-        if (is_object($object)) {
+        $exception = new Exception_Customize( $errorInfo, $code, $extra );
+        if ( is_object($object) ) {
             self::$messages[get_class($object)] = $exception->showMessage();
-        }else {
-            if (empty($object)) {
-                $object=$exception->getType();
+        } else {
+            if ( empty($object) ) {
+                $object = $exception->getType();
             }
             self::$messages[$object] = $exception->showMessage();
         }
@@ -52,7 +52,7 @@ abstract class ExceptionMe extends Exception {
      * @param <type> $exception
      */
     public static function recordUncatchedException($exception) {
-        $exception=new Exception_Customize($exception);
+        $exception = new Exception_Customize($exception);
         self::$messages[$exception->getType()] = $exception->showMessage();
     }
 
@@ -91,6 +91,7 @@ abstract class ExceptionMe extends Exception {
      * @todo 以XML形式显示异常信息
      */
     private static function showMessageByXml() {
+
     }
 
 
@@ -99,6 +100,7 @@ abstract class ExceptionMe extends Exception {
      * @todo 以树形式显示异常信息[HTML格式]
      */
     private static function showMessageByTree() {
+
     }
 
 
@@ -106,93 +108,95 @@ abstract class ExceptionMe extends Exception {
      * 以表形式显示异常信息[HTML格式]
      */
     private static function showMessageByTable() {
-        if (!empty (self::$messages)) {
+        if ( !empty(self::$messages) ) {
             UtilCss::report_info();
-            $errorInfo= '<table class="'.UtilCss::CSS_REPORT_TABLE.'" style="width:80%;">';
-            foreach (self::$messages as $key=>$value) {
-                $errorInfo.= '<tr>';
-                $errorInfo.= '  <td style="border-bottom:0px;">';
-                $errorInfo.= '    <table class="'.UtilCss::CSS_REPORT_TABLE.'">';
-                $errorInfo.= '      <tr>';
-                $errorInfo.= '          <th>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <th colspan="2" align="left">'.$key.'</td>';
-                $errorInfo.= '      </tr>';
+            $errorInfo  = '<div>';
+            $errorInfo .= '<table class="' . UtilCss::CSS_REPORT_TABLE . '" style="width:80%;">';
+            foreach (self::$messages as $key => $value) {
+                $errorInfo .= '<tr>';
+                $errorInfo .= '  <td style="border-bottom:0px;">';
+                $errorInfo .= '    <table class="' . UtilCss::CSS_REPORT_TABLE . '">';
+                $errorInfo .= '      <tr>';
+                $errorInfo .= '          <th>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <th colspan="2" align="left">' . $key . '</td>';
+                $errorInfo .= '      </tr>';
                 if (!empty($value['message'])) {
-                    $errorInfo.= '       <tr>';
-                    $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                    $errorInfo.= '          <td width="80px" border="1">'.Wl::EXCEPTION_REPORT_INFO.'</td>';
-                    $errorInfo.= '          <td>&nbsp;'.$value['message']."</td>";
-                    $errorInfo.= '       </tr>';
+                    $errorInfo .= '       <tr>';
+                    $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                    $errorInfo .= '          <td width="100px" border="1">' . Wl::EXCEPTION_REPORT_INFO . '</td>';
+                    $errorInfo .= '          <td>&nbsp;' . $value['message'] . "</td>";
+                    $errorInfo .= '       </tr>';
                 }
                 if (!empty ($value['extra'])) {
-                    $errorInfo.= '       <tr>';
-                    $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                    $errorInfo.= '          <td width="80px" border="1">'.Wl::EXCEPTION_REPORT_ADDITION.'</td>';
-                    $errorInfo.= '          <td>&nbsp;'.$value['extra']."</td>";
-                    $errorInfo.= '       </tr>';
+                    $errorInfo .= '       <tr>';
+                    $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                    $errorInfo .= '          <td width="100px" border="1">' . Wl::EXCEPTION_REPORT_ADDITION . '</td>';
+                    $errorInfo .= '          <td>&nbsp;' . $value['extra'] . "</td>";
+                    $errorInfo .= '       </tr>';
                 }
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_CLASS.'</td>';
-                $errorInfo.= '          <td>&nbsp;'.$value['class']."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_FUNCTION.'</td>';
-                $errorInfo.= '          <td>&nbsp;'.$value['function']."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_FILE.'</td>';
-                $errorInfo.= '          <td>&nbsp;'.$value['file']."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_LINE.'</td>';
-                $errorInfo.= '          <td>&nbsp;'.$value['line']."</td>";
-                $errorInfo.= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_CLASS . '</td>';
+                $errorInfo .= '          <td>&nbsp;' . $value['class'] . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_FUNCTION . '</td>';
+                $errorInfo .= '          <td>&nbsp;' . $value['function'] . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_FILE . '</td>';
+                $errorInfo .= '          <td>&nbsp;' . $value['file'] . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_LINE . '</td>';
+                $errorInfo .= '          <td>&nbsp;' . $value['line'] . "</td>";
+                $errorInfo .= '       </tr>';
                 if (!empty($value['param'])) {
-                    $errorInfo.= '       <tr>';
-                    $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                    $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_PARAMETER.'</td>';
-                    $errorInfo.= '          <td>&nbsp;';
+                    $errorInfo .= '       <tr>';
+                    $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                    $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_PARAMETER . '</td>';
+                    $errorInfo .= '          <td>&nbsp;';
                     if (is_string($value['param'][0])) {
-                        $errorInfo.=implode(' | ',$value['param']);
+                        $errorInfo .= implode(' | ',$value['param']);
                     }else if (is_object($value['param'][0])) {
                         foreach ($value['param'] as $object) {
-                            $errorInfo.=$object->classname()." | ";
+                            $errorInfo .= $object->classname() . " | ";
                         }
-                        $errorInfo=substr($errorInfo, 0,strlen($errorInfo)-2);
+                        $errorInfo = substr($errorInfo, 0, strlen($errorInfo) - 2);
                     }
-                    $errorInfo.= "</td>";
-                    $errorInfo.= '       </tr>';
+                    $errorInfo .= "</td>";
+                    $errorInfo .= '       </tr>';
                 }
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_DETAIL.'</td>';
-                $errorInfo.= "          <td><br/>".str_replace("\n", "<br/>", $value['detail'])."<br/></td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_TRACKTIME.'</td>';
-                $errorInfo.= '          <td>'.$value['tracktime']."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_TRACKINFO.'</td>';
-                $errorInfo.= '          <td>'."<br/>".str_replace("\n", "<br/>",$value['trace'])."<br/>"."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '       <tr>';
-                $errorInfo.= '          <td>&nbsp; &nbsp;</td>';
-                $errorInfo.= '          <td>'.Wl::EXCEPTION_REPORT_TYPE.'</td>';
-                $errorInfo.= '          <td>'.$value['type']."</td>";
-                $errorInfo.= '       </tr>';
-                $errorInfo.= '    </table>';
-                $errorInfo.=  ' </td>';
-                $errorInfo.= '</tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_DETAIL . '</td>';
+                $errorInfo .= "          <td><br/>" . str_replace("\n", "<br/>", $value['detail']) . "<br/></td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_TRACKTIME . '</td>';
+                $errorInfo .= '          <td>' . $value['tracktime'] . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_TRACKINFO . '</td>';
+                $errorInfo .= '          <td>' . "<br/>" . str_replace("\n", "<br/>",$value['trace']) . "<br/>" . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '       <tr>';
+                $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
+                $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_TYPE . '</td>';
+                $errorInfo .= '          <td>' . $value['type'] . "</td>";
+                $errorInfo .= '       </tr>';
+                $errorInfo .= '    </table>';
+                $errorInfo .=  ' </td>';
+                $errorInfo .= '</tr>';
             }
-            $errorInfo.= '</table>';
-            $errorInfo.= '<br><br><br><br><br><br><br><br><br><br>';
+            $errorInfo .= '</table>';
+            $errorInfo .= '</div>';
+            $errorInfo .= '<br><br><br><br><br><br><br><br><br><br>';
             return $errorInfo;
         }
     }

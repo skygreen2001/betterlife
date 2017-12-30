@@ -223,9 +223,10 @@ class UtilCss extends Util
                 border-bottom:1px solid '. self::$color_b .';
             }
             table.'.self::CSS_REPORT_TABLE.' td {
-                padding: 5px;
+                padding: 5px 10px;
                 border-right:1px solid '. self::$color_b .';
                 border-bottom:1px solid '. self::$color_b .';
+                word-break: break-all;
             }
             table.'.self::CSS_REPORT_TABLE.' th:last-child, table.'.self::CSS_REPORT_TABLE.' td:last-child {
                 border-right: 0px;
