@@ -30,6 +30,10 @@ $(function(){
   showLayoutMenuActive(".sidebar-nav li a");
   showLayoutMenuActive("#navbar .navbar-nav li a");
 
+  $(".navbar-container .navbar-header .navbar-toggle").click(function(){
+    $(this).toggleClass("on");
+  });
+
   //左侧导航条有子菜单点选
   $(".sidebar-nav >li > a.has-ul").click(function(e){
     e.preventDefault();
@@ -122,7 +126,7 @@ $(function(){
       $('.page-sidebar .sidebar-nav > li > a span i').remove();
     }
   }
-  
+
   //网页过长显示返回到顶部按钮
   $(document).on("scroll", function() {
     if ($(document).scrollTop() > $(window).height()-188) {
@@ -137,7 +141,10 @@ $(function(){
     $('body,html').animate({scrollTop:0});
   });
 
+  var bc_line_height = 0;
+  if ($(".breadcrumb-line").height()) bc_line_height = $(".breadcrumb-line").height();
   //布局自适应高度，确保footer始终显示在页面底部
-  var offset = $(window).height() - $(".navbar-container").height() - $(".breadcrumb-line").height() -$("footer").height();
-  if (offset>450) $(".content-wrapper .container-fluid").css("height", offset);
+  var offset = $(window).height() - $(".navbar-container").height() - bc_line_height - $("footer").height();
+  if (offset>440 || $(window).height()<525) $(".content-wrapper .container-fluid").css("height", offset);
+
 });

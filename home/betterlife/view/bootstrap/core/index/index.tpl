@@ -1,6 +1,6 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-
+<body class="index">
     <div id="main-content-container" class="container-fluid">
       <div class="page" id="page1">
         <div class="container section-header-container">
@@ -13,7 +13,6 @@
         </div>
         <div class="starfield"></div>
       </div>
-
 
       <div class="section page" id="page2">
           <div class="container section-container">
@@ -84,6 +83,7 @@
           </div>
         </div>
       </div>
+
       <div class="section page" id="page4">
           <div class="container section-container">
               <h2 class="title">四大前端框架 完美快速开发<font>四大前端框架始终坚持在技术创新中前行，引领行业重新定义前端开发时尚潮流</font></h2>
@@ -145,6 +145,7 @@
       </div>
 
       {include file="$templateDir/layout/normal/footer.tpl"}
+
       <div class="row footer-rainbow">
         <div class="col-xs-1" style="border:4px solid #d71335;"></div>
         <div class="col-xs-1" style="border:4px solid #bc3768;"></div>
@@ -162,6 +163,7 @@
     </div>
 
     <script src="{$template_url}js/common/bower/index.bower.min.js"></script>
-    <script src="{$template_url}js/index.js"></script>
 
+    <script src="{$template_url}js/index.js"></script>
+</body>
 {/block}

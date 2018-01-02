@@ -199,7 +199,7 @@ br {
 
 .footer > a:active,.footer > a:focus,.footer > a:hover{
   /*background-color: #7acb71;*/
-  
+
   background: -webkit-linear-gradient(left,#3fe69a, #4fc08d);
   box-shadow: 0 4px 8px 0 rgba(186, 210, 199, 0.8);
 }

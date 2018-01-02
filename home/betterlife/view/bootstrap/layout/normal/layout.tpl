@@ -23,8 +23,8 @@
   {php}
      flush();
   {/php}
-  <body class="index">
-    {include file="$templateDir/layout/normal/navbar.tpl"}
-    {block name=body}{/block}
-  </body>
+
+  {include file="$templateDir/layout/normal/navbar.tpl"}
+  {block name=body}{/block}
+  
 </html>
