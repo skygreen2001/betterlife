@@ -8,8 +8,6 @@ $(function(){
   if (lead_core_height>0) {
     $(".index #page1 .section-header-container").css("margin-top", lead_core_height/2);
   }
-  $("#btn-toggle-sidebar").css("display","none");
-  // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
   $(".navbar-fixed-top").css("opacity","0");
   // 隐藏toggle精简布局设置按钮
   $("#btn-layout-small").css("display","none");
@@ -19,23 +17,19 @@ $(function(){
   $(document).on("scroll", function() {
     if ($(document).scrollTop() <= 0) {
       $(".navbar").removeClass("nav-scroll");
-      // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
       $(".navbar-fixed-top").css("opacity","0");
       $("#navbar").removeClass("in");
     } else {
       $(".navbar").addClass("nav-scroll");
-      // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","block");
       $(".navbar-fixed-top").css("opacity","1");
     }
   });
 
   $("nav").hover(function() {
     $(".navbar").addClass("nav-scroll");
-    // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","block");
     $(".navbar-fixed-top").css("opacity","1");
   },function(){
     $(".navbar").removeClass("nav-scroll");
-    // if ($_.browser.mobile) $("a.navbar-brand,#btn-toggle-navbar").css("display","none");
     $(".navbar-fixed-top").css("opacity","0");
   });
 
@@ -43,13 +37,10 @@ $(function(){
   $('.starfield').starfield();
 
   // 第三屏左右滚动效果
-  // $('#page3 .content-head .bl-line').css("left",$('#page3 .content-head .col-md-4:first-child')[0].offsetLeft-10-$('#page3 .content-head')[0].offsetLeft);
-  // $('#page3 .content-head .col-md-4 i:first-child').css("border-color", "#fff");
   $('#page3 .content-head .col-md-4').each(function(){
     $(this).hover(function(){
       $('#page3 .content-head .col-md-4').removeClass("active");
       $(this).addClass("active");
-      // $('#page3 .content-head .bl-line').css("left",this.offsetLeft-10-$('#page3 .content-head')[0].offsetLeft);
       var dataId = $(this).attr("data-id");
       $('#page3 .content-head .page-detail').find("p").not("[data-id='"+dataId+"']").hide();
       $('#page3 .content-head .page-detail').find("p[data-id='"+dataId+"']").css("display","block");

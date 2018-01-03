@@ -1,4 +1,8 @@
 $(function(){
+  //手机toggle显示左侧导航
+  if ($(window).width()<768) $("#btn-toggle-sidebar").css("display","block");
+  $(window).resize(function(){if ($(window).width()<768) $("#btn-toggle-sidebar").css("display","block"); else $("#btn-toggle-sidebar").css("display","none");});
+
   //自动高亮当前页面链接地址对应的导航菜单
   function showLayoutMenuActive(linkName){
     var urlstatus = false;
@@ -58,10 +62,6 @@ $(function(){
   })
 
   if ( ($(window).width() > 755) && ($(window).width() < 826) ) collapse_sidebar();
-  $(window).resize(function(){
-    if ( $(window).width() > 752 ) $(".sidebar").removeAttr("style");
-
-  });
 
   //左侧导航条顶部切换按钮提示
   $('.navigation-header i').tooltip({
@@ -127,6 +127,9 @@ $(function(){
     }
   }
 
+  //下拉菜单显示效果
+  $.common.dropdown();
+  
   //网页过长显示返回到顶部按钮
   $(document).on("scroll", function() {
     if ($(document).scrollTop() > $(window).height()-188) {
@@ -142,8 +145,8 @@ $(function(){
   });
 
   //布局自适应高度，确保footer始终显示在页面底部
-  var bc_line_height = 0;
-  if ($(".breadcrumb-line").height()) bc_line_height = $(".breadcrumb-line").height();
-  var offset = $(window).height() - $(".navbar-container").height() - bc_line_height - $("footer").height();
-  if (offset>440 || $(window).height()<525) $(".content-wrapper .container-fluid").css("height", offset);
+  $.common.autoresize();
+  $(window).resize(function(){
+    $.common.autoresize();
+  });
 });

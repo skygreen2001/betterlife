@@ -84,6 +84,9 @@
 
         $(".login-container").css("min-height",$(window).height());
 
+        $(window).resize(function(){
+          $(".login-container").css("min-height",$(window).height());
+        });
       });
     </script>
 </body>
