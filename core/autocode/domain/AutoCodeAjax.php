@@ -24,6 +24,7 @@ class AutoCodeAjax extends AutoCodeView
         $editApiRela  = "";
         foreach ($fieldInfo as $fieldname=>$field)
         {
+            $field_comment = $field["Comment"];
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
@@ -166,7 +167,7 @@ class AutoCodeAjax extends AutoCodeView
         $fieldname{0}  = strtoupper($fieldname{0});
         $filename      = $instantceName . $fieldname . Config_F::SUFFIX_FILE_JSON;
         $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
-        AutoCodePreviewReport::$json_admin_files[$classname . $filename] = $relative_path;
+        AutoCodePreviewReport::$json_admin_files[$filename] = $relative_path;
         return self::saveDefineToDir( $dir, $filename, $defineJsonFileContent );
     }
 

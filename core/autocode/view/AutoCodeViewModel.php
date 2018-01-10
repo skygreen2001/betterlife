@@ -244,6 +244,7 @@ class AutoCodeViewModel extends AutoCodeView
         $idColumnName    = "id";
         $hasImgFormFlag  = "";
         $edit_js_content = "";
+        $editEnumColumn  = "";
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];

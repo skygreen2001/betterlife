@@ -1,4 +1,13 @@
 <?php
+$view_contents   = isset($view_contents) ? $view_contents : "";
+$headers         = isset($headers) ? $headers : "";
+$contents        = isset($contents) ? $contents : "";
+$realId          = isset($realId) ? $realId : "";
+$hasImgFormFlag  = isset($hasImgFormFlag) ? $hasImgFormFlag : "";
+$idColumnName    = isset($idColumnName) ? $idColumnName : "";
+$edit_contents   = isset($edit_contents) ? $edit_contents : "";
+$edit_js_content = isset($edit_js_content) ? $edit_js_content : "";
+$ueTextareacontents = isset($ueTextareacontents) ? $ueTextareacontents : "";
 $list_template =<<<LISTS
 <div class="block">
     <div><h1>{$table_comment}列表(共计{\$count{$classname}s}个)</h1></div>

@@ -1,4 +1,16 @@
 <?php
+$classname = isset($classname) ? $classname : "";
+$instancename = isset($instancename) ? $instancename : "";
+$classname_rela = isset($classname_rela) ? $classname_rela : "";
+$instancename_rela = isset($instancename_rela) ? $instancename_rela : "";
+$realId = isset($realId) ? $realId : "";
+$classNameField = isset($classNameField) ? $classNameField : "";
+$realId_m2m = isset($realId_m2m) ? $realId_m2m : "";
+$edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
+$editApiRela = isset($editApiRela) ? $editApiRela : "";
+$editApiImg = isset($editApiImg) ? $editApiImg : "";
+$edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
+
 $api_web_template = <<<API_WEB
 <?php
 // error_reporting(0);

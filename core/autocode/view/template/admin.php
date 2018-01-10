@@ -1,4 +1,44 @@
 <?php
+$appname = isset($appname) ? $appname : "";
+$classname = isset($classname) ? $classname : "";
+$realId = isset($realId) ? $realId : "";
+$table_comment = isset($table_comment) ? $table_comment : "";
+$classname_rela = isset($classname_rela) ? $classname_rela : "";
+$column_contents = isset($column_contents) ? $column_contents : "";
+$imgColumnDefs = isset($imgColumnDefs) ? $imgColumnDefs : "";
+$classNameField = isset($classNameField) ? $classNameField : "";
+$editApiRela = isset($editApiRela) ? $editApiRela : "";
+$editApiImg = isset($editApiImg) ? $editApiImg : "";
+$classname_rela = isset($classname_rela) ? $classname_rela : "";
+$instancename_rela = isset($instancename_rela) ? $instancename_rela : "";
+$realId_m2m = isset($realId_m2m) ? $realId_m2m : "";
+$imgColumnDefs = isset($imgColumnDefs) ? $imgColumnDefs : "";
+$bitColumnDefs = isset($bitColumnDefs) ? $bitColumnDefs : "";
+$statusColumnDefs = isset($statusColumnDefs) ? $statusColumnDefs : "";
+$idColumnDefs = isset($idColumnDefs) ? $idColumnDefs : "";
+$editImgColumn = isset($editImgColumn) ? $editImgColumn : "";
+$editDateColumn = isset($editDateColumn) ? $editDateColumn : "";
+$editEnumColumn = isset($editEnumColumn) ? $editEnumColumn : "";
+$editMulSelColumn = isset($editMulSelColumn) ? $editMulSelColumn : "";
+$editM2MSelColumn = isset($editM2MSelColumn) ? $editM2MSelColumn : "";
+$editBitColumn = isset($editBitColumn) ? $editBitColumn : "";
+$editValidRules = isset($editValidRules) ? $editValidRules : "";
+$editValidMsg = isset($editValidMsg) ? $editValidMsg : "";
+$row_no = isset($row_no) ? $row_no : "";
+$altImgVal = isset($altImgVal) ? $altImgVal : "";
+$status_switch_show = isset($status_switch_show) ? $status_switch_show : "";
+$showColumns = isset($showColumns) ? $showColumns : "";
+$commitTimeStr = isset($commitTimeStr) ? $commitTimeStr : "";
+$updateTimeStr = isset($updateTimeStr) ? $updateTimeStr : "";
+$hasImgFormFlag = isset($hasImgFormFlag) ? $hasImgFormFlag : "";
+$edit_contents = isset($edit_contents) ? $edit_contents : "";
+$enumJsContent = isset($enumJsContent) ? $enumJsContent : "";
+$rela_js_content = isset($rela_js_content) ? $rela_js_content : "";
+$ueTextareacontents = isset($ueTextareacontents) ? $ueTextareacontents : "";
+$edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
+$navbar_menus = isset($navbar_menus) ? $navbar_menus : "";
+$sidebar_menus = isset($sidebar_menus) ? $sidebar_menus : "";
+
 $api_web_template = <<<API_WEB
 <?php
 // error_reporting(0);
@@ -104,11 +144,11 @@ echo json_encode(\$result);
 SELECT_WEB;
 
 $js_template = <<<JS
-$(function(){
+\$(function(){
     //Datatables中文网[帮助]: http://datatables.club/
-    if ($.dataTable) {
-        var infoTable = $('#infoTable').DataTable({
-            "language"  : $.dataTable.chinese,
+    if (\$.dataTable) {
+        var infoTable = \$('#infoTable').DataTable({
+            "language"  : \$.dataTable.chinese,
             "processing": true,
             "serverSide": true,
             "retrieve"  : true,
@@ -145,14 +185,14 @@ $idColumnDefs
              }
             ],
             "initComplete":function(){
-                $.dataTable.filterDisplay();
+                \$.dataTable.filterDisplay();
             },
             "drawCallback": function( settings ) {
-                $.dataTable.pageNumDisplay(this);
-                $.dataTable.filterDisplay();
+                \$.dataTable.pageNumDisplay(this);
+                \$.dataTable.filterDisplay();
             }
         });
-        $.dataTable.doFilter(infoTable);
+        \$.dataTable.doFilter(infoTable);
     }
 
     if( \$(".content-wrapper form").length ) {
@@ -162,7 +202,7 @@ $editEnumColumn
 $editMulSelColumn
 $editM2MSelColumn
 $editBitColumn
-        $('#edit{$classname}Form').validate({
+        \$('#edit{$classname}Form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
             // focusInvalid: false,
@@ -175,14 +215,14 @@ $editValidRules
 $editValidMsg
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
-                $('.alert-danger', $('.login-form')).show();
+                \$('.alert-danger', \$('.login-form')).show();
             },
             highlight: function (e) {
-                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                \$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
             },
             success: function (e) {
-                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                $(e).remove();
+                \$(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                \$(e).remove();
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element.parent());
@@ -206,11 +246,11 @@ $js_sub_template_img = <<<JS_IMG
 
                         \$("body").off('click', 'a#imgUrl' + $realId);
                         \$("body").on('click', 'a#imgUrl' + $realId, function(){
-                            var imgLink = $('a#imgUrl' + $realId + " img").attr('src');
-                            $('#imagePreview').attr('src', imgLink);
-                            $('#imagePreview-link').attr('href', imgLink);
-                            var isShow = $.dataTable.showImages($(this).find("img"), "#imageModal .modal-dialog");
-                            if (isShow) $('#imageModal').modal('show'); else window.open(imgLink, '_blank');
+                            var imgLink = \$('a#imgUrl' + $realId + " img").attr('src');
+                            \$('#imagePreview').attr('src', imgLink);
+                            \$('#imagePreview-link').attr('href', imgLink);
+                            var isShow = \$.dataTable.showImages(\$(this).find("img"), "#imageModal .modal-dialog");
+                            if (isShow) \$('#imageModal').modal('show'); else window.open(imgLink, '_blank');
                         });
                     }
                     return result;
@@ -543,7 +583,7 @@ $navbar_template = <<<NAVBAR
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{$url_base}index.php?go=admin.index.index">首页</a></li>
+            <li><a href="{\$url_base}index.php?go=admin.index.index">首页</a></li>
 $navbar_menus
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -552,7 +592,7 @@ $navbar_menus
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
                 <li><a href="#reset"><span class="glyphicon glyphicon-edit"></span>修改密码</a></li>
-                <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+                <li><a href="{\$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
             <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>

@@ -149,3 +149,7 @@
   > http://ueditor.baidu.com/website/download.html
 * **本框架帮助文档**
   > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
+
+## 学习资料
+
+- PHP The Right Way: https://laravel-china.github.io/php-the-right-way/

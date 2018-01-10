@@ -276,6 +276,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $column_contents = "";
         foreach ($fieldInfo as $fieldname => $field)
         {
+            $field_comment = $field["Comment"];
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $field_comment = $field["Comment"];
                 if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
@@ -539,6 +540,7 @@ UETC;
 
         foreach ($fieldInfo as $fieldname => $field)
         {
+            $field_comment = $field["Comment"];
             if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $field_comment = $field["Comment"];
                 $isImage       = self::columnIsImage( $fieldname, $field_comment );
