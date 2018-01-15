@@ -57,11 +57,14 @@
                       <dt><span>封面</span></dt>
                       <dd>
                         {if $blog.icon_url}
+
                         <span><a href="{$blog.icon_url}" target="_blank"><img class="img-thumbnail" src="{$blog.icon_url}" alt="{$blog.blog_name}" /></a></span><br>
                         <span>存储路径:</span><br><span>{$blog.icon_url}</span>
                         {else}
+
                         <span><a href="https://lorempixel.com/900/500?r=1" target="_blank"><img class="img-thumbnail" src="https://lorempixel.com/900/500?r=1" alt="{$blog.blog_name}" /></a></span>
                         {/if}
+
                       </dd>
                     </dl>
                     <dl>
@@ -74,7 +77,7 @@
                     </dl>
                     <dl>
                       <dt><span>博客内容</span></dt>
-                      <dd><span>{$blog.blog_content}</span></dd>
+                      <dd id="blog_content"><span></span></dd>
                     </dl>
                     <dl>
                       <dt><span>发布日期</span></dt>
@@ -115,6 +118,15 @@
         <!-- /page content end -->
     </div>
     <!-- /page container end -->
-
     {include file="$templateDir/layout/normal/footer.tpl"}
+
+    <script>
+        var blog_content = "{$blog.blog_content|escape:'javascript'}";
+        $(function(){
+          // if ($(".content-wrapper .container-fluid").hasClass("view")){
+            $("#blog_content").html(blog_content);
+            $.common.remoteImgShow("#blog_content");
+          // }
+        });
+    </script>
 {/block}
