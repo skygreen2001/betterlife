@@ -102,7 +102,7 @@
                     <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.lists&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
                     </button>
-                    <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.edit&amp;id={$smarty.get.id}&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info">
+                    <button type="submit" onclick="location.href='{$url_base}index.php?go=admin.blog.edit&amp;id={$smarty.get.id}&amp;pageNo={$smarty.get.pageNo|default:1}'" class="btn btn-info btn-edit">
                       <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span>编辑</span>
                     </button>
                   </div>

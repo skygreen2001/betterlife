@@ -12,10 +12,22 @@ var commonLibrary = {
     autoresize  : function(){
         var bc_line_height = 0;
         if ($(".breadcrumb-line").height()) bc_line_height = $(".breadcrumb-line").height();
-        var offset = $(window).height() - $(".navbar-container").height() - bc_line_height - $("footer").height();
-        if (offset>440 || $(window).height()<525) $(".content-wrapper .container-fluid").css("height", offset);
+        var content_margin_top = parseInt($(".content-wrapper .container-fluid").css("margin-top"));
+        var offset = $(window).height() - $(".navbar-container").height() - bc_line_height - $("footer").height() - content_margin_top;
+        // if (offset>440 || $(window).height()<525) $(".content-wrapper .container-fluid").css("height", offset);
+        $(".content-wrapper .container-fluid").removeAttr("style");
 
+        if (($(".content-wrapper .container-fluid").height()<635)||($("body").height()<$(window).height())) {
+            $(".content-wrapper .container-fluid").css("height", offset);
+        }
         if ( $(window).width() > 752 ) $(".sidebar").removeAttr("style");
+        if ( $(window).width() < 992 ){
+          $(".navbar .navbar-container").removeClass("container");
+          $(".page-container").removeClass("container");
+          $("#btn-layout-small").css("display","none");
+        }else{
+          $("#btn-layout-small").css("display","block");
+        }
     },
     dropdown    : function(){
         //Adding a slide effect to bootstrap dropdown

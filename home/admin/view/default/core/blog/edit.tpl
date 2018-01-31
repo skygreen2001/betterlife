@@ -115,7 +115,7 @@
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div  class="btn-group" role="group">
-                            <button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
+                            <button class="btn btn-reset" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
                           </div>
                       </div>
                       </form>
