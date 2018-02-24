@@ -60,8 +60,8 @@
           <div id="searchbar-inner">
             <form method="get" action="" class="searchbar-form">
               <input type="search" class="form-control" name="search" autocomplete="off" autofocus="autofocus" placeholder="搜你所想">
+              <i id="searchbar-close" class="fa fa-remove search-toggle"></i>
             </form>
-            <i id="searchbar-close" class="fa fa-remove search-toggle"></i>
           </div>
         </div>
       </div>

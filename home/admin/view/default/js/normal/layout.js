@@ -38,6 +38,25 @@ $(function(){
     $(this).toggleClass("on");
   });
 
+  $("#searchbar input").keyup(function(){
+    if ($(this).val()==""){
+      $(this).siblings(".fa-remove").css("display","none");
+    }else{
+      $(this).siblings(".fa-remove").show();
+    }
+  });
+
+  // $("nav").hover(function() {
+  //   $(".navbar").addClass("nav-scroll");
+  //   $(".navbar-fixed-top").css("opacity","1");
+  // },function(){
+  //   $(".navbar").removeClass("nav-scroll");
+  //   $(".navbar-fixed-top").css("opacity","0");
+  // });
+  $(".container-fluid").click(function(){
+    $("#searchbar").collapse('hide');
+  });
+
   //左侧导航条有子菜单点选
   $(".sidebar-nav >li > a.has-ul").click(function(e){
     e.preventDefault();
@@ -129,7 +148,7 @@ $(function(){
 
   //下拉菜单显示效果
   $.common.dropdown();
-  
+
   //网页过长显示返回到顶部按钮
   $(document).on("scroll", function() {
     if ($(document).scrollTop() > $(window).height()-188) {

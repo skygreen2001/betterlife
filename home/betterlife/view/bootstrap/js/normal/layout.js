@@ -34,6 +34,24 @@ $(function(){
     $(this).toggleClass("on");
   });
 
+  // $("nav").hover(function() {
+  //   $(".navbar").addClass("nav-scroll");
+  //   $(".navbar-fixed-top").css("opacity","1");
+  // },function(){
+  //   $(".navbar").removeClass("nav-scroll");
+  //   $(".navbar-fixed-top").css("opacity","0");
+  // });
+  $(".container-fluid").click(function(){
+    $("#searchbar").collapse('hide');
+  });
+
+  $("#searchbar input").keyup(function(){
+    if ($(this).val()==""){
+      $(this).siblings(".fa-remove").css("display","none");
+    }else{
+      $(this).siblings(".fa-remove").show();
+    }
+  });
   //左侧导航条有子菜单点选
   $(".sidebar-nav >li > a.has-ul").click(function(e){
     e.preventDefault();
@@ -71,7 +89,7 @@ $(function(){
   });
 
   // 页面整体布局宽窄屏切换
-  $("#btn-layout-container").click(function(){
+  $("#btn-layout-small").click(function(){
     if ($(this).find("i").hasClass("glyphicon-resize-full")) {
       $(this).find("i").removeClass("glyphicon-resize-full").addClass("glyphicon-resize-small");
       $(".navbar .navbar-container").removeClass("container");
@@ -125,7 +143,7 @@ $(function(){
 
   //下拉菜单显示效果
   $.common.dropdown();
-  
+
   //网页过长显示返回到顶部按钮
   $(document).on("scroll", function() {
     if ($(document).scrollTop() > $(window).height()-188) {

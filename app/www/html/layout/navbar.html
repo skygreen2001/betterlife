@@ -45,8 +45,8 @@
         <div id="searchbar" ng-class="{true:'', false:'hidden'}[isSearch]">
           <div id="searchbar-inner">
             <form method="get" action="" class="header-searchform">
-              <input type="search" class="form-control" name="search" autocomplete="off" autofocus="autofocus" placeholder="搜你所想">
+              <input ng-model="searchbar.tSearch" ng-keyup="searchbar.inputSearch($event)" type="search" class="form-control" name="search" autocomplete="off" autofocus="autofocus" placeholder="搜你所想">
+              <i ng-show="searchbar.cSearch" id="searchbar-close" class="fa fa-remove search-toggle"></i>
             </form>
-            <i id="searchbar-close" class="fa fa-remove search-toggle"></i>
           </div>
         </div>

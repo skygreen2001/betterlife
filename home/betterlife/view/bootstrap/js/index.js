@@ -11,6 +11,9 @@ $(function(){
   $(".navbar-fixed-top").css("opacity","0");
   // 隐藏toggle精简布局设置按钮
   $("#btn-layout-small").css("display","none");
+  $(window).resize(function(){
+    $("#btn-layout-small").css("display","none");
+  });
 
   // 顶部导航滚动显示底部挡板效果
   $(document).scrollTop() <= 0 ? $(".navbar").removeClass("nav-scroll") : $(".navbar").addClass("nav-scroll");
@@ -23,14 +26,6 @@ $(function(){
       $(".navbar").addClass("nav-scroll");
       $(".navbar-fixed-top").css("opacity","1");
     }
-  });
-
-  $("nav").hover(function() {
-    $(".navbar").addClass("nav-scroll");
-    $(".navbar-fixed-top").css("opacity","1");
-  },function(){
-    $(".navbar").removeClass("nav-scroll");
-    $(".navbar-fixed-top").css("opacity","0");
   });
 
   //首页内容顶部显示星云效果
@@ -98,26 +93,26 @@ $(function(){
   var countE4 = new CountUp("countE4", 0, 70319, 0, 2.5, options);
 
   if(navigator.userAgent.match(/mobile/i)) {
+    countE1.start();
+    countE2.start();
+    countE3.start();
+    countE4.start();
+  }else{
+    if($(window).height() >= $("#page4").offset().top+300){
       countE1.start();
       countE2.start();
       countE3.start();
       countE4.start();
-  }else{
-      if($(window).height() >= $("#page4").offset().top+300){
+    }else{
+      $(window).scroll(function(){
+        // if($(window).scrollTop() >= $("#page4").offset().top-$(window).height()/4){
+        if($(window).scrollTop() >= $("#page4").offset().top-$(window).height()*7/10){
           countE1.start();
           countE2.start();
           countE3.start();
           countE4.start();
-      }else{
-          $(window).scroll(function(){
-              // if($(window).scrollTop() >= $("#page4").offset().top-$(window).height()/4){
-              if($(window).scrollTop() >= $("#page4").offset().top-$(window).height()*7/10){
-                  countE1.start();
-                  countE2.start();
-                  countE3.start();
-                  countE4.start();
-              }
-          })
-      }
+        }
+      })
+    }
   }
 });

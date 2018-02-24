@@ -40,4 +40,5 @@
     </div>
 
     {include file="$templateDir/layout/normal/footer.tpl"}
+    <script src="{$template_url}js/index.js"></script>
 {/block}

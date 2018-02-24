@@ -231,7 +231,7 @@ gulp.task('js', function() {
     jsTask
     .pipe($.rename({suffix: '.min'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest(path.join(config.dest, 'js', 'bower')));//, 'bower'
+    .pipe(gulp.dest(path.join(config.dest, 'js', 'bower')));
   }
 
   jsTask = streamqueue(
@@ -257,8 +257,8 @@ gulp.task('js', function() {
 =            mimic server request response json data                 =
 ====================================================================*/
 gulp.task('data', function() {
-    gulp.src('./data/*')
-    .pipe(gulp.dest(path.join(config.dest, 'data')));
+  gulp.src('./data/*')
+  .pipe(gulp.dest(path.join(config.dest, 'data')));
 });
 
 /*===================================================================

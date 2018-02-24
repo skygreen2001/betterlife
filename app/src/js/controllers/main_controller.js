@@ -17,6 +17,14 @@ angular.
 
       $scope.layout   = Constants.LAYOUT;
       $scope.isNavbar = false;
-      $scope.isSearch  = false;
+      $scope.isSearch = false;
+
+      $scope.searchbar = {
+        tSearch: "",
+        cSearch: false,
+        inputSearch: function(e) {
+          if (this.tSearch.length>0) this.cSearch = true; else this.cSearch = false;
+        }
+      }
     }
   );

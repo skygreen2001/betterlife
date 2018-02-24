@@ -28,11 +28,11 @@ var app = angular.module('bb', [
   'bb.controllers'
 ]);
 
-// app.run();
+app.run();
 
-app.run(function($transform) {
-  window.$transform = $transform;
-});
+// app.run(function($transform) {
+//   window.$transform = $transform;
+// });
 
 app.config(['$locationProvider', '$routeProvider', '$httpProvider',
   function($locationProvider, $routeProvider, $httpProvider) {
