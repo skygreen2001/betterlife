@@ -248,6 +248,9 @@ class View {
         switch ($template_mode) {
             case self::TEMPLATE_MODE_SMARTY:
                 $this->templateMode=self::TEMPLATE_MODE_SMARTY;
+                if (!class_exists("Smarty")){
+                  die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。<br/></p>");
+                }
                 $this->template = new Smarty();
                 if (Smarty::SMARTY_VERSION>=3.1 && class_exists("SmartyBC")) $this->template = new SmartyBC();
                 $this->template->template_dir =  Gc::$nav_root_path . $this->template_dir;
