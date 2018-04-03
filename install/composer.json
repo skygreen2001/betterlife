@@ -25,12 +25,16 @@
   },
   "repositories": [
     {
+        "type": "pear",
+        "url": "https://pear.php.net"
+    },
+    {
         "type":"package",
         "package": {
             "name": "pear/MDB2",
             "version": "2.4.1",
             "source": {
-              "url": "https://github.com/pear/MDB2.git",
+              "url": "https://github.com/pear/MDB2",
               "type": "git",
               "reference":"master"
             }
@@ -38,15 +42,16 @@
     }
   ],
   "require": {
-      "php"               : ">=5.2.0",
-      "smarty/smarty"     : "dev-master",
-      "phpoffice/phpexcel": "dev-master",
-      "phpoffice/phpword" : "v0.13.*",
-      "symfony/yaml"      : ">=2.0.4",
-      "mustangostang/spyc": "dev-master",
-      "fusonic/linq"      : "@dev",
-      "adodb/adodb-php"   : ">=5.19",
-      "pear/MDB2"         : ">=2.0.0"
+    "php"               : ">=5.2.0",
+    "smarty/smarty"     : "^3.1",
+    "phpoffice/phpexcel": "^1.8",
+    "phpoffice/phpword" : "^0.14.0",
+    "symfony/yaml"      : ">=2.0.4",
+    "mustangostang/spyc": "^0.6.2",
+    "fusonic/linq"      : "^2.0",
+    "adodb/adodb-php"   : ">=5.19",
+    "pear/MDB2"         : ">=2.0.0",
+    "phpoffice/phpspreadsheet": "^1.2"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
