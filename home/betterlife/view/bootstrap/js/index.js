@@ -2,6 +2,7 @@ $(function(){
 
   // 第一屏满屏显示
   $("html").css("height", "100%");
+  $("body").addClass("index");
 
   // 第一屏内容垂直居中显示
   var lead_core_height = $(window).height() - $(".index #page1 .bb-lead-core").height();
