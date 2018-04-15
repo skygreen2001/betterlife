@@ -145,9 +145,9 @@ class Initializer
         $is_not_run_betterlife = false;
         //if (ini_get('register_globals') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置register_globals = On<br/></p>";$is_not_run_betterlife=true;}
         //if (ini_get('allow_call_time_pass_reference') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置allow_call_time_pass_reference = On<br/></p>";$is_not_run_betterlife=true;}
-        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-gd php-gd<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-curl php-curl<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd php5-gd<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl php5-curl<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring<br/></p>";$is_not_run_betterlife = true; }
         if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/></p>";$is_not_run_betterlife = true; }
         if ( version_compare(phpversion(), 5.3, '<') ) {
             if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/></p>";$is_not_run_betterlife = true; }

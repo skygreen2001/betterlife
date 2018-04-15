@@ -77,11 +77,12 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         if ( !isset($dbname) ) {
             $dbname   = Config_Mysql::$dbname;
         }
-        $this->connection = new mysqli($connecturl, $username, $password, $dbname);
-        if ( !$this->$connection )
+        $dbinfo = new DbInfo_Mysqli();
+        $connection = new mysqli($connecturl, $username, $password, $dbname);
+        if ( !$connection )
         {
             LogMe::log(
-                '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysqli_error($this->connection)
+                '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysqli_error($connection)
                     . '.<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
             return false;
         }
@@ -92,7 +93,8 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             return false;
         }
 
-        $this->change_character_set( Config_Db::$character );
+        $connection->query("SET NAMES " . Config_Db::$character);
+
         if ( file_exists($script_filename) ) {
             $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
             $query = implode("\n", $query);
@@ -103,9 +105,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             {
                 $v = str_replace("--&nbsp--", "&nbsp;", $v);
                 if ( !empty($v) && ( $v != "\r") ) {
-                    $this->stmt = $this->connection->prepare($v);
-                    if ( $this->stmt ) {
-                        $this->stmt->execute();
+                    $stmt = $connection->prepare($v);
+                    if ( $stmt ) {
+                        $stmt->execute();
                     }
 
                     if ( mysqli_connect_errno() ) {
@@ -115,9 +117,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
                     }
                 }
             }
-            if ( $this->stmt ) {
-                $this->stmt->free_result();
-                $this->stmt->close();
+            if ( $stmt ) {
+                $stmt->free_result();
+                $stmt->close();
             }
             LogMe::log( "数据库操作成功，无异常！" );
         } else {

@@ -29,7 +29,7 @@ class Loader {
             if (Gc::$dev_debug_on) {
                 ExceptionMe::backtrace();
             }
-            e("Not a valid object '{$object}' to load",$this);
+            e("Not a valid object '{$object}' to load",self);
         }
         if (empty(self::$loaded[$object])) {
             if (empty($param1)) {

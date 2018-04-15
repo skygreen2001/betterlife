@@ -156,7 +156,7 @@ class UtilDateTime extends Util
     public static function isLeapYear($year='')
     {
         if(empty($year)) {
-            $year = $this->year;
+            return false;
         }
         return ((($year % 4) == 0) && (($year % 100) != 0) || (($year % 400) == 0));
     }
@@ -180,9 +180,9 @@ class UtilDateTime extends Util
     public static function magicInfo($year,$month,$day,$type="SX")
     {
         $result = '';
-        $m      =   $month;
-        $y      =   $year;
-        $d      =   $day;
+        $m      = $month;
+        $y      = $year;
+        $d      = $day;
         switch ($type) {
             case 'XZ'://星座
                 $XZDict = array('摩羯','宝瓶','双鱼','白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手');
