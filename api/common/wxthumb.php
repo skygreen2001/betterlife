@@ -10,7 +10,8 @@ if (!empty($blogId)&&($blogId>0)) {
     if ($blog) {
         $icon_url  = $blog->icon_url;
         $file_name = basename($icon_url);
-        $suffix_name = end(explode(".", $file_name));
+        $suffix_name = explode(".", $file_name);
+        $suffix_name = end($suffix_name);
         header("Content-Type:image/" . $suffix_name);
         if ( $suffix_name == "jpeg" ) $suffix_name = "jpg";
         $icon_path = GC::$upload_url."images".DS.$icon_url;
