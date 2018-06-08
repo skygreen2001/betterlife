@@ -234,7 +234,7 @@ class UtilImage
             }
 
             // 载入原图
-            $createFun = 'ImageCreateFrom' . ($type == 'jpg' ? 'jpeg' : $type);
+            $createFun = 'imagecreatefrom' . ($type == 'jpg' ? 'jpeg' : $type);
             $srcImg    = $createFun($image);
 
             //创建缩略图
@@ -264,7 +264,19 @@ class UtilImage
             $imageFun  = 'image' . ($type == 'jpg' ? 'jpeg' : $type);
             $image_dir = dirname($thumbname);
             UtilFileSystem::createDir( $image_dir );
-            $imageFun($thumbImg, $thumbname);
+            if ( 'jpg' == $type || 'jpeg' == $type ){
+                $imageFun($thumbImg, $thumbname, 100); //默认75% 保真quality: 0-100
+                $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
+            } else if ( 'png' == $type ) {
+                $imageFun($thumbImg, $thumbname, 0); //默认6,压缩等级：0-9
+                $imageFun($thumbImg, null, 0);//默认6,压缩等级：0-9
+            } else if ( 'gif' == $type ){
+                $imageFun($thumbImg, $thumbname);
+                $imageFun($thumbImg);
+            } else {
+                $imageFun($thumbImg, $thumbname);
+                $imageFun($thumbImg);
+            }
             imagedestroy($thumbImg);
             imagedestroy($srcImg);
             return $thumbname;
