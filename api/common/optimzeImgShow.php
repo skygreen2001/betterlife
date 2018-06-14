@@ -21,13 +21,15 @@ $hight   = $params['h'];
 // $hight = "400";
 
 if ($width || $hight) {
-    $img_src = Gc::$url_base.$img_src;
-    $file_name = basename($img_src);
+    $img_src     = Gc::$url_base.$img_src;
+    $file_name   = basename($img_src);
     $suffix_name = explode(".", $file_name);
+    $first_name  = current($suffix_name);
     $suffix_name = end($suffix_name);
+    $file_name   = $first_name . "_" . $width . "_" . $hight . "." . $suffix_name;
     header("Content-Type:image/" . $suffix_name);
     if ( $suffix_name == "jpeg" ) $suffix_name = "jpg";
-    $thumb_icon_path = GC::$upload_path . "images" . DS . "cache" . DS . $file_name;
+    $thumb_icon_path = Gc::$upload_path . "images" . DS . "cache" . DS . $file_name;
     if (file_exists($thumb_icon_path)) {
         echo file_get_contents($thumb_icon_path);
     } else {
