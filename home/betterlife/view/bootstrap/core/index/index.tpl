@@ -1,6 +1,6 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
-  <div id="main-content-container" class="container-fluid">
+  <div id="main-content-container" class="container-fluid" style="display:none;">
     <div class="page" id="page1">
       <div class="container section-header-container">
         <div class="bb-lead-core">

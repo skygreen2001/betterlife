@@ -1,8 +1,8 @@
 $(function(){
-
   // 第一屏满屏显示
   $("html").css("height", "100%");
   $("body").addClass("index");
+  $("#main-content-container").css("display","block");
 
   // 第一屏内容垂直居中显示
   var lead_core_height = $(window).height() - $(".index #page1 .bb-lead-core").height();
@@ -47,36 +47,22 @@ $(function(){
 
   //上下滑屏逐个出现
   if($(".section")){
-    var t = $(".section");
-    var tH = t.eq(0).height();
-    var winH = $(window).height();
-    var sTop = $(window).scrollTop();
-
-    $(window).scroll(function(){
-        sTop = $(window).scrollTop();
+    $(window).scroll(function() {
+      $('.section').each(function(){
+        var imagePos = $(this).offset().top;
+        var winH = $(window).height();
+        var topOfWindow = $(window).scrollTop();
         if(navigator.userAgent.match(/mobile/i)) {
-          pageAni(sTop);
+          if (imagePos < topOfWindow+winH/1.3) {
+            $(this).find(".title").addClass("animated bounceInUp");
+          }
         }else{
-          pageAniWin(sTop)
+          if (imagePos < topOfWindow+winH/1.3) {
+            $(this).find(".title").addClass("animated bounceInUp");
+          }
         }
+      });
     });
-    function pageAni(sTop){
-        $.each(t,function(i){
-            if( sTop>t.eq(i).offset().top-winH*1.1){
-                t.eq(i).addClass("animation");
-            }
-        });
-    }
-    function pageAniWin(sTop){
-        $.each(t,function(i){
-            if( sTop>t.eq(i).offset().top-winH/1.3){
-                t.eq(i).addClass("animation");
-            }
-        });
-    }
-    pageAni(sTop);
-    pageAniWin(sTop);
-    $(".section").removeClass("animation");
   }
 
   //coutUp

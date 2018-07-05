@@ -2,7 +2,7 @@
 <html lang="zh-CN" id="index">
   <head>
     {include file="$templateDir/layout/normal/header.tpl"}
-    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{$url_base}favicon.ico" mce_href="{$url_base}favicon.ico" type="image/x-icon">
     {if $isDev}
     <link rel="stylesheet" href="{$template_url}resources/css/common.css">
     <script src="{$template_url}js/common/base.js"></script>
