@@ -72,6 +72,7 @@ class AutoCodeAjax extends AutoCodeView
                     $talname_rela      = self::getTablename( $key );
                     $classname_rela    = self::getClassname($talname_rela);
                     $instancename_rela = self::getInstancename( $talname_rela );
+                    $class_relaField   = self::getShowFieldName( $classname_rela );
 
                     include("template" . DS . "ajax.php");
                     $phpName          = self::saveApiSelectDefineToDir( $talname_rela, $select_web_template );

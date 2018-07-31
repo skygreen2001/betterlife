@@ -23,16 +23,6 @@
             <relationclass name="Tags">tagss</relationclass>
         </many_many>
     </class>
-    <class name="Category">
-        <conditions>
-            <condition>name</condition>
-            <condition>sequence_no</condition>
-            <condition>status</condition>
-        </conditions>
-        <has_many>
-            <relationclass name="Blog">blogs</relationclass>
-        </has_many>
-    </class>
     <class name="Comment">
         <conditions>
             <condition>comment</condition>
@@ -62,6 +52,27 @@
             <relationclass name="Tags">tags</relationclass>
         </belong_has_one>
     </class>
+    <class name="Category">
+        <conditions>
+            <condition>name</condition>
+            <condition>sequence_no</condition>
+            <condition>status</condition>
+        </conditions>
+        <has_many>
+            <relationclass name="Blog">blogs</relationclass>
+        </has_many>
+    </class>
+    <class name="Region">
+        <conditions>
+            <condition>region_type</condition>
+        </conditions>
+        <relationShows>
+            <show local_key="parent_id" relation_class="Region">region_name</show>
+        </relationShows>
+        <belong_has_one>
+            <relationclass name="Region">region_p</relationclass>
+        </belong_has_one>
+    </class>
     <class name="Tags">
         <conditions>
             <condition>title</condition>
@@ -74,17 +85,6 @@
         <belongs_many_many>
             <relationclass name="Blog">blogs</relationclass>
         </belongs_many_many>
-    </class>
-    <class name="Region">
-        <conditions>
-            <condition>region_type</condition>
-        </conditions>
-        <relationShows>
-            <show local_key="parent_id" relation_class="Region">region_name</show>
-        </relationShows>
-        <belong_has_one>
-            <relationclass name="Region">region_p</relationclass>
-        </belong_has_one>
     </class>
     <class name="Logsystem">
         <conditions/>
@@ -168,11 +168,11 @@
     <class name="Rolefunctions">
         <conditions>
             <condition relation_class="Role" show_name="role_name">role_id</condition>
-            <condition relation_class="Functions" show_name="name">functions_id</condition>
+            <condition relation_class="Functions" show_name="url">functions_id</condition>
         </conditions>
         <relationShows>
             <show local_key="role_id" relation_class="Role">role_name</show>
-            <show local_key="functions_id" relation_class="Functions">name</show>
+            <show local_key="functions_id" relation_class="Functions">url</show>
         </relationShows>
         <belong_has_one>
             <relationclass name="Role">role</relationclass>

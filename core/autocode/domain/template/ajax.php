@@ -83,7 +83,7 @@ if (!empty(\$query)){
   \$where_clause  = "(";
   \$search_atom = explode(" ", trim(\$query));
   array_walk(\$search_atom, function(&\$value, \$key){
-    \$value = " ( title LIKE '%" . \$value . "%' ) ";
+    \$value = " ( $class_relaField LIKE '%" . \$value . "%' ) ";
   });
   \$where_clause .= implode(" and ", \$search_atom);
   \$where_clause .= ")";
@@ -94,7 +94,7 @@ if (\$page{$classname_rela}){
   foreach (\$page{$classname_rela} as \$key => \${$instancename_rela}) {
     \${$instancename_rela}v         = array();
     \${$instancename_rela}v["id"]   = \${$instancename_rela}->{$realId_m2m};
-    \${$instancename_rela}v["text"] = \${$instancename_rela}->title;
+    \${$instancename_rela}v["text"] = \${$instancename_rela}->{$class_relaField};
     \$data[]        = \${$instancename_rela}v;
   }
 }
