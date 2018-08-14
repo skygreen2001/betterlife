@@ -12,7 +12,7 @@ File Encoding         : 65001
 
 Date: 2014-04-27 22:31:35
 */
-
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -30,7 +30,7 @@ CREATE TABLE `bb_dic_category` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `id_UNIQUE` (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='博客分类';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='博客分类';
 
 -- ----------------------------
 -- Records of bb_dic_category
@@ -64,7 +64,7 @@ CREATE TABLE `bb_core_blog` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`blog_id`,`user_id`),
   KEY `fk_bb_core_blog_bb_user_user1` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='博客';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='博客';
 
 -- ----------------------------
 -- Records of bb_core_blog
@@ -88,7 +88,7 @@ CREATE TABLE `bb_dic_tags` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`tags_id`),
   UNIQUE KEY `id_UNIQUE` (`tags_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='标签';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='标签';
 
 -- ----------------------------
 -- Records of bb_dic_category
@@ -114,7 +114,7 @@ CREATE TABLE `bb_core_re_blogtags` (
   PRIMARY KEY (`blogtags_id`, `blog_id`, `tags_id`),
   KEY `fk_blog_belongs_tags` (`blog_id`),
   KEY `fk_blog_has_blog` (`tags_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客标签\n博客标签关系表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='博客标签\n博客标签关系表';
 
 -- ----------------------------
 -- Table structure for `bb_core_comment`
@@ -129,7 +129,7 @@ CREATE TABLE `bb_core_comment` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`comment_id`,`user_id`),
   KEY `fk_bb_core_comment_bb_user_user1` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='评论';
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='评论';
 
 -- ----------------------------
 -- Records of bb_core_comment
@@ -159,7 +159,7 @@ CREATE TABLE `bb_dic_region` (
   PRIMARY KEY (`region_id`,`parent_id`),
   KEY `parent_id` (`parent_id`),
   KEY `region_type` (`region_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=3409 DEFAULT CHARSET=utf8 COMMENT='地区';
+) ENGINE=MyISAM AUTO_INCREMENT=3409 DEFAULT CHARSET=utf8mb4 COMMENT='地区';
 
 -- ----------------------------
 -- Records of bb_dic_region
@@ -3584,7 +3584,7 @@ CREATE TABLE `bb_log_logsystem` (
   `priority` enum('0','1','2','3','4','5','6','7','8') NOT NULL COMMENT '优先级\n0:严重错误-EMERG\n1:警戒性错误-ALERT\n2:临界值错误-CRIT\n3:一般错误-ERR\n4:警告性错误-WARN\n5:通知-NOTICE\n6:信息-INFO\n7:调试-DEBUG\n8:SQL-SQL',
   `message` varchar(200) DEFAULT NULL COMMENT '日志内容',
   PRIMARY KEY (`logsystem_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统日志';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='系统日志';
 
 -- ----------------------------
 -- Records of bb_log_logsystem
@@ -3602,7 +3602,7 @@ CREATE TABLE `bb_log_loguser` (
   `commitTime` int(11) NOT NULL COMMENT '提交时间',
   PRIMARY KEY (`loguser_id`,`user_id`),
   KEY `fk_bb_log_loguser_bb_user_user1` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户日志';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='用户日志';
 
 -- ----------------------------
 -- Records of bb_log_loguser
@@ -3625,7 +3625,7 @@ CREATE TABLE `bb_msg_msg` (
   PRIMARY KEY (`msg_id`,`senderId`,`receiverId`),
   KEY `fk_bb_msg_msg_bb_user_user1` (`senderId`),
   KEY `fk_bb_msg_msg_bb_user_user2` (`receiverId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='消息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='消息';
 
 -- ----------------------------
 -- Records of bb_msg_msg
@@ -3643,7 +3643,7 @@ CREATE TABLE `bb_msg_notice` (
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`notice_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='通知';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='通知';
 
 -- ----------------------------
 -- Records of bb_msg_notice
@@ -3662,7 +3662,7 @@ CREATE TABLE `bb_msg_re_usernotice` (
   PRIMARY KEY (`usernotice_id`,`user_id`,`notice_id`),
   KEY `fk_notice_belongs_user` (`user_id`),
   KEY `fk_user_has_notice` (`notice_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户收到通知\n用户收到通知关系表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='用户收到通知\n用户收到通知关系表';
 
 -- ----------------------------
 -- Records of bb_msg_re_usernotice
@@ -3684,7 +3684,7 @@ CREATE TABLE `bb_user_admin` (
   `commitTime` int(11) DEFAULT NULL COMMENT '创建时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`admin_id`,`department_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='系统管理人员';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统管理人员';
 
 -- ----------------------------
 -- Records of bb_user_admin
@@ -3707,7 +3707,7 @@ CREATE TABLE `bb_user_department` (
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`department_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户所属部门';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户所属部门';
 
 -- ----------------------------
 -- Records of bb_user_department
@@ -3724,7 +3724,7 @@ CREATE TABLE `bb_user_functions` (
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`functions_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='功能信息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='功能信息';
 
 -- ----------------------------
 -- Records of bb_user_functions
@@ -3741,7 +3741,7 @@ CREATE TABLE `bb_user_re_rolefunctions` (
   PRIMARY KEY (`rolefunctions_id`,`role_id`,`functions_id`),
   KEY `fk_function_belong_role` (`role_id`),
   KEY `fk_role_has_function` (`functions_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色拥有功能\n角色拥有功能关系表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色拥有功能\n角色拥有功能关系表';
 
 -- ----------------------------
 -- Records of bb_user_re_rolefunctions
@@ -3759,7 +3759,7 @@ CREATE TABLE `bb_user_re_userrole` (
   UNIQUE KEY `id_UNIQUE` (`userrole_id`),
   KEY `fk_role_belongs_user` (`user_id`),
   KEY `fk_user_has_role` (`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户角色\n用户角色关系表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='用户角色\n用户角色关系表';
 
 -- ----------------------------
 -- Records of bb_user_re_userrole
@@ -3780,7 +3780,7 @@ CREATE TABLE `bb_user_role` (
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色';
 
 -- ----------------------------
 -- Records of bb_user_role
@@ -3805,7 +3805,7 @@ CREATE TABLE `bb_user_user` (
   `commitTime` int(11) DEFAULT NULL COMMENT '提交时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户';
 
 -- ----------------------------
 -- Records of bb_user_user
@@ -3834,7 +3834,7 @@ CREATE TABLE `bb_user_userdetail` (
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`userdetail_id`,`user_id`),
   UNIQUE KEY `fk_userdetail_user_user_id` (`user_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户详细信息';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户详细信息';
 
 -- ----------------------------
 -- Records of bb_user_userdetail
