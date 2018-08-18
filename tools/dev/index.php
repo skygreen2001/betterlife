@@ -84,7 +84,7 @@ class Project_Refactor
      * 需要忽略的目录【在大部分的项目中都不会用到】
      */
     public static $ignore_dir    = array(
-        "document",
+        "docs",
         "log",
         "model",
         "upload",
@@ -106,6 +106,7 @@ class Project_Refactor
         foreach (self::$ignore_dir as $ignore_dir) {
             $toDeleteDir = self::$save_dir.$ignore_dir;
             if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+            @mkdir($toDeleteDir);
         }
 
         if( is_dir(self::$save_dir.Gc::$module_root.DS."business") )
@@ -427,9 +428,9 @@ class Project_Refactor
                 file_put_contents($srcFile, $content);
             }
 
+            self::IgnoreInCommon();
             switch (self::$reuse_type) {
                 case EnumReusePjType::SIMPLE:
-                    self::IgnoreInCommon();
                     $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "model";
                     $del_model_action_files = UtilFileSystem::getAllFilesInDirectory( $toDeleteDir . DS . "action" . DS, array("php") );
                     foreach ($del_model_action_files as $del_model_action_file) {
