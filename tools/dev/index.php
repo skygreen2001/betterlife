@@ -454,13 +454,16 @@ class Project_Refactor
         }
 
         //修改数据库脚本表前缀
-        $db_bak_file = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS . "db_" . Gc::$appName . ".sql";
+        $db_bak_dir  = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS;
+        $db_bak_file = $db_bak_dir . "db_" . Gc::$appName . ".sql";
         if ( file_exists($db_bak_file) ) {
             $content = file_get_contents($db_bak_file);
-            $content = str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
+            $content = str_replace(Config_Db::$table_prefix, self::$table_prefix , $content);
             @unlink($db_bak_file);
-            $db_bak_file = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS . "db_" . self::$pj_name_en . ".sql";
+            $db_bak_file = $db_bak_dir . "db_" . self::$pj_name_en . ".sql";
             file_put_contents($db_bak_file, $content);
+            copy($db_bak_dir . "dbdesign_" . Gc::$appName . ".mwb", $db_bak_dir . "dbdesign_" . self::$pj_name_en . ".mwb");
+            @unlink($db_bak_dir . "dbdesign_" . Gc::$appName . ".mwb");
         }
 
         // 删除原来的代码生成配置文件
