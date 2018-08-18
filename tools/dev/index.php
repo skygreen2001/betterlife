@@ -286,28 +286,29 @@ class Project_Refactor
             //修改Gc.php配置文件
             $gc_file = self::$save_dir."Gc.php";
             $content = file_get_contents($gc_file);
-            // $content=str_replace("\"model\",", "", $content);
-            $content = str_replace("\"admin\",\r\n", "", $content);
+            $content = preg_replace('/\''.Config_Db::$table_prefix.'\'/', "'".self::$table_prefix."'", $content);
+            $content = str_replace("'admin',", "", $content);
+            $content = str_replace("'model',", "", $content);
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
             $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             file_put_contents($gc_file, $content);
 
             //修改Config_Db.php配置文件
-            $conf_db_file = self::$save_dir."config".DS."config".DS."Config_Db.php";
+            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_Db.php";
             $content      = file_get_contents($conf_db_file);
-            $content      = str_replace("\$dbname=\"".Config_Db::$dbname."\"", "\$dbname=\"".self::$db_name."\"", $content);
-            $content      = str_replace("\$table_prefix=\"".Config_Db::$table_prefix."\"", "\$table_prefix=\"".self::$table_prefix."\"", $content);
+            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
+            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . Config_Db::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
             $welcome_file = self::$save_dir."welcome.php";
             $content      = file_get_contents($welcome_file);
             if ( !empty(self::$git_name) ) {
-                $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
-                $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
-                $ctrr    = substr($ctrr,strpos($ctrr,"\""));
-                $content = $ctrl.self::$git_name.$ctrr;
+                $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url = \"") + 17);
+                $ctrr    = substr($content, strpos($content, "<?php \$help_url = \"") + 18);
+                $ctrr    = substr($ctrr, strpos($ctrr, "\""));
+                $content = $ctrl.self::$git_name . $ctrr;
             }
             $content = str_replace("网站后台", "", $content);
             // $content = str_replace("通用模版", "", $content);
@@ -317,39 +318,32 @@ class Project_Refactor
             self::IgnoreAllDbEngineExceptMysql();
 
             //修改Config_AutoCode.php配置文件
-            $config_autocode_file = self::$save_dir."config".DS."config".DS."Config_AutoCode.php";
+            $config_autocode_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_AutoCode.php";
             $content = file_get_contents($config_autocode_file);
             $content = str_replace("const ONLY_DOMAIN=false;", "const ONLY_DOMAIN=true;", $content);
             file_put_contents($config_autocode_file, $content);
-
-            //修改数据库脚本表前缀
-            $db_bak_file = self::$save_dir . "db" . DS ."mysql" . DS . "db_" . Gc::$appName . ".sql";
-            if ( file_exists($db_bak_file) ) {
-                $content = file_get_contents($db_bak_file);
-                $content = str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
-                file_put_contents($db_bak_file, $content);
-            }
         } else {
             //生成新项目目录
             UtilFileSystem::createDir( self::$save_dir );
             if ( !is_dir(self::$save_dir) ) {
                 system_dir_info( self::$save_dir );
             }
-            smartCopy(Gc::$nav_root_path,self::$save_dir);
+            smartCopy(Gc::$nav_root_path, self::$save_dir);
 
             //修改Gc.php配置文件
-            $gc_file = self::$save_dir."Gc.php";
+            $gc_file = self::$save_dir . "Gc.php";
             $content = file_get_contents($gc_file);
+            $content = preg_replace('/\'' . Config_Db::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
             $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             file_put_contents($gc_file, $content);
 
             //修改Config_Db.php配置文件
-            $conf_db_file = self::$save_dir . "config" . DS . "config" . DS . "Config_Db.php";
+            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_Db.php";
             $content      = file_get_contents($conf_db_file);
-            $content      = str_replace("\$dbname=\"" . Config_Db::$dbname . "\"", "\$dbname=\"" . self::$db_name . "\"", $content);
-            $content      = str_replace("\$table_prefix=\"" . Config_Db::$table_prefix . "\"", "\$table_prefix=\"" . self::$table_prefix . "\"", $content);
+            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "'.self::$db_name.'"', $content);
+            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . Config_Db::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
@@ -457,6 +451,16 @@ class Project_Refactor
                     }
                     break;
             }
+        }
+
+        //修改数据库脚本表前缀
+        $db_bak_file = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS . "db_" . Gc::$appName . ".sql";
+        if ( file_exists($db_bak_file) ) {
+            $content = file_get_contents($db_bak_file);
+            $content = str_replace(Config_Db::$table_prefix ,self::$table_prefix , $content);
+            @unlink($db_bak_file);
+            $db_bak_file = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS . "db_" . self::$pj_name_en . ".sql";
+            file_put_contents($db_bak_file, $content);
         }
 
         // 删除原来的代码生成配置文件
