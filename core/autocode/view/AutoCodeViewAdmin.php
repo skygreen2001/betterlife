@@ -14,15 +14,15 @@ class AutoCodeViewAdmin extends AutoCodeView
      * 源自:icomoon
      */
     const ADMIN_SIDEBAR_MENU_ICONS = array(
-        "icon-life-ring",
-        "icon-book",
-        "icon-user",
-        "icon-music",
-        "icon-arrow-circle-o-right",
-        "icon-film",
-        "icon-opera",
-        "icon-star",
-        "icon-pencil"
+        "fa-life-ring",
+        "fa-book",
+        "fa-user",
+        "fa-music",
+        "fa-arrow-circle-o-right",
+        "fa-film",
+        "fa-opera",
+        "fa-star",
+        "fa-pencil"
     );
     /**
      * 将表列定义转换成表示层布局菜单文件定义的内容
@@ -55,14 +55,23 @@ class AutoCodeViewAdmin extends AutoCodeView
             } else {
                 $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
             }
+            $icon_class = "fa " . $icon_class;
             if ( $group == Config_AutoCode::GROUP_ADMIN_MENU_CORE ) {
                 foreach ($tables as $tablename) {
                     $table_comment  = self::tableCommentKey( $tablename );
                     $instancename   = self::getInstancename($tablename);
+
+                    if ( $icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS) ) {
+                        $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[$icon_count];
+                    } else {
+                        $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
+                    }
+                    $icon_class = "fa " . $icon_class;
                     $sidebar_menus .= "          <li>\r\n".
                                       "            <a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"$icon_class\"></i> <span>$table_comment</span></a>\r\n".
                                       "          </li>\r\n";
                     $navbar_menus  .= "            <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
+                    $icon_count++;
                 }
             } else if ( count($tables) == 1 ) {
                 $tablename     = $tables[0];
@@ -78,13 +87,6 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $sidebar_menus .= "          <li data-role=\"dropdown\">\r\n".
                                   "            <a class=\"has-ul\" href=\"#collapse-$group\" aria-expanded=\"false\" aria-controls=\"collapse-$group\"><i class=\"$icon_class\"></i> <span>$gvn</span><i class=\"glyphicon glyphicon-menu-right menu-right\"></i></a>\r\n".
                                   "            <ul class=\"sub-menu\" id=\"collapse-$group\">\r\n";
-                foreach ($tables as $tablename) {
-                    $instancename   = self::getInstancename($tablename);
-                    $table_comment  = self::tableCommentKey( $tablename );
-                    $sidebar_menus .= "              <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
-                }
-                $sidebar_menus .= "            </ul>\r\n".
-                                  "          </li>\r\n";
 
                 $navbar_menus  .= "            <li class=\"dropdown\">\r\n".
                                   "              <a href=\"#\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n".
@@ -95,8 +97,11 @@ class AutoCodeViewAdmin extends AutoCodeView
                 foreach ($tables as $tablename) {
                     $instancename  = self::getInstancename($tablename);
                     $table_comment = self::tableCommentKey( $tablename );
-                    $navbar_menus .= "                <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>\r\n";
+                    $sidebar_menus.= "              <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"fa fa-pencil\"></i> $table_comment</a></li>\r\n";
+                    $navbar_menus .= "                <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"fa fa-pencil\"></i> $table_comment</a></li>\r\n";
                 }
+                $sidebar_menus .= "            </ul>\r\n".
+                                  "          </li>\r\n";
                 $navbar_menus  .= "              </ul>\r\n".
                                   "            </li>\r\n";
             }
@@ -274,10 +279,11 @@ class AutoCodeViewAdmin extends AutoCodeView
         $realId        = DataObjectSpec::getRealIDColumnName($classname);
 
         $column_contents = "";
+        $isImage = false;
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+            if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $field_comment = $field["Comment"];
                 if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
                 {
@@ -287,9 +293,12 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment = str_replace( "标识", "", $field_comment );
                 $field_comment = str_replace( "编号", "", $field_comment );
                 $column_contents .= "                                    <th>$field_comment</th>\r\n";
+                if ( !$isImage ) $isImage = self::columnIsImage( $fieldname, $field_comment );
             }
         }
-
+        $admin_modal_img_preview = "";
+        include("template" . DS . "admin.php");
+        if ($isImage) $admin_modal_img_preview = $admin_modal_img_template;
         include("template" . DS . "admin.php");
         $result = $list_template;
         $result = self::tableToViewTplDefine( $result );

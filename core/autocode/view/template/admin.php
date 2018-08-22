@@ -326,6 +326,19 @@ $column_contents
     </div>
 
     {include file="\$templateDir/layout/normal/footer.tpl"}
+$admin_modal_img_preview
+    {literal}
+    <script id="actionTmpl" type="text/x-jsrender">
+    <a id="info-view{{:id}}" href="#" class="btn-view">查看</a>
+    <a id="info-edit{{:id}}" href="#" class="btn-edit">修改</a>
+    <a id="info-dele{{:id}}" href="#" class="btn-dele" data-toggle="modal" data-target="#infoModal">删除</a>
+    </script>
+    {/literal}
+    <script src="{\$template_url}js/normal/list.js"></script>
+    <script src="{\$template_url}js/core/{$instancename}.js"></script>
+LIST_TPL;
+
+$admin_modal_img_template = <<<ADMIN_LIST_IMG_TPL
     <div id="image-model">
       <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -340,16 +353,7 @@ $column_contents
         </div>
       </div>
     </div>
-    {literal}
-    <script id="actionTmpl" type="text/x-jsrender">
-    <a id="info-view{{:id}}" href="#" class="btn-view">查看</a>
-    <a id="info-edit{{:id}}" href="#" class="btn-edit">修改</a>
-    <a id="info-dele{{:id}}" href="#" class="btn-dele" data-toggle="modal" data-target="#infoModal">删除</a>
-    </script>
-    {/literal}
-    <script src="{\$template_url}js/normal/list.js"></script>
-    <script src="{\$template_url}js/core/{$instancename}.js"></script>
-LIST_TPL;
+ADMIN_LIST_IMG_TPL;
 
 $view_template = <<<VIEW_TPL
     <!-- page container begin -->
@@ -510,10 +514,10 @@ $sidebar_template = <<<SIDEBAR
     <div class="sidebar page-sidebar">
       <div class="sidebar-content">
         <ul class="navigation-header">
-          <li ><a href="#"><i class="icon-th-list" title="功能导航"></i></a></li>
+          <li ><a href="#"><i class="fa fa-th-list" title="功能导航"></i></a></li>
         </ul>
         <ul class="sidebar-nav">
-          <li><a href="{\$url_base}index.php?go=admin.index.index"><i class="icon-dashboard"></i> <span>控制台</span></a></li>
+          <li><a href="{\$url_base}index.php?go=admin.index.index"><i class="fa fa-dashboard"></i> <span>控制台</span></a></li>
 $sidebar_menus
         </ul>
       </div>
@@ -544,7 +548,8 @@ $navbar_template = <<<NAVBAR
 $navbar_menus
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="icon-user"></span>
+                <span class="fa fa-user"></span>
+                <span class="username">{\$smarty.session.username}</span>
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dLabel">
@@ -552,17 +557,21 @@ $navbar_menus
                 <li><a href="{\$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
-            <li class="search-toggle"><a href="#"><span><span class="menu-search-text">搜索</span><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span></a></li>
 
-            <li><a id="btn-layout-container" href="#"><i class="glyphicon glyphicon-resize-small"></i></a></li>
+            <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
+              <a>
+                <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>
+              </a>
+            </li>
+            <li><a id="btn-layout-small"><i class="glyphicon glyphicon-resize-small"></i></a></li>
           </ul>
         </div>
-        <div id="searchform-header" class="hidden">
-          <div id="searchform-header-inner">
-            <form method="get" action="" class="header-searchform">
-              <input type="search" class="form-control" name="s" autocomplete="off" autofocus="autofocus" placeholder="搜索">
+        <div id="searchbar" class="collapse">
+          <div id="searchbar-inner">
+            <form method="get" action="" class="searchbar-form">
+              <input type="search" class="form-control" name="search" autocomplete="off" autofocus="autofocus" placeholder="搜你所想">
+              <i id="searchbar-close" class="fa fa-remove search-toggle"></i>
             </form>
-            <span id="searchform-header-close" class="glyphicon glyphicon-remove search-toggle"></span>
           </div>
         </div>
       </div>

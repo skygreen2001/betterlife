@@ -178,6 +178,7 @@ class ActionBasic extends Object
         }
         return false;
     }
+
     /**
      * 设置其他系统提供的信息
      * @param array $extras 其他信息
@@ -187,19 +188,37 @@ class ActionBasic extends Object
         $this->extras = $extras;
     }
 
-   /**
-    * 内部转向到指定网页地址
-    * @param mixed $url URL完整路径包括querystring
-    * @link http://localhost/betterlife/index.php?g=betterlife&m=blog&a=display&pageNo=8
-    */
-   public function redirect_url($url)
-   {
-       if ( contain( $url, "http://") ) {
-           header("Location:" . $url);
-       } else {
-           header("Location:http://" . $url);
-       }
-   }
+    /**
+     * 内部转向到指定网页地址
+     * @param mixed $url URL完整路径包括querystring
+     * @link http://localhost/betterlife/index.php?g=betterlife&m=blog&a=display&pageNo=8
+     */
+    public function redirect_url($url)
+    {
+        if ( contain( $url, "http://") ) {
+            header("Location:" . $url);
+        } else {
+            header("Location:http://" . $url);
+        }
+    }
+
+    /**
+     * 内部转向到另一网页地址
+     *
+     * @param mixed $action
+     * @param mixed $method
+     * @param array|string $querystringparam
+     * 示例：
+     *     index.php?g=betterlife&m=blog&a=write&pageNo=8&userId=5
+     *     $action：blog
+     *     $method：write
+     *     $querystring：pageNo=8&userId=5
+     *                   array('pageNo'=>8,'userId'=>5)
+     */
+    public function go($action, $method, $querystring = "")
+    {
+        $this->redirect($action, $method, $querystring);
+    }
 
     /**
      * 内部转向到另一网页地址

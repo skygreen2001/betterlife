@@ -48,6 +48,7 @@
                 <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
+
             <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
               <a>
                 <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>
