@@ -16,11 +16,11 @@
 
 * **通过Github官网下载**
 
-  官网地址: https://github.com/skygreen2001/betterlife.core
+  官网地址: https://github.com/skygreen2001/betterlife.git
 
   ```
-  > git clone https://github.com/skygreen2001/betterlife.core.git
-  > git clone git@github.com:skygreen2001/betterlife.core.git
+  > git clone https://github.com/skygreen2001/betterlife.git
+  > git clone git@github.com:skygreen2001/betterlife.git
   ```
 * **安装NodeJs**
 
