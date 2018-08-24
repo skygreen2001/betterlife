@@ -1,12 +1,12 @@
-﻿一键生成所有代码地址:http://127.0.0.1/betterlife/tools/tools/autocode/db_onekey.php
+# 代码生成配置文件说明
 
-*********************************************************************
-*********************************************************************
-***********************autoconfig配置说明****************************
-*********************************************************************
-*********************************************************************
+* 路径    :tools/tools/autocode/
 
-*.数据对象类配置。
+* 文件名称：autocode.config.xml
+
+﻿* 一键生成所有代码地址:http://127.0.0.1/betterlife/tools/tools/autocode/db_onekey.php
+
+## 数据对象类配置
   配置文件的元节点为class，对每一个数据对象进行查询条件、表关系主键显示配置、数据对象之间关系配置
     <classes>
     <class name="Order">
@@ -14,7 +14,7 @@
 
     - name :数据对象名称
 
-*.查询条件配置[允许配置关系主键查询]
+## 查询条件配置[允许配置关系主键查询]
     <conditions>
         <condition>name</condition>
         <condition relation_class="Member" show_name="username">member_id</condition>
@@ -24,7 +24,7 @@
     - show_name      :对应的表数据对象显示列
     - 值             :在当前数据对象表中存在的关系主键名称
 
-*.表关系主键显示配置
+## 表关系主键显示配置
     <relationShows>
        <show local_key="product_id" relation_class="Product">name</show>
     </relationShows>
@@ -33,7 +33,7 @@
     - local_key             :在当前数据对象表中存在的关系主键名称
     - 值      :对应的表数据对象显示列
 
-*.数据对象之间关系配置
+## 数据对象之间关系配置
     - has_one【一对一】
     - belong_has_one【从属一对一】
     - has_many【一对多】
@@ -76,7 +76,7 @@
         </belongs_many_many>
     </class>
 
-*.冗余字段配置
+## 冗余字段配置
       主要用于中间表为了减少联表查询保存的冗余字段数据。
       需要配置告知是关联哪个数据对象的冗余字段。
     <class name="Themeshow">
@@ -93,7 +93,7 @@
     </class>
 
 
-*.支持一选多[全部|已选|未选择]
+## 支持一选多[全部|已选|未选择]
   一选多中配置的是中间关系表才会生成
     <class name="User">
         <has_many>
