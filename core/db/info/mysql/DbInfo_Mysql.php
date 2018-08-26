@@ -285,16 +285,16 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             foreach ($fieldList as $field)
             {
                 if ( $isCommentFull ) {
-                    $result[$field[Field]] = $field[Comment];
+                    $result[$field["Field"]] = $field["Comment"];
                 } else {
-                    if ( contain($field[Comment], "\n" ) )
+                    if ( contain($field["Comment"], "\n" ) )
                     {
-                        $comment = explode("\n", $field[Comment]);
+                        $comment = explode("\n", $field["Comment"]);
                         if ( count($comment) > 0 ) {
-                            $result[$field[Field]] = $comment[0];
+                            $result[$field["Field"]] = $comment[0];
                         }
                     } else {
-                        $result[$field[Field]] = $field[Comment];
+                        $result[$field["Field"]] = $field["Comment"];
                     }
                 }
             }

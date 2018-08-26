@@ -76,4 +76,21 @@ class Action_Blog extends ActionAdmin
         $blogId   = $this->data["id"];
         $isDelete = Blog::deleteByID($blogId);
     }
+
+    /**
+     * 批量上传博客
+     * @param mixed $upload_file <input name="upload_file" type="file">
+     */
+    public function import($files)
+    {
+        return Manager_Service::blogService()->import($filter);
+    }
+    /**
+     * 导出博客
+     * @param mixed $filter
+     */
+    public function export($filter=null)
+    {
+        return Manager_Service::blogService()->exportBlog($filter);
+    }
 }

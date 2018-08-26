@@ -113,11 +113,22 @@ class Dispatcher
             if ( method_exists($current_action, "beforeAction") ) {
                 $current_action->beforeAction();
             }
-            $current_action->$action();
-            if ( get_class($current_action) == "Action_Ajax" ) die();
+            $response = $current_action->$action();
             if ( method_exists($current_action, "afterAction") ) {
                 $current_action->afterAction();
             }
+            if ( get_class($current_action) == "Action_Ajax" ) die();
+            // ajax请求 返回json数据对象
+            if ( $response && is_string($response) && json_decode($response) ) {
+                echo $response;
+                die();
+            }
+            // ajax请求 返回数组
+            if ( is_array($response) || is_object($response) ) {
+                echo json_encode($response);
+                die();
+            }
+
         } else {
           include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;

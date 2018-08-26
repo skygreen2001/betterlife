@@ -17,6 +17,10 @@
                 <div class="container-fluid list">
                     <div class="row">
                         <a class="btn btn-success" href="{$url_base}index.php?go=admin.blog.edit">新增博客</a>
+                        <div class="btns-container">
+                            <a class="btn btn-default" href="#">导入</a>
+                            <a class="btn btn-info" id="blog-export">导出</a>
+                        </div>
                     </div><br/>
                     <div class="row up-container">
                         <div class="filter-up">

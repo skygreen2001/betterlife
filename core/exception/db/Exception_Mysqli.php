@@ -14,24 +14,24 @@ class Exception_Mysqli extends Exception_Db
      * @param string $extra  补充存在多余调试信息
      * @param string $category 异常分类
      */
-    public static function record($extra=null,$category=null,$link=null)
+    public static function record($extra = null, $category = null, $link = null)
     {
-        if ($link==null) {
-            if (mysqli_connect_errno()) {
-                $category=  Exception_Db::CATEGORY_MYSQL;
-                LogMe::log("连接数据库失败:".mysqli_connect_error(),EnumLogLevel::ERR);
+        if ( $link == null ) {
+            if ( mysqli_connect_errno() ) {
+                $category = Exception_Db::CATEGORY_MYSQL;
+                LogMe::log( "连接数据库失败:" . mysqli_connect_error(), EnumLogLevel::ERR );
                 self::recordException("连接数据库失败:".mysqli_connect_error(), $category,mysqli_connect_errno(),$extra);
             }else{
-                $link=Manager_Db::newInstance()->currentdao()->getConnection();
+                $link = Manager_Db::newInstance()->currentdao()->getConnection();
             }
         }
-        if ($link && mysqli_error($link)) {
-            if (!isset ($category)) {
-                $category=  Exception_Db::CATEGORY_MYSQL;
+        if ( $link && is_object($link) && $link->error ) {
+            if ( !isset($category) ) {
+                $category = Exception_Db::CATEGORY_MYSQL;
             }
-            $errorinfo=mysqli_error($link);
-            LogMe::log("Error Info:".$errorinfo,EnumLogLevel::ERR);
-            self::recordException($errorinfo, $category,mysqli_errno($link),$extra);
+            $errorinfo = $link->error;
+            LogMe::log( "Error Info:" . $errorinfo, EnumLogLevel::ERR );
+            self::recordException( $errorinfo, $category, $link->errno, $extra );
         }
     }
 

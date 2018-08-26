@@ -41,7 +41,8 @@ $(function(){
                 {"orderable": false, "targets": 2,
                  "render"   : function(data, type, row) {
                     // 该图片仅供测试
-                    if ( !data ) data = "https://lorempixel.com/900/500?r=1";
+                    if ($_.params("d")=="1") data = "home/admin/view/default/resources/images/beauty.jpg";
+                    if ( !data ) data = "home/admin/view/default/resources/images/beauty.jpg";
                     var blog_id = row.blog_id;
                     var result = '<a id="' + "imgUrl" + blog_id + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.blog_name + '" /></a>';
 
@@ -120,6 +121,12 @@ $(function(){
             }
         });
         $.dataTable.doFilter(infoTable);
+
+        $("#blog-export").click(function(){
+            $.getJSON("index.php?go=admin.blog.export", function(response){
+                window.open(response.data);
+            });
+        })
     }
 
     if( $(".content-wrapper form").length ){
