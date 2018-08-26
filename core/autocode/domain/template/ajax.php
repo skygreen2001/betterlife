@@ -10,6 +10,7 @@ $edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
 $editApiRela = isset($editApiRela) ? $editApiRela : "";
 $editApiImg = isset($editApiImg) ? $editApiImg : "";
 $edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
+$class_relaField = isset($class_relaField) ? $class_relaField : "";
 
 $api_web_template = <<<API_WEB
 <?php

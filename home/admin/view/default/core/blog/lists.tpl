@@ -18,8 +18,12 @@
                     <div class="row">
                         <a class="btn btn-success" href="{$url_base}index.php?go=admin.blog.edit">新增博客</a>
                         <div class="btns-container">
-                            <a class="btn btn-default" href="#">导入</a>
-                            <a class="btn btn-info" id="blog-export">导出</a>
+                            <a class="btn btn-default" id="btn-blog-import">导入</a>
+                            <a class="btn btn-default" id="btn-blog-export">导出</a>
+                            <!-- <form id="blogImportForm" name="blogImportForm" action="{$url_base}index.php?go=admin.blog.import" method="POST" enctype="multipart/form-data"> -->
+                              <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls, .csv" />
+                            <!-- </form> -->
+                            <!-- .csv,application/msexcel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet -->
                         </div>
                     </div><br/>
                     <div class="row up-container">

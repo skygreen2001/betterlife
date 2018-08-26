@@ -122,14 +122,43 @@ $(function(){
         });
         $.dataTable.doFilter(infoTable);
 
-        $("#blog-export").click(function(){
+        $("#btn-blog-import").click(function(){
+            $("#upload_file").trigger('click');
+        });
+
+        $("#upload_file").change(function(){
+            var data = new FormData();
+            data.append('upload_file', $("#upload_file").get(0).files[0]);
+            $.ajax({
+                type: 'POST',
+                url: "index.php?go=admin.blog.import",
+                data: data,
+                success: function(response) {
+                    if (response && response.success){
+                        bootbox.alert("导入博客成功！");
+                        infoTable.draw();
+                    } else {
+                        bootbox.alert("导入博客失败！");
+                    }
+                    $("#upload_file").val("");
+
+                },
+                error: function(response) {
+                },
+                processData: false,
+                contentType: false,
+                dataType   : "json"
+            });
+        });
+
+        $("#btn-blog-export").click(function(){
             $.getJSON("index.php?go=admin.blog.export", function(response){
                 window.open(response.data);
             });
-        })
+        });
     }
 
-    if( $(".content-wrapper form").length ){
+    if( $(".content-wrapper .edit form").length ){
         $.edit.fileBrowser("#iconImage", "#iconImageTxt", "#iconImageDiv");
         $.edit.datetimePicker('#publish_date');
         $.edit.select2('#category_id', "", select_category);

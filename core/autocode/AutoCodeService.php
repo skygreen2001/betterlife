@@ -434,8 +434,9 @@ class AutoCodeService extends AutoCode
                            "    {\r\n".
                            "        \$diffpart = date(\"YmdHis\");\r\n".
                            "        if (!empty(\$files[\"upload_file\"])) {\r\n".
-                           "            \$tmptail = end(explode('.', \$files[\"upload_file\"][\"name\"]));\r\n".
-                           "            \$uploadPath = GC::\$attachment_path . \"{$instance_name}\" . DS . \"import\" . DS . \"{$instance_name}\$diffpart . \$tmptail\";\r\n".
+                           "            \$tmptail = explode('.', \$files[\"upload_file\"][\"name\"]);\r\n".
+                           "            \$tmptail = end(\$tmptail);\r\n".
+                           "            \$uploadPath = GC::\$attachment_path . \"{$instance_name}\" . DS . \"import\" . DS . \"{$instance_name}\$diffpart.\$tmptail\";\r\n".
                            "            \$result = UtilFileSystem::uploadFile(\$files, \$uploadPath);\r\n".
                            "            if (\$result && (\$result['success'] == true)) {\r\n".
                            "                if (array_key_exists('file_name', \$result)) {\r\n".
@@ -445,7 +446,7 @@ class AutoCodeService extends AutoCode
                            "                    foreach (\$data as \${$instance_name}) {\r\n".
                            self::relationFieldImport($instance_name,$classname,$fieldInfo).
                            "                        \${$instance_name} = new {$classname}(\${$instance_name});\r\n".
-                           self::enumComment2KeyInExtService($instance_name,$fieldInfo,$tablename,"        ").
+                           self::enumComment2KeyInExtService($instance_name,$fieldInfo,$tablename,"                ").
                            self::dataTimeConvert($instance_name,$fieldInfo,true).
                            "                        \${$instance_name}_id = \${$instance_name}->getId();\r\n".
                            "                        if (!empty(\${$instance_name}_id)) {\r\n".

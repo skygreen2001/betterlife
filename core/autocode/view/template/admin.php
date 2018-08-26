@@ -38,6 +38,7 @@ $ueTextareacontents = isset($ueTextareacontents) ? $ueTextareacontents : "";
 $edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
 $navbar_menus = isset($navbar_menus) ? $navbar_menus : "";
 $sidebar_menus = isset($sidebar_menus) ? $sidebar_menus : "";
+$admin_modal_img_preview = isset($admin_modal_img_preview) ? $admin_modal_img_preview : "";
 
 $api_web_template = <<<API_WEB
 <?php
@@ -455,7 +456,7 @@ $edit_template = <<<EDIT_TPL
                 <div class="container-fluid edit">
                   <div class="row col-xs-12">
                       <form id="edit{$classname}Form" class="form-horizontal" action="#" method="post" $hasImgFormFlag>
-                      {if \$message}
+                      {if isset(\$message)}
                       <div class="form-group">
                         <label class="col-sm-2 control-label error-msg">错误信息</label>
                         <div class="col-sm-9 edit-view error-msg">{\$message}</div>

@@ -7,7 +7,7 @@
  * @package services
  * @author skygreen skygreen2001@gmail.com
  */
-class ServiceBlog extends Service implements IServiceBasic 
+class ServiceBlog extends Service implements IServiceBasic
 {
     /**
      * 保存数据对象:博客
@@ -58,7 +58,7 @@ class ServiceBlog extends Service implements IServiceBasic
      * @param array|string $ids 数据对象编号
      * 形式如下:
      * 1.array:array(1,2,3,4,5)
-     * 2.字符串:1,2,3,4 
+     * 2.字符串:1,2,3,4
      * @return boolen 是否删除成功；true为操作正常
      */
     public function deleteByIds($ids)
@@ -68,15 +68,15 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 对数据对象:博客的属性进行递增
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
      * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
-     * @param string $property_name 属性名称 
-     * @param int $incre_value 递增数 
+     * @param string $property_name 属性名称
+     * @param int $incre_value 递增数
      * @return boolen 是否操作成功；true为操作正常
      */
     public function increment($filter=null, $property_name, $incre_value)
@@ -86,15 +86,15 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 对数据对象:博客的属性进行递减
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
      * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
-     * @param string $property_name 属性名称 
-     * @param int $decre_value 递减数 
+     * @param string $property_name 属性名称
+     * @param int $decre_value 递减数
      * @return boolen 是否操作成功；true为操作正常
      */
     public function decrement($filter=null, $property_name, $decre_value)
@@ -104,16 +104,16 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 查询数据对象:博客需显示属性的列表
-     * @param string $columns 指定的显示属性，同SQL语句中的Select部分。 
+     * @param string $columns 指定的显示属性，同SQL语句中的Select部分。
      * 示例如下：<br/>
      *    id,name,commitTime
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/> 
+     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
      * @param string $sort 排序条件<br/>
      * 示例如下：<br/>
      *      1.id asc;<br/>
@@ -130,13 +130,13 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 查询数据对象:博客的列表
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/> 
+     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
      * @param string $sort 排序条件<br/>
      * 示例如下：<br/>
      *      1.id asc;<br/>
@@ -153,13 +153,13 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 查询得到单个数据对象:博客实体
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/> 
+     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
      * @param string $sort 排序条件<br/>
      * 示例如下：<br/>
      *      1.id asc;<br/>
@@ -172,8 +172,8 @@ class ServiceBlog extends Service implements IServiceBasic
     }
 
     /**
-     * 根据表ID主键获取指定的对象[ID对应的表列] 
-     * @param string $id  
+     * 根据表ID主键获取指定的对象[ID对应的表列]
+     * @param string $id
      * @return 单个数据对象:博客实体
      */
     public function get_by_id($id)
@@ -183,13 +183,13 @@ class ServiceBlog extends Service implements IServiceBasic
 
     /**
      * 数据对象:博客总计数
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/> 
+     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
      * @return 数据对象:博客总计数
      */
     public function count($filter=null)
@@ -201,13 +201,13 @@ class ServiceBlog extends Service implements IServiceBasic
      * 数据对象:博客分页查询
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
-     * @param object|string|array $filter 查询条件，在where后的条件<br/> 
+     * @param object|string|array $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
      * 0."id=1,name='sky'"<br/>
-     * 1.array("id=1","name='sky'")<br/> 
+     * 1.array("id=1","name='sky'")<br/>
      * 2.array("id"=>"1","name"=>"sky")<br/>
      * 3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/> 
+     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
      * @param string $sort 排序条件<br/>
      * 默认为 id desc<br/>
      * 示例如下：<br/>
@@ -240,8 +240,9 @@ class ServiceBlog extends Service implements IServiceBasic
     {
         $diffpart = date("YmdHis");
         if (!empty($files["upload_file"])) {
-            $tmptail = end(explode('.', $files["upload_file"]["name"]));
-            $uploadPath = GC::$attachment_path . "blog" . DS . "import" . DS . "blog$diffpart . $tmptail";
+            $tmptail = explode('.', $files["upload_file"]["name"]);
+            $tmptail = end($tmptail);
+            $uploadPath = GC::$attachment_path . "blog" . DS . "import" . DS . "blog$diffpart.$tmptail";
             $result = UtilFileSystem::uploadFile($files, $uploadPath);
             if ($result && ($result['success'] == true)) {
                 if (array_key_exists('file_name', $result)) {
@@ -258,9 +259,9 @@ class ServiceBlog extends Service implements IServiceBasic
                             if ($category_r) $blog["category_id"]=$category_r->category_id;
                         }
                         $blog = new Blog($blog);
-                if (!EnumBlogStatus::isEnumValue($blog->status)){
-                    $blog->status=EnumBlogStatus::statusByShow($blog->status);
-                }
+                        if (!EnumBlogStatus::isEnumValue($blog->status)){
+                            $blog->status=EnumBlogStatus::statusByShow($blog->status);
+                        }
                         $blog_id = $blog->getId();
                         if (!empty($blog_id)) {
                             $hadBlog = Blog::existByID($blog->getId());
@@ -282,7 +283,8 @@ class ServiceBlog extends Service implements IServiceBasic
         }
         return array(
             'success' => true,
-            'data'  => $result
+            'data'  => $result,
+            'debug'  =>$data
         );
     }
 
@@ -298,7 +300,7 @@ class ServiceBlog extends Service implements IServiceBasic
         {
             Blog::propertyShow($data, array('status'));
         }
-        $arr_output_header= self::fieldsMean(Blog::tablename()); 
+        $arr_output_header= self::fieldsMean(Blog::tablename());
         foreach ($data as $blog) {
             if ($blog->statusShow) {
                 $blog['status'] = $blog->statusShow;
@@ -316,14 +318,13 @@ class ServiceBlog extends Service implements IServiceBasic
         }
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         $diffpart = date("YmdHis");
-        $outputFileName = Gc::$attachment_path . "export" . DS . "blog" . DS . "$diffpart.xls"; 
-        UtilExcel::arraytoExcel($arr_output_header, $data, $outputFileName, false); 
-        $downloadPath = Gc::$attachment_url . "export/blog/$diffpart.xls"; 
+        $outputFileName = Gc::$attachment_path . "export" . DS . "blog" . DS . "$diffpart.xls";
+        UtilExcel::arraytoExcel($arr_output_header, $data, $outputFileName, false);
+        $downloadPath = Gc::$attachment_url . "export/blog/$diffpart.xls";
         return array(
             'success' => true,
             'data'  => $downloadPath
-        ); 
+        );
     }
 
 }
-

@@ -25,7 +25,7 @@
                 <div class="container-fluid edit">
                   <div class="row col-xs-12">
                       <form id="editBlogForm" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
-                      {if $message}
+                      {if isset($message)}
                       <div class="form-group">
                         <label class="col-sm-2 control-label error-msg">错误信息</label>
                         <div class="col-sm-9 edit-view error-msg">{$message}</div>

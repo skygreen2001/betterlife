@@ -81,16 +81,22 @@ class Action_Blog extends ActionAdmin
      * 批量上传博客
      * @param mixed $upload_file <input name="upload_file" type="file">
      */
-    public function import($files)
+    public function import()
     {
-        return Manager_Service::blogService()->import($filter);
+        if ( !empty($_FILES) ){
+            return Manager_Service::blogService()->import($_FILES);
+        }
+        return array(
+            "error" => 500,
+            "info"  => "No Data"
+        );
     }
     /**
      * 导出博客
      * @param mixed $filter
      */
-    public function export($filter=null)
+    public function export()
     {
-        return Manager_Service::blogService()->exportBlog($filter);
+        return Manager_Service::blogService()->exportBlog();
     }
 }
