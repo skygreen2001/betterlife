@@ -437,22 +437,24 @@ class AutoCodeService extends AutoCode
                            "                    \$arr_import_header = self::fieldsMean({$classname}::tablename());\r\n".
                            "                    \$data = UtilExcel::exceltoArray(\$uploadPath, \$arr_import_header);\r\n".
                            "                    \$result = false;\r\n".
-                           "                    foreach (\$data as \${$instance_name}) {\r\n".
-                           self::relationFieldImport($instance_name,$classname,$fieldInfo).
-                           "                        \${$instance_name} = new {$classname}(\${$instance_name});\r\n".
-                           self::enumComment2KeyInExtService($instance_name,$fieldInfo,$tablename,"                ").
-                           self::dataTimeConvert($instance_name,$fieldInfo,true).
-                           self::bitVal($instance_name,$fieldInfo).
-                           "                        \${$instance_name}_id = \${$instance_name}->getId();\r\n".
-                           "                        if (!empty(\${$instance_name}_id)) {\r\n".
-                           "                            \$had{$classname} = {$classname}::existByID(\${$instance_name}->getId());\r\n".
-                           "                            if (\$had{$classname}) {\r\n".
-                           "                                \$result = \${$instance_name}->update();\r\n".
+                           "                    if (\$data){\r\n".
+                           "                        foreach (\$data as \${$instance_name}) {\r\n".
+                           self::relationFieldImport( $instance_name, $classname, $fieldInfo, "    " ).
+                           "                            \${$instance_name} = new {$classname}(\${$instance_name});\r\n".
+                           self::enumComment2KeyInExtService( $instance_name, $fieldInfo, $tablename, "                    ").
+                           self::dataTimeConvert( $instance_name, $fieldInfo, true, "    " ).
+                           self::bitVal( $instance_name, $fieldInfo, "    " ).
+                           "                            \${$instance_name}_id = \${$instance_name}->getId();\r\n".
+                           "                            if (!empty(\${$instance_name}_id)) {\r\n".
+                           "                                \$had{$classname} = {$classname}::existByID(\${$instance_name}->getId());\r\n".
+                           "                                if (\$had{$classname}) {\r\n".
+                           "                                    \$result = \${$instance_name}->update();\r\n".
+                           "                                } else {\r\n".
+                           "                                    \$result=\${$instance_name}->save();\r\n".
+                           "                                }\r\n".
                            "                            } else {\r\n".
-                           "                                \$result=\${$instance_name}->save();\r\n".
+                           "                                \$result = \${$instance_name}->save();\r\n".
                            "                            }\r\n".
-                           "                        } else {\r\n".
-                           "                            \$result = \${$instance_name}->save();\r\n".
                            "                        }\r\n".
                            "                    }\r\n".
                            "                } else {\r\n".
@@ -482,7 +484,6 @@ class AutoCodeService extends AutoCode
                                        $bitShow.
                                        "        }\r\n";
                  }
-
                  $result .= "    /**\r\n".
                             "     * 导出{$object_desc}\r\n".
                             "     * @param mixed \$filter\r\n".
@@ -609,7 +610,7 @@ class AutoCodeService extends AutoCode
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
      */
-    private static function relationFieldImport($instance_name, $classname, $fieldInfo)
+    private static function relationFieldImport($instance_name, $classname, $fieldInfo, $blankPre="")
     {
         $result = "";
         if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
@@ -630,45 +631,45 @@ class AutoCodeService extends AutoCode
                                     $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n".
-                                               "                            \${$i_name}_all=\${$instance_name}[\"{$field_comment}[全]\"];\r\n".
-                                               "                            if (\${$i_name}_all){\r\n".
-                                               "                                \${$i_name}_all_arr=explode(\"->\",\${$i_name}_all);\r\n".
-                                               "                                if (\${$i_name}_all_arr){\r\n".
-                                               "                                    \$level=count(\${$i_name}_all_arr);\r\n".
-                                               "                                    switch (\$level) {\r\n".
-                                               "                                        case 1:\r\n".
-                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                               "                                            if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                               "                                            break;\r\n".
-                                               "                                        case 2:\r\n".
-                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                               "                                            if (\${$i_name}_p){\r\n".
-                                               "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                               "                                                if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                               "                                            }\r\n".
-                                               "                                            break;\r\n".
-                                               "                                        case 3:\r\n".
-                                               "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
-                                               "                                            if (\${$i_name}_p){\r\n".
-                                               "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                               "                                                if (\${$i_name}_p){\r\n".
-                                               "                                                    \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[2],\"level\"=>3,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
-                                               "                                                    if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
-                                               "                                                }\r\n".
-                                               "                                            }\r\n".
-                                               "                                            break;\r\n".
-                                               "                                       }\r\n".
-                                               "                                  }\r\n".
-                                               "                            }\r\n".
-                                               "                        }\r\n";
+                                    $result .= $blankPre . "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n".
+                                               $blankPre . "                            \${$i_name}_all=\${$instance_name}[\"{$field_comment}[全]\"];\r\n".
+                                               $blankPre . "                            if (\${$i_name}_all){\r\n".
+                                               $blankPre . "                                \${$i_name}_all_arr=explode(\"->\",\${$i_name}_all);\r\n".
+                                               $blankPre . "                                if (\${$i_name}_all_arr){\r\n".
+                                               $blankPre . "                                    \$level=count(\${$i_name}_all_arr);\r\n".
+                                               $blankPre . "                                    switch (\$level) {\r\n".
+                                               $blankPre . "                                        case 1:\r\n".
+                                               $blankPre . "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               $blankPre . "                                            if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               $blankPre . "                                            break;\r\n".
+                                               $blankPre . "                                        case 2:\r\n".
+                                               $blankPre . "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               $blankPre . "                                            if (\${$i_name}_p){\r\n".
+                                               $blankPre . "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               $blankPre . "                                                if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               $blankPre . "                                            }\r\n".
+                                               $blankPre . "                                            break;\r\n".
+                                               $blankPre . "                                        case 3:\r\n".
+                                               $blankPre . "                                            \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[0],\"level\"=>1));\r\n".
+                                               $blankPre . "                                            if (\${$i_name}_p){\r\n".
+                                               $blankPre . "                                                \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[1],\"level\"=>2,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               $blankPre . "                                                if (\${$i_name}_p){\r\n".
+                                               $blankPre . "                                                    \${$i_name}_p={$key}::get_one(array(\"{$show_fieldname}\"=>\${$i_name}_all_arr[2],\"level\"=>3,\"parent_id\"=>\${$i_name}_p->{$fieldname}));\r\n".
+                                               $blankPre . "                                                    if (\${$i_name}_p)\${$instance_name}[\"{$fieldname}\"]=\${$i_name}_p->{$fieldname};\r\n".
+                                               $blankPre . "                                                }\r\n".
+                                               $blankPre . "                                            }\r\n".
+                                               $blankPre . "                                            break;\r\n".
+                                               $blankPre . "                                       }\r\n".
+                                               $blankPre . "                                  }\r\n".
+                                               $blankPre . "                            }\r\n".
+                                               $blankPre . "                        }\r\n";
                                     $isTreeLevelHad = true;
                                 }
                             } else {
-                                $result .= "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n";
-                                $result .= "                            \${$i_name}_r=$key::get_one(\"{$show_fieldname}='\".\${$instance_name}[\"$fieldname\"].\"'\");\r\n";
-                                $result .= "                            if (\${$i_name}_r) \${$instance_name}[\"$fieldname\"]=\${$i_name}_r->$fieldname;\r\n";
-                                $result .= "                        }\r\n";
+                                $result .= $blankPre . "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])){\r\n";
+                                $result .= $blankPre . "                            \${$i_name}_r=$key::get_one(\"{$show_fieldname}='\".\${$instance_name}[\"$fieldname\"].\"'\");\r\n";
+                                $result .= $blankPre . "                            if (\${$i_name}_r) \${$instance_name}[\"$fieldname\"]=\${$i_name}_r->$fieldname;\r\n";
+                                $result .= $blankPre . "                        }\r\n";
                             }
                         }
                     }
@@ -736,19 +737,19 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param bool $isImport 是否导入
      */
-    private static function dataTimeConvert($instance_name,$fieldInfo,$isImport=false)
+    private static function dataTimeConvert($instance_name, $fieldInfo, $isImport = false)
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if (self::isNotColumnKeywork($fieldname)){
+            if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::column_type($field["Type"]);
                 $field_comment = $field["Comment"];
-                if (($datatype == 'int') && (contains($field_comment, array("日期", "时间")) || contains($field_comment, array("date", "time"))))
+                if ( ($datatype == 'int') && (contains($field_comment, array("日期", "时间")) || contains($field_comment, array("date", "time"))) )
                 {
-                    if ($isImport) {
-                        $result .= "                        if (isset(\${$instance_name}->$fieldname))\${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp(UtilExcel::exceltimtetophp(\${$instance_name}->$fieldname));\r\n";
+                    if ( $isImport ) {
+                        $result .= "                            if (isset(\${$instance_name}->$fieldname))\${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp(UtilExcel::exceltimtetophp(\${$instance_name}->$fieldname));\r\n";
                     } else {
-                        $result .= "        if (isset(\${$instance_name}[\"$fieldname\"]))\${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp(\${$instance_name}[\"$fieldname\"]);\r\n";
+                        $result .= "            if (isset(\${$instance_name}[\"$fieldname\"]))\${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp(\${$instance_name}[\"$fieldname\"]);\r\n";
                     }
                 }
             }
@@ -762,14 +763,14 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
      */
-    private static function bitVal($instance_name,$fieldInfo,$blankPre="")
+    private static function bitVal($instance_name, $fieldInfo, $blankPre="")
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
             if (self::isNotColumnKeywork($fieldname)){
                 $datatype = self::column_type($field["Type"]);
                 if ($datatype == 'bit')
-                    $result .= "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = true; else \$$instance_name->$fieldname = false;\r\n";
+                    $result .= $blankPre . "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = true; else \$$instance_name->$fieldname = false;\r\n";
             }
         }
         return $result;
@@ -781,14 +782,14 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
      */
-    private static function bitShow($instance_name,$fieldInfo,$blankPre="")
+    private static function bitShow($instance_name, $fieldInfo, $blankPre = "")
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
             if (self::isNotColumnKeywork($fieldname)){
                 $datatype = self::column_type($field["Type"]);
                 if ($datatype == 'bit')
-                    $result .= "            if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";\r\n";
+                    $result .= $blankPre . "            if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";\r\n";
             }
         }
         return $result;
@@ -800,7 +801,7 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
      */
-    private static function datetimeShow($instance_name,$fieldInfo,$blankPre="")
+    private static function datetimeShow($instance_name, $fieldInfo, $blankPre = "")
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {

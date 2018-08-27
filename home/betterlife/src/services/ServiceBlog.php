@@ -249,30 +249,33 @@ class ServiceBlog extends Service implements IServiceBasic
                     $arr_import_header = self::fieldsMean(Blog::tablename());
                     $data = UtilExcel::exceltoArray($uploadPath, $arr_import_header);
                     $result = false;
-                    foreach ($data as $blog) {
-                        if (!is_numeric($blog["user_id"])){
-                            $user_r=User::get_one("username='".$blog["user_id"]."'");
-                            if ($user_r) $blog["user_id"]=$user_r->user_id;
-                        }
-                        if (!is_numeric($blog["category_id"])){
-                            $category_r=Category::get_one("name='".$blog["category_id"]."'");
-                            if ($category_r) $blog["category_id"]=$category_r->category_id;
-                        }
-                        $blog = new Blog($blog);
-                        if (!EnumBlogStatus::isEnumValue($blog->status)){
-                            $blog->status=EnumBlogStatus::statusByShow($blog->status);
-                        }
-                        if ( $blog->isPublic == "是" ) $blog->isPublic = true; else $blog->isPublic = false;
-                        $blog_id = $blog->getId();
-                        if (!empty($blog_id)) {
-                            $hadBlog = Blog::existByID($blog->getId());
-                            if ($hadBlog) {
-                                $result = $blog->update();
-                            } else {
-                                $result=$blog->save();
+                    // print_r($data);
+                    if ($data){
+                        foreach ($data as $blog) {
+                            if (!is_numeric($blog["user_id"])){
+                                $user_r=User::get_one("username='".$blog["user_id"]."'");
+                                if ($user_r) $blog["user_id"]=$user_r->user_id;
                             }
-                        } else {
-                            $result = $blog->save();
+                            if (!is_numeric($blog["category_id"])){
+                                $category_r=Category::get_one("name='".$blog["category_id"]."'");
+                                if ($category_r) $blog["category_id"]=$category_r->category_id;
+                            }
+                            $blog = new Blog($blog);
+                            if (!EnumBlogStatus::isEnumValue($blog->status)){
+                                $blog->status=EnumBlogStatus::statusByShow($blog->status);
+                            }
+                            if ( $blog->isPublic == "是" ) $blog->isPublic = true; else $blog->isPublic = false;
+                            $blog_id = $blog->getId();
+                            if (!empty($blog_id)) {
+                                $hadBlog = Blog::existByID($blog->getId());
+                                if ($hadBlog) {
+                                    $result = $blog->update();
+                                } else {
+                                    $result=$blog->save();
+                                }
+                            } else {
+                                $result = $blog->save();
+                            }
                         }
                     }
                 } else {

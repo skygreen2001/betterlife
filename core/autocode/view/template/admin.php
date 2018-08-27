@@ -333,7 +333,7 @@ $list_template = <<<LIST_TPL
                         <div class="btns-container">
                             <a class="btn btn-default" id="btn-{$instancename}-import">导入</a>
                             <a class="btn btn-default" id="btn-{$instancename}-export">导出</a>
-                            <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls, .csv" />
+                            <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls" />
                         </div>
                     </div><br/>
                     <div class="row up-container">
