@@ -86,14 +86,10 @@ class Action_Blog extends ActionAdmin
         if ( !empty($_FILES) ){
             return Manager_Service::blogService()->import($_FILES);
         }
-        return array(
-            "error" => 500,
-            "info"  => "No Data"
-        );
+        return array("error" => 500,"info"  => "No Data");
     }
     /**
      * 导出博客
-     * @param mixed $filter
      */
     public function export()
     {

@@ -325,6 +325,27 @@ class AutoCodeAction extends AutoCode
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \$isDelete = $classname::deleteByID(\${$instancename}Id);\r\n".
                   "    }\r\n";
+        $import = "\r\n".
+                  "    /**\r\n".
+                  "     * 批量上传{$table_comment}\r\n".
+                  "     * @param mixed \$upload_file <input name=\"upload_file\" type=\"file\">\r\n".
+                  "     */\r\n".
+                  "    public function import()\r\n".
+                  "    {\r\n".
+                  "        if ( !empty(\$_FILES) ){\r\n".
+                  "            return Manager_Service::{$instancename}Service()->import(\$_FILES);\r\n".
+                  "        }\r\n".
+                  "        return array(\"error\" => 500,\"info\"  => \"No Data\");\r\n".
+                  "    }\r\n";
+        $export = "\r\n".
+                  "    /**\r\n".
+                  "     * 导出{$table_comment}\r\n".
+                  "     */\r\n".
+                  "    public function export()\r\n".
+                  "    {\r\n".
+                  "        return Manager_Service::{$instancename}Service()->export{$classname}();\r\n".
+                  "    }\r\n";
+        $result .= $import . $export;
         return $result;
     }
 

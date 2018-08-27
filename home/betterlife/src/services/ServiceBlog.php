@@ -262,6 +262,7 @@ class ServiceBlog extends Service implements IServiceBasic
                         if (!EnumBlogStatus::isEnumValue($blog->status)){
                             $blog->status=EnumBlogStatus::statusByShow($blog->status);
                         }
+                        if ( $blog->isPublic == "是" ) $blog->isPublic = true; else $blog->isPublic = false;
                         $blog_id = $blog->getId();
                         if (!empty($blog_id)) {
                             $hadBlog = Blog::existByID($blog->getId());
@@ -315,6 +316,7 @@ class ServiceBlog extends Service implements IServiceBasic
                 $category_instance=Category::get_by_id($blog->category_id);
                 $blog['category_id']=$category_instance->category_name;
             }
+            if ( $blog->isPublic == 1 ) $blog->isPublic = "是"; else $blog->isPublic = "否";
         }
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         $diffpart = date("YmdHis");

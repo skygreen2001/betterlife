@@ -151,6 +151,41 @@ $idColumnDefs
             }
         });
         \$.dataTable.doFilter(infoTable);
+
+        \$("#btn-{$instancename}-import").click(function(){
+            \$("#upload_file").trigger('click');
+        });
+
+        \$("#upload_file").change(function(){
+            var data = new FormData();
+            data.append('upload_file', \$("#upload_file").get(0).files[0]);
+            \$.ajax({
+                type: 'POST',
+                url: "index.php?go=admin.{$instancename}.import",
+                data: data,
+                success: function(response) {
+                    if (response && response.success){
+                        bootbox.alert("导入{$table_comment}成功！");
+                        infoTable.draw();
+                    } else {
+                        bootbox.alert("导入{$table_comment}失败！");
+                    }
+                    \$("#upload_file").val("");
+
+                },
+                error: function(response) {
+                },
+                processData: false,
+                contentType: false,
+                dataType   : "json"
+            });
+        });
+
+        \$("#btn-{$instancename}-export").click(function(){
+            \$.getJSON("index.php?go=admin.{$instancename}.export", function(response){
+                window.open(response.data);
+            });
+        });
     }
 
     if( \$(".content-wrapper .edit form").length ) {
@@ -295,6 +330,11 @@ $list_template = <<<LIST_TPL
                 <div class="container-fluid list">
                     <div class="row">
                         <a class="btn btn-success" href="{\$url_base}index.php?go={$appname}.{$instancename}.edit">新增{$table_comment}</a>
+                        <div class="btns-container">
+                            <a class="btn btn-default" id="btn-{$instancename}-import">导入</a>
+                            <a class="btn btn-default" id="btn-{$instancename}-export">导出</a>
+                            <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls, .csv" />
+                        </div>
                     </div><br/>
                     <div class="row up-container">
                         <div class="filter-up">

@@ -186,18 +186,12 @@ class AutoCodeService extends AutoCode
         $category = Gc::$appName;
         $author   = self::$author;
         $package  = self::$package;
-        if (self::$type==3){
-            $package   = self::$app_dir.".".$package;
-        }
         $result.="/**\r\n".
                  " +---------------------------------------<br/>\r\n".
                  " * $table_comment<br/>\r\n".
                  " +---------------------------------------\r\n".
                  " * @category $category\r\n".
                  " * @package $package\r\n";
-        if (self::$type==3){
-            $result .= " * @subpackage ext\r\n";
-        }
         $result .= " * @author $author\r\n".
                    " */\r\n";
         switch (self::$type) {
@@ -448,6 +442,7 @@ class AutoCodeService extends AutoCode
                            "                        \${$instance_name} = new {$classname}(\${$instance_name});\r\n".
                            self::enumComment2KeyInExtService($instance_name,$fieldInfo,$tablename,"                ").
                            self::dataTimeConvert($instance_name,$fieldInfo,true).
+                           self::bitVal($instance_name,$fieldInfo).
                            "                        \${$instance_name}_id = \${$instance_name}->getId();\r\n".
                            "                        if (!empty(\${$instance_name}_id)) {\r\n".
                            "                            \$had{$classname} = {$classname}::existByID(\${$instance_name}->getId());\r\n".
@@ -473,8 +468,9 @@ class AutoCodeService extends AutoCode
                            "        );\r\n".
                            "    }\r\n\r\n";
                  //export
-                 $enumConvert = self::enumKey2CommentInExtService($instance_name,$classname,$fieldInfo);
-                 $datetimeShow = self::datetimeShow($instance_name,$fieldInfo);
+                 $enumConvert   = self::enumKey2CommentInService($instance_name,$classname,$fieldInfo);
+                 $datetimeShow  = self::datetimeShow($instance_name,$fieldInfo);
+                 $bitShow       = self::bitShow($instance_name,$fieldInfo);
                  $specialResult = $enumConvert["normal"].
                                   "        \$arr_output_header= self::fieldsMean({$classname}::tablename()); \r\n";
                  $relationFieldOutput = self::relationFieldOutput($instance_name,$classname,$fieldInfo);
@@ -483,8 +479,10 @@ class AutoCodeService extends AutoCode
                                        $enumConvert["output"].
                                        $relationFieldOutput.
                                        $datetimeShow.
+                                       $bitShow.
                                        "        }\r\n";
                  }
+
                  $result .= "    /**\r\n".
                             "     * 导出{$object_desc}\r\n".
                             "     * @param mixed \$filter\r\n".
@@ -709,7 +707,7 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
      */
-    private static function enumKey2CommentInExtService($instance_name,$classname,$fieldInfo,$blankPre="")
+    private static function enumKey2CommentInService($instance_name,$classname,$fieldInfo,$blankPre="")
     {
         $result      = array("normal"=>"","output"=>"");
         $enumColumns = array();
@@ -753,6 +751,44 @@ class AutoCodeService extends AutoCode
                         $result .= "        if (isset(\${$instance_name}[\"$fieldname\"]))\${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp(\${$instance_name}[\"$fieldname\"]);\r\n";
                     }
                 }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * bit boolean值转换
+     * @param string $instance_name 实体变量
+     * @param array $fieldInfos 表列信息列表
+     * @param string $blankPre 空白字符
+     */
+    private static function bitVal($instance_name,$fieldInfo,$blankPre="")
+    {
+        $result = "";
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (self::isNotColumnKeywork($fieldname)){
+                $datatype = self::column_type($field["Type"]);
+                if ($datatype == 'bit')
+                    $result .= "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = true; else \$$instance_name->$fieldname = false;\r\n";
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * bit boolean输出显示
+     * @param string $instance_name 实体变量
+     * @param array $fieldInfos 表列信息列表
+     * @param string $blankPre 空白字符
+     */
+    private static function bitShow($instance_name,$fieldInfo,$blankPre="")
+    {
+        $result = "";
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (self::isNotColumnKeywork($fieldname)){
+                $datatype = self::column_type($field["Type"]);
+                if ($datatype == 'bit')
+                    $result .= "            if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";\r\n";
             }
         }
         return $result;
