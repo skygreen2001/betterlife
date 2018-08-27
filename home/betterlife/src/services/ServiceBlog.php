@@ -323,9 +323,9 @@ class ServiceBlog extends Service implements IServiceBasic
         }
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         $diffpart = date("YmdHis");
-        $outputFileName = Gc::$attachment_path . "export" . DS . "blog" . DS . "$diffpart.xls";
+        $outputFileName = Gc::$attachment_path . "blog" . DS . "export" . DS . "$diffpart.xls";
         UtilExcel::arraytoExcel($arr_output_header, $data, $outputFileName, false);
-        $downloadPath = Gc::$attachment_url . "export/blog/$diffpart.xls";
+        $downloadPath = Gc::$attachment_url . "blog/export/$diffpart.xls";
         return array(
             'success' => true,
             'data'  => $downloadPath
