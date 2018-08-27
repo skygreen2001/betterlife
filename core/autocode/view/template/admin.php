@@ -153,7 +153,7 @@ $idColumnDefs
         \$.dataTable.doFilter(infoTable);
     }
 
-    if( \$(".content-wrapper form").length ) {
+    if( \$(".content-wrapper .edit form").length ) {
 $editImgColumn
 $editDateColumn
 $editEnumColumn
