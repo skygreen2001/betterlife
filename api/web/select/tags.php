@@ -2,7 +2,7 @@
 // error_reporting(0);
 require_once ("../../../init.php");
 
-$query        = $_GET["term"];
+$query        = @$_GET["term"];
 $where_clause = "";
 if (!empty($query)){
   $where_clause  = "(";
@@ -32,7 +32,7 @@ $result   = array(
 //调试使用的信息
 $result["debug"] = array(
   'param' => array(
-    'term' => $search
+    'term' => $query
   ),
   'where' => $where_clause
 );

@@ -533,11 +533,11 @@ $edit_contents
     <!-- /page container end -->
 
     {include file="\$templateDir/layout/normal/footer.tpl"}
-
-    <script src="{\$template_url}js/normal/edit.js"></script>
-    <script src="{\$template_url}js/core/{$instancename}.js"></script>
 $enumJsContent
 $rela_js_content
+    <script src="{\$template_url}js/normal/edit.js"></script>
+    <script src="{\$template_url}js/core/{$instancename}.js"></script>
+
 $ueTextareacontents
 EDIT_TPL;
 

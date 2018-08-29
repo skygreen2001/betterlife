@@ -108,7 +108,7 @@ if (\$page{$classname_rela}){
 //调试使用的信息
 \$result["debug"] = array(
   'param' => array(
-    'term' => \$search
+    'term' => \$query
   ),
   'where' => \$where_clause
 );

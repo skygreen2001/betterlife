@@ -343,7 +343,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $realId           = DataObjectSpec::getRealIDColumnName($key);
                     $classNameField   = self::getShowFieldName( $key );
                     $relation_content = "                              <select id=\"$realId\" name=\"$realId\" class=\"form-control\">\r\n".
-                                        "                                  <option value=\"-1\">请选择</option>\r\n".
+                                        "                                  <option value=\"-10000\">请选择</option>\r\n".
                                         "                                  {foreach item=$value from=\${$value}s}\r\n".
                                         "                                  <option value=\"{\${$value}.$realId}\">{\${$value}.{$classNameField}}</option>\r\n".
                                         "                                  {/foreach}\r\n".
@@ -441,11 +441,11 @@ class AutoCodeViewAdmin extends AutoCodeView
                           $edit_contents .= "                                  <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
                           $enumJsContent .= "    <script type=\"text/javascript\">\r\n".
                                             "        var select_{$fieldname} = {};\r\n".
-                                            "        {if \${$instancename}.{$fieldname}}\r\n".
-                                            "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
+                                            "        {if isset(\${$instancename}->{$fieldname})}\r\n".
+                                            "        select_{$fieldname}.id   = \"{\$" . $instancename . "->" . $fieldname . "}\";\r\n".
                                             "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
-                                            "        {/if}\r\n".
                                             "        select_{$fieldname} =  new Array(select_{$fieldname});\r\n".
+                                            "        {/if}\r\n".
                                             "    </script>\r\n";
                           break;
                         case "date":
