@@ -237,7 +237,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                         $statusColumnDefs .= $js_sub_template_status;
                         $fieldname_u       = $fieldname;
                         $fieldname_u{0}    = strtoupper($fieldname_u{0});
-                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"api/web/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname});";
+                        $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"api/web/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname});\r\n";
                         $defineJsonFileContent = $edit_sub_json_template;
                         AutoCodeAjax::saveJsonDefineToDir( $instancename, $fieldname, $defineJsonFileContent );
                     }
