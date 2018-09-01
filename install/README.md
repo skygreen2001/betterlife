@@ -33,6 +33,15 @@
   - Since PHP 7 is not in the official Ubuntu PPAs,使用Composer install 会提示错误: Call to undefined function: simplexml_load_string(),解决办法在服务器上执行以下指令
 
     ```
+    > sudo apt-get install php7.0-xml
     > sudo service php7.0-fpm restart
-    > sudo service php7.0-fpm restart
+    ```
+
+  - Composer require phpoffice/phpspreadsheet doesn't work
+
+    ```
+    > sudo apt install php-xml
+    > sudo apt install php7.0-gd
+    > sudo apt install php7.0-mbstring
+    > sudo apt install php-zip
     ```
