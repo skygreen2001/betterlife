@@ -5,7 +5,7 @@
  +------------------------------------------------
  * @category betterlife
  * @package library
- * @author zhouyuepu
+ * @author skygreen
  */
 class Library_Loader
 {
@@ -26,8 +26,8 @@ class Library_Loader
      */
     private static function load_phpexcel()
     {
-        $dir_phpexcel="vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "classes" . DS;
-        $class_phpexcel="PHPExcel.php";
+        $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "classes" . DS;
+        $class_phpexcel = "PHPExcel.php";
         include($dir_phpexcel . $class_phpexcel);
         include($dir_phpexcel . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php');
     }
@@ -37,11 +37,11 @@ class Library_Loader
      */
     public static function load_phpexcel_autoload($pObjectName)
     {
-        if ((class_exists($pObjectName)) || (strpos($pObjectName, 'PHPExcel') === False)) {
+        if ( ( class_exists($pObjectName) ) || ( strpos($pObjectName, 'PHPExcel') === False ) ) {
             return false;
         }
-        $pObjectFilePath =PHPEXCEL_ROOT.str_replace('_', DS, $pObjectName). '.php';
-        if ((file_exists($pObjectFilePath) === false) || (is_readable($pObjectFilePath) === false)) {
+        $pObjectFilePath = PHPEXCEL_ROOT.str_replace('_', DS, $pObjectName). '.php';
+        if ( ( file_exists($pObjectFilePath) === false ) || ( is_readable($pObjectFilePath) === false ) ) {
             return false;
         }
         require($pObjectFilePath);
@@ -54,8 +54,8 @@ class Library_Loader
      */
     private static function load_template_smarty()
     {
-        $dir_smarty = "vendor" . DS . "smarty" . DS . "libs". DS;
-        $file_smarty = "Smarty.class.php";
+        $dir_smarty    = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "vendor" . DS . "smarty" . DS .  "smarty" . DS . "libs". DS;
+        $file_smarty   = "Smarty.class.php";
         $file_smartybc = "SmartyBC.class.php";
         include $dir_smarty . $file_smarty;
         include $dir_smarty . $file_smartybc;

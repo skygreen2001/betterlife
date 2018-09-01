@@ -25,3 +25,14 @@
 
     [说明]
     > UEditor下载版本为:[1.4.3.3 PHP 版本] UTF-8版
+
+## FAQ
+
+### PHP 7 需知
+
+  - Since PHP 7 is not in the official Ubuntu PPAs,使用Composer install 会提示错误: Call to undefined function: simplexml_load_string(),解决办法在服务器上执行以下指令
+
+    ```
+    > sudo service php7.0-fpm restart
+    > sudo service php7.0-fpm restart
+    ```
