@@ -10,9 +10,10 @@
 class Action_Blog extends Action
 {
     /**
-     * 博客列表
+     * 博客一览
      */
-    public function index(){
+    public function index()
+    {
 
     }
 

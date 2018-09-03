@@ -24,7 +24,7 @@
           <li><a href="{$url_base}index.php?go={$appName}.index.index">首页</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.blog.index">博客</a></li>
           <li><a href="https://y.qq.com/" target="_blank">发现</a></li>
-          <li><a href="http://36kr.com/" target="_blank">我们</a></li>
+          <li><a href="{$url_base}index.php?go={$appName}.us.index">我们</a></li>
           <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
             <a>
               <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>
