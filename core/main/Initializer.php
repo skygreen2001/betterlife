@@ -41,7 +41,7 @@ class Initializer
     /**
     * 初始化错误，网站应用的设置路径有误提示信息。
     */
-    const ERROR_INFO_INIT_DIRECTORY="<table><tr><td>网站应用放置的目录路径设置不正确！</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置！</td></tr></table>";
+    const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确！</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置！</td></tr></table>";
 
     /**
      * 自动加载指定的类对象
@@ -49,27 +49,33 @@ class Initializer
      */
     public static function autoload($class_name)
     {
-        if (!empty (self::$coreFiles)) {
+        if ( !empty (self::$coreFiles) ) {
             foreach (self::$coreFiles as $coreFile) {
-                if (array_key_exists($class_name,  $coreFile)) {
-                    class_exists($class_name) ||require($coreFile[$class_name]);
+                if ( array_key_exists($class_name,  $coreFile) ) {
+                    class_exists($class_name) || require($coreFile[$class_name]);
                     return;
                 }
             }
-        }else {
+        } else {
             class_exists($class_name) || require($class_name.self::SUFFIX_FILE_PHP);
             return;
         }
 
-        if (!empty(self::$moduleFiles)) {
+        if ( !empty(self::$moduleFiles) ) {
             foreach (self::$moduleFiles as $moduleFile) {
-                if (array_key_exists($class_name, $moduleFile)) {
+                if ( array_key_exists($class_name, $moduleFile) ) {
                     //该语句比require_once快4倍
                     class_exists($class_name) || require($moduleFile[$class_name]);
 //                    require_once($moduleFile[$class_name]);
                     return;
                 }
             }
+        }
+        // 加载拥有命名空间路径的类名
+        if ( strpos($class_name, "\\") > 0 ) {
+            $parts = explode('\\', $class_name);
+            $path  = implode('/', $parts) . '.php';
+            require_once($path);
         }
     }
 
@@ -79,16 +85,16 @@ class Initializer
      */
     public static function initialize()
     {
-        if (!file_exists(Gc::$nav_root_path)||!file_exists(Gc::$nav_framework_path)){
+        if ( !file_exists(Gc::$nav_root_path) || !file_exists(Gc::$nav_framework_path) ) {
             die(self::ERROR_INFO_INIT_DIRECTORY);
         }
 
-        if (Gc::$dev_profile_on) {
+        if ( Gc::$dev_profile_on ) {
             require_once 'helper/Profiler.php';
             Profiler::init();
-            set_include_path(get_include_path().PATH_SEPARATOR.Gc::$nav_root_path."core".DS."lang");
-            Profiler::mark(Wl::LOG_INFO_PROFILE_RUN);
-            Profiler::mark(Wl::LOG_INFO_PROFILE_INIT);
+            set_include_path(get_include_path() . PATH_SEPARATOR . Gc::$nav_root_path . "core" . DS . "lang");
+            Profiler::mark( Wl::LOG_INFO_PROFILE_RUN );
+            Profiler::mark( Wl::LOG_INFO_PROFILE_INIT );
         }
         /**
          * 初始检验闸门
@@ -126,11 +132,11 @@ class Initializer
      */
     private static function loadTaglibrary()
     {
-        $root_taglib="taglib";
-        $file_tag_root=Gc::$nav_root_path.$root_taglib;
+        $root_taglib   = "taglib";
+        $file_tag_root = Gc::$nav_root_path . $root_taglib;
 
-        if (is_dir($file_tag_root)) {
-            $tmps=UtilFileSystem::getAllFilesInDirectory($file_tag_root);
+        if ( is_dir($file_tag_root) ) {
+            $tmps = UtilFileSystem::getAllFilesInDirectory( $file_tag_root );
             foreach ($tmps as $tmp) {
                 require_once($tmp);
             }
@@ -228,44 +234,43 @@ class Initializer
      */
     public static function set_include_path()
     {
-        $core_util="util";
-        $include_paths=array(
+        $core_util = "util";
+        $include_paths = array(
                 self::$NAV_CORE_PATH,
-                self::$NAV_CORE_PATH.$core_util,
-                self::$NAV_CORE_PATH."log",
-                self::$NAV_CORE_PATH.$core_util.DS."common",
+                self::$NAV_CORE_PATH . $core_util,
+                self::$NAV_CORE_PATH . "log",
+                self::$NAV_CORE_PATH . $core_util . DS . "common",
         );
-        set_include_path(get_include_path().PATH_SEPARATOR.join(PATH_SEPARATOR, $include_paths));
-        $dirs_root=UtilFileSystem::getAllDirsInDriectory(self::$NAV_CORE_PATH);
-        $include_paths=$dirs_root;
-        $module_Dir=Gc::$nav_root_path;
-        if (strlen(Gc::$module_root)>0) {
-            $module_Dir.=Gc::$module_root.DS;
+        set_include_path(get_include_path() . PATH_SEPARATOR . join(PATH_SEPARATOR, $include_paths));
+        $dirs_root     = UtilFileSystem::getAllDirsInDriectory( self::$NAV_CORE_PATH );
+        $include_paths = $dirs_root;
+        $module_Dir    = Gc::$nav_root_path;
+        if ( strlen(Gc::$module_root)>0 ) {
+            $module_Dir .= Gc::$module_root.DS;
         }
         foreach (Gc::$module_names as $moduleName) {
-            $moduleDir=$module_Dir.$moduleName.DS;
-            if (is_dir($moduleDir))
-            {
-                $modulesubdir=array_keys(UtilFileSystem::getSubDirsInDirectory($moduleDir));
+            $moduleDir = $module_Dir . $moduleName . DS;
+            if ( is_dir($moduleDir) ) {
+                $modulesubdir = array_keys(UtilFileSystem::getSubDirsInDirectory( $moduleDir ));
                 /**
                  * view主要为html,javascript,css文件；因此应该排除在外
                  */
-                $modulesubdir=array_diff($modulesubdir, Gc::$module_exclude_subpackage);
+                $modulesubdir = array_diff($modulesubdir, Gc::$module_exclude_subpackage);
                 foreach ($modulesubdir as $subdir) {
-                    $modulePath=$moduleDir;
-                    if (is_dir($moduleDir.$subdir)) {
-                        $modulePath.=$subdir.DS;
+                    $modulePath = $moduleDir;
+                    if ( is_dir($moduleDir . $subdir)) {
+                        $modulePath .= $subdir . DS;
                     }
-                    $tmps=UtilFileSystem::getAllDirsInDriectory($modulePath);
-                    $include_paths=array_merge($include_paths, $tmps);
+                    $tmps = UtilFileSystem::getAllDirsInDriectory( $modulePath );
+                    $include_paths = array_merge($include_paths, $tmps);
                 }
-            }else{
-                $module=basename($moduleDir);
-                echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>加载应用模块路径不存在:".$moduleDir."<br/>请去除Gc.php文件里\$module_names的模块：".$module."。<br/>再重新运行！</p>";
+            } else {
+                $module = basename($moduleDir);
+                echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>加载应用模块路径不存在:" . $moduleDir . "<br/>请去除Gc.php文件里\$module_names的模块：" . $module . "。<br/>再重新运行！</p>";
                 die();
             }
         }
-        set_include_path(get_include_path().PATH_SEPARATOR.join(PATH_SEPARATOR, $include_paths));
+        set_include_path(get_include_path() . PATH_SEPARATOR . join(PATH_SEPARATOR, $include_paths));
     }
 
     /**
@@ -273,22 +278,22 @@ class Initializer
      */
     private static function recordCoreClasses()
     {
-        $dirs_root=array(
-                self::$NAV_CORE_PATH
+        $dirs_root = array(
+            self::$NAV_CORE_PATH
         );
 
         foreach (self::$core_include_paths as $core_include_path) {
-            $dirs_root[]=Gc::$nav_root_path.$core_include_path;
+            $dirs_root[] = Gc::$nav_root_path . $core_include_path;
         }
 
         $files = new AppendIterator();
         foreach ($dirs_root as $dir) {
-            $tmp=new ArrayObject(UtilFileSystem::getAllFilesInDirectory($dir));
-            if (isset($tmp)) $files->append($tmp->getIterator());
+            $tmp = new ArrayObject(UtilFileSystem::getAllFilesInDirectory( $dir ));
+            if ( isset($tmp) ) $files->append($tmp->getIterator());
         }
 
         foreach ($files as $file) {
-            self::$coreFiles[Config_F::ROOT_CORE][basename($file,self::SUFFIX_FILE_PHP)]=$file;
+            self::$coreFiles[Config_F::ROOT_CORE][basename($file, self::SUFFIX_FILE_PHP)] = $file;
         }
     }
 
@@ -297,13 +302,13 @@ class Initializer
      */
     public static function recordModuleClasses()
     {
-        $module_dir= Gc::$nav_root_path;
-        if (strlen(Gc::$module_root)>0) {
-            $module_dir.=Gc::$module_root.DS;
+        $module_dir = Gc::$nav_root_path;
+        if ( strlen(Gc::$module_root) > 0 ) {
+            $module_dir .= Gc::$module_root . DS;
         }
         foreach (Gc::$module_names as $moduleName) {
-            $moduleDir=$module_dir.$moduleName.DS;
-            load_module($moduleName, $moduleDir,Gc::$module_exclude_subpackage);
+            $moduleDir = $module_dir . $moduleName . DS;
+            load_module($moduleName, $moduleDir, Gc::$module_exclude_subpackage);
         }
     }
 }

@@ -294,7 +294,7 @@ class UtilFileSystem extends Util
             $dh = opendir($dir);
             if ( $dh ) {
                 while (($file = readdir($dh)) !== false) {
-                     if ( $file != '.' && $file != '..' && $file != '.svn' && $file != '.git' && UtilString::contain($file, ".") ) {
+                     if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' && UtilString::contain($file, ".") ) {
                          foreach ($agreesuffix as $suffix) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
@@ -370,7 +370,7 @@ class UtilFileSystem extends Util
             $dp = dir($path);
             $dirdata[]  = $path;
             while($file = $dp->read()) {
-                if ( $file != '.' && $file != '..' && $file != '.svn' && $file != '.git' ) {
+                if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' ) {
                     $dirdata = self::searchAllDirsInDirectory( $path . DS . $file, $dirdata );
                 }
             }
@@ -393,7 +393,7 @@ class UtilFileSystem extends Util
         $handle = @opendir($path);
         if ( $handle ) {
             while (false !== ($file = @readdir($handle))) {
-                if ( $file == '.' || $file == '..' || $file == '.svn' || $file == '.git' ) {
+                if ( $file == '.' || $file == '..' || $file == '.DS_Store' || $file == '.svn' || $file == '.git' ) {
                     continue;
                 }
                 $nextpath = $path . DS . $file;

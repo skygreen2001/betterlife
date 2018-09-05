@@ -17,7 +17,7 @@ function class_autoloader($class_name)
     Initializer::autoload($class_name);
 }
 //使用composer的自动加载[必须放在spl_autoload_register的前面]
-$autoload_file = file_exists("install/vendor/autoload.php") ? "install/vendor/autoload.php" : "install/autoload.php";
+$autoload_file = file_exists(Gc::$nav_root_path . "install/vendor/autoload.php") ? Gc::$nav_root_path . "install/vendor/autoload.php" : Gc::$nav_root_path . "install/autoload.php";
 include $autoload_file;
 
 spl_autoload_register("class_autoloader");

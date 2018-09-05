@@ -16,6 +16,7 @@ class Library_Loader
     {
         self::load_phpexcel();
         self::load_template_smarty();
+        self::load_phpzip();
     }
 
     /**
@@ -26,7 +27,7 @@ class Library_Loader
      */
     private static function load_phpexcel()
     {
-        $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "classes" . DS;
+        $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "classes" . DS;
         $class_phpexcel = "PHPExcel.php";
         include($dir_phpexcel . $class_phpexcel);
         include($dir_phpexcel . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php');
@@ -54,10 +55,22 @@ class Library_Loader
      */
     private static function load_template_smarty()
     {
-        $dir_smarty    = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "vendor" . DS . "smarty" . DS .  "smarty" . DS . "libs". DS;
+        $dir_smarty    = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "smarty" . DS .  "smarty" . DS . "libs". DS;
         $file_smarty   = "Smarty.class.php";
         $file_smartybc = "SmartyBC.class.php";
         include $dir_smarty . $file_smarty;
         include $dir_smarty . $file_smartybc;
     }
+
+    /**
+     * 加载nelexa/zip库<br/>
+     * 使用Zip方法<br/>
+     * @link https://github.com/Ne-Lexa/php-zip
+     */
+    private static function load_phpzip()
+    {
+        $dir_phpzip   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "nelexa" . DS . "zip" . DS . "src" . DS;
+        set_include_path(get_include_path() . PATH_SEPARATOR . $dir_phpzip);
+    }
 }
+Library_Loader::load_run();
