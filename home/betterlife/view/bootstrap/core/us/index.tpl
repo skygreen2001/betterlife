@@ -129,7 +129,7 @@
                                 <li class="clearfix">
                                     <i class="icon fa fa-weixin fa-3x"></i>
                                     <strong>社交 ——</strong>
-                                    <span>丰富的兴趣群组团队功能<br/>发现周边的技术达人</span>
+                                    <span>丰富兴趣群组团队功能<br/>发现周边的技术达人</span>
                                 </li>
                             </ul>
                         </div>
