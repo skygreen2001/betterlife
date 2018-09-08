@@ -28,6 +28,7 @@ body {
   margin:0;
   padding:0;
   border:0 none;
+  min-height: 360px;
 }
 p {
   margin:5px;
@@ -52,9 +53,11 @@ a:hover {
   text-decoration: none;
 }
 .main {
-  padding-top: 5%;
+  position: absolute;
+  top: 50%;
+  margin-top: -300px;
   width : 100%;
-  height: 100%;
+  /* height: 100%; */
 }
 .inbox {
   width: 360px;
@@ -74,16 +77,34 @@ div.content{
 }
 div.content a{
   color: #666;
+  position: relative;
   letter-spacing: 2px;
   height: 36px;
   line-height: 36px;
 }
 div.content a:hover{
   color: #77cc6d;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  transition: color .2s;
+  -webkit-transition: color .2s;
+  -moz-transition: color .2s;
+  -ms-transition: color .2s;
+  -o-transition: color .2s;
+}
+div.content a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px!important;
+  bottom: -2px!important;
+  transform: scaleX(0);
+}
+div.content a:hover::after{
+  background-color: #77cc6d!important;
+  transition: transform .4s ease;
+  transform: scaleX(1);
+  transform-origin: left;
 }
 .content-down{
   color: #999;
@@ -92,7 +113,7 @@ div.content a:hover{
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   width: 100%;
   text-align: center;
@@ -120,14 +141,17 @@ footer div {
 }
 footer a{
   color: #888;
+  padding-bottom: 2px;
 }
 footer a:hover{
   color: #77cc6d;
   /*font-size: 14px;*/
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
+  border-bottom: 1px solid #77cc6d;
+  transition: color .2s;
+  -webkit-transition: color .2s;
+  -moz-transition: color .2s;
+  -ms-transition: color .2s;
+  -o-transition: color .2s;
 }
 </style>
 </head>
