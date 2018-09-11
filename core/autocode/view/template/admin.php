@@ -284,16 +284,12 @@ $js_sub_template_id = <<<JS_ID
 
                     \$("body").off('click', 'a#info-view' + data);
                     \$("body").on('click', "a#info-view"+data, function(){
-                        var pageNo = \$_.params("pageNo");
-                        if (!pageNo ) pageNo = 1;
-                        location.href = 'index.php?go={$appname}.{$instancename}.view&id=' + data + '&pageNo=' + pageNo;
+                        location.href = 'index.php?go={$appname}.{$instancename}.view&id=' + data;
                     });
 
                     \$("body").off('click', 'a#info-edit' + data);
                     \$("body").on('click', "a#info-edit"+data, function(){
-                        var pageNo = \$_.params("pageNo");
-                        if (!pageNo ) pageNo = 1;
-                        location.href = 'index.php?go={$appname}.{$instancename}.edit&id=' + data + '&pageNo=' + pageNo;
+                        location.href = 'index.php?go={$appname}.{$instancename}.edit&id=' + data;
                     });
 
                     \$("body").off('click', 'a#info-dele' + data);
@@ -446,10 +442,10 @@ $showColumns
                       <dt><span>更新时间</span></dt>
                       <dd><span>{\${$instancename}.{$updateTimeStr}|date_format:"%Y-%m-%d %H:%M"}</span></dd>
                     </dl>
-                    <button type="submit" onclick="location.href='{\$url_base}index.php?go={$appname}.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:1}'" class="btn btn-info">
+                    <button type="submit" onclick="location.href='{\$url_base}index.php?go={$appname}.{$instancename}.lists'" class="btn btn-info">
                       <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>返回</span>
                     </button>
-                    <button type="submit" onclick="location.href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;id={\$smarty.get.id}&amp;pageNo={\$smarty.get.pageNo|default:1}'" class="btn btn-info">
+                    <button type="submit" onclick="location.href='{\$url_base}index.php?go={$appname}.{$instancename}.edit&amp;id={\$smarty.get.id}'" class="btn btn-info">
                       <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span>编辑</span>
                     </button>
                   </div>

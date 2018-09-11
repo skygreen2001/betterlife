@@ -86,16 +86,12 @@ $(function(){
 
                     $("body").off('click', 'a#info-view' + data);
                     $("body").on('click', "a#info-view"+data, function(){
-                        var pageNo = $_.params("pageNo");
-                        if (!pageNo ) pageNo = 1;
-                        location.href = 'index.php?go=admin.blog.view&id='+data+'&pageNo='+pageNo;
+                        location.href = 'index.php?go=admin.blog.view&id='+data;
                     });
 
                     $("body").off('click', 'a#info-edit' + data);
                     $("body").on('click', "a#info-edit"+data, function(){
-                        var pageNo = $_.params("pageNo");
-                        if (!pageNo ) pageNo = 1;
-                        location.href = 'index.php?go=admin.blog.edit&id='+data+'&pageNo='+pageNo;
+                        location.href = 'index.php?go=admin.blog.edit&id='+data;
                     });
 
                     $("body").off('click', 'a#info-dele' + data);
