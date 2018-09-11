@@ -23,7 +23,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{$url_base}index.php?go={$appName}.index.index">首页</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.blog.index">博客</a></li>
-          <li><a href="https://y.qq.com/" target="_blank">发现</a></li>
+          <li><a href="{$url_base}index.php?go={$appName}.featured.index">发现</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.us.index">我们</a></li>
           <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
             <a>

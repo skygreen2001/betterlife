@@ -164,5 +164,5 @@
   </script>
   <!-- /template end -->
   {/literal}
-  <script src="{$template_url}js/core/blog.js"></script>
+  <script src="{$template_url}js/core/featured.js"></script>
 {/block}

@@ -188,10 +188,11 @@ class UtilFileSystem extends Util
      * @param mixed $files 上传的文件对象
      * @param string $uploadPath 文件路径或者文件名
      * @param sting $uploadFieldName 上传文件的input组件的名称
+     * @param boolean $is_permit_same_filename 是否允许文件重名
      * @param sting $file_permit_upload_size 上传文件大小尺寸,单位是M
      * @return array 返回信息数组
      */
-    public static function uploadFile($files, $uploadPath, $uploadFieldName = "upload_file", $file_permit_upload_size = 2)
+    public static function uploadFile($files, $uploadPath, $uploadFieldName = "upload_file", $is_permit_same_filename = false, $file_permit_upload_size = 2)
     {
         if ( $files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000 ) {
             if ( $files[$uploadFieldName]["error"] > 0 ) {
@@ -230,7 +231,7 @@ class UtilFileSystem extends Util
                     self::createDir($uploadPath);
                 }
                 system_dir_info( dirname($uploadPath), GC::$upload_path );
-                if ( file_exists($uploadPath.$temp_name) ) {
+                if ( !$is_permit_same_filename && file_exists($uploadPath.$temp_name) ) {
                     return array('success' => false, 'msg' => '文件重名!');
                 } else {
                     LogMe::log( "[upload before]:" . $files[$uploadFieldName]["tmp_name"] . "\r\n[upload after]:" . $uploadPath . $temp_name);

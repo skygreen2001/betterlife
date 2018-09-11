@@ -324,6 +324,7 @@ class AutoCodeAction extends AutoCode
                   "    {\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
                   "        \$isDelete = $classname::deleteByID(\${$instancename}Id);\r\n".
+                  "        return array(\"info\" => 200, \"data\"  => \${$instancename}Id);\r\n".
                   "    }\r\n";
         $import = "\r\n".
                   "    /**\r\n".

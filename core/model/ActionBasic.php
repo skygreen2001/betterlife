@@ -363,20 +363,41 @@ class ActionBasic extends Object
      * @param array $files 上传的文件对象
      * @param array $uploadFlag 上传标识,上传文件的input组件的名称
      * @param array $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
-     * @param array $defaultId 上传文件所在的目录标识，一般为类实例名称
+     * @param array $defaultId 上传文件所在的目录标识，一般为类实例名称; 如果包含有 . 则为指定文件名, 文件名后缀名会自动修改为上传文件的后缀名.
      * @return array 是否创建成功。
+     * @Example
+     *     - $this->$this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
+     *       [说明] 生成的图片会是 images/blog/icon_url/201806011225.png  类似的路径
+     *     - $this->$this->uploadImg($_FILES, "icon_url", "subdir", "test.png");
+     *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
+     *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
      */
     public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default")
     {
-        $diffpart = date("YmdHis");
         $result   = "";
         if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
             $path_r     = explode('.', $files[$uploadFlag]["name"]);
             $tmptail    = end($path_r);
-            $uploadPath = GC::$upload_path . "images" . DS . $defaultId . DS . $upload_dir . DS . $diffpart . "." . $tmptail;
-            $result     = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag );
+            $is_permit_same_filename = false;
+            if ( contain($defaultId, ".") ) {
+                $upload_url = $upload_dir;
+                if ( !empty($upload_dir) ) $upload_dir .= $upload_dir . DS;
+                $defaultId  = substr($defaultId, 0, strpos($defaultId, "."));
+                $uploadPath = Gc::$upload_path . "images" . DS . $upload_dir . $defaultId. "." . $tmptail;
+                if ( !empty($upload_url) ) $upload_url .= $upload_url . "/";
+                $file_name  = $upload_url . $defaultId . "." . $tmptail;
+                $is_permit_same_filename = true;
+            } else {
+                $diffpart   = date("YmdHis");
+                $upload_url = $upload_dir;
+                if ( !empty($upload_dir) ) $upload_dir .= $upload_dir . DS;
+                $uploadPath = Gc::$upload_path . "images" . DS . $defaultId . DS . $upload_dir . $diffpart . "." . $tmptail;
+                if ( !empty($upload_url) ) $upload_url .= $upload_url . "/";
+                $file_name  = "$defaultId/" . $upload_url . "$diffpart.$tmptail";
+            }
+            $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename );
             if ( $result && ( $result['success'] == true ) ){
-                $result['file_name'] = "$defaultId/$upload_dir/$diffpart.$tmptail";
+                $result['file_name'] = $file_name;
             } else {
                 return $result;
             }
