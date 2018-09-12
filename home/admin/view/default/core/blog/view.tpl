@@ -62,7 +62,7 @@
                         <span>存储路径:</span><br><span>{$blog.icon_url}</span>
                         {else}
 
-                        <span><a href="https://lorempixel.com/900/500?r=1" target="_blank"><img class="img-thumbnail" src="https://lorempixel.com/900/500?r=1" alt="{$blog.blog_name}" /></a></span>
+                        <span><img class="img-thumbnail" src="{$template_url}resources/images/beauty.jpg" alt="{$blog.blog_name}" /></span>
                         {/if}
 
                       </dd>

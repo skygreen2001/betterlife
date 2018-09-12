@@ -25,6 +25,23 @@
           <li><a href="{$url_base}index.php?go={$appName}.blog.index">博客</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.featured.index">发现</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.us.index">我们</a></li>
+
+          {if !isset( $smarty.session.user_id ) || $smarty.session.user_id <= 0}
+          <li><a href="{$url_base}admin/index.php">登录</a></li>
+          {else}
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="fa fa-user"></span>
+              <span class="username">skygreen</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+              <li><a href="{$url_base}admin/index.php"><span class="glyphicon glyphicon-edit"></span>后台管理</a></li>
+              <li><a href="#reset"><span class="glyphicon glyphicon-edit"></span>修改密码</a></li>
+              <li><a href="{$url_base}index.php?go=index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+            </ul>
+          </li>
+          {/if}
           <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
             <a>
               <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>

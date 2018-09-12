@@ -15,7 +15,7 @@ class Action_Auth extends ActionAdmin
     public function logout()
     {
         HttpSession::remove("user_id");
-        $this->redirect("auth","login");
+        $this->redirect_url(Gc::$url_base . "index.php?go=admin.auth.login");
     }
 
     /**

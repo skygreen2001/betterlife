@@ -4,9 +4,9 @@
     <div class="page" id="page1">
       <div class="container section-header-container">
         <div class="bb-lead-core">
-          <span class="bb-icon">B</span>
-          <p class="lead">Betterlife Front UI is the most popular front-end framework for developing responsive, web first projects on the web browser.</p>
-          <p class="lead"><a href="https://github.com/skygreen2001/betterlife.front/archive/master.zip" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Front UI</a></p>
+          <span class="bb-icon">BB</span>
+          <p class="lead">Betterlife is the most popular CMS framework for developing responsive, web first projects on the web browser.</p>
+          <p class="lead"><a href="https://github.com/skygreen2001/betterlife/archive/master.zip" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Framework</a></p>
           <p class="version">版本 v1.0.0</p>
         </div>
       </div>
@@ -21,7 +21,7 @@
 
     <div class="section page darker" id="page3">
       <div class="page-over-header text-center">
-        <div class="slogan-top">Betterlife Front UI</div>
+        <div class="slogan-top">Betterlife Framework</div>
         <div class="title slogan-bottom">
           Action → Better
           <div>Just Do It</div>
@@ -92,10 +92,10 @@
                         <div class="content-num"><span class="content-num-digital" id="countE1">65</span> %</div>
                         <div class="content-list-txt-bg"></div>
                         <div class="content-list-txt">
-                          jQuery是一个高效、精简、功能丰富的 JavaScript 工具库。它的语法设计使得许多操作变得容易，如操作文档对象（document）、选择文档对象模型（DOM）元素、创建动画效果、处理事件、以及开发Ajax程序。<br><br>
-                          全球前10,000个访问最高的网站中有65%使用了jQuery，是目前最受欢迎的JavaScript库。它是开源软件，使用MIT许可证授权。
+                          jQuery是一个高效、精简、功能丰富的 JavaScript 工具库。它的语法设计使得许多操作变得容易，如操作文档对象、选择文档对象模型元素、创建动画效果、处理事件、以及开发Ajax程序。<br><br>
+                          全球前10,000个访问最高的网站中有65%使用了jQuery，是目前最受欢迎的JavaScript库。
                         </div>
-                        <img src="https://lorempixel.com/900/500?r=1">
+                        <img src="{$template_url}resources/images/beauty.jpg" onload="this.src='https://lorempixel.com/900/500?r=1';" onerror="this.src='{$template_url}resources/images/beauty.jpg';" alt="美图">
                         <div class="content-list-pop"></div>
                     </div>
                     <p>Jquery</p>
@@ -108,7 +108,7 @@
                           Bootstrap 是最受欢迎的 HTML、CSS 和 JS 框架，用于开发响应式布局、移动设备优先的 WEB 项目。<br><br>
                           GitHub上面被标记为“Starred”次数排名第二最多的项目。Starred次数超过105,000，而分支次数超过了47,000次。
                         </div>
-                        <img src="https://lorempixel.com/900/500?r=2">
+                        <img src="{$template_url}resources/images/beauty.jpg" onload="this.src='https://lorempixel.com/900/500?r=2';" onerror="this.src='{$template_url}resources/images/beauty.jpg';" alt="美图">
                         <div class="content-list-pop"></div>
                     </div>
                     <p>Bootstrap</p>
@@ -121,7 +121,7 @@
                           AngularJS是一款开源JavaScript库，由Google维护，用来协助单一页面应用程序运行的。它的目标是通过MVC模式（MVC）功能增强基于浏览器的应用，使开发和测试变得更加容易。<br><br>
                           Angular是用于构建移动应用和桌面Web应用的开发平台。一套框架，多种平台，同时适用手机与桌面。
                         </div>
-                        <img src="https://lorempixel.com/900/500?r=3">
+                        <img src="{$template_url}resources/images/beauty.jpg" onload="this.src='https://lorempixel.com/900/500?r=3';" onerror="this.src='{$template_url}resources/images/beauty.jpg';" alt="美图">
                         <div class="content-list-pop"></div>
                     </div>
                     <p>Angular</p>
@@ -134,7 +134,7 @@
                           React是一个为数据提供渲染为HTML视图的开源JavaScript库。React为程序员提供了一种子组件不能直接影响外层组件的模型，数据改变时对HTML文档的有效更新，和现代单页应用中组件之间干净的分离。<br><br>
                           React和React Native在GitHub上的加星数量是Facebook位列第二的开源项目。
                         </div>
-                        <img src="https://lorempixel.com/900/500?r=4">
+                        <img src="{$template_url}resources/images/beauty.jpg" onload="this.src='https://lorempixel.com/900/500?r=4';" onerror="this.src='{$template_url}resources/images/beauty.jpg';" alt="美图">
                         <div class="content-list-pop"></div>
                     </div>
                     <p>React</p>

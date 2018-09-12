@@ -72,6 +72,10 @@
 
     <script type="text/javascript">
       $(function(){
+        $(".bb-icon").click(function(){
+          window.location = "{$url_base}index.php?go={$appName}.index.index";
+        });
+
         $(".checker").click(function(){
           if ($(this).find("span").hasClass("checked")){
             $(this).find("span").removeClass("checked");
