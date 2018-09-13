@@ -21,7 +21,7 @@
 
     <div class="section page darker" id="page3">
       <div class="page-over-header text-center">
-        <div class="slogan-top">Betterlife Framework</div>
+        <div class="slogan-top">Betterlife</div>
         <div class="title slogan-bottom">
           Action → Better
           <div>Just Do It</div>
