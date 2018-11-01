@@ -204,7 +204,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         }
         $tables = array();
         foreach(self::$showtables as $record) {
-            $table = reset($record);
+            if ( $record ) $table = @reset($record);
             if ( empty($table) ) $table = $record;
             $tables[strtolower($table)] = $table;
         }
@@ -392,7 +392,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             $this->stmt = $this->connection->prepare($sqlstring);
             if ( $this->stmt ) {
                 $this->stmt->execute();
-                $result = $this->getQueryResult($object);
+                $result = $this->getQueryResult();
                 Exception_Mysqli::record();
 
             }
