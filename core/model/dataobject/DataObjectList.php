@@ -24,7 +24,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
     public function getIdList() {
         if (($this->count()>0)){
             $object=$this[0];
-            $id_name=DataObjectSpec::getRealIDColumnName($object);       
+            $id_name=DataObjectSpec::getRealIDColumnName($object);
             $list = array();
             foreach($this as $item) {
                 $list[$item->$id_name] = $item->$id_name;
@@ -64,7 +64,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      */
     public function clear() {
         $this->exchangeArray(array());
-        unset($this);
+        reset($this);
     }
 
     /**
@@ -92,7 +92,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      * 转换成数组
      */
     public function toArray(){
-        return iterator_to_array($this->getIterator(),true); 
+        return iterator_to_array($this->getIterator(),true);
     }
     /**
      * 转换成xml文档
@@ -100,8 +100,8 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      */
     public function toXml(){
         if (($this->count()>0)){
-            $object=$this[0];         
-            $id_name=DataObjectSpec::getRealIDColumnName($object);     
+            $object=$this[0];
+            $id_name=DataObjectSpec::getRealIDColumnName($object);
             $dataobjectsArr=array();
             foreach ($this as $dataobject){
               $dataobjectArr=  $dataobject->toArray();
@@ -112,7 +112,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
             $result=UtilArray::array_to_xml($dataobjectsArr, $objectname."s");
         }else {
             $result=null;
-        }        
+        }
         return $result;
     }
         /**
@@ -121,25 +121,25 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      */
     public function toJson(){
         if (($this->count()>0)){
-            $object=$this[0];         
-            $id_name=DataObjectSpec::getRealIDColumnName($object);     
+            $object=$this[0];
+            $id_name=DataObjectSpec::getRealIDColumnName($object);
             $dataobjectsArr=array();
             foreach ($this as $dataobject){
               $dataobjectArr=  $dataobject->toArray();
               $dataobjectsArr[$dataobject->$id_name]=$dataobjectArr;
             }
             $objectname=$object->classname();
-            $objectname{0}=strtolower($objectname{0}); 
+            $objectname{0}=strtolower($objectname{0});
             $dataobjectsArr=array($objectname=>$dataobjectsArr);
             $result= json_encode($dataobjectsArr);
         }else {
             $result=null;
-        }        
+        }
         return $result;
     }
     //</editor-fold>
-    
-    
+
+
 }
 //class Better {
 //    public $name;
