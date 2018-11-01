@@ -53,7 +53,7 @@ class EnumLogLevel extends Enum
  * @package log
  * @author skygreen <skygreen2001@gmail.com>
  */
-class LogMe extends Object
+class LogMe extends BBObject
 {
     //<editor-fold defaultstate="collapsed" desc="日志核心代码">
     /**

@@ -8,13 +8,13 @@ Manager_Communication::init();
  * @package core.model
  * @author skygreen
  */
-class RemoteObject extends Object
+class RemoteObject extends BBObject
 {
     /**
      * 第三方进行通信的服务器地址
      * @var string
      */
-    public static $server_addr="http://127.0.0.1/betterlife/data/exchange/betterlife/server/";
+    public static $server_addr="http://127.0.0.1/bb/data/exchange/betterlife/server/";
     /**
      * 第三方进行通信的服务器索引Index文件地址。
      * @var string

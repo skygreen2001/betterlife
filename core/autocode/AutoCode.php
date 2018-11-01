@@ -7,7 +7,7 @@
  * @package core.autocode
  * @author skygreen <skygreen2001@gmail.com>
  */
-class AutoCode extends Object
+class AutoCode extends BBObject
 {
     /**
      * 显示生成前结果
