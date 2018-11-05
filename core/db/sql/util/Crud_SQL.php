@@ -152,7 +152,7 @@ abstract class Crud_SQL {
             }
 
             $asWhereClause=array();
-            if (is_array($detailclause)){
+            if ( $detailclause && is_array($detailclause) && ( count($detailclause) > 0 ) ) {
                 foreach ($detailclause as $key => $value) {
                     if ($this->isPreparedStatement) {
                         if ( $this->isLike) {

@@ -77,7 +77,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                  */
                 $i = 0;
                 if ( contain( $this->sQuery, "?" ) ) {
-                    if ( count($this->saParams) > 0 ) {
+                    if ( $this->saParams && count($this->saParams) > 0 ) {
                         foreach ($this->saParams as $param) {
                             $bind_name     = 'bind' . $i++;
                             $$bind_name    = $param;

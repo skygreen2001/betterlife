@@ -115,7 +115,7 @@ class DataObjectFunc
         $tablename=Config_Db::orm($classname);
         $_SQL=new Crud_Sql_Update();
         $_SQL->isPreparedStatement=false;
-        if (!contain($sql_id,"=")){
+        if ( $sql_ids && !contain($sql_ids,"=") ){
             if (is_string($classname)) {
                 if (class_exists($classname)) {
                     $classname=new $classname();

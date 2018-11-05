@@ -155,6 +155,7 @@ class Initializer
         if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl<br/></p>";$is_not_run_betterlife = true; }
         if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring<br/></p>";$is_not_run_betterlife = true; }
         if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli</p>";$is_not_run_betterlife = true; }
+        if ( !class_exists("SimpleXmlIterator") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php7.0-zip php7.0-xml<br/></p>";$is_not_run_betterlife = true; }
         if ( version_compare(phpversion(), 5.3, '<') ) {
             if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
         }
@@ -182,6 +183,7 @@ class Initializer
         self::is_can_run();
         //定义异常报错信息
         if ( Gc::$dev_debug_on ) {
+            ini_set('display_errors', 1);
             if ( defined('E_DEPRECATED') ) {
                 if ( Gc::$dev_php_debug_on ) {
                     error_reporting( E_ALL ^ E_DEPRECATED);
@@ -190,6 +192,7 @@ class Initializer
                 }
             }
             else error_reporting(E_ALL ^ E_WARNING);
+            ini_set('display_errors', 1);
         }else{
             error_reporting(0);
         }
