@@ -427,6 +427,7 @@ class UtilCss extends Util
                 }
                 .container .btnSubmit{
                   margin-left:120px;
+                  font-weight:600;
                 }
                 .btnSubmit:hover{
                   color:#000;

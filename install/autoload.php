@@ -27,7 +27,7 @@ class Library_Loader
      */
     private static function load_phpexcel()
     {
-        $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "classes" . DS;
+        $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "Classes" . DS;
         $class_phpexcel = "PHPExcel.php";
         include($dir_phpexcel . $class_phpexcel);
         include($dir_phpexcel . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php');
