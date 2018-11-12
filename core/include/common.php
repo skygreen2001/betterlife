@@ -115,8 +115,23 @@ function endWith($haystack, $needle, $strict = true)
 }
 
 /**
+ * 将Url param字符串转换成Json字符串
+ * @link http://php.net/manual/en/function.parse-str.php
+ * @example
+ *  示例如下：<br/>
+ *  $url_parms = 'title=hello&custLength=200&custWidth=300'
+ * @return Json字符串
+ */
+function urlparamToJsonString($url_parms)
+{
+    parse_str($url_parms, $parsed);
+    $result = json_encode($parsed);
+    return $result;
+}
+
+/**
  * js escape php 实现
- * 参考：PHP实现javascript的escape和unescape函数【http://js8.in/941.html】
+ * 参考：PHP实现javascript的escape和unescape函数
  * @param $string the sting want to be escaped
  * @param $in_encoding
  * @param $out_encoding
@@ -139,7 +154,7 @@ function escape($string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
 
 /**
  * js unescape php 实现
- * 参考：PHP实现javascript的escape和unescape函数【http://js8.in/941.html】
+ * 参考：PHP实现javascript的escape和unescape函数
  * @param $string the sting want to be escaped
  * @param $in_encoding
  * @param $out_encoding
