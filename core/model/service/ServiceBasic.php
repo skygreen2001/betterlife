@@ -493,7 +493,9 @@ class ServiceBasic extends Service implements IServiceBasic
         if ((empty($info_noneed))&&(empty($info_failed))){
             return array('success' => true,'data' => true);
         }else{
-            return array('success' => false,'data' => $info_noneed.$info_failed);
+            $info = $info_noneed . $info_failed;
+            // if ($info) $info = str_replace("<br/>", "    ", $info);
+            return array('success' => false,'data' => $info);
         }
     }
 }
