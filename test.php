@@ -1,14 +1,6 @@
 <?php
 require_once ("init.php");
 
-
-
-
-
-
-// $response=Manager_Service::blogService()->exportBlog();
-// echo "<script>window.open('".$response["data"]."');</script>";
-
 //调用一对一
 // $user=User::get_by_id(1);
 // $userdetail=$user->userdetail;
@@ -228,6 +220,16 @@ require_once ("init.php");
 // LogMe::log("我在想事情呢！等等我");
 // LogMe::log("不急不急,休息一下！");
 
-if( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1","localhost") ) ) {
+// 压缩文件加密
+// $texFName   = Gc::$nav_root_path . "README.md";
+// $img_dir    = Gc::$upload_path . "images/blog/icon_url/";
+// $outputFile = Gc::$upload_path . "zip" . DS . "666.zip";
+// UtilZipfile::zip($texFName, $outputFile, $img_dir, "images", "1234");
+
+// $response=Manager_Service::blogService()->exportBlog();
+// echo "<script>window.open('".$response["data"]."');</script>";
+
+
+if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
     phpinfo();
 }

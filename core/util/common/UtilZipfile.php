@@ -239,7 +239,7 @@ class UtilZipfile
      * 将若干个文件压缩成一个文件下载
      * 注释: 压缩的文件似乎只能在Windows操作系统下可以访问
      * 调用示例:
-     *     1.UtilZipfile::zip(array(Gc::$attachment_path."attachment".DIRECTORY_SEPARATOR."20111221034439.xlsx","attachment".DIRECTORY_SEPARATOR."20111221034612.xlsx"),Gc::$attachment_path."goodjob.zip",true);
+     *    1.UtilZipfile::zip(array(Gc::$attachment_path."attachment".DIRECTORY_SEPARATOR."20111221034439.xlsx","attachment".DIRECTORY_SEPARATOR."20111221034612.xlsx"),Gc::$attachment_path."goodjob.zip",true);
      *    2.UtilZipFile::zip(array("a/b/c/abc.txt"=>Gc::$attachment_path."test.txt"),Gc::$attachment_path."test.zip");
      *                      就是将原来文件名为test.txt压缩到test.zip文件，它的新名称就是test.txt。
      * @param mixed $arr_filename 需要压缩的文件名称列表
@@ -251,6 +251,8 @@ class UtilZipfile
         $ziper = new UtilZipfile();
         $ziper->is_dir_info_include = $is_dir_info_include;
         $ziper->addFiles($arr_filename);
+        $zip_dir = dirname($outputfile);
+        UtilFileSystem::createDir($zip_dir);
         //array of files
         $ziper->output($outputfile);
         return true;
@@ -266,19 +268,29 @@ class UtilZipfile
      * @param string $out_zip_filename 输出zip文件名
      * @param string $attachment_source_dir 附件如图片或者参考文档所在目录
      * @param string $attachment_dest_dir 指定在压缩文件里附件如图片或者参考文档所在目录
+     * @param string $password 默认没有密码，没有加密
      * 示例
      *    $texFName   = Gc::$upload_path . "tex" . DS . $paperID . ".tex";
      *    $img_dir    = Gc::$upload_path . "tex" . DS ."img";
      *    $outputFile = Gc::$upload_path . "tex" . DS . "zip" . DS . "bb.zip";
+     *    $password   = "1234";
      *    UtilZipfile::zip($texFName, $outputFile, $img_dir, "images");
      */
-    public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images")
+    public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password=null)
     {
         if ( !empty($out_zip_filename) && !empty($main_filename) ) {
             $zipFile    = new \PhpZip\ZipFile();
             $zip_method = \PhpZip\ZipFile::METHOD_DEFLATED;
             $filename   = basename($main_filename);
             $zipFile->addFile($main_filename, $filename, $zip_method);
+
+            if ( !empty($password) ) {
+                $encryptionMethod = \PhpZip\ZipFile::ENCRYPTION_METHOD_TRADITIONAL;
+                $zipFile->setReadPassword($password);
+                $zipFile->setPassword($password, $encryptionMethod);
+            }
+            $zip_dir = dirname($out_zip_filename);
+            UtilFileSystem::createDir($zip_dir);
             if ( !empty($attachment_source_dir) ) $zipFile->addDir($attachment_source_dir, $attachment_dest_dir, $zip_method);
             $zipFile
                 ->saveAsFile($out_zip_filename)
