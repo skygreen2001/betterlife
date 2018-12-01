@@ -157,10 +157,11 @@ class AutoCodeConfig extends AutoCode
      */
     private static function conditionsToConfig($classname, $tablename, $fieldInfo, $conditions)
     {
+        $exists_condition = array();
+        $showfieldname    = "";
         if ( !self::isMany2ManyByClassname( $classname ) ) {
             $showfieldname = self::getShowFieldNameByClassname( $classname, true );
             if ( !empty($showfieldname) ) {
-                $exists_condition = array();
                 if ( ( !contain( $tablename, Config_Db::TABLENAME_RELATION ) ) && ( !in_array($showfieldname, $exists_condition) ) ) {
                     $conditions[]       = array("@value" => $showfieldname);
                     $exists_condition[] = $showfieldname;

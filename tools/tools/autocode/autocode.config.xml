@@ -212,15 +212,13 @@
         <conditions>
             <condition>username</condition>
         </conditions>
-        <has_one>
-            <relationclass name="Userdetail">userdetail</relationclass>
-        </has_one>
         <has_many>
             <relationclass name="Blog">blogs</relationclass>
             <relationclass name="Comment">comments</relationclass>
             <relationclass name="Loguser">logusers</relationclass>
             <relationclass name="Usernotice">usernotices</relationclass>
             <relationclass name="Userrole">userroles</relationclass>
+            <relationclass name="Userdetail">userdetails</relationclass>
         </has_many>
         <many_many>
             <relationclass name="Notice">notices</relationclass>

@@ -125,9 +125,11 @@ APACHECONFIG;
     echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     echo "sudo chmod -R 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",12);
-    echo "* . 重启apache : sudo service httpd restart";
+    echo "*. 重启apache方式一: sudo service httpd restart" . "<br/>" . str_repeat("&nbsp;",12);
+    echo "*. 重启apache方式二: sudo service apache2 restart";
     $mysql_config = <<<MYSQLCONFIG
-                                + . 修改mysql的字符集为utf8
+
+                                +. 修改mysql的字符集为utf8
                                         修改etc/my . cnf
                                         [mysqld]
                                             character_set_server = utf8
@@ -136,15 +138,17 @@ APACHECONFIG;
                                             default-character-set = utf8
                                         [mysql]
                                             default-character-set = utf8
-                                + . 运行命令:service mysqld restart
-                                + . 查看字符集：
+                                +. 运行命令:sudo service mysqld restart
+                                +. 查看字符集：
                                         mysql：
                                             show variables like 'character_set%';
+
+
 MYSQLCONFIG;
-    $mysql_config = str_replace("\r\n", "<br/>", $mysql_config);
+    $mysql_config = str_replace("\r", "<br/>", $mysql_config);
+    $mysql_config = str_replace("\n", "<br/>", $mysql_config);
     $mysql_config = str_replace("    ", "&nbsp;&nbsp;&nbsp;&nbsp;", $mysql_config);
     echo $mysql_config . str_repeat("&nbsp;", 12);
-    echo "* . 重启apache : sudo service mysqld restart";
 }
 
 ?>

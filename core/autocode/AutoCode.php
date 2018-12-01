@@ -432,7 +432,10 @@ class AutoCode extends BBObject
         if ( contain( $column_name, "ID" ) ) {
             return false;
         }
-        if ( contains( $column_name, array("PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC") ) ) {
+        if ( contains( $column_name, array("THUMBNAIL", "PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC") ) ) {
+            return true;
+        }
+        if ( contains( $column_comment, array("图像地址", "图片地址")) ){
             return true;
         }
         return false;
