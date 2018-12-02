@@ -419,7 +419,7 @@ class UtilCss extends Util
                   cursor:pointer;
 
                   font-size: 15px;
-                  font-weight: lighter;
+                  font-weight: 600;
                   background-color:'. self::$color_b .';
                   border:1px solid;
                   border-color:#fff;

@@ -36,7 +36,7 @@ $userinput_model = <<<USERINPUT
                 <input class="input_save_dir" type="text" name="save_dir" value="$default_dir" id="save_dir" />
                 $show_select_lists
             </div>
-            <input class="btnSubmit" type="submit" value="生成" /><br/>
+            <input class="btnSubmit" type="submit" value="生成" /><br/><br/><br/>
             $more_content
         </form>
         </div>
