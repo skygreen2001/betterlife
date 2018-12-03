@@ -558,14 +558,16 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 示例如下：<br/>
      *        1.id asc;<br/>
      *        2.name desc;<br/>
-     * @param string $limit 分页数目:同Mysql limit语法
+     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下：<br/>
-     *    0,10<br/>
+     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     *    1,10<br/> (相当于第1-第10条)
+     *    10 <br/>(相当于第1-第10条)
      * @return 查询列数组，当只有一个值的时候如select count(表名_id)，自动从数组中转换出来值字符串
      */
     public static function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        return DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, $limit);
+        return DataObjectFunc::showColumns( get_called_class(), $columns, $filter, $sort, $limit );
     }
 
     /**
@@ -608,9 +610,11 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 示例如下：<br/>
      *        1.id asc;<br/>
      *        2.name desc;<br/>
-     * @param string $limit 分页数目:同Mysql limit语法
+     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下：<br/>
-     *    0,10<br/>
+     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     *    1,10<br/> (相当于第1-第10条)
+     *    10 <br/>(相当于第1-第10条)
      * @return 对象列表数组
      */
     public static function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)

@@ -35,13 +35,18 @@ class Crud_Sql_Select extends Crud_SQL
      */
     private $order;
     /**
-     * @var string 分页
+     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
+     * 示例如下：<br/>
+     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     *    1,10<br/> (相当于第1-第10条)
+     *    10 <br/>(相当于第1-第10条)
      */
     private $limit;
     /**
      * @var string  分页 Postgres offset语法
      */
     private $offset;
+
     // 数据库表达式
     protected $comparison= array('eq'=>'=','neq'=>'!=','gt'=>'>','egt'=>'>=','lt'=>'<','elt'=>'<=','notlike'=>'NOT LIKE','like'=>'LIKE');
     // 查询表达式
@@ -55,20 +60,20 @@ class Crud_Sql_Select extends Crud_SQL
      */
     public function select()
     {
-        $selectables=func_get_args();
-        if (count($selectables)==1) {
-            if (is_array($selectables[0])) {
-                $selectables= $selectables[0];
-            }else if (is_string($selectables[0])) {
-                if (empty($selectables[0])) {
-                    $selectables=array("*");
+        $selectables = func_get_args();
+        if ( count($selectables) == 1 ) {
+            if ( is_array($selectables[0]) ) {
+                $selectables = $selectables[0];
+            } else if ( is_string($selectables[0]) ) {
+                if ( empty($selectables[0]) ) {
+                    $selectables = array("*");
                 }
             }
-            $this->selectables=$selectables;
-        }else if (count($selectables)==0) {
-            $this->selectables=array("*");
-        }else if (count($selectables)>1) {
-            $this->selectables=$selectables;
+            $this->selectables = $selectables;
+        } else if ( count($selectables) == 0 ) {
+            $this->selectables = array("*");
+        } else if ( count($selectables) > 1 ) {
+            $this->selectables = $selectables;
         }
         return $this;
     }
@@ -80,32 +85,32 @@ class Crud_Sql_Select extends Crud_SQL
      */
     public function from($tableorclassNames)
     {
-        if (class_exists($tableorclassNames)){
-            $this->tableName = Config_Db::orm($tableorclassNames);
-        }else{
-            if (is_string($tableorclassNames)){
-                if (contain($tableorclassNames,",")){
-                    $tableorclassNames=explode(",", $tableorclassNames);
+        if ( class_exists($tableorclassNames) ) {
+            $this->tableName = Config_Db::orm( $tableorclassNames );
+        } else {
+            if ( is_string($tableorclassNames) ) {
+                if ( contain( $tableorclassNames, "," ) ) {
+                    $tableorclassNames = explode(",", $tableorclassNames);
                 }
             }
-            if (is_array($tableorclassNames)){
+            if ( is_array($tableorclassNames) ) {
                 $this->tableName = "";
                 foreach ($tableorclassNames as $tableorclassName) {
                     $tableorclassName = trim($tableorclassName);
-                    if (contain($tableorclassName," ")){
+                    if ( contain( $tableorclassName, " " ) ) {
                         $class_names = preg_split ("/\s+/", $tableorclassName);
-                        if (count($class_names)>=1) $class_name =$class_names[0];
-                        if (class_exists($class_name)){
-                            $this->tableName .= call_user_func($class_name."::tablename")." ".$class_names[1].",";
-                        }else{
-                            $this->tableName .= $class_name." ".$class_names[1].",";
+                        if ( count($class_names) >= 1 ) $class_name = $class_names[0];
+                        if ( class_exists($class_name) ) {
+                            $this->tableName .= call_user_func($class_name . "::tablename") . " " . $class_names[1] . ",";
+                        } else {
+                            $this->tableName .= $class_name . " " . $class_names[1] . ",";
                         }
-                    }else{
-                        $this->tableName .= $tableorclassName.",";
+                    } else {
+                        $this->tableName .= $tableorclassName . ",";
                     }
                 }
-                $this->tableName=substr($this->tableName,0,strlen($this->tableName)-1);
-            }else{
+                $this->tableName = substr($this->tableName, 0, strlen($this->tableName) - 1);
+            } else {
                 $this->tableName = $tableorclassNames;
             }
         }
@@ -152,9 +157,9 @@ class Crud_Sql_Select extends Crud_SQL
      */
     public function order($order)
     {
-        if(!empty($order)) {
-            if (!(stripos($order,"asc")!==false||stripos($order,"desc")!==false)) {
-                $order.=" desc ";
+        if ( !empty($order) ) {
+            if ( !(stripos($order,"asc") !== false || stripos($order, "desc") !== false) ) {
+                $order .= " desc ";
             }
         }
         $this->order = $order;
@@ -162,28 +167,29 @@ class Crud_Sql_Select extends Crud_SQL
     }
 
     /**
-     * 分页数目:同Mysql limit语法<br/>
+     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下：<br/>
-     *    1:0,10<br/>
-     *    2:10
+     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     *    1,10<br/> (相当于第1-第10条)
+     *    10 <br/>(相当于第1-第10条)
      * @param mixed $limit
      * @return Crud_Sql_Select
      */
     public function limit($limit)
     {
-        if (is_int($limit)) {
+        if ( is_int($limit) ) {
             $this->limit = $limit;
-        }else {
-            $limit_arr=explode(",", $limit);
-            if (count($limit_arr)>0) {
-              if (empty($limit_arr[0])){
-                 $limit_arr[0]=0;
+        } else {
+            $limit_arr = explode(",", $limit);
+            if ( count($limit_arr) > 0 ) {
+              if ( empty($limit_arr[0]) ) {
+                 $limit_arr[0] = 0;
               }
-              if ($limit_arr[0]>0){
-                 $limit_arr[0]=$limit_arr[0]-1;
+              if ( $limit_arr[0] > 0 ) {
+                 $limit_arr[0] = $limit_arr[0] - 1;
               }
             }
-            $this->limit=implode(",", $limit_arr);
+            $this->limit = implode(",", $limit_arr);
         }
         return $this;
     }
@@ -197,8 +203,8 @@ class Crud_Sql_Select extends Crud_SQL
      */
     public function offset($offset)
     {
-        if ($offset>0){
-            $offset=$offset-1;
+        if ( $offset > 0 ) {
+            $offset = $offset - 1;
         }
         $this->offset = $offset;
         return $this;
@@ -210,26 +216,26 @@ class Crud_Sql_Select extends Crud_SQL
      */
     public function result()
     {
-        if (!empty($this->selectables)){
-            $selectClause=join(",",$this->selectables);
-        }else{
-            $selectClause="*";
+        if ( !empty($this->selectables) ) {
+            $selectClause = join(",", $this->selectables);
+        } else {
+            $selectClause = "*";
         }
-        $this->query = self::SQL_SELECT.$selectClause.self::SQL_FROM.$this->tableName;
-        if (!empty($this->join))
-            $this->query.= $this->join;
-        if (!empty($this->whereClause))
-            $this->query.= self::SQL_WHERE.$this->whereClause;
-        if (!empty($this->groupby))
-            $this->query.= self::SQL_GROUPBY.$this->groupby;
-        if (!empty($this->having))
-            $this->query.= self::SQL_HAVING.$this->having;
-        if (!empty($this->order))
-            $this->query.= self::SQL_ORDERBY.$this->order;
-        if (!empty($this->limit))
-            $this->query.= self::SQL_LIMIT.$this->limit;
-        if (!empty($this->offset))
-            $this->query.= self::SQL_OFFSET.$this->offset;
+        $this->query = self::SQL_SELECT . $selectClause . self::SQL_FROM . $this->tableName;
+        if ( !empty($this->join) )
+            $this->query .= $this->join;
+        if ( !empty($this->whereClause) )
+            $this->query .= self::SQL_WHERE . $this->whereClause;
+        if ( !empty($this->groupby) )
+            $this->query .= self::SQL_GROUPBY . $this->groupby;
+        if ( !empty($this->having) )
+            $this->query .= self::SQL_HAVING . $this->having;
+        if ( !empty($this->order) )
+            $this->query .= self::SQL_ORDERBY . $this->order;
+        if ( !empty($this->limit) )
+            $this->query .= self::SQL_LIMIT . $this->limit;
+        if ( !empty($this->offset) )
+            $this->query .= self::SQL_OFFSET . $this->offset;
         return $this->query;
     }
 }
