@@ -160,7 +160,7 @@ class UtilImage
             //$gray=ImageColorAllocate($thumbImg,255,0,0);
             //ImageString($thumbImg,2,5,5,"ThinkPHP",$gray);
             // 生成图片
-            $imageFun = 'image' . ($type == 'jpg' ? 'jpeg' : $type);
+            $imageFun     = 'image' . ($type == 'jpg' ? 'jpeg' : $type);
             $dim_file_dir = dirname($dim_file);
             UtilFileSystem::createDir( $dim_file_dir );
             $imageFun($dim, $dim_file);
@@ -185,11 +185,12 @@ class UtilImage
      * @param string $maxHeight 高度
      * @param boolean $interlace 启用隔行扫描,默认true
      * @param boolean $isStrict 是否严格按尺寸来缩放，默认false是取宽高中的最小值成比例缩放
+     * @param boolean $is_echo_output 是否直接输出图片
      +----------------------------------------------------------
      * @return void
      +----------------------------------------------------------
      */
-    public static function thumb($image, $thumbname, $type = '', $maxWidth = 200, $maxHeight = 50, $interlace = true, $isStrict = false)
+    public static function thumb($image, $thumbname, $type = '', $maxWidth = 200, $maxHeight = 50, $interlace = true, $isStrict = false, $is_echo_output = false)
     {
         // 获取原图信息
         $info = self::getImageInfo( $image );
@@ -266,16 +267,16 @@ class UtilImage
             UtilFileSystem::createDir( $image_dir );
             if ( 'jpg' == $type || 'jpeg' == $type ){
                 $imageFun($thumbImg, $thumbname, 100); //默认75% 保真quality: 0-100
-                $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
+                if ($is_echo_output) $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
             } else if ( 'png' == $type ) {
                 $imageFun($thumbImg, $thumbname, 0); //默认6,压缩等级：0-9
-                $imageFun($thumbImg, null, 0);//默认6,压缩等级：0-9
+                if ($is_echo_output) $imageFun($thumbImg, null, 0);//默认6,压缩等级：0-9
             } else if ( 'gif' == $type ){
                 $imageFun($thumbImg, $thumbname);
-                $imageFun($thumbImg);
+                if ($is_echo_output) $imageFun($thumbImg);
             } else {
                 $imageFun($thumbImg, $thumbname);
-                $imageFun($thumbImg);
+                if ($is_echo_output) $imageFun($thumbImg);
             }
             imagedestroy($thumbImg);
             imagedestroy($srcImg);
@@ -506,7 +507,7 @@ class UtilImage
      * @return string
      +----------------------------------------------------------
      */
-    public static function showASCIIImg($image,$string='',$type='')
+    public static function showASCIIImg($image, $string = '', $type = '')
     {
         $info  = self::getImageInfo($image);
         if ( $info !== false ) {
@@ -524,7 +525,7 @@ class UtilImage
                 for($x=0; $x < $dx; $x++) {
                     $col = imagecolorat($im, $x, $y);
                     $rgb = imagecolorsforindex($im, $col);
-                    $str = empty($string)?'*':$string[$i++];
+                    $str = empty($string) ? '*' : $string[$i++];
                     $out.= sprintf('<span style="margin:0px;color:#%02x%02x%02x">' . $str . '</span>', $rgb['red'], $rgb['green'], $rgb['blue']);
                 }
                 $out .= "<br>\n";
@@ -555,14 +556,14 @@ class UtilImage
         $rand = range('a', 'z');
         shuffle($rand);
         $verifyCode = array_slice($rand, 0, 10);
-        $letter = implode(" ", $verifyCode);
+        $letter     = implode(" ", $verifyCode);
         $_SESSION[$verifyName] = $verifyCode;
-        $im = imagecreate($width, $height);
-        $r = array(225, 255, 255, 223);
-        $g = array(225, 236, 237, 255);
-        $b = array(225, 236, 166, 125);
+        $im  = imagecreate($width, $height);
+        $r   = array(225, 255, 255, 223);
+        $g   = array(225, 236, 237, 255);
+        $b   = array(225, 236, 166, 125);
         $key = mt_rand(0, 3);
-        $backColor = imagecolorallocate($im, $r[$key], $g[$key], $b[$key]);
+        $backColor   = imagecolorallocate($im, $r[$key], $g[$key], $b[$key]);
         $borderColor = imagecolorallocate($im, 100, 100, 100);                    //边框色
         imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $backColor);
         imagerectangle($im, 0, 0, $width - 1, $height - 1, $borderColor);
@@ -667,13 +668,13 @@ class UtilImage
         self::output( $im, $type );
     }
 
-    private static function output($im,$type='png',$filename='')
+    private static function output($im, $type = 'png', $filename = '')
     {
         header("Content-type: image/" . $type);
         $ImageFun = 'image' . $type;
         if ( empty($filename) ) {
             $ImageFun($im);
-        }else {
+        } else {
             $ImageFun($im, $filename);
         }
         imagedestroy($im);
