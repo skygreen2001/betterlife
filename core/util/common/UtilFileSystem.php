@@ -16,27 +16,26 @@ class UtilFileSystem extends Util
      */
     public static function removeBom($data)
     {
-        if(is_array($data)){
-            foreach($data as $k=>$v){
-                if (is_file($v)){
+        if ( is_array($data) ) {
+            foreach ($data as $k => $v) {
+                if ( is_file($v) ) {
                     $v = file_get_contents($v);
                 }
                 $charset[1] = substr($v, 0, 1);
                 $charset[2] = substr($v, 1, 1);
                 $charset[3] = substr($v, 2, 1);
-                if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
+                if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
                     $data[$k] = substr($v, 3);
                 }
             }
-        }
-        else{
-            if (is_file($data)){
+        } else{
+            if ( is_file($data) ) {
                 $data = file_get_contents($data);
             }
             $charset[1] = substr($data, 0, 1);
             $charset[2] = substr($data, 1, 1);
             $charset[3] = substr($data, 2, 1);
-            if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
+            if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191 ) {
                 $data = substr($data, 3);
             }
         }
@@ -51,13 +50,16 @@ class UtilFileSystem extends Util
     */
     public static function file_rename($source, $dest)
     {
-        if(PHP_OS=='WINNT'){
-            @copy($source,$dest);
+        if ( PHP_OS == 'WINNT' ) {
+            @copy($source, $dest);
             @unlink($source);
-            if(file_exists($dest)) return true;
-            else return false;
-        }else{
-            return rename($source,$dest);
+            if ( file_exists($dest) ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return rename($source, $dest);
         }
     }
 
@@ -69,8 +71,8 @@ class UtilFileSystem extends Util
      */
     public static function createDir($dir, $mod = 0755)
     {
-        if (UtilString::is_utf8($dir)){
-            $dir=rawurldecode(self::charsetConvert($dir));
+        if ( UtilString::is_utf8( $dir ) ) {
+            $dir = rawurldecode(self::charsetConvert( $dir ));
         }
         return is_dir($dir) or mkdir($dir, $mod, true);
         //return is_dir($dir) or (self::createDir(dirname($dir)) and mkdir($dir, 0777));
@@ -85,10 +87,10 @@ class UtilFileSystem extends Util
      */
     public static function save_file_content($filename, $content)
     {
-        if ( UtilString::is_utf8( $filename ) ){
-            $filename=rawurldecode(self::charsetConvert( $filename ));
+        if ( UtilString::is_utf8( $filename ) ) {
+            $filename = rawurldecode(self::charsetConvert( $filename ));
         }
-        self::createDir( dirname( $filename ) );
+        self::createDir( dirname($filename) );
         $cFile = fopen($filename, 'w');
         if ( $cFile ){
             file_put_contents($filename, $content);
@@ -107,8 +109,8 @@ class UtilFileSystem extends Util
     {
         if( ( $handle = opendir($path) ) ) {
             while (false !== ( $file = readdir($handle) )) {
-                if ( $file!='.' && $file!='..' ) {
-                    if ( is_dir($path.DS.$file) ) {
+                if ( $file != '.' && $file != '..' ) {
+                    if ( is_dir($path . DS . $file) ) {
                         self::rmdir( $path . DS . $file );
                     } else {
                         @unlink($path . DS . $file);
@@ -155,7 +157,7 @@ class UtilFileSystem extends Util
      */
     public static function move_chmod_uploaded_file($filename, $destination, $mod = 0644)
     {
-        if ( move_uploaded_file($filename,$destination) ) {
+        if ( move_uploaded_file($filename, $destination) ) {
             chmod($destination, $mod);
             return true;
         } else {
@@ -217,36 +219,36 @@ class UtilFileSystem extends Util
                         break;
                 }
                 $errorInfo .= "<br/>[错误号：" . $files[$uploadFieldName]["error"] . "],详情查看：<br/>http://php.net/manual/zh/features.file-upload.errors.php";
-                return array( 'success' => false, 'msg' =>  $errorInfo );
+                return array('success' => false, 'msg' => $errorInfo);
             } else {
                 //获得临时文件名
                 $path_r    = explode('.', $files[$uploadFieldName]["name"]);
                 $tmptail   = end($path_r);
                 $temp_name = basename($uploadPath);
-                if ( contain($temp_name,".") ){
+                if ( contain($temp_name, ".") ){
                     $temp_name="";
-                    self::createDir(dirname($uploadPath));
+                    self::createDir( dirname($uploadPath) );
                 } else {
                     $temp_name = date("YmdHis").'.'.$tmptail;
-                    self::createDir($uploadPath);
+                    self::createDir( $uploadPath );
                 }
-                system_dir_info( dirname($uploadPath), GC::$upload_path );
-                if ( !$is_permit_same_filename && file_exists($uploadPath.$temp_name) ) {
+                system_dir_info(dirname($uploadPath), GC::$upload_path);
+                if ( !$is_permit_same_filename && file_exists($uploadPath . $temp_name) ) {
                     return array('success' => false, 'msg' => '文件重名!');
                 } else {
                     LogMe::log( "[upload before]:" . $files[$uploadFieldName]["tmp_name"] . "\r\n[upload after]:" . $uploadPath . $temp_name);
                     $IsUploadSucc = move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath . $temp_name);
-                    if ( !$IsUploadSucc ){
+                    if ( !$IsUploadSucc ) {
                         return array('success' => false, 'msg' => '文件上传失败，通知系统管理员!');
                     }
                     if ( empty($temp_name) ){
-                        $temp_name=basename($uploadPath);
+                        $temp_name = basename($uploadPath);
                     }
                     return array('success' => true,'file_showname'=>$files[$uploadFieldName]["name"],'file_name' => $temp_name);
                 }
             }
         } else {
-            return array('success' => false, 'msg' => '文件太大！文件大小不能超过'.$file_permit_upload_size."M!");
+            return array('success' => false, 'msg' => '文件太大！文件大小不能超过' . $file_permit_upload_size . "M!");
         }
     }
 
@@ -264,7 +266,7 @@ class UtilFileSystem extends Util
     public static function getSubDirsInDirectory($dir)
     {
         $dirdata = array();
-        if ( strcmp(substr($dir, strlen($dir) - 1,strlen($dir)), DS) == 0 ) {
+        if ( strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0 ) {
             $dir = substr($dir, 0, strlen($dir) - 1);//如果路径不以DIRECTORY_SEPARATOR结尾的话，应补上
         }
         if ( is_dir($dir) )
@@ -272,7 +274,9 @@ class UtilFileSystem extends Util
             $iterator = new DirectoryIterator($dir);
             foreach ($iterator as $fileinfo) {
                 if ( $fileinfo->isDir() ) {
-                    if ( $fileinfo->getFilename() != '.' && $fileinfo->getFilename() != '..' && $fileinfo->getFilename() != '.svn' && $fileinfo->getFilename() != '.git' ) {
+                    $file = $fileinfo->getFilename();
+                    if ( $file[0] != "." ) {
+                    // if ( $fileinfo->getFilename() != '.' && $fileinfo->getFilename() != '..' && $fileinfo->getFilename() != '.svn' && $fileinfo->getFilename() != '.git' ) {
                         $dirdata[$fileinfo->getFilename()] = $fileinfo->getPathname();
     //                          echo $fileinfo->getFilename() ."=>".$fileinfo->getPathname()."\n";
                     }
@@ -295,8 +299,9 @@ class UtilFileSystem extends Util
             $dh = opendir($dir);
             if ( $dh ) {
                 while (($file = readdir($dh)) !== false) {
-                     if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' && UtilString::contain($file, ".") ) {
-                         foreach ($agreesuffix as $suffix) {
+                    if ( $file[0] != "." ) {
+                    // if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' && UtilString::contain($file, ".") ) {
+                        foreach ($agreesuffix as $suffix) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
                             $fileSuffix = strcasecmp($fileSuffix, $suffix);
@@ -304,8 +309,8 @@ class UtilFileSystem extends Util
                                 $result[] = $dir . $file;
                                 //echo "filename: $file : filetype: " . filetype($dir . $file) . "\n";
                             }
-                         }
-                     }
+                        }
+                    }
                 }
                 closedir($dh);
             }
@@ -336,7 +341,7 @@ class UtilFileSystem extends Util
         $data = self::searchAllFilesInDirectory( $dir, $data, $agreesuffix );
         ksort($data);
         $result = array_values($data);
-//          print_r($data);
+        // print_r($data);
         return $result;
     }
 
@@ -371,7 +376,8 @@ class UtilFileSystem extends Util
             $dp = dir($path);
             $dirdata[]  = $path;
             while($file = $dp->read()) {
-                if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' ) {
+                if ( $file[0] != "." ) {
+                // if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' ) {
                     $dirdata = self::searchAllDirsInDirectory( $path . DS . $file, $dirdata );
                 }
             }
@@ -394,7 +400,8 @@ class UtilFileSystem extends Util
         $handle = @opendir($path);
         if ( $handle ) {
             while (false !== ($file = @readdir($handle))) {
-                if ( $file == '.' || $file == '..' || $file == '.DS_Store' || $file == '.svn' || $file == '.git' ) {
+                if ( $file[0] == "." ) {
+                // if ( $file == '.' || $file == '..' || $file == '.DS_Store' || $file == '.svn' || $file == '.git' ) {
                     continue;
                 }
                 $nextpath = $path . DS . $file;
@@ -405,7 +412,7 @@ class UtilFileSystem extends Util
                     if ( $file !== "Thumbs.db" ) {
                         if ( $agreesuffix == "*" ) {
                             $data[dirname($nextpath) . DS . 'a' . basename($nextpath)] = $nextpath;
-                        }else if ( is_string($agreesuffix) ) {
+                        } else if ( is_string($agreesuffix) ) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
                             $fileSuffix = strcasecmp($fileSuffix, $agreesuffix);
@@ -413,11 +420,13 @@ class UtilFileSystem extends Util
                                 $isChinese = UtilString::is_chinese( $nextpath );
                                 if ( $isChinese ) {
                                     $is_utf8 = UtilString::is_utf8( $nextpath );
-                                    if ( !$is_utf8 ) $nextpath_tmp = UtilString::gbk2utf8( $nextpath );
+                                    if ( !$is_utf8 ) {
+                                        $nextpath_tmp = UtilString::gbk2utf8( $nextpath );
+                                    }
                                     $nextpath_basename = basename($nextpath_tmp);
-                                    $nextpath_tmp = substr($nextpath_tmp, 0, strrpos($nextpath_tmp, "\\"));
+                                    $nextpath_tmp      = substr($nextpath_tmp, 0, strrpos($nextpath_tmp, "\\"));
                                 } else {
-                                    $nextpath_tmp = dirname($nextpath);
+                                    $nextpath_tmp      = dirname($nextpath);
                                     $nextpath_basename = basename($nextpath);
                                 }
                                 $data[$nextpath_tmp . DS . 'a' . $nextpath_basename] = $nextpath;

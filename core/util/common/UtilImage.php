@@ -56,7 +56,7 @@ class UtilImage
      * @return void
      +----------------------------------------------------------
      */
-    public static function showImg($imgFile, $text='', $width=80, $height = 30)
+    public static function showImg($imgFile, $text = '', $width = 80, $height = 30)
     {
         //获取图像文件信息
         $info = self::getImageInfo( $imgFile );
@@ -172,6 +172,23 @@ class UtilImage
     }
 
     /**
+     * png图片设置透明背景
+     */
+    private static function setTransparency($new_image, $image_source)
+    {
+        $transparencyIndex = imagecolortransparent($image_source);
+        $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
+
+        if ( $transparencyIndex >= 0 ) {
+            $transparencyColor = imagecolorsforindex($image_source, $transparencyIndex);
+        }
+
+        $transparencyIndex = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
+        imagefill($new_image, 0, 0, $transparencyIndex);
+        imagecolortransparent($new_image, $transparencyIndex);
+    }
+
+    /**
      +----------------------------------------------------------<br/>
      * 生成缩略图<br/>
      +----------------------------------------------------------
@@ -195,29 +212,34 @@ class UtilImage
         // 获取原图信息
         $info = self::getImageInfo( $image );
         if ( $info !== false) {
-            $srcWidth  = $info['width'];
-            $srcHeight = $info['height'];
-            $type = empty($type) ? $info['type'] : $type;
+            $srcWidth   = $info['width'];
+            $srcHeight  = $info['height'];
+            $actualType = $info['type'];
+            $type = empty($type) ? $actualType : $type;
             $type = strtolower($type);
             $interlace = $interlace? 1:0;
             unset($info);
+
+            if ( ( $actualType != $type && $actualType != "jpeg" ) || ( $actualType == "jpeg" && $type != "jpg" && $type != "jpeg" ) ) {
+                LogMe::log( "图片文件:" . $image . ",实际图片类型:" . $actualType );
+            }
 
             //计算是按照具体尺寸还是 %修改图片
             if ( contain( $maxWidth, "%" ) )
             {
                 $maxWidth = substr($maxWidth, 0, (strlen($maxWidth) - 1));
                 $mWidth   = $srcWidth * $maxWidth / 100;
-            }
-            else
+            } else {
                 $mWidth = $maxWidth;
+            }
 
             if ( contain( $maxHeight, "%" ) )
             {
                 $maxHeight = substr($maxHeight, 0, (strlen($maxHeight) - 1));
                 $mHeight   = $srcHeight * $maxHeight / 100;
-            }
-            else
+            } else {
                 $mHeight = $maxHeight;
+            }
             $scale = min($mWidth / $srcWidth, $mHeight / $srcHeight); // 计算缩放比例
             if ( $isStrict ) {
                 $width  = $mWidth;
@@ -235,48 +257,73 @@ class UtilImage
             }
 
             // 载入原图
-            $createFun = 'imagecreatefrom' . ($type == 'jpg' ? 'jpeg' : $type);
+            $createFun = 'imagecreatefrom' . $actualType;
             $srcImg    = $createFun($image);
 
             //创建缩略图
-            if ( $type != 'gif' && function_exists('imagecreatetruecolor') )
+            if ( $actualType != 'gif' && function_exists('imagecreatetruecolor') ){
                 $thumbImg = imagecreatetruecolor($width, $height);
-            else
+                if ( $actualType == 'png' ) {
+                    self::setTransparency( $thumbImg, $srcImg );
+                }
+            } else {
                 $thumbImg = imagecreate($width, $height);
+                self::setTransparency($thumbImg,$srcImg);
+            }
 
             // 复制图片
-            if ( function_exists("ImageCopyResampled") )
+            if ( function_exists("ImageCopyResampled") ) {
                 imagecopyresampled($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
-            else
+            } else {
                 imagecopyresized($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth,$srcHeight);
-            if ( 'gif' == $type || 'png' == $type ) {
-                //imagealphablending($thumbImg, false);//取消默认的混色模式
-                //imagesavealpha($thumbImg,true);//设定保存完整的 alpha 通道信息
-                $background_color = imagecolorallocate($thumbImg, 0, 255, 0);  //  指派一个绿色
-                imagecolortransparent($thumbImg, $background_color);  //  设置为透明色，若注释掉该行则输出绿色的图
+            }
+
+            if ( 'gif' == $actualType || 'png' == $actualType ) {
+                imagealphablending($thumbImg, true);//取消默认的混色模式
+                imagesavealpha($thumbImg, true);//设定保存完整的 alpha 通道信息
+
+                // Fill the image with transparent color
+                $color = imagecolorallocatealpha($thumbImg, 255, 255, 255, 127);
+                imagefill($thumbImg, 0, 0, $color);
+                // $background_color = imagecolorallocate($thumbImg, 0, 0, 0);  //  指派一个背景色
+                // imagefill($thumbImg, 0, 0, $background_color);
             }
 
             // 对jpeg图形设置隔行扫描
-            if ( 'jpg' == $type || 'jpeg' == $type ) imageinterlace($thumbImg, $interlace);
+            if ( 'jpg' == $actualType || 'jpeg' == $actualType ) {
+                imageinterlace($thumbImg, $interlace);
+            }
 
-            //$gray=ImageColorAllocate($thumbImg,255,0,0);
-            //ImageString($thumbImg,2,5,5,"ThinkPHP",$gray);
             // 生成图片
-            $imageFun  = 'image' . ($type == 'jpg' ? 'jpeg' : $type);
+            $imageFun  = 'image' . $actualType;
             $image_dir = dirname($thumbname);
             UtilFileSystem::createDir( $image_dir );
-            if ( 'jpg' == $type || 'jpeg' == $type ){
+            if ( 'jpg' == $actualType || 'jpeg' == $actualType ){
                 $imageFun($thumbImg, $thumbname, 100); //默认75% 保真quality: 0-100
-                if ($is_echo_output) $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
-            } else if ( 'png' == $type ) {
-                $imageFun($thumbImg, $thumbname, 0); //默认6,压缩等级：0-9
-                if ($is_echo_output) $imageFun($thumbImg, null, 0);//默认6,压缩等级：0-9
-            } else if ( 'gif' == $type ){
+                if ($is_echo_output) {
+                    $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
+                }
+            } else if ( 'png' == $actualType ) {
+                $imageFun($thumbImg, $thumbname, 6); //默认6,压缩等级：0-9
+                if ($is_echo_output) {
+                    $imageFun($thumbImg, null, 6);//默认6,压缩等级：0-9
+                }
+            } else if ( 'gif' == $actualType ){
                 $imageFun($thumbImg, $thumbname);
-                if ($is_echo_output) $imageFun($thumbImg);
+                if ($is_echo_output) {
+                    $imageFun($thumbImg);
+                }
+                // 需要安装: ImageMagic
+                // Ubuntu: apt-get install imagemagick
+                // $f = basename($thumbname);
+                // $image_o = Gc::$upload_path . "tempimages" . DS . $f;
+                // system("convert $image -coalesce $image_o");
+                // system("convert -size $srcWidth x $srcHeight $image_o -resize $width x $height  $thumbname");
             } else {
                 $imageFun($thumbImg, $thumbname);
-                if ($is_echo_output) $imageFun($thumbImg);
+                if ($is_echo_output) {
+                    $imageFun($thumbImg);
+                }
             }
             imagedestroy($thumbImg);
             imagedestroy($srcImg);
