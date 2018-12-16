@@ -2,6 +2,7 @@ $(function(){
   // 第一屏满屏显示
   $("html").css("height", "100%");
   $("body").addClass("index");
+  $(".navbar-fixed-top").css("opacity","0");
   $("#main-content-container").css("display","block");
 
   // 第一屏内容垂直居中显示
@@ -9,7 +10,6 @@ $(function(){
   if (lead_core_height>0) {
     $(".index #page1 .section-header-container").css("margin-top", lead_core_height/2);
   }
-  $(".navbar-fixed-top").css("opacity","0");
   // 隐藏toggle精简布局设置按钮
   $("#btn-layout-small").css("display","none");
   $(window).resize(function(){
