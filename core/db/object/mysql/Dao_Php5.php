@@ -21,32 +21,30 @@ class Dao_Php5 extends Dao implements IDaoNormal
      * @param string $dbname
      * @return mixed 数据库连接
      */
-     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
-     {
-         $connecturl = Config_Mysql::connctionurl( $host, $port );
+    public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
+    {
+        $connecturl = Config_Mysql::connctionurl( $host, $port );
 
-         if ( !isset($username) ) {
-             $username = Config_Mysql::$username;
-         }
-         if ( !isset($password) ) {
-             $password = Config_Mysql::$password;
-         }
-         if ( !isset($dbname) ) {
-             $dbname   = Config_Mysql::$dbname;
-         }
-         if ( Config_Mysql::$is_persistent ) {
-             $this->connection = mysql_pconnect($connecturl, $username, $password);
-         }else {
-             $this->connection = mysql_connect($connecturl, $username, $password);
-         }
-         if ( $this->connection ) mysql_select_db($dbname, $this->connection);
-         if ( strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false ) {
-             $this->change_character_set( $character_code = Config_Db::$character);
-         }
-
-         if ( strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false ) {
-             $this->change_character_set( $character_code = Config_Db::$character );
+        if ( !isset($username) ) {
+            $username = Config_Mysql::$username;
         }
+        if ( !isset($password) ) {
+            $password = Config_Mysql::$password;
+        }
+        if ( !isset($dbname) ) {
+            $dbname   = Config_Mysql::$dbname;
+        }
+        if ( Config_Mysql::$is_persistent ) {
+            $this->connection = mysql_pconnect($connecturl, $username, $password);
+        } else {
+            $this->connection = mysql_connect($connecturl, $username, $password);
+        }
+        if ( $this->connection ) mysql_select_db($dbname, $this->connection);
+        if ( strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false ) {
+            $this->change_character_set( $character_code = Config_Db::$character);
+        }
+
+        $this->change_character_set( $character_code = Config_Db::$character );
     }
 
     /**

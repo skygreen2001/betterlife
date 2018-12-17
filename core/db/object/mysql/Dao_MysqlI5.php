@@ -41,9 +41,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             Exception_Mysqli::record();
         }
 
-        if ( strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false ) {
-            $this->change_character_set( $character_code = Config_Db::$character );
-        }
+        $this->change_character_set( $character_code = Config_Db::$character );
     }
 
     /**
