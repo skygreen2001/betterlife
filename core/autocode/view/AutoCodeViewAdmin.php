@@ -454,7 +454,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                         case "date":
                           $edit_contents .= "                                  <div class=\"input-group col-sm-9 datetimeStyle\" id=\"" . $fieldname . "\">\r\n".
                                             "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n".
-                                            "                                      <span class=\"input-group-addon\"><i class=\"icon-calendar bigger-110\"></i></span>\r\n".
+                                            "                                      <span class=\"input-group-addon\"><i class=\"fa fa-calendar bigger-110\"></i></span>\r\n".
                                             "                                  </div>\r\n";
                           break;
                         case "int":
