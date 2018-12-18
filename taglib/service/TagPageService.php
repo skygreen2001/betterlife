@@ -12,7 +12,7 @@ class TagPageService {
      * 在分页导航条里链接地址里带有的当前页数标识符
      *
      */
-    public static $linkUrl_pageFlag = "pageNo";
+    public static $linkUrl_pageFlag   = "pageNo";
     /**
      * 在分页标签里显示的分页页码数
      * @var mixed
@@ -21,18 +21,18 @@ class TagPageService {
     /**
     * 默认每页显示记录数
     */
-    public static $default_pagesize = 10;
-    private $count = 10; // 记录总数
+    public static $default_pagesize   = 10;
+    private $count   = 10; // 记录总数
     private $allPageCount;//总页数
     private $nowpage = 1; // 当前页数
     private $pageSize; // 每页显示记录数
     private $startPoint;//分页开始记录数
     private $endPoint;//分页结束记录数
 
-    private  $linkUrl;// 导航地址
+    private $linkUrl;// 导航地址
 
-    private  $navig;// 导航条
-    private  $navigTo;// 导航条
+    private $navig;// 导航条
+    private $navigTo;// 导航条
 
     public static function Init($nowpage, $count, $pageSize = null, $linkUrl = null) {
         if ( empty($pageSize) ) $pageSize = self::$default_pagesize;
@@ -145,17 +145,18 @@ class TagPageService {
                 $stb .= $this->url_link_pageparam(1);
                 $stb .= "首页</a> ";
             } else {
-                $stb .= "首页";
+                $stb .= '<span class="current_page">首</span>';
                 $stb .= "&nbsp;";
             }
 
             // 上一页
             if ( $this->nowpage > 1 ) {
                 $stb .= $this->url_link_pageparam( $this->nowpage - 1 );
-                $stb .= "上一页</a> ";
+                // $stb .= "上一页</a> ";
+                $stb .= "<</a> ";
             } else {
-                $stb .= "上一页";
-                $stb .= "&nbsp;";
+                // $stb .= "上一页";
+                // $stb .= "&nbsp;";
             }
 
             // 显示页码
@@ -188,7 +189,9 @@ class TagPageService {
 
                 for ($i = $startShowNo; $i <= $endShowNo; $i++) {
                     if ( $i == $this->nowpage ) {
-                        $stb .= $i . "&nbsp;";
+                        // 当前页面号码数显示
+                        // $stb .= $i . "&nbsp;";
+                        $stb .= '<span class="current_page">' . $i ."</span>&nbsp;";
                     } else {
                         $stb .= $this->url_link_pageparam($i);
                         $stb .= $i."</a>&nbsp;";
@@ -203,10 +206,11 @@ class TagPageService {
             // 下一页
             if ( $this->nowpage < floor(( $this->count + $this->pageSize - 1 ) / $this->pageSize) ) {
                 $stb .= $this->url_link_pageparam( $this->nowpage + 1 );
-                $stb .= "下一页</a>";
+                // $stb .= "下一页</a>";
+                $stb .= "></a>";
             } else {
-                $stb .= "下一页 ";
-                $stb .= "&nbsp;";
+                // $stb .= "下一页 ";
+                // $stb .= "&nbsp;";
             }
 
             // 末页
@@ -214,9 +218,10 @@ class TagPageService {
                 $stb .= $this->url_link_pageparam( floor(($this->count + $this->pageSize - 1) / $this->pageSize) );
                 $stb .= "末页</a> "; // 共x页
             } else {
-                $stb .= "末页 ";
+                $stb .= '<span class="current_page">末</span>&nbsp;';
                 $stb .= "&nbsp;";
             }
+            $stb .= '<span>(共计' . $this->allPageCount . '页' . $this->count . '条记录)</span>';
         }
         return $stb;
     }

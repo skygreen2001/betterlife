@@ -112,14 +112,16 @@ form .viewdoblock .entry .content.select{
     }
 }
 
-.btnSubmit{
-    margin-top: 15px;
-    width: 126px;
-    height: 38px;
+.btnSubmit, .btnReset{
+    margin: 15px 0;
+    width: auto;
+    min-width: 68px;
+    height: auto;
+    padding: 6px 30px;
     color: #FFF;
     cursor: pointer;
     font-size: 15px;
-    font-weight: lighter;
+    font-weight: 600;
     background-color: #77cc6d;
     border: 1px solid;
     border-color: #fff;
@@ -130,6 +132,17 @@ form .viewdoblock .entry .content.select{
     color: #000;
     background-color: #fff;
     border: 1px solid #77cc6d;
+}
+
+.btnReset{
+    color: #fff;
+    background-color: #999;
+    border-color: #999;
+}
+
+.btnReset:hover {
+    background-color: #666;
+    border-color: #666;
 }
 
 form .viewdoblock .entry .content {

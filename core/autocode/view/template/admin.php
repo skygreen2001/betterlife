@@ -510,7 +510,7 @@ $edit_contents
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div class="btn-group" role="group">
-                            <button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
+                            <button type="reset" class="btn btn-reset"><i class="fa fa-undo bigger-110"></i>重置</button>
                           </div>
                       </div>
                       </form>

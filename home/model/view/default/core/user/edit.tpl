@@ -15,7 +15,7 @@
             <tr class="entry"><th class="head">用户密码</th><td class="content"><input type="text" class="edit" name="password" value="{$user.password}"/></td></tr>
             <tr class="entry"><th class="head">邮箱地址</th><td class="content"><input type="text" class="edit" name="email" value="{$user.email}"/></td></tr>
             <tr class="entry"><th class="head">手机电话</th><td class="content"><input type="text" class="edit" name="cellphone" value="{$user.cellphone}"/></td></tr>
-            <tr class="entry"><th class="head">访问次数</th><td class="content"><input type="text" class="edit" name="loginTimes" value="{$user.loginTimes}"/></td></tr>
+            <tr class="entry"><th class="head">访问次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$user.loginTimes|default:100}"/></td></tr>
             <tr class="entry">
                 <th class="head">通知</th>
                 <td class="content select">
@@ -28,7 +28,12 @@
                     <select id="role_id" name="role_id[]" class="form-control" multiple ></select>
                 </td>
             </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">
@@ -41,7 +46,9 @@
 
     <script type="text/javascript">
     $(function() {
-        var select_notice =  new Array({count($user.notices)});
+        var select_notice =  new Array();
+        {if $user.notices}
+        select_notice =  new Array({count($user.notices)});
         {foreach $user.notices as $notice}
 
         var notice       = {};
@@ -49,8 +56,11 @@
         notice.text      = "{$notice.noticeType}";
         select_notice[{$notice@index}] = notice;
         {/foreach}
+        {/if}
 
-        var select_role =  new Array({count($user.roles)});
+        var select_role =  new Array();
+        {if $user.roles}
+        select_role =  new Array({count($user.roles)});
         {foreach $user.roles as $role}
 
         var role       = {};
@@ -58,6 +68,7 @@
         role.text      = "{$role.role_name}";
         select_role[{$role@index}] = role;
         {/foreach}
+        {/if}
 
 
         $.edit.select2('#notice_id', "api/web/select/notice.php", select_notice);

@@ -222,13 +222,16 @@ class AutoCodeViewModel extends AutoCodeView
                     $instancename_rela = self::getInstancename( $talname_rela );
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName( $key );
-                    $rela_js_content  .= "        var select_{$instancename_rela} =  new Array({count(\${$instancename}.{$value})});\r\n".
+                    $rela_js_content  .= "        var select_{$instancename_rela} =  new Array();\r\n".
+                                         "        {if \${$instancename}.{$value}}\r\n".
+                                         "        var select_{$instancename_rela} =  new Array({count(\${$instancename}.{$value})});\r\n".
                                          "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
                                          "        var $instancename_rela       = {};\r\n".
                                          "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";\r\n".
                                          "        $instancename_rela.text      = \"{\$$instancename_rela.$classNameField}\";\r\n".
                                          "        select_{$instancename_rela}[{\${$instancename_rela}@index}] = $instancename_rela;\r\n".
-                                         "        {/foreach}\r\n\r\n";
+                                         "        {/foreach}\r\n".
+                                         "        {/if}\r\n\r\n";
                     $rela_m2m_content .= "            <tr class=\"entry\">\r\n".
                                          "                <th class=\"head\">$m2m_table_comment</th>\r\n".
                                          "                <td class=\"content select\">\r\n".

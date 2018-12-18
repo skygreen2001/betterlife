@@ -24,7 +24,7 @@
                 </td>
             </tr>
             <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
-            <tr class="entry"><th class="head">排序</th><td class="content"><input type="text" class="edit" name="sequenceNo" value="{$blog.sequenceNo}"/></td></tr>
+            <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo|default:100}"/></td></tr>
             <tr class="entry">
                 <th class="head">分类</th>
                 <td class="content select">
@@ -46,7 +46,13 @@
                     </div>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">是否公开</th><td class="content"><input type="text" class="edit" name="isPublic" value="{$blog.isPublic}"/></td></tr>
+            <tr class="entry">
+                <th class="head">是否公开</th>
+                <td class="content">
+                    <input type="radio" id="isPublic1" name="isPublic" value="1" {if $blog.isPublic} checked {/if} /><label for="isPublic1" class="radio_label">是</label>
+                    <input type="radio" id="isPublic0" name="isPublic" value="0" {if !$blog.isPublic} checked {/if}/><label for="isPublic0" class="radio_label">否</label>
+                </td>
+            </tr>
             <tr class="entry">
                 <th class="head">博客内容</th>
                 <td class="content">
@@ -60,7 +66,12 @@
                     <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
                 </td>
             </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">
@@ -90,6 +101,8 @@
         select_category =  new Array(select_category);
         {/if}
 
+        var select_tags =  new Array();
+        {if $blog.tagss}
         var select_tags =  new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
@@ -98,6 +111,7 @@
         tags.text      = "{$tags.title}";
         select_tags[{$tags@index}] = tags;
         {/foreach}
+        {/if}
 
 
         $.edit.select2('#user_id', "", select_user);

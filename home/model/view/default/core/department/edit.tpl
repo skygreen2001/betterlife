@@ -13,11 +13,16 @@
             {if $department}<tr class="entry"><th class="head">编号</th><td class="content">{$department.department_id}</td></tr>{/if}
             <tr class="entry"><th class="head">部门名称</th><td class="content"><input type="text" class="edit" name="department_name" value="{$department.department_name}"/></td></tr>
             <tr class="entry"><th class="head">管理者</th><td class="content"><input type="text" class="edit" name="manager" value="{$department.manager}"/></td></tr>
-            <tr class="entry"><th class="head">预算</th><td class="content"><input type="text" class="edit" name="budget" value="{$department.budget}"/></td></tr>
-            <tr class="entry"><th class="head">实际开销</th><td class="content"><input type="text" class="edit" name="actualexpenses" value="{$department.actualexpenses}"/></td></tr>
-            <tr class="entry"><th class="head">预估平均工资</th><td class="content"><input type="text" class="edit" name="estsalary" value="{$department.estsalary}"/></td></tr>
-            <tr class="entry"><th class="head">实际工资</th><td class="content"><input type="text" class="edit" name="actualsalary" value="{$department.actualsalary}"/></td></tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry"><th class="head">预算</th><td class="content"><input type="number" class="edit" name="budget" value="{$department.budget|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">实际开销</th><td class="content"><input type="number" class="edit" name="actualexpenses" value="{$department.actualexpenses|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">预估平均工资</th><td class="content"><input type="number" class="edit" name="estsalary" value="{$department.estsalary|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">实际工资</th><td class="content"><input type="number" class="edit" name="actualsalary" value="{$department.actualsalary|default:100}"/></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">

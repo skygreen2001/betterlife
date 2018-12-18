@@ -33,7 +33,12 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">

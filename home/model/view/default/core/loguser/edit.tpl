@@ -23,14 +23,24 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">类型</th><td class="content"><input type="text" class="edit" name="userType" value="{$loguser.userType}"/></td></tr>
+            <tr class="entry">
+                <th class="head">类型</th>
+                <td class="content select">
+                    <select id="userType" name="userType" class="form-control"></select>
+                </td>
+            </tr>
             <tr class="entry">
                 <th class="head">日志详情</th>
                 <td class="content">
                     <textarea id="log_content" name="log_content">{$loguser.log_content}</textarea>
                 </td>
             </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">
@@ -52,8 +62,15 @@
         select_user =  new Array(select_user);
         {/if}
 
+        var select_userType = {};
+        {if $loguser.userType}
+        select_userType.id   = "{$loguser.userType}";
+        select_userType.text = "{$loguser.userTypeShow}";
+        select_userType =  new Array(select_userType);
+        {/if}
 
         $.edit.select2('#user_id', "", select_user);
+        $.edit.select2('#userType', "api/web/data/loguserUserType.json", select_userType);
     });
     </script>
 

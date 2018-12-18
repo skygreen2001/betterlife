@@ -11,9 +11,14 @@
         <form name="tagsForm" method="post"><input type="hidden" name="tags_id" value="{$tags.tags_id}"/>
         <table class="viewdoblock">
             {if $tags}<tr class="entry"><th class="head">标识</th><td class="content">{$tags.tags_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">序号</th><td class="content"><input type="text" class="edit" name="sequence_no" value="{$tags.sequence_no}"/></td></tr>
+            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$tags.sequence_no|default:100}"/></td></tr>
             <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="title" value="{$tags.title}"/></td></tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">

@@ -12,7 +12,7 @@
         <form name="noticeForm" method="post"><input type="hidden" name="notice_id" value="{$notice.notice_id}"/>
         <table class="viewdoblock">
             {if $notice}<tr class="entry"><th class="head">编号</th><td class="content">{$notice.notice_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">通知分类</th><td class="content"><input type="text" class="edit" name="noticeType" value="{$notice.noticeType}"/></td></tr>
+            <tr class="entry"><th class="head">通知分类</th><td class="content"><input type="number" class="edit" name="noticeType" value="{$notice.noticeType|default:100}"/></td></tr>
             <tr class="entry"><th class="head">标题</th><td class="content"><input type="text" class="edit" name="title" value="{$notice.title}"/></td></tr>
             <tr class="entry">
                 <th class="head">通知内容</th>
@@ -20,7 +20,12 @@
                     <textarea id="notice_content" name="notice_content">{$notice.notice_content}</textarea>
                 </td>
             </tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">

@@ -99,7 +99,7 @@
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="publish_date">
                                   <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
-                                  <span class="input-group-addon"><i class="icon-calendar bigger-110"></i></span>
+                                  <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
                               </div>
                           </div>
                       </div>
@@ -115,7 +115,7 @@
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div  class="btn-group" role="group">
-                            <button class="btn btn-reset" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
+                            <button class="btn btn-reset" type="reset"><i class="fa fa-undo bigger-110"></i>重置</button>
                           </div>
                       </div>
                       </form>
@@ -142,7 +142,9 @@
         select_category =  new Array(select_category);
         {/if}
 
-        var select_tags =  new Array({count($blog.tagss)});
+        var select_tags =  new Array();
+        {if $blog.tagss}
+        select_tags =  new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
         var tags       = {};
@@ -150,6 +152,7 @@
         tags.text      = "{$tags.title}";
         select_tags[{$tags@index}] = tags;
         {/foreach}
+        {/if}
 
         var select_status = {};
         {if $blog.status}

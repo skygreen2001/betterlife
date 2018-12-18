@@ -33,15 +33,25 @@
                     </div>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">国家</th><td class="content"><input type="text" class="edit" name="country" value="{$userdetail.country}"/></td></tr>
-            <tr class="entry"><th class="head">省</th><td class="content"><input type="text" class="edit" name="province" value="{$userdetail.province}"/></td></tr>
-            <tr class="entry"><th class="head">市</th><td class="content"><input type="text" class="edit" name="city" value="{$userdetail.city}"/></td></tr>
-            <tr class="entry"><th class="head">区</th><td class="content"><input type="text" class="edit" name="district" value="{$userdetail.district}"/></td></tr>
+            <tr class="entry"><th class="head">国家</th><td class="content"><input type="number" class="edit" name="country" value="{$userdetail.country|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">省</th><td class="content"><input type="number" class="edit" name="province" value="{$userdetail.province|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">市</th><td class="content"><input type="number" class="edit" name="city" value="{$userdetail.city|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">区</th><td class="content"><input type="number" class="edit" name="district" value="{$userdetail.district|default:100}"/></td></tr>
             <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address}"/></td></tr>
             <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq}"/></td></tr>
-            <tr class="entry"><th class="head">会员性别</th><td class="content"><input type="text" class="edit" name="sex" value="{$userdetail.sex}"/></td></tr>
+            <tr class="entry">
+                <th class="head">会员性别</th>
+                <td class="content select">
+                    <select id="sex" name="sex" class="form-control"></select>
+                </td>
+            </tr>
             <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="birthday" value="{$userdetail.birthday}"/></td></tr>
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">
@@ -62,8 +72,15 @@
         select_user =  new Array(select_user);
         {/if}
 
+        var select_sex = {};
+        {if $userdetail.sex}
+        select_sex.id   = "{$userdetail.sex}";
+        select_sex.text = "{$userdetail.sexShow}";
+        select_sex =  new Array(select_sex);
+        {/if}
 
         $.edit.select2('#user_id', "", select_user);
+        $.edit.select2('#sex', "api/web/data/userdetailSex.json", select_sex);
     });
     </script>
 

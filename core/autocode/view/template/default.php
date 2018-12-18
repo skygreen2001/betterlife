@@ -42,7 +42,12 @@ $edit_template = <<<EDIT
         <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>
         <table class="viewdoblock">
 $edit_contents
-            <tr class="entry"><td class="content" colspan="2" align="center"><input type="submit" value="提交" class="btnSubmit" /></td></tr>
+            <tr class="entry">
+              <td class="content" colspan="2" align="center">
+                <input type="submit" value="提交" class="btnSubmit" />
+                <input type="reset" value="重置" class="btnReset" />
+              </td>
+            </tr>
         </table>
         </form>
         <div class="footer" align="center">
