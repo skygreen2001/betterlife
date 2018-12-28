@@ -33,52 +33,33 @@ class UtilExcel extends Util
         $objExcel->setActiveSheetIndex(0);
         $objActsheet = $objExcel->getActiveSheet();
 
+        //获取表头
+        $i = 1;
+        if ( $arr_output_header ) {
+            $column = 'A';
+            foreach ($arr_output_header as $key => $value)
+            {
+                if ( $column > 'A' ) $value = str_replace(array('标识', '编号', '主键'), "", $value);
+                $objActsheet->setCellValue($column . $i, $value);
+                $column++;
+            }
+            $i++;
+        }
         //获取表内容
-        $i = 0;
         if ( !empty($excelarr) ) {
+            if ( is_object($excelarr) ) $excelarr = array($excelarr);
             foreach ($excelarr as $record)
             {
                 $column = 'A';
                 foreach ($arr_output_header as $key => $value)
                 {
-                    if ( $i == 0 )
-                    {
-                        if ( $column > 'A' ) $value = str_replace(array('标识', '编号', '主键'), "", $value);
-                        $objActsheet->setCellValue($column . "1", $value);
-                        $objActsheet->setCellValue($column . "2", $record->$key);
-                        $j = 2;
-                    }
-                    else
-                    {
-                        $objActsheet->setCellValue($column . $i, $record->$key);
-                    }
+                    $objActsheet->setCellValue($column . $i, $record->$key);
                     $column++;
-                }
-                if ( $j == 2 )
-                {
-                    $i = 2;
-                    $j = 0;
                 }
                 $i++;
             }
-        } else {
-            $column = 'A';
-            foreach ($arr_output_header as $key => $value)
-            {
-                if ( $i == 0 )
-                {
-                    if ( $column > 'A' ) $value = str_replace(array('标识', '编号', '主键'), "", $value);
-                    $objActsheet->setCellValue($column . "1", $value);
-                    $objActsheet->setCellValue($column . "2", $record->$key);
-                    $j = 2;
-                }
-                else
-                {
-                    $objActsheet->setCellValue($column . $i, $record->$key);
-                }
-                $column++;
-            }
         }
+
         if ( empty($outputFileName) ) {
             if ( $isExcel2007 ) $outputFileName = date("YmdHis") . ".xlsx"; else $outputFileName = date("YmdHis") . ".xls";
         } else {
@@ -103,7 +84,7 @@ class UtilExcel extends Util
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Pragma: no-cache");
             $objWriter->save('php://output');
-        } else{
+        } else {
             //导出到服务器
             //$outputFileName=UtilString::utf82gbk($outputFileName);
             $objWriter->save($outputFileName);
