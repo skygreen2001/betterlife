@@ -51,15 +51,15 @@ class UtilDateTime extends Util
     /**
      * 标准日期时间格式：年-月-日 时:分:秒
      */
-    const TIMEFORMAT_YMDHIS="Y-m-d H:i:s";
+    const TIMEFORMAT_YMDHIS = "Y-m-d H:i:s";
     /**
      * 标准日期时间格式：年-月-日 时:分:秒
      */
-    const TIMEFORMAT_YMD="Y-m-d";
+    const TIMEFORMAT_YMD    = "Y-m-d";
     /**
      * 标准日期时间格式：时:分:秒
      */
-    const TIMEFORMAT_HIS="H:i:s";
+    const TIMEFORMAT_HIS    = "H:i:s";
     /**
      * 设置当前为中国时区的时间。
      */
@@ -83,28 +83,28 @@ class UtilDateTime extends Util
      * 2:格式：小时:分钟:秒<br/>
      +----------------------------------------------------------<br/>
      */
-    public static function now($type=EnumDateTimeFormat::DATE,$timeformat=EnumDateTimeShow::DATETIME)
+    public static function now($type = EnumDateTimeFormat::DATE, $timeformat = EnumDateTimeShow::DATETIME)
     {
         self::ChinaTime();
         switch ($timeformat) {
             case EnumDateTimeShow::DATE:
-                $now= date(self::TIMEFORMAT_YMD);
+                $now = date(self::TIMEFORMAT_YMD);
                 break;
             case EnumDateTimeShow::TIME:
-                $now= date(self::TIMEFORMAT_HIS);
+                $now = date(self::TIMEFORMAT_HIS);
                 break;
             default:
-                $now= date(self::TIMEFORMAT_YMDHIS);
+                $now = date(self::TIMEFORMAT_YMDHIS);
                 break;
         }
 
         switch ($type){
             case EnumDateTimeFORMAT::TIMESTAMP:
-                return UtilDateTime::dateToTimestamp($now);
+                return UtilDateTime::dateToTimestamp( $now );
             case EnumDateTimeFORMAT::DATE:
                 return $now;
             case EnumDateTimeFORMAT::STRING:
-                return $now."";
+                return $now . "";
         }
         return $now;
     }
@@ -114,7 +114,7 @@ class UtilDateTime extends Util
      * @param int $timestamp 时间戳
      * @return string 日期时间格式年-月-日 时:分:秒
      */
-    public static function timestampToDateTime($timestamp,$format=self::TIMEFORMAT_YMDHIS)
+    public static function timestampToDateTime($timestamp, $format = self::TIMEFORMAT_YMDHIS)
     {
         self::ChinaTime();
         return date($format, $timestamp);
@@ -125,16 +125,16 @@ class UtilDateTime extends Util
      * @param string $str 日期时间格式年-月-日 时:分:秒
      * @return 时间戳
      */
-    public static function dateToTimestamp($str='')
+    public static function dateToTimestamp($str = '')
     {
-        if (empty($str)){
-            $str=self::now();
+        if ( empty($str) ) {
+            $str = self::now();
         }
-        @list($date, $time) = explode(' ', $str);
+        @list($date, $time)       = explode(' ', $str);
         list($year, $month, $day) = explode('-', $date);
-        if(empty($time)){
+        if ( empty($time) ) {
             $timestamp = mktime(0, 0, 0, $month, $day, $year);
-        }else{
+        } else {
             list($hour, $minute, $second) = explode(':', $time);
             $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
         }
@@ -155,10 +155,10 @@ class UtilDateTime extends Util
      */
     public static function isLeapYear($year='')
     {
-        if(empty($year)) {
+        if ( empty($year) ) {
             return false;
         }
-        return ((($year % 4) == 0) && (($year % 100) != 0) || (($year % 400) == 0));
+        return ( ( ( $year % 4 ) == 0 ) && ( ( $year % 100 ) != 0 ) || ( ( $year % 400 ) == 0 ) );
     }
 
 
@@ -177,7 +177,7 @@ class UtilDateTime extends Util
      * @throws ThinkExecption
      +----------------------------------------------------------
      */
-    public static function magicInfo($year,$month,$day,$type="SX")
+    public static function magicInfo($year, $month, $day, $type = "SX")
     {
         $result = '';
         $m      = $month;
@@ -185,28 +185,30 @@ class UtilDateTime extends Util
         $d      = $day;
         switch ($type) {
             case 'XZ'://星座
-                $XZDict = array('摩羯','宝瓶','双鱼','白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手');
-                $Zone   = array(1222,122,222,321,421,522,622,722,822,922,1022,1122,1222);
-                if((100*$m+$d)>=$Zone[0]||(100*$m+$d)<$Zone[1])
-                    $i=0;
-                else
-                    for($i=1;$i<12;$i++) {
-                        if((100*$m+$d)>=$Zone[$i]&&(100*$m+$d)<$Zone[$i+1])
+                $XZDict = array('摩羯', '宝瓶', '双鱼', '白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手');
+                $Zone   = array(1222, 122, 222, 321, 421, 522, 622, 722, 822, 922, 1022, 1122, 1222);
+                if ( ( 100 * $m + $d ) >= $Zone[0] || ( 100 * $m + $d ) < $Zone[1] ) {
+                    $i = 0;
+                } else {
+                    for ($i = 1; $i < 12; $i++) {
+                        if ( ( 100 * $m + $d ) >= $Zone[$i] && ( 100 * $m + $d ) < $Zone[$i + 1]){
                             break;
+                        }
                     }
-                $result = $XZDict[$i].'座';
+                }
+                $result = $XZDict[$i] . '座';
                 break;
             case 'GZ'://干支
                 $GZDict = array(
-                        array('甲','乙','丙','丁','戊','己','庚','辛','壬','癸'),
-                        array('子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥')
+                    array('甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'),
+                    array('子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥')
                 );
-                $i= $y -1900+36 ;
-                $result = $GZDict[0][$i%10].$GZDict[1][$i%12];
+                $i      = $y - 1900 + 36 ;
+                $result = $GZDict[0][$i % 10] . $GZDict[1][$i % 12];
                 break;
             case 'SX'://生肖
-                $SXDict = array('鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪');
-                $result = $SXDict[($y-4)%12];
+                $SXDict = array('鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪');
+                $result = $SXDict[($y - 4) % 12];
                 break;
         }
         return $result;
@@ -218,12 +220,15 @@ class UtilDateTime extends Util
      */
     public static function birthdayToAge($birthday)
     {
-        list($year,$month,$day) = explode("-",$birthday);
+        list($year, $month, $day) = explode("-", $birthday);
         $year_diff  = date("Y") - $year;
         $month_diff = date("m") - $month;
         $day_diff   = date("d") - $day;
-        if ($month_diff < 0) $year_diff--;
-        elseif (($month_diff==0) && ($day_diff < 0)) $year_diff--;
+        if ( $month_diff < 0 ) {
+            $year_diff--;
+        } elseif ( ( $month_diff == 0 ) && ( $day_diff < 0 ) ) {
+            $year_diff--;
+        }
         return $year_diff;
     }
 }
