@@ -279,6 +279,7 @@ class UtilZipfile
     public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password=null)
     {
         if ( !empty($out_zip_filename) && !empty($main_filename) ) {
+            ini_set('memory_limit', '-1'); //取消内存限制
             $zipFile    = new \PhpZip\ZipFile();
             $zip_method = \PhpZip\ZipFile::METHOD_DEFLATED;
             $filename   = basename($main_filename);
