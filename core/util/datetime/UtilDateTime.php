@@ -231,6 +231,23 @@ class UtilDateTime extends Util
         }
         return $year_diff;
     }
+
+    /**
+     * 日期遍历: 获取开始日期与结束日期之间所有日期
+     * @param mixed $startDate 开始日期。格式如："2018-01-01"
+     * @param mixed $endDate 结束日期。格式如："2019-01-01"
+     * @return array 开始日期与结束日期之间所有日期
+     */
+    public static function getDates($startDate, $endDate) {
+        $result    = array();
+        $startDate = new DateTime($startDate);
+        $endDate   = new DateTime($endDate);
+        foreach (new DatePeriod($startDate, new DateInterval('P1D'), $endDate) as $d) {
+            $result[] = $d->format('Y-m-d');
+        }
+        return $result;
+    }
+
 }
 //echo UtilDateTime::magicInfo("1979", "3", "10","XZ")
 ?>
