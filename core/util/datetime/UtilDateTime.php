@@ -2,20 +2,20 @@
 /**
 * 输出日期时间的格式
 */
-class EnumDateTimeFORMAT extends Enum
+class EnumDateTimeFormat extends Enum
 {
     /**
     * Timestamp
     */
-    const TIMESTAMP=0;
+    const TIMESTAMP = 0;
     /**
     * 日期时间
     */
-    const DATE=1;
+    const DATE = 1;
     /**
     * 日期字符串时间形式
     */
-    const STRING=2;
+    const STRING = 2;
 }
 
 /**
@@ -26,15 +26,15 @@ class EnumDateTimeShow extends Enum
     /**
     * 显示日期时间
     */
-    const DATETIME=0;
+    const DATETIME = 0;
     /**
     * 只显示日期
     */
-    const DATE=1;
+    const DATE = 1;
     /**
     * 只显示时间
     */
-    const TIME=2;
+    const TIME = 2;
 }
 
 /**
@@ -99,11 +99,11 @@ class UtilDateTime extends Util
         }
 
         switch ($type){
-            case EnumDateTimeFORMAT::TIMESTAMP:
+            case EnumDateTimeFormat::TIMESTAMP:
                 return UtilDateTime::dateToTimestamp( $now );
-            case EnumDateTimeFORMAT::DATE:
+            case EnumDateTimeFormat::DATE:
                 return $now;
-            case EnumDateTimeFORMAT::STRING:
+            case EnumDateTimeFormat::STRING:
                 return $now . "";
         }
         return $now;

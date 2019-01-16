@@ -215,7 +215,7 @@ require_once ("init.php");
 // $xml->load(Gc::$nav_root_path."core\\util\\config\\xml\\"."setting.xml");
 // echo 'PHP:'. $xml->get('db.host').'';
 
-// print_r(UtilDateTime::now(EnumDateTimeFORMAT::DATE,EnumDateTimeShow::TIME));
+// print_r(UtilDateTime::now(EnumDateTimeFormat::DATE,EnumDateTimeShow::TIME));
 
 // LogMe::log("我在想事情呢！等等我");
 // LogMe::log("不急不急,休息一下！");

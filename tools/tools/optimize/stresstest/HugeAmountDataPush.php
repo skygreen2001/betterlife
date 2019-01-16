@@ -299,7 +299,7 @@ class HugeAmountDataPush
                         case "decimal":
                             $tmp=strtoupper($fieldname);
                             if ($tmp=="COMMITTIME"){
-                                $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFORMAT::TIMESTAMP)."'";
+                                $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP)."'";
                             }else{
                                 $fieldname_f=strtoupper($fieldname);
                                 if(contain($fieldname_f,"ID")){
@@ -418,7 +418,7 @@ class HugeAmountDataPush
                     case "decimal":
                         $tmp=strtoupper($fieldname);
                         if ($tmp=="COMMITTIME"){
-                            $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFORMAT::TIMESTAMP)."'";
+                            $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP)."'";
                         }else{
                             $fieldname_f=strtoupper($fieldname);
                             if(contain($fieldname_f,"ID")){
