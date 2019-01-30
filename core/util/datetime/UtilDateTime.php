@@ -69,6 +69,20 @@ class UtilDateTime extends Util
     }
 
     /**
+     * 昨天
+     */
+    public static function yesterday() {
+      return date("Y-m-d",strtotime("-1 day"));
+    }
+
+    /**
+     * 明天
+     */
+    public static function tomorrow() {
+      return date("Y-m-d",strtotime("+1 day"));
+    }
+
+    /**
      +----------------------------------------------------------<br/>
      * 获取现在的日期时间显示<br/>
      * 输出不同数据格式的日期｜时间｜日期时间

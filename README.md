@@ -96,6 +96,8 @@
 
     XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
 
+  - 本地运行PHP server: php -S localhost:8000)
+
 ## 云部署
 
 * [阿里云](https://market.aliyun.com/developer)
@@ -134,6 +136,10 @@
 
 ## 参考资料
 
+* **本框架帮助文档**
+  > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
+* **本地运行服务器**
+  > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
 * **安装NodeJs**
   > [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/)
 * **安装Gulp**
@@ -147,8 +153,6 @@
   > https://github.com/PHPOffice/PHPExcel
 * **安装UEditor**
   > http://ueditor.baidu.com/website/download.html
-* **本框架帮助文档**
-  > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
 
 ## 学习资料
 
