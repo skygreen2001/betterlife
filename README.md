@@ -107,6 +107,7 @@
 
 ## 开发工具
 
+* [Visual Studio Code](https://code.visualstudio.com/)
 * [Atom](https://atom.io)
 * [Atom IDE](https://ide.atom.io/)
 * [Sublime](http://www.sublimetext.com)

@@ -21,11 +21,11 @@ class AutoCode extends BBObject
      * 是否还需要输出页面的css样式
      * 确保css只生成一次
      */
-    public static $isOutputCss=true;
+    public static $isOutputCss = true;
     /**
      * 开发者
      */
-    public static $author= "skygreen skygreen2001@gmail.com";
+    public static $author = "skygreen skygreen2001@gmail.com";
     /**
      * 生成Php文件保存的路径
      */
@@ -37,11 +37,11 @@ class AutoCode extends BBObject
     /**
      * 生成源码[services|domain]所在目录名称
      */
-    public static $dir_src="src";
+    public static $dir_src = "src";
     /**
      *实体数据对象类文件所在的路径
      */
-    public static $domain_dir="domain";
+    public static $domain_dir = "domain";
     /**
      * 表列表
      * @var mixed
@@ -56,7 +56,7 @@ class AutoCode extends BBObject
      * 所有表列信息
      * @var mixed
      */
-    public static $fieldInfos=array();
+    public static $fieldInfos = array();
     /**
      * 数据对象关系显示字段
      * @var mixed
@@ -94,7 +94,7 @@ class AutoCode extends BBObject
         if ( empty(self::$fieldInfos) && ( !empty(self::$tableList) ) ) {
             $ignoreTables = array();
             foreach (self::$tableList as $tablename) {
-                $classname = self::getClassname($tablename);
+                $classname = self::getClassname( $tablename );
                 $prefix    = Config_Db::$table_prefix;
                 if ( ( !empty($prefix) ) && ( !contain( $tablename, $prefix ) ) ) {
                     $ignoreTables[] = $tablename;
@@ -133,12 +133,16 @@ class AutoCode extends BBObject
      */
     protected static function getClassname($tablename)
     {
-        if (in_array($tablename, Config_Db::$orm)) {
-            $classname=array_search($tablename, Config_Db::$orm);
-        }else {
-            $classnameSplit= explode("_", $tablename);
-            $classnameSplit=array_reverse($classnameSplit);
-            $classname=ucfirst($classnameSplit[0]);
+        if ( Config_AutoCode::DB_TABLE_DOMAIN_EQUAL ) {
+            $classname = ucfirst($tablename);
+            return $classname;
+        }
+        if ( in_array($tablename, Config_Db::$orm) ) {
+            $classname = array_search($tablename, Config_Db::$orm);
+        } else {
+            $classnameSplit = explode("_", $tablename);
+            $classnameSplit = array_reverse($classnameSplit);
+            $classname      = ucfirst($classnameSplit[0]);
         }
         return $classname;
     }
@@ -598,7 +602,7 @@ class AutoCode extends BBObject
         $tablename = self::getTablename($classname);
         if ( contain( $tablename, Config_Db::TABLENAME_RELATION . "_") ) {
             $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
-            $realId    = DataObjectSpec::getRealIDColumnName($classname);
+            $realId    = DataObjectSpec::getRealIDColumnName( $classname );
             unset($fieldInfo[$realId]);
             $countC    = 0;
             foreach (array_keys($fieldInfo) as $fieldname)

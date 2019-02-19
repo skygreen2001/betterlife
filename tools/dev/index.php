@@ -474,6 +474,7 @@ class Project_Refactor
         self::UserInput();
         $default_dir    = Gc::$url_base;
         $domain_url     = str_replace(Gc::$appName . "/", "", $default_dir);
+        $domain_url     = str_replace(Gc::$appName_alias . "/", "", $domain_url);
 
 
         if ( contain( strtolower(php_uname()), "darwin") ) {

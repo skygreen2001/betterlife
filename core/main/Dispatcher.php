@@ -29,7 +29,7 @@ class Dispatcher
           return;
         }
         $moduleName = $router->getModule();
-        if ( array_key_exists($moduleName, Initializer::$moduleFiles) ) {
+        if ( $moduleName && array_key_exists($moduleName, Initializer::$moduleFiles) ) {
           $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
           include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
