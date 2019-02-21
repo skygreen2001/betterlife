@@ -45,7 +45,8 @@ class AutoCodeService extends AutoCode
         if (!UtilString::is_utf8(self::$service_dir_full)) {
             self::$service_dir_full = UtilString::gbk2utf8(self::$service_dir_full);
         }
-        self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
+        // self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
+        self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . "admin" . DS . self::$dir_src . DS . self::$service_dir . DS;
 
         self::init();
 

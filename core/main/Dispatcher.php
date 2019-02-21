@@ -35,7 +35,7 @@ class Dispatcher
           include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
           return;
         }
-        $action_controller = Action::ROUTINE_CLASS_PREFIX . ucfirst($controller);
+        $action_controller = ActionBasic::ROUTINE_CLASS_PREFIX . ucfirst($controller);
         if ( array_key_exists($action_controller, $moduleFile) ) {
             require_once($moduleFile[$action_controller]);
             /**
