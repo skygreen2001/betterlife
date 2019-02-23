@@ -53,7 +53,12 @@ class UtilExcel extends Util
                 $column = 'A';
                 foreach ($arr_output_header as $key => $value)
                 {
-                    $objActsheet->setCellValue($column . $i, $record->$key);
+                    if ( is_array($record) ) {
+                        $objActsheet->setCellValue($column . $i, $record[$key]);
+                    } else {
+                        $objActsheet->setCellValue($column . $i, $record->$key);
+                    }
+
                     $column++;
                 }
                 $i++;
