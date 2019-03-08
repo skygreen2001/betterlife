@@ -35,20 +35,19 @@ class Blogtags extends DataObject
      * 从属一对一关系
      */
     static $belong_has_one=array(
-        "blog"=>"Blog",
-        "tags"=>"Tags"
+        "blog" => "Blog",
+        "tags" => "Tags"
     );
     /**
      * 规格说明
      * 表中不存在的默认列定义:commitTime,updateTime
      * @var mixed
      */
-    public $field_spec=array(
-        EnumDataSpec::REMOVE=>array(
+    public $field_spec = array(
+        EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
         ),
     );
 
 }
-

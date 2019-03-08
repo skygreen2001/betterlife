@@ -343,27 +343,29 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名称
      */
-    private static function domainDataobjectRelationSpec($fieldInfo,$classname)
+    private static function domainDataobjectRelationSpec($fieldInfo, $classname)
     {
-        $result="";
-        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
-        {
+        $result = "";
+        if ( array_key_exists($classname, self::$relation_all) ) {
+            $relationSpec = self::$relation_all[$classname];
+        }
+        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) ) {
             //导出一对一关系规范定义(如果存在)
-            if (array_key_exists("has_one", $relationSpec))
-            {
+            if ( array_key_exists("has_one", $relationSpec) ) {
                 $has_one        = $relationSpec["has_one"];
                 $has_one_effect = "";
                 foreach ($has_one as $key => $value) {
-                   $has_one_effect .= "        \"$value\"=>\"$key\",\r\n";
+                    $has_one_effect .= "        \"$value\" => \"$key\",\r\n";
                 }
-                if ( !empty($has_one_effect) ) $has_one_effect = substr($has_one_effect, 0, strlen($has_one_effect) - 3);
+                if ( !empty($has_one_effect) ) {
+                    $has_one_effect = substr($has_one_effect, 0, strlen($has_one_effect) - 3);
+                }
                 $result .= "\r\n".
                            "    /**\r\n".
                            "     * 一对一关系\r\n".
                            "     */\r\n".
-                           "    static \$has_one=array(\r\n".
-                           $has_one_effect."\r\n".
+                           "    static \$has_one = array(\r\n".
+                           $has_one_effect . "\r\n".
                            "    );\r\n";
             }
             //导出从属一对一关系规范定义(如果存在)
@@ -372,14 +374,14 @@ class AutoCodeDomain extends AutoCode
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 $belong_has_one_effect = "";
                 foreach ($belong_has_one as $key => $value) {
-                   $belong_has_one_effect .= "        \"$value\"=>\"$key\",\r\n";
+                   $belong_has_one_effect .= "        \"$value\" => \"$key\",\r\n";
                 }
                 if ( !empty($belong_has_one_effect) ) $belong_has_one_effect = substr($belong_has_one_effect, 0, strlen($belong_has_one_effect) - 3);
                 $result .= "\r\n".
                            "    /**\r\n".
                            "     * 从属一对一关系\r\n".
                            "     */\r\n".
-                           "    static \$belong_has_one=array(\r\n".
+                           "    static \$belong_has_one = array(\r\n".
                            $belong_has_one_effect."\r\n".
                            "    );\r\n";
                 $classname_lc    = $classname;
@@ -399,14 +401,14 @@ class AutoCodeDomain extends AutoCode
                 $has_many        = $relationSpec["has_many"];
                 $has_many_effect = "";
                 foreach ($has_many as $key => $value) {
-                   $has_many_effect .= "        \"".$value."\"=>\"$key\",\r\n";
+                   $has_many_effect .= "        \"" . $value . "\" => \"$key\",\r\n";
                 }
                 if ( !empty($has_many_effect) ) $has_many_effect = substr($has_many_effect, 0, strlen($has_many_effect) - 3);
                 $result .= "\r\n".
                            "    /**\r\n".
                            "     * 一对多关系\r\n".
                            "     */\r\n".
-                           "    static \$has_many=array(\r\n".
+                           "    static \$has_many = array(\r\n".
                            $has_many_effect."\r\n".
                            "    );\r\n";
             }
@@ -416,32 +418,33 @@ class AutoCodeDomain extends AutoCode
                 $many_many        = $relationSpec["many_many"];
                 $many_many_effect = "";
                 foreach ($many_many as $key => $value) {
-                   $many_many_effect .= "        \"".$value."\"=>\"$key\",\r\n";
+                   $many_many_effect .= "        \"".$value."\" => \"$key\",\r\n";
                 }
                 if ( !empty($many_many_effect) ) $many_many_effect = substr($many_many_effect, 0, strlen($many_many_effect) - 3);
                 $result .= "\r\n".
                            "    /**\r\n".
                            "     * 多对多关系\r\n".
                            "     */\r\n".
-                           "    static \$many_many=array(\r\n".
+                           "    static \$many_many = array(\r\n".
                            $many_many_effect."\r\n".
                            "    );\r\n";
             }
             //导出从属于多对多关系规范定义(如果存在)
-            if ( array_key_exists("belongs_many_many", $relationSpec) )
-            {
+            if ( array_key_exists("belongs_many_many", $relationSpec) ) {
                 $belongs_many_many        = $relationSpec["belongs_many_many"];
                 $belongs_many_many_effect = "";
                 foreach ($belongs_many_many as $key => $value) {
-                   $belongs_many_many_effect .= "        \"".$value."\"=>\"$key\",\r\n";
+                   $belongs_many_many_effect .= "        \"" . $value . "\" => \"$key\",\r\n";
                 }
-                if ( !empty($belongs_many_many_effect) ) $belongs_many_many_effect = substr($belongs_many_many_effect, 0, strlen($belongs_many_many_effect) - 3);
+                if ( !empty($belongs_many_many_effect) ) {
+                    $belongs_many_many_effect = substr($belongs_many_many_effect, 0, strlen($belongs_many_many_effect) - 3);
+                }
                 $result .= "\r\n".
                            "    /**\r\n".
                            "     * 从属于多对多关系\r\n".
                            "     */\r\n".
-                           "    static \$belongs_many_many=array(\r\n".
-                           $belongs_many_many_effect."\r\n".
+                           "    static \$belongs_many_many = array(\r\n".
+                           $belongs_many_many_effect . "\r\n".
                            "    );\r\n";
             }
         }
@@ -474,7 +477,7 @@ class AutoCodeDomain extends AutoCode
         if ( !empty($removeStr) ) {
             $removeStr = substr($removeStr, 0, strlen($removeStr) - 3);
             self::$spec_comment = "     * 表中不存在的默认列定义:" . implode(",", $removefields) . "\r\n";
-            self::$spec_content = "        EnumDataSpec::REMOVE=>array(\r\n".
+            self::$spec_content = "        EnumDataSpec::REMOVE => array(\r\n".
                                   $removeStr . "\r\n".
                                   "        ),\r\n";
         }
@@ -504,7 +507,7 @@ class AutoCodeDomain extends AutoCode
                     $enumclassname = self::enumClassName($fieldname,$tablename);
                     $result .= "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                "    {\r\n".
-                               "        return {$enumclassname}::{$fieldname}Show(\${$fieldname});\r\n".
+                               "        return {$enumclassname}::{$fieldname}Show( \${$fieldname} );\r\n".
                                "    }\r\n";
                 }
             }

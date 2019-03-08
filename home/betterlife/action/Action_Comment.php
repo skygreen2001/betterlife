@@ -14,34 +14,34 @@ class Action_Comment extends Action
     */
     public function comment()
     {
-        $blog_id= $this->data["blog_id"];
-        if ($blog_id){
-            $this->view->blog=Blog::get_by_id($blog_id);
-        }else{
-            $this->redirect("blog","display");
+        $blog_id = $this->data["blog_id"];
+        if ( $blog_id ) {
+            $this->view->blog = Blog::get_by_id( $blog_id );
+        } else {
+            $this->redirect( "blog", "display" );
             die();
         }
-        if (count($_POST)>0) {
+        if ( count($_POST) > 0 ) {
             $comment = $this->model->Comment;
             $comment->blog_id = $blog_id;
-            $comment->user_id=HttpSession::get('user_id');
-            if (!empty($comment->comment_id)){
-              $comment->update();
-              $this->view->message="评论修改成功";
-            }else{
-              $comment->save();
-              $this->view->message="评论提交成功";
+            $comment->user_id = HttpSession::get( 'user_id' );
+            if ( !empty($comment->comment_id) ) {
+                $comment->update();
+                $this->view->message = "评论修改成功";
+            } else {
+                $comment->save();
+                $this->view->message = "评论提交成功";
             }
-            $view->view->color="green";
+            $view->view->color = "green";
         }
-        $comment_id= $this->data["comment_id"];
-        if ($comment_id){
-            $comment=Comment::get_by_id($comment_id);
-            $this->view->comment_content=$comment->comment;
+        $comment_id = $this->data["comment_id"];
+        if ( $comment_id ) {
+            $comment = Comment::get_by_id( $comment_id );
+            $this->view->comment_content = $comment->comment;
         }
-        $canEdit=$this->view->blog->canEdit();
-        if (!$canEdit){
-            $this->load_onlineditor("comment");
+        $canEdit = $this->view->blog->canEdit();
+        if ( !$canEdit ) {
+            $this->load_onlineditor( "comment" );
         }
     }
     /**
@@ -49,12 +49,12 @@ class Action_Comment extends Action
      */
     public function delete()
     {
-      $comment_id= $this->data["comment_id"];
-      $comment=new Comment();
-      $comment->setId($comment_id);
+      $comment_id = $this->data["comment_id"];
+      $comment    = new Comment();
+      $comment->setId( $comment_id );
       $comment->delete();
       unset($this->data["comment_id"]);
-      $this->redirect("comment","comment",$this->data);
+      $this->redirect( "comment", "comment", $this->data );
     }
 
 

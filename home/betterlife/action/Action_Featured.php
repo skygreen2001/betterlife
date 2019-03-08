@@ -18,3 +18,6 @@ class Action_Featured extends Action
     }
 
 }
+
+
+?>

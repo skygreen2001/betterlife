@@ -51,7 +51,7 @@ class Blog extends DataObject
      * 0: 不公开<br/>
      * 1: 公开<br/>
      * 默认为1: 公开<br/>
-     * 
+     *
      * @var bit
      * @access public
      */
@@ -68,7 +68,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * 
+     *
      * @var enum
      * @access public
      */
@@ -110,11 +110,11 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * 
+     *
      */
     public function getStatusShow()
     {
-        return self::statusShow($this->status);
+        return self::statusShow( $this->status );
     }
 
     /**
@@ -123,11 +123,11 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     * 
+     *
      */
     public static function statusShow($status)
     {
-        return EnumBlogStatus::statusShow($status);
+        return EnumBlogStatus::statusShow( $status );
     }
 
 
@@ -136,7 +136,7 @@ class Blog extends DataObject
      * 0: 不公开<br/>
      * 1: 公开<br/>
      * 默认为1: 公开<br/>
-     * 
+     *
      */
     public function isPublicShow()
     {
@@ -146,4 +146,3 @@ class Blog extends DataObject
         return "否";
     }
 }
-

@@ -16,11 +16,11 @@ class Action extends ActionBasic
     {
         parent::beforeAction();
         $globalPage = array(
-            Gc::$appName.".auth.register",
-            Gc::$appName.".auth.login",
-            Gc::$appName.".index.index"
+            Gc::$appName . ".auth.register",
+            Gc::$appName . ".auth.login",
+            Gc::$appName . ".index.index"
         );
-        if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
+        if ( !in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' ) ){
             // $this->redirect("auth","login");
         }
     }
