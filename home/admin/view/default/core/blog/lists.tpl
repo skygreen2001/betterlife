@@ -3,7 +3,7 @@
     <div class="page-container">
         <div class="page-content">
             {include file="$templateDir/layout/normal/sidebar.tpl"}
-            <div class="content-wrapper">
+            <div class="content-wrapper list-wrapper">
               <div class="main-content">
                 <div class="row">
                   <div class="breadcrumb-line">
