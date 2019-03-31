@@ -16,48 +16,20 @@
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-right" style="display: none;">
+          <ul class="nav navbar-nav navbar-right">
             <li><a href="{$url_base}index.php?go=report.index.index">首页</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportUserCount.lists">月增用户数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTripModelCount.lists">月增线路数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTripCount.lists">月增活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEAccountCount.lists">月增企业数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportRechargeCount.lists">月充值数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportETripCount.lists">企办活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportMTripCount.lists">月办活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportMTripCountAvg.lists">月办活动平均人数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportMTeamAvgPeople.lists">月战队平均人数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEArtistCount.lists">企设计师数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportETripModelCount.lists">企设线路数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMTripModelCount.lists">企月设线路数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEHasTripCount.lists">企建活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMTripCount.lists">企月增活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMBTripCount.lists">企月办活动数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportETripAvgPeople.lists">企业活动平均人数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportETeamAvgPeople.lists">企业战队平均人数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportERechargeCount.lists">企充值数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEConsumption.lists">企消耗数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportELeftCount.lists">企结余数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMRechargeCount.lists">企月充值数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMConsumption.lists">企月消耗数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEMLeftCount.lists">企月结余数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportECertifyTime.lists">企认证时间</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportERechargeTime.lists">企充值时间表</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportEBTripTime.lists">企办活动时间表</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistTripModel.lists">设计师线路</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistTMCount.lists">设计师线路数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistMTMCount.lists">设计师月线路数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTMByTCount.lists">线路被活动引用数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistTMByTAvgCount.lists">设计师线被活引用平均数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistTMByTMaxCount.lists">设计师线被活引用最大数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistMTMByTAvgCount.lists">设计师月线被活引用平均数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportArtistMTMByTMaxCount.lists">设计师月线路被活动引用最大数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTMByTrip.lists">被引用活动</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTMByTHoldCount.lists">引用活动举办数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTripConsumption.lists">已办活动冻结数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTripReturnCount.lists">已办活动退还数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportTripSettleCount.lists">已办活动结算总数</a></li>
-            <li><a href="{$url_base}index.php?go=report.reportMTripSettleCount.lists">月办活动结算总数</a></li>
+            <li class="dropdown">
+              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-user"></span>
+                <span class="username">报表管理</span>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li><a href="{$url_base}index.php?go=report.reportone.index&rtype=userReport"><span class="glyphicon glyphicon-edit"></span>用户统计</a></li>
+                <li><a href="{$url_base}index.php?go=report.reportone.index&rtype=blogReport"><span class="glyphicon glyphicon-edit"></span>博客统计</a></li>
+              </ul>
+            </li>
+
             <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
               <a>
                 <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>

@@ -136,7 +136,7 @@ footer:hover {
   -o-transition: all 0.3s ease-in-out;
 }
 footer div {
-  width: 320px;
+  width: 400px;
   margin: 0 auto;
 }
 footer a{
@@ -175,7 +175,9 @@ footer a:hover{
     </div>
     <footer><?php $help_url="https://www.gitbook.com/book/skygreen2001/betterlife/" ?>
         <div>
-            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a>|<a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a>|<a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a>|<a href="<?php echo $help_url ?>" target="_blank">帮助</a>
+            <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a> | <a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a> |
+            <a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">一键生成</a> |
+            <a href="<?php echo Gc::$url_base?>tools/tools/autocode/report_onekey.php" target="_blank">工具箱</a> | <a href="<?php echo $help_url ?>" target="_blank">帮助</a>
         </div>
     </footer>
 
