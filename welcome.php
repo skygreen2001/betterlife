@@ -72,7 +72,7 @@ div.content-container{
 }
 div.content{
   display: inline-block;
-  margin-top: 28%;
+  margin-top: 22%;
   margin-left: 33%;
 }
 div.content a{
@@ -162,8 +162,9 @@ footer a:hover{
             <div class="content-container">
                 <div class="content" align="center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
-                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>app/index.php">手机应用</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=report.index.index">报表系统</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模版</a></p>
                 </div>
             </div>

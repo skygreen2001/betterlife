@@ -1,1 +1,1 @@
-# Pc端ajax请求服务端返回json数据
+# 手机端ajax请求服务端返回json数据
