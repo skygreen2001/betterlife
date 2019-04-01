@@ -22,7 +22,7 @@ class AutoCodeCreateReport extends AutoCode
     public static function AutoCode($isProd = false, $reportCname = "", $reportEname = "", $reportDesc = "", $reportSql = "")
     {
         include( "template" . DS . "report.php" );
-        if ( !isset($reportEname) ) {
+        if ( !isset($reportEname) || empty($reportEname) ) {
             //没有定义英文名时，之后写算法取出中文名首字母
             $reportEname = UtilPinyin::getPinyinName($reportCname,2);
             if (strlen($reportEname)>self::$ename_limit_count) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
