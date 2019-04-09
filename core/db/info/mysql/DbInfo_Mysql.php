@@ -318,7 +318,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         }
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
         LogMe::log( $sqlUnique );
-        return (bool)($this->query( $sqlUnique )->value());
+        $uniqueSql = $this->query( $sqlUnique );
+        if ( $uniqueSql && is_object($uniqueSql) ) return (bool)($uniqueSql->value());
+        return false;
     }
 
     /**
