@@ -149,15 +149,22 @@ class Initializer
     private static function is_can_run()
     {
         $is_not_run_betterlife = false;
+        $phpver = strtolower(phpversion());
+        $pi     = '7.0';
+        if ($phpver >= 7) {
+            $pos1 = strpos($phpver, ".");
+            $pos2 = strpos($phpver, ".", $pos1 + strlen("."));
+            $pi= substr($phpver, 0, $pos2);
+        }
         //if (ini_get('register_globals') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置register_globals = On<br/></p>";$is_not_run_betterlife=true;}
         //if (ini_get('allow_call_time_pass_reference') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置allow_call_time_pass_reference = On<br/></p>";$is_not_run_betterlife=true;}
-        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli</p>";$is_not_run_betterlife = true; }
-        if ( !class_exists("SimpleXmlIterator") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php7.0-zip php7.0-xml<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd php$pi-gd<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl php$pi-curl<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring php$pi-mbstring<br/></p>";$is_not_run_betterlife = true; }
+        if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";$is_not_run_betterlife = true; }
+        if ( !class_exists("SimpleXmlIterator") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";$is_not_run_betterlife = true; }
         if ( version_compare(phpversion(), 5.3, '<') ) {
-            if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
+            if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
         }
         if ( $is_not_run_betterlife ) die();
     }

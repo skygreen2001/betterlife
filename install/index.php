@@ -1,7 +1,8 @@
 <?php
 //服务器安装提示
 require_once ("../init.php");
-$os  = strtolower(php_uname());
+$os     = strtolower(php_uname());
+$phpver = strtolower(phpversion());
 echo UtilCss::form_css() . "\r\n";
 echo "
 <style type = 'text/css'>
@@ -18,6 +19,8 @@ p {
 </style>
 ";
 echo "系统信息:" . $os . "<br/>";
+echo "PHP版本:" . $phpver . "<br/>";
+
 if (contain($os,"Windows")) {
     echo "您使用的是Windows系统<br/>";
     echo "[以下以wamp进行说明]<br/>安装提示如下:<br/>" . str_repeat("&nbsp;",12);
@@ -75,8 +78,16 @@ APACHECONFIG;
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
     echo "php_gd2|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     echo "* . 服务器下执行:<br/>" . str_repeat("&nbsp;",30);
-    echo "sudo apt-get install php-gd php-curl php-mbstring php-mysqli<br/>" . str_repeat("&nbsp;",30);
-    echo "sudo apt-get install php5-gd php5-curl php5-mysql php5-mysqli<br/>" . str_repeat("&nbsp;",30);
+    if ($phpver >= 7) {
+        $pos1 = strpos($phpver, ".");
+        $pos2 = strpos($phpver, ".", $pos1 + strlen("."));
+        $pi= substr($phpver, 0, $pos2);
+        echo "sudo apt-get install php$pi-gd php$pi-curl php$pi-mbstring php$pi-mysql php$pi-mysqli php$pi-zip php$pi-xml<br/>" . str_repeat("&nbsp;",12);
+    } else {
+        echo "sudo apt-get install php-gd php-curl php-mbstring php-mysqli<br/>" . str_repeat("&nbsp;",30);
+        echo "sudo apt-get install php5-gd php5-curl php5-mysql php5-mysqli<br/>" . str_repeat("&nbsp;",12);
+    }
+
     echo "* . 因为安全原因，需要手动在服务器上创建以下目录能够读写<br/>" . str_repeat("&nbsp;",30);
     echo "log|upload|templates_c<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要手动在服务器上执行脚本:<br/>" . str_repeat("&nbsp;",30);
@@ -104,7 +115,7 @@ APACHECONFIG;
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
     echo "php_gd2|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     echo "* . 如果是在Centos服务器下，执行:<br/>" . str_repeat("&nbsp;",30);
-    echo "yum install php-gd<br/>" . str_repeat("&nbsp;",30);
+    echo "yum install php-gd<br/>" . str_repeat("&nbsp;",12);
     echo "* . 因为安全原因，需要手动在服务器上创建以下目录能够读写<br/>" . str_repeat("&nbsp;",30);
     echo "log|upload|templates_c<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要手动在服务器上执行脚本 : <br/>" . str_repeat("&nbsp;",30);
