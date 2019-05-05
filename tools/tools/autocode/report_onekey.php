@@ -4,10 +4,12 @@ require_once ("../../../init.php");
 
 $title = "一键生成指定SQL查询的报表";
 $url_base = UtilNet::urlbase();
+$reportType = !empty($_REQUEST['report_type']) ? $_REQUEST['report_type'] : "1";
 $reportCname = !empty($_REQUEST['report_cname']) ? $_REQUEST['report_cname'] : "";
 $reportEname = !empty($_REQUEST['report_ename']) ? $_REQUEST['report_ename'] : "";
 $reportDesc = !empty($_REQUEST['report_desc']) ? $_REQUEST['report_desc'] : "";
 $reportSql = !empty($_REQUEST['report_sql']) ? $_REQUEST['report_sql'] : "";
+$reportSql = preg_replace('/\'/', '\"', $reportSql);
 
 AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
 ?>
@@ -41,10 +43,16 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
                 <?php echo $title ?>
             </p>
             <a href="#" slot="extra" @click.prevent="refresh">
-                <i class="ivu-icon ivu-icon-ios-refresh-circle"></i>
-                Change
+                <i class="ivu-icon ivu-icon-ios-refresh-circle"></i> 刷新
             </a>
             <i-form ref="reportForm" :model="reportForm" :rules="ruleValidate" label-position="right" :label-width="100">
+                <div class="input-contianer">
+                    <form-item label="报表生成方式" prop="report_type">
+                        <i-select v-model="reportForm.report_type" name="report_type">
+                            <i-option v-for="item in report_types" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </i-select>
+                    </form-item>
+                </div>
                 <div class="input-contianer">
                     <!-- <label><i style="color: red;">*</i> 报表中文昵称</label> -->
                     <form-item label="报表中文昵称" prop="report_cname">
@@ -71,26 +79,33 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
                 </div>
 
                 <div>
-                    <input type="hidden" name="report_dev" value="true" />
+                    <input type="hidden" v-model="reportForm.report_dev" name="report_dev" value="true" />
                 </div>
-                <i-button type="primary" html-type="submit" @click="createReport">生成</i-button><br><br>
+                <i-button type="primary" @click="createReport">生成</i-button><br><br>
             </i-form>
+              <Divider dashed> 说明 </Divider>
+              <p>报表默认按统一的规则生成，自定义则可以在单独的各个文件中生成，灵活度高</p>
+          </card>
 
           <?php
           $reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
-          if ($reportDev && !empty($reportCname) && !empty($reportDesc) && !empty($reportSql)){
+          if ($reportDev && !empty($reportCname) && !empty($reportSql)){
               AutoCodeCreateReport::AutoCode(false,$reportCname,$reportEname,$reportDesc,$reportSql);
               LogMe::log("-----生成至model目录-----");
+
+              echo "<card name='reportCard' style=\"width:600px;margin: -30px auto 50px auto;\">";
               echo "<h4 style=\"text-align: center\">请去model目录下查看新创建的报表文件，确认无误后点击覆盖生成，生成正式文件</h4>";
+              echo "<br />";
               echo "
-                <form>
+                <i-form>
                   <input class=\"input_save_dir\" type=\"hidden\" name=\"report_cname\" value=\"$reportCname\" />
                   <input class=\"input_save_dir\" type=\"hidden\" name=\"report_ename\" value=\"$reportEname\" />
                   <input class=\"input_save_dir\" type=\"hidden\" name=\"report_desc\" value=\"$reportDesc\" />
-                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_sql\" value=\"$reportSql\" />
+                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_sql\" value='$reportSql' />
                   <input type='hidden' name='report_prod' value='true'>
                   <i-button type='primary'>覆盖生成</i-button>
-                </form>";
+                </i-form>";
+              echo "</card>";
           }
 
           $reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
@@ -99,11 +114,7 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
               LogMe::log("-----生成至正式目录-----");
               echo "<h4 style='text-align: center'>报表文件已生成至正式目录，请自行查看</h4>";
           }
-
           ?>
-
-
-          </card>
           </div>
         <script src="../../../misc/js/common/bower.min.js"></script>
         <script type="text/javascript">
@@ -113,11 +124,23 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
           var reportForm = new Vue({
             el: '#report-form',
             data: {
+              report_types: [
+                {
+                    value: '1',
+                    label: '默认'
+                },
+                {
+                    value: '2',
+                    label: '自定义'
+                }
+              ],
               reportForm: {
+                report_type: '<?php echo $reportType ?>',
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: '<?php echo $reportSql ?>'
+                report_sql: '<?php echo $reportSql ?>',
+                report_dev: true
               },
               ruleValidate: {
                   report_cname: [
@@ -129,7 +152,6 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
               }
             },
             created: function () {
-              // `this` points to the vm instance
               // console.log('message is: ' + this.report_cname);
             },
             computed: {
@@ -153,7 +175,7 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
                         console.log("<?php echo $url_base;?>tools/tools/autocode/report_onekey.php?" + params);
                         location.href = "<?php echo $url_base;?>tools/tools/autocode/report_onekey.php?" + params;
                     } else {
-                        // this.$Message.error('Fail!');
+                        this.$Message.error('请按格式要求填写表格!');
                     }
                 })
               },
