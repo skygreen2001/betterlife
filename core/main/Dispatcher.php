@@ -147,7 +147,7 @@ class Dispatcher
         $view       = $current_action->getView();
         $controller = $router->getController();
         $action     = $router->getAction();
-        $templateFile    = $controller.DS.$action;//模板文件路径名称
+        $templateFile    = $controller . DS . $action;//模板文件路径名称
         $controller_path = $router->getController_path();
         if ( !empty($controller_path) ) {
             if ( endWith( $controller_path, DS ) ) {

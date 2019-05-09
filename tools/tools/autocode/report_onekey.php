@@ -2,23 +2,53 @@
 <?php
 require_once ("../../../init.php");
 
-$title = "一键生成指定SQL查询的报表";
+$title    = "一键生成指定SQL查询的报表";
 $url_base = UtilNet::urlbase();
-$reportType = !empty($_REQUEST['report_type']) ? $_REQUEST['report_type'] : "1";
+$reportType  = !empty($_REQUEST['report_type']) ? $_REQUEST['report_type'] : "1";
 $reportCname = !empty($_REQUEST['report_cname']) ? $_REQUEST['report_cname'] : "";
 $reportEname = !empty($_REQUEST['report_ename']) ? $_REQUEST['report_ename'] : "";
-$reportDesc = !empty($_REQUEST['report_desc']) ? $_REQUEST['report_desc'] : "";
-$reportSql = !empty($_REQUEST['report_sql']) ? $_REQUEST['report_sql'] : "";
-$reportSql = preg_replace('/\'/', '\"', $reportSql);
+$reportDesc  = !empty($_REQUEST['report_desc']) ? $_REQUEST['report_desc'] : "";
+$reportSql   = !empty($_REQUEST['report_sql']) ? $_REQUEST['report_sql'] : "";
+$reportSql   = preg_replace('/\'/', '\"', $reportSql);
 
 AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
+
+$reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
+$template_build_dev = "";
+if ($reportDev && !empty($reportCname) && !empty($reportSql)){
+    AutoCodeCreateReport::AutoCode( false, $reportCname, $reportEname, $reportDesc, $reportSql );
+    $template_build_dev = <<<TPL_BUILDDEV
+        <card name='reportCard' style="width:600px;margin: -30px auto 50px auto;">
+            <h4 style="text-align: center">请去model目录下查看新创建的报表文件，确认无误后点击覆盖生成，生成正式文件</h4><br />
+            <i-form>
+                <input class="input_save_dir" type="hidden" name="report_cname" value="$reportCname" />
+                <input class="input_save_dir" type="hidden" name="report_ename" value="$reportEname" />
+                <input class="input_save_dir" type="hidden" name="report_desc" value="$reportDesc" />
+                <input class="input_save_dir" type="hidden" name="report_sql" value='$reportSql' />
+                <input type='hidden' name='report_prod' value='true'>
+                <i-button type='primary'>覆盖生成</i-button>
+            </i-form>
+        </card>
+TPL_BUILDDEV;
+};
+
+$reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
+$template_build_prod = "";
+if ($reportProd && !empty($reportCname) && !empty($reportDesc) && !empty($reportSql)){
+    AutoCodeCreateReport::AutoCode(true,$reportCname,$reportEname,$reportDesc,$reportSql);
+    $template_build_prod = <<<TPL_BUILDPROD
+        <card name='reportCard' style="width:600px;margin: -30px auto 50px auto;">
+            <h4 style='text-align: center'>报表文件已生成至正式目录，请自行查看</h4>
+        </card>
+TPL_BUILDPROD;
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>一键生成指定SQL查询的报表</title>
+        <title><?php echo $title?></title>
         <meta name="description" content="Hello">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,14 +63,10 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
-        <!-- <h1 align="center"><?php echo $title ?></h1> -->
         <div id="report-form" class="container" align="center">
-
           <card name='reportCard' style="width:600px;margin: 150px auto 50px auto;">
             <p slot="title" style="text-align:left;">
-                <i class="ivu-icon ivu-icon-ios-construct"></i>
-                <?php echo $title ?>
+                <i class="ivu-icon ivu-icon-ios-construct"></i> <?php echo $title ?>
             </p>
             <a href="#" slot="extra" @click.prevent="refresh">
                 <i class="ivu-icon ivu-icon-ios-refresh-circle"></i> 刷新
@@ -54,25 +80,21 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
                     </form-item>
                 </div>
                 <div class="input-contianer">
-                    <!-- <label><i style="color: red;">*</i> 报表中文昵称</label> -->
                     <form-item label="报表中文昵称" prop="report_cname">
                       <i-input v-model="reportForm.report_cname" name="report_cname" placeholder="" clearable  />
                     </form-item>
                 </div>
                 <div class="input-contianer">
-                    <!-- <label>&nbsp;&nbsp;报表英文昵称</label> -->
                     <form-item label="报表英文昵称" prop="report_ename">
                       <i-input v-model="reportForm.report_ename" name="report_ename" placeholder="" clearable />
                     </form-item>
                 </div>
                 <div class="input-contianer">
-                    <!-- <label><i style="color: red;">*</i> 报表详细描述</label> -->
                     <form-item label="报表详细描述" prop="report_desc">
                       <i-input type="textarea" v-model="reportForm.report_desc" name="report_desc" :rows="6" :cols="58" :autosize="{minRows: 2,maxRows: 5}"  />
                     </form-item>
                 </div>
                 <div class="input-contianer">
-                    <!-- <label><i style="color: red;">*</i> 报表所需SQL</label -->
                     <form-item label="报表所需SQL" prop="report_sql">
                       <i-input type="textarea" v-model="reportForm.report_sql" name="report_sql" :rows="10" :cols="58" :autosize="{minRows: 2,maxRows: 20}"  />
                     </form-item>
@@ -83,39 +105,15 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
                 </div>
                 <i-button type="primary" @click="createReport">生成</i-button><br><br>
             </i-form>
-              <Divider dashed> 说明 </Divider>
-              <p>报表默认按统一的规则生成，自定义则可以在单独的各个文件中生成，灵活度高</p>
+            <Divider dashed> 说明 </Divider>
+            <p>报表默认按统一的规则生成，自定义则可以在单独的各个文件中生成，灵活度高</p>
           </card>
 
           <?php
-          $reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
-          if ($reportDev && !empty($reportCname) && !empty($reportSql)){
-              AutoCodeCreateReport::AutoCode(false,$reportCname,$reportEname,$reportDesc,$reportSql);
-              LogMe::log("-----生成至model目录-----");
-
-              echo "<card name='reportCard' style=\"width:600px;margin: -30px auto 50px auto;\">";
-              echo "<h4 style=\"text-align: center\">请去model目录下查看新创建的报表文件，确认无误后点击覆盖生成，生成正式文件</h4>";
-              echo "<br />";
-              echo "
-                <i-form>
-                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_cname\" value=\"$reportCname\" />
-                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_ename\" value=\"$reportEname\" />
-                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_desc\" value=\"$reportDesc\" />
-                  <input class=\"input_save_dir\" type=\"hidden\" name=\"report_sql\" value='$reportSql' />
-                  <input type='hidden' name='report_prod' value='true'>
-                  <i-button type='primary'>覆盖生成</i-button>
-                </i-form>";
-              echo "</card>";
-          }
-
-          $reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
-          if ($reportProd && !empty($reportCname) && !empty($reportDesc) && !empty($reportSql)){
-              AutoCodeCreateReport::AutoCode(true,$reportCname,$reportEname,$reportDesc,$reportSql);
-              LogMe::log("-----生成至正式目录-----");
-              echo "<h4 style='text-align: center'>报表文件已生成至正式目录，请自行查看</h4>";
-          }
+          if ( $template_build_dev ) echo $template_build_dev;
+          if ( $template_build_prod ) echo $template_build_prod;
           ?>
-          </div>
+        </div>
         <script src="../../../misc/js/common/bower.min.js"></script>
         <script type="text/javascript">
           Vue.config.debug = true;
@@ -181,6 +179,7 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
               },
               refresh: function() {
                 console.log("refresh");
+                 this.$refs["reportForm"].resetFields();
               }
             }
           });

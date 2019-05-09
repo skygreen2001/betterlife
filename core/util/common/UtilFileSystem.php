@@ -103,28 +103,6 @@ class UtilFileSystem extends Util
     /**
      * 移除文件夹<br/>
      * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用！
-     * @param string $path 文件路径
-     */
-    public static function rmdir($path)
-    {
-        if( ( $handle = opendir($path) ) ) {
-            while (false !== ( $file = readdir($handle) )) {
-                if ( $file != '.' && $file != '..' ) {
-                    if ( is_dir($path . DS . $file) ) {
-                        self::rmdir( $path . DS . $file );
-                    } else {
-                        @unlink($path . DS . $file);
-                    }
-                }
-            }
-            closedir($handle);
-            @rmdir($path);
-        }
-        return true;
-    }
-
-    /**
-     * 删除目录
      * @param string $dir 目录
      */
     public static function deleteDir($dir)
@@ -148,6 +126,22 @@ class UtilFileSystem extends Util
         @rmdir($dir);
     }
 
+    /**
+     * 复制源路径下所有的文件和子目录到目标路径下
+     * [文件系统函数: copy](https://www.php.net/manual/zh/function.copy.php)
+     * @param string $src 源路径目录
+     * @param string $dst 目标路径目录
+     */
+    public static function copyDir($src, $dst) {
+        if (file_exists($dst)) self::deleteDir($dst);
+        if (is_dir($src)) {
+            mkdir($dst);
+            $files = scandir($src);
+            foreach ($files as $file)
+            if ($file != "." && $file != "..") self::copyDir("$src/$file", "$dst/$file");
+        }
+        else if (file_exists($src)) copy($src, $dst);
+    }
     /**
      * 上传文件后，将目标文件的权限设置为0644，避免有些服务器丢失读取权限
      * @param string $filename 文件名
@@ -276,9 +270,7 @@ class UtilFileSystem extends Util
                 if ( $fileinfo->isDir() ) {
                     $file = $fileinfo->getFilename();
                     if ( $file[0] != "." ) {
-                    // if ( $fileinfo->getFilename() != '.' && $fileinfo->getFilename() != '..' && $fileinfo->getFilename() != '.svn' && $fileinfo->getFilename() != '.git' ) {
                         $dirdata[$fileinfo->getFilename()] = $fileinfo->getPathname();
-    //                          echo $fileinfo->getFilename() ."=>".$fileinfo->getPathname()."\n";
                     }
                 }
             }
@@ -300,14 +292,12 @@ class UtilFileSystem extends Util
             if ( $dh ) {
                 while (($file = readdir($dh)) !== false) {
                     if ( $file[0] != "." ) {
-                    // if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' && UtilString::contain($file, ".") ) {
                         foreach ($agreesuffix as $suffix) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
                             $fileSuffix = strcasecmp($fileSuffix, $suffix);
                             if ( $fileSuffix === 0 ) {
                                 $result[] = $dir . $file;
-                                //echo "filename: $file : filetype: " . filetype($dir . $file) . "\n";
                             }
                         }
                     }
@@ -401,7 +391,6 @@ class UtilFileSystem extends Util
         if ( $handle ) {
             while (false !== ($file = @readdir($handle))) {
                 if ( $file[0] == "." ) {
-                // if ( $file == '.' || $file == '..' || $file == '.DS_Store' || $file == '.svn' || $file == '.git' ) {
                     continue;
                 }
                 $nextpath = $path . DS . $file;
