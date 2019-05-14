@@ -1,4 +1,3 @@
-
 <?php
 require_once ("../../../init.php");
 
@@ -9,14 +8,23 @@ $reportCname = !empty($_REQUEST['report_cname']) ? $_REQUEST['report_cname'] : "
 $reportEname = !empty($_REQUEST['report_ename']) ? $_REQUEST['report_ename'] : "";
 $reportDesc  = !empty($_REQUEST['report_desc']) ? $_REQUEST['report_desc'] : "";
 $reportSql   = !empty($_REQUEST['report_sql']) ? $_REQUEST['report_sql'] : "";
-$reportSql   = preg_replace('/\'/', '\"', $reportSql);
+$reportSql   = preg_replace('/\"/', "'", $reportSql);
 
 AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
 
 $reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
 $template_build_dev = "";
 if ($reportDev && !empty($reportCname) && !empty($reportSql)){
-    AutoCodeCreateReport::AutoCode( false, $reportCname, $reportEname, $reportDesc, $reportSql );
+    $config = array(
+        "isProd" => false,
+        "reportType" => $reportType,
+        "reportCname" => $reportCname,
+        "reportEname" => $reportEname,
+        "reportDesc" => $reportDesc,
+        "reportSql" => $reportSql,
+
+    );
+    AutoCodeCreateReport::AutoCode( $config );
     $template_build_dev = <<<TPL_BUILDDEV
         <card name='reportCard' style="width:600px;margin: -30px auto 50px auto;">
             <h4 style="text-align: center">请去model目录下查看新创建的报表文件，确认无误后点击覆盖生成，生成正式文件</h4><br />
@@ -24,7 +32,7 @@ if ($reportDev && !empty($reportCname) && !empty($reportSql)){
                 <input class="input_save_dir" type="hidden" name="report_cname" value="$reportCname" />
                 <input class="input_save_dir" type="hidden" name="report_ename" value="$reportEname" />
                 <input class="input_save_dir" type="hidden" name="report_desc" value="$reportDesc" />
-                <input class="input_save_dir" type="hidden" name="report_sql" value='$reportSql' />
+                <input class="input_save_dir" type="hidden" name="report_sql" value="$reportSql" />
                 <input type='hidden' name='report_prod' value='true'>
                 <i-button type='primary'>覆盖生成</i-button>
             </i-form>
@@ -35,7 +43,15 @@ TPL_BUILDDEV;
 $reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
 $template_build_prod = "";
 if ($reportProd && !empty($reportCname) && !empty($reportDesc) && !empty($reportSql)){
-    AutoCodeCreateReport::AutoCode(true,$reportCname,$reportEname,$reportDesc,$reportSql);
+    $config = array(
+        "isProd" => true,
+        "reportType" => $reportType,
+        "reportCname" => $reportCname,
+        "reportEname" => $reportEname,
+        "reportDesc" => $reportDesc,
+        "reportSql" => $reportSql,
+    );
+    AutoCodeCreateReport::AutoCode( $config );
     $template_build_prod = <<<TPL_BUILDPROD
         <card name='reportCard' style="width:600px;margin: -30px auto 50px auto;">
             <h4 style='text-align: center'>报表文件已生成至正式目录，请自行查看</h4>
@@ -137,7 +153,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: '<?php echo $reportSql ?>',
+                report_sql: "<?php echo $reportSql ?>",
                 report_dev: true
               },
               ruleValidate: {

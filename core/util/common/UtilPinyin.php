@@ -126,7 +126,7 @@ class UtilPinyin
      * 2: 除头字母大写外，其它字头字母小写
      * 3: 除头字母大写外，其它字头字母大写
      */
-    public static function getPinyinName($cname, $outputType = 1)
+    public static function getPinyinName($cname, $outputType = 2)
     {
         if ( empty($cname) ) return "";
         $result = "";
@@ -140,7 +140,7 @@ class UtilPinyin
             } else {
               switch ($outputType) {
                 case 2:
-                  $result .= $estr[0];
+                  if ($estr) $result .= $estr[0];
                   break;
                 case 3:
                   $result .= ucfirst($estr[0]);

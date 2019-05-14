@@ -1,166 +1,130 @@
 <?php
 /**
+ +---------------------------------------<br/>
  * 工具类:自动生成代码-一键生成前后台报表模板<br/>
- * Created by IntelliJ IDEA.
- * User: harlan
- * Date: 2019/3/1
- * Time: 16:46
+ +---------------------------------------
+ * @category betterlife
+ * @package core.autocode
+ * @author skygreen <skygreen2001@gmail.com>
  */
 
 class AutoCodeCreateReport extends AutoCode
 {
+    /**
+     * 英文名称字数限制
+     */
     public static $ename_limit_count = 16;
     /**
      * 自动生成代码-一键生成前后台报表模板
      * 报表代码生成模板文件目录: /core/autocode/view/template/report.php
-     * @param $isProd true: 生成至正式目录, false: 生成至model目录下
-     * @param $reportCname: 中文名称
-     * @param $reportEname: 英文名称
-     * @param $reportDesc : 报表描述
-     * @param $reportSql  : 报表SQL
+     * @param array $config 配置
+     *              - $isProd: 生成至正式目录, false: 生成至model目录下
+     *              - $reportType: 生成报表的类型，1: 默认，2:自定义
+     *              - $reportCname: 中文名称
+     *              - $reportEname: 英文名称
+     *              - $reportDesc : 报表描述
+     *              - $reportSql  : 报表SQL
      */
-    public static function AutoCode($isProd = false, $reportCname = "", $reportEname = "", $reportDesc = "", $reportSql = "")
+    public static function AutoCode($config)
     {
+        extract($config);
         include( "template" . DS . "report.php" );
+
+        // 初始化配置
         if ( !isset($reportEname) || empty($reportEname) ) {
             //没有定义英文名时，之后写算法取出中文名首字母
-            $reportEname = UtilPinyin::getPinyinName($reportCname,2);
-            if (strlen($reportEname)>self::$ename_limit_count) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
+            $reportEname = UtilPinyin::getPinyinName( $reportCname );
+            if ( strlen($reportEname) > self::$ename_limit_count ) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
         }
-        $prod_root_path = Gc::$nav_root_path;
-        $dev_root_path  = self::$save_dir;
-        // **生成API文件[为页面提供数据的接口文件]: 模板文件中$api_template
-        $filename = "report" . $reportEname . ".php";
-        if ( !empty($isProd) ) {
-            //正式目录
-            $dir = $prod_root_path . "api" . DS."web" . DS . "report" . DS;
+        if ( !isset($reportDesc) || empty($reportDesc) ) {
+            $reportDesc = $reportCname;
+        }
+
+        if ( $isProd ) {
+            $dest_root_path = Gc::$nav_root_path;
         } else {
-            //model目录
-            $dir = $dev_root_path . "api" . DS . "web" . DS . "report" . DS;
+            $dest_root_path = self::$save_dir;
         }
+        $dest_home_path = $dest_root_path . "home" . DS . "report" . DS;
+        $dest_view_path = $dest_home_path . "view" . DS . "default" . DS;
 
-        self::saveDefineToDir($dir, $filename, $api_template);
-
-        //**生成Action类[控制某一页的报表]: 模板文件中$action_template
-        $filename = "Action_Report" . $reportEname . ".php";
-
-        $prod_root_path .= "home" . DS . "report" . DS;
-        $dev_root_path  .= "home" . DS . "report" . DS;
-        if ( !empty($isProd) ) {
-            $dir = $prod_root_path . "action" . DS;
-        } else {
-            $dir = $dev_root_path . "action" . DS;
-        }
-        self::saveDefineToDir($dir, $filename, $action_template);
-
-
-        //**生成页面tpl文件: 模板文件中$tpl_template
         $selCols = ServiceReport::getSqlSelCols($reportSql);
-        $tplColumns = "";
-        foreach ($selCols as $selCol) {
-            $tplColumns .= "<th>" . $selCol . "</th>";
-        }
-        include( "template" . DS . "report.php" );
-        $filename = "lists.tpl";
 
-        $prod_root_view_path = $prod_root_path . "view" . DS . "default" . DS;
-        $dev_root_view_path  = $dev_root_path . "view" . DS . "default" . DS;
-        if ( !empty($isProd) ) {
-            $dir = $prod_root_view_path . "core" . DS . "report" . $reportEname . DS;
-        } else {
-            $dir = $dev_root_view_path . "core" . DS . "report" . $reportEname . DS;
-        }
-        self::saveDefineToDir($dir, $filename, $tpl_template);
+        // 默认生成的报表文件内容
+        if ( $reportType == "1" ) {
+            $report_config_file      = Gc::$nav_root_path . "misc" . DS . "sql" . DS . "report.php";
+            $dest_report_config_file = $dest_root_path . "misc" . DS . "sql" . DS . "report.php";
+            $fileContent = file_get_contents($report_config_file);
 
-
-        //**生成页面js文件: 模板文件中$js_template
-        $jsColumns = "";
-        foreach ($selCols as $selCol) {
-            $jsColumns .= "{ data: \"" . $selCol . "\" },";
-        }
-        include( "template" . DS . "report.php" );
-        $filename = "report" . $reportEname . ".js";
-        if ( !empty($isProd) ) {
-            $dir = $prod_root_view_path . "js" . DS . "core" . DS;
-        } else {
-            $dir = $dev_root_view_path . "js" . DS . "core" . DS;
-        }
-        self::saveDefineToDir($dir, $filename, $js_template);
-
-
-        //**修改页面导航栏[navbar、sidebar 添加新增报表导航]:
-        //  navbar 目录: /home/report/view/default/layout/normal/navbar.tpl
-        $filePath = $prod_root_view_path . "layout" . DS . "normal" . DS . "navbar.tpl";
-        $fileContent = file_get_contents($filePath);
-        if ( !empty($fileContent) ) {
-            $endPos = strpos($fileContent, "<li id=\"searchbar-li\"");
-            $startContent = substr($fileContent, 0, $endPos);
-            $endContent = substr($fileContent, $endPos);
-            $startPos = strpos($startContent, "</ul>");
-            $startContent = substr($startContent, 0, $startPos);
-
-            $currentNav = <<<NAV
-                <li><a href="{\$url_base}index.php?go=report.report$reportEname.lists">$reportCname</a></li>
-              </ul>
-            </li>
-
-NAV;
-            $hasContains = strpos($startContent, "report$reportEname");
-            if ( empty($hasContains) ) {
-                $startContent = $startContent . "  " . ltrim($currentNav);
+            $configColumns = "";
+            foreach ($selCols as $selCol) {
+                $configColumns .= "        \"" . $selCol . "\",\r\n";
             }
-            $fileContent = $startContent . "            " . $endContent;
-        }
-        $filename = "navbar.tpl";
-        if ( !empty($isProd) ) {
-            $dir = $prod_root_view_path . "layout" . DS . "normal" . DS;
+            if ( $configColumns ) $configColumns = substr($configColumns, 0, strlen($configColumns) - 3);
+            include( "template" . DS . "report.php" );
+
+            $fileContent = $fileContent . $sql_config_template;
+            self::saveDefineToFile($dest_report_config_file, $fileContent);
+
         } else {
-            $dir = $dev_root_view_path . "layout" . DS . "normal" . DS;
-        }
-        self::saveDefineToDir($dir, $filename, $fileContent);
-
-        //  sidebar目录: /home/report/view/default/layout/normal/sidebar.tpl
-        $filePath = $prod_root_view_path . "layout" . DS . "normal" . DS . "sidebar.tpl";
-        $fileContent = file_get_contents($filePath);
-        if ( !empty($fileContent) ) {
-            $endPos = strrpos($fileContent, "</li>");
-            $startContent = substr_replace($fileContent, "", $endPos);
-            $endContent = substr($fileContent, $endPos);
-            $currentSide = <<<SIDE
-  <a href="{\$url_base}index.php?go=report.report$reportEname.lists"><i class="fa fa-life-ring"></i> <span>$reportCname</span></a>
-
-SIDE;
-            $hasContains = strpos($startContent, "report$reportEname");
-            if ( empty($hasContains) ) {
-                $startContent = $startContent . $currentSide;
+            // 自定义生成的报表文件内容
+            $tplColumns = "";
+            foreach ($selCols as $selCol) {
+                $tplColumns .= "                                    <th>" . $selCol . "</th>\r\n";
             }
-            $fileContent = $startContent . "          " . $endContent;
+            if ( $tplColumns ) $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
+
+            $jsColumns = "";
+            foreach ($selCols as $selCol) {
+                $jsColumns .= "                { data: \"" . $selCol . "\" },\r\n";
+            }
+            if ( $jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - 3);
+            include( "template" . DS . "report.php" );
+            /**
+             * api_file   : 生成API文件[为页面提供数据的接口文件]: 模板文件中$api_template
+             * action_file: 生成Action类[控制某一页的报表]: 模板文件中$action_template
+             * tpl_file   : 生成页面tpl文件: 模板文件中$tpl_template
+             * js_file    : 生成页面js文件: 模板文件中$js_template
+             */
+            $dest_file_path = array(
+                "api_file"    => $dest_root_path . "api" . DS."web" . DS . "report" . DS . "report" . $reportEname . ".php",
+                "action_file" => $dest_home_path . "action" . DS . "Action_Report" . $reportEname . ".php",
+                "tpl_file"    => $dest_view_path . "core" . DS . "report" . $reportEname . DS . "lists.tpl",
+                "js_file"     => $dest_view_path . "js" . DS . "core" . DS . "report" . $reportEname . ".js",
+            );
+            self::saveDefineToFile($dest_file_path["api_file"], $api_template);
+            self::saveDefineToFile($dest_file_path["action_file"], $action_template);
+            self::saveDefineToFile($dest_file_path["tpl_file"], $tpl_template);
+            self::saveDefineToFile($dest_file_path["js_file"], $js_template);
+
+            self::createServiceFile( $isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path);
         }
-        $filename = "sidebar.tpl";
-        if ( !empty($isProd) ) {
-            $dir = $prod_root_view_path . "layout" . DS . "normal" . DS;
-        } else {
-            $dir = $dev_root_view_path . "layout" . DS . "normal" . DS;
-        }
-        self::saveDefineToDir($dir, $filename, $fileContent);
 
-        $prod_service_path = $prod_root_path . "src" . DS . "services" . DS;
-        $dev_service_path  = $dev_root_path . "src" . DS . "services" . DS;
+        // 两种生成报表的类型都会创建的文件内容
+        self::createLayoutFile( $isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path );
+    }
 
-        //**生成报表服务类[控制导出报表]: 模板文件中$service_template
-        $filename = "Service" . $reportEname . ".php";
-        if ( !empty($isProd) ) {
-            $dir = $prod_service_path;
-        } else {
-            $dir = $dev_service_path;
-        }
-//        LogMe::log("service_template:".$service_template);
-        self::saveDefineToDir($dir, $filename, $service_template);
+    /**
+     * 创建报表需修改的服务层文件
+     * @param string $isProd: 生成至正式目录, false: 生成至model目录下
+     * @param string $reportType: 生成报表的类型，1: 默认，2:自定义
+     * @param string $reportCname: 中文名称
+     * @param string $reportEname: 英文名称
+     * @param string $reportDesc : 报表描述
+     * @param string $reportSql  : 报表SQL
+     * @param string $dest_home_path: 存储项目根路径
+     */
+    private static function createServiceFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path) {
+        include( "template" . DS . "report.php" );
+        $dest_service_path = $dest_home_path . "src" . DS . "services" . DS;
 
+        // 生成报表服务类[控制导出报表]: 模板文件中$service_template
+        self::saveDefineToFile($dest_service_path . "Service" . $reportEname . ".php", $service_template);
 
-        //**向管理报表服务类的类中添加实例化方法: 目录/home/report/src/services/Manager_ReportService.php
-        $filePath = $prod_service_path . "Manager_ReportService.php";
-        $fileContent = file_get_contents($filePath);
+        //**向管理报表服务类的类中添加实例化方法
+        $prod_root_path           = Gc::$nav_root_path . "home" . DS . "report" . DS;
+        $prod_manage_service_path = $prod_root_path . "src" . DS . "services" . DS . "Manager_ReportService.php";
+        $fileContent = file_get_contents($prod_manage_service_path);
         if ( !empty($fileContent) ) {
             $endPos = strrpos($fileContent, "}");
             $startContent = substr_replace($fileContent, "", $endPos);
@@ -180,7 +144,6 @@ SIDE;
         return self::\${$reportEnameLo}Service;
     }
 
-
 SERVICE;
             $hasContains = strpos($startContent, "\${$reportEnameLo}Service");
             if ( empty($hasContains) ) {
@@ -188,15 +151,84 @@ SERVICE;
             }
             $fileContent = $startContent . $endContent;
         }
-        $filename = "Manager_ReportService.php";
-        if ( !empty($isProd) ) {
-            $dir = $prod_service_path;
-        } else {
-            $dir = $dev_service_path;
-        }
-        self::saveDefineToDir($dir, $filename, $fileContent);
-
+        $dest_manage_service_path = $dest_service_path . "Manager_ReportService.php";
+        self::saveDefineToFile($dest_manage_service_path, $fileContent);
     }
+
+    /**
+     * 创建报表需修改的布局表示层页面
+     * @param string $isProd: 生成至正式目录, false: 生成至model目录下
+     * @param string $reportType: 生成报表的类型，1: 默认，2:自定义
+     * @param string $reportCname: 中文名称
+     * @param string $reportEname: 英文名称
+     * @param string $reportDesc : 报表描述
+     * @param string $reportSql  : 报表SQL
+     * @param string $dest_view_path: 表示层存储根路径
+     */
+    private static function createLayoutFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path) {
+        include( "template" . DS . "report.php" );
+
+        /**
+         * navbar_file: 修改页面导航栏[navbar、sidebar 添加新增报表导航]
+         * action_file: 生成Action类[控制某一页的报表]: 模板文件中$action_template
+         */
+        $dest_file_path = array(
+            "navbar_file"  => $dest_view_path . "layout" . DS . "normal" . DS . "navbar.tpl",
+            "sidebar_file" => $dest_view_path . "layout" . DS . "normal" . DS . "sidebar.tpl",
+        );
+
+        $prod_view_path = Gc::$nav_root_path . "home" . DS . "report" . DS . "view" . DS . "default" . DS;
+        $prod_file_path = array(
+            "navbar_file"  => $prod_view_path . "layout" . DS . "normal" . DS . "navbar.tpl",
+            "sidebar_file" => $prod_view_path . "layout" . DS . "normal" . DS . "sidebar.tpl",
+        );
+
+        if ( $reportType == "1" ) {
+            $report_url = "report.reportone.index&rtype=" . $reportEname;
+        } else {
+            $report_url = "report.report$reportEname.lists";
+        }
+        $fileContent = file_get_contents($prod_file_path["navbar_file"]);
+        if ( !empty($fileContent) ) {
+            $endPos = strpos($fileContent, "<li id=\"searchbar-li\"");
+            $startContent = substr($fileContent, 0, $endPos);
+            $endContent = substr($fileContent, $endPos);
+            $startPos = strpos($startContent, "</ul>");
+            $startContent = substr($startContent, 0, $startPos);
+
+            $currentNav = <<<NAV
+                <li><a href="{\$url_base}index.php?go=$report_url">$reportCname</a></li>
+              </ul>
+            </li>
+
+NAV;
+            $hasContains = strpos($startContent, "report$reportEname");
+            if ( empty($hasContains) ) {
+                $startContent = $startContent . "  " . ltrim($currentNav);
+            }
+            $fileContent = $startContent . "            " . $endContent;
+        }
+
+        self::saveDefineToFile($dest_file_path["navbar_file"], $fileContent);
+
+        $fileContent = file_get_contents($prod_file_path["sidebar_file"]);
+        if ( !empty($fileContent) ) {
+            $endPos = strrpos($fileContent, "</li>");
+            $startContent = substr_replace($fileContent, "", $endPos);
+            $endContent = substr($fileContent, $endPos);
+            $currentSide = <<<SIDE
+    <a href="{\$url_base}index.php?go=$report_url"><i class="fa fa-life-ring"></i> <span>$reportCname</span></a>
+
+SIDE;
+            $hasContains = strpos($startContent, "report$reportEname");
+            if ( empty($hasContains) ) {
+                $startContent = $startContent . $currentSide;
+            }
+            $fileContent = $startContent . "          " . $endContent;
+        }
+        self::saveDefineToFile($dest_file_path["sidebar_file"], $fileContent);
+    }
+
 }
 
 ?>

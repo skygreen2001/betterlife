@@ -12,6 +12,20 @@ $reportDesc  = isset($reportDesc) ? $reportDesc : "";
 $reportSql   = isset($reportSql) ? $reportSql : "";
 $tplColumns  = isset($tplColumns) ? $tplColumns : "";
 $jsColumns   = isset($jsColumns) ? $jsColumns : "";
+$configColumns  = isset($configColumns) ? $configColumns : "";
+
+$sql_config_template = <<<SQLCONFIG
+
+\$configReport["$reportEname"] = array(
+    "title" => "$reportCname",
+    "intro" => "$reportDesc",
+    "columns" => array(
+$configColumns
+    )
+);
+\$sqlReport["$reportEname"] = "$reportSql";
+
+SQLCONFIG;
 
 $api_template = <<<API
 <?php
@@ -118,7 +132,7 @@ $tpl_template = <<<TPL
                         <table id="infoTable" class="display nowrap dataTable table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    $tplColumns
+$tplColumns
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -169,7 +183,7 @@ $js_template = <<<JS
             "bLengthChange": true,
             "aLengthMenu"  : [[10, 25, 50, 100,-1],[10, 25, 50, 100,'全部']],
             "columns": [
-                $jsColumns
+$jsColumns
             ],
             "initComplete":function(){
                 \$.dataTable.filterDisplay();

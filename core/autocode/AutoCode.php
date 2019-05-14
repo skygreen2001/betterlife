@@ -318,6 +318,19 @@ class AutoCode extends BBObject
     }
 
     /**
+     * 保存生成的代码到指定命名规范的文件中
+     * @param string $dir 保存路径
+     * @param string $filename 文件名称
+     * @param string $definePhpFileContent 生成的代码
+     */
+    protected static function saveDefineToFile($filename, $definePhpFileContent)
+    {
+        UtilFileSystem::createDir( dirname($filename) );
+        UtilFileSystem::save_file_content( $filename, $definePhpFileContent );
+        return basename($filename, ".php");
+    }
+
+    /**
      * 用户输入需求
      * @param $title 标题
      * @param $inputArr 输入用户需求的选项
