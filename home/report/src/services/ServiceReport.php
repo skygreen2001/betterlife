@@ -102,26 +102,86 @@ class ServiceReport extends Service
      * @param string $reportSql
      * @return array
      */
-   public static function getOrderBy($reportSql = "")
-   {
-      $result  = self::getFilterTime($reportSql);
-      if ( empty($result) ) {
-          $columns = self::getSqlSelCols($reportSql);
-          foreach ($columns as $column)
-          {
-              if ( contains( strtolower($column), array("id") ) ) {
-                  $result = $column;
-                  break;
-              }
+    public static function getOrderBy($reportSql = "")
+    {
+        $result  = self::getFilterTime($reportSql);
+        if ( empty($result) ) {
+            $columns = self::getSqlSelCols($reportSql);
+            foreach ($columns as $column)
+            {
+                if ( contains( strtolower($column), array("id") ) ) {
+                    $result = $column;
+                    break;
+                }
 
-              if ( contains( $column, array("标识", "编号") ) ) {
-                  $result = $column;
-                  break;
-              }
+                if ( contains( $column, array("标识", "编号") ) ) {
+                    $result = $column;
+                    break;
+                }
+            }
+        }
+        return " order by " . $result . " desc ";
+    }
+
+    /**
+     * 根据用户输入筛选条件生成sql where语句
+     * @param string $sql_report 报表sql语句
+     * @param string $query 用户输入语句
+     * @param string $startDate 开始时间
+     * @param string $endDate 结束时间
+     * @param string $columns 列筛选条件
+     * @return array
+     */
+    public static function getWhereClause($sql_report, $query, $startDate, $endDate, $columns = null)
+    {
+        $where_clause = "";
+        if ($sql_report) $sql_report = str_replace(";", "", $sql_report);
+        if ( !empty($query) ) {
+          $search_atom  = explode(" ", trim($query));
+          $filterCols   = ServiceReport::getFilterCols( $sql_report );
+          $where_sub    = array();
+          for ($i=0; $i < count($filterCols); $i++) {
+            $clause    = " ( ";
+            $filterCol = $filterCols[$i];
+            $satom_tmp = $search_atom;
+            array_walk($satom_tmp, function(&$value, $key, $filterCol) {
+              $value = " $filterCol LIKE '%" . $value . "%' ";
+            }, $filterCol);
+            $clause .= implode(" and ", $satom_tmp);
+            $clause .= " ) ";
+            $where_sub[$i] = $clause;
           }
-      }
-      return " order by " . $result . " desc ";
-   }
+          if ( $where_sub && count($where_sub) > 0 ) {
+            if ( count($where_sub) > 1 ) $where_clause = " ( ";
+            $where_clause .= implode(" or ", $where_sub);
+            if ( count($where_sub) > 1 ) $where_clause .= " ) ";
+          }
+        }
+
+        if ( !empty($startDate) && !empty($endDate) ) {
+          $filterTime  = ServiceReport::getFilterTime( $sql_report );
+          if ($filterTime) {
+            if ( !empty($where_clause) ) $where_clause .= ' and ';
+            $where_clause .= " ( $filterTime between '$startDate' and '$endDate' ) ";
+          }
+        }
+
+        if ( $columns && count($columns) > 0 ) {
+          foreach ($columns as $key => $column) {
+            $column_search_value = $column["search"]["value"];
+            if ( $column_search_value != "" ) {
+              if ( !empty($where_clause) ) {
+                $where_clause .= " and ";
+              }
+              $where_clause .= " " . $column["data"] . "='" . $column_search_value . "' ";
+            }
+          }
+        }
+
+        if ( !empty($where_clause) ) $where_clause = " where " . $where_clause;
+        return $where_clause;
+    }
+    
 }
 
 ?>

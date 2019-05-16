@@ -11,7 +11,7 @@ $configReport["userReport"] = array(
         "用户数"
     )
 );
-$sqlReport["userReport"] = "select DATE_FORMAT(updateTime,'%Y-%m-%d') 日期,count(user_id) 用户数 from bb_user_user group by 日期;";
+$sqlReport["userReport"] = "select DATE_FORMAT(updateTime,'%Y-%m-%d') 日期,count(user_id) 用户数 from bb_user_user group by 日期";
 
 $configReport["blogReport"] = array(
     "title" => "日增博客数",
@@ -21,4 +21,4 @@ $configReport["blogReport"] = array(
         "博客数"
     )
 );
-$sqlReport["blogReport"] = "select DATE_FORMAT(updateTime,'%Y-%m-%d') 日期,count(blog_id) 博客数 from bb_core_blog group by 日期;";
+$sqlReport["blogReport"] = "select DATE_FORMAT(updateTime,'%Y-%m-%d') 日期,count(blog_id) 博客数 from bb_core_blog group by 日期";

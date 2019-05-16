@@ -68,7 +68,9 @@ $(function(){
             $.dataTable.doFilter(infoTable);
 
             $("#btn-report-export").click(function(){
-                var link   = "index.php?go=report.reportone.export&rtype=" + rtype;
+                var params = infoTable.ajax.params();
+                params = "&query=" + params.query + "&startDate=" + params.startDate + "&endDate=" + params.endDate;
+                var link   = "index.php?go=report.reportone.export&rtype=" + rtype + params;
                 $.getJSON(link, function(response){
                     window.open(response.data);
                 });

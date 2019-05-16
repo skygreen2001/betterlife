@@ -18,12 +18,15 @@ class Action_Reportone extends ActionReport
     }
 
     /**
-     * 导出报表: 月充值数
-     * 说明   : 本月充值数，增长率(需要程序)
+     * 导出报表: 统一的报表
+     * 说明   : 统一的报表
      */
     public function export()
     {
-        $rtype = $this->data["rtype"];
-        return Manager_ReportService::serviceReportone()->export($rtype);
+        $rtype     = $this->data["rtype"];
+        $startDate = $_GET["startDate"];
+        $endDate   = $_GET["endDate"];
+        $query     = $_GET["query"];
+        return Manager_ReportService::serviceReportone()->export($rtype, $startDate, $endDate, $query);
     }
 }
