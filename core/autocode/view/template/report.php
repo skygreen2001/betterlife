@@ -38,6 +38,8 @@ require_once ("../../../init.php");
 \$draw         = \$_GET["draw"];
 \$currentPage  = \$_GET["page"];
 \$pageSize     = \$_GET["pageSize"];
+\$startDate    = \$_GET["startDate"];
+\$endDate      = \$_GET["endDate"];
 \$query        = \$_GET["query"];
 \$columns      = \$_GET["columns"];
 \$where_clause = "";
@@ -62,6 +64,11 @@ if ( !empty(\$query) ) {
     \$where_clause .= implode(" or ", \$where_sub);
     if ( count(\$where_sub) > 1 ) \$where_clause .= " ) ";
   }
+}
+
+if ( !empty(\$startDate) && !empty(\$endDate) ) {
+    if ( !empty(\$where_clause) ) \$where_clause .= ' and ';
+    \$where_clause .= " ( $reptTimeCol between '\$startDate' and '\$endDate' ) ";
 }
 
 foreach (\$columns as \$key => \$column) {
@@ -111,7 +118,12 @@ if( contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
   //调试使用的信息
   \$result["debug"] = array(
     'param' => array(
-      'columns' => \$columns
+      'columns'   => \$columns,
+      'query'     => \$query,
+      'page'      => \$currentPage,
+      'pageSize'  => \$pageSize,
+      'startDate' => \$startDate,
+      'endDate'   => \$endDate
     ),
     'sql'   => \$reportSql,
     'where' => \$where_clause
@@ -171,13 +183,26 @@ $tpl_template = <<<TPL
                   <div class="breadcrumb-line">
                     <ul class="breadcrumb">
                       <li><a href="{\$url_base}index.php?go=admin.index.index"><i class="icon-home2 position-left"></i>首页</a></li>
-                      <li class="active">$reportCname ( 说明: $reportDesc )</li>
+                      <li class="active" title="$reportCname ( 说明: $reportDesc )">$reportCname ( 说明: $reportDesc )</li>
                     </ul>
                   </div>
                 </div>
 
                 <div class="container-fluid list">
                     <div class="row">
+                        <div class="form-group filter-report">
+                          <label for="startDateStr" class="col-sm-2 control-label">开始时间</label>
+                          <div class="input-group col-sm-3 datetimeStyle" id="startDate">
+                              <input id="startDateStr" name="startDate" class="form-control date-picker" type="text" value=""/>
+                              <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                          </div>
+                          <label for="endDateStr" class="col-sm-2 control-label">结束时间</label>
+                          <div class="input-group col-sm-3 datetimeStyle" id="endDate">
+                              <input id="endDateStr" name="endDate" class="form-control date-picker" type="text" value=""/>
+                              <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                          </div>
+                        </div>
+
                         <div class="btns-container">
                             <a class="btn btn-default" id="btn-report-export">导出</a>
                             <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls" />
@@ -211,6 +236,7 @@ $tplColumns
 
     {include file="\$templateDir/layout/normal/footer.tpl"}
     <script src="{\$template_url}js/normal/list.js"></script>
+    <script src="{\$template_url}js/normal/edit.js"></script>
     <script src="{\$template_url}js/core/report$reportEname.js"></script>
 {/block}
 TPL;
@@ -232,6 +258,14 @@ $js_template = <<<JS
                     d.pageSize = d.length;
                     d.page     = d.start / d.length + 1;
                     d.limit    = d.start + d.length;
+                    d.startDate = '';
+                    d.endDate   = '';
+
+                    // [Add parameter to datatable ajax call before draw](https://stackoverflow.com/questions/28906515/add-parameter-to-datatable-ajax-call-before-draw)
+                    // Retrieve dynamic parameters
+                    var dt_params = $('#infoTable').data('dt_params');
+                    // Add dynamic parameters to the data object sent to the server
+                    if(dt_params){ $.extend(d, dt_params); }
                     return d;
                 },
                 //可以对返回的结果进行改写
@@ -265,6 +299,21 @@ $jsColumns
                 window.open(response.data);
             });
         });
+
+        $.edit.datetimePicker('#startDate');
+        $.edit.datetimePicker('#endDate');
+
+        $(".datetimeStyle").on("dp.change", function(e) {
+            $(this).children("input").val(e.date.format("YYYY-MM-DD") + " 00:00");
+            var startDate = $("#startDateStr").val();
+            var endDate   = $("#endDateStr").val();
+            if (startDate && endDate) {
+                $('#infoTable').data('dt_params', { startDate: startDate, endDate: endDate });
+                // console.log(infoTable.ajax.params());
+                infoTable.draw();
+            }
+        });
+
     }
 
 });

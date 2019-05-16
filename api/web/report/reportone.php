@@ -4,6 +4,8 @@ require_once ("../../../misc/sql/report.php");
 $draw         = $_GET["draw"];
 $currentPage  = $_GET["page"];
 $pageSize     = $_GET["pageSize"];
+$startDate    = $_GET["startDate"];
+$endDate      = $_GET["endDate"];
 $query        = $_GET["query"];
 $columns      = $_GET["columns"];
 $where_clause = "";
@@ -32,6 +34,14 @@ if ( !empty($query) ) {
     if ( count($where_sub) > 1 ) $where_clause = " ( ";
     $where_clause .= implode(" or ", $where_sub);
     if ( count($where_sub) > 1 ) $where_clause .= " ) ";
+  }
+}
+
+if ( !empty($startDate) && !empty($endDate) ) {
+  $filterTime  = ServiceReport::getFilterTime( $sql_report );
+  if ($filterTime) {
+    if ( !empty($where_clause) ) $where_clause .= ' and ';
+    $where_clause .= " ( $filterTime between '$startDate' and '$endDate' ) ";
   }
 }
 
@@ -82,7 +92,12 @@ if( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.")
   //调试使用的信息
   $result["debug"] = array(
     'param' => array(
-      'columns' => $columns
+      'columns' => $columns,
+      'query'     => $query,
+      'page'      => $currentPage,
+      'pageSize'  => $pageSize,
+      'startDate' => $startDate,
+      'endDate'   => $endDate
     ),
     'sql'   => $reportSql,
     'where' => $where_clause

@@ -7,6 +7,7 @@ $(function(){
         var rtitle = title + " ( 说明: " + intro + " )";
         // 设置报表标题
         $("#rtitle").html(rtitle);
+        $("#rtitle").attr("title", rtitle);
 
         var rhead = "";
         var dtColumns = [];
@@ -32,6 +33,14 @@ $(function(){
                         d.pageSize = d.length;
                         d.page     = d.start / d.length + 1;
                         d.limit    = d.start + d.length;
+                        d.startDate = '';
+                        d.endDate   = '';
+
+                        // [Add parameter to datatable ajax call before draw](https://stackoverflow.com/questions/28906515/add-parameter-to-datatable-ajax-call-before-draw)
+                        // Retrieve dynamic parameters
+                        var dt_params = $('#infoTable').data('dt_params');
+                        // Add dynamic parameters to the data object sent to the server
+                        if(dt_params){ $.extend(d, dt_params); }
                         return d;
                     },
                     //可以对返回的结果进行改写
@@ -63,6 +72,20 @@ $(function(){
                 $.getJSON(link, function(response){
                     window.open(response.data);
                 });
+            });
+
+            $.edit.datetimePicker('#startDate');
+            $.edit.datetimePicker('#endDate');
+
+            $(".datetimeStyle").on("dp.change", function(e) {
+                $(this).children("input").val(e.date.format("YYYY-MM-DD") + " 00:00");
+                var startDate = $("#startDateStr").val();
+                var endDate   = $("#endDateStr").val();
+                if (startDate && endDate) {
+                    $('#infoTable').data('dt_params', { startDate: startDate, endDate: endDate });
+                    // console.log(infoTable.ajax.params());
+                    infoTable.draw();
+                }
             });
         }
     });

@@ -95,7 +95,7 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <label for="creationTimeStr" class="col-sm-2 control-label">发布日期</label>
+                          <label for="publish_dateStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="publish_date">
                                   <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
