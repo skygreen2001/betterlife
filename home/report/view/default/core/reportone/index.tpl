@@ -22,6 +22,16 @@
                             <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls" />
                         </div>
                     </div><br/>
+                    <div class="row up-container">
+                        <div class="filter-up">
+                            <div class="filter-up-right col-sm-12">
+                                <div>
+                                    <i aria-label="search-menu" class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                    <input id="input-search" type="search" placeholder="搜索名称" aria-controls="infoTable" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row table-responsive col-xs-12">
                         <table id="infoTable" class="display nowrap dataTable table table-striped table-bordered">
                             <thead>

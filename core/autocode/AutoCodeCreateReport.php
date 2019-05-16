@@ -40,6 +40,10 @@ class AutoCodeCreateReport extends AutoCode
             $reportDesc = $reportCname;
         }
 
+        if ( !empty($reportSql) ) {
+            $reportSql = str_replace(";", "", $reportSql);
+        }
+
         if ( $isProd ) {
             $dest_root_path = Gc::$nav_root_path;
         } else {
@@ -56,11 +60,11 @@ class AutoCodeCreateReport extends AutoCode
             $dest_report_config_file = $dest_root_path . "misc" . DS . "sql" . DS . "report.php";
             $fileContent = file_get_contents($report_config_file);
 
-            $configColumns = "";
+            $configCols = "";
             foreach ($selCols as $selCol) {
-                $configColumns .= "        \"" . $selCol . "\",\r\n";
+                $configCols .= "        \"" . $selCol . "\",\r\n";
             }
-            if ( $configColumns ) $configColumns = substr($configColumns, 0, strlen($configColumns) - 3);
+            if ( $configCols ) $configCols = substr($configCols, 0, strlen($configCols) - 3);
             include( "template" . DS . "report.php" );
 
             $fileContent = $fileContent . $sql_config_template;
@@ -79,6 +83,17 @@ class AutoCodeCreateReport extends AutoCode
                 $jsColumns .= "                { data: \"" . $selCol . "\" },\r\n";
             }
             if ( $jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - 3);
+
+
+            $reptTimeCol = ServiceReport::getFilterTime( $reportSql );
+            $reptOrderBy = ServiceReport::getOrderBy( $reportSql );
+            $filterCols  = ServiceReport::getFilterCols( $reportSql );
+            $reptFiltCol = "";
+            foreach ($filterCols as $filterCol) {
+                $reptFiltCol .= "'$filterCol', ";
+            }
+            if ( $reptFiltCol ) $reptFiltCol = substr($reptFiltCol, 0, strlen($reptFiltCol) - 2);
+
             include( "template" . DS . "report.php" );
             /**
              * api_file   : 生成API文件[为页面提供数据的接口文件]: 模板文件中$api_template

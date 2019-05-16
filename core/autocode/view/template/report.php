@@ -1,10 +1,11 @@
 <?php
 /**
+ +---------------------------------------<br/>
  * 生成报表[模板文件]
- * Created by IntelliJ IDEA.
- * User: harlan
- * Date: 2019/2/28
- * Time: 16:38
+ +---------------------------------------
+ * @category betterlife
+ * @package core.autocode
+ * @author skygreen <skygreen2001@gmail.com>
  */
 $reportCname = isset($reportCname) ? $reportCname : "";
 $reportEname = isset($reportEname) ? $reportEname : "";
@@ -12,7 +13,10 @@ $reportDesc  = isset($reportDesc) ? $reportDesc : "";
 $reportSql   = isset($reportSql) ? $reportSql : "";
 $tplColumns  = isset($tplColumns) ? $tplColumns : "";
 $jsColumns   = isset($jsColumns) ? $jsColumns : "";
-$configColumns  = isset($configColumns) ? $configColumns : "";
+$configCols  = isset($configCols) ? $configCols : "";
+$reptTimeCol = isset($reptTimeCol) ? $reptTimeCol : "";
+$reptFiltCol = isset($reptFiltCol) ? $reptFiltCol : "";
+$reptOrderBy = isset($reptOrderBy) ? $reptOrderBy : "";
 
 $sql_config_template = <<<SQLCONFIG
 
@@ -20,7 +24,7 @@ $sql_config_template = <<<SQLCONFIG
     "title" => "$reportCname",
     "intro" => "$reportDesc",
     "columns" => array(
-$configColumns
+$configCols
     )
 );
 \$sqlReport["$reportEname"] = "$reportSql";
@@ -31,10 +35,50 @@ $api_template = <<<API
 <?php
 require_once ("../../../init.php");
 
-\$draw        = \$_GET["draw"];
-\$currentPage = \$_GET["page"];
-\$pageSize    = \$_GET["pageSize"];
-\$reportSql  = "$reportSql";
+\$draw         = \$_GET["draw"];
+\$currentPage  = \$_GET["page"];
+\$pageSize     = \$_GET["pageSize"];
+\$query        = \$_GET["query"];
+\$columns      = \$_GET["columns"];
+\$where_clause = "";
+\$orderDes     = "$reptOrderBy";
+if ( !empty(\$query) ) {
+  \$search_atom  = explode(" ", trim(\$query));
+  \$filterCols   = array( $reptFiltCol );
+  \$where_sub    = array();
+  for (\$i=0; \$i < count(\$filterCols); \$i++) {
+    \$clause    = " ( ";
+    \$filterCol = \$filterCols[\$i];
+    \$satom_tmp = \$search_atom;
+    array_walk(\$satom_tmp, function(&\$value, \$key, \$filterCol) {
+      \$value = " \$filterCol LIKE '%" . \$value . "%' ";
+    }, \$filterCol);
+    \$clause .= implode(" and ", \$satom_tmp);
+    \$clause .= " ) ";
+    \$where_sub[\$i] = \$clause;
+  }
+  if ( \$where_sub && count(\$where_sub) > 0 ) {
+    if ( count(\$where_sub) > 1 ) \$where_clause = " ( ";
+    \$where_clause .= implode(" or ", \$where_sub);
+    if ( count(\$where_sub) > 1 ) \$where_clause .= " ) ";
+  }
+}
+
+foreach (\$columns as \$key => \$column) {
+  \$column_search_value = \$column["search"]["value"];
+  if ( \$column_search_value != "" ) {
+    if ( !empty(\$where_clause) ) {
+      \$where_clause .= " and ";
+    }
+    \$where_clause .= " " . \$column["data"] . "='" . \$column_search_value . "' ";
+  }
+}
+
+if ( !empty(\$where_clause) ) \$where_clause = " where " . \$where_clause;
+
+\$reportSql   = "select * from (";
+\$reportSql  .= " $reportSql ";
+\$reportSql  .= ") report_tmp " . \$where_clause . \$orderDes;
 \$data       = sqlExecute(\$reportSql);
 \$totalCount = count(\$data);
 \$pageData   = array();
@@ -62,6 +106,17 @@ if ( \$totalCount > 0 ) {
   'recordsFiltered' => \$totalCount,
   'recordsTotal' => \$totalCount
 );
+
+if( contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) || Gc::\$dev_debug_on ) {
+  //调试使用的信息
+  \$result["debug"] = array(
+    'param' => array(
+      'columns' => \$columns
+    ),
+    'sql'   => \$reportSql,
+    'where' => \$where_clause
+  );
+}
 echo json_encode(\$result);
 
 ?>
@@ -128,6 +183,16 @@ $tpl_template = <<<TPL
                             <input id="upload_file" name="upload_file" type="file" style="display:none;" accept=".xlsx, .xls" />
                         </div>
                     </div><br/>
+                    <div class="row up-container">
+                        <div class="filter-up">
+                            <div class="filter-up-right col-sm-12">
+                                <div>
+                                    <i aria-label="search-menu" class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                    <input id="input-search" type="search" placeholder="搜索名称" aria-controls="infoTable" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row table-responsive col-xs-12">
                         <table id="infoTable" class="display nowrap dataTable table table-striped table-bordered">
                             <thead>

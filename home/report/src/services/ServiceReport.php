@@ -47,9 +47,81 @@ class ServiceReport extends Service
                 }
             }
         }
-        unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
+        // unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         return $arr_output_header;
     }
+
+    /**
+     * 解析SQL查询取出用户可筛选的字段
+     * @param string $reportSql
+     * @return array
+     */
+    public static function getFilterCols($reportSql = "")
+    {
+        $columns = self::getSqlSelCols($reportSql);
+        $result  = array();
+        foreach ($columns as $column)
+        {
+            if ( contains( strtolower($column), array("id", "name", "title") ) ) {
+                $result[] = $column;
+            }
+
+            if ( contains( $column, array("名称", "标题", "标识", "编号") ) ) {
+                $result[] = $column;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 解析SQL查询取出用户可筛选的时间字段
+     * @param string $reportSql
+     * @return array
+     */
+    public static function getFilterTime($reportSql = "")
+    {
+        $columns = self::getSqlSelCols($reportSql);
+        $result  = "";
+        foreach ($columns as $column)
+        {
+            if ( contains( $column, array("date", "time") ) ) {
+                $result = $column;
+                break;
+            }
+
+            if ( contains( $column, array("时间", "年", "月", "日") ) ) {
+                $result = $column;
+                break;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 解析SQL查询取出用户可排序的字段
+     * @param string $reportSql
+     * @return array
+     */
+   public static function getOrderBy($reportSql = "")
+   {
+      $result  = self::getFilterTime($reportSql);
+      if ( empty($result) ) {
+          $columns = self::getSqlSelCols($reportSql);
+          foreach ($columns as $column)
+          {
+              if ( contains( strtolower($column), array("id") ) ) {
+                  $result = $column;
+                  break;
+              }
+
+              if ( contains( $column, array("标识", "编号") ) ) {
+                  $result = $column;
+                  break;
+              }
+          }
+      }
+      return " order by " . $result . " desc ";
+   }
 }
 
 ?>
