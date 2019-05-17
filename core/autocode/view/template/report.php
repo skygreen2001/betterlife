@@ -42,49 +42,13 @@ require_once ("../../../init.php");
 \$endDate      = \$_GET["endDate"];
 \$query        = \$_GET["query"];
 \$columns      = \$_GET["columns"];
-\$where_clause = "";
+
+\$sql_report   = " $reportSql ";
+\$where_clause = ServiceReport::getWhereClause(\$sql_report, \$query, \$startDate, \$endDate, \$columns);
 \$orderDes     = "$reptOrderBy";
-if ( !empty(\$query) ) {
-  \$search_atom  = explode(" ", trim(\$query));
-  \$filterCols   = array( $reptFiltCol );
-  \$where_sub    = array();
-  for (\$i=0; \$i < count(\$filterCols); \$i++) {
-    \$clause    = " ( ";
-    \$filterCol = \$filterCols[\$i];
-    \$satom_tmp = \$search_atom;
-    array_walk(\$satom_tmp, function(&\$value, \$key, \$filterCol) {
-      \$value = " \$filterCol LIKE '%" . \$value . "%' ";
-    }, \$filterCol);
-    \$clause .= implode(" and ", \$satom_tmp);
-    \$clause .= " ) ";
-    \$where_sub[\$i] = \$clause;
-  }
-  if ( \$where_sub && count(\$where_sub) > 0 ) {
-    if ( count(\$where_sub) > 1 ) \$where_clause = " ( ";
-    \$where_clause .= implode(" or ", \$where_sub);
-    if ( count(\$where_sub) > 1 ) \$where_clause .= " ) ";
-  }
-}
-
-if ( !empty(\$startDate) && !empty(\$endDate) ) {
-    if ( !empty(\$where_clause) ) \$where_clause .= ' and ';
-    \$where_clause .= " ( $reptTimeCol between '\$startDate' and '\$endDate' ) ";
-}
-
-foreach (\$columns as \$key => \$column) {
-  \$column_search_value = \$column["search"]["value"];
-  if ( \$column_search_value != "" ) {
-    if ( !empty(\$where_clause) ) {
-      \$where_clause .= " and ";
-    }
-    \$where_clause .= " " . \$column["data"] . "='" . \$column_search_value . "' ";
-  }
-}
-
-if ( !empty(\$where_clause) ) \$where_clause = " where " . \$where_clause;
 
 \$reportSql   = "select * from (";
-\$reportSql  .= " $reportSql ";
+\$reportSql  .= \$sql_report;
 \$reportSql  .= ") report_tmp " . \$where_clause . \$orderDes;
 \$data       = sqlExecute(\$reportSql);
 \$totalCount = count(\$data);
@@ -134,7 +98,6 @@ echo json_encode(\$result);
 ?>
 API;
 
-
 $action_template = <<<ACTION
 <?php
 /**
@@ -163,7 +126,10 @@ class Action_Report$reportEname extends ActionReport
      */
     public function export$reportEname()
     {
-        return Manager_ReportService::service$reportEname()->export$reportEname();
+        \$startDate = \$_GET["startDate"];
+        \$endDate   = \$_GET["endDate"];
+        \$query     = \$_GET["query"];
+        return Manager_ReportService::service$reportEname()->export$reportEname( \$startDate, \$endDate, \$query );
     }
 }
 ?>
@@ -295,7 +261,9 @@ $jsColumns
         \$.dataTable.doFilter(infoTable);
 
         \$("#btn-report-export").click(function(){
-            \$.getJSON("index.php?go=report.report{$reportEname}.export{$reportEname}", function(response){
+            var params = infoTable.ajax.params();
+            params = "&query=" + params.query + "&startDate=" + params.startDate + "&endDate=" + params.endDate;
+            \$.getJSON("index.php?go=report.report{$reportEname}.export{$reportEname}" + params, function(response){
                 window.open(response.data);
             });
         });
@@ -336,21 +304,28 @@ class Service$reportEname extends ServiceReport
      * 导出报表: $reportCname
      * 说明   : $reportDesc
      */
-    public function export$reportEname() {
-        \$reportSql = "$reportSql";
+    public function export$reportEname(\$startDate, \$endDate, \$query) {
+        \$sql_report = " $reportSql ";
+        \$out_header = \$this->getSqlSelCols(\$sql_report);
+        \$whereState = ServiceReport::getWhereClause(\$sql_report, \$query, \$startDate, \$endDate);
+        \$orderDes   = ServiceReport::getOrderBy(\$sql_report);
+
+        \$reportSql  = "select * from (";
+        \$reportSql .= \$sql_report;
+        \$reportSql .= ") report_tmp " . \$whereState . \$orderDes;
+
         // 对sql进行格式化
-        \$reportSql = trim(\$reportSql);//去除首尾空格
-        \$reportSql = strtolower(\$reportSql);//转换成小写
-        \$data = sqlExecute(\$reportSql);// 获取数据
-        \$arr_output_header = \$this->getSqlSelCols(\$reportSql);
-        \$diffpart = date("YmdHis");
-        \$fileName = "$reportCname".\$diffpart;
-        \$outputFileName = Gc::\$attachment_path . "export" . DS . "report" . DS . "\$fileName.xls";
-        UtilExcel::arraytoExcel(\$arr_output_header, \$data, \$outputFileName, false);
-        \$downloadPath = Gc::\$attachment_url . "export/report/\$fileName.xls";
+        \$reportSql  = trim(\$reportSql);//去除首尾空格
+        \$reportSql  = strtolower(\$reportSql);//转换成小写
+        \$data       = sqlExecute(\$reportSql);// 获取数据
+        \$diffpart   = date("YmdHis");
+        \$fileName   = "$reportCname".\$diffpart;
+        \$outFname   = Gc::\$attachment_path . "export" . DS . "report" . DS . "\$fileName.xls";
+        UtilExcel::arraytoExcel(\$out_header, \$data, \$outFname, false);
+        \$downPath   = Gc::\$attachment_url . "export/report/\$fileName.xls";
         return array(
             'success' => true,
-            'data'  => \$downloadPath
+            'data'    => \$downPath
         );
     }
 }

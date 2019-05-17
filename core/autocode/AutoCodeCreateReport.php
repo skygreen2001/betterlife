@@ -35,6 +35,8 @@ class AutoCodeCreateReport extends AutoCode
             //没有定义英文名时，之后写算法取出中文名首字母
             $reportEname = UtilPinyin::getPinyinName( $reportCname );
             if ( strlen($reportEname) > self::$ename_limit_count ) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
+        } else{
+            $reportEname = ucfirst($reportEname);
         }
         if ( !isset($reportDesc) || empty($reportDesc) ) {
             $reportDesc = $reportCname;
