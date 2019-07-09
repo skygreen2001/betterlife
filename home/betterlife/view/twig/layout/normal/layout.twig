@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    {{ include("layout/normal/header.twig") }}
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{{ template_url }}resources/css/public.css" />
+    <script type="text/javascript" src="{{ template_url }}js/public.js"></script>
+    {% autoescape %}
+    {{ viewObject.css_ready|default("")|raw }}
+    <!-- Latest compiled and minified CSS -->
+    {{ viewObject.js_ready|default("")|raw }}
+    {% endautoescape %}
+  </head>
+  <!-- {php}
+     flush();
+  {/php} -->
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>

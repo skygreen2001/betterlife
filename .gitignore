@@ -12,3 +12,4 @@
 /install/node_modules
 .DS_Store
 /misc/js/onlineditor
+home/betterlife/view/twig/tmp

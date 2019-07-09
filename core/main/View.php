@@ -63,7 +63,7 @@ class View {
             "encoding"      => Gc::$encoding
         );
 
-        if( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+        if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
           self::$view_global["isDev"] = true;
         }
     }
@@ -252,14 +252,18 @@ class View {
                   die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。<br/></p>");
                 }
                 $this->template = new Smarty();
-                if (Smarty::SMARTY_VERSION>=3.1 && class_exists("SmartyBC")) $this->template = new SmartyBC();
-                $this->template->template_dir =  Gc::$nav_root_path . $this->template_dir;
-                $this->template->compile_dir =  Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
-                $this->template->config_dir =  $template_tmp_dir . "configs" . DS;
-                $this->template->cache_dir =  $template_tmp_dir . "cache" . DS;
+                if ( Smarty::SMARTY_VERSION>=3.1 && class_exists("SmartyBC") ) $this->template = new SmartyBC();
+                $this->template->template_dir  =  Gc::$nav_root_path . $this->template_dir;
+                $this->template->compile_dir   =  Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
+                $this->template->config_dir    =  $template_tmp_dir . "configs" . DS;
+                $this->template->cache_dir     =  $template_tmp_dir . "cache" . DS;
                 $this->template->compile_check = true;
                 $this->template->allow_php_templates = true;
                 $this->template->allow_php_tag = true;
+                // 开启自定义安全机制
+                // $my_security_policy = new Smarty_Security($this->template);
+                // $my_security_policy->allow_php_tag = true;
+                // $this->template->enableSecurity($my_security_policy);
                 $this->template->debugging = Gc::$dev_smarty_on;
                 $this->template->force_compile = false;
                 $this->template->caching = Gc::$is_online_optimize;
@@ -269,8 +273,15 @@ class View {
                 break;
             case self::TEMPLATE_MODE_TWIG:
                 $this->templateMode = self::TEMPLATE_MODE_TWIG;
-                $templateFilePath = basename($templatefile) . $this->template_suffix_name;
-                $this->template->template_dir = $this->template_dir;
+                $this->template->template_dir = Gc::$nav_root_path . $this->template_dir;
+                $this->template->cache_dir = $template_tmp_dir . "cache" . DS;
+                UtilFileSystem::createDir($this->template->cache_dir);
+                system_dir_info($this->template->cache_dir);
+                $twig_loader = new \Twig\Loader\FilesystemLoader(dirname($this->template->template_dir));
+                $this->template = new \Twig\Environment($twig_loader, [
+                    'cache' => $this->template->cache_dir,
+                ]);
+                $this->template->template_dir = Gc::$nav_root_path . $this->template_dir;
                 $this->template->temp_dir = $template_tmp_dir . "temp" . DS;
                 $this->template->cache_dir = $template_tmp_dir . "cache" . DS;
                 break;
@@ -298,8 +309,9 @@ class View {
         switch ($template_mode) {
             case self::TEMPLATE_MODE_NONE:
                 break;
-            case self::TEMPLATE_MODE_SMARTY:
             case self::TEMPLATE_MODE_TWIG:
+                break;
+            case self::TEMPLATE_MODE_SMARTY:
             case self::TEMPLATE_MODE_PHPTEMPLATE:
                 $this->template->assign($key, $value);
                 break;
@@ -322,25 +334,33 @@ class View {
         $templateFilePath = $templatefile . $this->template_suffix_name;
         switch ($template_mode) {
             case self::TEMPLATE_MODE_SMARTY:
-                if(!empty($this->viewObject)){
-                  $view_array=UtilObject::object_to_array($this->viewObject,$this->vars);
-                  foreach($view_array as $key => $value) {
-                    if (!array_key_exists($key, self::$view_global)) {
-                      $this->set($key,$value);
+                if ( !empty($this->viewObject) ) {
+                  $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
+                  foreach ($view_array as $key => $value) {
+                    if ( !array_key_exists($key, self::$view_global) ) {
+                      $this->set($key, $value);
                     }
                   }
-                  $name_viewObject = ViewObject::get_Class();
+                  $name_viewObject    = ViewObject::get_Class();
                   $name_viewObject{0} = strtolower($name_viewObject{0});
                   $this->template->assignByRef($name_viewObject, $this->viewObject);
                 }
                 $this->template->display($templateFilePath);
                 break;
             case self::TEMPLATE_MODE_TWIG:
-                $sub_dir=explode(DS, $templateFilePath);
-                if (!empty($sub_dir)) {
-                    $this->template->template_dir .= $sub_dir[0];
+                if ( !empty($this->viewObject) ) {
+                  $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
+                  foreach ($view_array as $key => $value) {
+                    if ( !array_key_exists($key, self::$view_global) ) {
+                      $this->set($key, $value);
+                    }
+                  }
+                  $name_viewObject    = ViewObject::get_Class();
+                  $name_viewObject{0} = strtolower($name_viewObject{0});
+                  $this->set($name_viewObject, $this->viewObject);
                 }
-                $this->template->output();
+                $tplFilePath = Config_F::VIEW_CORE . DS . $templateFilePath;
+                echo $this->template->render($tplFilePath, $this->vars);
 
                 break;
             case self::TEMPLATE_MODE_PHPTEMPLATE:
@@ -351,7 +371,7 @@ class View {
                 $this->template->set_file(basename($filename_dir[1], Gc::$template_file_suffix), $filename_dir[0]);
                 break;
             default:
-                $viewvars = $this->getVars($controller);
+                $viewvars = $this->getVars();
                 extract($viewvars);
                 include_once(Gc::$nav_root_path . $this->template_dir() . $templateFilePath);
                 break;
