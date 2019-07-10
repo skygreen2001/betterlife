@@ -3,11 +3,11 @@
     {% if (online_editor=='KindEditor')  %}
     <script>
     KindEditor.ready(function(KE) {
-        KE.create('textarea[name="blog_content"]',{{ keConfig});
+        KE.create('textarea[name="blog_content"]',{{ keConfig }});
     });</script>
     {% endif %}
     {% if (online_editor=='CKEditor')  %}
-    {{ editorHtml}
+    {{ editorHtml }}
     <script>$(function(){
          ckeditor_replace_blog_content();});</script>
     {% endif %}
@@ -19,7 +19,7 @@
     <div class="contentBox" >
         <b><my:a href="{{ url_base }}index.php?go={{ appName }}.auth.logout">退出</my:a></b><br/>
         <my:a href="{{ url_base }}index.php?go={{ appName }}.blog.display&amp;pageNo={{ app.request.get('pageNo')|default("1") }}">博客列表</my:a>
-        <br/><font color="{{ color }}">{{ message|nl2br|default:'' }}</font><br/>
+        <br/><font color="{{ color }}">{{ message|nl2br|default('') }}</font><br/>
         <form name="postForm" method="POST">
             博文名:<br/>
             <input type="text" class="inputNormal" style="width:100%;" name="blog_name" value="{{ blog.blog_name }}"/><br/><br/>

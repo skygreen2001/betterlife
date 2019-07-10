@@ -22,13 +22,13 @@
         <my:a href="{{ url_base }}?go={{ appName }}.blog.display&pageNo={{ app.request.get('pageNo')|default('1') }}"><b>博客列表</b></my:a>
         <div id='blog{{ blog.blog_id }}' >
             <h3>{{ blog.blog_name }}</h3>
-            <p>{{ blog.blog_content|nl2br }}</p>
+            <p>{{ blog.blog_content|raw|nl2br }}</p>
             评论数:{{ blog.count_comments }}
         </div>
         {% if (app.request.get('comment_id') is not defined) %}
             {% for comment in blog.comments %}
             <div>
-                <blockquote>{{ comment.comment|nl2br }} <br/>
+                <blockquote>{{ comment.comment|raw|nl2br }} <br/>
                 由 {{ comment.user.username }} 在 {{ comment.commitTime|date('Y-m-d H:i') }} 提交<br/><span></span>
                 </blockquote>
                 <b>

@@ -131,23 +131,6 @@ class Gc {
         'report',
     );
     /**
-     * 开发者自定义当前使用模板目录名<br/>
-     * 示例：D:\wamp\www\betterlife\home\betterlife\view\default<br/>
-     *       default即自定义当前使用模板目录名
-     * @var string
-     * @static
-     */
-    public static $self_theme_dir = 'default';
-    /**
-     * 每个模块可以定义自己显示的模板名
-     * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
-     * @var mixed
-     */
-    public static $self_theme_dir_every = array(
-        'betterlife'=>'bootstrap',
-        // 'model'=>'bootstrap'
-    );
-    /**
      * URL访问模式,可选参数0、1、2、3,代表以下四种模式：<br/>
      * 0 (普通模式);<br/>
      * 1 (PATHINFO 模式); eg:<br/>
@@ -158,7 +141,7 @@ class Gc {
      * @var int
      * @static
      */
-    public static $url_model=0;
+    public static $url_model = 0;
     /**
      * 是否打开Smarty Debug Console窗口
      * @var bool
@@ -184,14 +167,32 @@ class Gc {
      * @var int
      * @static
      */
-    public static $template_mode = 1;
+    public static $template_mode = 1; // View::TEMPLATE_MODE_TWIG;
     /**
      * 每个模块可以定义自己的模板模式
      * 如果没有定义，则使用$template_mode默认定义的名称，一般都是1:Smarty
      * @var mixed
      */
     public static $template_mode_every = array(
-        //'betterlife'=>1
+        // 'betterlife'=>2,// View::TEMPLATE_MODE_TWIG
+    );
+    /**
+     * 开发者自定义当前使用模板目录名<br/>
+     * 示例：D:\wamp\www\betterlife\home\betterlife\view\default<br/>
+     *       default即自定义当前使用模板目录名
+     * @var string
+     * @static
+     */
+    public static $self_theme_dir = 'default';
+    /**
+     * 每个模块可以定义自己显示的模板名
+     * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
+     * @var mixed
+     */
+    public static $self_theme_dir_every = array(
+        // 'betterlife'=>'twig',
+        'betterlife'=>'bootstrap',
+        // 'model'=>'bootstrap'
     );
     /**
     * 模板文件后缀名称<br/>
@@ -201,7 +202,15 @@ class Gc {
     * @var string
     * @static
     */
-    public static $template_file_suffix = '.tpl';
+    public static $template_file_suffix = '.tpl'; // '.twig';
+    /**
+     * 每个模块可以定义自己的模板后缀名
+     * 如果没有定义，则使用$template_file_suffix默认定义的名称，一般都是.tpl
+     * @var mixed
+     */
+    public static $template_file_suffix_every = array(
+        // 'betterlife'=>'.twig',
+    );
     /**
      * 所有无需预加载的 业务应用所在的根目录路径下的子目录<br/>
      * 举例：<br/>

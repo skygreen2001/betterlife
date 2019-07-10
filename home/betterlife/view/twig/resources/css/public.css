@@ -227,7 +227,7 @@ input[type=submit] {
   cursor:pointer;
 
   font-size: 15px;
-  font-weight: lighter;
+  font-weight: 600;
   background-color:#77cc6d;
   border:1px solid;
   border-color:#fff;

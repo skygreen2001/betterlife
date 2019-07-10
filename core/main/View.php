@@ -243,7 +243,12 @@ class View {
         }
         $this->template_dir = $this->getTemplate_View_Dir($this->moduleName) . Config_F::VIEW_CORE . DS;
         $template_tmp_dir = $this->getTemplate_View_Dir($this->moduleName) . "tmp" . DS;
-        $this->template_suffix_name = Gc::$template_file_suffix;
+
+        if (isset(Gc::$template_file_suffix_every) && array_key_exists($this->moduleName, Gc::$template_file_suffix_every)) {
+            $this->template_suffix_name = Gc::$template_file_suffix_every[$this->moduleName];
+        } else {
+            $this->template_suffix_name = Gc::$template_file_suffix;
+        }
 
         switch ($template_mode) {
             case self::TEMPLATE_MODE_SMARTY:
@@ -358,6 +363,7 @@ class View {
                   $name_viewObject    = ViewObject::get_Class();
                   $name_viewObject{0} = strtolower($name_viewObject{0});
                   $this->set($name_viewObject, $this->viewObject);
+                  // print_r($this->viewObject);
                 }
                 $tplFilePath = Config_F::VIEW_CORE . DS . $templateFilePath;
                 echo $this->template->render($tplFilePath, $this->vars);
@@ -368,7 +374,7 @@ class View {
                 if (!empty($sub_dir)) {
                     $filename_dir = $sub_dir[0];
                 }
-                $this->template->set_file(basename($filename_dir[1], Gc::$template_file_suffix), $filename_dir[0]);
+                $this->template->set_file(basename($filename_dir[1], $this->template_suffix_name), $filename_dir[0]);
                 break;
             default:
                 $viewvars = $this->getVars();

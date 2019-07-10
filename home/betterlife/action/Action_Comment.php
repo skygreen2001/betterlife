@@ -41,6 +41,7 @@ class Action_Comment extends Action
         }
         $canEdit = $this->view->blog->canEdit();
         if ( !$canEdit ) {
+            $this->loadJs("js/edit.js");
             $this->load_onlineditor( "comment" );
         }
     }

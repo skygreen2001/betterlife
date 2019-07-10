@@ -10,9 +10,9 @@
             {% if blog.canEdit %}[<my:a href="{{ url_base }}index.php?go={{ appName }}.blog.write&blog_id={{ blog.blog_id }}&pageNo={{ app.request.get('pageNo')|default('1') }}">改</my:a>]{% endif %}
             {% if blog.canDelete %}[<my:a href="{{ url_base }}index.php?go={{ appName }}.blog.delete&blog_id={{ blog.blog_id }}&pageNo={{ app.request.get('pageNo')|default('1') }}">删</my:a>]{% endif %}
             </b><br/>
-            {{ blog.blog_content|nl2br }}<br/><br/>
+            {{ blog.blog_content|raw|nl2br }}<br/><br/>
             由 {{ blog.user.username }} 在 {{ blog.commitTime|date('Y-m-d H:i') }} 发表<br/>
-            评论数:{{ viewObject->count_comments(blog.blog_id) }}<br/>
+            评论数:{{ viewObject.count_comments(blog.blog_id) }}<br/>
         </div>
         {% endfor %}<br/>
         <my:page src='{{ url_base }}index.php?go={{ appName }}.blog.display' /><br/>
