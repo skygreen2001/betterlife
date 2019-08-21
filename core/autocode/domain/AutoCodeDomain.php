@@ -43,6 +43,7 @@ class AutoCodeDomain extends AutoCode
     {
         self::$app_dir         = Gc::$appName;
         self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS.self::$dir_src . DS . self::$domain_dir . DS;
+        
         self::init();
         if (self::$isOutputCss) self::$showReport .= UtilCss::form_css() . "\r\n";
         self::$enumClass       = "";
@@ -71,6 +72,9 @@ class AutoCodeDomain extends AutoCode
         self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . self::$enum_dir . "'>" . self::$domain_dir_full . self::$enum_dir."</a></font><br/><br/>";
         self::$showReport .= self::$enumClass;
         self::$showReport .= "</div>";
+        
+        // 获取类主键的时候，需要获取类，第一次新建的时候，目标路径下还没有该类定义
+        load_module("model", self::$domain_dir_full);
     }
 
     /**

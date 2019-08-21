@@ -135,7 +135,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $classname    = self::getClassname($tablename);
         $instancename = self::getInstancename($tablename);
         $realId       = DataObjectSpec::getRealIDColumnName($classname);
-
+        
         $column_contents  = "";
         $imgColumnDefs    = "";
         $bitColumnDefs    = "";
