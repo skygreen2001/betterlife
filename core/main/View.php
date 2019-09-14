@@ -96,7 +96,7 @@ class View {
         $this->template_set($key, $value, $template_mode);
     }
 
-    public function get($property) {
+    public function get($key) {
         if (is_array($this->vars)) {
             return $this->vars[$key];
         } else {
@@ -257,15 +257,27 @@ class View {
                   die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。<br/></p>");
                 }
                 $this->template = new Smarty();
-                if ( Smarty::SMARTY_VERSION>=3.1 && class_exists("SmartyBC") ) $this->template = new SmartyBC();
-                $this->template->template_dir  =  Gc::$nav_root_path . $this->template_dir;
-                $this->template->compile_dir   =  Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
-                $this->template->config_dir    =  $template_tmp_dir . "configs" . DS;
-                $this->template->cache_dir     =  $template_tmp_dir . "cache" . DS;
+                if ( Smarty::SMARTY_VERSION >= 3.1 && class_exists("SmartyBC") ) {
+                    $this->template = new SmartyBC();
+                }
+                $this->template->template_dir  = Gc::$nav_root_path . $this->template_dir;
+                $this->template->compile_dir   = Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
+                $this->template->config_dir    = $template_tmp_dir . "configs" . DS;
+                $this->template->cache_dir     = $template_tmp_dir . "cache" . DS;
                 $this->template->compile_check = true;
                 $this->template->allow_php_templates = true;
-                $this->template->allow_php_tag = true;
                 // 开启自定义安全机制
+                if ( class_exists("Smarty_Security") ){
+                    $my_security_policy = new Smarty_Security($this->template);
+                    $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName);
+                    $my_security_policy->allow_php_tag = true;
+                    $my_security_policy->php_functions = array();
+                    $my_security_policy->php_handling = Smarty::PHP_PASSTHRU;
+                    $my_security_policy->php_modifier = array();
+                    $my_security_policy->modifiers = array();
+                    $this->template->enableSecurity($my_security_policy);
+                }
+                
                 // $my_security_policy = new Smarty_Security($this->template);
                 // $my_security_policy->allow_php_tag = true;
                 // $this->template->enableSecurity($my_security_policy);
@@ -346,10 +358,12 @@ class View {
                       $this->set($key, $value);
                     }
                   }
-                  $name_viewObject    = ViewObject::get_Class();
-                  $name_viewObject{0} = strtolower($name_viewObject{0});
-                  $this->template->assignByRef($name_viewObject, $this->viewObject);
+                } else {
+                    $this->viewObject = new ViewObject();
                 }
+                $name_viewObject    = ViewObject::get_Class();
+                $name_viewObject{0} = strtolower($name_viewObject{0});
+                $this->template->assignByRef($name_viewObject, $this->viewObject);
                 $this->template->display($templateFilePath);
                 break;
             case self::TEMPLATE_MODE_TWIG:

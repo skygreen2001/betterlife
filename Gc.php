@@ -18,8 +18,8 @@ class Gc {
     public static $database_config = array(
         'db_type'  => 0,//默认使用mysql数据库. EnumDbSource::DB_MYSQL=0, 具体定义参见Config_Db.php里EnumDbSource的定义
         'driver'   => 1,//数据库使用调用引擎. EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI, 具体定义参见Config_Db.php里EnumDbEngine的定义
-        'host'     => '127.0.0.1',//数据库主机[默认本地 localhost]
-        // 'host'     => '192.168.64.2',//数据库主机[默认本地 localhost]
+        // 'host'     => '127.0.0.1',//数据库主机[默认本地 localhost]
+        'host'     => '192.168.64.2',//数据库主机[默认本地 localhost]
         'port'     => '',//数据库端口
         'database' => 'betterlife',//数据库名称
         'username' => 'root',//数据库用户名

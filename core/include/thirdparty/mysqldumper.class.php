@@ -41,11 +41,11 @@ class Mysqldumper {
     var $_dbpassword;
     var $_dbname;
     var $_isDroptables;
-    var $tableid;    //数据表ID
+    var $tableid;    //锟斤拷锟捷憋拷ID
     var $startid;
 
 
-    function Mysqldumper($host = "localhost", $dbuser = "", $dbpassword = "", $dbname = "") {
+    function __construct($host = "localhost", $dbuser = "", $dbpassword = "", $dbname = "") {
         $this->setHost($host);
         $this->setDBuser($dbuser);
         $this->setDBpassword($dbpassword);
@@ -108,7 +108,7 @@ class Mysqldumper {
         }
 
         $fw = @fopen($bakfile, "wb");
-        if(!$fw) exit("备份目录{$backdir}不可写");
+        if(!$fw) exit("锟斤拷锟斤拷目录{$backdir}锟斤拷锟斤拷写");
         $resource = mysql_connect($this->getHost(), $this->getDBuser(), $this->getDBpassword(),true);
         mysql_select_db($this->getDbname(), $resource);
         if(!constant("DB_OLDVERSION"))
@@ -266,15 +266,15 @@ class Mysqldumper {
             }
     }
 
-    //截最后一个是否是半个UTF-8中文
+    //锟斤拷锟斤拷锟揭伙拷锟斤拷欠锟斤拷前锟斤拷UTF-8锟斤拷锟斤拷
     function utftrim($str)
     {
         $found = false;
         for($i=0;$i<4&&$i<strlen($str);$i++)
         {
             $ord = ord(substr($str,strlen($str)-$i-1,1));
-            //UTF-8中文分{四/三/二字节码},第一位分别为11110xxx(>192),1110xxxx(>192),110xxxxx(>192);接下去的位数都是10xxxxxx(<192)
-            //其他ASCII码都是0xxxxxxx
+            //UTF-8锟斤拷锟侥凤拷{锟斤拷/锟斤拷/锟斤拷锟街斤拷锟斤拷},锟斤拷一位锟街憋拷为11110xxx(>192),1110xxxx(>192),110xxxxx(>192);锟斤拷锟斤拷去锟斤拷位锟斤拷锟斤拷锟斤拷10xxxxxx(<192)
+            //锟斤拷锟斤拷ASCII锟诫都锟斤拷0xxxxxxx
             if($ord> 192)
             {
                 $found = true;

@@ -230,6 +230,6 @@ require_once ("init.php");
 // echo "<script>window.open('".$response["data"]."');</script>";
 
 
-if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
     phpinfo();
 }
