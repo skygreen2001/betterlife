@@ -249,7 +249,6 @@ class ServiceBlog extends Service implements IServiceBasic
                     $arr_import_header = self::fieldsMean(Blog::tablename());
                     $data = UtilExcel::exceltoArray($uploadPath, $arr_import_header);
                     $result = false;
-                    // print_r($data);
                     if ($data){
                         foreach ($data as $blog) {
                             if (!is_numeric($blog["user_id"])){

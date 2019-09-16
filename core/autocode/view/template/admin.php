@@ -174,6 +174,7 @@ $idColumnDefs
 
                 },
                 error: function(response) {
+                    \$("#upload_file").val("");
                 },
                 processData: false,
                 contentType: false,

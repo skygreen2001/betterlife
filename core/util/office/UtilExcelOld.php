@@ -2,13 +2,13 @@
 /**
  +---------------------------------<br/>
  * 功能:处理Excel相关的事宜方法。<br/>
- * PhpSpreadsheet's documentation: https://phpspreadsheet.readthedocs.io
  +---------------------------------
  * @category betterlife
  * @package util.common
  * @author skygreen
+ * NOTICE: composer.json 需要安装: "phpoffice/phpexcel" : "^1.8", 老版本支持Php5.2以上
  */
-class UtilExcel extends Util
+class UtilExcelOld extends Util
 {
     /**
     * 将数组转换成Excel文件
@@ -24,15 +24,12 @@ class UtilExcel extends Util
     {
         UtilFileSystem::createDir( dirname($outputFileName) );
         $objActSheet = array ();
-        $objExcel    = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        self::addSuffixInfo($objExcel);
-
+        $objExcel    = new PHPExcel();
         if ( $isExcel2007 ) {
             if ( !function_exists("zip_open") ) { LogMe::log( "后台下载功能需要Zip模块支持,名称:php_zip<br/>", EnumLogLevel::ALERT ); die(); }
-            $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objExcel);
-            $objWriter->setOffice2003Compatibility(true);
+            $objWriter = new PHPExcel_Writer_Excel2007($objExcel);
         }else{
-            $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xls($objExcel);
+            $objWriter = new PHPExcel_Writer_Excel5($objExcel);
         }
         $objExcel->setActiveSheetIndex(0);
         $objActsheet = $objExcel->getActiveSheet();
@@ -98,8 +95,6 @@ class UtilExcel extends Util
             //$outputFileName=UtilString::utf82gbk($outputFileName);
             $objWriter->save($outputFileName);
         }
-        $objExcel->disconnectWorksheets();
-        unset($objExcel);
     }
 
     /**
@@ -139,26 +134,20 @@ class UtilExcel extends Util
         }
         if ( $filetype == 'xls' || $filetype == 'xlsx' )
         {
-            if ( $filetype == 'xls' ) {
-                $PHPReader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-            } else {
-                $PHPReader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            }
-            $PHPExcel  = $PHPReader->load($importFileName);
-            if ( !$PHPExcel ) {
-                LogMe::log( '请确保Excel格式正确！' );
-                return null;
-            }
-
-            if ($PHPExcel->getSheetCount() <= 0) {
-                LogMe::log( '请确保Excel存在数据！' );
-                LogMe::log( print_pre( $PHPExcel ) );
-                return null;
+            $PHPExcel  = new PHPExcel();
+            $PHPReader = new PHPExcel_Reader_Excel2007();
+            if ( !$PHPReader->canRead($importFileName) )
+            {
+                $PHPReader = new PHPExcel_Reader_Excel5();
+                if ( !$PHPReader->canRead($importFileName) )
+                {
+                    LogMe::log( '请确保Excel格式正确！' );
+                    return null;
+                }
             }
             try
             {
-                $PHPReader->setReadDataOnly(true);
-                LogMe::log(print_pre($PHPExcel));
+                $PHPExcel     = $PHPReader->load($importFileName);
                 $currentSheet = $PHPExcel->getSheet(0);
                 //取得excel的sheet
                 $allColumn    = $currentSheet->getHighestColumn(); //表中列数
@@ -228,20 +217,4 @@ class UtilExcel extends Util
         }
         return $result;
     }
-
-    /**
-     * 添加Excel文档附加信息
-     * @param @mixed $spreadsheet Excel文档
-     */
-    private static function addSuffixInfo($spreadsheet) {
-      $spreadsheet->getProperties()
-                  ->setCreator('skygreen2001')
-                  ->setLastModifiedBy("skygreen2001")
-                  ->setTitle(Gc::$site_name)
-                  ->setSubject(Gc::$site_name)
-                  ->setDescription(Gc::$site_name)
-                  ->setKeywords(Gc::$site_name)
-                  ->setCategory(Gc::$site_name);
-    }
-
 }
