@@ -148,7 +148,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      */
     public function change_character_set($character_code = "utf8mb4")
     {
-        $sql = "SET NAMES " . Config_C::CHARACTER_UTF ;
+        $sql = "SET NAMES " . $character_code;
         $this->connection->query($sql);
     }
 
