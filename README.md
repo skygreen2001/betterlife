@@ -150,8 +150,8 @@
   > http://www.phpcomposer.com/
 * **下载Smarty**
   > https://github.com/smarty-php/smarty
-* **下载PHPExcel**
-  > https://github.com/PHPOffice/PHPExcel
+* **下载PhpSpreadsheet**
+  > https://github.com/PHPOffice/PhpSpreadsheet
 * **安装UEditor**
   > http://ueditor.baidu.com/website/download.html
 

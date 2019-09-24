@@ -1,6 +1,32 @@
 <?php
 require_once ("init.php");
 
+
+use DebugBar\StandardDebugBar;
+
+$debugbar = new StandardDebugBar();
+$debugbarRenderer = $debugbar->getJavascriptRenderer(Gc::$url_base . "install/vendor/maximebf/debugbar/src/DebugBar/Resources");
+
+$debugbar["messages"]->addMessage("hello world!");
+?>
+<html>
+    <head>
+        <?php echo $debugbarRenderer->renderHead() ?>
+        <style>
+        /* 替换debugbar的图标 */
+        .phpdebugbar div.phpdebugbar-header, .phpdebugbar a.phpdebugbar-restore-btn {
+            background-image: url(favicon.ico);
+        }
+        </style>
+    </head>
+    <body>
+        ...
+        <?php echo $debugbarRenderer->render() ?>
+    </body>
+</html>
+
+<?php
+// require_once ("init.php");
 //调用一对一
 // $user=User::get_by_id(1);
 // $userdetail=$user->userdetail;
@@ -229,7 +255,6 @@ require_once ("init.php");
 // $response=Manager_Service::blogService()->exportBlog();
 // echo "<script>window.open('".$response["data"]."');</script>";
 
-
-if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
-    phpinfo();
-}
+// if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+//     phpinfo();
+// }

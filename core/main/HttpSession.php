@@ -15,11 +15,10 @@ class HttpSession
     public static function init()
     {
         // session_save_path("/tmp");
-        if(!isset($_SESSION))
-        {
+        if ( !isset($_SESSION) ) {
             session_start() or
             die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>需要手动修改php.ini文件以下配置,并重启:<br/>".str_repeat("&nbsp;",8).
-                "session.save_path = \"/tmp\"<br/>".str_repeat("&nbsp;",8)).
+                "session.save_path = \"/tmp\"<br/>".str_repeat("&nbsp;",8)) .
                 "请注意save_path路径，网站拥有者是否有权限可以访问！</p>";
         }
     }
@@ -33,7 +32,9 @@ class HttpSession
     public static function isHave($key)
     {
         // die(sys_get_temp_dir());
-        if (!isset($_SESSION))self::init();
+        if ( !isset($_SESSION) ){
+            self::init();
+        }
         return isset($_SESSION[$key]);
     }
 
@@ -45,7 +46,9 @@ class HttpSession
      */
     public static function set($key,$value)
     {
-        if (!isset($_SESSION))self::init();
+        if ( !isset($_SESSION) ) {
+            self::init();
+        }
         $_SESSION[$key]= $value;
     }
 
@@ -55,10 +58,10 @@ class HttpSession
      */
     public static function sets($key_values)
     {
-        if ($key_values&&is_array($key_values)&&(count($key_values)>0))
+        if ( $key_values && is_array($key_values) && ( count($key_values) > 0 ) )
         {
             foreach ($key_values as $key=>$value) {
-                self::set($key,$value);
+                self::set( $key, $value );
             }
         }
     }
@@ -71,10 +74,12 @@ class HttpSession
      */
     public static function get($key)
     {
-        if (!isset($_SESSION))self::init();
-        if (isset($_SESSION[$key])){
+        if ( !isset($_SESSION) ) {
+            self::init();
+        }
+        if ( isset($_SESSION[$key]) ) {
             return $_SESSION[$key];
-        }else{
+        } else {
             return null;
         }
     }
@@ -86,11 +91,11 @@ class HttpSession
      */
     public static function gets($keys)
     {
-        $result=array();
-        if ($keys&&is_array($keys)&&(count($keys)>0))
+        $result = array();
+        if ( $keys && is_array($keys) && ( count($keys) > 0 ) )
         {
             foreach ($keys as $key) {
-                $result[$key]=self::get($key);
+                $result[$key] = self::get($key);
             }
         }
         return $result;
@@ -103,8 +108,10 @@ class HttpSession
      */
     public static function remove($key)
     {
-        if (!isset($_SESSION))self::init();
-        if(isset($_SESSION[$key])) {
+        if ( !isset($_SESSION) ) {
+            self::init();
+        }
+        if ( isset($_SESSION[$key]) ) {
             unset($_SESSION[$key]);
         }
     }
@@ -116,8 +123,10 @@ class HttpSession
      */
     public static function removes($keys)
     {
-        if (!isset($_SESSION))self::init();
-        if ($keys&&is_array($keys)&&(count($keys)>0))
+        if ( !isset($_SESSION) ) {
+            self::init();
+        }
+        if ( $keys && is_array($keys) && ( count($keys) > 0 ) )
         {
             foreach ($keys as $key) {
                 unset($_SESSION[$key]);

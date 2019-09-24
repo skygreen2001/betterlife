@@ -13,7 +13,7 @@ class Dispatcher
      * 是否输出返回静态页面信息
      * @var bool
      */
-    public static $isOutputStatic=false;
+    public static $isOutputStatic = false;
     /**
      * WEB URL的转发
      * @global Action $app

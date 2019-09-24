@@ -9,12 +9,12 @@
 * **安装Smarty | PHPExcel | UEditor**
 
   - 下载Github库
-    - Smarty  : https://github.com/smarty-php/smarty
-    - PHPExcel: https://github.com/PHPOffice/PHPExcel
+    - Smarty        : https://github.com/smarty-php/smarty
+    - PhpSpreadsheet: https://github.com/PHPOffice/PhpSpreadsheet
 
   - 放置 Smarty 库, PhpExcel库
     - 放置 Smarty 库 -> install/vendor/smarty/smarty/ 目录下
-    - 放置 PHPExcel 库 -> install/vendor/phpoffice/phpexcel/ 目录下
+    - 放置 PhpSpreadsheet 库 -> install/vendor/phpoffice/phpspreadsheet/ 目录下
 
   - 下载 在线编辑器: [UEditor](http://ueditor.baidu.com/website/download.html)
     - 下载 在线编辑器: [UEditor] [1.4.3.3 PHP 版本] UTF-8版
