@@ -15,14 +15,10 @@ $sql_report   = str_replace(";", "", $sql_report);
 $where_clause = ServiceReport::getWhereClause($sql_report, $query, $startDate, $endDate, $columns);
 $orderDes     = ServiceReport::getOrderBy($sql_report);
 
-$reportSql   = "select * from (";
-$reportSql  .= $sql_report;
-$reportSql  .= ") report_tmp " . $where_clause . $orderDes;
-$data        = sqlExecute($reportSql);
-$totalCount  = @count($data);
-$pageData    = array();
-$pageCount   = 0;
-
+$countSql   = "select count(*) from (" . $sql_report . ") report_tmp " . $where_clause;
+$totalCount  = sqlExecute($countSql);
+$pageData   = array();
+$pageCount  = 0;
 if ( $totalCount > 0 ) {
     // 总页数
     $pageCount = ceil($totalCount / $pageSize);
@@ -35,7 +31,11 @@ if ( $totalCount > 0 ) {
         if ( $endPoint > $totalCount ) {
             $endPoint = $totalCount;
         }
-        $pageData = array_slice($data, $startPoint, $pageSize, false);
+
+				$reportSql   = "select * from (";
+				$reportSql  .= $sql_report;
+				$reportSql  .= ") report_tmp " . $where_clause . $orderDes . " limit " . $startPoint . "," . $pageSize;
+        $pageData = sqlExecute($reportSql);
     }
 }
 

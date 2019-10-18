@@ -130,6 +130,11 @@ TPL_BUILDPROD;
           Vue.config.debug = true;
           Vue.config.devtools = true;
 
+          // javascript的几种使用多行字符串的方式: http://jser.me/2013/08/20/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E4%BD%BF%E7%94%A8%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B9%E5%BC%8F.html
+          function heredoc(fn) {
+              return fn.toString().split('\n').slice(1,-1).join('\n') + '\n'
+          }
+
           var reportForm = new Vue({
             el: '#report-form',
             data: {
@@ -148,7 +153,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: "<?php echo $reportSql ?>",
+                report_sql: heredoc(function(){/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
                 report_dev: true
               },
               reportProdForm: {
@@ -156,7 +161,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: "<?php echo $reportSql ?>",
+                report_sql: heredoc(function(){/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
                 report_prod: true
               },
               ruleValidate: {

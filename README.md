@@ -157,4 +157,5 @@
 
 ## 学习资料
 
+- [学习Symfony](docs/learn/SYMFONY.md)
 - PHP The Right Way: https://laravel-china.github.io/php-the-right-way/

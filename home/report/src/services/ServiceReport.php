@@ -20,8 +20,20 @@ class ServiceReport extends Service
         $reportSql = strtolower($reportSql);//转换成小写
         //解析sql取出查的字段名，以array输出
         $fromPos   = strpos($reportSql, " from");//获取from的位置
+        if ( empty($fromPos) ) {
+            $fromPos = stripos($reportSql, "	from");
+        }
+        if ( empty($fromPos) ) {
+            $fromPos = stripos($reportSql, "from");
+        }
         $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
         $reportSql = substr($reportSql, 7);//截取select后from前的字符串
+        if (contain($reportSql, "from")) {
+            if (!preg_match('/from(\s+)(\S*),/i', $reportSql)) {
+                $fromPos   = strpos($reportSql, "from");//获取from的位置
+                $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
+            }
+        }
 
         // [PHP正则表达式来拆分SQL字段列表](http://cn.voidcc.com/question/p-fmqfqqts-ye.html)
         // [PHP SQL Parser](https://code.google.com/archive/p/php-sql-parser/)
@@ -34,8 +46,11 @@ class ServiceReport extends Service
             $newSelCol = preg_split('/( |as)/', $selCol, 0, PREG_SPLIT_NO_EMPTY);//正则匹配分隔字符串
             //以下用来判断select column列名是否被重命名 ( 根据newSelCol的size来判断 )
             if ( count($newSelCol) > 1) {
-                $newSelCol[1] = preg_replace("/('|`|\")/", "", $newSelCol[1]);
-                $arr_output_header[$newSelCol[1]] = $newSelCol[1];
+                // $newSelCol[1] = preg_replace("/('|`|\")/", "", $newSelCol[1]);
+                // $arr_output_header[$newSelCol[1]] = $newSelCol[1];
+                $lst_index = count($newSelCol) - 1;
+                $newSelCol[$lst_index] = preg_replace("/('|`|\")/", "", $newSelCol[$lst_index]);
+                $arr_output_header[$newSelCol[$lst_index]] = $newSelCol[$lst_index];
             } else {
                 $newSelColStr   = $newSelCol[0];
                 $newSelColArray = explode(".", $newSelColStr);
@@ -181,7 +196,7 @@ class ServiceReport extends Service
         if ( !empty($where_clause) ) $where_clause = " where " . $where_clause;
         return $where_clause;
     }
-    
+
 }
 
 ?>

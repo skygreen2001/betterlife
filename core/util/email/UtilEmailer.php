@@ -33,7 +33,7 @@ class UtilEmailer
      * @param string $subject 邮件标题
      * @param string $content 邮件内容
      */
-    public static function sendEmail($fromaddress,$fromname,$toaddress,$toname,$subject,$content)
+    public static function sendEmail($fromaddress, $fromname, $toaddress, $toname, $subject, $content)
     {
         $mail = new PHPMailer(); //建立邮件发送类
         $mail->Host = self::$host; //您的企业邮局域名
