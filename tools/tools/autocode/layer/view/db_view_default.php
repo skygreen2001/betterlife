@@ -1,5 +1,6 @@
 <?php
 require_once ("../../../../../init.php");
+require_once ("../../../../../core/autocode/AutoCodeAction.php");
 
 if (isset($_REQUEST["type"])&&!empty($_REQUEST["type"])){
     $type=$_REQUEST["type"];

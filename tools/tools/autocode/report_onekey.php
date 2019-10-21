@@ -64,13 +64,9 @@ TPL_BUILDPROD;
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title><?php echo $title?></title>
-        <meta name="description" content="Hello">
+        <meta name="description" content="报表代码生成器">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
         <link rel="icon" href="<?php echo $url_base ?>favicon.ico" mce_href="favicon.ico" type="image/x-icon">
-
         <link rel="stylesheet" href="../../../misc/css/common.min.css">
         <link rel="stylesheet" href="../../../misc/css/normalize.css">
     </head>
