@@ -29,8 +29,10 @@ class Library_Loader
     {
         $dir_phpexcel   = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "phpoffice" . DS . "phpexcel" . DS . "Classes" . DS;
         $class_phpexcel = "PHPExcel.php";
-        include($dir_phpexcel . $class_phpexcel);
-        include($dir_phpexcel . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php');
+        if (file_exists($dir_phpexcel . $class_phpexcel)) {
+            include($dir_phpexcel . $class_phpexcel);
+            include($dir_phpexcel . 'PHPExcel' . DS . 'Writer' . DS . 'Excel2007.php');
+        }
     }
 
     /**
@@ -58,8 +60,10 @@ class Library_Loader
         $dir_smarty    = Gc::$nav_root_path . "install" . DS . "vendor" . DS . "smarty" . DS .  "smarty" . DS . "libs". DS;
         $file_smarty   = "Smarty.class.php";
         $file_smartybc = "SmartyBC.class.php";
-        include $dir_smarty . $file_smarty;
-        include $dir_smarty . $file_smartybc;
+        if (file_exists($dir_smarty . $file_smarty)) {
+            include $dir_smarty . $file_smarty;
+            include $dir_smarty . $file_smartybc;
+        }
     }
 
     /**

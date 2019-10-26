@@ -5,6 +5,9 @@ $os     = strtolower(php_uname());
 $phpver = strtolower(phpversion());
 echo UtilCss::form_css() . "\r\n";
 echo "
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <style type = 'text/css'>
 body {
     font-family: Arial;
@@ -17,6 +20,8 @@ p {
     margin:5px;
 }
 </style>
+</head>
+<body>
 ";
 echo "系统信息:" . $os . "<br/>";
 echo "PHP版本:" . $phpver . "<br/>";
@@ -161,5 +166,6 @@ MYSQLCONFIG;
     $mysql_config = str_replace("    ", "&nbsp;&nbsp;&nbsp;&nbsp;", $mysql_config);
     echo $mysql_config . str_repeat("&nbsp;", 12);
 }
+echo "</body></html>";
 
 ?>
