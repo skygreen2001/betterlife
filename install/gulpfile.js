@@ -86,6 +86,10 @@ gulp.task('ueditor_grunt', function() {
     cwd: config.ueditor.src
   }).exec();
 
+  new run.Command('sudo npm install -g grunt-cli', {
+    cwd: config.ueditor.src
+  }).exec();
+
   new run.Command('sudo grunt default', {
     cwd: config.ueditor.src
   }).exec();
