@@ -13,7 +13,7 @@ class EnumDataObjectDefaultKeyword extends Enum
      * 在具体的数据对象里需要用该名称声明列规格说明。它需要定义为public static的Access属性。<br/>
      * 它和$field_spec_default内定义的列规格最终会整合在一起从而最终决定数据对象的列规格说明
      */
-    const NAME_FIELD_SPEC="field_spec";
+    const NAME_FIELD_SPEC = "field_spec";
     /**
      * 列规格说明的名称。<br/>
      * 它只能在DataObject内定义，作为所有数据对象全局通用的列规格说明<br/>
@@ -24,21 +24,21 @@ class EnumDataObjectDefaultKeyword extends Enum
     /**
      * ID名称定义的策略的名称
      */
-    const NAME_IDNAME_STRATEGY="idname_strategy";
+    const NAME_IDNAME_STRATEGY = "idname_strategy";
     /**
      * ID名称中的连接符的名称。<br/>
      * ID名称定义的策略为TABLENAME_ID有效。
      */
-    const NAME_IDNAME_CONCAT="idname_concat";
+    const NAME_IDNAME_CONCAT = "idname_concat";
     /**
      * Foreign ID名称定义的策略的名称
      */
-    const NAME_FOREIGNIDNAME_STRATEGY="foreignid_name_strategy";
+    const NAME_FOREIGNIDNAME_STRATEGY = "foreignid_name_strategy";
     /**
      * Foreign ID名称中的连接符的名称。<br/>
      * Foreign ID名称定义的策略为TABLENAME_ID有效。
      */
-    const NAME_FOREIGNID_CONCAT="foreignid_concat";
+    const NAME_FOREIGNID_CONCAT = "foreignid_concat";
 }
 
 /**
@@ -57,7 +57,7 @@ class EnumTableRelation extends Enum
     /**
      * 一对一关联
      */
-    const HAS_ONE    = 'has_one';
+    const HAS_ONE = 'has_one';
     /**
      * 从属一对一关联，即主表中一字段关联关系表中的主键
      */
@@ -76,29 +76,7 @@ class EnumTableRelation extends Enum
     const BELONGS_TO = 'belongs_many_many';
 }
 
-/**
- +---------------------------------------<br/>
- * 枚举类型：数据对象默认列定义<br/>
- +---------------------------------------<br/>
- * @category betterlife
- * @package core.model
- * @author skygreen
- */
-class EnumColumnNameDefault extends Enum
-{
-    /**
-     * 数据对象的唯一标识
-     */
-    const ID="id";
-    /**
-     * 数据创建的时间
-     */
-    const COMMITTIME="commitTime";
-    /**
-     * 数据最后更新的时间
-     */
-    const UPDATETIME="updateTime";
-}
+
 
 /**
  +---------------------------------------<br/>
@@ -114,21 +92,21 @@ class EnumIDNameStrategy extends Enum
      * 无策略<br/>
      * 说明：需要在数据对象类里定义$field_spec；说明ID别名。
      */
-    const NONE=-1;
+    const NONE = -1;
     /**
      * ID名称为：id
      */
-    const ID=0;
+    const ID = 0;
     /**
      * ID名称为:对象名+'id'<br/>
      * 如果对象名为User,则ID名称为:userid【头字母大小写均可】
      */
-    const TABLENAMEID=1;
+    const TABLENAMEID = 1;
     /**
      * ID名称为:对象名+连接符+'id' <br/>
      * 如果对象名为User,连接符为'_';则ID名称为:user_id【头字母大小写均可】
      */
-    const TABLENAME_ID=2;
+    const TABLENAME_ID = 2;
 }
 
 
@@ -146,12 +124,12 @@ class EnumForeignIDNameStrategy extends Enum
      * ID名称为:对象名+'id'<br/>
      * 如果对象名为User,则ID名称为:userid【头字母大小写均可】
      */
-    const TABLENAMEID=1;
+    const TABLENAMEID = 1;
     /**
      * ID名称为:对象名+连接符+'id' <br/>
      * 如果对象名为User,连接符为'_';则ID名称为:user_id【头字母大小写均可】
      */
-    const TABLENAME_ID=2;
+    const TABLENAME_ID = 2;
 }
 
 /**
@@ -167,15 +145,15 @@ class EnumDataSpec extends Enum
     /**
      * 数据对象定义中需要移除的列
      */
-    const REMOVE="remove";
+    const REMOVE = "remove";
     /**
      * 多对多关系表名称定义，如无定义，则按默认规则查找指定表。
      */
-    const MANY_MANY_TABLE="many_many_table";
+    const MANY_MANY_TABLE = "many_many_table";
     /**
      * 数据对象外键名称定义，如无定义，则按默认规则查找指定外键。
      */
-    const FOREIGN_ID="foreign_id";
+    const FOREIGN_ID = "foreign_id";
 }
 //</editor-fold>
 
@@ -221,16 +199,16 @@ class DataObjectSpec
     * 它全局的定义了当前应用的列规格说明；<br/>
     * @var array
     */
-    static $field_spec_default= array(
+    static $field_spec_default = array(
         //EnumColumnNameDefault::ID=>'id',
         //EnumColumnNameDefault::COMMITTIME=>'commitTime',
-        EnumDataSpec::REMOVE=>array(
+        EnumDataSpec::REMOVE => array(
             //'updateTime'
         ),
-        EnumDataSpec::MANY_MANY_TABLE=>array(
+        EnumDataSpec::MANY_MANY_TABLE => array(
             //多对多关系类名=>多对多关系表名
         ),
-        EnumDataSpec::FOREIGN_ID=>array(
+        EnumDataSpec::FOREIGN_ID => array(
             //类名=>外键名
             //实例对象名=>外键名[在从属于一对一关系类名中经常遇到，比如家庭地址中省|市|区都关联同一个类:地区；需要用实例对象名]
         )
@@ -348,13 +326,13 @@ class DataObjectSpec
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FOREIGNID_CONCAT]);
         unset($arrDataObject[self::NAME_REAL_FIELDSPEC]);
         unset($arrDataObject["currentDao"]);
-        $field_spec=self::real_field_spec($obj);
-        if (isset($field_spec)){
-            if (array_key_exists(EnumDataSpec::REMOVE, $field_spec)){
-                $field_spec_remove=$field_spec[EnumDataSpec::REMOVE];
+        $field_spec = self::real_field_spec( $obj );
+        if ( isset($field_spec) ){
+            if ( array_key_exists(EnumDataSpec::REMOVE, $field_spec) ) {
+                $field_spec_remove = $field_spec[EnumDataSpec::REMOVE];
                 foreach ($field_spec_remove as $value) {
                     unset($arrDataObject[$value]);
-                    if (in_array($value, $field_spec)){
+                    if ( in_array($value, $field_spec) ) {
                         unset($arrDataObject[array_search($value, $field_spec)]);
                     }
                 }
@@ -368,7 +346,7 @@ class DataObjectSpec
     /**
      * 存放当前数据对象的列规格说明的名称。
      */
-    const NAME_REAL_FIELDSPEC="real_fieldspec";
+    const NAME_REAL_FIELDSPEC = "real_fieldspec";
     /**
      * 当前数据对象的列规格说明
      * 由两部分组成：
@@ -453,7 +431,7 @@ class DataObjectSpec
 
         if ( $dataobject instanceof DataObject ) {
             $columnName = self::getRealColumnName( $dataobject, EnumColumnNameDefault::ID );
-            
+
             if ( $columnName === EnumColumnNameDefault::ID ) {
                 $idname_strategy = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY );
                 switch ($idname_strategy) {

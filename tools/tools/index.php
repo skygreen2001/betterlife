@@ -17,6 +17,18 @@ $url_base = UtilNet::urlbase();
     <link rel="stylesheet" href="../../misc/css/common.min.css">
     <link rel="stylesheet" href="../../misc/css/normalize.css">
     <style type="text/css">
+      .vertical-center-modal{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .vertical-center-modal .ivu-modal{
+          top: 0;
+      }
+      input{
+        height: 30px;
+        padding-left: 5px;
+      }
       li {
         list-style: none;
         text-align: left;
@@ -25,17 +37,17 @@ $url_base = UtilNet::urlbase();
     </style>
 </head>
 <body>
-  <div id="report-form" class="container" align="center">
+  <div id="tools-box" class="container" align="center">
     <card id="dbCommonCard" name='dbCommonCard' style="width:600px;margin: 150px auto 10px auto;">
       <p slot="title" style="text-align:left;">
           <i class="ivu-icon ivu-icon-ios-construct"></i> 数据库常用脚本生成工具
       </p>
       <ul>
-        <li><a href="db/rename_db_prefix.php" target="_blank">修改数据库表前缀</a></li>
-        <li><a href="db/db_replace_keywords.php" target="_blank">替换所有表里的关键词</a></li>
-        <li><a href="db/db_delete_data.php" target="_blank">删除所有的表数据</a></li>
-        <li><a href="db/db_delete_tables.php" target="_blank">删除所有的表</a></li>
-        <li><a href="db/sqlserver/db_sqlserver_convert_prepare.php" target="_blank">移植数据库表从Mysql到Sqlserver</a></li>
+        <li><a @click="at=1;inputModel=true">修改数据库表前缀</a></li>
+        <li><a @click="at=2;inputModel=true">替换所有表里的关键词</a></li>
+        <li><a @click="at=3;ok()">删除所有的表数据</a></li>
+        <li><a @click="at=4;ok()">删除所有的表</a></li>
+        <li><a @click="at=5;ok()">移植数据库表从Mysql到Sqlserver</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="at=6;ok()">[包括注释]</a></li>
       </ul>
     </card>
     <card id="dbCodeCard" name='dbCodeCard' style="width:600px;margin: 10px auto 50px auto;">
@@ -52,6 +64,19 @@ $url_base = UtilNet::urlbase();
       </ul>
     </card>
     <i-button type="primary" @click="goback">返回首页</i-button><br><br>
+    <Modal title="修改数据库表前缀" v-model="inputModel" @on-ok="ok" class-name="vertical-center-modal">
+      <div style='line-height:1.5em;'>
+          <i-input v-model="originTxt">
+            <span slot="prepend">原关键字</span>
+          </i-input><br/>
+          <i-input v-model="newTxt">
+            <span slot="prepend">新关键字</span>
+          </i-input>
+      </div>
+    </Modal>
+    <Modal title="结果" v-model="resultModel" cancel-text="" fullscreen>
+        <div v-html="result"></div>
+    </Modal>
   </div>
   <script src="../../misc/js/common/bower.min.js"></script>
   <script type="text/javascript">
@@ -59,9 +84,77 @@ $url_base = UtilNet::urlbase();
       Vue.config.devtools = true;
 
       var reportForm = new Vue({
-        el: '#report-form',
-
+        el: '#tools-box',
+        data () {
+            return {
+                /**
+                 * 1: 修改数据库表前缀
+                 * 2: 替换所有表里的关键词
+                 * 3: 删除所有的表数据
+                 * 4: 删除所有的表
+                 * 5: 移植数据库表从Mysql到Sqlserver
+                 * 6: 移植数据库表从Mysql到Sqlserver(包括注释)
+                 */
+                at: 0,
+                inputModel: false,
+                originTxt: '',
+                newTxt: '',
+                resultModel: false,
+                result: ''
+            }
+        },
         methods: {
+          ok: function() {
+            let ctrl = this;
+            let url = '';
+            let params = {};
+            switch (this.at) {
+              case 1:
+                url = "db/rename_db_prefix.php";
+                params = {
+                  old_prefix: this.originTxt,
+                  new_prefix: this.newTxt
+                }
+                break;
+              case 2:
+                url = "db/db_replace_keywords.php";
+                params = {
+                  oldwords: this.originTxt,
+                  newwords: this.newTxt
+                }
+                break;
+              case 3:
+                url = "db/db_delete_data.php";
+                break;
+              case 4:
+                url = "db/db_delete_tables.php";
+                break;
+              case 5:
+                url = "db/sqlserver/db_sqlserver_convert_prepare.php";
+                break;
+              case 6:
+                url = "db/sqlserver/db_sqlserver_convert_prepare.php";
+                params = {
+                  isComment: 1
+                }
+                break;
+
+              default:
+            }
+            if ( url ) {
+              axios.get(url,{
+                      params: params
+                   })
+                   .then(function(response) {
+                      // document.write(res.body);
+                      ctrl.resultModel = true;
+                      ctrl.result = response.data;
+                   })
+                   .catch(function (error) { // 请求失败处理
+                       console.log(error);
+                   });
+            }
+          },
           goback: function() {
              location.href = "<?php echo $url_base ?>";
           }
