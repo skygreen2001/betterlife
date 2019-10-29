@@ -43,7 +43,8 @@
     "maximebf/debugbar"  : ">=1.0.0",
     "twig/twig"          : "^2.0",
     "symfony/flex"       : "^1.4",
-    "symfony/yaml"       : ">=2.0.4"
+    "symfony/yaml"       : ">=2.0.4",
+    "doctrine/cache"     : "^1.8"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"

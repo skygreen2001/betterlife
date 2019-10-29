@@ -1,32 +1,6 @@
 <?php
 require_once ("init.php");
 
-
-use DebugBar\StandardDebugBar;
-
-$debugbar = new StandardDebugBar();
-$debugbarRenderer = $debugbar->getJavascriptRenderer(Gc::$url_base . "install/vendor/maximebf/debugbar/src/DebugBar/Resources");
-
-$debugbar["messages"]->addMessage("hello world!");
-?>
-<html>
-    <head>
-        <?php echo $debugbarRenderer->renderHead() ?>
-        <style>
-        /* 替换debugbar的图标 */
-        .phpdebugbar div.phpdebugbar-header, .phpdebugbar a.phpdebugbar-restore-btn {
-            background-image: url(favicon.ico);
-        }
-        </style>
-    </head>
-    <body>
-        ...
-        <?php echo $debugbarRenderer->render() ?>
-    </body>
-</html>
-
-<?php
-// require_once ("init.php");
 //调用一对一
 // $user=User::get_by_id(1);
 // $userdetail=$user->userdetail;
@@ -221,6 +195,9 @@ $debugbar["messages"]->addMessage("hello world!");
 // $comments=Comment::queryPageMultitable(1,6,"Blog a,Comment b","b.blog_id=a.blog_id and a.blog_name like '%Web%'");
 // print_r($comments);
 
+// 默认redis缓存
+// $serverCache = BBCache::singleton()->server();
+// $serverCache->TestRun();
 
 //PHP 与 Linq
 //Create data source
@@ -255,6 +232,6 @@ $debugbar["messages"]->addMessage("hello world!");
 // $response=Manager_Service::blogService()->exportBlog();
 // echo "<script>window.open('".$response["data"]."');</script>";
 
-// if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
-//     phpinfo();
-// }
+if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+    phpinfo();
+}
