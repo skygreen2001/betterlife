@@ -41,16 +41,22 @@ class EnumCacheDriverType extends Enum{
  */
 class BBCache {
     /**
-    * 分布式缓存管理器唯一实例
-    * @var BBCache
-    */
+     * 分布式缓存管理器唯一实例
+     * @var BBCache
+     */
     private static $instance;
     /**
-    * 缓存服务器
-    *
-    * @var mixed
-    */
-    private static $cache;
+     * 缓存服务器
+     *
+     * @var mixed
+     */
+    private $cache;
+    /**
+     * redis缓存服务器
+     *
+     * @var mixed
+     */
+    private $redisCache;
 
     private function __construct()
     {
@@ -58,7 +64,7 @@ class BBCache {
 
     /**
      * 单例化
-     * @return Manager_Db
+     * @return BBCache
      */
     public static function singleton() {
         if (!isset(self::$instance)){
@@ -149,14 +155,29 @@ class BBCache {
     }
 
     /**
-    * 获取缓存服务器
-    * @param mixed $cache_drive 处理缓存的方式的类型,默认采用Redis
-    * @return 缓存服务器
-    */
-    public function server($cache_drive = EnumCacheDriverType::REDIS){
-        if ($this->cache == null) {
+     * 获取缓存服务器
+     * @param mixed $cache_drive 处理缓存的方式的类型,默认采用Redis
+     * @return 缓存服务器
+     */
+    public function server($cache_drive = EnumCacheDriverType::REDIS) {
+        if ( $this->cache == null ) {
             $this->cache = $this->serverCache($cache_drive);
         }
         return $this->cache;
+    }
+
+
+    /**
+     * 获取Redis缓存服务器
+     * @param string $host
+     * @param string $port
+     * @param string $password
+     * @return Redis缓存服务器
+     */
+    public function redisServer($host = '', $port = '', $password = '') {
+        if ( $this->redisCache == null ) {
+            $this->redisCache = new Cache_Redis($host, $port, $password);
+        }
+        return $this->redisCache;
     }
 }

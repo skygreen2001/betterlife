@@ -27,6 +27,25 @@ class Cache_Redis extends Cache_Base
      */
     public function TestRun()
     {
+        // $this->testData();
+        $dbInfos = $this->dbInfos();
+        print_pre($dbInfos, true, "获取Redis DB信息:");
+        $i = 0;
+        foreach ($dbInfos as $key => $value) {
+            $this->select($i);
+            // $count = $this->countKeys();
+            // echo "[$key]共计:" . $count . "个keys<br/>";
+
+            $allKeys = $this->keys();
+            print_pre($allKeys, true, "[$key]清单如下:");
+            $i++;
+        }
+    }
+
+    /**
+     * 验证测试数据
+     */
+    private function testData() {
         $this->set( 'key', 'value' );
         $this->update( 'key', 'hello,girl' );
         $test = $this->get( 'key' );
@@ -48,14 +67,73 @@ class Cache_Redis extends Cache_Base
         print_r($users);
     }
 
-    public function Cache_Redis()
+    /**
+     * 实例化初始化Redis服务器
+     * @param string $host
+     * @param string $port
+     * @param string $password
+     */
+    public function __construct($host = '', $port = '', $password = '')
     {
+        if ( empty($host) ) {
+            $host = Config_Redis::$host;
+        }
+        if ( empty($port) ) {
+            $port = Config_Redis::$port;
+        }
         $this->redis = new Redis();
         if ( Config_Redis::$is_persistent ) {
-            $this->redis->pconnect(Config_Redis::$host, Config_Redis::$port);
+            $this->redis->pconnect($host, $port);
         } else {
-            $this->redis->connect(Config_Redis::$host, Config_Redis::$port);
+            $this->redis->connect($host, $port);
         }
+
+        if ( empty($password) ) {
+            $password = Config_Redis::$password;
+        }
+        if ( !empty($password) ) {
+            $this->redis->auth($password);
+        }
+        if ( !empty(Config_Redis::$prefix_key) ) {
+            $this->redis->setOption(Redis::OPT_PREFIX, Config_Redis::$prefix_key);
+        }
+    }
+
+    /**
+     * 选择指定第几个数据库
+     */
+    public function select($index)
+    {
+        $this->redis->select($index);
+    }
+
+    /**
+     * 所有键值清单
+     */
+    public function keys()
+    {
+        $result = $this->redis->keys('*');
+        return $result;
+    }
+
+    /**
+     * 计数: 所有键
+     */
+    public function dbInfos()
+    {
+        $info = $this->redis->info();
+        // print_pre($info, true, "Redis系统信息:");
+        $result = UtilArray::like( $info, "^db\d+" );
+        return $result;
+    }
+
+    /**
+     * 计数: 所有键
+     */
+    public function countKeys()
+    {
+        $result = $this->redis->dbSize();
+        return $result;
     }
 
     /**
@@ -128,7 +206,6 @@ class Cache_Redis extends Cache_Base
     {
         $this->redis->delete($key);
     }
-
 
     /**
      * 获取指定key的值

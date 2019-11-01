@@ -210,11 +210,15 @@ function logMe($var)
 
 /**
  * 是否直接显示出来
- * @param type $s
- * @param type $isEcho
+ * @param @mixed $s 复合类型
+ * @param boolean $isEcho 是否直接显示打印出来 
+ * @param string $title 标题
  */
-function print_pre($s, $isEcho = false)
+function print_pre($s, $isEcho = false, $title="")
 {
+    if ( !empty($title) && $isEcho ) {
+        echo $title . "<br/>";
+    }
     if ( $isEcho ) {
         print "<pre>"; print_r($s); print "</pre>";
     } else {
