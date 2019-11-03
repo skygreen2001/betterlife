@@ -82,7 +82,7 @@ TPL_BUILDPROD;
             <a href="#" slot="extra" @click.prevent="refresh">
                 <i class="ivu-icon ivu-icon-ios-refresh-circle"></i> 刷新
             </a>
-            <i-form ref="reportForm" :model="reportForm" :rules="ruleValidate" label-position="right" :label-width="100">
+            <i-form ref="reportForm" :model="reportForm" :rules="ruleValidate" label-position="right" :label-width="120">
                 <div class="input-contianer">
                     <form-item label="报表生成方式" prop="report_type">
                         <i-select v-model="reportForm.report_type" name="report_type">
