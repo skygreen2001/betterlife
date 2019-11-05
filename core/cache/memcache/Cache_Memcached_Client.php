@@ -80,7 +80,7 @@ class Cache_Memcached_Client extends Cache_Base
      * 查看键key是否存在。
      * @param string $key
      */
-    public function Contains($key)
+    public function contains($key)
     {
         if ( isset($this->obj) ) {
             $tmp = $this->get($key);

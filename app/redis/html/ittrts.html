@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="index">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="../../../favicon.ico" mce_href="../../../favicon.ico" type="image/x-icon">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Redis系统数据监控</title>
+
+    <link rel="stylesheet" href="../../../misc/css/common.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style media="screen"></style>
+</head>
+
+<body class="ittrtest">
+    <div id="app" class="page-container">
+        <div class="layout">
+            <Layout>
+                <Header theme="dark">
+                    <div class="layout-nav">
+                      <!-- v-if="isShowMenuConfig"  -->
+                        <i-menu mode="horizontal" theme="dark" @on-select="menuSelect">
+                            <menu-item name="1">
+                                <Icon type="ios-construct"></Icon><span>设置</span>
+                            </menu-item>
+                        </i-menu>
+                        <i-menu mode="horizontal" theme="dark" active-name="7" @on-select="menuSelect">
+                            <Submenu name="2">
+                                <template slot="title">
+                                    <Icon type="ios-desktop"></Icon><span>设备</span>
+                                </template>
+                                <menu-item name="4">全部</menu-item>
+                                <menu-item name="5">正式服务器(v3)</menu-item>
+                                <menu-item name="6">测试服务器(debug)</menu-item>
+                                <menu-item name="7">本地服务器(127)</menu-item>
+                                <menu-item name="8">自定义</menu-item>
+                            </Submenu>
+                        </i-menu>
+                        <i-menu mode="horizontal" theme="dark" active-name="9" @on-select="getKeys">
+                            <Submenu name="3">
+                                <template slot="title">
+                                    <Icon type="ios-apps"></Icon><span>DB</span>
+                                </template>
+                                <menu-item name="9">全部</menu-item>
+                                <menu-item v-for="item in dbs" :key="item" :name="item">{{item}}</menu-item>
+                            </Submenu>
+                        </i-menu>
+                    </div>
+                </Header>
+
+                <Content>
+                    <div class="info">
+                        <div class="left_info fl">
+                            <span>当前服务器：</span>
+                            <span>{{server}}</span>
+                        </div>
+                    </div>
+                    <div style="border: 1px solid #343434;margin-top:10px;overflow:hidden;">
+                        <div class="result_area">
+                            <div class="left_area fl" :style="{height: css.r_lf_ht}">
+                                <List footer="这已经是底部了" border>
+                                    <template slot="header">
+                                        <Icon type="ios-refresh-circle"></Icon>
+                                    </template>
+                                    <list-item v-for="item in keys" :key="item" :class="{'selected': item == key}">
+                                        <div @click="getKeyDetail(item)" class="menuDiv">
+                                            {{item}}
+                                        </div>
+                                    </list-item>
+                                </List>
+                            </div>
+                            <div class="right_area fr" :style="{height: css.r_rt_ht}">
+                                <i-input v-model="result" type="textarea" placeholder=""></i-input>
+                                <i-button class="btn-update" type="primary" @click="updateKey">修改</i-button>
+                            </div>
+                        </div>
+                    </div>
+                </Content>
+
+                <!-- footer begin -->
+                <Footer class="text-muted">
+                    <div class="footer">
+                        <div class="footer-content">
+                            <ul>
+                                <li>
+                                    <span class="fslogo"><h2>Redis</h2><h6>系统数据监控</h6></span>
+                                </li>
+                                <li>
+                                    <span><Icon type="md-bicycle"></Icon></span>
+                                    <span>BB只为更好</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Footer>
+                <!-- /footer end -->
+            </Layout>
+        </div>
+
+        <!--设置模态框 -->
+        <Modal v-model="configModel" title="设置" class-name="vertical-center-modal">
+            <div class="setting_content">
+            </div>
+        </Modal>
+
+        <!--设备 自定义 模态框 -->
+        <Modal v-model="customModel" title="自定义" class-name="vertical-center-modal">
+            <div style="overflow:auto">
+                <div class="">
+                    <i-input v-model="customIP" placeholder="请输入新的IP地址。。。" style="width:240px;"> </i-input>
+                </div>
+                <div class="ip_modalDiv">
+                    <i-menu mode="vertical" active-name="3-1" :open-names="['3']" @on-select="menuSelect">
+                        <Submenu name="3">
+                            <template slot="title">
+                                <Icon type="stats-bars"></Icon>
+                                ip地址
+                            </template>
+                            <menu-item name="3-1">192.168.2.12</menu-item>
+                            <menu-item name="3-2">192.168.2.37</menu-item>
+                            <menu-item name="3-3">192.168.2.35</menu-item>
+                        </Submenu>
+                    </i-menu>
+                </div>
+            </div>
+        </Modal>
+    </div>
+
+    <script type="text/javascript" src="../../../misc/js/common/bower.min.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script type="text/javascript">
+    </script>
+</body>
+
+</html>

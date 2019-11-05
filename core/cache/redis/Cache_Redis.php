@@ -87,7 +87,7 @@ class Cache_Redis extends Cache_Base
         } else {
             $this->redis->connect($host, $port);
         }
-
+        ob_clean();
         if ( empty($password) ) {
             $password = Config_Redis::$password;
         }
@@ -117,7 +117,7 @@ class Cache_Redis extends Cache_Base
     }
 
     /**
-     * 计数: 所有键
+     * 所有的数据库db
      */
     public function dbInfos()
     {
@@ -140,7 +140,7 @@ class Cache_Redis extends Cache_Base
      * 查看键key是否存在。
      * @param string $key
      */
-    public function Contains($key)
+    public function contains($key)
     {
         if ( isset($this->redis) ) {
             return  $this->redis->exists($key);

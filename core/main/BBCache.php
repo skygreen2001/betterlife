@@ -67,7 +67,7 @@ class BBCache {
      * @return BBCache
      */
     public static function singleton() {
-        if (!isset(self::$instance)){
+        if ( !isset(self::$instance) ) {
             $c = __CLASS__;
             self::$instance = new $c();
         }

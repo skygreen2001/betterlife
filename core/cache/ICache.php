@@ -54,7 +54,7 @@ interface ICache
        * 查看键key是否存在。
        * @param string $key
        */
-      public function Contains($key);
+      public function contains($key);
 
       /**
        * 获取指定key的值
