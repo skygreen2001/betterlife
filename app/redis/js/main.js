@@ -29,11 +29,11 @@ var app = new Vue({
                     this.configModel = true;
                     break;
                 case "5"://v3
-                    this.server = 'v3.itasktour.com';
+                    this.server = 'www.bb.com';
                     this.getDbs();
                     break;
                 case "6"://debug
-                    this.server = 'dev.itasktour.com';
+                    this.server = 'dev.bb.com';
                     this.getDbs();
                     break;
                 case "7"://本地
@@ -55,7 +55,7 @@ var app = new Vue({
                 step  : 1,
                 server: this.server
             };
-            axios.get('../../../api/common/redis.php', {
+            axios.get('../../api/common/redis.php', {
                       params: params
                    })
                  .then(function (response) {
@@ -75,7 +75,7 @@ var app = new Vue({
                 server: this.server,
                 db: this.db
             };
-            axios.get('../../../api/common/redis.php', {
+            axios.get('../../api/common/redis.php', {
                       params: params
                    })
                  .then(function (response) {
@@ -95,7 +95,7 @@ var app = new Vue({
                 db: this.db,
                 key: this.key
             };
-            axios.get('../../../api/common/redis.php', {
+            axios.get('../../api/common/redis.php', {
                       params: params
                    })
                  .then(function (response) {
@@ -124,7 +124,7 @@ var app = new Vue({
                 key: this.key,
                 result: result
             };
-            axios.get('../../../api/common/redis.php', {
+            axios.get('../../api/common/redis.php', {
                       params: params
                    })
                  .then(function (response) {

@@ -7,15 +7,15 @@ $key    = @$_GET["key"];
 $val    = @$_GET["result"];
 
 $password = "";
-$port     = "8368";
+$port     = "8888";
 switch ($server) {
-  case 'v3.itasktour.com':
-    $server   = 'v31.itasktour.com';
-    $password = "7htVhQrFP2big7NiBde5fpEEdUaa";
+  case 'www.bb.com':
+    $server   = 'w.itasktour.com';
+    $password = "123456";
     $port     = Config_Redis::$port;
     break;
-  case 'dev.itasktour.com':
-    $password = "7htVhQrFP2big7NiBde5fpEEdUaa";
+  case 'dev.bb.com':
+    $password = "123456";
     break;
   case '127.0.0.1':
     $server = '192.168.64.1';
