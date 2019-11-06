@@ -8,6 +8,10 @@
  +---------------------------------
  * @see phpredis: https://github.com/phpredis/phpredis
  * @see install: https://github.com/phpredis/phpredis/blob/develop/INSTALL.markdown
+ * @see 关于Mac安装PHP相关扩展出现Zend/zend_config.h缺失的问题记录: https://blog.51cto.com/vsfor/1892319
+ *      - 在Mac系统目录下: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/usr/include/php
+ * @see Mac 下编译 PHP 扩展遇到的一些问题: http://www.ishenping.com/ArtInfo/3703557.html
+ *      - 在Mac系统目录下: “/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/php”
  * @see redis服务的配置文件修改 bind ip,默认是bind 127.0.0.1 只允许本地连接 0.0.0.0允许任意ip,也可根据需要自己修改。
  * @see redis.conf 配置文件中设置: bind 127.0.0.1 192.168.64.2
  * [以下为老的解决方案，已作废，仅供学习参考]
