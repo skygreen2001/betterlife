@@ -30,6 +30,7 @@ $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
         <link rel="icon" href="<?php echo Gc::$url_base?>favicon.ico" mce_href="favicon.ico" type="image/x-icon">
         <title><?php echo Gc::$site_name?>数据库说明手册</title>
         <style type="text/css">
+            body {width: 800px;margin: 0 auto;}
             a:link,a:hover{font-size:15px;margin:0;padding:0;color:#000;}
             a:visited {font-size:15px;    margin:0;padding:0;color:#f00;}
             *{margin:0 0 0 12px;padding:0px;}
