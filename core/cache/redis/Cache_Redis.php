@@ -140,6 +140,47 @@ class Cache_Redis extends Cache_Base
         return $result;
     }
 
+
+    /**
+     * 获取指定$key的类型
+     * @return
+     *     1: string: Redis::REDIS_STRING
+     *     2: set: Redis::REDIS_SET
+     *     3: list: Redis::REDIS_LIST
+     *     4: zset: Redis::REDIS_ZSET
+     *     5: hash: Redis::REDIS_HASH
+     *     0: other: Redis::REDIS_NOT_FOUND
+     */
+    public function getKeyType($key)
+    {
+        $result = $this->redis->type($key);
+        return $result;
+
+        // $typeOfKey = "";
+        // switch($result){
+        //     case Redis::REDIS_STRING :
+        //         $typeOfKey = "String";
+        //         break;
+        //     case Redis::REDIS_SET :
+        //         $typeOfKey = "Set";
+        //         break;
+        //     case Redis::REDIS_LIST :
+        //         $typeOfKey = "List";
+        //         break;
+        //     case Redis::REDIS_ZSET :
+        //         $typeOfKey = "Sorted Set";
+        //         break;
+        //     case Redis::REDIS_HASH :
+        //         $typeOfKey = "Hash";
+        //         break;
+        //     case Redis::REDIS_NOT_FOUND :
+        //         $typeOfKey = "this Type Not Found in Redis";
+        //         break;
+        //
+        // }
+        // return $typeOfKey ;
+    }
+
     /**
      * 查看键key是否存在。
      * @param string $key
@@ -175,6 +216,8 @@ class Cache_Redis extends Cache_Base
     * 与save和update不同，无论何时都保存 <br/>
     * @param string $key
     * @param string|array|object $value
+    *        - 如果redis键值类型为string: 直接保存
+    *        - 如果redis键值类型为set: 字符串每个元素之间以 ｜ 分割
     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
     * @return bool
     */
@@ -183,7 +226,29 @@ class Cache_Redis extends Cache_Base
         if ( is_object($value) ) {
             $value = serialize($value);
         }
-        $this->redis->setex($key, $expired, $value);
+        $type = $this->getKeyType($key);
+        $type = Redis::REDIS_SET;
+        switch($type){
+            case Redis::REDIS_STRING :
+                $this->redis->setex($key, $expired, $value);
+                break;
+            case Redis::REDIS_SET :
+                $this->redis->del($key);
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->sAdd($key, $ivalue);
+                }
+                break;
+            case Redis::REDIS_LIST :
+                break;
+            case Redis::REDIS_ZSET :
+                break;
+            case Redis::REDIS_HASH :
+                break;
+            default:
+                $this->redis->setex($key, $expired, $value);
+                break;
+        }
     }
 
    /**
@@ -218,7 +283,27 @@ class Cache_Redis extends Cache_Base
      */
     public function get($key)
     {
-        $data = $this->redis->get($key);
+        $type = $this->getKeyType($key);
+        switch($type){
+            case Redis::REDIS_STRING :
+                $data = $this->redis->get($key);
+                break;
+            case Redis::REDIS_SET :
+                $data = $this->redis->sMembers($key);
+                break;
+            case Redis::REDIS_LIST :
+                $typeOfKey = "List";
+                break;
+            case Redis::REDIS_ZSET :
+                $typeOfKey = "Sorted Set";
+                break;
+            case Redis::REDIS_HASH :
+                $typeOfKey = "Hash";
+                break;
+            default:
+                $data = $this->redis->get($key);
+                break;
+        }
 
         if ( @unserialize($data) ) {
             $data = unserialize($data);

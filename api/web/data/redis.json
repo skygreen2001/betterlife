@@ -1,0 +1,18 @@
+{
+  "data": [{
+    "id": "w",
+    "server": "w.itasktour.com",
+    "port": "8686",
+    "password": "123456"
+  },{
+    "id": "dev",
+    "server": "dev.itasktour.com",
+    "port": "8888",
+    "password": "123456"
+  },{
+    "id": "127",
+    "server": "192.168.64.1",
+    "port": "6379",
+    "password": ""
+  }]
+}

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="../../favicon.ico" mce_href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../../favicon.ico" mce_href="../../../favicon.ico" type="image/x-icon">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Redis系统数据监控</title>
 
-    <link rel="stylesheet" href="../../misc/css/common.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="../../../misc/css/common.min.css">
+    <link rel="stylesheet" href="../css/app.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,13 +21,12 @@
     <style media="screen"></style>
 </head>
 
-<body class="ittrtest">
+<body class="app-container">
     <div id="app" class="page-container">
         <div class="layout">
             <Layout>
                 <Header theme="dark">
                     <div class="layout-nav">
-                      <!-- v-if="isShowMenuConfig"  -->
                         <i-menu mode="horizontal" theme="dark" @on-select="menuSelect">
                             <menu-item name="1">
                                 <Icon type="ios-construct"></Icon><span>设置</span>
@@ -38,11 +37,9 @@
                                 <template slot="title">
                                     <Icon type="ios-desktop"></Icon><span>设备</span>
                                 </template>
-                                <menu-item name="4">全部</menu-item>
-                                <menu-item name="5">正式服务器(v3)</menu-item>
-                                <menu-item name="6">测试服务器(debug)</menu-item>
-                                <menu-item name="7">本地服务器(127)</menu-item>
-                                <menu-item name="8">自定义</menu-item>
+                                <!-- <menu-item name="4">全部</menu-item> -->
+                                <menu-item v-for="item in serves" :key="item.id" :name="item.id">{{item.text}}</menu-item>
+                                <!-- <menu-item name="8">自定义</menu-item> -->
                             </Submenu>
                         </i-menu>
                         <i-menu mode="horizontal" theme="dark" active-name="9" @on-select="getKeys">
@@ -50,7 +47,7 @@
                                 <template slot="title">
                                     <Icon type="ios-apps"></Icon><span>DB</span>
                                 </template>
-                                <menu-item name="9">全部</menu-item>
+                                <!-- <menu-item name="9">全部</menu-item> -->
                                 <menu-item v-for="item in dbs" :key="item" :name="item">{{item}}</menu-item>
                             </Submenu>
                         </i-menu>
@@ -107,9 +104,63 @@
         </div>
 
         <!--设置模态框 -->
-        <Modal v-model="configModel" title="设置" class-name="vertical-center-modal">
+        <Modal v-model="configModel" title="设置" width="800" class-name="vertical-center-modal">
             <div class="setting_content">
+                <i-button style="margin-bottom:10px;" type="primary" @click="onAdd">新增</i-button>
+                <i-table height="600" stripe border :columns="configs.columns" :data="configs.data">
+                    <template slot-scope="{ row, index }" slot="id">
+                      <i-input type="text" v-model="configs.editId" v-if="configs.editIndex === index"></i-input>
+                      <span v-else>{{ row.id }}</span>
+                    </template>
+
+                    <template slot-scope="{ row, index }" slot="name">
+                      <i-input type="text" v-model="configs.editName" v-if="configs.editIndex === index"></i-input>
+                      <span v-else>{{ row.name }}</span>
+                    </template>
+
+                    <template slot-scope="{ row, index }" slot="server">
+                      <i-input type="text" v-model="configs.editServer" v-if="configs.editIndex === index"></i-input>
+                      <span v-else>{{ row.server }}</span>
+                    </template>
+
+                    <template slot-scope="{ row, index }" slot="port">
+                      <i-input type="text" v-model="configs.editPort" v-if="configs.editIndex === index"></i-input>
+                      <span v-else>{{ row.port }}</span>
+                    </template>
+
+                    <template slot-scope="{ row, index }" slot="password">
+                      <i-input type="text" v-model="configs.editPasswd" v-if="configs.editIndex === index"></i-input>
+                      <span v-else>{{ row.password }}</span>
+                    </template>
+
+                    <template slot-scope="{ row, index }" slot="action">
+                      <div v-if="configs.editIndex === index">
+                        <i-button type="primary" size="small" style="margin-right: 5px" @click="onSave(index)">保存</i-button>
+                        <i-button type="error" size="small" @click="configs.editIndex = -1">取消</i-button>
+                      </div>
+                      <div v-else>
+                        <i-button type="primary" size="small" style="margin-right: 5px" @click="onEdit(row, index)">编辑</i-button>
+                        <i-button type="error" size="small" @click="onDelete(row, index)">删除</i-button>
+                      </div>
+                    </template>
+                </i-table>
             </div>
+        </Modal>
+
+        <!--设置 添加 模态框 -->
+        <Modal v-model="addserverModel" title="添加Redis服务器" @on-ok="onSave" width="800" class-name="vertical-center-modal">
+            <div class="addserver_content" align="center">
+                <i-input class="input-add" v-model="configs.editId"><span slot="prepend">标&nbsp;&nbsp;&nbsp;识</span></i-input>
+                <i-input class="input-add" v-model="configs.editName"><span slot="prepend">名&nbsp;&nbsp;&nbsp;称</span></i-input>
+                <i-input class="input-add" v-model="configs.editServer"><span slot="prepend">服务器</span></i-input>
+                <i-input class="input-add" v-model="configs.editPort"><span slot="prepend">端&nbsp;&nbsp;&nbsp;口</span></i-input>
+                <i-input class="input-add" v-model="configs.editPasswd"><span slot="prepend">密&nbsp;&nbsp;&nbsp;码</span></i-input>
+            </div>
+        </Modal>
+
+        <!-- 删除确认模态框 -->
+        <Modal title="删除确认" v-model="isConfirmAction" @on-ok="onConfirmDelete" class-name="vertical-center-modal">
+            <p> {{  actionInfo }} </p>
         </Modal>
 
         <!--设备 自定义 模态框 -->
@@ -135,8 +186,8 @@
         </Modal>
     </div>
 
-    <script type="text/javascript" src="../../misc/js/common/bower.min.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="../../../misc/js/common/bower.min.js"></script>
+    <script src="../js/main.js"></script>
 
     <script type="text/javascript">
     </script>
