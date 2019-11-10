@@ -125,13 +125,28 @@ switch ($step) {
   case 3:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
-    $result = $serverCache->get($key);
+    $result         = array();
+    $result["type"] = $serverCache->getKeyType($key);
+    if ( $result["type"] == Redis::REDIS_HASH || $result["type"] == Redis::REDIS_ZSET ) {
+        $result["data"] = $key;
+    } else {
+        $result["data"] = $serverCache->get($key);
+    }
     break;
   case 4:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
     $serverCache->set($key, $val);
-    $result = $serverCache->get($key);
+    $result         = array();
+    $result["data"] = $serverCache->get($key);
+    $result["type"] = $serverCache->getKeyType($key);
+    break;
+  case 5:
+    $queryKey = @$_GET["queryKey"];
+    $dbIndex  = (int) str_replace("db", "", $db);
+    $serverCache->select($dbIndex);
+    $result   = $serverCache->keys("*" . $queryKey . "*");
+    sort($result, SORT_STRING);
     break;
   default:
     break;

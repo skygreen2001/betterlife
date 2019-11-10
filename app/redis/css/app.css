@@ -7,7 +7,7 @@ header {
 }
 
 content {
-    min-height: 750px;
+    min-height: 678px;
     min-width: 320px;
     max-width: 1440px;
     width: 100%;
@@ -55,6 +55,14 @@ Content div span {
     margin-top: 18px;
 }
 
+.ivu-list-bordered {
+    margin-top: 45px;
+    border-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+}
+
 .ivu-list-bordered .ivu-list-item {
     width: 100%;
     cursor: pointer;
@@ -69,6 +77,15 @@ Content div span {
 
 .vertical-center-modal .ivu-modal {
     top: 0;
+}
+
+.ivu-spin-fullscreen-wrapper {
+    z-index: 300000 !important;
+    background-color: #fff;
+}
+
+.spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
 }
 
 .ip_modalDiv .ivu-menu {
@@ -171,6 +188,59 @@ footer .footer .footer-content ul li i {
     min-height: 600px;
 }
 
+.fixed-header {
+    position: fixed;
+    z-index: 5;
+    /* width: 450px; */
+    background-color: #f5f7f9;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 40px;
+    border: 1px solid #ccc;
+    /* border-bottom: 0px; */
+}
+.fixed-header .ivu-input {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.fixed-header .btn-query {
+    margin-left:-5px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.fixed-header .btn-query span{
+    font-size: 12px;
+}
+
+.left_area .ivu-input-group {
+    margin-top: 5px;
+    margin-left: 10px;
+    width: auto;
+}
+.left_area .ivu-btn-circle.ivu-btn-icon-only {
+  /* .ivu-icon.ivu-icon-ios-refresh-circle  */
+    float: left;
+    margin-top: 6px;
+    margin-left: -30px;
+}
+
+.left-header-btns-right {
+    float: right;
+    /* margin-top: -38px; */
+    margin-right: 10px;
+}
+
+.left-header-btns-right .ivu-btn-primary, .left-header-btns-right span, .setting_content .ivu-btn-primary, .setting_content span {
+    font-size: 11px;
+}
+
+.left-header-btns-right .ivu-btn-primary, .setting_content .ivu-btn-primary, .setting_content  .ivu-btn-error, .setting_content  .ivu-btn-success {
+    height: 32px;
+    line-height: 32px;
+}
+
 .left_area .ivu-list-container {
     min-height: 506px;
 }
@@ -198,8 +268,16 @@ footer .footer .footer-content ul li i {
     max-height: auto !important;
     min-height: 600px !important;
 }
+
+.result-type {
+    height: 45px;
+    text-align: left;
+    line-height: 45px;
+}
+
 .btn-update {
-    margin-top: 10px;
+    float: right;
+    margin: -40px auto 0px auto;
 }
 
 .input-add {

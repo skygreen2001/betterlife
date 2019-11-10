@@ -32,6 +32,8 @@ class Cache_Redis extends Cache_Base
     public function TestRun()
     {
         // $this->testData();
+        $this->redis->hSet('h', 'key1', 'hello');
+
         $dbInfos = $this->dbInfos();
         print_pre($dbInfos, true, "获取Redis DB信息:");
         $i = 0;
@@ -114,9 +116,9 @@ class Cache_Redis extends Cache_Base
     /**
      * 所有键值清单
      */
-    public function keys()
+    public function keys($pattern = '*')
     {
-        $result = $this->redis->keys('*');
+        $result = $this->redis->keys($pattern);
         return $result;
     }
 
@@ -217,7 +219,8 @@ class Cache_Redis extends Cache_Base
     * @param string $key
     * @param string|array|object $value
     *        - 如果redis键值类型为string: 直接保存
-    *        - 如果redis键值类型为set: 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
     * @return bool
     */
@@ -227,7 +230,7 @@ class Cache_Redis extends Cache_Base
             $value = serialize($value);
         }
         $type = $this->getKeyType($key);
-        $type = Redis::REDIS_SET;
+        // $type = Redis::REDIS_SET;
         switch($type){
             case Redis::REDIS_STRING :
                 $this->redis->setex($key, $expired, $value);
@@ -240,6 +243,11 @@ class Cache_Redis extends Cache_Base
                 }
                 break;
             case Redis::REDIS_LIST :
+                $this->redis->del($key);
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->rPush($key, $ivalue);
+                }
                 break;
             case Redis::REDIS_ZSET :
                 break;
@@ -292,13 +300,25 @@ class Cache_Redis extends Cache_Base
                 $data = $this->redis->sMembers($key);
                 break;
             case Redis::REDIS_LIST :
-                $typeOfKey = "List";
+                $data = $this->redis->lRange($key, 0, -1);
                 break;
             case Redis::REDIS_ZSET :
-                $typeOfKey = "Sorted Set";
+                $data = $this->redis->zRange($key, 0, -1);
                 break;
             case Redis::REDIS_HASH :
-                $typeOfKey = "Hash";
+                $data = $this->redis->hGetAll($key);
+                // print_pre($data);die();
+                // if ( $data && is_array($data) && count($data) > 0 ) {
+                //     echo count($data);
+                //     $result = array();
+                //     foreach ($data as $key => $value) {
+                //         $result[$key] = unserialize($key);
+                //         // if ( @unserialize($value) ) {
+                //         //     $data[$key] = unserialize($value);
+                //         // }
+                //     }
+                //     $data = $result;
+                // }
                 break;
             default:
                 $data = $this->redis->get($key);

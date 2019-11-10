@@ -5,7 +5,7 @@ var app = new Vue({
     el: '#app',
     data(){
         return{
-            apiUrl: '../../../api/common/redis.php',
+            apiUrl: '../../api/common/redis.php',
             server: '', // 选中的服务器
             db    : '', // 选中的db
             key   : '', // 选中的key
@@ -13,12 +13,21 @@ var app = new Vue({
             dbs   : [], // 选中的服务器所有的db列表
             keys  : [], // redis里所有的主键
             result: '', // 选中key后的value
-            valType: 1, // 指定Redis键值的类型，默认是1:字符串； 2: set
+            resultTypeShow  : "",    // 键值类型显示
+            valType         : 1,     // 指定Redis键值的类型，默认是1:字符串； 2: set
+            isLoadingShow   : false, // 是否显示DB菜单
             addserverModel  : false, // 是否显示新增服务器窗口
+            addNewKeyModel  : false, // 是否显示新增键值设置窗口
             configModel     : false, // 是否显示设置窗口
             isConfirmAction : false, // 是否显示确认操作窗口
-            customModel     : false, // 是否显示自定义设置窗口
+            addNewType      : '',    // 新增的键类型
+            addNewKey       : '',    // 新增的键
+            addNewValue     : '',    // 新增的值
+            sel_server      : '',    // 选中服务器显示
+            sel_db          : '',    // 选中DB显示
+            sel_key         : '',    // 选中key显示
             customIP        : '',    // 自定义IP
+            queryKey: '', // 查询键
             css   : {
                 r_lf_ht: '600px',
                 r_rt_ht: '600px'
@@ -28,6 +37,7 @@ var app = new Vue({
                     {
                         title: '标识',
                         slot : 'id',
+                        width: 80,
                         sortable: true
                     },
                     {
@@ -40,6 +50,7 @@ var app = new Vue({
                     },
                     {
                         title: '端口',
+                        width: 80,
                         slot : 'port'
                     },
                     {
@@ -49,7 +60,7 @@ var app = new Vue({
                     {
                         title: '操作',
                         slot : 'action',
-                        width: 150,
+                        width: 180,
                         align: 'center'
                     }
                 ],
@@ -77,37 +88,49 @@ var app = new Vue({
                     this.getConfigs();
                     break;
                 case "8":
-                    this.customModel = true;
+                    this.addNewKeyModel = true;
                     break;
                 default:
             }
-            this.server = name;
-            this.getDbs();
-
+            if ( name != "1" && name!= "8" ) {
+                this.server     = name
+                let index = this.serves.findIndex(e => e.id == name);
+                this.sel_server = this.serves[index].text;
+                this.sel_db     = "";
+                this.sel_key    = "";
+                this.getDbs();
+            }
+        },
+        loading () {
+            this.$Spin.show({
+                render: (h) => {
+                    return h('div', [
+                        h('Icon', {
+                            'class': 'spin-icon-load',
+                            props: {
+                                type: 'ios-loading',
+                                size: 18
+                            }
+                        }),
+                        h('div', 'Loading')
+                    ])
+                }
+            });
         },
         getServers: function() {
             var ctrl = this;
             let params = {
                 step: 100
             };
+            this.loading();
             axios.get(this.apiUrl, {
                       params: params
                    })
                  .then(function (response) {
-                     console.log(response);
+                     // console.log(response);
                      if ( Array.isArray(response.data) ) {
                          ctrl.serves = response.data;
-                     // if ( response.data && (typeof response.data === "object" ) ) {
-                     //    let data = JSON.parse(JSON.stringify(response.data));
-                     //    for (var key in data) {
-                     //        let text = data[key] + "(" + key + ")";
-                     //        let m = {
-                     //            id: key,
-                     //            text: text
-                     //        }
-                     //        ctrl.serves.push(m)
-                     //    }
-                     //    console.log(ctrl.serves);
+                         ctrl.$Spin.hide();
                      } else {
                          ctrl.$Modal.error({
                             title: '服务端错误',
@@ -125,13 +148,14 @@ var app = new Vue({
                 ca: 100
             };
             this.configs.editIndex = -1;
+            this.loading();
             axios.get(this.apiUrl, {
                       params: params
                    })
                  .then(function (response) {
                      if ( Array.isArray(response.data) ) {
                          ctrl.configs.data = response.data;
-                         console.log(ctrl.configs.data);
+                         // console.log(ctrl.configs.data);
                      } else {
                          if ( response.data ) {
                              ctrl.$Modal.error({
@@ -140,7 +164,7 @@ var app = new Vue({
                              });
                          }
                      }
-
+                     ctrl.$Spin.hide();
                  })
                  .catch(function (error) {
                      console.log(error);
@@ -177,7 +201,7 @@ var app = new Vue({
                       params: params
                    })
                  .then(function (response) {
-                     console.log(response);
+                     // console.log(response);
                  })
                  .catch(function (error) {
                      console.log(error);
@@ -217,7 +241,7 @@ var app = new Vue({
                       }
                    })
                  .then(function (response) {
-                     console.log(response);
+                     // console.log(response);
                  })
                  .catch(function (error) {
                      console.log(error);
@@ -226,11 +250,16 @@ var app = new Vue({
             this.configs.deleteOne = -1;
         },
         getDbs: function() {
-            var ctrl = this;
+            var ctrl   = this;
             let params = {
                 step     : 1,
                 server_id: this.server
             };
+            this.dbs    = [];
+            this.keys   = [];
+            this.result = '';
+            this.resultTypeShow = "";
+            this.isLoadingShow  = true;
             axios.get(this.apiUrl, {
                       params: params
                    })
@@ -238,69 +267,108 @@ var app = new Vue({
                      // console.log(response);
                      if ( Array.isArray(response.data) ) {
                          ctrl.dbs = response.data;
-                         console.log(ctrl.dbs);
+                         // console.log(ctrl.dbs);
                      } else {
                          ctrl.$Modal.error({
                             title: '服务端错误',
                             content: '请确认服务端是否配置正确！'
                          });
                      }
-
+                     ctrl.isLoadingShow = false;
                  })
                  .catch(function (error) {
                      console.log(error);
+                     ctrl.isLoadingShow = false;
                  });
         },
         getKeys: function(name) {
             var ctrl = this;
-            this.db = name;
+            this.queryKey = "";
+            this.db       = name;
+            this.sel_db   = name;
+            this.sel_key  = "";
+            this.result   = '';
+            this.resultTypeShow = "";
             let params = {
                 step     : 2,
                 server_id: this.server,
                 db       : this.db
             };
+            this.isLoadingShow = true;
             axios.get(this.apiUrl, {
                       params: params
                    })
                  .then(function (response) {
                      ctrl.keys = response.data;
-                     console.log(ctrl.keys);
+                     ctrl.isLoadingShow = false;
+                     // console.log(ctrl.keys);
                  })
                  .catch(function (error) {
                      console.log(error);
+                     ctrl.isLoadingShow = false;
+                 });
+        },
+        doQueryKey: function() {
+            var ctrl = this;
+            this.sel_key = "";
+            this.result  = '';
+            this.resultTypeShow = "";
+            let params = {
+                step     : 5,
+                server_id: this.server,
+                db       : this.db,
+                queryKey : this.queryKey
+            };
+            this.isLoadingShow = true;
+            axios.get(this.apiUrl, {
+                      params: params
+                   })
+                 .then(function (response) {
+                     ctrl.keys = response.data;
+                     ctrl.isLoadingShow = false;
+                     // console.log(ctrl.keys);
+                 })
+                 .catch(function (error) {
+                     console.log(error);
+                     ctrl.isLoadingShow = false;
                  });
         },
         getKeyDetail: function(key) {
             this.key = key;
             var ctrl = this;
             this.valType = 1;
+            this.sel_key = key;
             let params = {
                 step     : 3,
                 server_id: this.server,
                 db       : this.db,
                 key      : this.key
             };
+            this.isLoadingShow = true;
             axios.get(this.apiUrl, {
                       params: params
                    })
                  .then(function (response) {
                      var data = response.data;
                      var result = "";
-                     if ( data ) {
-                         if ( Array.isArray(data) ) {
-                             result = data.join("\r\n");
-                             ctrl.valType = 2;
+                     if ( data && data.data ) {
+                         if ( Array.isArray(data.data) ) {
+                             result = data.data.join("\r\n");
                          } else {
-                             result = data.trim();
-                             if ( ctrl.isJson(result) == "object" ) {
+                             result = data.data.trim();
+                             if ( ctrl.isJson(result) ) {
                                  result = JSON.stringify(JSON.parse(result), null, 2);
                                  result = result.replace(/ /g, "  ");
                              }
                          }
+                         ctrl.valType = data.type;
+                         ctrl.resultTypeShow = ctrl.valTypeShow(ctrl.valType);
                      }
                      ctrl.result = result;
+                     ctrl.isLoadingShow = false;
                  })
                  .catch(function (error) {
+                     ctrl.isLoadingShow = false;
                      console.log(error);
                  });
         },
@@ -312,7 +380,7 @@ var app = new Vue({
                     result = result.replace(/\s+/g, "");
                 } else if ( this.valType == 2 ) {
                     result = result.trim().replace(/\s+/g, "|");
-                    console.log(result);
+                    // console.log(result);
                 }
             }
             let params = {
@@ -323,43 +391,77 @@ var app = new Vue({
                 valType  : this.valType,
                 result   : result
             };
+            this.isLoadingShow = true;
             axios.get(this.apiUrl, {
                       params: params
                    })
                  .then(function (response) {
                      var data = response.data;
                      var result = "";
-                     if ( data ) {
-                         if ( Array.isArray(data) ) {
-                             result = data.join("\r\n");
-                             ctrl.valType = 2;
+                     if ( data && data.data ) {
+                         if ( Array.isArray(data.data) ) {
+                             result = data.data.join("\r\n");
                          } else {
-                             result = data.trim();
-                             if ( ctrl.isJson(result) == "object" ) {
+                             result = data.data.trim();
+                             if ( ctrl.isJson(result) ) {
                                  result = JSON.stringify(JSON.parse(result), null, 2);
                                  result = result.replace(/ /g, "  ");
                              }
                          }
+                         ctrl.valType = data.type;
+                         ctrl.resultTypeShow = ctrl.valTypeShow(ctrl.valType);
                      }
                      ctrl.result = result;
+                     ctrl.isLoadingShow = false;
+                     ctrl.$Modal.success({
+                        title: '信息',
+                        content: '修改[' + ctrl.key + ']的值成功！'
+                     });
                  })
                  .catch(function (error) {
+                     ctrl.isLoadingShow = false;
                      console.log(error);
                  });
+        },
+        onAddNewKey: function() {
 
         },
         /**
          * 判断是否json
          */
-        isJson: function(string) {
+        isJson: function(content) {
             try {
-                if ( typeof JSON.parse(string) == 'object' )
+                if ( typeof JSON.parse(content) == 'object' )
                     return true;
                 return false;
             } catch (e) {
                 console.log(e);
                 return false;
             }
+        },
+        valTypeShow: function(valType) {
+            let result = "STRING";
+            switch (valType) {
+                case 1:
+                    result = "STRING";
+                    break;
+                case 2:
+                    result = "SET";
+                    break;
+                case 3:
+                    result = "LIST";
+                    break;
+                case 4:
+                    result = "ZSET";
+                    break;
+                case 5:
+                    result = "HASH";
+                    break;
+                default:
+                    result = "其它";
+                    break;
+            }
+            return result;
         },
         initLayout: function() {
             let offsetH  = 195;
@@ -370,21 +472,14 @@ var app = new Vue({
             // 内容区域左侧内容高度
             let l_height = (window.innerHeight - 300) +'px !important';
             $(".left_area .ivu-list-container").css("cssText", "min-height:" + l_height);
+            $(".fixed-header").css("width", $(".ivu-list-bordered").width() + 2);
             // $(".left_area .ivu-list-container").css("cssText", "height:auto");
-            // 内容区域又侧内容高度
+            // 内容区域右侧内容高度
             let r_height = (window.innerHeight - 250) +'px !important';
             $(".right_area textarea").css("cssText", "min-height:" + r_height + ";max-height:" + r_height);
             if (window.innerHeight < 800) {
                 $(".right_area").css("cssText", "position:relative;width:59%;right:5px;");
             }
-        }
-    },
-    filters: {
-        pretty: function(value) {
-            if (value) {
-                return JSON.stringify(JSON.parse(value), null, 2);
-            }
-            return value;
         }
     },
     watch : {
