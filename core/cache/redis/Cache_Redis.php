@@ -157,7 +157,6 @@ class Cache_Redis extends Cache_Base
     {
         $result = $this->redis->type($key);
         return $result;
-
         // $typeOfKey = "";
         // switch($result){
         //     case Redis::REDIS_STRING :
@@ -200,15 +199,55 @@ class Cache_Redis extends Cache_Base
     * 仅当存储空间中不存在键相同的数据时才保存<br/>
     * @param string $key
     * @param string|array|object $value
+    *        - 如果redis键值类型为string: 直接保存
+    *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
+    * @param string $type 键类型
+    *     1: string: Redis::REDIS_STRING
+    *     2: set: Redis::REDIS_SET
+    *     3: list: Redis::REDIS_LIST
+    *     4: zset: Redis::REDIS_ZSET
+    *     5: hash: Redis::REDIS_HASH
+    *     0: other: Redis::REDIS_NOT_FOUND
     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
     * @return bool
     */
-    public function save($key, $value, $expired = 86400)
+    public function save($key, $value, $type = Redis::REDIS_STRING, $expired = 86400)
     {
         if ( is_object($value) ) {
             $value = serialize($value);
         }
-        $this->redis->setnx($key, $value);
+        switch($type){
+            case Redis::REDIS_STRING:
+                $this->redis->setNx($key, $value);
+                break;
+            case Redis::REDIS_SET:
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->sAdd($key, $ivalue);
+                }
+                break;
+            case Redis::REDIS_LIST:
+                $this->redis->del($key);
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->rPush($key, $ivalue);
+                }
+                break;
+            case Redis::REDIS_ZSET:
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->zAdd($key, $ivalue);
+                }
+                break;
+            case Redis::REDIS_HASH:
+                $this->redis->hSetNx($key, $value);
+                break;
+            default:
+                $this->redis->setNx($key, $value);
+                break;
+        }
         $now = time(NULL); // current timestamp
         $this->redis->expireAt($key, $now + $expired);
     }
@@ -221,6 +260,7 @@ class Cache_Redis extends Cache_Base
     *        - 如果redis键值类型为string: 直接保存
     *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
     *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
     * @return bool
     */
@@ -232,29 +272,36 @@ class Cache_Redis extends Cache_Base
         $type = $this->getKeyType($key);
         // $type = Redis::REDIS_SET;
         switch($type){
-            case Redis::REDIS_STRING :
-                $this->redis->setex($key, $expired, $value);
+            case Redis::REDIS_STRING:
+                $this->redis->setEx($key, $expired, $value);
                 break;
-            case Redis::REDIS_SET :
+            case Redis::REDIS_SET:
                 $this->redis->del($key);
                 $content = explode("|", $value);
                 foreach ($content as $ivalue) {
                     $this->redis->sAdd($key, $ivalue);
                 }
                 break;
-            case Redis::REDIS_LIST :
+            case Redis::REDIS_LIST:
                 $this->redis->del($key);
                 $content = explode("|", $value);
                 foreach ($content as $ivalue) {
                     $this->redis->rPush($key, $ivalue);
                 }
                 break;
-            case Redis::REDIS_ZSET :
+            case Redis::REDIS_ZSET:
+                $this->redis->del($key);
+                $content = explode("|", $value);
+                foreach ($content as $ivalue) {
+                    $this->redis->zAdd($key, $ivalue);
+                }
                 break;
-            case Redis::REDIS_HASH :
+            case Redis::REDIS_HASH:
+                $this->redis->del($key);
+                $this->redis->hSet($key, $value);
                 break;
             default:
-                $this->redis->setex($key, $expired, $value);
+                $this->redis->setEx($key, $expired, $value);
                 break;
         }
     }
@@ -268,10 +315,7 @@ class Cache_Redis extends Cache_Base
     */
     public function update($key, $value, $expired = 86400)
     {
-        if ( is_object($value) ) {
-            $value = serialize($value);
-        }
-        $this->redis->setex($key, $expired, $value);
+        $this->set( $key, $value, $expired );
     }
 
    /**
@@ -307,18 +351,6 @@ class Cache_Redis extends Cache_Base
                 break;
             case Redis::REDIS_HASH :
                 $data = $this->redis->hGetAll($key);
-                // print_pre($data);die();
-                // if ( $data && is_array($data) && count($data) > 0 ) {
-                //     echo count($data);
-                //     $result = array();
-                //     foreach ($data as $key => $value) {
-                //         $result[$key] = unserialize($key);
-                //         // if ( @unserialize($value) ) {
-                //         //     $data[$key] = unserialize($value);
-                //         // }
-                //     }
-                //     $data = $result;
-                // }
                 break;
             default:
                 $data = $this->redis->get($key);

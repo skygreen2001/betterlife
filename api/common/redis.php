@@ -148,6 +148,22 @@ switch ($step) {
     $result   = $serverCache->keys("*" . $queryKey . "*");
     sort($result, SORT_STRING);
     break;
+  case 6:
+    $addNewType  = @$_GET["addNewType"];
+    $addNewKey   = @$_GET["addNewKey"];
+    $addNewValue = @$_GET["addNewValue"];
+    $dbIndex     = (int) str_replace("db", "", $db);
+    $serverCache->select($dbIndex);
+    $serverCache->save($addNewKey, $addNewValue, $addNewType);
+    $result      = $serverCache->keys();
+    sort($result, SORT_STRING);
+    break;
+  case 7:
+    $dbIndex = (int) str_replace("db", "", $db);
+    $serverCache->select($dbIndex);
+    $serverCache->delete($key);
+    $result  = true;
+    break;
   default:
     break;
 }

@@ -378,7 +378,7 @@ var app = new Vue({
             if ( result ) {
                 if ( this.valType == 1 ) {
                     result = result.replace(/\s+/g, "");
-                } else if ( this.valType == 2 ) {
+                } else if ( this.valType == 2 || this.valType == 3 ) {
                     result = result.trim().replace(/\s+/g, "|");
                     // console.log(result);
                 }
@@ -424,7 +424,69 @@ var app = new Vue({
                  });
         },
         onAddNewKey: function() {
-
+            var ctrl = this;
+            let result = this.result;
+            if ( result ) {
+                if ( this.addNewType == 1 ) {
+                    result = result.replace(/\s+/g, "");
+                } else if ( this.addNewType == 2 || this.addNewType == 3 ) {
+                    result = result.trim().replace(/\s+/g, "|");
+                    // console.log(result);
+                }
+            }
+            let params = {
+                step       : 6,
+                server_id  : this.server,
+                db         : this.db,
+                addNewType : this.addNewType,
+                addNewKey  : this.addNewKey,
+                addNewValue: this.addNewValue
+            };
+            this.isLoadingShow = true;
+            axios.get(this.apiUrl, {
+                      params: params
+                   })
+                 .then(function (response) {
+                     var data = response.data;
+                     ctrl.keys = response.data;
+                     ctrl.isLoadingShow = false;
+                     ctrl.$Modal.success({
+                        title: '信息',
+                        content: '新增[' + ctrl.addNewKey + ']的值成功！'
+                     });
+                 })
+                 .catch(function (error) {
+                     ctrl.isLoadingShow = false;
+                     console.log(error);
+                 });
+        },
+        onDeleteKey() {
+          var ctrl = this;
+          let params = {
+              step     : 7,
+              server_id: this.server,
+              db       : this.db,
+              key      : this.sel_key
+          };
+          this.isLoadingShow = true;
+          let del_key = this.sel_key;
+          axios.get(this.apiUrl, {
+                    params: params
+                 })
+               .then(function (response) {
+                   var data = response.data;
+                   ctrl.getKeys(ctrl.db);
+                   ctrl.queryKey = "";
+                   ctrl.isLoadingShow = false;
+                   ctrl.$Modal.success({
+                      title: '信息',
+                      content: '删除[' + del_key + ']的值成功！'
+                   });
+               })
+               .catch(function (error) {
+                   ctrl.isLoadingShow = false;
+                   console.log(error);
+               });
         },
         /**
          * 判断是否json

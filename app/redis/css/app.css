@@ -280,6 +280,11 @@ footer .footer .footer-content ul li i {
     margin: -40px auto 0px auto;
 }
 
+.btn-delete {
+    float: right;
+    margin: -40px 90px 0px auto;
+}
+
 .input-add {
     width:450px;
     margin:10px auto;
