@@ -101,13 +101,13 @@ class DataObjectFunc
      * @param string $sql_id 需更新数据的ID编号或者ID编号的Sql语句<br/>
      * 示例如下：<br/>
      *     $sql_ids:<br/>
-     *         1.1,2,3<br/>
-     *         2.array(1,2,3)<br/>
+     *         1. 1, 2, 3<br/>
+     *         2. array(1, 2, 3)<br/>
      * @param string $array_properties 指定的属性<br/>
      * 示例如下：<br/>
      *     $array_properties<br/>
-     *      1.pass=1,name='sky'<br/>
-     *      2.array("pass"=>"1","name"=>"sky")<br/>
+     *      1. pass = 1, name = 'sky'<br/>
+     *      2. array("pass" => "1", "name" => "sky")<br/>
      * @return boolen 是否更新成功；true为操作正常<br/>
      */
     public static function updateProperties($classname, $sql_ids, $array_properties)
@@ -150,16 +150,16 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param mixed $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $array_properties 指定的属性<br/>
      * 示例如下：<br/>
      *     $array_properties<br/>
-     *      1.pass=1,name='sky'<br/>
-     *      2.array("pass"=>"1","name"=>"sky")<br/>
+     *      1. pass = 1, name = 'sky'<br/>
+     *      2. array("pass" => "1", "name" => "sky")<br/>
      * @return boolen 是否更新成功；true为操作正常<br/>
      */
     public static function updateBy($classname, $filter, $array_properties)
@@ -176,10 +176,10 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param string $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
      * @param string classname 数据对象类名
      * @param string property_name 属性名称
      * @param int incre_value 递增数
@@ -198,10 +198,10 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param string $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
      * @param string classname 数据对象类名
      * @param string property_name 属性名称
      * @param int decre_value 递减数
@@ -223,19 +223,19 @@ class DataObjectFunc
      *     id,name,commitTime
      * @param mixed $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
      * 示例如下：<br/>
-     *      1.id asc;<br/>
-     *      2.name desc;<br/>
+     *      1. id asc;<br/>
+     *      2. name desc;<br/>
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下：<br/>
-     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
-     *    1,10<br/> (相当于第1-第10条)
+     *    6, 10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     *    1, 10<br/> (相当于第1-第10条)
      *    10 <br/>(相当于第1-第10条)
      * @return 对象列表数组
      */
@@ -249,7 +249,7 @@ class DataObjectFunc
             $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
         }
         $sQuery = $_SQL->select($columns)->from($tablename)->where($filter)->order($sort)->limit($limit)->result();
-        return DataObject::dao()->sqlExecute($sQuery);//,$classname
+        return DataObject::dao()->sqlExecute( $sQuery );//,$classname
     }
 
     /**
@@ -272,7 +272,7 @@ class DataObjectFunc
             $idColumn = DataObjectSpec::getRealIDColumnName( $classname );
             if ( isset($idColumn) ) {
                 $sQuery = $_SQL->deletefrom($tablename)->where($idColumn . "='$id'")->result();
-                return DataObject::dao()->sqlExecute($sQuery);
+                return DataObject::dao()->sqlExecute( $sQuery );
             }
         }
         return false;
@@ -283,10 +283,10 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param array|string $ids 数据对象编号
      *  形式如下:
-     *  1.array:array(1,2,3,4,5)
-     *  2.字符串:1,2,3,4
+     *  1. array:array(1, 2, 3, 4, 5)
+     *  2. 字符串:1, 2, 3, 4
      */
-    public static function deleteByIds($classname,$ids)
+    public static function deleteByIds($classname, $ids)
     {
         $data = false;
         if ( !empty($ids) ) {
@@ -328,11 +328,11 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param mixed $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      */
     public static function deleteBy($classname, $filter)
     {
@@ -381,11 +381,11 @@ class DataObjectFunc
      * @param string $classname 数据对象类名
      * @param mixed $filter 查询条件，在where后的条件<br/>
      * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @return bool 是否存在
      */
     public static function existBy($classname, $filter)

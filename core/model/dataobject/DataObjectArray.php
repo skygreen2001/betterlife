@@ -15,11 +15,11 @@ class DataObjectArray extends BBObject implements ArrayAccess
     * @param mixed $array
     * @return DataObject
     */
-    public function __construct($array=null)
+    public function __construct($array = null)
     {
-        if (!empty($array)&&is_array($array))
-            foreach ($array as $key=>$value)
-                $this->$key=$value;
+        if ( !empty($array) && is_array($array) )
+            foreach ($array as $key => $value)
+                $this->$key = $value;
     }
 
     /**
@@ -30,7 +30,7 @@ class DataObjectArray extends BBObject implements ArrayAccess
      */
     public function __get($property)
     {
-        if (property_exists($this,$property)) return $this->$property;
+        if ( property_exists($this, $property) ) return $this->$property;
         return null;
     }
 
@@ -42,7 +42,7 @@ class DataObjectArray extends BBObject implements ArrayAccess
      */
     public function __set($property, $value)
     {
-        return $this->$property=$value;
+        return $this->$property = $value;
     }
 
      /**
@@ -50,15 +50,15 @@ class DataObjectArray extends BBObject implements ArrayAccess
      * @return string 描述当前对象。
      */
     public function __toString() {
-        return DataObjectFunc::toString($this);
+        return DataObjectFunc::toString( $this );
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="定义数组进入对象方式">
     public function offsetExists($key)
     {
-        if ($this->$key) return true;
-        return method_exists($this,$key);
+        if ( $this->$key ) return true;
+        return method_exists($this, $key);
     }
     public function offsetGet($key)
     {

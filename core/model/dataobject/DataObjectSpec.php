@@ -2,7 +2,7 @@
 //<editor-fold defaultstate="collapsed" desc="枚举类型">
 /**
  +---------------------------------------<br/>
- * 枚举类型：DataObject默认关键字<br/>
+ * 枚举类型: DataObject默认关键字<br/>
  * 数据对象可重载对默认关键字的定义
  +---------------------------------------<br/>
  */
@@ -43,9 +43,9 @@ class EnumDataObjectDefaultKeyword extends Enum
 
 /**
  +---------------------------------------<br/>
- * 枚举类型：数据库关联模式<br/>
+ * 枚举类型: 数据库关联模式<br/>
  * 数据对象关系定义<br/>
- * 数据对象间关系对应表关系定义，有以下关系：<br/>
+ * 数据对象间关系对应表关系定义，有以下关系: <br/>
  * 一对一，一对多，多对多<br/>
  +---------------------------------------<br/>
  * @category betterlife
@@ -80,7 +80,7 @@ class EnumTableRelation extends Enum
 
 /**
  +---------------------------------------<br/>
- * 枚举类型：ID名称定义的策略
+ * 枚举类型: ID名称定义的策略
  +---------------------------------------<br/>
  * @category betterlife
  * @package core.model
@@ -90,11 +90,11 @@ class EnumIDNameStrategy extends Enum
 {
     /**
      * 无策略<br/>
-     * 说明：需要在数据对象类里定义$field_spec；说明ID别名。
+     * 说明: 需要在数据对象类里定义$field_spec；说明ID别名。
      */
     const NONE = -1;
     /**
-     * ID名称为：id
+     * ID名称为: id
      */
     const ID = 0;
     /**
@@ -112,7 +112,7 @@ class EnumIDNameStrategy extends Enum
 
 /**
  +---------------------------------------<br/>
- * 枚举类型：默认外键ID名称定义的策略
+ * 枚举类型: 默认外键ID名称定义的策略
  +---------------------------------------<br/>
  * @category betterlife
  * @package core.model
@@ -134,7 +134,7 @@ class EnumForeignIDNameStrategy extends Enum
 
 /**
  +---------------------------------------<br/>
- * 枚举类型：数据对象列规格默认列定义<br/>
+ * 枚举类型: 数据对象列规格默认列定义<br/>
  +---------------------------------------<br/>
  * @category betterlife
  * @package core.model
@@ -160,33 +160,33 @@ class EnumDataSpec extends Enum
 /**
  * 数据对象的列规格说明。<br/>
  * 在数据对象的列规格里，<br/>
- * 1.$key->$value说明是：DataObject默认列名->列别名。<br/>
- *   它主要用于与第三方WEB应用整合时，可能数据对象表唯一标识定义为$table_id,如用户表的唯一标识是：user_id;<br/>
+ * 1.$key->$value说明是: DataObject默认列名->列别名。<br/>
+ *   它主要用于与第三方WEB应用整合时，可能数据对象表唯一标识定义为$table_id,如用户表的唯一标识是: user_id;<br/>
  *   在框架中设计当列名有别名时，以列别名去表中查找相应列。<br/>
  * 2.remove:在数据对象中移除不需要持久化的列。<br/>
  *   如数据对象中不需要列commitTime或者updateTime数据列时，只需要在其中声明，其中声明的列即不在框架的持久层中进行存储。<br/>
  * 3.many_many_table:多对多关系表名称定义，如无定义，则按默认规则查找指定表。<br/>
- *   多对多表名默认规则：<br/>
+ *   多对多表名默认规则: <br/>
  *        多对多【主控端-即定义为$many_many】:数据库表名前缀+“_”+[文件夹目录+“_”]...+TABLENAME_RELATION+"_"+主表名+关系表名。<br/>
  *        如User和Role是多对多关系，数据库表名前缀为bb,文件夹目录是user,TABLENAME_RELATION是re；那么在User里定义$many_many包含:Role;则对应的表名是:bb_user_re_userrole.<br/>
  *        多对多【从属端-即定义为$belongs_many_many】:数据库表名前缀+“_”+[文件夹目录+“_”]...+TABLENAME_RELATION+"_"+关系表名+主表名。<br/>
  *        如User和Role是多对多关系，数据库表名前缀为bb,文件夹目录是user,TABLENAME_RELATION是re；那么在Role里定义$belongs_many_many包含:User;则对应的表名是:bb_user_re_userrole.<br/>
  * 4.foreign_id:在对象之间或者说表之间存在一对一，一对多，多对多的关系时，可通过它指定外键的名称，如果没有指定，则按默认定义。<br/>
- *   外键的名称默认定义：<br/>
+ *   外键的名称默认定义: <br/>
  *   一对一:【关系表类名+"_"+id】；注意关系表类名头字母小写<br/>
- *                      如UserDetail和User是一对一关系，则在UserDetail中对应User的外键就是：user_id。<br/>
+ *                      如UserDetail和User是一对一关系，则在UserDetail中对应User的外键就是: user_id。<br/>
  *                      在User中定义$has_one是UserDetail，在UserDetail定义$belong_has_one是User<br/>
  *   一对多:【关系表类名+"_"+id】；注意关系表类名头字母小写<br/>
- *                      如Department和User是一对多关系，则在User中对应Department的外键就是：department_id<br/>
+ *                      如Department和User是一对多关系，则在User中对应Department的外键就是: department_id<br/>
  *                      在User中定义$belong_has_one是Department，在Department中定义$has_many是User。<br/>
  *   多对多【主控端】:多对多关系会产生一张中间表,它定义在EnumDataSpec::MANY_MANY_TABLE里，<br/>
  *                   注意表类名头字母小写 <br/>
- *                   主表类外键名称：【主表类名+"_"+id】，关系表类外键名称：【关系表类名+"_"+id】<br/>
+ *                   主表类外键名称: 【主表类名+"_"+id】，关系表类外键名称: 【关系表类名+"_"+id】<br/>
  *   多对多【从属端】:多对多关系会产生一张中间表,它定义在EnumDataSpec::MANY_MANY_TABLE里，<br/>
  *                   注意表类名头字母小写 <br/>
- *                   主表类外键名称：【主表类名+"_"+id】，关系表类外键名称：【关系表类名+"_"+id】<br/>
- * 说明：$field_spec_default为默认的数据对象的列规格说明，它全局的定义了当前应用的列规格说明；<br/>
- *      数据对象定义需定义字段：public $field_spec，它定义了当前数据对象的列规格说明。
+ *                   主表类外键名称: 【主表类名+"_"+id】，关系表类外键名称: 【关系表类名+"_"+id】<br/>
+ * 说明: $field_spec_default为默认的数据对象的列规格说明，它全局的定义了当前应用的列规格说明；<br/>
+ *      数据对象定义需定义字段: public $field_spec，它定义了当前数据对象的列规格说明。
  * @category betterlife
  * @package core.model
  * @subpackage dataobject
@@ -222,8 +222,8 @@ class DataObjectSpec
     //<editor-fold defaultstate="collapsed" desc="数据对象的列规格的处理维护方法">
     /**
      * 当前数据对象的列规格说明
-     * 由两部分组成：
-     * 1.默认的全局列规格：$field_spec_default,在DataObject内定义。
+     * 由两部分组成:
+     * 1.默认的全局列规格: $field_spec_default, 在DataObject内定义。
      * 2.当前数据对象的列数据规格:$field_spec
      *   它可以重载或重写全局列规格的属性说明。
      * @param DataObject $dataobject 数据对象实体
@@ -349,9 +349,9 @@ class DataObjectSpec
     const NAME_REAL_FIELDSPEC = "real_fieldspec";
     /**
      * 当前数据对象的列规格说明
-     * 由两部分组成：
-     * 1.默认的全局列规格：$field_spec_default,在DataObject内定义。
-     * 2.当前数据对象的列数据规格:$field_spec
+     * 由两部分组成:
+     * 1. 默认的全局列规格: $field_spec_default,在DataObject内定义。
+     * 2. 当前数据对象的列数据规格:$field_spec
      *   它可以重载或重写全局列规格的属性说明。
      * @param string $dataobject 当前对象
      * @return array 当前数据对象的列规格说明
@@ -367,7 +367,7 @@ class DataObjectSpec
     /**
      * 根据默认列标识字段获取数据对象默认列的实际列名。
      * @param string $dataobject 当前对象
-     * @param string $columnFlag 默认列标识字段,定义在枚举类型：EnumColumnNameDefault
+     * @param string $columnFlag 默认列标识字段,定义在枚举类型: EnumColumnNameDefault
      * @param string 实际列名
      */
     public static function getRealColumnName($dataobject, $columnFlag) {

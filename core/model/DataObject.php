@@ -9,13 +9,13 @@ DataObjectSpec::init();
  * 所有数据实体类如POJO的父类<br/>
  * 该实体类设计为ActiveRecord模式。<br/>
  * 可直接在对象上操作CRUD增删改查操作<br/>
- * 查主要为：根据主键和名称查找对象。<br/>
+ * 查主要为: 根据主键和名称查找对象。<br/>
  *            总记录数和分页查找等常规方法。<br/>
- * 框架定义数据对象的默认列[关键字可通过数据对象列规格$field_spec修改]：<br/>
- *            id,commitTime，updateTime<br/>
- * id:数据对象的唯一标识<br/>
- * committime:数据创建的时间，当没有updateTime时，其亦代表数据最后更新的时间<br/>
- * updateTime:数据最后更新的时间。<br/>
+ * 框架定义数据对象的默认列[关键字可通过数据对象列规格$field_spec修改]: <br/>
+ *            id, commitTime, updateTime<br/>
+ * id: 数据对象的唯一标识<br/>
+ * committime: 数据创建的时间, 当没有updateTime时, 其亦代表数据最后更新的时间<br/>
+ * updateTime: 数据最后更新的时间。<br/>
  +-----------------------------------------<br/>
  * @category betterlife
  * @package core.model
@@ -45,7 +45,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static $foreignid_concat = '_';
     /**
-     * 数据对象定义需定义字段：public $field_spec<br/>
+     * 数据对象定义需定义字段: public $field_spec<br/>
      * 它定义了当前数据对象的列规格说明。<br/>
      * 数据对象的列规格说明可参考DataObjectSpec::$field_spec_default的定义
      */
@@ -59,7 +59,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public $commitTime;
     /**
-     * @var int 记录最后更新的时间，当表中无该字段时，一般用commitTime记录最后更新的时间。
+     * @var int 记录最后更新的时间, 当表中无该字段时, 一般用commitTime记录最后更新的时间。
      */
     public $updateTime;
     /**
@@ -105,7 +105,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     }
 
     /**
-     * 说明：若每个具体的实现类希望不想实现set,get方法；<br/>
+     * 说明: 若每个具体的实现类希望不想实现set,get方法；<br/>
      *        则将该方法复制到每个具体继承他的对象类内。<br/>
      * 可设定对象未定义的成员变量[但不建议这样做]<br/>
      * 可无需定义get方法和set方法<br/>
@@ -150,7 +150,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     //</editor-fold>
 
     /**
-     * 处理表之间一对一，一对多，多对多的关系
+     * 处理表之间一对一, 一对多, 多对多的关系
      */
     public function getMutualRelation($property)
     {
@@ -279,7 +279,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="数据持久化：数据库的CRUD操作">
+    //<editor-fold defaultstate="collapsed" desc="数据持久化: 数据库的CRUD操作">
     /**
      * 获取当前数据对象的表名
      */
@@ -330,28 +330,28 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      +----------------------------------------------------<br>
-     * 数据对象存在多对多|从属于多对多关系时，因为存在一张中间表。<br>
+     * 数据对象存在多对多|从属于多对多关系时, 因为存在一张中间表。<br>
      * 因此它们的关系需要单独进行存储<br>
-     * 示例1【多对多-主控端】：<br>
-     *        $user=new User();<br>
+     * 示例1【多对多-主控端】: <br>
+     *        $user = new User();<br>
      *        $user->setId(2);<br>
-     *        $user->saveRelationForManyToMany("roles","3",array("commitTime"=>date("Y-m-d H:i:s")));<br>
-     *        说明:roles是在User数据对象中定义的变量：<br>
-     *        static $many_many=array(<br>
-     *            "roles"=>"Role",<br>
+     *        $user->saveRelationForManyToMany( "roles", "3", array("commitTime" => date("Y-m-d H:i:s")) );<br>
+     *        说明:roles是在User数据对象中定义的变量: <br>
+     *        static $many_many = array(<br>
+     *            "roles" => "Role",<br>
      *        );<br>
-     * 示例2【多对多-被控端】：<br>
-     *        $role=new Role();
+     * 示例2【多对多-被控端】: <br>
+     *        $role = new Role();
      *        $role->setId(5);
-     *        $role->saveRelationForManyToMany("users","6",array("commitTime"=>date("Y-m-d H:i:s")));
-     *        说明:users是在Role数据对象中定义的变量：<br>
-     *        static $belongs_many_many=array(
-     *            "users"=>"User",
+     *        $role->saveRelationForManyToMany( "users", "6", array("commitTime" => date("Y-m-d H:i:s")) );
+     *        说明:users是在Role数据对象中定义的变量: <br>
+     *        static $belongs_many_many = array(
+     *            "users" => "User",
      *        );
      +----------------------------------------------------<br>
      * @param mixed $relation_object 多对多|从属于多对多关系定义对象
      * @param mixed $relation_id_value 关系对象的主键ID值。
-     * @param array $other_column_values  其他列值键值对【冗余字段便于查询的数据列值】，如有一列：记录关系创建时间。
+     * @param array $other_column_values 其他列值键值对【冗余字段便于查询的数据列值】, 如有一列: 记录关系创建时间。
      * @return mixed 保存对象后的主键
      */
     public function saveRelationForManyToMany($relation_object, $relation_id_value, $other_column_values = null)
@@ -361,8 +361,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 同步删除取消了已有多对多关系、保存新增多对多关系<br/>
-     * 示例：<br>
-     *     Blogcategory::saveDeleteRelateions("blog_id", 1, "category_id", array(1,2,3,4,5,6));
+     * 示例: <br>
+     *     Blogcategory::saveDeleteRelateions( "blog_id", 1, "category_id", array(1, 2, 3, 4, 5, 6) );
      * @param string $id_name 主标识名称
      * @param int $id 主标识
      * @param string $rel_name 关系标识名称
@@ -386,8 +386,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 根据主键删除多条记录
      * @param array|string $ids 数据对象编号
      *  形式如下:
-     *  1.array:array(1,2,3,4,5)
-     *  2.字符串:1,2,3,4
+     *  1. array:array(1, 2, 3, 4, 5)
+     *  2. 字符串:1, 2, 3, 4
      * @return boolen 是否修改成功
      */
     public static function deleteByIds($ids)
@@ -397,13 +397,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据条件删除多条记录
-     * @param mixed $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param mixed $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @return boolen 是否修改成功
      */
     public static function deleteBy($filter)
@@ -443,15 +443,15 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 更新对象指定的属性
      * @param array|string $sql_ids 需更新数据的ID编号或者ID编号的Sql语句<br/>
-     * 示例如下：<br/>
+     * 示例如下: <br/>
      *        $sql_ids:<br/>
-     *            1.1,2,3<br/>
-     *            2.array(1,2,3)<br/>
+     *            1. 1, 2, 3<br/>
+     *            2. array(1, 2, 3)<br/>
      * @param string $array_properties 指定的属性<br/>
-     * 示例如下：<br/>
+     * 示例如下: <br/>
      *        $array_properties<br/>
-     *            1.pass=1,name='sky'<br/>
-     *            2.array("pass"=>"1","name"=>"sky")<br/>
+     *            1. pass = 1, name = 'sky'<br/>
+     *            2. array("pass" => "1", "name" => "sky")<br/>
      * @return boolen 是否更新成功；true为操作正常<br/>
      */
     public static function updateProperties($sql_ids, $array_properties)
@@ -461,18 +461,18 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据条件更新数据对象指定的属性
-     * @param mixed $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param mixed $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $array_properties 指定的属性<br/>
-     * 示例如下：<br/>
+     * 示例如下: <br/>
      *        $array_properties<br/>
-     *            1.pass=1,name='sky'<br/>
-     *            2.array("pass"=>"1","name"=>"sky")<br/>
+     *            1. pass = 1, name = 'sky'<br/>
+     *            2. array("pass" => "1", "name" => "sky")<br/>
      * @return boolen 是否更新成功；true为操作正常<br/>
      */
     public static function updateBy($filter, $array_properties)
@@ -482,31 +482,31 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 对属性进行递增
-     * @param object|string|array $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string property_name 属性名称
      * @param int incre_value 递增数
      * @return boolen 是否修改成功
      */
-    public static function increment($filter=null, $property_name, $incre_value = 1)
+    public static function increment($filter = null, $property_name, $incre_value = 1)
     {
         return DataObjectFunc::increment( get_called_class(), $filter, $property_name, $incre_value );
     }
 
     /**
      * 对属性进行递减
-     * @param object|string|array $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string property_name 属性名称
      * @param int decre_value 递减数
      * @return boolen 是否修改成功
@@ -528,13 +528,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 判断符合条件的数据对象是否存在
-     * @param mixed $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param mixed $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @return bool 是否存在
      */
     public static function existBy($filter)
@@ -544,26 +544,26 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询当前对象需显示属性的列表
-     * @param string $columns指定的显示属性，同SQL语句中的Select部分。
-     * 示例如下：<br/>
+     * @param string $columns指定的显示属性, 同SQL语句中的Select部分。
+     * 示例如下: <br/>
      *        id,name,commitTime
-     * @param object|string|array $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
-     * 示例如下：<br/>
-     *        1.id asc;<br/>
-     *        2.name desc;<br/>
-     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下：<br/>
-     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
-     *    1,10<br/> (相当于第1-第10条)
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
+     * @param string $limit 分页数量:limit起始数被改写, 默认从1开始, 如果是0, 同Mysql limit语法；
+     * 示例如下: <br/>
+     *    6, 10<br/>  从第6条开始取10条(如果是mysql的limit, 意味着从第五条开始, 框架里不是这个意义。)
+     *    1, 10<br/> (相当于第1-第10条)
      *    10 <br/>(相当于第1-第10条)
-     * @return 查询列数组，当只有一个值的时候如select count(表名_id)，自动从数组中转换出来值字符串
+     * @return 查询列数组, 当只有一个值的时候如select count(表名_id), 自动从数组中转换出来值字符串
      */
     public static function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
@@ -572,21 +572,21 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询当前对象单个需显示的属性
-     * @param string 指定的显示属性，同SQL语句中的Select部分。
-     * 示例如下：<br/>
-     *        id,name,commitTime
-     * @param object|string|array $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param string 指定的显示属性, 同SQL语句中的Select部分。
+     * 示例如下: <br/>
+     *        id, name, commitTime
+     * @param object|string|array $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
-     * 示例如下：<br/>
-     *        1.id asc;<br/>
-     *        2.name desc;<br/>
-     * @return 查询列数组，自动从数组中转换出来值字符串,最后只返回一个值
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
+     * @return 查询列数组, 自动从数组中转换出来值字符串,最后只返回一个值
      */
     public static function select_one($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -599,21 +599,21 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询数据对象列表
-     * @param object|string|array $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件<br/>
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
-     * 示例如下：<br/>
-     *        1.id asc;<br/>
-     *        2.name desc;<br/>
-     * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下：<br/>
-     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
-     *    1,10<br/> (相当于第1-第10条)
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
+     * @param string $limit 分页数量:limit起始数被改写, 默认从1开始, 如果是0, 同Mysql limit语法；
+     * 示例如下: <br/>
+     *    6, 10<br/>  从第6条开始取10条(如果是mysql的limit, 意味着从第五条开始, 框架里不是这个意义。)
+     *    1, 10<br/> (相当于第1-第10条)
      *    10 <br/>(相当于第1-第10条)
      * @return 对象列表数组
      */
@@ -624,17 +624,17 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询得到单个对象实体
-     * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件
-     * 示例如下：
-     *        1.id asc;
-     *        2.name desc;
+     * 示例如下:
+     *        1. id asc;<br/>
+     *        2. name desc;
      * @return 单个对象实体
      */
     public static function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
@@ -655,12 +655,12 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 对象总计数
      * @param object|string|array $filter<br/>
-     *        $filter 格式示例如下：<br/>
-     *            0.允许对象如new User(id="1",name="green");<br/>
-     *            1."id=1","name='sky'"<br/>
-     *            2.array("id=1","name='sky'")<br/>
-     *            3.array("id"=>"1","name"=>"sky")
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     *        $filter 格式示例如下: <br/>
+     *            0. "id = 1, name = 'sky'"<br/>
+     *            1. array("id = 1", "name = 'sky'")<br/>
+     *            2. array("id" => "1", "name" => "sky")<br/>
+     *            3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @return 对象总计数
      */
     public static function count($filter = null)
@@ -670,18 +670,18 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 对象总计数[多表关联查询]
-     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名]，在from后的多张表名，表名之间以逗号[,]隔开
-     * 示例如下：<br/>
-     *        0."table1,table2"<br/>
-     *        1.array("table1","table2")<br/>
-     *        2."class1,class2"<br/>
-     *        3.array("class1","class2")<br/>
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 示例如下: <br/>
+     *        0. "table1, table2"<br/>
+     *        1. array("table1", "table2")<br/>
+     *        2. "class1, class2"<br/>
+     *        3. array("class1", "class2")<br/>
      * @param object|string|array $filter
-     *        $filter 格式示例如下：<br/>
-     *            0.允许对象如new User(id="1",name="green");<br/>
-     *            1."id=1","name='sky'"<br/>
-     *            2.array("id=1","name='sky'")<br/>
-     *            3.array("id"=>"1","name"=>"sky")<br/>
+     *        $filter 格式示例如下: <br/>
+     *            0. 允许对象如new User(id = "1", name = "green");<br/>
+     *            1. "id = 1", "name = 'sky'"<br/>
+     *            2. array("id = 1", "name = 'sky'")<br/>
+     *            3. array("id" => "1", "name" => "sky")<br/>
      * @return 对象总计数
      */
     public static function countMultitable($from, $filter = null)
@@ -691,8 +691,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 数据对象标识最大值
-     * @param string $column_name 列名，默认为数据对象标识
-     * @param object|string|array $filter 查询条件，在where后的条件
+     * @param string $column_name 列名, 默认为数据对象标识
+     * @param object|string|array $filter 查询条件, 在where后的条件
      * @return int 数据对象标识最大值<br/>
      */
     public static function max($column_name = null, $filter = null)
@@ -701,10 +701,10 @@ abstract class DataObject extends BBObject implements ArrayAccess
     }
 
     /**
-     * 数据对象指定列名最小值，如未指定列名，为标识最小值
-     * @param string $column_name 列名，默认为数据对象标识
-     * @param object|string|array $filter 查询条件，在where后的条件
-     * @return int 数据对象列名最小值，如未指定列名，为标识最小值<br/>
+     * 数据对象指定列名最小值, 如未指定列名, 为标识最小值
+     * @param string $column_name 列名, 默认为数据对象标识
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * @return int 数据对象列名最小值, 如未指定列名, 为标识最小值<br/>
      */
     public static function min($column_name = null, $filter = null)
     {
@@ -714,7 +714,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 数据对象指定列名总数
      * @param string $column_name 列名
-     * @param object|string|array $filter 查询条件，在where后的条件
+     * @param object|string|array $filter 查询条件, 在where后的条件
      * @return int 数据对象列名总数<br/>
      */
     public static function sum($column_name = null, $filter = null)
@@ -726,18 +726,18 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 对象分页
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
-     * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
      * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *      1.id asc;<br/>
-     *      2.name desc;
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
      * @return mixed 对象分页
      */
     public static function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
@@ -751,28 +751,28 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 对象分页根据当前页数和每页显示记录数
      * @param int $pageNo  当前页数
      * @param int $pageSize 每页显示记录数
-     * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
      * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *        1.id asc;<br/>
-     *        2.name desc;
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
      * @return array
-     *        count    :符合条件的记录总计数
-     *        pageCount:符合条件的总页数
-     *        data     :对象分页
+     *        count    : 符合条件的记录总计数
+     *        pageCount: 符合条件的总页数
+     *        data     : 对象分页
      */
     public static function queryPageByPageNo($pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         if ( is_string($filter) ) $filter = trim($filter);
-        $count= self::dao()->count(get_called_class(), $filter);
-        $data = array();
+        $count = self::dao()->count( get_called_class(), $filter );
+        $data  = array();
         $pageCount = 0;
         if ( $count > 0 ) {
             // 总页数
@@ -800,24 +800,24 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 对象分页[多表关联查询]
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
-     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名]，在from后的多张表名，表名之间以逗号[,]隔开
-     * 示例如下：<br/>
-     *        0."table1,table2"<br/>
-     *        1.array("table1","table2")<br/>
-     *        2."class1,class2"<br/>
-     *        3.array("class1","class2")<br/>
-     * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *        0."id=1,name='sky'"<br/>
-     *        1.array("id=1","name='sky'")<br/>
-     *        2.array("id"=>"1","name"=>"sky")<br/>
-     *        3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 示例如下: <br/>
+     *        0. "table1, table2"<br/>
+     *        1. array("table1", "table2")<br/>
+     *        2. "class1, class2"<br/>
+     *        3. array("class1", "class2")<br/>
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: <br/>
+     *        0. "id = 1, name = 'sky'"<br/>
+     *        1. array("id = 1", "name = 'sky'")<br/>
+     *        2. array("id" => "1", "name" => "sky")<br/>
+     *        3. 允许对象如new User(id = "1", name = "green");<br/>
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
      * @param string $sort 排序条件<br/>
      * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *        1.id asc;<br/>
-     *        2.name desc;
+     * 示例如下: <br/>
+     *        1. id asc;<br/>
+     *        2. name desc;
      * @return mixed 对象分页
      */
     public static function queryPageMultitable($startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
@@ -832,8 +832,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 将数据对象转换成xml
      * @param $filterArray 需要过滤不生成的对象的field<br/>
-     * 示例：$filterArray=array("id","commitTime");
-     * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
+     * 示例: $filterArray = array("id", "commitTime");
+     * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
      * @return xml内容
      */
     public function toXml($isAll = true, $filterArray = null)
@@ -843,7 +843,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 将数据对象转换成Json类型格式
-     * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
+     * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
      * @return Json格式的数据格式的字符串。
      */
     public function toJson($isAll = false)
@@ -853,12 +853,12 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 将数据对象转换成Array
-     * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
+     * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
      * @return 数组
      */
-    public function toArray($isAll=true)
+    public function toArray($isAll = true)
     {
-        return UtilObject::object_to_array($this,$isAll);
+        return UtilObject::object_to_array( $this, $isAll );
     }
     //</editor-fold>
 
