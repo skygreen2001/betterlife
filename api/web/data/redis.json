@@ -2,13 +2,13 @@
   "data": [{
     "id"      : "www",
     "name"    : "正式服务器",
-    "server"  : "w.itasktour.com",
+    "server"  : "w.bb.com",
     "port"    : "8686",
     "password": "123456"
   },{
     "id"      : "dev",
     "name"    : "测试服务器",
-    "server"  : "dev.itasktour.com",
+    "server"  : "dev.bb.com",
     "port"    : "8888",
     "password": "123456"
   },{

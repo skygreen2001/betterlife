@@ -488,6 +488,31 @@ var app = new Vue({
                    console.log(error);
                });
         },
+        onUpload: function() {
+
+        },
+        onDownload: function() {
+            var ctrl = this;
+            let params = {
+                step     : 8,
+                server_id: this.server,
+                db       : this.db,
+                queryKey : this.queryKey
+            };
+            this.isLoadingShow = true;
+            axios.get(this.apiUrl, {
+                      params: params
+                   })
+                 .then(function (response) {
+                     ctrl.isLoadingShow = false;
+                     var data = response.data;
+                     window.open(data);
+                 })
+                 .catch(function (error) {
+                     ctrl.isLoadingShow = false;
+                     console.log(error);
+                 });
+        },
         /**
          * 判断是否json
          */

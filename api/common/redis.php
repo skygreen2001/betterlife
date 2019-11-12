@@ -84,13 +84,15 @@ $valType   = @$_GET["valType"];
 $val       = @$_GET["result"];
 
 // Redis服务器数据信息查询
-$config_need = server_config($server_id);
-if ( $config_need ) {
-    extract($config_need);
-} else {
-    return;
+if ( !empty($server_id) ) {
+    $config_need = server_config($server_id);
+    if ( $config_need ) {
+        extract($config_need);
+    } else {
+        return;
+    }
+    $serverCache = BBCache::singleton()->redisServer($server, $port, $password);
 }
-$serverCache = BBCache::singleton()->redisServer($server, $port, $password);
 $result = '';
 switch ($step) {
   // 查询Redis服务器设置列表
@@ -110,18 +112,21 @@ switch ($step) {
     echo json_encode($data);
     return ;
     break;
+  // 查询指定服务器所有的DB
   case 1:
     $dbs = $serverCache->dbInfos();
     if ( $dbs && is_array($dbs) && count($dbs) > 0 ) {
         $result = array_keys($dbs);
     }
     break;
+  // 查询指定DB所有的keys
   case 2:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
     $result = $serverCache->keys();
     sort($result, SORT_STRING);
     break;
+  // 查询指定key的value
   case 3:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
@@ -133,6 +138,7 @@ switch ($step) {
         $result["data"] = $serverCache->get($key);
     }
     break;
+  // 修改指定key的value
   case 4:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
@@ -141,6 +147,7 @@ switch ($step) {
     $result["data"] = $serverCache->get($key);
     $result["type"] = $serverCache->getKeyType($key);
     break;
+  // 模糊查询指定关键词的所有key
   case 5:
     $queryKey = @$_GET["queryKey"];
     $dbIndex  = (int) str_replace("db", "", $db);
@@ -148,6 +155,7 @@ switch ($step) {
     $result   = $serverCache->keys("*" . $queryKey . "*");
     sort($result, SORT_STRING);
     break;
+  // 新增key和value
   case 6:
     $addNewType  = @$_GET["addNewType"];
     $addNewKey   = @$_GET["addNewKey"];
@@ -158,11 +166,46 @@ switch ($step) {
     $result      = $serverCache->keys();
     sort($result, SORT_STRING);
     break;
+  // 删除指定key
   case 7:
     $dbIndex = (int) str_replace("db", "", $db);
     $serverCache->select($dbIndex);
     $serverCache->delete($key);
     $result  = true;
+    break;
+  // 导出
+  case 8:
+    $queryKey = @$_GET["queryKey"];
+    $dbIndex = (int) str_replace("db", "", $db);
+    $serverCache->select($dbIndex);
+    if ( !empty($queryKey) ) {
+        $keys = $serverCache->keys("*" . $queryKey . "*");
+    } else {
+        $keys = $serverCache->keys();
+    }
+    if ( $keys && count($keys) > 0 ) {
+        // $values = $serverCache->gets($keys);
+        // $result = array_combine($keys, $values);
+        $data = array();
+        $index = 0;
+        foreach ($keys as $key) {
+            $data[$index][0] = $key;
+            $data[$index][1] = $serverCache->get($key);
+            if ( is_array($data[$index][1]) ) {
+                $data[$index][1] = json_encode($data[$index][1], JSON_OBJECT_AS_ARRAY | JSON_UNESCAPED_UNICODE);
+            }
+            $index++;
+        }
+        $redisFile = "redis" . date("YmdHis") . ".xls";
+        $redisPath = Gc::$upload_path . "redis" . DS . "export" . DS . $redisFile;
+        $arr_output_header = array("key", "value");
+        UtilFileSystem::createDir( dirname($redisPath) );
+        UtilExcel::arraytoExcel($arr_output_header, $data, $redisPath, false);
+        $result = Gc::$upload_url . "redis/export/" . $redisFile;
+        echo $result;
+        return;
+    }
+    // $result  = true;
     break;
   default:
     break;
@@ -177,8 +220,8 @@ echo json_encode($result);
  */
 function config_path() {
     $config_redis_file = Gc::$nav_root_path . "api" . DS ."web" . DS . "data" . DS . "redis.json";
-    $config_dest       = Gc::$upload_path . "config" . DS . "redis.json";
-    UtilFileSystem::createDir(dirname($config_dest));
+    $config_dest       = Gc::$upload_path . "redis" . DS ."config" . DS . "redis.json";
+    UtilFileSystem::createDir( dirname($config_dest) );
     if ( !file_exists($config_dest) ) {
         @copy($config_redis_file, $config_dest);
 
@@ -196,7 +239,7 @@ function config_path() {
 function save_server_configs($configs) {
     if ( $configs ) {
         $config_redis_file = config_path();
-        $contents = json_encode($configs, JSON_OBJECT_AS_ARRAY | JSON_PRETTY_PRINT);
+        $contents = json_encode($configs, JSON_OBJECT_AS_ARRAY | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         if ( !empty($contents) ) {
             file_put_contents($config_redis_file, $contents);
         }

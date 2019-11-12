@@ -371,7 +371,8 @@ class Cache_Redis extends Cache_Base
      */
     public function gets($keyArr)
     {
-        $data = $this->redis->getMultiple($keyArr);
+        // $data = $this->redis->getMultiple($keyArr);
+        $data = $this->redis->mGet($keyArr);
         if ( $data ) {
             $result = array();
             foreach ($data as $element)
@@ -386,13 +387,23 @@ class Cache_Redis extends Cache_Base
     }
 
     /**
-     * 清除所有的对象。
+     * 清除当前选中DB所有的键值
      *
      */
     public function clear()
     {
-        $allKeys = $this->redis->keys('*');
-        $this->delete( $allKeys );
+        // $allKeys = $this->redis->keys('*');
+        // $this->delete( $allKeys );
+        $this->redis->flushDb();
+    }
+
+    /**
+     * 清除所有DB所有的键值
+     *
+     */
+    public function clearAll()
+    {
+        $this->redis->flushAll();
     }
 
 
