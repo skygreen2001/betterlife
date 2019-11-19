@@ -16,11 +16,14 @@ $width   = $params['w'];
 $hight   = $params['h'];
 
 // 以下为测试数据
-// $img_src = "https://www.itasktour.com/upload/images/indextrip/cover_img/20171128100823.jpg";
+// $img_src = "https://www.bb.com/upload/images/indextrip/cover_img/20171128100823.jpg";
 // $width = "600";
 // $hight = "400";
 
 if ($width || $hight) {
+
+    // 方案一: file_get_contents
+    // echo file_get_contents($img_src);
     $img_src     = Gc::$url_base.$img_src;
     $file_name   = basename($img_src);
     $suffix_name = explode(".", $file_name);
@@ -30,14 +33,12 @@ if ($width || $hight) {
     header("Content-Type:image/" . $suffix_name);
     if ( $suffix_name == "jpeg" ) $suffix_name = "jpg";
     $thumb_icon_path = Gc::$upload_path . "images" . DS . "cache" . DS . $file_name;
-    if (file_exists($thumb_icon_path)) {
+    if ( file_exists($thumb_icon_path) ) {
         echo file_get_contents($thumb_icon_path);
     } else {
-        UtilImage::thumb($img_src, $thumb_icon_path, $suffix_name, $width, $hight);
+        UtilImage::thumb( $img_src, $thumb_icon_path, $suffix_name, $width, $hight );
     }
 } else {
-    // 方案一: file_get_contents
-    // echo file_get_contents($img_src);
 
     // 方案二: curl
     header("Content-Type: image/jpeg;");

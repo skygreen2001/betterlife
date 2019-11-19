@@ -3,10 +3,6 @@ header("Content-Type: image/jpeg;");
 $params  = $_GET;
 $img_src = $params['src'];
 
-// 方案一: file_get_contents
-// echo file_get_contents($img_src);
-
-// 方案二: curl
 // $img_src = 'https://images.nga.gov/en/web_images/constable.jpg'; //仅供测试
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $img_src);
