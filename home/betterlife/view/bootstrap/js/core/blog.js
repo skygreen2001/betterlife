@@ -4,45 +4,45 @@ $(function(){
 
     //滚动翻页: https://stackoverflow.com/questions/14035180/jquery-load-more-data-on-scroll
     $(window).scroll(function() {
-      if (currentScreen<=3){
-        if($(window).scrollTop() == $(document).height() - $(window).height()) {
-          mimicData(++currentScreen);
+        if ( currentScreen <= 3) {
+            if ( $(window).scrollTop() == $(document).height() - $(window).height() ) {
+                mimicData(++currentScreen);
+            }
         }
-      }
     });
 
     $(".btn-load-more button").click(function(){
-      mimicData(++currentScreen);
+        mimicData(++currentScreen);
     });
 
     $(".head-img img").css("margin-top","-300px");
 
     function mimicData(screen){
-      $.ajax({
-        url:"api/web/data/blog.json",
-        dataType: "json",
-        success: function(response){
-          var data = response.data;
-          if (data && data.length>0){
-            var unit;
-            var result = "";
-            if (screen <= data.length){
-              for (var i = 0; i < data.length*3; i++) {
-                unit = data[currentScreen-1];
-                unit.template_url = template_url;
-                result += $.templates("#unitTmpl").render(unit);
+        $.ajax({
+          url:"api/web/data/blog.json",
+          dataType: "json",
+          success: function(response){
+              var data = response.data;
+              if ( data && data.length > 0 ) {
+                  var unit;
+                  var result = "";
+                  if ( screen <= data.length ) {
+                      for (var i = 0; i < data.length * 3; i++) {
+                          unit = data[currentScreen-1];
+                          unit.template_url = template_url;
+                          result += $.templates("#unitTmpl").render(unit);
+                      }
+                      $(".unit-list").append(result).fadeIn();
+                      $(window).scrollTop($(window).scrollTop()-1);
+                      $.common.autoresize();
+                      if (screen == data.length) $(".btn-load-more").css("display", "none");
+                  } else {
+                      $(".btn-load-more").css("display", "none");
+                  }
+              } else {
+                  $(".btn-load-more").css("display", "none");
               }
-              $(".unit-list").append(result).fadeIn();
-              $(window).scrollTop($(window).scrollTop()-1);
-              $.common.autoresize();
-              if (screen == data.length) $(".btn-load-more").css("display", "none");
-            }else{
-              $(".btn-load-more").css("display", "none");
-            }
-          }else{
-            $(".btn-load-more").css("display", "none");
           }
-        }
-      });
+        });
     }
 });
