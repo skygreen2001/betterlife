@@ -5,20 +5,29 @@ require_once ("../../init.php");
 
 $step   = @$_GET["step"];     // 菜单操作
 if ( !empty($step) ) {
+    $isRemote  = @$_GET["isConfigRemote"];
     $server_id = @$_GET["server_id"];
     $db        = @$_GET["db"];
     $key       = @$_GET["key"];
     $val       = @$_GET["result"];
-    // Redis服务器数据信息查询
-    if ( !empty($server_id) ) {
-        $config_need = server_config($server_id);
-        if ( $config_need ) {
-            extract($config_need);
-        } else {
-            return;
+
+    if ( isset($isRemote) && $isRemote == true ) {
+        if ( !empty($server_id) ) {
+            // Redis服务器数据信息查询
+            $config_need = server_config($server_id);
+            if ( $config_need ) {
+                extract($config_need);
+            } else {
+                return;
+            }
         }
-        $serverCache = BBCache::singleton()->redisServer($server, $port, $password);
+    } else {
+        $server   = @$_GET["server"];
+        $port     = @$_GET["port"];
+        $password = @$_GET["password"];
     }
+    $serverCache = BBCache::singleton()->redisServer($server, $port, $password);
+
     $result = '';
     switch ($step) {
       // 查询Redis服务器设置列表
