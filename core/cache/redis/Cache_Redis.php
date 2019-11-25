@@ -25,6 +25,7 @@
 class Cache_Redis extends Cache_Base
 {
     private $redis;
+    public static $SPLIT_ELEMENT ="<(||)>";
 
     /**
      * 测试体验Redis Cache
@@ -123,6 +124,25 @@ class Cache_Redis extends Cache_Base
     }
 
     /**
+     * 计数: 所选择的DB所有键计数
+     */
+    public function size()
+    {
+        $result = $this->redis->dbSize();
+        return $result;
+    }
+
+
+    /**
+     * 计数:
+     */
+    public function countKeys()
+    {
+        $result = $this->redis->dbSize();
+        return $result;
+    }
+
+    /**
      * 所有的数据库db
      */
     public function dbInfos()
@@ -132,16 +152,6 @@ class Cache_Redis extends Cache_Base
         $result = UtilArray::like( $info, "^db\d+" );
         return $result;
     }
-
-    /**
-     * 计数: 所有键
-     */
-    public function countKeys()
-    {
-        $result = $this->redis->dbSize();
-        return $result;
-    }
-
 
     /**
      * 获取指定$key的类型
@@ -157,29 +167,66 @@ class Cache_Redis extends Cache_Base
     {
         $result = $this->redis->type($key);
         return $result;
-        // $typeOfKey = "";
-        // switch($result){
-        //     case Redis::REDIS_STRING :
-        //         $typeOfKey = "String";
-        //         break;
-        //     case Redis::REDIS_SET :
-        //         $typeOfKey = "Set";
-        //         break;
-        //     case Redis::REDIS_LIST :
-        //         $typeOfKey = "List";
-        //         break;
-        //     case Redis::REDIS_ZSET :
-        //         $typeOfKey = "Sorted Set";
-        //         break;
-        //     case Redis::REDIS_HASH :
-        //         $typeOfKey = "Hash";
-        //         break;
-        //     case Redis::REDIS_NOT_FOUND :
-        //         $typeOfKey = "this Type Not Found in Redis";
-        //         break;
-        //
-        // }
-        // return $typeOfKey ;
+    }
+
+    /**
+     * 根据类型显示转换成Redis的类型值
+     */
+    public function getKeyTypeByShow($typeShow) {
+        $type = "";
+        $typeShow = strtoupper($typeShow);
+        switch ($typeShow) {
+            case "STRING":
+                $type = Redis::REDIS_STRING;
+                break;
+            case "SET":
+                $type = Redis::REDIS_SET;
+                break;
+            case "LIST":
+                $type = Redis::REDIS_LIST;
+                break;
+            case "ZSET":
+            case "SORTED SET":
+                $type = Redis::REDIS_ZSET;
+                break;
+            case "HASH":
+                $type = Redis::REDIS_HASH;
+                break;
+            case "OTHER":
+                $type = Redis::REDIS_NOT_FOUND;
+                break;
+            default:
+                $type = $typeShow;
+                break;
+        }
+        return $type;
+    }
+    /**
+     * 类型显示字符串
+     */
+    public function getKeyTypeShow($type) {
+        $typeOfKey = "";
+        switch ($type) {
+            case Redis::REDIS_STRING:
+                $typeOfKey = "STRING";
+                break;
+            case Redis::REDIS_SET:
+                $typeOfKey = "SET";
+                break;
+            case Redis::REDIS_LIST:
+                $typeOfKey = "LIST";
+                break;
+            case Redis::REDIS_ZSET:
+                $typeOfKey = "ZSET"; // "Sorted Set";
+                break;
+            case Redis::REDIS_HASH:
+                $typeOfKey = "HASH";
+                break;
+            case Redis::REDIS_NOT_FOUND:
+                $typeOfKey = "OTHER";
+                break;
+        }
+        return $typeOfKey;
     }
 
     /**
@@ -203,6 +250,7 @@ class Cache_Redis extends Cache_Base
     *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
     *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
     *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
     * @param string $type 键类型
     *     1: string: Redis::REDIS_STRING
     *     2: set: Redis::REDIS_SET
@@ -215,6 +263,7 @@ class Cache_Redis extends Cache_Base
     */
     public function save($key, $value, $type = Redis::REDIS_STRING, $expired = 86400)
     {
+        if ( empty($key) ) return;
         if ( is_object($value) ) {
             $value = serialize($value);
         }
@@ -223,26 +272,70 @@ class Cache_Redis extends Cache_Base
                 $this->redis->setNx($key, $value);
                 break;
             case Redis::REDIS_SET:
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->sAdd($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                $this->redis->sAdd($key, $ivalue);
+                            }
+                        }
+                    } else {
+                        $this->redis->sAdd($key, $value);
+                    }
                 }
                 break;
             case Redis::REDIS_LIST:
-                $this->redis->del($key);
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->rPush($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                $this->redis->rPush($key, $ivalue);
+                            }
+                        }
+                    } else {
+                        $this->redis->rPush($key, $value);
+                    }
                 }
                 break;
             case Redis::REDIS_ZSET:
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->zAdd($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            $i = 0;
+                            foreach ($content as $ivalue) {
+                                $this->redis->zAdd($key, $i, $ivalue);
+                                $i++;
+                            }
+                        }
+                    } else {
+                        $i = $this->redis->zSize($key) + 1;
+                        $this->redis->zAdd($key, $i, $value);
+                    }
                 }
                 break;
             case Redis::REDIS_HASH:
-                $this->redis->hSetNx($key, $value);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                if ( !empty($ivalue) & contain( $ivalue, ":" ) ) {
+                                    $icontent = explode(":", $ivalue);
+                                    $hashKey  = trim($icontent[0]);
+                                    $hashVal  = trim($icontent[1]);
+                                    $this->redis->hSet($key, $hashKey, $hashVal);
+                                }
+                            }
+                        }
+                    } else {
+                        $this->redis->hSetNx($key, $key, $value);
+                    }
+                } else {
+                    $this->redis->hSetNx($key, $key, "");
+                }
                 break;
             default:
                 $this->redis->setNx($key, $value);
@@ -261,44 +354,97 @@ class Cache_Redis extends Cache_Base
     *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
     *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
     *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
+    *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
     * @return bool
     */
-    public function set($key, $value, $expired = 86400)
+    public function set($key, $value, $type = Redis::REDIS_NOT_FOUND, $expired = 86400)
     {
+        if ( empty($key) ) return;
         if ( is_object($value) ) {
             $value = serialize($value);
         }
-        $type = $this->getKeyType($key);
+        if ( $type == Redis::REDIS_NOT_FOUND ) {
+            if ( $type == Redis::REDIS_NOT_FOUND ) {
+                $type = Redis::REDIS_STRING;
+            }
+        }
         // $type = Redis::REDIS_SET;
         switch($type){
             case Redis::REDIS_STRING:
                 $this->redis->setEx($key, $expired, $value);
                 break;
             case Redis::REDIS_SET:
-                $this->redis->del($key);
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->sAdd($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                $this->redis->sAdd($key, $ivalue);
+                            }
+                        }
+                    } else {
+                        $this->redis->sAdd($key, $value);
+                    }
+                } else {
+                    $this->redis->sAdd($key, "");
                 }
                 break;
             case Redis::REDIS_LIST:
-                $this->redis->del($key);
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->rPush($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                $this->redis->rPush($key, $ivalue);
+                            }
+                        }
+                    } else {
+                        $this->redis->rPush($key, $value);
+                    }
+                } else {
+                    $this->redis->rPush($key, "");
                 }
                 break;
             case Redis::REDIS_ZSET:
-                $this->redis->del($key);
-                $content = explode("|", $value);
-                foreach ($content as $ivalue) {
-                    $this->redis->zAdd($key, $ivalue);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            $i = 0;
+                            foreach ($content as $ivalue) {
+                                $this->redis->zAdd($key, $i, $ivalue);
+                                $i++;
+                            }
+                        }
+                    } else {
+                        $i = $this->redis->zSize($key) + 1;
+                        $this->redis->zAdd($key, $i, $value);
+                    }
+                } else {
+                    $this->redis->zAdd($key, 0, "");
                 }
                 break;
             case Redis::REDIS_HASH:
-                $this->redis->del($key);
-                $this->redis->hSet($key, $value);
+                if ( !empty($value) ) {
+                    if ( contain( $value, self::$SPLIT_ELEMENT ) ) {
+                        $content = explode(self::$SPLIT_ELEMENT, $value);
+                        if ( $content && is_array($content) && count($content) > 0 ) {
+                            foreach ($content as $ivalue) {
+                                if ( !empty($ivalue) & contain( $ivalue, ":" ) ) {
+                                    $icontent = explode(":", $ivalue);
+                                    $hashKey  = trim($icontent[0]);
+                                    $hashVal  = trim($icontent[1]);
+                                    $this->redis->hSet($key, $hashKey, $hashVal);
+                                }
+                            }
+                        }
+                    } else {
+                        $this->redis->hSet($key, $key, $value);
+                    }
+                } else {
+                    $this->redis->hSet($key, $key, "");
+                }
                 break;
             default:
                 $this->redis->setEx($key, $expired, $value);
@@ -313,9 +459,9 @@ class Cache_Redis extends Cache_Base
     * @param string|array|object $value
     * @return bool
     */
-    public function update($key, $value, $expired = 86400)
+    public function update($key, $value, $type = Redis::REDIS_STRING, $expired = 86400)
     {
-        $this->set( $key, $value, $expired );
+        $this->set( $key, $value, $type, $expired );
     }
 
    /**
@@ -335,6 +481,7 @@ class Cache_Redis extends Cache_Base
      */
     public function get($key)
     {
+        if ( empty($key) ) return;
         $type = $this->getKeyType($key);
         switch($type){
             case Redis::REDIS_STRING :
@@ -350,7 +497,16 @@ class Cache_Redis extends Cache_Base
                 $data = $this->redis->zRange($key, 0, -1);
                 break;
             case Redis::REDIS_HASH :
-                $data = $this->redis->hGetAll($key);
+                $data   = $this->redis->hGetAll($key);
+                $result = json_encode($data);
+                // 是经过序列化编码的Java对象
+                if ( json_last_error() == JSON_ERROR_NONE ) {
+                    $rd   = array();
+                    foreach ($data as $skey => $svalue) {
+                        $rd[] = $skey . ": " . $svalue;
+                    }
+                    $data = $rd;
+                }
                 break;
             default:
                 $data = $this->redis->get($key);
@@ -365,6 +521,7 @@ class Cache_Redis extends Cache_Base
 
     /**
      * 获取指定keys的值们。<br/>
+     * 只取字符串
      * 允许一次查询多个键值，减少通讯次数。
      * @param array $key
      * @return array
@@ -406,7 +563,9 @@ class Cache_Redis extends Cache_Base
         $this->redis->flushAll();
     }
 
-
+    /**
+     * 关闭Redis服务器
+     */
     public function close()
     {
         $this->redis->close();

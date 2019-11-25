@@ -1,3 +1,7 @@
+html, body, #app, .layout {
+    height: 100%;
+}
+
 header {
     width: 100%;
     position: fixed;
@@ -6,6 +10,10 @@ header {
     z-index: 10000;
 }
 
+header,.ivu-menu {
+    height: 50px;
+    line-height: 50px;
+}
 content {
     min-height: 678px;
     min-width: 320px;
@@ -13,7 +21,8 @@ content {
     width: 100%;
     padding: 0 30px;
     padding-top: 10px;
-    margin: 60px auto;
+    margin: 50px auto;
+    overflow: scroll;
 }
 
 hr {
@@ -91,7 +100,6 @@ Content div span {
 .ip_modalDiv .ivu-menu {
     float: none;
 }
-
 /************************* Layout:  footer start ************************/
 
 footer {
@@ -176,20 +184,32 @@ footer .footer .footer-content ul li i {
     margin-left: 10px;
 }
 
+.result_container {
+    border: 1px solid #343434;
+    margin-top:10px;
+    overflow:auto;
+    min-width: 1048px;
+}
+
 .result_area {
     overflow: auto;
     margin: 5px;
     position: relative;
-    min-height: 600px;
+    /* min-height: 600px; */
 }
 
 .left_area {
     width: 40%;
-    min-height: 600px;
+    max-width: 546px;
+    min-width: 410px;
+    /* min-height: 600px; */
+    overflow: scroll;
+    border-bottom: 1px solid #dcdee2;
+    border-radius: 6px;
 }
 
 .fixed-header {
-    position: fixed;
+    position: absolute;
     z-index: 5;
     /* width: 450px; */
     background-color: #f5f7f9;
@@ -258,10 +278,11 @@ footer .footer .footer-content ul li i {
 }
 
 .right_area {
-    position: fixed;
-    right: 36px;
-    width: 56%;
-    min-height: 600px;
+    position: absolute;
+    right: 1px;
+    width: 59%;
+    max-width: 806px;
+    /* min-height: 600px; */
     text-align: center;
 }
 
