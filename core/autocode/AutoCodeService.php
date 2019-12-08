@@ -836,7 +836,7 @@ class AutoCodeService extends AutoCode
      */
     private static function saveServiceDefineToDir($tablename, $definePhpFileContent)
     {
-        $filename         = self::getServiceClassname($tablename) . " .php";
+        $filename         = self::getServiceClassname($tablename) . ".php";
         $service_dir_full = self::$service_dir_full;
         $relative_path    = str_replace(self::$save_dir, "", $service_dir_full . $filename);
         $classname        = self::getClassname( $tablename );
