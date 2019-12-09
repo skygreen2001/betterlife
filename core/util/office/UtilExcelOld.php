@@ -55,10 +55,15 @@ class UtilExcelOld extends Util
                 foreach ($arr_output_header as $key => $value)
                 {
                     if ( is_array($record) ) {
-                        $objActsheet->setCellValue($column . $i, $record[$key]);
+                        // $objActsheet->setCellValue($column . $i, $record[$key]);
+                        // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也已文本格式导出。
+                        $objActsheet->setCellValueExplicit($column . $i, $record[$key], PHPExcel_Cell_DataType::TYPE_STRING);
                     } else {
-                        $objActsheet->setCellValue($column . $i, $record->$key);
+                        // $objActsheet->setCellValue($column . $i, $record->$key);
+                        // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也已文本格式导出。
+                        $objActsheet->setCellValueExplicit($column . $i, $record->$key, PHPExcel_Cell_DataType::TYPE_STRING);
                     }
+                    // $objActsheet->getStyle($column . $i)->getNumberFormat()->setFormatCode("@");
 
                     $column++;
                 }
