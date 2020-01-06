@@ -1,6 +1,14 @@
 <?php
 $url = $_GET['url'];
 require_once ("../../init.php");
+/**
+ * 公众号微信JDK授权接口
+ * 微信JS-SDK文档: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1
+ * 附录6-DEMO页面和示例代码: http://demo.open.weixin.qq.com/jssdk 
+ * 示例代码：http://demo.open.weixin.qq.com/jssdk/sample.zip
+ * 备注：链接中包含php、java、nodejs以及python的示例代码供第三方参考，第三方切记要对获取的accesstoken以及jsapi_ticket进行缓存以确保不会触发频率限制。
+ * 本地示例: api/common/wechat/wxjdk/
+ */ 
 class WxJsSDK {
   const APPID = "公众号第三方用户唯一凭证 appid";
   const APPSECRET = "第三方用户唯一凭证密钥，即appsecret";
