@@ -255,7 +255,7 @@ class UtilArray extends Util
     public static function array_key_filter($array, $keys)
     {
         $return = array();
-        foreach (explode(',',$keys) as $k) {
+        foreach (explode(',', $keys) as $k) {
             if ( isset($array[$k]) ) {
                 $return[$k] = $array[$k];
             }
@@ -485,7 +485,7 @@ class UtilArray extends Util
     }
 
     /**
-     * 获取数组中包含有指定字符串键值对数组。
+     * 获取数组中键包含有指定字符串键值对数组。
      * @param array $data 源数组
      * @param string $needle 指定的字符串，允许使用正则表达式
      * @return 包含指定字符串键值对新数组
@@ -496,11 +496,34 @@ class UtilArray extends Util
      *     [db2] => keys=8,expires=7,avg_ttl=513154026
      *     [db3] => keys=38,expires=30,avg_ttl=2387575246
      * )
+     * $content = UtilArray::like( $content, "db" );
      */
     public static function like($data, $needle) {
         $result = array();
         foreach ($data as $key => $value)
           if ( preg_match('/' . $needle . '/', $key) )
+            $result[$key] = $value;
+        return $result;
+    }
+
+    /**
+     * 获取数组中值包含有指定字符串键值对数组。
+     * @param array $data 源数组
+     * @param string $needle 指定的字符串，允许使用正则表达式
+     * @return 包含指定字符串键值对新数组
+     * 示例:
+     * Array (
+     *     [db0] => keys=106,expires=0,avg_ttl=0
+     *     [db1] => keys=57,expires=57,avg_ttl=500072192
+     *     [db2] => keys=8,expires=7,avg_ttl=513154026
+     *     [db3] => keys=38,expires=30,avg_ttl=2387575246
+     * )
+     * $content = UtilArray::likeValue( $content, "keys=38," );
+     */
+    public static function likeValue($data, $needle) {
+        $result = array();
+        foreach ($data as $key => $value)
+          if ( preg_match('/' . $needle . '/', $value) )
             $result[$key] = $value;
         return $result;
     }
