@@ -212,6 +212,9 @@
         <conditions>
             <condition>username</condition>
         </conditions>
+        <has_one>
+            <relationclass name="Userdetail">userdetail</relationclass>
+        </has_one>
         <has_many>
             <relationclass name="Blog">blogs</relationclass>
             <relationclass name="Comment">comments</relationclass>

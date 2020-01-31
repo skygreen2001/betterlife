@@ -16,6 +16,16 @@ $(function(){
         isActive = true;
       }
 
+      if ( $(this).attr('href').indexOf("?go") > 7 ) {
+        link     = $_.params("go", link);
+        url_p    = $_.params("go", urlstr);
+        if ( link && link != '' && link != '#' ) {
+          link = link.substring(0,link.lastIndexOf("."));
+          url_p = url_p.substring(0,url_p.lastIndexOf("."));
+          isActive = url_p == link;
+        }
+      }
+
       if ( isActive ) {
         $(this).addClass('active');
         urlstatus = true;

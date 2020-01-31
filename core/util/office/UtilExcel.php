@@ -23,6 +23,11 @@ class UtilExcel extends Util
     */
     public static function arraytoExcel($arr_output_header, $excelarr, $outputFileName = null, $isDirectDownload = false, $isExcel2007 = false)
     {
+        $pv = (float) phpversion();
+        if ( $pv <= 5.5 ) {
+            UtilExcelOld::arraytoExcel( $arr_output_header, $excelarr, $outputFileName, $isDirectDownload, $isExcel2007 );
+            die();
+        }
         UtilFileSystem::createDir( dirname($outputFileName) );
         $objActSheet = array ();
         $objExcel    = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -135,6 +140,11 @@ class UtilExcel extends Util
      */
     public static function exceltoArray($importFileName, $arr_import_header)
     {
+        $pv = (float) phpversion();
+        if ( $pv <= 5.5 ) {
+            UtilExcelOld::exceltoArray( $importFileName, $arr_import_header );
+            die();
+        }
         $result   = null;
         $filetype = explode('.', $importFileName);
         $filetype = end($filetype);

@@ -125,13 +125,6 @@ MODEL;
             $moreContent  = str_replace("[module_name]", "front", $moreContent);
             $moreContent  = str_replace("[checked]", "", $moreContent);
 
-            //生成标准方法的Service文件
-            if( self::$service_files && (count(self::$service_files)>0) ) {
-                $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
-                $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$service_files, "front" );
-            }
-
             // 生成前端Action，继承基本Action
             if ( self::$action_front_files&&(count(self::$action_front_files)>0) ) {
                 $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>前端控制器</a>";
@@ -153,6 +146,19 @@ MODEL;
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "admin", $moreContent);
             $moreContent  = str_replace("[checked]", "", $moreContent);
+
+            //生成标准方法的Service文件
+            if( self::$service_files && (count(self::$service_files)>0) ) {
+                $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
+                $moreContent .= str_replace("[title]", $title, $title_model);
+                $moreContent .= self::groupFileContentsStatus( self::$service_files, "front" );
+
+                //生成服务管理器
+                $title             = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
+                $moreContent      .= str_replace("[title]", $title, $title_model);
+                $s_manage_file     = Gc::$module_root . DS . "admin" . DS . self::$dir_src . DS . AutoCodeService::$service_dir . DS . "Manager_Service.php";
+                $moreContent      .= self::groupFileContentsStatus( array($s_manage_file), "admin" );
+            }
 
             // 生成后台Action，继承基本Action
             if ( self::$action_admin_files&&(count(self::$action_admin_files)>0) ) {

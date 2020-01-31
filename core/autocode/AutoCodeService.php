@@ -79,7 +79,6 @@ class AutoCodeService extends AutoCode
         }
         self::$showReport .= '</div><br>';
 
-
         $category = Gc::$appName;
         $author   = self::$author;
         $package  = self::$package;
@@ -89,7 +88,7 @@ class AutoCodeService extends AutoCode
          */
         self::$showReport .= "<font color='#237319'>[需要在管理类Manager_Service里添加没有的代码]</font><br />";
 
-        // 创建前台管理服务类
+        // 创建后台管理服务类
         $result = self::createManageService( $table_names );
         $section_define  = $result["section_define"];
         $section_content = $result["section_content"];
