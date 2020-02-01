@@ -294,7 +294,11 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
                             $result[$field["Field"]] = $comment[0];
                         }
                     } else {
-                        $result[$field["Field"]] = $field["Comment"];
+                        if ( $field["Comment"] ) {
+                            $result[$field["Field"]] = $field["Comment"];
+                        } else {
+                            $result[$field["Field"]] = $field["Field"];
+                        }
                     }
                 }
             }

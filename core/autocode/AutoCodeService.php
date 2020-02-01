@@ -567,7 +567,7 @@ class AutoCodeService extends AutoCode
                                     $show_fieldname = str_replace("_id", "", $show_fieldname);
                                 }
                             }
-                            if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
+                            // if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
                             $i_name    = $key;
                             $i_name{0} = strtolower($i_name{0});
                             if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {

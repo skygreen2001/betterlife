@@ -315,7 +315,7 @@ class ServiceBlog extends Service implements IServiceBasic
             $category_instance = null;
             if ( $blog->category_id ) {
                 $category_instance = Category::get_by_id( $blog->category_id );
-                $blog['category_id'] = $category_instance->category_name;
+                $blog['category_id'] = $category_instance->name;
             }
             if ( $blog->isPublic == 1 ) $blog->isPublic = "是"; else $blog->isPublic = "否";
         }
