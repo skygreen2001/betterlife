@@ -32,8 +32,8 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
         p {
           margin:5px;
         }
-        .en{
-          font-family:Arial,verdana,Geneva,Helvetica,sans-serif;
+        .en {
+          font-family:"PingFang SC","Helvetica Neue","Helvetica", Arial,sans-serif,verdana,Geneva,Helvetica;
         }
         h1{
           font-size: 40px;
