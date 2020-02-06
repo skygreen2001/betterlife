@@ -34,11 +34,22 @@ $url_base = UtilNet::urlbase();
         text-align: left;
         line-height: 25px;
       }
+      #tools-box {
+        display:none;
+      }
+      #dbCommonCard {
+        width: 600px;
+        margin: 150px auto 10px auto;
+      }
+      #dbCodeCard {
+        width: 600px;
+        margin: 10px auto 50px auto;
+      }
     </style>
 </head>
 <body>
   <div id="tools-box" class="container" align="center">
-    <card id="dbCommonCard" name='dbCommonCard' style="width:600px;margin: 150px auto 10px auto;">
+    <card id="dbCommonCard" name='dbCommonCard'>
       <p slot="title" style="text-align:left;">
           <i class="ivu-icon ivu-icon-ios-construct"></i> 数据库常用脚本生成工具
       </p>
@@ -50,7 +61,7 @@ $url_base = UtilNet::urlbase();
         <li><a @click="at=5;ok()">移植数据库表从Mysql到Sqlserver</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="at=6;ok()">[包括注释]</a></li>
       </ul>
     </card>
-    <card id="dbCodeCard" name='dbCodeCard' style="width:600px;margin: 10px auto 50px auto;">
+    <card id="dbCodeCard" name='dbCodeCard'>
       <p slot="title" style="text-align:left;">
           <i class="ivu-icon ivu-icon-ios-construct"></i> 数据库代码生成工具
       </p>
@@ -102,6 +113,15 @@ $url_base = UtilNet::urlbase();
                 resultModel: false,
                 result: ''
             }
+        },
+        created: function () {
+            this.$Spin.show();
+            setTimeout(() => {
+                this.$Spin.hide();
+                $(function(){
+                  $("#tools-box").css("display", "block");
+                });
+            }, 1000);
         },
         methods: {
           ok: function() {

@@ -74,7 +74,7 @@ TPL_BUILDPROD;
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id="report-form" class="container" align="center">
+        <div id="report-form" class="container" align="center" style="display:none;">
           <card id="reportCard" name='reportCard' style="width:600px;margin: 150px auto 50px auto;">
             <p slot="title" style="text-align:left;">
                 <i class="ivu-icon ivu-icon-ios-construct"></i> <?php echo $title ?>
@@ -176,6 +176,15 @@ TPL_BUILDPROD;
             },
             watch: {
             },
+            created: function () {
+                this.$Spin.show();
+                setTimeout(() => {
+                    this.$Spin.hide();
+                    $(function(){
+                      $("#report-form").css("display", "block");
+                    });
+                }, 1000);
+            },
             methods: {
               createReport: function () {
                 this.$refs["reportForm"].validate((valid) => {
@@ -215,7 +224,7 @@ TPL_BUILDPROD;
               },
               refresh: function() {
                 console.log("refresh");
-                 this.$refs["reportForm"].resetFields();
+                this.$refs["reportForm"].resetFields();
               }
             }
           });

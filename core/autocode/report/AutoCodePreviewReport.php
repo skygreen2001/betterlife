@@ -40,7 +40,7 @@ class AutoCodePreviewReport extends AutoCode
      */
     public static function init()
     {
-        self::$manage_service_file = Gc::$module_root . DS . Gc::$appName . DS . self::$dir_src . DS . AutoCodeService::$service_dir . DS . "Manager_Service.php";
+        self::$manage_service_file = Gc::$module_root . DS . "admin" . DS . self::$dir_src . DS . AutoCodeService::$service_dir . DS . "Manager_Service.php";
     }
 
     /**
@@ -156,8 +156,7 @@ MODEL;
                 //生成服务管理器
                 $title             = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
                 $moreContent      .= str_replace("[title]", $title, $title_model);
-                $s_manage_file     = Gc::$module_root . DS . "admin" . DS . self::$dir_src . DS . AutoCodeService::$service_dir . DS . "Manager_Service.php";
-                $moreContent      .= self::groupFileContentsStatus( array($s_manage_file), "admin" );
+                $moreContent      .= self::groupFileContentsStatus( array(self::$manage_service_file), "admin" );
             }
 
             // 生成后台Action，继承基本Action
@@ -289,12 +288,12 @@ MODEL;
      * @param string $content 生成代码的报告主要内容
      * @return 生成代码的报告可交互操作
      */
-    private static function modelShowDetailReport($table_names,$content)
+    private static function modelShowDetailReport($table_names, $content)
     {
         $save_dir = self::$save_dir;
-        if(is_array($table_names))$table_names=implode(",", $table_names);
+        if ( is_array($table_names) ) $table_names = implode(",", $table_names);
         $preview_report_info = UtilCss::preview_report_info();
-        $showResult=<<<REPORT
+        $showResult = <<<REPORT
     $preview_report_info
     <script language="JavaScript">
     function toggleGroup(source, toggleEle)
@@ -323,21 +322,21 @@ MODEL;
     }
     </script>
 
-    <div align="center">
-    <form method="post"><input type="hidden" name="model_save_dir" value="$save_dir" /><input type="hidden" name="table_names" value="$table_names" />
-        <table class="preview">
-          <tbody>
-            <tr>
-                <th class="confirm">全&nbsp;&nbsp;选<input type="checkbox" id="overwrite" name="selectAll" onclick="toggle(this)"></th>
-                <th class="file">文件路径</th>
-                <th class="file">操作</th>
-            </tr>
-        $content
-          </tbody>
-        </table>
-        <input class="btnSubmit" type="submit" value='覆盖生成' /><br/><br/><br/><br/><br/><br/>
-    </form>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <div align="center" style="margin-top:36px;">
+        <form method="post"><input type="hidden" name="model_save_dir" value="$save_dir" /><input type="hidden" name="table_names" value="$table_names" />
+            <table class="preview">
+            <tbody>
+                <tr>
+                    <th class="confirm">全&nbsp;&nbsp;选<input type="checkbox" id="overwrite" name="selectAll" onclick="toggle(this)"></th>
+                    <th class="file">文件路径</th>
+                    <th class="file">操作</th>
+                </tr>
+            $content
+            </tbody>
+            </table>
+            <input class="btnSubmit" type="submit" value='覆盖生成' /><br/><br/><br/><br/><br/><br/>
+        </form>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 REPORT;
         return $showResult;
