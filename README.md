@@ -4,19 +4,15 @@
 
 它包括一套实用的通用模版、后台管理模版、手机模版，并根据项目的需要，按照数据库的设计一键生成定制化的代码框架。
 
+它自定义了一套快速开发报表的工具、Redis管理工具、数据库运维工具以协助快速开发。
+
 ## 帮助文档
 
 * [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
 * [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
 * [本地说明文档](docs/)
 
-## 安装说明
-
-### 安装目录
-
-  - 安装目录: 以下安装都在根路径/install 目录下
-
-### 推荐方式
+## 下载源码
 
 * **通过Github官网下载**
 
@@ -26,30 +22,22 @@
   > git clone https://github.com/skygreen2001/betterlife.git
   > git clone git@github.com:skygreen2001/betterlife.git
   ```
-* **安装NodeJs**
+  
+## 安装说明
 
-  下载地址: https://nodejs.org/en/download/
+### 安装目录
+
+  - 安装目录: 以下安装都在根路径/install 目录下
+
+### 安装PHP第三方库
 
 * **安装 composer**
 
   安装composer: http://docs.phpcomposer.com/00-intro.html
 
-* **安装Gulp**
-
-  ```
-  > npm install -g gulp
-  ```
-
 * **安装目录下运行**
 
   安装目录是根目录下的install目录, 即本说明文件目录下
-
-  - 运行npm
-
-    ```
-    > npm install
-    ```
-    [Mac电脑用户]: sudo npm install
 
   - 运行composer
 
@@ -58,21 +46,10 @@
     ```
     [Mac电脑用户]: sudo composer install
 
-  - 运行gulp
+### 可选安装
 
-    ```
-    > sudo gulp
-    ```
-
-  - 安装ueditor
-
-    ```
-    > sudo gulp ueditor_cp && sudo gulp ueditor
-    ```
-
-### 手动方式
-
-* [手动方式安装](install/README.md)
+  - [其它安装可选](install/README.md)
+    - 该方式为可选项，可以不用执行。
 
 ## 运行环境安装
 
@@ -106,7 +83,10 @@
 
 * [阿里云](https://market.aliyun.com/developer)
 * [Heroku](https://devcenter.heroku.com/categories/php)
-* [docker](https://docs.docker.com): https://segmentfault.com/a/1190000006802383
+* [docker](https://docs.docker.com)
+  * [The full PHP development environment for Docker](http://laradock.io)
+  * [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
+  * [DevDock](https://github.com/iMacken/DevDock)
 * [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
 
 ## 开发工具
@@ -117,6 +97,7 @@
 * [Sublime](http://www.sublimetext.com)
 
 ## 框架目录定义
+
   - core   : 框架核心支持文件
   - taglib : 自定义标签，您也可以在自己的应用中定义自定义标签
   - install: 安装目录
@@ -151,19 +132,12 @@
   > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
 * **本地运行服务器**
   > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
-* **安装NodeJs**
-  > [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/)
-* **安装Gulp**
-  > 中文说明: http://www.gulpjs.com.cn/docs/getting-started/
-  > 英文说明: http://www.gulpjs.com
 * **安装Composer**
   > http://www.phpcomposer.com/
 * **下载Smarty**
   > https://github.com/smarty-php/smarty
 * **下载PhpSpreadsheet**
   > https://github.com/PHPOffice/PhpSpreadsheet
-* **安装UEditor**
-  > http://ueditor.baidu.com/website/download.html
 
 ## 学习资料
 

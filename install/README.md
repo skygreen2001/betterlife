@@ -1,8 +1,47 @@
 # 安装说明
 
+## 安装目录
+
+  - 安装目录: 以下安装都在根路径/install 目录下
+
 ## 推荐方式
 
-* [推荐方式安装](../README.md)
+- 以下步骤主要目标是安装 UEditor。
+- 该方式为可选项，可以不用执行。
+- 该方式主要是通过前端打包工具安装UEditor。
+
+* **安装NodeJs**
+
+  下载地址: https://nodejs.org/en/download/
+
+* **安装Gulp**
+
+  ```
+  > npm install -g gulp
+  ```
+
+* **安装目录下运行**
+
+  安装目录是根目录下的install目录, 即本说明文件目录下
+
+  - 运行npm
+
+    ```
+    > npm install
+    ```
+    [Mac电脑用户]: sudo npm install
+
+  - 运行gulp
+
+    ```
+    > sudo gulp
+    ```
+
+  - 安装ueditor
+
+    ```
+    > sudo gulp ueditor_cp && sudo gulp ueditor
+    ```
 
 ## 手动方式
 
@@ -45,3 +84,15 @@
     > sudo apt install php7.0-mbstring
     > sudo apt install php-zip
     ```
+
+## 参考资料
+
+* **安装UEditor**
+  > http://ueditor.baidu.com/website/download.html
+
+* **安装NodeJs**
+  > [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/)
+
+* **安装Gulp**
+  > 中文说明: http://www.gulpjs.com.cn/docs/getting-started/
+  > 英文说明: http://www.gulpjs.com
