@@ -422,3 +422,38 @@ td,
 th {
   padding: 0;
 }
+
+/**
+ * iview css customize
+ */
+
+a {
+  color: #77cc6d;
+}
+a:active,a:hover {
+  color: #349e28;
+}
+.ivu-spin-dot {
+  background-color: #77cc6d;
+}
+.ivu-input:focus, .ivu-btn-primary:focus, .ivu-select-visible .ivu-select-selection {
+  box-shadow: 0 0 0 2px rgba(111, 222, 98, 0.2);
+}
+.ivu-input:focus, .ivu-input:hover,
+.ivu-select-visible .ivu-select-selection,
+.ivu-select-selection-focused, .ivu-select-selection:hover {
+  border-color: #6fde62;
+}
+
+.ivu-select-item-selected, .ivu-select-item-selected:hover {
+  color: #349e28;
+}
+
+.ivu-btn-primary {
+  background-color: #77cc6d;
+  border-color: #77cc6d;
+}
+.ivu-btn-primary:hover,.ivu-btn-primary.active, .ivu-btn-primary:active {
+  background-color: #6fde62;
+  border-color: #6fde62;
+}
