@@ -1,37 +1,19 @@
 <?php
 require_once ("../../../init.php");
-if (isset($_REQUEST["oldwords"])&&!empty($_REQUEST["oldwords"]))
+if ( isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
 {
-    $oldwords=$_REQUEST["oldwords"];
-    if (isset($_REQUEST["newwords"])&&!empty($_REQUEST["newwords"])){
-        $newwords=$_REQUEST["newwords"];
-    }else{
-        $newwords=Gc::$appName;
+    $oldwords = $_REQUEST["oldwords"];
+    if ( isset($_REQUEST["newwords"]) && !empty($_REQUEST["newwords"]) ) {
+        $newwords = $_REQUEST["newwords"];
+    } else {
+        $newwords = Gc::$appName;
     }
-    $tableList=Manager_Db::newInstance()->dbinfo()->tableList();
-    $fieldInfos=array();
-    foreach ($tableList as $tablename){
-       $fieldInfoList=Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
-       foreach($fieldInfoList as $fieldname=>$field){
-           $fieldInfos[$tablename][$fieldname]["Field"]=$field["Field"];
-           $fieldInfos[$tablename][$fieldname]["Type"]=$field["Type"];
-           $fieldInfos[$tablename][$fieldname]["Comment"]=$field["Comment"];
-       }
-    }
-    $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
-    $filterTableColumns=array();
-    foreach ($fieldInfos as $tablename=>$fieldInfo){
-        foreach ($fieldInfo as $fieldname=>$field)
-        {
-            $data=Manager_Db::newInstance()->dao()->sqlExecute("select $fieldname from $tablename where $fieldname like '%$oldwords%'");
-            if ($data){
-                $filterTableColumns[$tablename][]=$fieldname;
-            }
-        }
-    }
-    if ($filterTableColumns){
+
+    $filterTableColumns = UtilDb::keywords_table_columns( $oldwords );
+
+    if ( $filterTableColumns ) {
         echo "存在[{$oldwords}]的表列清单如下<br/>";
-        foreach ($filterTableColumns as $key=>$columns) {
+        foreach ($filterTableColumns as $key => $columns) {
             echo "表名:$key<br/>";
             foreach ($columns as $column) {
                 echo "===$column===<br/>";
@@ -40,7 +22,7 @@ if (isset($_REQUEST["oldwords"])&&!empty($_REQUEST["oldwords"]))
         echo "<br/>";
 
         echo "查询[{$oldwords}]的SQL语句清单如下<br/>";
-        foreach ($filterTableColumns as $key=>$columns) {
+        foreach ($filterTableColumns as $key => $columns) {
             foreach ($columns as $column) {
                 echo "select * from $key where $column like '%$oldwords%';<br/>";
             }
@@ -48,12 +30,12 @@ if (isset($_REQUEST["oldwords"])&&!empty($_REQUEST["oldwords"]))
         echo "<br/>";
 
         echo "将[{$oldwords}]替换成[{$newwords}]的SQL语句清单如下<br/>";
-        foreach ($filterTableColumns as $key=>$columns) {
+        foreach ($filterTableColumns as $key => $columns) {
             foreach ($columns as $column) {
                 echo "update $key set $column  = replace($column,'$oldwords','$newwords');<br/>";
             }
         }
-    }else{
+    } else {
         echo "在数据库里没有关键字:[{$oldwords}]";
     }
 }
@@ -63,7 +45,31 @@ else
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
     echo "<head>\r\n";
     echo UtilCss::form_css()."\r\n";
-    $url_base=UtilNet::urlbase();
+    $url_base = UtilNet::urlbase();
+    $title    = "替换关键词";
+    echo '<style>';
+    echo 'label {';
+    echo '    width:auto';
+    echo '}';
+    echo '.btn-confirm {';
+    echo '    display: inline-block;';
+    echo '    margin: 0 4px;';
+    echo '    padding: 4px 12px;';
+    echo '    border-radius: 4px;';
+    echo '    border-bottom: 4px solid #3aa373;';
+    echo '    font-size: 14px;';
+    echo '    color: #fff;';
+    echo '    background-color: #4fc08d;';
+    echo '}';
+    echo '.btn-confirm:active, .btn-confirm:focus, .btn-confirm:hover {';
+    echo '    color: #fff;';
+    echo '    cursor: pointer;';
+    echo '    border: 0px;';
+    echo '    border-bottom: 4px solid #3aa373;';
+    echo '    background: -webkit-linear-gradient(left,#3fe69a, #4fc08d);';
+    echo '    box-shadow: 0 4px 8px 0 rgba(186, 210, 199, 0.8);';
+    echo '}';
+    echo '</style>';
     echo "<script type='text/javascript' src='".$url_base."misc/js/util/file.js'></script>";
     echo "</head>";
     echo "<body>";
@@ -74,7 +80,7 @@ else
     echo "      <label>原关键字:</label><input type=\"text\" name=\"oldwords\" value=\"\" id=\"oldwords\" /><br/><br/>";
     echo "      <label>新关键字:</label><input type=\"text\" name=\"newwords\" value=\"\" id=\"newwords\" /><br/><br/>";
     echo "  </div>";
-    echo "  <input type=\"submit\" value='生成' /><br/>";
+    echo "  <input class='btn-confirm' type='submit' value='确定' /><br/>";
     echo "</form>";
     echo "</div>";
     echo "</body>";
