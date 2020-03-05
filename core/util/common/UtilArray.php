@@ -435,9 +435,9 @@ class UtilArray extends Util
      */
     public static function get($array, $key, $needle)
     {
-        foreach ($array as $key => $val) {
+        foreach ($array as $a_key => $val) {
             if ($val[$key] === $needle) {
-                return $array[$key];
+                return $array[$a_key];
             }
         }
         return null;
