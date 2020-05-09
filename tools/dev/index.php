@@ -589,7 +589,9 @@ class Project_Refactor
         echo "<body class='prj-onekey'>";
         echo "<h1 align='center'>$title</h1>\r\n";
         echo "<div align='center' height='450' style='margin-left: -10%;'>\r\n";
+        
         echo $errorInfo;
+
         echo "<form>\r\n";
         echo "    <div style='line-height:1.5em;'>\r\n";
         echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>\r\n";
