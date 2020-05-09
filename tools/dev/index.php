@@ -588,14 +588,14 @@ class Project_Refactor
         echo "</head>";
         echo "<body class='prj-onekey'>";
         echo "<h1 align='center'>$title</h1>\r\n";
-        echo "<div align='center' height='450'>\r\n";
+        echo "<div align='center' height='450' style='margin-left: -10%;'>\r\n";
         echo $errorInfo;
         echo "<form>\r\n";
         echo "    <div style='line-height:1.5em;'>\r\n";
         echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>\r\n";
         echo "        <label>Web项目名称【英文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【英文】' name='pj_name_en' value='$pj_name_en' id='pj_name_en' oninput=\"document.getElementById('dbname').value=this.value;document.getElementById('save_dir').value=this.value;\" /><br/>\r\n";
         echo "        <label title='最好两个字母,头字母大写'>&nbsp;&nbsp;&nbsp;&nbsp;Web项目别名:</label><input title='最好两个字母,头字母大写' style='width:400px;text-align:left;padding-left:10px;' type='text' name='pj_name_alias' value='$pj_name_alias' id='pj_name_alias' /><br/>\r\n";
-        echo "        <label>&nbsp;&nbsp;输出Web项目路径:</label><label style='width:400px;text-align:left;'>$domain_root</label><input style='width: 150px;position: absolute;right: 130px;text-align:left;padding-left:10px;margin-top: 10px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /><br/>\r\n";
+        echo "        <div><label>&nbsp;&nbsp;输出Web项目路径:</label><label style='text-align:left;'>$domain_root</label><input style='width: 150px;display: inline-block;text-align:left;padding-left:10px;margin-left: 20px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /></div>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
