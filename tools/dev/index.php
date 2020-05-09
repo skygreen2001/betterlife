@@ -1,5 +1,6 @@
 <?php
 require_once ("../../init.php");
+set_time_limit(0);
 /**
  * 重用类型
  */
@@ -197,29 +198,25 @@ class Project_Refactor
         {
             self::$pj_name_cn = $_REQUEST["pj_name_cn"];
         } else {
-            self::UserInput();
-            die("<div align='center'><font color='red'>不能为空:新Web项目名称【中文】</font></div>");
+            self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称【中文】</font></div>");
         }
         if ( isset($_REQUEST["pj_name_en"]) && !empty($_REQUEST["pj_name_en"]) )
         {
             self::$pj_name_en = $_REQUEST["pj_name_en"];
         } else {
-            self::UserInput();
-            die("<div align='center'><font color='red'>不能为空:新Web项目名称【英文】</font></div>");
+            self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称【英文】</font></div>");
         }
         if ( isset($_REQUEST["pj_name_alias"]) && !empty($_REQUEST["pj_name_alias"]) )
         {
             self::$pj_name_alias = $_REQUEST["pj_name_alias"];
         } else {
-            self::UserInput();
-            die("<div align='center'><font color='red'>不能为空:新Web项目名称别名</font></div>");
+            self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称别名</font></div>");
         }
         if( isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"]) )
         {
             self::$db_name = $_REQUEST["dbname"];
         } else {
-            self::UserInput();
-            die("<div align='center'><font color='red'>不能为空:数据库名称</font></div>");
+            self::UserInput("<div align='center'><font color='red'>不能为空:数据库名称</font></div>");
         }
 
         if ( isset($_REQUEST["table_prefix"]) && !empty($_REQUEST["table_prefix"]) )
@@ -242,8 +239,7 @@ class Project_Refactor
         if ( is_dir(self::$save_dir . "core" . DS) )
         {
             self::$save_dir = $save_dir;
-            self::UserInput();
-            die("<div align='center'><font color='red'>该目录已存在!为防止覆盖您现有的代码,请更名!</font></div>");
+            self::UserInput("<div align='center'><font color='red'>该目录已存在!为防止覆盖您现有的代码,请更名!</font></div>");
         }
 
         if ( self::$reuse_type == EnumReusePjType::MINI )
@@ -471,7 +467,6 @@ class Project_Refactor
         @unlink($del_autocode_config_xml_file);
 
         self::$save_dir = $save_dir;
-        self::UserInput();
         $default_dir    = Gc::$url_base;
         $domain_url     = str_replace(Gc::$appName . "/", "", $default_dir);
         $domain_url     = str_replace(Gc::$appName_alias . "/", "", $domain_url);
@@ -487,7 +482,7 @@ class Project_Refactor
             $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
-        die("<div align='center'><font color='green'><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功！</a></font><br/><a href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div><br><br><br><br><br><br><br><br>");
+        self::UserInput("<div align='center'><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功！</a><br/><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div>");
     }
 
 
@@ -550,7 +545,7 @@ class Project_Refactor
     /**
      * 用户输入需求
      */
-    public static function UserInput()
+    public static function UserInput($errorInfo = "")
     {
         $title="一键重用Web项目代码";
         if( empty($_REQUEST["save_dir"]) ){
@@ -594,12 +589,13 @@ class Project_Refactor
         echo "<body class='prj-onekey'>";
         echo "<h1 align='center'>$title</h1>\r\n";
         echo "<div align='center' height='450'>\r\n";
+        echo $errorInfo;
         echo "<form>\r\n";
         echo "    <div style='line-height:1.5em;'>\r\n";
         echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>\r\n";
         echo "        <label>Web项目名称【英文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【英文】' name='pj_name_en' value='$pj_name_en' id='pj_name_en' oninput=\"document.getElementById('dbname').value=this.value;document.getElementById('save_dir').value=this.value;\" /><br/>\r\n";
         echo "        <label title='最好两个字母,头字母大写'>&nbsp;&nbsp;&nbsp;&nbsp;Web项目别名:</label><input title='最好两个字母,头字母大写' style='width:400px;text-align:left;padding-left:10px;' type='text' name='pj_name_alias' value='$pj_name_alias' id='pj_name_alias' /><br/>\r\n";
-        echo "        <label>&nbsp;&nbsp;输出Web项目路径:</label><label style='width:400px;text-align:left;'>$domain_root</label><br><input style='width:190px;text-align:left;padding-left:10px;margin-left:40px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /><br/>\r\n";
+        echo "        <label>&nbsp;&nbsp;输出Web项目路径:</label><label style='width:400px;text-align:left;'>$domain_root</label><input style='width: 150px;position: absolute;right: 130px;text-align:left;padding-left:10px;margin-top: 10px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
@@ -620,6 +616,7 @@ class Project_Refactor
         echo "</div>\r\n";
         echo "</body>\r\n";
         echo "</html>";
+        die();
     }
 }
 

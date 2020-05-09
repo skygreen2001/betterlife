@@ -6,12 +6,6 @@
 
 它自定义了一套快速开发报表的工具、Redis管理工具、数据库运维工具以协助快速开发。
 
-## 帮助文档
-
-* [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
-* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
-* [本地说明文档](docs/)
-
 ## 下载源码
 
 * **通过Github官网下载**
@@ -25,33 +19,7 @@
   
 ## 安装说明
 
-### 安装目录
-
-  - 安装目录: 以下安装都在根路径/install 目录下
-
-### 安装PHP第三方库
-
-* **安装 composer**
-
-  安装composer: http://docs.phpcomposer.com/00-intro.html
-
-* **安装目录下运行**
-
-  安装目录是根目录下的install目录, 即本说明文件目录下
-
-  - 运行composer
-
-    ```
-    > composer install
-    ```
-    [Mac电脑用户]: sudo composer install
-
-### 可选安装
-
-  - [其它安装可选](install/README.md)
-    - 该方式为可选项，可以不用执行。
-
-## 运行环境安装
+### 运行环境安装
 
   以下工具任选一种即可
 
@@ -79,25 +47,31 @@
 
   - 本地运行PHP server: php -S localhost:8000)
 
-## 云部署
+### 安装目录
 
-* [阿里云](https://market.aliyun.com/developer)
-* [Heroku](https://devcenter.heroku.com/categories/php)
-* [docker](https://docs.docker.com)
-  * [The full PHP development environment for Docker](http://laradock.io)
-  * [PHPDocker](https://phpdocker.io/)
-  * [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
-  * [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
-  * [Docker for Beginners](https://github.com/docker/labs/tree/master/beginner/)
-  * [DevDock](https://github.com/iMacken/DevDock)
-* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
+  - 安装目录: 以下安装都在根路径/install 目录下
 
-## 开发工具
+### 安装PHP第三方库
 
-* [Visual Studio Code](https://code.visualstudio.com/)
-* [Atom](https://atom.io)
-* [Atom IDE](https://ide.atom.io/)
-* [Sublime](http://www.sublimetext.com)
+* **安装 composer**
+
+  安装composer: http://docs.phpcomposer.com/00-intro.html
+
+* **安装目录下运行**
+
+  安装目录是根目录下的install目录, 即本说明文件目录下
+
+  - 运行composer
+
+    ```
+    > composer install
+    ```
+    [Mac电脑用户]: sudo composer install
+
+### 其它安装
+
+  - [其它安装可选](install/README.md)
+    - 后台【admin】在线编辑器使用百度的UEditor组建，需按该文档说明进行安装。
 
 ## 框架目录定义
 
@@ -128,6 +102,35 @@
     - api/web          : Pc端ajax请求服务端返回json数据
     - upload/images    : 上传图片放置路径
     - upload/attachment: 批量导入/导出数据文件(如excel)放置目录
+
+## 帮助文档
+
+* [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
+* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
+* [本地说明文档](docs/)
+
+
+## 开发工具
+
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [Atom](https://atom.io)
+* [Atom IDE](https://ide.atom.io/)
+* [Sublime](http://www.sublimetext.com)
+
+### 云部署
+
+- 感兴趣可以试试看，可忽略跳过云部署这部分
+
+* [阿里云](https://market.aliyun.com/developer)
+* [Heroku](https://devcenter.heroku.com/categories/php)
+* [docker](https://docs.docker.com)
+  * [The full PHP development environment for Docker](http://laradock.io)
+  * [PHPDocker](https://phpdocker.io/)
+  * [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
+  * [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
+  * [Docker for Beginners](https://github.com/docker/labs/tree/master/beginner/)
+  * [DevDock](https://github.com/iMacken/DevDock)
+* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
 
 ## 参考资料
 
