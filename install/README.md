@@ -8,6 +8,8 @@
 
 - 以下步骤主要目标是安装 UEditor。
 - 该方式主要是通过打包工具安装UEditor。
+- 现阶段在Mac上无法正常使用Node和Gulp安装UEditor。
+- 现阶段在目标路径下已经按手动模式安装好了UEditor，该推荐方式是我期望在未来通过打包方式自动安装好UEditor组件。
 
 * **安装NodeJs**
 

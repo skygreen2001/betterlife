@@ -1,16 +1,12 @@
 
 # 基础
 
-    - 【ok】后台导入导出模版功能
-    - php7 and namespace（遵循规范psr）
+    - Symfony 的 DebugBar
     - 各种数据库可以备份和导出导入互通
-    - 【ok】common -> misc
-    - 【ok】打包?可去除指定文件[安装自动化，可控制安装bower、grunt、gulf]
-    - 创建node和npm的betterlife初始化
+    - 创建yarn、node和npm的betterlife初始化
     - 数据库增加事务支持
     - 邮件修改参考drupal
     - TWIG PHPTEMPLATE
-    - 后台的import和export excel
     - 数据库导出pdf文档
     - 代码生成可以选择第二级
     - 配置yml化
@@ -22,6 +18,11 @@
     - gzip统一成一个
     - 教程-》参考angular git tag 的方式
     - github:app 作为一个module
+    - php7 and namespace（遵循规范psr）
+    - 【ok】后台的import和export excel
+    - 【ok】后台导入导出模版功能
+    - 【ok】common -> misc
+    - 【ok】打包?可去除指定文件[安装自动化，可控制安装bower、grunt、gulf]
 
 # IDE之路
 

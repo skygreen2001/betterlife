@@ -41,7 +41,14 @@ class UtilUeditor extends Util
      */
     public static function loadJsFunction($textarea_id, $viewObject = null, $form_id = null, $configString = "")
     {
-        $is_toolbar_full = false;
+        $is_toolbar_full      = false;
+        $info_install_ueditor = "";
+        $uc_file = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
+        $ue_readme_url = Gc::$url_base . "install" . DS . "README.md";
+        if ( !file_exists($uc_file) ) {
+            $info_install_ueditor = '<div class=\"alert alert-danger\" role=\"alert\">很遗憾不能正常显示在线编辑器! <a target="_blank" href=\"' . $ue_readme_url . '\" class=\"alert-link\">请下载帮助文档后按要求安装好UEditor</a>.</div>';
+        }
+
         if ( $is_toolbar_full ) {
             UtilJavascript::loadJsContentReady( $viewObject, "
                 var ue_{$textarea_id};
@@ -51,6 +58,7 @@ class UtilUeditor extends Util
                         allowDivTransToP: false
                     });
                 }
+                $('#$textarea_id').before('$info_install_ueditor');
                 "
             );
         } else {
@@ -67,6 +75,7 @@ class UtilUeditor extends Util
                     });
                     $.edit.ueditorFullscreen('$textarea_id');
                 }
+                $('#$textarea_id').before('$info_install_ueditor');
                 "
             );
         }

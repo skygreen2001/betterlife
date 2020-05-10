@@ -181,14 +181,14 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
 </head>
 <body>
     <div class="main">
-        <h1 align="center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> 技术玩家乐园 </h1>
+        <h1 style="text-align:center">欢迎来到 <span class="en"><?php echo Gc::$site_name ?></span> 技术玩家乐园 </h1>
         <div class="inbox">
             <div class="content-container">
-                <div class="content" align="center">
+                <div class="content" style="text-align:center">
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=<?php echo Gc::$appName ?>.index.index">网站前台</a></p>
-                    <p><a target="_blank" href="<?php echo Gc::$url_base?>app/html5/index.php">手机应用</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=admin.index.index">管理后台</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=report.index.index">报表系统</a></p>
+                    <p><a target="_blank" href="<?php echo Gc::$url_base?>app/html5/index.php">手机应用</a></p>
                     <p><a target="_blank" href="<?php echo Gc::$url_base?>index.php?go=model.index.index">通用模版</a></p>
                 </div>
             </div>
