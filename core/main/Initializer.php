@@ -57,7 +57,7 @@ class Initializer
                 }
             }
         } else {
-            class_exists($class_name) || require($class_name.self::SUFFIX_FILE_PHP);
+            class_exists($class_name) || require($class_name . self::SUFFIX_FILE_PHP);
             return;
         }
 
