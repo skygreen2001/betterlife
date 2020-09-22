@@ -44,6 +44,7 @@ class AutoCodeCreateReport extends AutoCode
 
         if ( !empty($reportSql) ) {
             $reportSql = str_replace(";", "", $reportSql);
+            $reportSql = trim($reportSql);
         }
 
         if ( $isProd ) {
@@ -148,8 +149,8 @@ class AutoCodeCreateReport extends AutoCode
             $endContent = substr($fileContent, $endPos);
             $reportEnameLo = lcfirst($reportEname);
             $currentService = <<<SERVICE
-    private static \${$reportEnameLo}Service;
 
+    private static \${$reportEnameLo}Service;
     /**
      * 提供服务: $reportCname
      */

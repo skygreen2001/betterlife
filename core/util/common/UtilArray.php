@@ -522,9 +522,11 @@ class UtilArray extends Util
      */
     public static function likeValue($data, $needle) {
         $result = array();
-        foreach ($data as $key => $value)
-          if ( preg_match('/' . $needle . '/', $value) )
-            $result[$key] = $value;
+        if ( $data && is_array($data) ) {
+            foreach ($data as $key => $value)
+            if ( preg_match('/' . $needle . '/', $value) )
+                $result[$key] = $value;
+        }
         return $result;
     }
 }

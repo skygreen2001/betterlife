@@ -48,9 +48,10 @@ require_once ("../../../init.php");
 \$orderDes     = "$reptOrderBy";
 
 \$countSql   = "select count(*) from (" . \$sql_report . ") report_tmp " . \$where_clause;
-\$totalCount  = sqlExecute(\$countSql);
+\$totalCount = sqlExecute(\$countSql);
 \$pageData   = array();
 \$pageCount  = 0;
+\$reportSql  = "";
 if ( \$totalCount > 0 ) {
     // 总页数
     \$pageCount = ceil(\$totalCount / \$pageSize);
