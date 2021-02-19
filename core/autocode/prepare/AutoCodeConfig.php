@@ -41,8 +41,8 @@ class AutoCodeConfig extends AutoCode
      */
     public static function init()
     {
-        self::$filename_config_xml = Gc::$nav_root_path."tools".DS."tools".DS."autocode".DS."autocode.config.xml";
-        self::$url_config_xml      = Gc::$url_base."tools/tools/autocode/autocode.config.xml";
+        self::$filename_config_xml = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS . "autocode.config.xml";
+        self::$url_config_xml      = Gc::$url_base . "tools/tools/autocode/autocode.config.xml";
         parent::init();
     }
 
@@ -56,9 +56,9 @@ class AutoCodeConfig extends AutoCode
     public static function run($table_names = "")
     {
         $filename = self::$filename_config_xml;
-        if ((!Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename))
+        if ( (!Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename) )
         {
-            $filename = dirname($filenamepath) . "autocode_create.config.xml";
+            $filename = dirname($filename) . DS . "autocode_create.config.xml";
             self::$filename_config_xml = $filename;
             self::$url_config_xml = Gc::$url_base . "tools/tools/autocode/autocode_create.config.xml";
         }
@@ -183,8 +183,8 @@ class AutoCodeConfig extends AutoCode
                     $exists_condition[] = $fieldname;
                 }
                 if ( contain( $fieldname, "_id" ) && ( !contain( $fieldname, "parent_id" ) ) ) {
-                    $relation_classname    = str_replace("_id", "", $fieldname);
-                    $relation_classname{0} = strtoupper($relation_classname{0});
+                    $relation_classname = str_replace("_id", "", $fieldname);
+                    $relation_classname = ucfirst($relation_classname);
                     $relation_class        = null;
                     if ( class_exists($relation_classname) ) {
                         $relation_class = new $relation_classname();
@@ -222,8 +222,8 @@ class AutoCodeConfig extends AutoCode
             if ( !self::isNotColumnKeywork( $fieldname ) ) continue;
             if ( $fieldname == self::keyIDColumn( $classname ) ) continue;
             if ( contain( $fieldname, "_id" ) || ( contain( strtoupper($fieldname), "PARENT_ID" ) ) ) {
-                $relation_classname    = str_replace("_id", "", $fieldname);
-                $relation_classname{0} = strtoupper($relation_classname{0});
+                $relation_classname = str_replace("_id", "", $fieldname);
+                $relation_classname = ucfirst($relation_classname);
                 if ( strtoupper($relation_classname) == "PARENT" ) {
                     $showfieldname   = self::getShowFieldName($classname);
                     $relationShows[] = array(
@@ -270,28 +270,29 @@ class AutoCodeConfig extends AutoCode
 
             $realId = DataObjectSpec::getRealIDColumnName( $classname );
             if ( contain( $fieldname, "_id" ) || ( contain( $fieldname, "parent_id" ) ) ) {
-                $relation_classname    = str_replace("_id", "", $fieldname);
-                $relation_classname{0} = strtoupper($relation_classname{0});
+                $relation_classname = str_replace("_id", "", $fieldname);
+                $relation_classname = ucfirst($relation_classname);
                 if ( strtoupper($relation_classname) == "PARENT" ) {
-                    $instance_name    = $classname;
-                    $instance_name{0} = strtolower($instance_name);
+                    $instance_name = $classname;
+                    $instance_name = lcfirst($instance_name);
                     $relation_fives["belong_has_one"]["relationclass"][] = array(
                         '@attributes' => array(
                             "name" => $classname
                         ),
                         '@value' => $instance_name."_p"
                     );
-                }else{
+                } else {
                     $relation_class = null;
                     if ( class_exists($relation_classname) ) {
                         $relation_class = new $relation_classname();
                     }
                     if ( $relation_class instanceof DataObject ) {
                         //belong_has_one:[当前表有归属表的标识，归属表没有当前表的标识]
-                        if ( !array_key_exists($realId, $relation_class) )
+                        // if ( !array_key_exists($realId, $relation_class) )
+                        if ( !(property_exists($relation_class, $realId)) ) 
                         {
-                            $instance_name    = $relation_classname;
-                            $instance_name{0} = strtolower($instance_name);
+                            $instance_name = $relation_classname;
+                            $instance_name = lcfirst($instance_name);
                             $relation_fives["belong_has_one"]["relationclass"][] = array(
                                 '@attributes' => array(
                                     "name" => $relation_classname
@@ -302,12 +303,12 @@ class AutoCodeConfig extends AutoCode
 
                         //has_many[归属表没有当前表的标识，当前表有归属表的标识]
                         //has_one:[归属表没有当前表的标识，当前表有归属表的标识，并且当前表里归属表的标识为Unique]
-                        if (!array_key_exists($realId, $relation_class))
+                        if ( !property_exists($relation_class, $realId) )
                         {
                             if (array_key_exists($relation_classname, self::$table_key_map)) {
                                 $relation_tablename_key = self::$table_key_map[$relation_classname];
-                                $instance_name    = $classname;
-                                $instance_name{0} = strtolower($instance_name);
+                                $instance_name = $classname;
+                                $instance_name = lcfirst($instance_name);
                                 $isunique = Manager_Db::newInstance()->dbinfo()->hasUnique($tablename, $fieldname);
                                 if ( $isunique ) {
                                     self::$config_classes["class"][$relation_tablename_key]
@@ -369,8 +370,8 @@ class AutoCodeConfig extends AutoCode
                         $ownerInstancename  = $class_onetwo[1]."s";
                         $belongInstancename = $class_onetwo[0]."s";
                     }
-                    $ownerClassname{0}  = strtoupper($ownerClassname{0});
-                    $belongClassname{0} = strtoupper($belongClassname{0});
+                    $ownerClassname  = ucfirst($ownerClassname);
+                    $belongClassname = ucfirst($belongClassname);
 
                     $relation_tablename_key_m2m = self::$table_key_map[$ownerClassname];
                     if ( self::$config_classes["class"][$relation_tablename_key_m2m] ) {

@@ -19,25 +19,33 @@ class DataObjectFunc
     public static function call($dataobject, $method, $arguments)
     {
         if ( strpos($method, "set") !== false ) {
-            $property    = substr($method, strlen("set"), strlen($method));
-            $property{0} = strtolower($property{0});
+            $property = substr($method, strlen("set"), strlen($method));
+            $property = lcfirst($property);
             //$property=lcfirst(substr($method,strlen("set"),strlen($method)));
-            $dataobject->{$property} = $arguments[0];
+            if ( is_object($dataobject) ) {
+                $dataobject->{$property} = $arguments[0];
+            }
         } else if ( strpos($method,"get") !== false ) {
-            $property    = substr($method, strlen("get"), strlen($method));
-            $property{0} = strtolower($property{0});
+            $property = substr($method, strlen("get"), strlen($method));
+            $property = lcfirst($property);
             if ( method_exists($dataobject,$property) ) {
                 $method = $property;
-                return $dataobject->$method();
+                if ( is_object($dataobject) ) {
+                    return $dataobject->$method();
+                }
             }
             //$property=lcfirst(substr($method,strlen("get"),strlen($method)));
-            return $dataobject->{$property};
+            if ( is_object($dataobject) ) {
+                return $dataobject->{$property};
+            }
         } else {
             //处理表之间一对一，一对多，多对多的关系
             //$isRelation=false;//是否存在关系
-            $relationData = $dataobject->getMutualRelation( $method );
-            if ( $relationData ) {
-                return $relationData;
+            if ( is_object($dataobject) ) {
+                $relationData = $dataobject->getMutualRelation( $method );
+                if ( $relationData ) {
+                    return $relationData;
+                }
             }
         }
     }
@@ -54,19 +62,23 @@ class DataObjectFunc
     {
         if ( method_exists($dataobject, "get" . ucfirst($property)) ) {
             $methodname = "get" . ucfirst($property);
-            return $dataobject->{$methodname}();
+            if ( is_object($dataobject) ) {
+                return $dataobject->{$methodname}();
+            }
         } else {
             //处理表之间一对一，一对多，多对多的关系
             //$isRelation=false;//是否存在关系
-            $relationData = $dataobject->getMutualRelation( $property );
-            if ( $relationData ) {
-                return $relationData;
-            } else {
-                if ( !property_exists($dataobject,$property) ) {
-                    if ( method_exists($dataobject,$property) ) {
-                        return $dataobject->$property();
-                    } else {
-                        return @$dataobject->{$property};
+            if ( is_object($dataobject) ) {
+                $relationData = $dataobject->getMutualRelation( $property );
+                if ( $relationData ) {
+                    return $relationData;
+                } else {
+                    if ( !property_exists($dataobject,$property) ) {
+                        if ( method_exists($dataobject,$property) ) {
+                            return $dataobject->$property();
+                        } else {
+                            return @$dataobject->{$property};
+                        }
                     }
                 }
             }
@@ -85,10 +97,14 @@ class DataObjectFunc
     {
         if ( method_exists($dataobject, "set" . ucfirst($property)) ) {
             $methodname = "set" . ucfirst($property);
-            $dataobject->{$methodname}($value);
+            if ( is_object($dataobject) ) {
+                $dataobject->{$methodname}($value);
+            }
         } else {
             //if (!property_exists($dataobject,$property)) {
-            $dataobject->{$property} = $value;
+            if ( is_object($dataobject) ) {
+                $dataobject->{$property} = $value;
+            }
             //}
         }
     }
@@ -527,28 +543,31 @@ class DataObjectFunc
         if ( Gc::$dev_debug_on ) {
             return print_pre($dataobject) . "";
         } else {
-            $classname  = $dataobject->classname();
-            $result     = "<pre>";
-            $result    .= $classname . " DataObject\r\n{\r\n";
-            $dataobject = clone $dataobject;
-            if ( is_a($dataobject, "DataObject") ) {
-                $dataobjectArr        = $dataobject->toArray();
-                $dataobjectProperties = UtilReflection::getClassPropertiesInfo( $dataobject );
-                foreach($dataobjectArr as $key => $value)
-                {
-                    $access = "";
-                    if ( array_key_exists($key, $dataobjectProperties) ) {
-                        $propertyInfo = $dataobjectProperties[$key];
-                        if ( !empty($propertyInfo) && array_key_exists("access", $propertyInfo) ) {
-                            $access = ":" . $propertyInfo["access"];
+            if ( is_object($dataobject) ) {
+                $classname  = $dataobject->classname();
+                $result     = "<pre>";
+                $result    .= $classname . " DataObject\r\n{\r\n";
+                $dataobject = clone $dataobject;
+                if ( is_a($dataobject, "DataObject") ) {
+                    $dataobjectArr        = $dataobject->toArray();
+                    $dataobjectProperties = UtilReflection::getClassPropertiesInfo( $dataobject );
+                    foreach($dataobjectArr as $key => $value)
+                    {
+                        $access = "";
+                        if ( array_key_exists($key, $dataobjectProperties) ) {
+                            $propertyInfo = $dataobjectProperties[$key];
+                            if ( !empty($propertyInfo) && array_key_exists("access", $propertyInfo) ) {
+                                $access = ":" . $propertyInfo["access"];
+                            }
                         }
+                        $result .= "      [" . $key . $access . "]" . " => " . $value . "\r\n";
                     }
-                    $result .= "      [" . $key . $access . "]" . " => " . $value . "\r\n";
                 }
+                $result .= "}";
+                $result .= "</pre>";
+                return $result;
             }
-            $result .= "}";
-            $result .= "</pre>";
-            return $result;
+            return "";
         }
     }
 

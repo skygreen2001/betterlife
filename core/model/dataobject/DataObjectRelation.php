@@ -64,7 +64,7 @@ class DataObjectRelation extends BBObject
                    return $field_spec_foreignid[$instance_name];
                 }
             }
-            $classname{0} = strtolower($classname{0});
+            $classname = lcfirst($classname);
 
             $classname_dataobject    = get_class($dataobject);
             $foreignid_name_strategy = UtilReflection::getClassStaticPropertyValue( $classname_dataobject, EnumDataObjectDefaultKeyword::NAME_FOREIGNIDNAME_STRATEGY );
@@ -89,7 +89,6 @@ class DataObjectRelation extends BBObject
      * 处理表之间一对一，一对多，多对多的关系
      * @param string $dataobject 当前对象
      * @param string $property 关系对象类名
-     * @param bool $isRelation 是否存在关系，如果存在关系，则返回关系对象数据
      */
     public static function getMutualRelation($dataobject, $property) {
         if ( $dataobject instanceof DataObject ) {
@@ -121,7 +120,7 @@ class DataObjectRelation extends BBObject
                         $isExist = true;
                     } else {
                         $property_lcfirst    = $property;
-                        $property_lcfirst{0} = strtolower($property_lcfirst{0});
+                        $property_lcfirst = lcfirst($property_lcfirst);
                         if ( array_key_exists($property_lcfirst, $has_many) ) {
                             $isExist  = true;
                             $property = $property_lcfirst;
@@ -129,9 +128,8 @@ class DataObjectRelation extends BBObject
                     }
                     if ( $isExist ) {
                         $detail_class = $has_many[$property];
-                        $isRelation   = true;
                         $classname    = $dataobject->classname();
-                        $classname{0} = strtolower($classname{0});
+                        $classname    = lcfirst($classname);
                         $foreignId    = self::getRealForeignIDColumnName($dataobject, $classname);
                         if ( $dataobject->getId() ) {
                             return  DataObject::dao()->get( $detail_class, $foreignId . "=" . $dataobject->getId() );
@@ -160,15 +158,14 @@ class DataObjectRelation extends BBObject
                     if ( array_key_exists($property, $many_many) ) {
                         $isExist = true;
                     } else {
-                        $property_lcfirst    = $property;
-                        $property_lcfirst{0} = strtolower($property_lcfirst{0});
+                        $property_lcfirst = $property;
+                        $property_lcfirst = lcfirst($property_lcfirst);
                         if ( array_key_exists($property_lcfirst, $many_many) ) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
                     if ( $isExist ) {
-                        $isRelation = true;
                         if ( $dataobject->getId() ) {
                             $detail_class = $many_many[$property];
                             $_SQL         = new Crud_Sql_Select();
@@ -203,15 +200,14 @@ class DataObjectRelation extends BBObject
                     if ( array_key_exists($property, $belong_to) ) {
                         $isExist = true;
                     } else {
-                        $property_lcfirst    = $property;
-                        $property_lcfirst{0} = strtolower($property_lcfirst{0});
+                        $property_lcfirst = $property;
+                        $property_lcfirst = lcfirst($property_lcfirst);
                         if ( array_key_exists($property_lcfirst, $belong_to) ) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
                     if ( $isExist ) {
-                        $isRelation = true;
                         if ( $dataobject->getId() ) {
                             $mainClass = $belong_to[$property];
                             $_SQL      = new Crud_Sql_Select();
@@ -247,8 +243,8 @@ class DataObjectRelation extends BBObject
                     if ( array_key_exists($property,$has_one) ) {
                         $isExist = true;
                     } else {
-                        $property_lcfirst    = $property;
-                        $property_lcfirst{0} = strtolower($property_lcfirst{0});
+                        $property_lcfirst = $property;
+                        $property_lcfirst = lcfirst($property_lcfirst);
                         if ( array_key_exists($property_lcfirst,$has_one) ) {
                             $isExist  = true;
                             $property = $property_lcfirst;
@@ -256,10 +252,9 @@ class DataObjectRelation extends BBObject
                     }
                     if ( $isExist ) {
                         $detail_class = $has_one[$property];
-                        $isRelation   = true;
                         $classname    = $dataobject->classname();
-                        $classname{0} = strtolower($classname{0});
-                        $foreignId = self::getRealForeignIDColumnName( $dataobject, $classname );
+                        $classname    = lcfirst($classname);
+                        $foreignId    = self::getRealForeignIDColumnName( $dataobject, $classname );
                         if ( $dataobject->getId() ) {
                             return DataObject::dao()->get_one( $detail_class, $foreignId . "=" . $dataobject->getId() );
                         }
@@ -287,8 +282,8 @@ class DataObjectRelation extends BBObject
                     if ( array_key_exists($property, $belong_has_one) ) {
                         $isExist = true;
                     } else {
-                        $property_lcfirst    = $property;
-                        $property_lcfirst{0} = strtolower($property_lcfirst{0});
+                        $property_lcfirst = $property;
+                        $property_lcfirst = lcfirst($property_lcfirst);
                         if ( array_key_exists($property_lcfirst, $belong_has_one) ) {
                             $isExist  = true;
                             $property = $property_lcfirst;
@@ -296,7 +291,6 @@ class DataObjectRelation extends BBObject
                     }
                     if ( $isExist ) {
                         $detail_class  = $belong_has_one[$property];
-                        $isRelation    = true;
                         $foreignId     = self::getRealForeignIDColumnName( $dataobject, $detail_class, $property);
                         $relationvalue = $dataobject->$foreignId;
                         $relationObject_IdName= DataObjectSpec::getRealIDColumnNameStatic( $detail_class );

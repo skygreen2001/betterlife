@@ -130,7 +130,7 @@ class AutoCodeViewModel extends AutoCodeView
                                 }
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename( $key_r )];
-                                $key_r{0} = strtolower($key_r{0});
+                                $key_r = lcfirst($key_r);
                                 if ( array_key_exists("parent_id", $fieldInfo_relationshow) ) {
                                     $headers  .= "            <th class=\"header\">{$field_comment}[全]</th>\r\n";
                                     $contents .= "            <td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td>\r\n";
@@ -322,7 +322,7 @@ class AutoCodeViewModel extends AutoCodeView
                                             "                </td>\r\n".
                                             "            </tr>\r\n";
                           $fieldname_u       = $fieldname;
-                          $fieldname_u{0}    = strtoupper($fieldname_u{0});
+                          $fieldname_u       = ucfirst($fieldname_u);
                           $editEnumColumn   .= "        \$.edit.select2('#$fieldname', \"api/web/data/" . $instancename . "$fieldname_u.json\", select_{$fieldname});\r\n";
                           break;
                         case "int":
@@ -494,7 +494,7 @@ UETC;
                                 }
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename($key_r)];
-                                $key_r{0} = strtolower($key_r{0});
+                                $key_r = lcfirst($key_r);
                                 if ( array_key_exists("parent_id", $fieldInfo_relationshow) ) {
                                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">{$field_comment}[全]</th><td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td></tr>\r\n";
                                 }

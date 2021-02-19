@@ -168,7 +168,7 @@ class XmlObject extends BBObject implements ArrayAccess
         $filename=call_user_func("$classname::address");
         $spec_library=UtilXmlSimple::fileXmlToArray($filename);
         $result=array();
-        $classname{0} = strtolower($classname{0});
+        $classname = lcfirst($classname);
         foreach ($spec_library[$classname] as $block)
         {
             $blockAttr=$block[Util::XML_ELEMENT_ATTRIBUTES];
@@ -218,23 +218,23 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public static function queryPage($startPoint,$endPoint,$filter=null,$xmlObject_classname)
     {
-        if ($xmlObject_classname==null){
-            $classname=get_called_class();
-        }else{
-            $classname=$xmlObject_classname;
+        if ( $xmlObject_classname == null ) {
+            $classname = get_called_class();
+        } else {
+            $classname = $xmlObject_classname;
         }
-        $filename=call_user_func("$classname::address");
-        $spec_library=UtilXmlSimple::fileXmlToArray($filename);
-        $result=array();
-        $classname{0} = strtolower($classname{0});
+        $filename = call_user_func("$classname::address");
+        $spec_library = UtilXmlSimple::fileXmlToArray( $filename );
+        $result = array();
+        $classname = lcfirst($classname);
         foreach ($spec_library[$classname] as $block)
         {
-            $blockAttr=$block[Util::XML_ELEMENT_ATTRIBUTES];
-            if (self::isValidData($blockAttr,$filter)){
-                $result[]=$blockAttr;
+            $blockAttr = $block[Util::XML_ELEMENT_ATTRIBUTES];
+            if ( self::isValidData( $blockAttr, $filter ) ) {
+                $result[] = $blockAttr;
             }
         }
-        $result=array_slice($result, $startPoint, $endPoint);
+        $result = array_slice($result, $startPoint, $endPoint);
         return $result;
     }
 
@@ -250,56 +250,56 @@ class XmlObject extends BBObject implements ArrayAccess
     *      1.array("id"=>"1","name"=>"sky")<br/>--精确查找
     *      2.array("id"=>"1","name contain 'sky'")<br/>--模糊查找
     */
-    public static function isValidData($blockAttr,$filter)
+    public static function isValidData($blockAttr, $filter)
     {
-        if (empty($filter)) return true;
-        if (is_string($filter)){
-           if (contain($filter,"and")){
-               $condition=explode("and",$filter);
-               if (count($condition)==2){
-                   $column=trim($condition[0]);
-                   $col_value=trim($condition[1]);
-                   if (array_key_exists($column,$blockAttr)){
-                       $block_value= $blockAttr[$column];
-                       if (strtolower($block_value)==strtolower($col_value)){
+        if ( empty($filter) ) return true;
+        if ( is_string($filter) ) {
+           if ( contain($filter, "and") ) {
+               $condition = explode("and", $filter);
+               if ( count($condition) == 2 ) {
+                   $column    = trim($condition[0]);
+                   $col_value = trim($condition[1]);
+                   if ( array_key_exists($column, $blockAttr) ) {
+                        $block_value = $blockAttr[$column];
+                        if ( strtolower($block_value) == strtolower($col_value) ) {
                             return true;
-                       }
+                        }
                    }
                }
-           } else if (contain($filter,"contain")){
-               $condition=explode("contain",$filter);
-               if (count($condition)==2){
-                   $column=trim($condition[0]);
-                   $col_value=trim($condition[1]);
-                   if (array_key_exists($column,$blockAttr)){
-                       $block_value= $blockAttr[$column];
-                       if (contain($block_value,$col_value)){
+           } else if ( contain( $filter, "contain" ) ) {
+               $condition = explode("contain", $filter);
+               if ( count($condition) == 2 ) {
+                   $column    = trim($condition[0]);
+                   $col_value = trim($condition[1]);
+                   if ( array_key_exists($column, $blockAttr) ) {
+                        $block_value = $blockAttr[$column];
+                        if ( contain( $block_value, $col_value ) ) {
                             return true;
-                       }
+                        }
                    }
                }
            }
-        }else{
-            foreach ($filter as $key=>$value){
-                if (is_int($key)){
-                   $condition=explode("contain",$value);
-                   if (count($condition)==2){
-                       $column=trim($condition[0]);
-                       $col_value=trim($condition[1]);
-                       if (array_key_exists($column,$blockAttr)){
-                           $block_value= $blockAttr[$column];
-                           $col_value=str_replace("'","",$col_value);
-                           if (contain($block_value,$col_value)){
+        } else {
+            foreach ($filter as $key => $value){
+                if ( is_int($key) ) {
+                   $condition = explode("contain", $value);
+                   if ( count($condition) == 2 ) {
+                       $column    = trim($condition[0]);
+                       $col_value = trim($condition[1]);
+                       if ( array_key_exists($column, $blockAttr) ) {
+                            $block_value = $blockAttr[$column];
+                            $col_value   = str_replace("'", "", $col_value);
+                            if ( contain( $block_value, $col_value ) ) {
                                 return true;
-                           }
+                            }
                        }
                    }
-                }else{
-                   if (array_key_exists($key,$blockAttr)){
-                       $block_value= $blockAttr[$key];
-                       if (strtolower($block_value)==strtolower($value)){
+                } else {
+                   if ( array_key_exists($key, $blockAttr) ) {
+                        $block_value = $blockAttr[$key];
+                        if ( strtolower($block_value) == strtolower($value) ) {
                             return true;
-                       }
+                        }
                    }
                 }
             }
@@ -313,20 +313,20 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function save()
     {
-        $this->commitTime=UtilDateTime::now();
-        $data=UtilObject::object_to_array($this);
-        $classname=$this->classname();
-        $filename=call_user_func("$classname::address");
-        $xml=UtilXmlSimple::fileXmlToObject($filename);
-        $classname{0} = strtolower($classname{0});
-        $child=$xml->addChild($classname);//取该对象的类名作为节点名，头字母转化为小写
-        $this->id=microtime(false)."";
-        $this->id=str_replace(" ","",$this->id);
-        $this->id=str_replace(".","",$this->id);
+        $this->commitTime = UtilDateTime::now();
+        $data = UtilObject::object_to_array( $this );
+        $classname = $this->classname();
+        $filename  = call_user_func("$classname::address");
+        $xml       = UtilXmlSimple::fileXmlToObject($filename);
+        $classname = lcfirst($classname);
+        $child     = $xml->addChild($classname);//取该对象的类名作为节点名，头字母转化为小写
+        $this->id  = microtime(false) . "";
+        $this->id  = str_replace(" ", "", $this->id);
+        $this->id  = str_replace(".", "", $this->id);
         $child->addAttribute(self::$name_id_property, $this->id);
-        foreach($data as $key=>$value) {
-            if ($value!=null&&!endWith($key,"Show")){
-                $value=htmlentities( $value,ENT_COMPAT,"UTF-8");
+        foreach($data as $key => $value) {
+            if ( $value != null && !endWith($key, "Show")){
+                $value=htmlentities($value, ENT_COMPAT, "UTF-8");
                 $child->addAttribute($key, $value);
             }
         }
@@ -344,43 +344,43 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function update()
     {
-        $this->updateTime=UtilDateTime::now();
-        $data=UtilObject::object_to_array($this);
-        unset ($data[self::$name_id_property]);
-        $node=$this->getId();
-        $classname=$this->classname();
-        $filename=call_user_func("$classname::address");
-        $xml=UtilXmlSimple::fileXmlToObject($filename);
-        $classname{0} = strtolower($classname{0});
-        $xml_child=$xml->xpath("//$classname"."[@".self::$name_id_property."='$node']");
-        if ($xml_child)
+        $this->updateTime = UtilDateTime::now();
+        $data = UtilObject::object_to_array( $this );
+        unset($data[self::$name_id_property]);
+        $node      = $this->getId();
+        $classname = $this->classname();
+        $filename  = call_user_func("$classname::address");
+        $xml       = UtilXmlSimple::fileXmlToObject( $filename );
+        $classname = lcfirst($classname);
+        $xml_child = $xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
+        if ( $xml_child )
         {
-            $xml_attributes=$xml_child[0];
-            if ($xml_child){
-                $attributes=$xml_attributes->attributes();
-                if ($attributes){
+            $xml_attributes = $xml_child[0];
+            if ( $xml_child ) {
+                $attributes = $xml_attributes->attributes();
+                if ( $attributes ) {
                     $arrObjData = get_object_vars($attributes);
-                    $arrObjData=end($arrObjData);
+                    $arrObjData = end($arrObjData);
                     foreach ($arrObjData as $key => $value) {
-                        $methodName="set".  ucfirst($key);
-                        if (method_exists($this, $methodName)){
+                        $methodName = "set". ucfirst($key);
+                        if ( method_exists($this, $methodName) ) {
                             $this->$methodName($value);
                         }
                     }
                 }
             }
         }
-        foreach($data as $key=>$value) {
-            if (property_exists($attributes,$key)){
-                $attributes->$key=$value;
-            }else{
-                if ($value!=null&&!endWith($key,"Show")){
-                    if ($attributes){
+        foreach($data as $key => $value) {
+            if ( property_exists($attributes, $key) ) {
+                $attributes->$key = $value;
+            } else {
+                if ( $value != null && !endWith($key, "Show") ) {
+                    if ( $attributes ) {
                         $attributes->addAttribute($key, $value);
                     }
                 }
             }
-            $this->$key=$value;
+            $this->$key = $value;
         }
         $xml->asXML($filename);
         return $this;
@@ -391,14 +391,14 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function  delete()
     {
-        $node=$this->getId();
-        $classname=$this->classname();
-        $filename=call_user_func("$classname::address");
-        $xml=UtilXmlSimple::fileXmlToObject($filename);
-        $classname{0} = strtolower($classname{0});
-        $xml_child=$xml->xpath("//$classname"."[@".self::$name_id_property."='$node']");
-        foreach( $xml_child  as $el){
-            if($el[self::$name_id_property]==$node)
+        $node      = $this->getId();
+        $classname = $this->classname();
+        $filename  = call_user_func("$classname::address");
+        $xml       = UtilXmlSimple::fileXmlToObject($filename);
+        $classname= lcfirst($classname);
+        $xml_child=$xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
+        foreach ($xml_child  as $el){
+            if ( $el[self::$name_id_property] == $node )
             {
                 $domRef = dom_import_simplexml($el);
                 $domRef->parentNode->removeChild($domRef);
@@ -419,7 +419,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function toArray($isAll=true)
     {
-       return UtilObject::object_to_array($this,$isAll);
+       return UtilObject::object_to_array( $this, $isAll );
     }
 }
 ?>

@@ -388,8 +388,8 @@ class AutoCodeDomain extends AutoCode
                            "    static \$belong_has_one = array(\r\n".
                            $belong_has_one_effect."\r\n".
                            "    );\r\n";
-                $classname_lc    = $classname;
-                $classname_lc{0} = strtolower($classname_lc{0});
+                $classname_lc = $classname;
+                $classname_lc = lcfirst($classname_lc);
                 foreach ($belong_has_one as $key => $value) {
                     if ( $value == $classname_lc."_p" ) {
                         self::$relation_spec_comment = "     * 外键特殊定义声明: FOREIGN_ID\r\n";

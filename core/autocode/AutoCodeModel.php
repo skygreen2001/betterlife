@@ -16,7 +16,7 @@ class AutoCodeModel extends AutoCode
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode($table_names="")
+    public static function AutoCode($table_names = "")
     {
         $dest_directory = Gc::$nav_root_path . "tools" . DS."tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";

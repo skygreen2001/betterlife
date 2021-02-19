@@ -108,8 +108,8 @@ class AutoCodeAjax extends AutoCodeView
                                 }
                             }
                             if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
-                            $i_name      = $key;
-                            $i_name{0}   = strtolower($i_name{0});
+                            $i_name = $key;
+                            $i_name = lcfirst($i_name);
                             if ( !array_key_exists("$show_fieldname", $fieldInfo) ){
                                 $result .= "    if ( !empty(\${$instance_name}->$fieldname) ) {\r\n".
                                            "      \${$i_name}_i = $key::get_by_id(\${$instance_name}->$fieldname);\r\n".
@@ -165,7 +165,7 @@ class AutoCodeAjax extends AutoCodeView
     public static function saveJsonDefineToDir($instantceName, $fieldname, $defineJsonFileContent)
     {
         $dir           = self::$save_dir . "api" . DS . "web" . DS . "data" . DS;
-        $fieldname{0}  = strtoupper($fieldname{0});
+        $fieldname     = ucfirst($fieldname);
         $filename      = $instantceName . $fieldname . Config_F::SUFFIX_FILE_JSON;
         $relative_path = str_replace( self::$save_dir, "", $dir . $filename );
         AutoCodePreviewReport::$json_admin_files[$filename] = $relative_path;

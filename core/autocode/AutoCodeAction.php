@@ -131,8 +131,8 @@ class AutoCodeAction extends AutoCode
         }
 
         self::$showReport.= '</div><br/>';
-        $category_cap     = Gc::$appName;
-        $category_cap{0}  = ucfirst($category_cap{0});
+        $category_cap = Gc::$appName;
+        $category_cap = ucfirst($category_cap);
         /**
          * 生成标准的增删改查模板Action文件需生成首页访问所有生成的链接
          */
@@ -572,7 +572,7 @@ class AutoCodeAction extends AutoCode
                         $relationShow  = $relationSpecs[$fieldname];
                         foreach ($relationShow as $key => $value) {
                             $i_name    = $key;
-                            $i_name{0} = strtolower($i_name{0});
+                            $i_name    = lcfirst($i_name);
                             $fieldInfo = self::$fieldInfos[self::getTablename($key)];
                             if ( !$isTreeLevelHad ) {
                                 if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {

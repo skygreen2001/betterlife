@@ -126,7 +126,7 @@ class AutoCodeService extends AutoCode
         foreach ($tableList as $tablename) {
             $table_comment = self::tableCommentKey( $tablename );
             $classname     = self::getClassname( $tablename );
-            $classname{0}  = strtolower($classname{0});
+            $classname     = lcfirst($classname);
             $service_classname = self::getServiceClassname( $tablename );
             $section_define   .= "    private static \$" . $classname . "Service;\r\n";
             $section_content  .= "    /**\r\n" .
@@ -525,8 +525,8 @@ class AutoCodeService extends AutoCode
         $redundancy_table_fields = self::$redundancy_table_fields[$classname];
         if ( ( is_array($redundancy_table_fields) ) && ( count($redundancy_table_fields) > 0 ) ) {
             foreach ($redundancy_table_fields as $relation_classname => $redundancy_table_field) {
-                $relation_instance_name    = $relation_classname;
-                $relation_instance_name{0} = strtolower($relation_instance_name{0});
+                $relation_instance_name = $relation_classname;
+                $relation_instance_name = lcfirst($relation_instance_name);
                 $realId  = DataObjectSpec::getRealIDColumnName( $relation_classname );
                 $result .= "        if ( \${$instance_name}[\"{$realId}\"] ) {\r\n" .
                            "            \${$relation_instance_name} = $relation_classname::get_by_id( \${$instance_name}[\"{$realId}\"] );\r\n" .
@@ -568,8 +568,8 @@ class AutoCodeService extends AutoCode
                                 }
                             }
                             // if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
-                            $i_name    = $key;
-                            $i_name{0} = strtolower($i_name{0});
+                            $i_name = $key;
+                            $i_name = lcfirst($i_name);
                             if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
                                 $result .= "            \${$i_name}_instance = null;\r\n";
                                 $result .= "            if ( \${$instance_name}->$fieldname ) {\r\n";
@@ -623,7 +623,7 @@ class AutoCodeService extends AutoCode
                         foreach ($relationShow as $key => $value) {
                             $i_name         = $key;
                             $show_fieldname = self::getShowFieldName( $key );
-                            $i_name{0}      = strtolower($i_name{0});
+                            $i_name         = lcfirst($i_name);
                             $fieldInfo_relation = self::$fieldInfos[self::getTablename($key)];
                             if ( array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation) ) {
                                 if ( !$isTreeLevelHad ) {

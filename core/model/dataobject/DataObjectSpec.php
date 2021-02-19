@@ -288,8 +288,8 @@ class DataObjectSpec
                     } else {
                         $classname = $dataobject;
                     }
-                    $classname{0} = strtolower($classname{0});
-                    $columnName   = $classname . EnumColumnNameDefault::ID;
+                    $classname  = lcfirst($classname);
+                    $columnName = $classname . EnumColumnNameDefault::ID;
                     break;
                 case EnumIDNameStrategy::TABLENAME_ID:
                     if ( is_object($dataobject) ) {
@@ -297,7 +297,7 @@ class DataObjectSpec
                     } else {
                         $classname = $dataobject;
                     }
-                    $classname{0}  = strtolower($classname{0});
+                    $classname     = lcfirst($classname);
                     $idname_concat = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT );
                     $columnName    = $classname . $idname_concat . EnumColumnNameDefault::ID;
                     break;
@@ -405,7 +405,7 @@ class DataObjectSpec
             $field_spec_remove = self::getRealColumnName( $dataobject, EnumDataSpec::REMOVE );
             if ( is_array($field_spec_remove) ) {
                 $columnNameLcfirst = $columnName;
-                $columnNameLcfirst{0} = strtolower($columnNameLcfirst{0});
+                $columnNameLcfirst = lcfirst($columnNameLcfirst);
                 if ( in_array($columnNameLcfirst, $field_spec_remove) ||
                      in_array(ucfirst($columnName), $field_spec_remove) ) {
                     return true;
@@ -438,13 +438,13 @@ class DataObjectSpec
                     case EnumIDNameStrategy::ID:
                         break;
                     case EnumIDNameStrategy::TABLENAMEID:
-                        $classname    = $dataobject->classname();
-                        $classname{0} = strtolower($classname{0});
-                        $columnName   = $classname . EnumColumnNameDefault::ID;
+                        $classname  = $dataobject->classname();
+                        $classname  = lcfirst($classname);
+                        $columnName = $classname . EnumColumnNameDefault::ID;
                         break;
                     case EnumIDNameStrategy::TABLENAME_ID:
                         $classname     = $dataobject->classname();
-                        $classname{0}  = strtolower($classname{0});
+                        $classname     = lcfirst($classname);
                         $idname_concat = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT );
                         $columnName = $classname . $idname_concat . EnumColumnNameDefault::ID;
                         break;

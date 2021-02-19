@@ -12,13 +12,13 @@ class AutoCodeOneKey extends AutoCode
     /**
      * 自动生成代码-一键生成前后台所有模板文件
      */
-    public static function AutoCode()
+    public static function AutoCode($table_names = "")
     {
         $dest_directory = Gc::$nav_root_path."tools".DS."tools".DS."autocode".DS;
         $filename       = $dest_directory."autocode.config.xml";
         AutoCodeValidate::run();
-        if( Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
-        if (!file_exists($filename)){
+        if ( Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
+        if ( !file_exists($filename) ){
             AutoCodeConfig::run();
             die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码！</div>");
         }

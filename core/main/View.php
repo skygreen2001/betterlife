@@ -117,7 +117,7 @@ class View {
     public function __call($method, $arguments) {
         if ( UtilString::contain( $method, "set" ) ) {
             $property = substr($method, strlen("set"), strlen($method));
-            $property{0} = strtolower($property{0});
+            $property = lcfirst($property);
             if ( property_exists($this, $property) ) {
                 $this->$property = $arguments[0];
             } else {
@@ -125,10 +125,10 @@ class View {
             }
         } else if ( UtilString::contain($method,"get") ) {
             $property = substr($method, strlen("get"), strlen($method));
-            $property{0} = strtolower($property{0});
+            $property = lcfirst($property);
             if ( is_array($this->vars) ) {
                 return $this->vars[$property];
-            } else {
+            } else if ( is_object($this->vars) ) {
                 return $this->vars->$property;
             }
         }
@@ -334,7 +334,7 @@ class View {
         }
         if ( is_array($this->vars) ) {
             $this->vars[$key] = $value;
-        } else {
+        } else if ( is_object($this->vars) ) {
             $this->vars->$key = $value;
         }
     }
@@ -360,8 +360,8 @@ class View {
                 } else {
                     $this->viewObject = new ViewObject();
                 }
-                $name_viewObject    = ViewObject::get_Class();
-                $name_viewObject{0} = strtolower($name_viewObject{0});
+                $name_viewObject = ViewObject::get_Class();
+                $name_viewObject = lcfirst($name_viewObject);
                 $this->template->assignByRef($name_viewObject, $this->viewObject);
                 $this->template->display($templateFilePath);
                 break;
@@ -373,8 +373,8 @@ class View {
                       $this->set($key, $value);
                     }
                   }
-                  $name_viewObject    = ViewObject::get_Class();
-                  $name_viewObject{0} = strtolower($name_viewObject{0});
+                  $name_viewObject = ViewObject::get_Class();
+                  $name_viewObject = lcfirst($name_viewObject);
                   $this->set($name_viewObject, $this->viewObject);
                   // print_r($this->viewObject);
                 }

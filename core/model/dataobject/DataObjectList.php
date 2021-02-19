@@ -108,9 +108,9 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
               $dataobjectArr = $dataobject->toArray();
               $dataobjectsArr[$dataobject->$id_name] = $dataobjectArr;
             }
-            $objectname    = $object->classname();
-            $objectname{0} = strtolower($objectname{0});
-            $result        = UtilArray::array_to_xml( $dataobjectsArr, $objectname . "s" );
+            $objectname = $object->classname();
+            $objectname = lcfirst($objectname);
+            $result     = UtilArray::array_to_xml( $dataobjectsArr, $objectname . "s" );
         } else {
             $result = null;
         }
@@ -130,7 +130,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
               $dataobjectsArr[$dataobject->$id_name] = $dataobjectArr;
             }
             $objectname     = $object->classname();
-            $objectname{0}  = strtolower($objectname{0});
+            $objectname     = lcfirst($objectname);
             $dataobjectsArr = array($objectname => $dataobjectsArr);
             $result = json_encode($dataobjectsArr);
         } else {
