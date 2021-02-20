@@ -90,7 +90,7 @@ class Dal_Adodb extends Dal implements IDal
                         break;
                 }
             }else{
-                if($engine==EnumDbSource::ENGINE_DAL_ADODB) {
+                if($engine==EnumDbEngine::ENGINE_DAL_ADODB) {
                     $this->connection=ADONewConnection(Config_Adodb::driver($dbtype));
                 }
                 if ($dbtype==EnumDbSource::DB_ORACLE) {
@@ -149,54 +149,56 @@ class Dal_Adodb extends Dal implements IDal
      */
     public function save($object)
     {
-        $autoId=-1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter($object)) {
+        $autoId = -1;//新建对象插入数据库记录失败
+        if ( !$this->validObjectParameter($object) ) {
             return $autoId;
         }
         try {
-            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
-            $this->saParams=UtilObject::object_to_array($object);
+            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP ) );
+            $this->saParams = UtilObject::object_to_array($object);
 //            $sql = Crud_SQL::SQL_SELECT." * ".Crud_SQL::SQL_FROM.$tablename.Crud_SQL::SQL_WHERE.$this->sql_id($object).self::EQUAL."-1";
 //            $rs = $this->connection->Execute($sql); # Execute the query and get the empty recordset
 //            $this->sQuery = $this->connection->GetInsertSQL($rs,  $this->saParams);
             //对SQL Server会报异常,故不使用:SQL error: [Microsoft][ODBC SQL Server Driver][SQL Server]列名 '********' 无效。, SQL state S0022 in SQLExecDirect
-            $_SQL=new Crud_Sql_Insert();
-            $this->sQuery=$_SQL->insert($this->classname)->values($this->saParams)->result();
-            if (Config_Db::$db==EnumDbSource::DB_SQLSERVER&&((trim(strtoupper(Gc::$encoding))==Config_C::CHARACTER_UTF_8)||(trim(strtolower(Gc::$encoding))==Config_C::CHARACTER_UTF8))) {
-              if (UtilString::is_utf8($this->sQuery)&&Config_Adodb::driver($this->dbtype)!=Config_Adodb::DRIVER_MSSQL_UTF8) {
-                 $this->sQuery=UtilString::utf82gbk($this->sQuery);
-              }
-            }
-
-            if (Config_Db::$debug_show_sql){
-                LogMe::log("SQL:".$this->sQuery);
-                if (!empty($this->saParams)) {
-                    LogMe::log("SQL PARAM:".var_export($this->saParams, true));
+            $_SQL = new Crud_Sql_Insert();
+            if ( is_object($_SQL) ) {
+                $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
+                if ( Config_Db::$db == EnumDbSource::DB_SQLSERVER && ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8 ) ) ) {
+                    if ( UtilString::is_utf8( $this->sQuery ) && Config_Adodb::driver( $this->dbtype ) != Config_Adodb::DRIVER_MSSQL_UTF8 ) {
+                        $this->sQuery=UtilString::utf82gbk($this->sQuery);
+                    }
                 }
             }
-            if ($this->connection->Execute($this->sQuery) === false) {
-                Exception_Db::log($this->connection->ErrorMsg());
+
+            if ( Config_Db::$debug_show_sql ) {
+                LogMe::log("SQL:".$this->sQuery);
+                if ( !empty($this->saParams) ) {
+                    LogMe::log( "SQL PARAM:".var_export($this->saParams, true) );
+                }
             }
-            $autoId=@$this->connection->Insert_ID();
-            if (!$autoId) {
-                $realIdName=DataObjectSpec::getRealIDColumnName($object);
-                $sql_maxid=Crud_SQL::SQL_MAXID;
-                $sql_maxid=str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
-                $tablename =Config_Adodb::orm($this->classname);
-                $autoIdSql=Crud_SQL::SQL_SELECT.$sql_maxid.Crud_SQL::SQL_FROM.$tablename;
-                $this->stmt= $this->connection->Execute($autoIdSql);
-                if (!empty($this->stmt)&&(count($this->stmt->fields)>0)) {
-                    $autoId=@$this->stmt->fields[0];
+            if ( $this->connection->Execute($this->sQuery) === false ) {
+                Exception_Db::log( $this->connection->ErrorMsg() );
+            }
+            $autoId = @$this->connection->Insert_ID();
+            if ( !$autoId ) {
+                $realIdName = DataObjectSpec::getRealIDColumnName($object);
+                $sql_maxid  = Crud_SQL::SQL_MAXID;
+                $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
+                $tablename  = Config_Adodb::orm($this->classname);
+                $autoIdSql  = Crud_SQL::SQL_SELECT.$sql_maxid.Crud_SQL::SQL_FROM.$tablename;
+                $this->stmt = $this->connection->Execute($autoIdSql);
+                if ( !empty($this->stmt) && ( count($this->stmt->fields) > 0 ) ) {
+                    $autoId = @$this->stmt->fields[0];
                 }
             }
             //如果获取id报异常， 重置其为未获值
-            if (!isset($autoId)){
-              $autoId=-1;
+            if ( !isset($autoId) ) {
+                $autoId = -1;
             }
         } catch (Exception $exc) {
-            Exception_Db::log($exc->getTraceAsString());
+            Exception_Db::log( $exc->getTraceAsString() );
         }
-        if (!empty($object)&&is_object($object)){
+        if ( !empty($object) && is_object($object) ) {
           $object->setId($autoId);//当保存返回对象时使用
         }
         return $autoId;
@@ -210,23 +212,23 @@ class Dal_Adodb extends Dal implements IDal
      */
     public function delete($object)
     {
-        $result=false;
-        if (!$this->validObjectParameter($object)) {
+        $result = false;
+        if ( !$this->validObjectParameter($object) ) {
             return $result;
         }
-        $id=$object->getId();
-        if (!empty($id)) {
+        $id = $object->getId();
+        if ( !empty($id) ) {
             try {
-                $_SQL=new Crud_Sql_Delete();
-                $where=$this->sql_id($object).self::EQUAL.$id;
-                $this->sQuery=$_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql){
-                    LogMe::log("SQL:".$this->sQuery);
+                $_SQL  = new Crud_Sql_Delete();
+                $where = $this->sql_id($object) . self::EQUAL . $id;
+                $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
+                if ( Config_Db::$debug_show_sql ) {
+                    LogMe::log( "SQL:" . $this->sQuery );
                 }
-                $this->connection->Execute($this->sQuery);
-                $result=true;
+                $this->connection->Execute( $this->sQuery );
+                $result = true;
             } catch (Exception $exc) {
-                Exception_Db::log($exc->getTraceAsString());
+                Exception_Db::log( $exc->getTraceAsString() );
             }
         }
         return $result;

@@ -207,12 +207,14 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
                 }
             }
-            $object_arr = $this->connection->query($this->sQuery);
-            if ( $object_arr ){
-                $row    = $object_arr->fetch_row();
-                $result = $row[0];
+            if ( is_object($this->connection) ) {
+                $object_arr = $this->connection->query($this->sQuery);
+                if ( $object_arr ) {
+                    $row    = $object_arr->fetch_row();
+                    $result = $row[0];
+                    if ( is_string($result) ) $result = floatval($result);
+                }
             }
-            if ( is_string($result) ) $result = floatval($result);
             return $result;
         } catch (Exception $exc) {
             Exception_Mysqli::record( $exc->getTraceAsString() );
@@ -306,6 +308,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             if ( $this->stmt->num_rows>0 ) {
                 /* get resultset for metadata */
                 $meta = $this->stmt->result_metadata();
+                $row = array();
                 while ($field = $meta->fetch_field()) {
                     $params[] = &$row[$field->name];
                 }

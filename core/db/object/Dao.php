@@ -15,7 +15,7 @@ abstract class Dao
      */
     protected $classname;
     /**
-     * @var string 数据库连接
+     * @var object 数据库连接
      */
     public $connection;
     /**

@@ -54,7 +54,8 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
 
         // Decode url-encoded information in the db connection string.
         $host     = $db_config["host"];
-        $user     = $db_config["user"];
+        $port     = $db_config["port"];
+        $username = $db_config["user"];
         $password = $db_config["password"];
         $dbname   = $db_config["dbname"];
         $script_filename = $db_config["script_filename"];
@@ -77,7 +78,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         if ( !isset($dbname) ) {
             $dbname   = Config_Mysql::$dbname;
         }
-        $dbinfo = new DbInfo_Mysqli();
+        // $dbinfo = new DbInfo_Mysqli();
         $connection = new mysqli($connecturl, $username, $password, $dbname);
         if ( !$connection )
         {
@@ -166,7 +167,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             UtilCss::report_info();
             echo "SQL> {$sql}; <br>";
             echo "<table class='" . UtilCss::CSS_REPORT_TABLE . "' border=1><thead><tr><th> Variable_name</th>" . "<th> Value</th></tr></thead>";
-            while ($row = fetch_row($result)) {
+            while ($row = $result->fetch_row()) {
                 echo "<tr><td>{$row['Variable_name']}</td><td>{$row['Value']}</td></tr>";
             }
             echo "</table><br>";
@@ -240,7 +241,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $fields = $this->query("SHOW FULL FIELDS IN $table");
 
         foreach ($fields as $field) {
-            $field = UtilObject::object_to_array($field);
+            $field = UtilObject::object_to_array( $field );
             $fieldList[$field['Field']] = $field;
         }
         if (isset ($fieldList)) return $fieldList;
@@ -391,7 +392,8 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      */
     private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries=false)
     {
-        if ( isset($_REQUEST['showqueries']) ) {
+        
+        if ( Config_Db::$debug_show_sql ) {
             $starttime = microtime(true);
         }
         if ( $this->connection ) {
@@ -400,15 +402,14 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
                 $this->stmt->execute();
                 $result = $this->getQueryResult();
                 Exception_Mysqli::record();
-
             }
         }
 
-        if( isset($_REQUEST['showqueries']) ) {
+        if( Config_Db::$debug_show_sql ) {
             $endtime = microtime(true);
-            echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
+            LogMe::log( "\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n" );
         }
-        if ( !$this->stmt && $errorLevel && $this->connection ) e( "无法运行查询语句: $sql | " . mysqli_error($this->connection), $this );
+        if ( !$this->stmt && $errorLevel && $this->connection ) e( "无法运行查询语句: $sqlstring | " . mysqli_error($this->connection), $this );
         if ( $this->stmt ) return $result;
         return null;
     }
@@ -426,11 +427,13 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             if ( $this->stmt->num_rows>0 ) {
                 /* get resultset for metadata */
                 $meta = $this->stmt->result_metadata();
+                $row = array();
                 while ($field = $meta->fetch_field()) {
                     $params[] = &$row[$field->name];
                 }
+
                 call_user_func_array(array($this->stmt, 'bind_result'), $params);
-                $result=array();
+                $result = array();
                 while ($this->stmt->fetch()) {
                     if ( count($row) == 1 ) {
                         foreach($row as $key => $val) {
