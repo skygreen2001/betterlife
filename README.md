@@ -105,7 +105,7 @@
 
 ## 帮助文档
 
-* [帮助说明文档](https://www.gitbook.com/book/skygreen2001/betterlife)
+* [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
 * [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
 * [本地说明文档](docs/)
 
@@ -135,7 +135,7 @@
 ## 参考资料
 
 * **本框架帮助文档**
-  > http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
+  > 早期文档: http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
 * **本地运行服务器**
   > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
 * **安装Composer**
