@@ -391,7 +391,7 @@ class UtilArray extends Util
      * 查询数组中key所在的位置
      * @param mixed $array 查询数组
      * @param mixed $key
-     * @return 数组中$key所在的位置【从1开始】
+     * @return int 数组中$key所在的位置【从1开始】
      */
     public static function keyPosition($array, $key)
     {

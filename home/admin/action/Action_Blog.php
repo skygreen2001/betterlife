@@ -45,8 +45,8 @@ class Action_Blog extends ActionAdmin
                     $this->view->set("message",$result["msg"]);
                 }
             }
+            if ( $blog->isPublic == 'on' ) $blog->isPublic = 1; else $blog->isPublic = 0;
             if ( !empty($id) ) {
-                if ( $blog->isPublic == 'on' ) $blog->isPublic = true; else $blog->isPublic = false;
                 $blog->update();
             } else {
                 $id = $blog->save();

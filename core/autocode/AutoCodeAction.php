@@ -260,7 +260,7 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = true; else \$$instancename->$fieldname = false;\r\n";
+                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;\r\n";
                 break;
             }
         }
@@ -422,9 +422,9 @@ class AutoCodeAction extends AutoCode
                    "    }\r\n";
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
-        $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
-        if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
-        $result .= $relationFieldTreeRecursive;
+        // $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
+        // if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
+        // $result .= $relationFieldTreeRecursive;
 
         $result .= "    /**\r\n".
                    "     * 查看{$table_comment}\r\n".
@@ -552,60 +552,61 @@ class AutoCodeAction extends AutoCode
         $relation_data["rela_m2m_content"] = $rela_m2m_content;
         return $relation_data;
     }
-    /**
-     * 目录树递归函数:显示父目录[全]
-     * 如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
-     * @param mixed $instance_name 实体变量
-     * @param mixed $classname 数据对象列名
-     * @param mixed $fieldInfo 表列信息列表
-     */
-    public static function relationFieldTreeRecursive($instance_name, $classname, $fieldInfo)
-    {
-        $result = "";
-        if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
-        {
-            if ( array_key_exists($classname, self::$relation_viewfield) ) {
-                $relationSpecs  = self::$relation_viewfield[$classname];
-                $isTreeLevelHad = false;
-                foreach ($fieldInfo as $fieldname => $field) {
-                    if ( array_key_exists($fieldname, $relationSpecs) ) {
-                        $relationShow  = $relationSpecs[$fieldname];
-                        foreach ($relationShow as $key => $value) {
-                            $i_name    = $key;
-                            $i_name    = lcfirst($i_name);
-                            $fieldInfo = self::$fieldInfos[self::getTablename($key)];
-                            if ( !$isTreeLevelHad ) {
-                                if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {
-                                    $classNameField = self::getShowFieldName( $key );
-                                    $field_comment  = $field["Comment"];
-                                    $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= "    /**\r\n".
-                                               "     * 显示{$field_comment}[全]\r\n".
-                                               "     * 注:采用了递归写法\r\n".
-                                               "     * @param 对象 \$parent_id 父地区标识\r\n".
-                                               "     * @param mixed \$level 目录层级\r\n".
-                                               "     */\r\n".
-                                               "    private function {$i_name}ShowAll(\$parent_id,\$level)\r\n".
-                                               "    {\r\n".
-                                               "        \${$i_name}_p=$key::get_by_id(\$parent_id);\r\n".
-                                               "        if (\$level==1){\r\n".
-                                               "            \${$i_name}ShowAll=\${$i_name}_p->$classNameField;\r\n".
-                                               "        }else{\r\n".
-                                               "            \$parent_id=\${$i_name}_p->parent_id;\r\n".
-                                               "            \${$i_name}ShowAll=\$this->{$i_name}ShowAll(\$parent_id,\$level-1).\"->\".\${$i_name}_p->$classNameField;\r\n".
-                                               "        }\r\n".
-                                               "        return \${$i_name}ShowAll;\r\n".
-                                               "    }\r\n\r\n";
-                                    $isTreeLevelHad = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $result;
-    }
+    // /**
+    //  * 目录树递归函数:显示父目录[全]
+    //  * 如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
+    //  * @param mixed $instance_name 实体变量
+    //  * @param mixed $classname 数据对象列名
+    //  * @param mixed $fieldInfo 表列信息列表
+    //  */
+    // public static function relationFieldTreeRecursive($instance_name, $classname, $fieldInfo)
+    // {
+    //     $result = "";
+    //     if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
+    //     {
+    //         if ( array_key_exists($classname, self::$relation_viewfield) ) {
+    //             $relationSpecs  = self::$relation_viewfield[$classname];
+    //             $isTreeLevelHad = false;
+    //             foreach ($fieldInfo as $fieldname => $field) {
+    //                 if ( array_key_exists($fieldname, $relationSpecs) ) {
+    //                     $relationShow  = $relationSpecs[$fieldname];
+    //                     foreach ($relationShow as $key => $value) {
+    //                         $i_name    = $key;
+    //                         $i_name    = lcfirst($i_name);
+    //                         $fieldInfo = self::$fieldInfos[self::getTablename($key)];
+    //                         if ( !$isTreeLevelHad ) {
+    //                             if ( array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo) ) {
+    //                                 // print_pre($relationSpecs, true);die();
+    //                                 $classNameField = self::getShowFieldName( $key );
+    //                                 $field_comment  = $field["Comment"];
+    //                                 $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
+    //                                 $result .= "    /**\r\n".
+    //                                            "     * 显示{$field_comment}[全]\r\n".
+    //                                            "     * 注:采用了递归写法\r\n".
+    //                                            "     * @param 对象 \$parent_id 父地区标识\r\n".
+    //                                            "     * @param mixed \$level 目录层级\r\n".
+    //                                            "     */\r\n".
+    //                                            "    private function {$i_name}ShowAll(\$parent_id,\$level)\r\n".
+    //                                            "    {\r\n".
+    //                                            "        \${$i_name}_p=$key::get_by_id(\$parent_id);\r\n".
+    //                                            "        if (\$level==1){\r\n".
+    //                                            "            \${$i_name}ShowAll=\${$i_name}_p->$classNameField;\r\n".
+    //                                            "        }else{\r\n".
+    //                                            "            \$parent_id=\${$i_name}_p->parent_id;\r\n".
+    //                                            "            \${$i_name}ShowAll=\$this->{$i_name}ShowAll(\$parent_id,\$level-1).\"->\".\${$i_name}_p->$classNameField;\r\n".
+    //                                            "        }\r\n".
+    //                                            "        return \${$i_name}ShowAll;\r\n".
+    //                                            "    }\r\n\r\n";
+    //                                 $isTreeLevelHad = true;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return $result;
+    // }
 
     /**
      * 是否需要在编辑页面上传图片

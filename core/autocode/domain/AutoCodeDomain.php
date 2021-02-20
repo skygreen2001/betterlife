@@ -332,7 +332,7 @@ class AutoCodeDomain extends AutoCode
 
         $result .= self::domainEnumPropertyShow( $fieldInfo, $tablename );
         $result .= self::domainEnumShow( $fieldInfo, $tablename );
-        $result .= self::domainTreeLevelDefine( $fieldInfo, $classname );
+        $result .= self::domainTreeLevelDefine( $fieldInfo, $classname, $tablename );
         $result .= self::domainBitShow( $fieldInfo, $tablename );
         $result .= "}\r\n\r\n";
         return $result;
@@ -589,39 +589,77 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 当前类名称
      */
-    private static function domainTreeLevelDefine($fieldInfo, $classname)
+    private static function domainTreeLevelDefine($fieldInfo, $classname, $tablename)
     {
         $result = "\r\n";
-        if ( array_key_exists("countChild", $fieldInfo) || array_key_exists("childCount", $fieldInfo) ) {
-            $realId=DataObjectSpec::getRealIDColumnName($classname);
-            $result.="    /**\r\n".
-                     "     * 计算所有的子元素数量并存储\r\n".
-                     "     */\r\n".
-                     "    public static function allCountChild()\r\n".
-                     "    {\r\n".
-                     "        \$max_id=$classname::max();\r\n".
-                     "        for(\$i=1;\$i<=\$max_id;\$i++){\r\n".
-                     "            \$countChild=$classname::select(\"count(*)\",\"parent_id=\".\$i);\r\n".
-                     "            $classname::updateBy(\"$realId=\".\$i,\"countChild=\".\$countChild);\r\n".
-                     "        }\r\n".
-                     "    }\r\n\r\n";
-        }
-        if (array_key_exists("level",$fieldInfo)){
-            $result.="    /**\r\n".
-                     "     * 最高的层次，默认为3\r\n".
-                     "     */\r\n".
-                     "    public static function maxlevel()\r\n".
-                     "    {\r\n".
-                     "        return $classname::select(\"max(level)\");//return 3;\r\n".
-                     "    }\r\n\r\n";
-        }else if (array_key_exists("region_type",$fieldInfo)){
-            $result.="    /**\r\n".
-                     "     * 最高的层次，默认为3\r\n".
-                     "     */\r\n".
-                     "    public static function maxlevel()\r\n".
-                     "    {\r\n".
-                     "        return $classname::select(\"max(region_type)\");//return 3;\r\n".
-                     "    }\r\n\r\n";
+        if ( array_key_exists("parent_id", $fieldInfo) ) {
+            if ( array_key_exists("countChild", $fieldInfo) || array_key_exists("childCount", $fieldInfo) ) {
+                $realId  = DataObjectSpec::getRealIDColumnName( $classname );
+                $result .= "    /**\r\n".
+                           "     * 计算所有的子元素数量并存储\r\n".
+                           "     */\r\n".
+                           "    public static function allCountChild()\r\n".
+                           "    {\r\n".
+                           "        \$max_id = $classname::max();\r\n".
+                           "        for (\$i = 1;\$i <= \$max_id;\$i++) {\r\n".
+                           "            \$countChild = $classname::select( \"count(*)\", \"parent_id=\" . \$i );\r\n".
+                           "            $classname::updateBy( \"$realId=\" . \$i, \"countChild=\" . \$countChild );\r\n".
+                           "        }\r\n".
+                           "    }\r\n\r\n";
+            }
+            if ( array_key_exists("level", $fieldInfo) ) {
+                $result .= "    /**\r\n".
+                           "     * 最高的层次，默认为3\r\n".
+                           "     */\r\n".
+                           "    public static function maxlevel()\r\n".
+                           "    {\r\n".
+                           "        return $classname::select( \"max(level)\" );//return 3;\r\n".
+                           "    }\r\n\r\n";
+                $instance_name = self::getInstancename( $tablename );
+                if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
+                {
+                    if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                        $relationSpecs = self::$relation_viewfield[$classname];
+                        $fieldname     = "parent_id";
+                        $relationShow  = $relationSpecs[$fieldname];
+                        $isTreeLevelHad = false;
+                        foreach ($relationShow as $key => $value) {
+                            $classNameField = self::getShowFieldName( $key );
+                            $field          = $fieldInfo[$fieldname];
+                            $field_comment  = $field["Comment"];
+                            $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
+                            if ( !$isTreeLevelHad ) {
+                                $result .= "    /**\r\n".
+                                "     * 显示{$field_comment}[全]\r\n".
+                                "     */\r\n".
+                                "    public function get{$classname}ShowAll()\r\n".
+                                "    {\r\n".
+                                "        return self::{$instance_name}ShowAll( \$this->parent_id, \$this->level );\r\n". 
+                                "    }\r\n\r\n";
+
+                                $result .= "    /**\r\n".
+                                "     * 显示{$field_comment}[全]\r\n".
+                                "     * 注:采用了递归写法\r\n".
+                                "     * @param int \$parent_id {$field_comment}标识\r\n".
+                                "     * @param int \$level 目录层级\r\n".
+                                "     */\r\n".
+                                "    public static function {$instance_name}ShowAll(\$parent_id, \$level)\r\n".
+                                "    {\r\n".
+                                "        \${$instance_name}_p = $classname::get_by_id( \$parent_id );\r\n".
+                                "        if ( \$level == 1 ) {\r\n".
+                                "             \${$instance_name}ShowAll = \${$instance_name}_p->$classNameField;\r\n".
+                                "        } else {\r\n".
+                                "             \$parent_id     = \${$instance_name}_p->parent_id;\r\n".
+                                "             \${$instance_name}ShowAll = self::{$instance_name}ShowAll( \$parent_id, \$level - 1 ) . \"->\" . \${$instance_name}_p->$classNameField;\r\n". 
+                                "        }\r\n". 
+                                "        return \${$instance_name}ShowAll;\r\n". 
+                                "    }\r\n\r\n";
+                                $isTreeLevelHad = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
         return $result;
     }

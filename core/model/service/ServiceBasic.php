@@ -355,48 +355,6 @@ class ServiceBasic extends Service implements IServiceBasic
     }
 
     /**
-     * 将过滤条件转换成需查询的模糊条件
-     * @param array|object $filter 过滤条件
-     * @return string 查询条件
-     */
-    protected function filtertoCondition($filter)
-    {
-        if ( is_array($filter) ) {
-            $condition = $filter;
-        } else if ( is_object($filter) ) {
-            $condition = UtilObject::object_to_array( $filter );
-        }
-        if ( !empty($condition) && ( count($condition) > 0 ) ) {
-            $conditionArr = array();
-            foreach ($condition as $key => $value) {
-                if ( empty($value) && $value !== 0 && $value !== '0' ) continue;
-                if ( !UtilString::is_utf8( $value ) ) {
-                    $value = UtilString::gbk2utf8( $value );
-                }
-                if ( is_int($value) || is_bool($value) ) {
-                    $conditionArr[] = $key . "='" . $value . "'";
-                } else if ( contain($value, "T00:00:00" ) ) {
-                    $value = str_replace("T00:00:00", "", $value);
-                    $conditionArr[] = $key . "='" . $value . "'";
-                } else {
-                    if ( is_numeric($value) ) {
-                        $judgeKey = strtolower($key);
-                        if ( contains( $judgeKey, array("type", "stat") ) ) {//如果是枚举类型
-                            $conditionArr[] = $key . "='" . $value . "'";
-                            continue;
-                        }
-                    }
-                    $conditionArr[] = $key . " like '%" . $value . "%'";
-                }
-            }
-            $condition = implode(" and ", $conditionArr);
-        } else {
-            $condition = "";
-        }
-        return $condition;
-    }
-
-    /**
      * 上传图片文件
      * @param array $files 上传的文件对象
      * @param array $uploadFlag 上传标识,上传文件的input组件的名称
@@ -488,10 +446,10 @@ class ServiceBasic extends Service implements IServiceBasic
                 }
             }
             if ( !empty($info_noneed) ) {
-                $info_noneed = "请先批量上传$classname_comment数据(Excel文档格式)，并在图片列中指定图片文件名！<br/>" . $info_noneed;
+                $info_noneed = "请先批量上传 $classname_comment 数据(Excel文档格式)，并在图片列中指定图片文件名！<br/>" . $info_noneed;
             }
             //删除压缩文件目录
-            $isRmSucc = UtilFileSystem::rmdir( $upload_zip_dir );
+            $isRmSucc = UtilFileSystem::deleteDir( $upload_zip_dir );
         }
         if ( ( empty($info_noneed) ) && ( empty($info_failed) ) ) {
             return array('success' => true,'data' => true);

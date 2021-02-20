@@ -32,6 +32,48 @@ class Service extends BBObject {
     }
 
     /**
+     * 将过滤条件转换成需查询的模糊条件
+     * @param array|object $filter 过滤条件
+     * @return string 查询条件
+     */
+    protected function filtertoCondition($filter)
+    {
+        if ( is_array($filter) ) {
+            $condition = $filter;
+        } else if ( is_object($filter) ) {
+            $condition = UtilObject::object_to_array( $filter );
+        }
+        if ( !empty($condition) && ( count($condition) > 0 ) ) {
+            $conditionArr = array();
+            foreach ($condition as $key => $value) {
+                if ( empty($value) && $value !== 0 && $value !== '0' ) continue;
+                if ( !UtilString::is_utf8( $value ) ) {
+                    $value = UtilString::gbk2utf8( $value );
+                }
+                if ( is_int($value) || is_bool($value) ) {
+                    $conditionArr[] = $key . "='" . $value . "'";
+                } else if ( contain($value, "T00:00:00" ) ) {
+                    $value = str_replace("T00:00:00", "", $value);
+                    $conditionArr[] = $key . "='" . $value . "'";
+                } else {
+                    if ( is_numeric($value) ) {
+                        $judgeKey = strtolower($key);
+                        if ( contains( $judgeKey, array("type", "stat") ) ) {//如果是枚举类型
+                            $conditionArr[] = $key . "='" . $value . "'";
+                            continue;
+                        }
+                    }
+                    $conditionArr[] = $key . " like '%" . $value . "%'";
+                }
+            }
+            $condition = implode(" and ", $conditionArr);
+        } else {
+            $condition = "";
+        }
+        return $condition;
+    }
+
+    /**
      * 转换成数组
      * @return int
      */

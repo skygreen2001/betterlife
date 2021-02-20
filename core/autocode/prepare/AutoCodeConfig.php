@@ -368,7 +368,9 @@ class AutoCodeConfig extends AutoCode
             {
                 $fieldInfo_m2m = self::$fieldInfos[self::getTablename($classname)];
                 unset($fieldInfo_m2m['updateTime'], $fieldInfo_m2m['commitTime']);
-                $realId        = DataObjectSpec::getRealIDColumnName($classname);
+
+                $realId        = self::getRealIDByTable( $classname, $fieldInfo );
+                // $realId        = DataObjectSpec::getRealIDColumnName($classname);
                 unset($fieldInfo_m2m[$realId]);
                 if ( count($fieldInfo_m2m) == 2) {
                     //many_many[在关系表中有两个关系主键，并且表名的前半部分是其中一个主键]

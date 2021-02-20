@@ -83,6 +83,13 @@ class Region extends DataObject
     }
 
     /**
+     * 显示父地区[全]
+     */
+    public function getRegionShowAll() {
+        return self::regionShowAll( $this->parent_id, $this->level );
+    }
+    
+    /**
      * 显示地区类型<br/>
      * 0:国家-country<br/>
      * 1:省-province<br/>
@@ -103,5 +110,22 @@ class Region extends DataObject
         return Region::select("max(level)");//return 3;
     }
 
+    /**
+     * 显示父地区[全]
+     * 注:采用了递归写法
+     * @param int $parent_id 父地区标识
+     * @param int $level 目录层级
+     */
+    public static function regionShowAll($parent_id, $level)
+    {
+        $region_p = Region::get_by_id( $parent_id );
+        if ( $level == 1 ) {
+             $regionShowAll = $region_p->region_name;
+        } else {
+             $parent_id     = $region_p->parent_id;
+             $regionShowAll = self::regionShowAll( $parent_id, $level - 1 ) . "->" . $region_p->region_name;
+        }
+        return $regionShowAll;
+    }
 }
 
