@@ -587,7 +587,7 @@ class AutoCodeService extends AutoCode
                                     $field_comment  = self::columnCommentKey($field_comment,$fieldname);
                                     $result .= "            if ( \${$i_name}_instance ) {\r\n" .
                                                "                \$level = \${$i_name}_instance->level;\r\n" .
-                                               "                \${$instance_name}[\"{$i_name}ShowAll\"] = $classname::{$i_name}ShowAll( \${$instance_name}->parent_id, \$level );\r\n" .
+                                               "                \${$instance_name}[\"{$i_name}ShowAll\"] = $key::{$i_name}ShowAll( \${$instance_name}->parent_id, \$level );\r\n" .
                                                "                \$" .$instance_name."['$fieldname'] = \${$i_name}_instance->$value;\r\n" .
                                                "                \$pos = UtilArray::keyPosition( \$arr_output_header, \"$fieldname\" );\r\n" .
                                                "                UtilArray::insert( \$arr_output_header, \$pos + 1, array('{$i_name}ShowAll' => \"{$field_comment}[全]\") );\r\n" .
