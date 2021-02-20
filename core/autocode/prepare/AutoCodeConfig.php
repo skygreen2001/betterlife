@@ -255,6 +255,26 @@ class AutoCodeConfig extends AutoCode
     }
 
     /**
+     * 第一次生成实体类的时候，因为框架生成的应用内没有该实体类
+     * 而实体类的主键是通过实体类的命名规则生成，当没有实体类的时候就需要通过表定义和主键的定义规则来确定该实体类的主键
+     * 优先判断规则为:
+     * 表名+"_id"  > "id" > 表名+"id" 
+     * @param array $classname 数据对象类名
+     * @param array $fieldInfo 表列信息列表
+     */
+    private static function getRealIDByTable($classname, $fieldInfo) {
+        $classname = strtolower($classname);
+        foreach  ($fieldInfo as $fieldname => $field)
+        {
+            $cf     = strtolower($fieldname);
+            $realId = strtolower($classname) . "_id";
+            if ( ( $cf == $classname . "_id" ) || ( $cf == "id" ) || ( $cf == $classname . "id" ) ) {
+                return $fieldname;
+            }
+        }
+    }
+    
+    /**
      * 表五种关系映射配置
      * @param array $classname 数据对象类名
      * @param string $tablename 表名称
@@ -263,12 +283,13 @@ class AutoCodeConfig extends AutoCode
      */
     private static function relationFives($classname, $tablename, $fieldInfo, $relation_fives)
     {
+        $realId = self::getRealIDByTable( $classname, $fieldInfo );
         foreach  ($fieldInfo as $fieldname => $field)
         {
             if ( !self::isNotColumnKeywork( $fieldname ) ) continue;
             if ( $fieldname == self::keyIDColumn( $classname ) ) continue;
 
-            $realId = DataObjectSpec::getRealIDColumnName( $classname );
+            // $realId = DataObjectSpec::getRealIDColumnName( $classname );
             if ( contain( $fieldname, "_id" ) || ( contain( $fieldname, "parent_id" ) ) ) {
                 $relation_classname = str_replace("_id", "", $fieldname);
                 $relation_classname = ucfirst($relation_classname);

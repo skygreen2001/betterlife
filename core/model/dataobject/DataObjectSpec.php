@@ -454,7 +454,7 @@ class DataObjectSpec
             }
             return $columnName;
         } else {
-            LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );
+            LogMe::log( Wl::ERROR_INFO_EXTENDS_CLASS );
         }
     }
     //</editor-fold>

@@ -15,13 +15,13 @@ class UtilReflection extends Util
      * @param string $staticPropertyName 静态变量的名称
      * @return mixed 指定静态变量的值。 
      */
-    public static function getClassStaticPropertyValue($object,$staticPropertyName) 
+    public static function getClassStaticPropertyValue($object, $staticPropertyName) 
     {
-        $class=object_reflection($object);
-        if (isset($class)){
-            $result=$class->getStaticPropertyValue($staticPropertyName,null);
+        $class = object_reflection($object);
+        if ( isset($class) ) {
+            $result = $class->getStaticPropertyValue( $staticPropertyName, null );
             return $result;
-        }else{
+        } else {
             return null;
         }
     }
@@ -33,8 +33,8 @@ class UtilReflection extends Util
      */
     public static function getClassStaticProperties($object)
     {     
-        $class=object_reflection($object);
-        if (isset($class)){
+        $class = object_reflection($object);
+        if ( isset($class) ) {
             return $class->getStaticProperties();                      
         }  
         return null;
@@ -48,10 +48,10 @@ class UtilReflection extends Util
      * @param bool $isprefix 是否前缀，true:前缀,false:后缀
      * @return string 指定类指定静态变量值的名称
      */
-    public static function getClassStaticPropertyNameByValue($object,$propertyValue,$pre1sufix="",$isprefix=true)
+    public static function getClassStaticPropertyNameByValue($object, $propertyValue, $pre1sufix = "", $isprefix = true)
     {
-        $staticProperties=self::getClassStaticProperties($object);
-        return UtilArray::array_search($staticProperties,$propertyValue,$pre1sufix,$isprefix);        
+        $staticProperties = self::getClassStaticProperties( $object );
+        return UtilArray::array_search( $staticProperties, $propertyValue, $pre1sufix, $isprefix );        
     }
 
     /**
@@ -61,8 +61,8 @@ class UtilReflection extends Util
      */
     public static function getClassConsts($object) 
     {
-        $class=object_reflection($object);
-        if (isset ($class)){
+        $class = object_reflection($object);
+        if ( isset ($class) ){
             $consts = $class->getConstants();
 //            foreach ($consts as $constant => $value) {
 //                echo "$constant = $value\n";
@@ -80,10 +80,10 @@ class UtilReflection extends Util
      * @param bool $isprefix 是否前缀，true:前缀,false:后缀
      * @return string 指定类指定常量值的名称
      */
-    public static function getClassConstNameByValue($object,$propertyValue,$pre1sufix="",$isprefix=true)
+    public static function getClassConstNameByValue($object, $propertyValue, $pre1sufix = "", $isprefix = true)
     {
-        $consts=self::getClassConsts($object);        
-        return UtilArray::array_search($consts,$propertyValue,$pre1sufix,$isprefix);
+        $consts = self::getClassConsts( $object );
+        return UtilArray::array_search( $consts, $propertyValue, $pre1sufix, $isprefix );
     }
     
     /**
@@ -93,32 +93,29 @@ class UtilReflection extends Util
     */
     public static function getClassPropertiesInfo($object)
     {        
-        $class=object_reflection($object);
-        $dataobjectProperties=$class->getProperties();
-        $result=array();
+        $class  = object_reflection($object);
+        $dataobjectProperties = $class->getProperties();
+        $result = array();
                   
-        foreach($dataobjectProperties as $dataobjectProperty)
+        foreach ($dataobjectProperties as $dataobjectProperty)
         {
-            $property=array();
-            $propertyName=$dataobjectProperty->getName();
-            $property['name']=$propertyName;
-            if (property_exists($object,$propertyName)){
-                @$property['value']=$object[$propertyName];   
-                $property['access']="";
-                if ($dataobjectProperty->isPublic()) $property['access']='public';
-                if ($dataobjectProperty->isPrivate()) $property['access']='private';
-                if ($dataobjectProperty->isProtected()) $property['access']='protected';
+            $property         = array();
+            $propertyName     = $dataobjectProperty->getName();
+            $property['name'] = $propertyName;
+            if ( property_exists($object, $propertyName) ) {
+                @$property['value'] = $object[$propertyName];   
+                $property['access'] = "";
+                if ( $dataobjectProperty->isPublic() ) $property['access']    = 'public';
+                if ( $dataobjectProperty->isPrivate() ) $property['access']   = 'private';
+                if ( $dataobjectProperty->isProtected() ) $property['access'] = 'protected';
             }
             //$dataobjectProperty->isStatic()
-            $test=Reflection::getModifierNames($object->getModifiers());
-            $mo= $test;  
-            $result[$propertyName]=$property;
+            $test = Reflection::getModifierNames( $object->getModifiers() );
+            $mo   = $test;  
+            $result[$propertyName] = $property;
         }
         return $result;
-    }
-    
-    
-    
+    } 
 }
 
 ?>
