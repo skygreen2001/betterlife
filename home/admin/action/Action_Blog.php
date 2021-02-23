@@ -66,7 +66,7 @@ class Action_Blog extends ActionAdmin
         $categorys = Category::get("", "category_id asc");
         $this->view->set("categorys", $categorys);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('blog_content');
+        $this->load_onlineditor( 'blog_content' );
     }
     /**
      * 删除博客

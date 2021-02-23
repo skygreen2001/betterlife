@@ -661,7 +661,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *            2. array("id" => "1", "name" => "sky")<br/>
      *            3. 允许对象如new User(id = "1", name = "green");<br/>
      * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"<br/>
-     * @return 对象总计数
+     * @return int 对象总计数
      */
     public static function count($filter = null)
     {

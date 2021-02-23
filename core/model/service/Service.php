@@ -14,8 +14,8 @@ class Service extends BBObject {
      */
     private static $currentDao;
     protected static function dao() {
-        if (empty(self::$currentDao)) {
-            self::$currentDao=Manager_Db::newInstance()->dao();
+        if ( empty(self::$currentDao) ) {
+            self::$currentDao = Manager_Db::newInstance()->dao();
         }
         return self::$currentDao;
     }
@@ -28,7 +28,7 @@ class Service extends BBObject {
      */
     public static function fieldsMean($tablename)
     {
-       return Manager_Db::newInstance()->dbinfo()->fieldMapNameList($tablename);
+       return Manager_Db::newInstance()->dbinfo()->fieldMapNameList( $tablename );
     }
 
     /**
@@ -78,36 +78,36 @@ class Service extends BBObject {
      * @return int
      */
     public static function toArray(){
-        $servicename=get_called_class();
-        $result=null;
-        $services=array();
-        if (class_exists($servicename)){
-           $service=new ReflectionClass($servicename);
-           $methods=$service->getMethods();
-           $methodsArr=array();
+        $servicename = get_called_class();
+        $result      = null;
+        $services = array();
+        if ( class_exists($servicename) ) {
+           $service    = new ReflectionClass($servicename);
+           $methods    = $service->getMethods();
+           $methodsArr = array();
            foreach ($methods as $method) {
-               if ($method->isPublic()){
-                   $methodname=$method->getName();
-                   $params=$method->getParameters();
-                   $paramArr=array();
-                   $count=1;
+               if ( $method->isPublic() ) {
+                   $methodname = $method->getName();
+                   $params     = $method->getParameters();
+                   $paramArr   = array();
+                   $count      = 1;
                    foreach ($params as $i => $param) {
-                       $paramname=$param->getName();
-                       if ($param->isDefaultValueAvailable()){
-                          $paramArr[$paramname]=$param->getDefaultValue();
-                       }else{
-                           $paramArr[$paramname]="无默认值";
+                       $paramname = $param->getName();
+                       if ( $param->isDefaultValueAvailable() ) {
+                          $paramArr[$paramname]  = $param->getDefaultValue();
+                       } else {
+                           $paramArr[$paramname] = "无默认值";
                        }
-                       $methodsArr[$methodname]=$paramArr;
+                       $methodsArr[$methodname]  = $paramArr;
                    }
                }
-               $services[$servicename]=array('methods'=>$methodsArr);
+               $services[$servicename] = array('methods'=>$methodsArr);
                unset($services[$servicename]['methods']["__set"]);
                unset($services[$servicename]['methods']["__get"]);
            }
         }
-        if (count($services)>0){
-            $result=$services;
+        if ( count($services) > 0 ) {
+            $result = $services;
         }
         //print_r($result);
         return $result;

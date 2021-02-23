@@ -372,7 +372,7 @@ class ActionBasic extends BBObject
      *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
      *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
      */
-    public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default")
+    public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10)
     {
         $result   = "";
         if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
@@ -395,7 +395,7 @@ class ActionBasic extends BBObject
                 if ( !empty($upload_url) ) $upload_url .= $upload_url . "/";
                 $file_name  = "$defaultId/" . $upload_url . "$diffpart.$tmptail";
             }
-            $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename );
+            $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size );
             if ( $result && ( $result['success'] == true ) ){
                 $result['file_name'] = $file_name;
             } else {

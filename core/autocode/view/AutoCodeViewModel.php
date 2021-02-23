@@ -86,7 +86,7 @@ class AutoCodeViewModel extends AutoCodeView
                 $isImage = self::columnIsImage( $key, $value );
                 if ($isImage) continue;
 
-                $is_no_relation = true;
+                // $is_no_relation = true;
                 //关系列的显示
                 if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield )>0 ) )
                 {
@@ -99,13 +99,16 @@ class AutoCodeViewModel extends AutoCodeView
                             foreach ( $relationShow as $key_r => $value_r ) {
                                 $realId = DataObjectSpec::getRealIDColumnName( $key_r );
                                 if ( empty( $realId ) ) $realId = $key;
+                                $show_fieldname = "";
                                 if ( ( !array_key_exists($value_r, $fieldInfo) ) || ( $classname == $key_r ) ) {
                                     $show_fieldname = $value_r;
                                     if ( $realId != $key ) {
                                         if ( contain( $key, "_id" ) ) {
                                             $key = str_replace("_id", "", $key);
                                         }
-                                        $show_fieldname .= "_" . $key;
+                                        // if ( $key != "parent" ) {
+                                        //     $show_fieldname .= "_" . $key;
+                                        // }
                                     }
                                     if ($show_fieldname == "name") {
                                         $show_fieldname = strtolower($key_r) . "_" . $value_r;
@@ -115,7 +118,8 @@ class AutoCodeViewModel extends AutoCodeView
                                         $show_fieldname = strtolower($key_r)."_".$value_r;
                                     }
                                 }
-                                if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                                
+                                if ( !array_key_exists($show_fieldname, $fieldInfo) ) {
                                     $field_comment  = $value;
                                     $field_comment  = self::columnCommentKey( $field_comment, $key );
                                     $headers       .= "            <th class=\"header\">$field_comment</th>\r\n";
@@ -126,7 +130,7 @@ class AutoCodeViewModel extends AutoCodeView
                                     if ( empty($classNameField) ) $classNameField = $realId;
                                     $showColName    = $insname_rela . "." . $classNameField;
                                     $contents      .= "            <td class=\"content\">{\${$instancename}.$showColName}</td>\r\n";
-                                    $is_no_relation = false;
+                                    // $is_no_relation = false;
                                 }
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename( $key_r )];
@@ -463,6 +467,7 @@ UETC;
                             foreach ($relationShow as $key_r => $value_r) {
                                 $realId = DataObjectSpec::getRealIDColumnName( $key_r );
                                 if ( empty($realId) ) $realId = $key;
+                                $show_fieldname = "";
                                 if ( (!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r) ){
                                     $show_fieldname = $value_r;
                                     if ( $realId != $key ){
@@ -470,7 +475,10 @@ UETC;
                                         if ( contain($key,"_id") ) {
                                             $key_m = str_replace("_id", "", $key_m);
                                         }
-                                        $show_fieldname .= "_".$key_m;
+
+                                        // if ( $key_m != "parent" ) {
+                                        //     $show_fieldname .= "_" . $key_m;
+                                        // }
                                     }
                                     if ( $show_fieldname == "name" ) {
                                         $show_fieldname = strtolower($key_r)."_".$value_r;
@@ -480,7 +488,7 @@ UETC;
                                         $show_fieldname = strtolower($key_r) . "_" . $value_r;
                                     }
                                 }
-                                if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                                if ( !array_key_exists($show_fieldname, $fieldInfo) ) {
                                     $field_comment = $value;
                                     $field_comment = self::columnCommentKey($field_comment,$key);
 

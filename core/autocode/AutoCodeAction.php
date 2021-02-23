@@ -238,7 +238,7 @@ class AutoCodeAction extends AutoCode
             $field_comment = $field["Comment"];
             if ( self::columnIsTextArea( $fieldname, $field["Type"] ) )
             {
-                $text_area_fieldname[] = "'".$fieldname."'";
+                $text_area_fieldname[] = "'" . $fieldname . "'";
             }
 
             $isImage       = self::columnIsImage($fieldname, $field_comment);
@@ -260,22 +260,22 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "                if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;\r\n";
+                $editBitContent .= "            if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;\r\n";
                 break;
             }
         }
-        $editBitContent = "            if ( !empty(\$id) ) {\r\n".
-                          $editBitContent.
+        $editBitContent = $editBitContent.
+                          "            if ( !empty(\$id) ) {\r\n".
                           "                \${$instancename}->update();\r\n".
                           "            } else {\r\n".
                           "                \$id = \${$instancename}->save();\r\n".
                           "            }\r\n";
 
         if ( count($text_area_fieldname) == 1 ) {
-            $editTextareaContent .= "        \$this->load_onlineditor({$text_area_fieldname[0]});\r\n";
+            $editTextareaContent .= "        \$this->load_onlineditor( {$text_area_fieldname[0]} );\r\n";
         } else if (count($text_area_fieldname)>1){
-            $fieldnames           = implode(",", $text_area_fieldname);
-            $editTextareaContent .= "        \$this->load_onlineditor(array({$fieldnames}));\r\n";
+            $fieldnames           = implode(", ", $text_area_fieldname);
+            $editTextareaContent .= "        \$this->load_onlineditor( array({$fieldnames}) );\r\n";
         }
         $result = "    /**\r\n".
                   "     * {$table_comment}列表\r\n".
@@ -495,11 +495,11 @@ class AutoCodeAction extends AutoCode
         }
         if ( count($text_area_fieldname) == 1 ) {
             $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
-                       "        \$this->load_onlineditor({$text_area_fieldname[0]});\r\n";
+                       "        \$this->load_onlineditor( {$text_area_fieldname[0]} );\r\n";
         } else if ( count($text_area_fieldname) > 1 ) {
             $fieldnames = implode(",", $text_area_fieldname);
             $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
-                          "        \$this->load_onlineditor(array({$fieldnames}));\r\n";
+                          "        \$this->load_onlineditor( array({$fieldnames}) );\r\n";
         }
         $result .= "    }\r\n".
                    "    /**\r\n".

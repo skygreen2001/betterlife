@@ -78,10 +78,10 @@ $select_web_template = <<<SELECT_WEB
 // error_reporting(0);
 require_once ("../../../init.php");
 
-\$query        = \$_GET["term"];
+\$query        = @\$_GET["term"];
 \$where_clause = "";
 if (!empty(\$query)){
-  \$where_clause  = "(";
+  \$where_clause = "(";
   \$search_atom = explode(" ", trim(\$query));
   array_walk(\$search_atom, function(&\$value, \$key){
     \$value = " ( $class_relaField LIKE '%" . \$value . "%' ) ";
