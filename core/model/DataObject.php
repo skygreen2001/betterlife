@@ -80,6 +80,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 静态方法:获取数据对象的类名
      */
+    public static function cnames()
+    {
+        return self::classname_static();
+    }
+    /**
+     * 静态方法:获取数据对象的类名
+     */
     public static function classname_static()
     {
         $result = get_called_class();

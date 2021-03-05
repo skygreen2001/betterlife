@@ -253,7 +253,7 @@ class TagPageService {
         $stb = "";
         //当某个分页板块内容超过10页以上，那么允许显示跳转到指定页功能
         if ( $this->allPageCount > 11 ) {
-            $stb .= "<form id='bb_page' name='bb_page' action='" . $this->getLinkUrl() . "'>";
+            $stb .= "&nbsp;<form id='bb_page' name='bb_page' action='" . $this->getLinkUrl() . "'>";
             $stb .= "跳转至：";
             $stb .= "<input type='text' name='pageNo' id='" . self::$linkUrl_pageFlag . "'";
             $stb .= " size='3'";
@@ -317,7 +317,7 @@ class TagPageService {
      */
     public function wapReplace()
     {
-        $this->navig = str_replace("&nbsp;", "  ", navig);
+        $this->navig = str_replace("&nbsp;", "  ", $this->navig);
     }
 
     public function getNavigTo()

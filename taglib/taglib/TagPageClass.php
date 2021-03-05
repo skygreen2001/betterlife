@@ -36,7 +36,7 @@ class TagPageClass extends TagClass
                     break;
             }
         } else {
-            $error_info = "分页Session名称应该是:" . $tag_page_sessionname;
+            $error_info = "分页Session名称应该是:" . self::$tag_page_sessionname;
             $this->html = $error_info;
             echo $error_info;
         }

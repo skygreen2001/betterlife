@@ -229,7 +229,7 @@ class ServiceBlog extends Service implements IServiceBasic
      */
     public function sqlExecute()
     {
-        return self::dao()->sqlExecute( "select * from " . Blog::tablename(), Blog::classname_static() );
+        return self::dao()->sqlExecute( "select * from " . Blog::tablename(), Blog::cnames() );
     }
 
     /**

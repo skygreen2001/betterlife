@@ -55,7 +55,7 @@ abstract class TagClass {
     /**
      *
      * @param $tagStr
-     * @return take the attribute from tag
+     * @return array the attribute from tag
      */
     final function getAttributesFormTag($tagStr){
         $attributes = array();

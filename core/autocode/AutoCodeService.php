@@ -416,7 +416,7 @@ class AutoCodeService extends AutoCode
                            "     */\r\n" .
                            "    public function sqlExecute()\r\n" .
                            "    {\r\n" .
-                           "        return self::dao()->sqlExecute( \"select * from \" . $classname::tablename(), $classname::classname_static() );\r\n" .
+                           "        return self::dao()->sqlExecute( \"select * from \" . $classname::tablename(), $classname::cnames() );\r\n" .
                            "    }\r\n\r\n";
                 //import
                 $result .= "    /**\r\n" .
