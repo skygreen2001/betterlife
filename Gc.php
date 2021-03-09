@@ -95,6 +95,12 @@ class Gc {
      *
      * @var mixed
      */
+    public static $uploadImg_url; // = 'http://localhost/upload/images/';
+    /**
+     * 上传图片的路径
+     *
+     * @var mixed
+     */
     public static $upload_path;//='C:\\wamp\\www\\betterlife\\upload\\';
     //</editor-fold>
 
@@ -363,6 +369,7 @@ class Gc {
             }
         }
         if ( empty(Gc::$attachment_url) ) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
+        if ( empty(Gc::$uploadImg_url) ) Gc::$uploadImg_url = Gc::$upload_url . 'images/';
     }
     //</editor-fold>
 }
