@@ -6,7 +6,11 @@
  *         rewrite ^/img/(.*)$ /api/common/optimzeImgShow.php?src=$1;
  *     }
  * - web html image src rule:
- *     https://www.bb.com/img/upload/images/indextrip/cover_img/20171128100823.jpg&w=600&h=400
+ *     https://www.bb.com/img/upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400
+ * - 页面中定义格式如:
+ *     <img src="https://www.bb.com/img/upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400" alt="" />
+ *    其实质调用路径如:
+ *    https://www.bb.com/api/common/optimzeImgShow.php?src=upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400
  */
 require_once ("../../init.php");
 ob_end_clean();ob_end_clean();
@@ -16,7 +20,7 @@ $width   = $params['w'];
 $hight   = $params['h'];
 
 // 以下为测试数据
-// $img_src = "https://www.bb.com/upload/images/indextrip/cover_img/20171128100823.jpg";
+// $img_src = "https://www.bb.com/upload/images/blog/cover_img/20171128100823.jpg";
 // $width = "600";
 // $hight = "400";
 
@@ -24,7 +28,7 @@ if ($width || $hight) {
 
     // 方案一: file_get_contents
     // echo file_get_contents($img_src);
-    $img_src     = Gc::$url_base.$img_src;
+    $img_src     = Gc::$url_base . $img_src;
     $file_name   = basename($img_src);
     $suffix_name = explode(".", $file_name);
     $first_name  = current($suffix_name);

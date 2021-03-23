@@ -35,6 +35,11 @@ abstract class Crud_SQL {
     const SQL_ORDER_DEFAULT_ID   = " #id desc ";
     const SQL_ORDER_DEFAULT_TIME = " commitTime desc ";
     const SQL_FLAG_ID = "#id";
+    /**
+     * DB常规函数变量
+     * 如mysql 常规函数定义变量
+     */
+    const DB_FUNC_KEYWORD = array("find_in_set(", "concat(", "now(");
     protected $tableName;
     protected $whereClause;
     protected $query;
@@ -105,7 +110,16 @@ abstract class Crud_SQL {
                             $detailclause = $detailclause[0];
                         }
                         if ( isset($detailclause[0]) ) {
-                            if ( strpos($detailclause[0], "=") ) {
+                            $isRepeatClause = true;
+                            if ( is_array($detailclause) && count($detailclause) > 0 ) {
+                                foreach ($detailclause as $dc) {
+                                    if ( !contain( $dc, "=" ) ) {
+                                        $isRepeatClause = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if ( $isRepeatClause ) {
                                 //第二种情况
                                 //第零种情况|第一种情况:[通过whereOr传入]
                                 $detailclause = implode(",", $detailclause);
@@ -117,6 +131,10 @@ abstract class Crud_SQL {
                                 } else {
                                     return $this;
                                 }
+                            } else {
+                                $detailclause = implode(" and ", $detailclause);
+                                $this->whereClause = $detailclause;
+                                return $this;
                             }
                         } else {
                             //第三种情况:无需处理[通过whereOr传入]
@@ -141,7 +159,6 @@ abstract class Crud_SQL {
                         return $this;
                     }
                 }
-
                 $detailclause = str_replace(trim(self::SQL_AND), ",", $clause);
                 $detailclause = implode(",", $detailclause);
                 if ( !empty($detailclause) ) {
@@ -307,9 +324,17 @@ abstract class Crud_SQL {
             return $result;
         }
         if ( is_string($param) ) {
+            $pparam = trim($param);
+            if ( empty($param) ) {
+                return $result;
+            }
             if ( contains( $param, array(self::SQL_OR, self::SQL_LIKE, "(") ) ) {
                 if ( contain( $param, "," ) && ( !contains( $param, array(" in ", " in(", " in (") ) ) ) {
-                    $param = str_replace(",", " and ", $param);
+                    $pparam = strtolower(trim($param));
+                    $pparam = str_replace(" ", "", $pparam);
+                    if (  !contains( $pparam, self::DB_FUNC_KEYWORD ) ) {
+                        $param = str_replace(",", " and ", $param);
+                    }
                 }
                 return $param;
             } else {
@@ -352,7 +377,11 @@ abstract class Crud_SQL {
                             if ( contain($value, "=") && ( is_numeric($key) ) ) {
                                 $result[] = $value;
                             } else {
-                                $result[] = $key . "=" . $value;
+                                if ( is_string($key) ) {
+                                    $result[] = $key . "=" . $value;
+                                } else {
+                                    $result[] = $value;
+                                }
                                 continue;
                             }
                         }
@@ -375,7 +404,11 @@ abstract class Crud_SQL {
                             $result[$key] = $value;
                         }
                     } else {
-                        $result[$key] = $value;
+                        if ( is_string($key) ) {
+                            $result[$key] = $value;
+                        } else {
+                            $result[] = $value;
+                        }
                     }
                 }
             }

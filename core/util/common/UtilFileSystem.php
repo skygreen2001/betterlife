@@ -220,10 +220,10 @@ class UtilFileSystem extends Util
                 $tmptail   = end($path_r);
                 $temp_name = basename($uploadPath);
                 if ( contain($temp_name, ".") ){
-                    $temp_name="";
+                    $temp_name = "";
                     self::createDir( dirname($uploadPath) );
                 } else {
-                    $temp_name = date("YmdHis").'.'.$tmptail;
+                    $temp_name = date("YmdHis") . UtilString::rand_string() . '.' . $tmptail;
                     self::createDir( $uploadPath );
                 }
                 system_dir_info(dirname($uploadPath), GC::$upload_path);

@@ -83,8 +83,8 @@ if ( !function_exists('get_called_class') ) {
 }
 
 /**
-* 写字符串到文件。
-*/
+ * 写字符串到文件。
+ */
 if ( !function_exists('file_put_contents') ) {
     define('FILE_APPEND', 1);
     function file_put_contents($n, $d, $flag = false) {
@@ -104,11 +104,11 @@ if ( !function_exists('file_put_contents') ) {
 }
 
 /**
-* 该函数只对Utf8编码的值进行Json编码。<br/>
-* 返回值的JSON编码呈现。 <br/>
-* @param mixed $value Utf8编码的值，除resource以外的类型，最常用的是array数组。
-* @return 值的JSON编码呈现
-*/
+ * 该函数只对Utf8编码的值进行Json编码。<br/>
+ * 返回值的JSON编码呈现。 <br/>
+ * @param mixed $value Utf8编码的值，除resource以外的类型，最常用的是array数组。
+ * @return 值的JSON编码呈现
+ */
 if ( !function_exists('json_encode') ) {
     function json_encode($value) {
         switch ( gettype($value) ) {
@@ -151,11 +151,11 @@ if ( !function_exists('json_encode') ) {
 }
 
 /**
-* 将Json编码的字符串转换成对象或者数组。
-* @param string $json Json编码的字符串。
-* @param mixed $assoc 当为true的时候,则转换为数组。
-* @return mixed 对象或者数组
-*/
+ * 将Json编码的字符串转换成对象或者数组。
+ * @param string $json Json编码的字符串。
+ * @param mixed $assoc 当为true的时候,则转换为数组。
+ * @return mixed 对象或者数组
+ */
 if ( !function_exists('json_decode') ) {
     function json_decode($json, $assoc) {
         include_once(dirname(__FILE__) . '/lib/json.php');
@@ -181,4 +181,18 @@ if ( !function_exists('apache_request_headers') ) {
     }
 }
 
+/**
+ *  返回数组中当前的键／值对
+ */
+if ( !function_exists('each') ) {
+    function each($array_param) {
+        $result = array();
+        if ( is_array($array_param) && count($array_param) > 0 ) {
+            $result          = [key($array_param), current($array_param)];
+            $result["key"]   = key($array_param);
+            $result["value"] = current($array_param);
+        }
+        return $result;
+    }
+}
 ?>

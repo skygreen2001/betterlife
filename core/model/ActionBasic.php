@@ -359,11 +359,102 @@ class ActionBasic extends BBObject
     }
 
     /**
-     * 上传图片文件
-     * @param array $files 上传的文件对象
+     * 上传多个图片文件
+     * @param array $files 上传多个文件的对象
      * @param array $uploadFlag 上传标识,上传文件的input组件的名称
      * @param array $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
      * @param array $defaultId 上传文件所在的目录标识，一般为类实例名称; 如果包含有 . 则为指定文件名, 文件名后缀名会自动修改为上传文件的后缀名.
+     * @param array $isReturnAll 是否返回所有值，当多个图片文件上传，有的是空的，是否也返回空；保证传入和返回的数组数量相等
+     * @return array 是否创建成功。
+     * @Example
+     *     - $this->$this->uploadImgs($_FILES, "icon_url", "icon_url", "blog");
+     *       [说明] 生成的图片会是 images/blog/icon_url/201806011225.png  类似的路径
+     *     - $this->$this->uploadImgs($_FILES, "icon_url", "subdir", "test.png");
+     *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
+     *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
+     */
+    public function uploadImgs($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10, $isReturnAll = false)
+    {
+        $result = array();
+        if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
+            if ( ( is_array($files[$uploadFlag]["name"]) ) && count($files[$uploadFlag]["name"]) > 0 ) {
+                /**
+                 *  允许同名name:$uploadFlag的多个文件上传,其上传的文件格式如下
+                 *  Array
+                 *   (
+                 *       [upload_single_img] => Array
+                 *           (
+                 *               [name] => 
+                 *               [type] => 
+                 *               [tmp_name] => 
+                 *               [error] => 4
+                 *               [size] => 0
+                 *           )
+                 *       [upload_multiple_img] => Array
+                 *           (
+                 *               [name] => Array
+                 *                   (
+                 *                       [0] => 1.jpg
+                 *                       [1] => 2.jpg
+                 *                       [2] => 3.png
+                 *                   )
+                 *               [type] => Array()
+                 *               [tmp_name] => Array()
+                 *               [error] => Array()
+                 *               [size] => Array()
+                 *           )
+                 *   )
+                 */
+                $files_upload = $files[$uploadFlag];
+                $countFiles   = count($files[$uploadFlag]["name"]);
+                $isExistUpload = false;
+                for ($i = 0; $i < $countFiles; $i++) { 
+                    if ( !empty($files[$uploadFlag]["name"][$i]) ) {
+                        $isExistUpload = true;
+                        break;
+                    }
+                }
+                if ( $isExistUpload ) {
+                    $file_keys = array_keys($files_upload);
+                    for ($i = 0; $i < $countFiles; $i++) { 
+                        if ( !empty($files[$uploadFlag]["name"][$i]) ) {
+                            $files_single = array();
+                            $files_single[$uploadFlag] = array();
+                            $file_single  = $files_single[$uploadFlag];
+                            foreach ($file_keys as $key) {
+                                $file_single[$key] = $files_upload[$key][$i];
+                            }
+                            $files_single[$uploadFlag] = $file_single;
+                            $result_one = $this->uploadImg( $files_single, $uploadFlag, $upload_dir, $defaultId, $file_permit_upload_size );
+                            if ( $result_one && ( $result_one['success'] == true ) ) {
+                                $result["success"] = true;
+                                $result['file_name'][] = $result_one['file_name'];
+                            } else {
+                                $result = $result_one;
+                                break;
+                            }
+                        } else {
+                            if ( $isReturnAll ) {
+                                $result['file_name'][] = "";
+                            }
+                        }
+                    }
+                } else {
+                    $result["success"] = true;
+                }
+            }
+        }
+        return $result;
+    }
+ 
+    /**
+     * 上传图片文件
+     * @param array  $files 上传的文件对象
+     * @param string $uploadFlag 上传标识,上传文件的input组件的名称
+     * @param string $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
+     * @param string $defaultId 上传文件所在的目录标识，一般为类实例名称; 如果包含有 . 则为指定文件名, 文件名后缀名会自动修改为上传文件的后缀名.
+     * @param int    $file_permit_upload_size 允许上传的文件尺寸大小: 默认10M
+     * @param boolean $is_permit_same_filename 是否允许用同一个名字
      * @return array 是否创建成功。
      * @Example
      *     - $this->$this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
@@ -372,29 +463,28 @@ class ActionBasic extends BBObject
      *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
      *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
      */
-    public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10)
+    public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10, $is_permit_same_filename = false)
     {
-        $result   = "";
+        $result = array();
         if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
             $path_r     = explode('.', $files[$uploadFlag]["name"]);
             $tmptail    = end($path_r);
-            $is_permit_same_filename = false;
+            $upload_url = $upload_dir;
             if ( contain($defaultId, ".") ) {
-                $upload_url = $upload_dir;
-                if ( !empty($upload_dir) ) $upload_dir .= $upload_dir . DS;
+                if ( !empty($upload_dir) ) $upload_dir .= DS;
                 $defaultId  = substr($defaultId, 0, strpos($defaultId, "."));
                 $uploadPath = Gc::$upload_path . "images" . DS . $upload_dir . $defaultId. "." . $tmptail;
-                if ( !empty($upload_url) ) $upload_url .= $upload_url . "/";
+                if ( !empty($upload_url) ) $upload_url .= "/";
                 $file_name  = $upload_url . $defaultId . "." . $tmptail;
                 $is_permit_same_filename = true;
             } else {
-                $diffpart   = date("YmdHis");
-                $upload_url = $upload_dir;
-                if ( !empty($upload_dir) ) $upload_dir .= $upload_dir . DS;
+                $diffpart   = date("YmdHis") . UtilString::rand_string();
+                if ( !empty($upload_dir) ) $upload_dir .= DS;
                 $uploadPath = Gc::$upload_path . "images" . DS . $defaultId . DS . $upload_dir . $diffpart . "." . $tmptail;
-                if ( !empty($upload_url) ) $upload_url .= $upload_url . "/";
+                if ( !empty($upload_url) ) $upload_url .= "/";
                 $file_name  = "$defaultId/" . $upload_url . "$diffpart.$tmptail";
             }
+            // print_pre($file_name, true);
             $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size );
             if ( $result && ( $result['success'] == true ) ){
                 $result['file_name'] = $file_name;

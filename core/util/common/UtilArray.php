@@ -529,6 +529,31 @@ class UtilArray extends Util
         }
         return $result;
     }
+
+    /**
+     * 判断数组所有元素是否都是空值
+     * 数组的每个元素都是基础类型或者空数组
+     * 示例:
+     *    Array
+     *     (
+     *        [0] => 
+     *        [1] => 
+     *        [2] => 
+     *     )
+     * @param array $data 源数组
+     * @return boolean 数组所有元素是否都是空值
+     */
+     public static function empty($data) {
+        if ( empty($data) ) return true;
+        if ( (is_array($data)) && count($data) > 0 ) {
+            foreach ($data as $one) {
+                if ( !empty($one) ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 ?>

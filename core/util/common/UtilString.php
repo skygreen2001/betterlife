@@ -12,13 +12,14 @@ class UtilString extends Util
     /**
      * 查看字符串里是否包含指定字符串
      * @param mixed $subject
-     * @param mixed $needle
+     * @param mixed $needle* 
+     * @return boolean 是否字符串里包含指定字符串。
      */
-    public static function contain($subject,$needle)
+    public static function contain($subject, $needle)
     {
-        if (strpos($subject,$needle)!== false) {
+        if ( strpos($subject, $needle) !== false ) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -26,7 +27,7 @@ class UtilString extends Util
     /**
      * 检查是否有影响系统稳定，数据完全的字符。
      * @param type $str 字符串
-     * @return bool 是否有影响系统稳定，数据完全的字符。
+     * @return boolean 是否有影响系统稳定，数据完全的字符。
      */
     public static function has_unsafeword($str)
     {
@@ -45,62 +46,68 @@ class UtilString extends Util
 
     /**
      * 返回中文文字内容的长度。
+     * 在strlen计算时，对待一个UTF8的中文字符是3个长度
+     * 在mb_strlen计算时，选定内码为UTF8，则会将一个中文字符当作长度1来计算
+     * mbstring 不是一个默认扩展。这意味着它默认没有被激活。 你必须在 configure 选项中显式激活该模块。
+     * --enable-mbstring：激活 mbstring 函数。 要使用 mbstring 函数必须启用这个选项。
+     * https://www.php.net/manual/zh/function.mb-strlen.php
+     * Windows服务器上使用前需要确保在php.ini中加载了php_mbstring.dll，即确保“extension=php_mbstring.dll”这一行存在并且没有被注释掉
      * @param string $title 中文文字内容
      * @return int 中文文字内容的长度
      */
-    public static function strlenChinaese( $title )
+    public static function cn_strlen( $title )
     {
-        $realnum = 0;
-        for ($i = 0; $i < strlen($title); $i++)
-        {
-            $ctype = 0;
-            $cstep = 0;
-
-            $cur = substr($title, $i, 1);
-            if ($cur == "&")
+        if ( function_exists("mb_strlen") ) {
+            return mb_strlen($title);
+        } else {
+            $realnum = 0;
+            for ($i = 0; $i < strlen($title); $i++)
             {
-                if(substr($title, $i, 4) == "&lt;") {
-                    $i += 3;
-                    $realnum++;
-                } else if (substr($title, $i, 4) == "&gt;") {
-                    $i += 3;
-                    $realnum++;
-                } else if (substr($title,$i,5) == "&amp;") {
-                    $i += 4;
-                    $realnum++;
-                } else if (substr($title,$i,6) == "&quot;") {
-                    $i += 5;
-                    $realnum++;
-                } else if (preg_match("/&#(\d+);?/i",substr($title,$i,8),$match)) {
-                    $i += strlen($match[0])-1;
-                    $realnum++;
-                }
-            } else {
-                if ( ord($cur) >= 252 ) {
-                    $i += 5;
-                    $realnum++;
-                    if ( $magic ) {
-                        $blen++;
-                        $ctype = 1;
+                $ctype = 0;
+                $cstep = 0;
+
+                $cur = substr($title, $i, 1);
+                if ($cur == "&")
+                {
+                    if(substr($title, $i, 4) == "&lt;") {
+                        $i += 3;
+                        $realnum++;
+                    } else if (substr($title, $i, 4) == "&gt;") {
+                        $i += 3;
+                        $realnum++;
+                    } else if (substr($title,$i,5) == "&amp;") {
+                        $i += 4;
+                        $realnum++;
+                    } else if (substr($title,$i,6) == "&quot;") {
+                        $i += 5;
+                        $realnum++;
+                    } else if (preg_match("/&#(\d+);?/i",substr($title,$i,8),$match)) {
+                        $i += strlen($match[0])-1;
+                        $realnum++;
                     }
-                } else if ( ord($cur) >= 248 ) {
-                    $i += 4;
-                    $realnum++;
-                } else if ( ord($cur) >= 240 ) {
-                    $i += 3;
-                    $realnum++;
-                } else if ( ord($cur) >= 224 ) {
-                    $i += 2;
-                    $realnum++;
-                } else if(ord($cur)>=192) {
-                    $i += 1;
-                    $realnum++;
                 } else {
-                    $realnum++;
+                    if ( ord($cur) >= 252 ) {
+                        $i += 5;
+                        $realnum++;
+                    } else if ( ord($cur) >= 248 ) {
+                        $i += 4;
+                        $realnum++;
+                    } else if ( ord($cur) >= 240 ) {
+                        $i += 3;
+                        $realnum++;
+                    } else if ( ord($cur) >= 224 ) {
+                        $i += 2;
+                        $realnum++;
+                    } else if(ord($cur)>=192) {
+                        $i += 1;
+                        $realnum++;
+                    } else {
+                        $realnum++;
+                    }
                 }
             }
+            return $realnum;
         }
-        return $realnum;
     }
 
     /**
