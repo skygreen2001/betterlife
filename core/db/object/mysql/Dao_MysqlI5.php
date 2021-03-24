@@ -377,6 +377,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             }
             $_SQL->isPreparedStatement = true;
             $filter_arr = $_SQL->parseValidInputParam( $filter );
+            $this->saParams = null;
             if ( is_array($filter_arr) && count($filter_arr) > 0 ) {
                 $this->saParams = $filter_arr;
             } else {
@@ -418,6 +419,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
             $filter_arr = $_SQL->parseValidInputParam( $filter );
+            $this->saParams = null;
             if ( is_array($filter_arr) && count($filter_arr) > 0 ) {
                 $this->saParams = $filter_arr;
             } else {
@@ -460,7 +462,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $result = $this->getResultToObjects($object);
-                if ( count($result) == 1 ) {
+                if ( $result && is_array($result) && count($result) == 1 ) {
                     $result = $result[0];
                 }
                 return $result;
@@ -488,14 +490,14 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $object->setUpdateTime( UtilDateTime::now() );
             $this->saParams = UtilObject::object_to_array($object);
             //$this->saParams=$this->filterViewProperties($this->saParams);
-            $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
+            $this->sQuery   = $_SQL->insert( $this->classname )->values( $this->saParams )->result();
             $this->executeSQL();
             if ( $this->stmt ) {
                 $autoId = $this->stmt->insert_id;
                 $object->setId( $autoId );
                 $this->stmt->free_result();
                 $this->stmt->close();
-            }else{
+            } else {
                  Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
             }
         } catch (Exception $exc) {

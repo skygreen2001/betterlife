@@ -22,9 +22,9 @@ class Crud_Sql_Insert extends Crud_SQL {
      * @return Crud_Sql_Insert 
      */
     public function insert($tableorclassName) {
-        if (class_exists($tableorclassName)){
+        if ( class_exists($tableorclassName) ) {
             $this->tableName = Config_Db::orm($tableorclassName);;
-        }else{
+        } else {
             $this->tableName = $tableorclassName;
         }
         return $this;
@@ -39,25 +39,25 @@ class Crud_Sql_Insert extends Crud_SQL {
      * 使用预处理SQL语句
      * 1.set("id=?","name='?'")
      * 2.set(array("id"=>"1","name"=>"sky"))
-     * @param $type_rep 替代符的类型。1:$,其他:?
-     * @return string values Insert语句子字符串
+     * @param $type_rep 替代符的类型。1:$, 其他:?
+     * @return Crud_Sql_Insert 其中:values Insert语句子字符串
      */
-    public function values($values,$type_rep=null) {
-        $count=1;
+    public function values($values, $type_rep = null) {
+        $count = 1;
         foreach ($values as $key => $value) {
-            $this->columns.=$key.",";
-            if ($this->isPreparedStatement) {
-                if ($this->type_rep==1) {
-                    $this->values.='$'.($count++).',';
-                }else {
-                    $this->values.="?,";
+            $this->columns .= $key . ",";
+            if ( $this->isPreparedStatement ) {
+                if ( $type_rep && $type_rep == 1 ) {
+                    $this->values .= '$' . ($count++) . ',';
+                } else {
+                    $this->values .= "?,";
                 }
             }else {
-                $this->values.="'".$value."',";
+                $this->values .= "'" . $value . "',";
             }
         }
-        $this->columns=substr( $this->columns, 0,strlen($this->columns)-1);
-        $this->values=substr( $this->values, 0,strlen($this->values)-1);
+        $this->columns = substr($this->columns, 0, strlen($this->columns) - 1);
+        $this->values  = substr($this->values, 0, strlen($this->values) - 1);
         return $this;
     }
 
@@ -66,9 +66,9 @@ class Crud_Sql_Insert extends Crud_SQL {
      * @return string SQL完整的语句
      */
     public function result() {
-        $this->query=self::SQL_INSERT.$this->tableName;
-        $this->query.=" (".$this->columns.")";
-        $this->query.= self::SQL_INSERT_VALUE."(".$this->values.")";
+        $this->query  = self::SQL_INSERT . $this->tableName;
+        $this->query .= " (" . $this->columns . ")";
+        $this->query .= self::SQL_INSERT_VALUE . "(" . $this->values . ")";
         return $this->query;
     }
     
@@ -86,12 +86,12 @@ class Crud_Sql_Insert extends Crud_SQL {
      * @return string 表名
      */
     public function tablename($sqlstring){
-        if (isset($sqlstring)){
-            $sql_need=UtilString::word_trim($sqlstring,3);
-            if(isset($sql_need)){
-                $tablenamepart=preg_split("/[\s]+/",$sql_need);
-                if (count($tablenamepart)==3){
-                    $tablename=$tablenamepart[2];
+        if ( isset($sqlstring) ) {
+            $sql_need = UtilString::word_trim( $sqlstring, 3 );
+            if ( isset($sql_need) ) {
+                $tablenamepart = preg_split("/[\s]+/", $sql_need);
+                if ( count($tablenamepart) == 3 ) {
+                    $tablename = $tablenamepart[2];
                     return $tablename;
                 }
             }

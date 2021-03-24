@@ -459,5 +459,63 @@ class UtilFileSystem extends Util
     {
         return pathinfo($filename, PATHINFO_EXTENSION);
     }
+
+    /**
+     * 截取视频指定时间的图片
+     * 需要在服务器上安装ffmpeg: http://ffmpeg.org
+     * 安装如下:
+     *    - 下载ffmpeg: curl -O http://ffmpeg.org/releases/ffmpeg-4.3.2.tar.bz2
+     *    - 安装ffmpeg:
+     *      tar -jxvf ffmpeg-4.3.2.tar.bz2 && cd ffmpeg-4.3.2/
+     *      apt-get install yasm
+     *      ./configure --enable-shared --prefix=/usr/local/ffmpeg
+     *      make && make install
+     *      vi /etc/ld.so.conf
+     *            include /etc/ld.so.conf.d/*.conf
+     *            /usr/local/ffmpeg/lib
+     *      ldconfig
+     *      vi /etc/profile
+     *            加入环境变量:
+     *               export FFMPEG_HOME=/usr/local/ffmpeg
+     *               export PATH=$FFMPEG_HOME/bin:$PATH
+     *      source /etc/profile
+     *      ffmpeg -version 
+     * 示例: ffmpeg -ss 2 -i good.mp4 -y -frames:v 1 -f image2 good.jpg
+     * @param string $videoPath 视频文件路径
+     * @param string $outputPath 输出图片路径, 如果没有输入图片路径就放在视频同目录下
+     * @param int $width 图片宽度
+     * @param int $height 图片高度
+     * @param int $startTime 截取视频选择开始时间, 如"-ss 10"是将视频指向10秒, 也就是从10秒开始
+     * @return string 输出图片路径
+     */
+    public static function captureVideoImage($videoPath, $outputPath = null, $startTime = 2, $width = 0, $height = 0) 
+    {
+        if ( empty($outputPath) ) {
+            $outputPath  = dirname($videoPath);
+            $outputPath .= DS . date("YmdHis") . UtilString::rand_string() . '.jpg';
+        }
+
+        $isMac = ( contain( strtolower(php_uname()), "darwin" ) ) ? true : false;
+        $ffmpeg = "ffmpeg";
+        if ( $isMac ) {
+            $ffmpeg = "/usr/local/bin/ffmpeg";
+        } else {
+            $ffmpeg = "/usr/local/ffmpeg/bin/ffmpeg";
+        }
+        if ( $width != 0 ) {
+            //多一个-s 指定图片的宽高比
+            $str = $ffmpeg . " -ss " . $startTime . " -i " . $videoPath . " -y -frames:v 1 -f image2 -s " . $width . "x" . $height . " " . $outputPath;
+        } else {
+            $str = $ffmpeg . " -ss " . $startTime . " -i $videoPath -y -frames:v 1 -f image2 " . $outputPath;
+        }
+        LogMe::log( $str );
+        exec($str, $output, $return_val);
+        LogMe::log( print_pre($output) );
+        LogMe::log( $return_val );
+        if ( $return_val == 0 ) {
+            return $outputPath;
+        }
+        return null;
+    }
 }
 //print_r(UtilFileSystem::getAllFilesInDirectory("D:\\wamp\\www"));
