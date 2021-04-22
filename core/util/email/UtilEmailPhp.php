@@ -3,6 +3,8 @@
  +---------------------------------------<br/>
  * 这个功能用在Linux上 需要配合Sendmail使用
  * 该功能尚未投入实际应用
+ * 本类里PHP方法: ereg 已过时，需找到替换方法
+ * 本类只可用于学习，暂不考虑投入实用
  * 参考这篇文章:http://www.jacmoe.dk/how-to-send-test-emails-using-php-mail-from-your-local-wamp-installation
  * Window下sendmail下载:http://glob.com.au/sendmail/
  * 要使邮件函数可用，PHP 需要已安装且正在运行的邮件系统。

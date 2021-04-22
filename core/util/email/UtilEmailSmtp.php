@@ -2,9 +2,12 @@
 /**
  +---------------------------------------<br/>
  * 发邮件的类<br/>
+ * 推荐使用UtilEmailer.php
+ * 本类已不再维护
+ * 本类里PHP方法: ereg 已过时，需找到替换方法才可正常使用
  * 调用UtilEmailSmtp()发邮件<br/>
- *   $fromaddress = "skygreen2001@163.com";<br/>
- *   $toaddress = "skygreen2001@sina.com";<br/>
+ *   $fromaddress = "xxx@xxx.com";<br/>
+ *   $toaddress = "xxx@xxx.com";<br/>
  *   $mailsubject = "测试邮件";<br/>
  *   $mailbody = "<a href='http://www.sohu.com'>怎么办我想想</a>";<br/>
  *   $Email = new UtilEmailSmtp();<br/>
@@ -26,11 +29,11 @@ class UtilEmailSmtp extends Util
     private static $smtp_port = 25;
     private static $time_out = 30;
     private static $host_name;
-    private static $relay_host = "smtp.163.com";
+    private static $relay_host = "smtp.xxx.com";
     private static $debug = false;
     private static $auth = true;
-    private static $user = "skygreen2001@163.com";
-    private static $pass = "sa793100";
+    private static $user = "xxx@xxx.com";
+    private static $pass = "XXXXXX";
     //是否邮件是utf-8字符集，如果不是，就是gbk字符集
     private static $is_utf8 = false;
     /* Public Variables */
@@ -274,14 +277,15 @@ class UtilEmailSmtp extends Util
         }
     }
 
-    public function get_attach_type($image_tag) { //
+    public function get_attach_type($image_tag) {
 
         $filedata = array();
 
         $img_file_con=fopen($image_tag,"r");
         unset($image_data);
+        $image_data = "";
         while ($tem_buffer=AddSlashes(fread($img_file_con,filesize($image_tag))))
-            $image_data.=$tem_buffer;
+            $image_data .= $tem_buffer;
         fclose($img_file_con);
 
         $filedata['context'] = $image_data;
