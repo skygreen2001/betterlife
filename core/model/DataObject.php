@@ -257,7 +257,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
             return $this->$columnName;
         } else {
             unset($this->real_fieldspec);
-            return $this->getCommitTime( $updateTime );
+            return $this->getCommitTime( );
         }
         //return $this->updateTime;
     }
@@ -622,7 +622,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *    6, 10<br/>  从第6条开始取10条(如果是mysql的limit, 意味着从第五条开始, 框架里不是这个意义。)
      *    1, 10<br/> (相当于第1-第10条)
      *    10 <br/>(相当于第1-第10条)
-     * @return 对象列表数组
+     * @return array 对象列表数组
      */
     public static function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
@@ -642,7 +642,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 示例如下:
      *        1. id asc;<br/>
      *        2. name desc;
-     * @return 单个对象实体
+     * @return object 单个对象实体
      */
     public static function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -689,7 +689,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *            1. "id = 1", "name = 'sky'"<br/>
      *            2. array("id = 1", "name = 'sky'")<br/>
      *            3. array("id" => "1", "name" => "sky")<br/>
-     * @return 对象总计数
+     * @return int 对象总计数
      */
     public static function countMultitable($from, $filter = null)
     {
