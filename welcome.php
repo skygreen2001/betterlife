@@ -23,7 +23,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
     <style type="text/css">
         body {
           font-size: 13px;
-          font-family:'Microsoft YaHei',"微软雅黑",Arial, sans-serif,'Open Sans';
+          font-family: Arial, sans-serif,'Open Sans';
           margin:0;
           padding:0;
           border:0 none;
@@ -36,6 +36,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           font-family:"PingFang SC","Helvetica Neue","Helvetica", Arial,sans-serif,verdana,Geneva,Helvetica;
         }
         h1{
+          font-family:'Microsoft YaHei',"微软雅黑",Arial, sans-serif,'Open Sans';
           font-size: 40px;
           font-weight: lighter;
         }
@@ -75,7 +76,6 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           margin-left: 33%;
         }
         div.content a{
-          font-family: Arial, sans-serif,'Open Sans';
           color: #666;
           position: relative;
           letter-spacing: 2px;
@@ -140,7 +140,6 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           margin: 0 auto;
         }
         footer a{
-          font-family: Arial, sans-serif,'Open Sans';
           color: #888;
           padding-bottom: 2px;
         }
