@@ -75,6 +75,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           margin-left: 33%;
         }
         div.content a{
+          font-family: Arial, sans-serif,'Open Sans';
           color: #666;
           position: relative;
           letter-spacing: 2px;
@@ -139,6 +140,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           margin: 0 auto;
         }
         footer a{
+          font-family: Arial, sans-serif,'Open Sans';
           color: #888;
           padding-bottom: 2px;
         }
