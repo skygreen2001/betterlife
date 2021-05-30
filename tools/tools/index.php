@@ -37,18 +37,29 @@ $url_base = UtilNet::urlbase();
       #tools-box {
         display:none;
       }
-      #dbCommonCard {
+      #toolkitCard {
         width: 600px;
-        margin: 150px auto 10px auto;
+        margin: 80px auto 10px auto;
+      }
+      #dbCommonCard,#dbCodeCard {
+        width: 600px;
+        margin: 10px auto 10px auto;
       }
       #dbCodeCard {
-        width: 600px;
-        margin: 10px auto 50px auto;
+        margin-bottom: 30px;
       }
     </style>
 </head>
 <body>
   <div id="tools-box" class="container" align="center">
+    <card id="toolkitCard" name='toolkitCard'>
+      <p slot="title" style="text-align:left;">
+          <i class="ivu-icon ivu-icon-ios-construct"></i> 原创高级工具集
+      </p>
+      <ul>
+        <li><a href="<?php echo $url_base ?>app/redis/index.html" target="_blank">Redis Online Manager</a></li>
+      </ul>
+    </card>
     <card id="dbCommonCard" name='dbCommonCard'>
       <p slot="title" style="text-align:left;">
           <i class="ivu-icon ivu-icon-ios-construct"></i> 数据库常用脚本生成工具

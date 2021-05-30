@@ -15,9 +15,9 @@
  * @see redis服务的配置文件修改 bind ip,默认是bind 127.0.0.1 只允许本地连接 0.0.0.0允许任意ip,也可根据需要自己修改。
  * @see redis.conf 配置文件中设置: bind 127.0.0.1 192.168.64.2
  * [以下为老的解决方案，已作废，仅供学习参考]
- *      X@see Reference Method:http://code.google.com/p/phpredis/wiki/referencemethods
- *      X@see php-redis:http://code.google.com/p/php-redis/
- *      X@see PHP-redis中文说明:http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
+ *      @see Reference Method:http://code.google.com/p/phpredis/wiki/referencemethods
+ *      @see php-redis:http://code.google.com/p/php-redis/
+ *      @see PHP-redis中文说明:http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
  * @category betterlife
  * @package core.cache
  * @author skygreen
