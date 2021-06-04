@@ -37,7 +37,7 @@ abstract class Dao
     /**
      * Sql 连接符
      */
-    const EQUAL="=";
+    const EQUAL = "=";
     //</editor-fold>
 
     /**
@@ -215,7 +215,7 @@ abstract class Dao
 
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
-     * @param stdClass $result 结果集
+     * @param array $result 结果集
      * @return 值
      */
     protected function getValueIfOneValue($result)

@@ -14,11 +14,11 @@ class Manager_Db extends Manager {
      */
     private $dao_static;
     /**
-     * @var mixed 实时指定的Dao或者Dal对象，实时注入配置
+     * @var object 实时指定的Dao或者Dal对象，实时注入配置
      */
     private $dao_dynamic;
     /**
-     * @var mixed 当前使用的Dao或者Dal对象
+     * @var object 当前使用的Dao或者Dal对象
      */
     private $currentdao;
     /**
@@ -37,24 +37,24 @@ class Manager_Db extends Manager {
     }
 
     public static function singleton( ) {
-        return newInstance();
+        return self::newInstance();
     }
 
     /**
      * 单例化
-     * @return Manager_Db
+     * @return object Manager_Db
      */
     public static function newInstance( ) {
         if ( !isset(self::$instance) ) {
             $c = __CLASS__;
-            self::$instance=new $c();
+            self::$instance = new $c();
         }
         return self::$instance;
     }
 
     /**
      * 返回当前使用的Dao
-     * @return mixed 当前使用的Dao
+     * @return object 当前使用的Dao
      */
     public function currentdao(){
         if ( $this->currentdao == null ){
@@ -63,6 +63,28 @@ class Manager_Db extends Manager {
         return $this->currentdao;
     }
 
+    /**
+     * 重置 currentdao，可重新设置数据源
+     * 使用在多数据源操作里
+     * 示例如下:
+     * 
+     *   Gc::$database_config  = array(
+     *        'host'     => '127.0.0.1',
+     *        'port'     => '',
+     *        'database' => 'itt_task_user_3',
+     *        'username' => 'root',
+     *        'password' => ''
+     *    );
+     *    Config_Db::initGc();
+     *    Manager_Db::newInstance()->resetDao();
+     *    $sql = "insert into blog(content) values ('test')"
+     *    $id  = sqlExecute($sql);
+     */
+    public function resetDao(){
+        $this->currentdao = null;
+        $this->dao_static = null;
+    }
+    
     /**
      * 全局设定一个Dao对象；
      * 由开发者配置设定对象决定

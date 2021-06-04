@@ -360,17 +360,43 @@ class Config_Db extends ConfigBB
         return null;
     }
 
+    /**
+     * 初始化全局变量: Gc::$database_config
+     */
+    public static function initGc() {
+        if ( isset(Gc::$database_config) ) {
+            $db_config = Gc::$database_config;
+            if ( isset($db_config['db_type']) ) {
+                Config_Db::$db     = $db_config['db_type'];
+            }
+            if ( isset($db_config['driver']) ) {
+                Config_Db::$engine = $db_config['driver'];
+            }
+
+            if ( isset($db_config['host']) ) {
+                Config_Db::$host           = $db_config['host'];
+            }
+            if ( isset($db_config['port']) ) {
+                Config_Db::$port           = $db_config['port'];
+            }
+            if ( isset($db_config['database']) ) {
+                Config_Db::$dbname         = $db_config['database'];
+            }
+            if ( isset($db_config['username']) ) {
+                Config_Db::$username       = $db_config['username'];
+            }
+            if ( isset($db_config['password']) ) {
+                Config_Db::$password       = $db_config['password'];
+            }
+
+            if ( isset($db_config['prefix']) ) {
+                Config_Db::$table_prefix   = $db_config['prefix'];
+            }
+            if ( isset($db_config['debug']) ) {
+                Config_Db::$debug_show_sql = $db_config['debug'];
+            }
+        }
+    }
 }
 
-if (isset(Gc::$database_config)) {
-    $db_config = Gc::$database_config;
-    Config_Db::$db             = $db_config['db_type'];
-    Config_Db::$engine         = $db_config['driver'];
-    Config_Db::$host           = $db_config['host'];
-    Config_Db::$port           = $db_config['port'];
-    Config_Db::$dbname         = $db_config['database'];
-    Config_Db::$username       = $db_config['username'];
-    Config_Db::$password       = $db_config['password'];
-    Config_Db::$table_prefix   = $db_config['prefix'];
-    Config_Db::$debug_show_sql = $db_config['debug'];
-}
+Config_Db::initGc();
