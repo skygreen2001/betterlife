@@ -35,8 +35,8 @@
               <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
               <li><a href="http://36kr.com/" target="_blank">研发</a></li>
               <li><a href="https://www.jd.com/" target="_blank">购物</a></li>
-              <li><a href="../../html/model/preview.html">话题</a></li>
-              <li><a href="https://xiaohua.zol.com.cn//" target="_blank">幽默</a></li>
+              <li><a href="https://www.douban.com/" target="_blank">话题</a></li>
+              <li><a href="https://xiaohua.zol.com.cn/" target="_blank">幽默</a></li>
             </ul>
           </li>
 
