@@ -35,13 +35,13 @@
       html, .us {
         height: 100%;
       }
-      .index #page1 .bb-icon{
+      .index .section#page1 .bb-icon{
         cursor: pointer;
       }
-      .index #page1 .section-header-container{
+      .index .section#page1 .section-header-container{
         position: relative;
       }
-      .index #page1 {
+      .index .section#page1 {
         padding: 0;
         height: auto;
       }
@@ -125,7 +125,7 @@
   <body class="index">
     <div class="us pure">
       <div id="main-content-container" class="container-fluid">
-        <div class="page" id="page1">
+        <div class="section page" id="page1">
           <div class="container section-header-container" id="header">
             <div class="bb-lead-core">
               <a href="<?php echo $url_base?>index.php?go=<?php echo $app_name?>.index.index"><span class="bb-icon">BB</span></a>
