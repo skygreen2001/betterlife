@@ -1,7 +1,7 @@
 {extends file="$templateDir/layout/normal/layout.tpl"}
 {block name=body}
   <div id="main-content-container" class="container-fluid" style="display:none;">
-    <div class="page" id="page1">
+    <div class="section page" id="page1">
       <div class="container section-header-container">
         <div class="bb-lead-core">
           <span class="bb-icon">BB</span>
@@ -145,7 +145,7 @@
 
     {include file="$templateDir/layout/normal/footer.tpl"}
 
-    <div class="row footer-rainbow">
+    <div class="footer-rainbow">
       <div class="col-xs-1" style="border:4px solid #d71335;"></div>
       <div class="col-xs-1" style="border:4px solid #bc3768;"></div>
       <div class="col-xs-1" style="border:4px solid #f7366a;"></div>

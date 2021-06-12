@@ -16,7 +16,7 @@
             <i class="fa fa-search"></i>
           </button>
           <a class="navbar-brand" href="{$url_base}index.php?go=admin.index.index">
-            <i class="glyphicon glyphicon-grain"></i> {$site_name}
+            <img src="{$template_url}resources/images/logo.png" /> <span> {$site_name} </span>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">

@@ -421,7 +421,7 @@
                         </div>
                         <div class="col-md-4 contact-info animated">
                             <h5><i class="fa fa-map-marker"></i> Address</h5>
-                            <p><span class="yahei">上海静安区延平路10弄云和花园6号楼3201</span></p>
+                            <p><span class="yahei">上海静安区静安公园静安寺666号8单元108室(虚拟)</span></p>
                         </div>
                         <div class="col-md-4 contact-info animated">
                             <h5><i class="fa fa-envelope"></i> Email</h5>

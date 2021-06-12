@@ -23,6 +23,10 @@ class View {
     const TEMPLATE_MODE_TWIG        = 2;
     const TEMPLATE_MODE_PHPTEMPLATE = 3;
 
+    /**
+     * 变量
+     * @var array||object
+     */
     private $vars = array();
     /**
      * 显示页面上使用的变量存储对象

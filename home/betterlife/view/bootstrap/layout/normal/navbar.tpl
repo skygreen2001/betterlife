@@ -16,7 +16,7 @@
           <i class="fa fa-search"></i>
         </button>
         <a class="navbar-brand" href="{$url_base}index.php?go={$appName}.index.index">
-          <i class="glyphicon glyphicon-grain"></i> {$site_name}
+          <img src="{$template_url}resources/images/logo.png" /> <span> {$site_name} </span>
         </a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
@@ -25,6 +25,20 @@
           <li><a href="{$url_base}index.php?go={$appName}.blog.index">博客</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.featured.index">发现</a></li>
           <li><a href="{$url_base}index.php?go={$appName}.us.index">我们</a></li>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              其它
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+              <li><a href="http://www.iqiyi.com/" target="_blank">电影</a></li>
+              <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
+              <li><a href="http://36kr.com/" target="_blank">研发</a></li>
+              <li><a href="https://www.jd.com/" target="_blank">购物</a></li>
+              <li><a href="../../html/model/preview.html">话题</a></li>
+              <li><a href="https://xiaohua.zol.com.cn//" target="_blank">幽默</a></li>
+            </ul>
+          </li>
 
           {if !isset( $smarty.session.user_id ) || $smarty.session.user_id <= 0}
           <li><a href="{$url_base}admin/index.php">登录</a></li>
