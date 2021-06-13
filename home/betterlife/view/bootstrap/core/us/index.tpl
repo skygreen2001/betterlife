@@ -78,9 +78,9 @@
                         <h3>关于我们</h3>
                         <div class="line1"></div>
                         <p style="text-align:left;">
-                            <span class="yahei">来自雪橇科技的skygreen以“只为更好”为核心探索新科技和技术的的框架。
-                                <br>品牌成立于2015年4月，自成立以来，雪橇科技就专注于定向活动领域。旗下产品爱闯闯是国内独创的一站式定向团建平台。
-                                <br>爱闯闯把实境位置和游戏任务充分结合，根据实地线索，利用LBS、AR等技术完成与位置相关的解密、寻宝任务，从而创造一个神秘、酷眩、阳光的运动世界。
+                            <span class="yahei">来自中国的skygreen以“只为更好”为核心探索新科技和技术的的框架。
+                                <br>框架创建于2010年4月，自创建以来，skygreen就专注于定向活动领域。旗下产品Betterlife是国内独创的一站式CMS平台。
+                                <br>Skygreen把前端技术和PHP充分结合，根据反复实践，利用Bootstrap、Jquery、Vue、Angular、React等技术完成各种各样的Web开发任务，从而创造一个创新、易读、阳光的开发世界。
                             </span>
                         </p>
                     </div>
