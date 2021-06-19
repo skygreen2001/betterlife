@@ -19,12 +19,12 @@ class UtilObject extends Util
      * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
      * @return xml内容
      */
-    public static function object_to_xml($object,$filterArray=null,$isAll=false)
+    public static function object_to_xml($object, $filterArray = null,$isAll = false)
     {
         $dom       = new DOMDocument("1.0", "utf-8");
         $root      = $dom->createElement(get_class($object));
         $objectArr = self::object_to_array( $object, $isAll );
-        foreach($objectArr as $key => $value) {
+        foreach ($objectArr as $key => $value) {
             $node = self::createNode( $dom, $key, $value, $filterArray, $isAll );
             if ( $node != NULL ) {
                 $root->appendChild($node);
@@ -41,7 +41,7 @@ class UtilObject extends Util
             if ( $value == NULL ) {
                 if ( $isAll ) {
                     if ( isset($filterArray) && in_array($key, $filterArray) ) {
-                    }else{
+                    } else{
                         $node = $dom->createElement($key);
                     }
                 }
@@ -53,10 +53,10 @@ class UtilObject extends Util
             }
         } else {
             $node = $dom->createElement($key);
-            if($value != NULL) {
-                foreach($value as $key => $value) {
+            if ( $value != NULL ) {
+                foreach ($value as $key => $value) {
                     $sub = self::createNode( $dom, $key, $value );
-                    if($sub != NULL){
+                    if ( $sub != NULL ) {
                         $node->appendChild($sub);
                     }
                 }
@@ -93,7 +93,7 @@ class UtilObject extends Util
             }
 
             foreach ($array as $akey => $aval) {
-                if (is_string($akey)) {//&&property_exists($data, $akey)
+                if ( is_string($akey) ) {//&&property_exists($data, $akey)
                     if ( method_exists($data, 'set' . ucfirst($akey)) ) {
 //            $data->{'set'.ucfirst($akey)}($aval);
                         if ( $isAll ) {
@@ -143,12 +143,13 @@ class UtilObject extends Util
             $rtn = array ();
             $rtn['source_keys'] = $clone;
 
-            while ( list ($key, $value) = each ($clone) ) {
+            // while ( list ($key, $value) = each ($clone) ) {
+            foreach ($clone as $key => $value) {
                 $aux    = explode ("\0", $key);
                 $newkey = $aux[count($aux)-1];
                 if ( $isAll ) {
                     $rtn[$newkey] = $rtn['source_keys'][$key];
-                }else {
+                } else {
                     if ( isset($rtn['source_keys'][$key]) || is_bool($rtn['source_keys'][$key]) ) {
                         $rtn[$newkey] = $rtn['source_keys'][$key];
                         if ( $rtn[$newkey] === false ) $rtn[$newkey] = 0;
@@ -169,7 +170,7 @@ class UtilObject extends Util
                 $rtn = DataObjectSpec::removeNotObjectDataField( $rtn, $obj );
             }
             return $rtn;
-        }else {
+        } else {
             return null;
         }
     }
