@@ -322,8 +322,9 @@ class ServiceBlog extends Service implements IServiceBasic
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         // 以下注解主要用于sql查询已经定义了column名称。查询出来的数据如示例情况
         // start: 以数据的第一个数据的key为excel的第一行，适用于数据每一个行的key都是一样的，
-        //        例如:  array({'id' => 1, "name" => "sky"}, {'id' => 2, "name" => "green"});
-        //              $arr_output_header = array("id" => "id", "name" => "name");   
+        // 例如:  
+        //    $data              = array({'id' => 1, "name" => "sky"}, {'id' => 2, "name" => "green"});
+        //    $arr_output_header = array("id" => "id", "name" => "name");   
         // $arr_output_header = array();
         // if ($data && count($data) > 0) {
         //     $keys = array_keys($data[0]);
@@ -332,7 +333,7 @@ class ServiceBlog extends Service implements IServiceBasic
         //     }
         // }
         // end  : 以数据的第一个数据的key为excel的第一行. 
-        $diffpart = date("YmdHis");
+        $diffpart       = date("YmdHis");
         $outputFileName = Gc::$attachment_path . "export" . DS . "blog" . DS . "$diffpart.xls";
         UtilExcel::arraytoExcel( $arr_output_header, $data, $outputFileName, false );
         $downloadPath   = Gc::$attachment_url . "export/blog/$diffpart.xls";

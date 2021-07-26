@@ -135,10 +135,21 @@ class UtilExcel extends Util
 
     /**
      * 从Excel文件获取行数据转换成数组
-     * @param ByteArray $byte
+     * @param string $importFileName 导入Excel文件名称(包括完整的文件路径)
+     * @param array $arr_import_header 头信息数组
+     * @param string $sheetIndexOrName Excel文件sheet序号或者sheet名称
+     * 测试用例:
+     *    $blog_path = Gc::$upload_path . "blog.xls";
+     *    $arr_import_header = Service::fieldsMean( Blog::tablename() );
+     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header);
+     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, 1);
+     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "blog");
+     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "博客");
+     *    print_pre($content, true);
+     * 
      * @return array
      */
-    public static function exceltoArray($importFileName, $arr_import_header)
+    public static function exceltoArray($importFileName, $arr_import_header, $sheetIndexOrName = 0)
     {
         $pv = (float) phpversion();
         if ( $pv <= 5.5 ) {
@@ -175,8 +186,16 @@ class UtilExcel extends Util
             try
             {
                 $PHPReader->setReadDataOnly(true);
-                LogMe::log(print_pre($PHPExcel));
-                $currentSheet = $PHPExcel->getSheet(0);
+                LogMe::log( print_pre( $PHPExcel ) );
+                if ( is_numeric($sheetIndexOrName) ) {
+                    $currentSheet = $PHPExcel->getSheet( $sheetIndexOrName );
+                } else {
+                    $currentSheet = $PHPExcel->getSheetByName( $sheetIndexOrName );
+                }
+                if ( !$currentSheet ) {
+                    return array();
+                }
+
                 //取得excel的sheet
                 $allColumn    = $currentSheet->getHighestColumn(); //表中列数
                 $allRow       = $currentSheet->getHighestRow(); //表中行数
@@ -197,11 +216,11 @@ class UtilExcel extends Util
                 $currentColumn++;
             }
             $arr_import_header = array_flip($arr_import_header);
-            $arr_head = array();
+            $arr_head          = array();
             foreach ($header as $value) {
                 if ( empty($value) ) continue;
-                if ( !array_key_exists($value,$arr_import_header) ) {
-                    $key_words = array('标识','编号','主键');
+                if ( !array_key_exists($value, $arr_import_header) ) {
+                    $key_words = array('标识', '编号', '主键');
                     foreach ($key_words as $key_word) {
                         if ( array_key_exists($value . $key_word, $arr_import_header) ) {
                             $value = $value . $key_word;
@@ -251,14 +270,14 @@ class UtilExcel extends Util
      * @param @mixed $spreadsheet Excel文档
      */
     private static function addSuffixInfo($spreadsheet) {
-      $spreadsheet->getProperties()
-                  ->setCreator('skygreen2001')
-                  ->setLastModifiedBy("skygreen2001")
-                  ->setTitle(Gc::$site_name)
-                  ->setSubject(Gc::$site_name)
-                  ->setDescription(Gc::$site_name)
-                  ->setKeywords(Gc::$site_name)
-                  ->setCategory(Gc::$site_name);
+        $spreadsheet->getProperties()
+                    ->setCreator('skygreen2001')
+                    ->setLastModifiedBy("skygreen2001")
+                    ->setTitle(Gc::$site_name)
+                    ->setSubject(Gc::$site_name)
+                    ->setDescription(Gc::$site_name)
+                    ->setKeywords(Gc::$site_name)
+                    ->setCategory(Gc::$site_name);
     }
 
 }

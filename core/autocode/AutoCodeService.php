@@ -459,7 +459,7 @@ class AutoCodeService extends AutoCode
                            "                } else {\r\n" .
                            "                    \$result=false;\r\n" .
                            "                }\r\n" .
-                           "            }else{\r\n" .
+                           "            } else {\r\n" .
                            "                return \$result;\r\n" .
                            "            }\r\n" .
                            "        }\r\n" .
@@ -493,7 +493,7 @@ class AutoCodeService extends AutoCode
                             "        \$data = $classname::get( \$filter );\r\n" .
                             $specialResult .
                             "        unset(\$arr_output_header['updateTime'], \$arr_output_header['commitTime']);\r\n" .
-                            "        \$diffpart = date(\"YmdHis\");\r\n" .
+                            "        \$diffpart       = date(\"YmdHis\");\r\n" .
                             "        \$outputFileName = Gc::\$attachment_path . \"export\" . DS . \"{$instance_name}\" . DS . \"\$diffpart.xls\"; \r\n" .
                             "        UtilExcel::arraytoExcel( \$arr_output_header, \$data, \$outputFileName, false ); \r\n" .
                             "        \$downloadPath   = Gc::\$attachment_url . \"export/{$instance_name}/\$diffpart.xls\"; \r\n" .
