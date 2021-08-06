@@ -338,13 +338,20 @@ class AutoCodeAction extends AutoCode
                   "        }\r\n".
                   "        return array(\"error\" => 500,\"info\"  => \"No Data\");\r\n".
                   "    }\r\n";
+
+        $classNameField   = self::getShowFieldName( $classname );
         $export = "\r\n".
                   "    /**\r\n".
                   "     * 导出{$table_comment}\r\n".
                   "     */\r\n".
                   "    public function export()\r\n".
                   "    {\r\n".
-                  "        return Manager_Service::{$instancename}Service()->export{$classname}();\r\n".
+                  "        \$filter_name = \"$classNameField\";\r\n" .
+                  "        \$filter      = null;\r\n" .
+                  "        if ( !empty(\$filter_name) ) {\r\n" .
+                  "            \$filter = array(\$filter_name => \$this->data[\$filter_name]);\r\n" .
+                  "        }\r\n" .
+                  "        return Manager_Service::{$instancename}Service()->export{$classname}(\$filter);\r\n" .
                   "    }\r\n";
         $result .= $import . $export;
         return $result;

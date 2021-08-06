@@ -75,6 +75,7 @@ class Action_Blog extends ActionAdmin
     {
         $blogId   = $this->data["id"];
         $isDelete = Blog::deleteByID($blogId);
+        return array("info" => 200, "data"  => $blogId);
     }
 
     /**
@@ -93,6 +94,13 @@ class Action_Blog extends ActionAdmin
      */
     public function export()
     {
-        return Manager_Service::blogService()->exportBlog();
+        $filter_name = "blog_name";
+        $filter      = null;
+        if ( !empty($filter_name) ) {
+            $filter = array($filter_name => $this->data[$filter_name]);
+        }
+        // $filter = " blog_name like '%" . $this->data["blog_name"] . "%' or blog_content like '%" . $this->data["blog_name"] . "%'" ;
+        // LogMe::log("filter:" . print_pre($filter));
+        return Manager_Service::blogService()->exportBlog($filter);
     }
 }

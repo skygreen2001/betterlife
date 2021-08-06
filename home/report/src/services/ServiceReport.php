@@ -144,7 +144,7 @@ class ServiceReport extends Service
      * @param string $query 用户输入语句
      * @param string $startDate 开始时间
      * @param string $endDate 结束时间
-     * @param string $columns 列筛选条件
+     * @param array $columns 列筛选条件
      * @return array
      */
     public static function getWhereClause($sql_report, $query, $startDate, $endDate, $columns = null)

@@ -489,7 +489,11 @@ class AutoCodeService extends AutoCode
                             "     */\r\n" .
                             "    public function export{$classname}(\$filter = null)\r\n" .
                             "    {\r\n" .
-                            "        if ( \$filter ) \$filter = \$this->filtertoCondition( \$filter );\r\n" .
+                            "        if ( \$filter ) {\r\n" .
+                            "            if ( is_array(\$filter) || is_object(\$filter) ) {\r\n" .    
+                            "                \$filter = \$this->filtertoCondition( \$filter );\r\n" .
+                            "            }\r\n" .
+                            "        }\r\n" .
                             "        \$data = $classname::get( \$filter );\r\n" .
                             $specialResult .
                             "        unset(\$arr_output_header['updateTime'], \$arr_output_header['commitTime']);\r\n" .

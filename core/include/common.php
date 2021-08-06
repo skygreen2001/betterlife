@@ -3,7 +3,7 @@
  * 直接执行SQL语句
  * @param mixed $sql SQL查询语句
  * @param string|class|bool $object 需要生成注入的对象实体|类名称
- * @return array 默认返回数组,如果$object指定数据对象，返回指定数据对象列表，$object=true，返回stdClass列表。
+ * @return mixed 默认返回数组,如果$object指定数据对象，返回指定数据对象列表，$object=true，返回stdClass列表。
  */
 function sqlExecute($sqlstring, $object = null)
 {
@@ -12,9 +12,9 @@ function sqlExecute($sqlstring, $object = null)
     }
     if ( $object ){
         if ( is_bool($object) )$object = null;
-        return Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+        return Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
     } else {
-        $lists=Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+        $lists = Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
         if ( $lists ) {
             if ( is_array($lists) ) {
                 if ( count($lists) > 0 ) {

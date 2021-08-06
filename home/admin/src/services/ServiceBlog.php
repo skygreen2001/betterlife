@@ -296,7 +296,11 @@ class ServiceBlog extends Service implements IServiceBasic
      */
     public function exportBlog($filter = null)
     {
-        if ( $filter ) $filter = $this->filtertoCondition( $filter );
+        if ( $filter ) {
+            if ( is_array($filter) || is_object($filter) ) {
+                $filter = $this->filtertoCondition( $filter );
+            }
+        }
         $data = Blog::get( $filter );
         if ( ( !empty($data) ) && ( count($data) > 0 ) )
         {

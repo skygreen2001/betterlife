@@ -183,7 +183,8 @@ $idColumnDefs
         });
 
         \$("#btn-{$instancename}-export").click(function(){
-            \$.getJSON("index.php?go=admin.{$instancename}.export", function(response){
+            var query = \$("#input-search").val();
+            \$.getJSON("index.php?go=admin.{$instancename}.export&{$classNameField}=" + query, function(response){
                 window.open(response.data);
             });
         });

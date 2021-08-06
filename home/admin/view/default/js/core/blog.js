@@ -149,7 +149,8 @@ $(function(){
         });
 
         $("#btn-blog-export").click(function(){
-            $.getJSON("index.php?go=admin.blog.export", function(response){
+            var query = $("#input-search").val();
+            $.getJSON("index.php?go=admin.blog.export&blog_name=" + query, function(response){
                 window.open(response.data);
             });
         });
