@@ -150,7 +150,7 @@ $(function(){
 
         $("#btn-blog-export").click(function(){
             var query = $("#input-search").val();
-            $.getJSON("index.php?go=admin.blog.export&blog_name=" + query, function(response){
+            $.getJSON("index.php?go=admin.blog.export&query=" + query, function(response){
                 window.open(response.data);
             });
         });

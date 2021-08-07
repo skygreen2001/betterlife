@@ -63,7 +63,18 @@ class Service extends BBObject {
                             continue;
                         }
                     }
-                    $conditionArr[] = $key . " like '%" . $value . "%'";
+
+                    $where_clause_one = "(";
+                    $search_atom  = explode(" ", trim($value));
+                    $search_key = $key;
+                    array_walk($search_atom, function(&$value, $key, $search_key) {
+                        $value = " ( $search_key LIKE '%" . $value . "%' ) ";
+                    }, $search_key);
+                    $where_clause_one .= implode(" and ", $search_atom);
+                    $where_clause_one .= ")";
+
+                    $conditionArr[] = $where_clause_one;
+                    // $conditionArr[] = $key . " like '%" . $value . "%'";
                 }
             }
             $condition = implode(" and ", $conditionArr);

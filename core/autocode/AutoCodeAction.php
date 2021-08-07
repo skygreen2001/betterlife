@@ -348,8 +348,8 @@ class AutoCodeAction extends AutoCode
                   "    {\r\n".
                   "        \$filter_name = \"$classNameField\";\r\n" .
                   "        \$filter      = null;\r\n" .
-                  "        if ( !empty(\$filter_name) ) {\r\n" .
-                  "            \$filter = array(\$filter_name => \$this->data[\$filter_name]);\r\n" .
+                  "        if ( !empty(\$filter_name) && !empty(\$this->data[\"query\"]) ) {\r\n" .
+                  "            \$filter = array(\$filter_name => \$this->data[\"query\"]);\r\n" .
                   "        }\r\n" .
                   "        return Manager_Service::{$instancename}Service()->export{$classname}(\$filter);\r\n" .
                   "    }\r\n";

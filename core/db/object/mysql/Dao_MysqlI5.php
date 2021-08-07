@@ -313,19 +313,19 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     $params[] = &$row[$field->name];
                 }
                 call_user_func_array(array($this->stmt, 'bind_result'), $params);
-                $result=array();
+                $result = array();
                 while ($this->stmt->fetch()) {
-                    if (!empty($object)) {
-                        if ($this->validParameter($object)) {
-                            $c = UtilObject::array_to_object( $row, $this->classname );
-                            $result[]=$c;
+                    if ( !empty($object) ) {
+                        if ( $this->validParameter($object) ) {
+                            $c        = UtilObject::array_to_object( $row, $this->classname );
+                            $result[] = $c;
                         }
-                    }else {
+                    } else {
                         if ( count($row) == 1 ) {
                             foreach($row as $key => $val) {
                                 $result[] = $val;
                             }
-                        }else{
+                        } else {
                             $c = new stdClass();
                             foreach ($row as $key => $val) {
                                 $c->{$key} = $val;

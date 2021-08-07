@@ -96,10 +96,10 @@ class Action_Blog extends ActionAdmin
     {
         $filter_name = "blog_name";
         $filter      = null;
-        if ( !empty($filter_name) ) {
-            $filter = array($filter_name => $this->data[$filter_name]);
+        if ( !empty($filter_name) && !empty($this->data["query"]) ) {
+            $filter = array($filter_name => $this->data["query"]);
         }
-        // $filter = " blog_name like '%" . $this->data["blog_name"] . "%' or blog_content like '%" . $this->data["blog_name"] . "%'" ;
+        // $filter = " blog_name like '%" . $this->data["query"] . "%' or blog_content like '%" . $this->data["query"] . "%'" ;
         // LogMe::log("filter:" . print_pre($filter));
         return Manager_Service::blogService()->exportBlog($filter);
     }

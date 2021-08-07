@@ -184,7 +184,7 @@ $idColumnDefs
 
         \$("#btn-{$instancename}-export").click(function(){
             var query = \$("#input-search").val();
-            \$.getJSON("index.php?go=admin.{$instancename}.export&{$classNameField}=" + query, function(response){
+            \$.getJSON("index.php?go=admin.{$instancename}.export&query=" + query, function(response){
                 window.open(response.data);
             });
         });

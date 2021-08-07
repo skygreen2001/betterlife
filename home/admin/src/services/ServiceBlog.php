@@ -307,21 +307,23 @@ class ServiceBlog extends Service implements IServiceBasic
             Blog::propertyShow( $data, array('status') );
         }
         $arr_output_header = self::fieldsMean( Blog::tablename() );
-        foreach ($data as $blog) {
-            if ( $blog->statusShow ) {
-                $blog['status'] = $blog->statusShow;
+        if ( $data && count($data) > 0 ) {
+            foreach ($data as $blog) {
+                if ( $blog->statusShow ) {
+                    $blog['status'] = $blog->statusShow;
+                }
+                $user_instance = null;
+                if ( $blog->user_id ) {
+                    $user_instance = User::get_by_id( $blog->user_id );
+                    $blog['user_id'] = $user_instance->username;
+                }
+                $category_instance = null;
+                if ( $blog->category_id ) {
+                    $category_instance = Category::get_by_id( $blog->category_id );
+                    $blog['category_id'] = $category_instance->name;
+                }
+                if ( $blog->isPublic == 1 ) $blog->isPublic = "是"; else $blog->isPublic = "否";
             }
-            $user_instance = null;
-            if ( $blog->user_id ) {
-                $user_instance = User::get_by_id( $blog->user_id );
-                $blog['user_id'] = $user_instance->username;
-            }
-            $category_instance = null;
-            if ( $blog->category_id ) {
-                $category_instance = Category::get_by_id( $blog->category_id );
-                $blog['category_id'] = $category_instance->name;
-            }
-            if ( $blog->isPublic == 1 ) $blog->isPublic = "是"; else $blog->isPublic = "否";
         }
         unset($arr_output_header['updateTime'], $arr_output_header['commitTime']);
         // 以下注解主要用于sql查询已经定义了column名称。查询出来的数据如示例情况

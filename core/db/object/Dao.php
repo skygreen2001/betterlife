@@ -215,6 +215,8 @@ abstract class Dao
 
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
+     * 如果是数据对象，返回数组对象
+     * 如果是基础类型如int等一般是统计函数count,sum,max,min，直接返回值
      * @param array $result 结果集
      * @return 值
      */
@@ -222,11 +224,11 @@ abstract class Dao
     {
         if ( ($result != null) && (count($result) == 1) ) {
             if ( $result[0] instanceof stdClass ) {
-                $tmp = UtilObject::object_to_array( $result[0] );
-                if ( count($tmp) == 1 ) {
-                    $tmp_values = array_values($tmp);
-                    $result     = $tmp_values[0];
-                }
+                // $tmp = UtilObject::object_to_array( $result[0] );
+                // if ( count($tmp) == 1 ) {
+                //     $tmp_values = array_values($tmp);
+                //     $result     = $tmp_values[0];
+                // }
             } else {
                 if ( !( $result[0] instanceof DataObject ) ) $result = $result[0];
             }
