@@ -287,7 +287,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($from)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
-            $result=$this->sqlExecute( $this->sQuery, $object );
+            $result = $this->sqlExecute( $this->sQuery, $object );
             return $result;
         } catch (Exception $exc) {
             Exception_Mysqli::record( $exc->getTraceAsString() );
