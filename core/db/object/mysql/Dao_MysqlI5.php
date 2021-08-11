@@ -135,16 +135,16 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     return $autoId;
                 }
                 $result = $this->getResultToObjects($object);
-                $sql_s  = preg_replace("/\s/","",$sqlstring);
-                $sql_s  = strtolower($sql_s);
-                if ( ( !empty($result) ) && ( !is_array($result) ) ) {
-                    if ( !( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(") ) ) ) {
-                        $tmp      = $result;
-                        $result   = null;
-                        $result[] = $tmp;
-                    }
-                }
-            }else{
+                // $sql_s  = preg_replace("/\s/","",$sqlstring);
+                // $sql_s  = strtolower($sql_s);
+                // if ( ( !empty($result) ) && ( !is_array($result) ) ) {
+                //     if ( !( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(") ) ) ) {
+                //         $tmp      = $result;
+                //         $result   = null;
+                //         $result[] = $tmp;
+                //     }
+                // }
+            } else {
                Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
             }
         } catch (Exception $exc) {
@@ -164,7 +164,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *          3.array("id"=>"1","name"=>"sky")<br/>
      * @return 对象总计数
      */
-    public function count($object, $filter=null)
+    public function count($object, $filter = null)
     {
         if ( !$this->validParameter($object) ) {
             return 0;
@@ -298,7 +298,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     /**
      * 将查询结果转换成业务层所认知的对象
      * @param string $object 需要转换成的对象实体|类名称
-     * @return 转换成的对象实体列表
+     * @return array 转换成的对象实体列表
      */
     private function getResultToObjects($object)
     {
