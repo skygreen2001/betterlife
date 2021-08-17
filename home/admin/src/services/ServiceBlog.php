@@ -341,7 +341,7 @@ class ServiceBlog extends Service implements IServiceBasic
         // end  : 以数据的第一个数据的key为excel的第一行. 
         $diffpart       = date("YmdHis");
         $outputFileName = Gc::$attachment_path . "export" . DS . "blog" . DS . "$diffpart.xls";
-        UtilExcel::arraytoExcel( $arr_output_header, $data, $outputFileName, false );
+        UtilExcel::arraytoExcel( $arr_output_header, $data, $outputFileName );
         $downloadPath   = Gc::$attachment_url . "export/blog/$diffpart.xls";
         return array(
             'success' => true,

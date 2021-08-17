@@ -501,7 +501,7 @@ class AutoCodeService extends AutoCode
                             "        unset(\$arr_output_header['updateTime'], \$arr_output_header['commitTime']);\r\n" .
                             "        \$diffpart       = date(\"YmdHis\");\r\n" .
                             "        \$outputFileName = Gc::\$attachment_path . \"export\" . DS . \"{$instance_name}\" . DS . \"\$diffpart.xls\"; \r\n" .
-                            "        UtilExcel::arraytoExcel( \$arr_output_header, \$data, \$outputFileName, false ); \r\n" .
+                            "        UtilExcel::arraytoExcel( \$arr_output_header, \$data, \$outputFileName ); \r\n" .
                             "        \$downloadPath   = Gc::\$attachment_url . \"export/{$instance_name}/\$diffpart.xls\"; \r\n" .
                             "        return array(\r\n" .
                             "            'success' => true,\r\n" .

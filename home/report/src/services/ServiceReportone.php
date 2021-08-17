@@ -26,12 +26,12 @@ class ServiceReportone extends ServiceReport
         $reportSql .= ") report_tmp " . $whereState . $orderDes;
         // 对sql进行格式化,保证和$out_header里抬头一致
         $reportSql  = trim($reportSql);//去除首尾空格
-        $reportSql  = strtolower($reportSql);//转换成小写
+        // $reportSql  = strtolower($reportSql);//转换成小写
         $data       = sqlExecute($reportSql);// 获取数据
         $diffpart   = date("YmdHis");
         $fileName   = $rtype . $diffpart;
         $outputFileName = Gc::$attachment_path . "export" . DS . "report" . DS . "$fileName.xls";
-        UtilExcel::arraytoExcel($out_header, $data, $outputFileName, false);
+        UtilExcel::arraytoExcel( $out_header, $data, $outputFileName );
         $downloadPath   = Gc::$attachment_url . "export/report/$fileName.xls";
         return array(
             'success' => true,

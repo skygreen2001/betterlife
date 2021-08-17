@@ -317,12 +317,12 @@ class Service$reportEname extends ServiceReport
 
         // 对sql进行格式化
         \$reportSql  = trim(\$reportSql);//去除首尾空格
-        \$reportSql  = strtolower(\$reportSql);//转换成小写
+        // \$reportSql  = strtolower(\$reportSql);//转换成小写
         \$data       = sqlExecute(\$reportSql);// 获取数据
         \$diffpart   = date("YmdHis");
         \$fileName   = "$reportCname".\$diffpart;
         \$outFname   = Gc::\$attachment_path . "export" . DS . "report" . DS . "\$fileName.xls";
-        UtilExcel::arraytoExcel(\$out_header, \$data, \$outFname, false);
+        UtilExcel::arraytoExcel( \$out_header, \$data, \$outFname );
         \$downPath   = Gc::\$attachment_url . "export/report/\$fileName.xls";
         return array(
             'success' => true,
