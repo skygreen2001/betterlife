@@ -14,7 +14,7 @@ class ServiceReportone extends ServiceReport
      * @param string $rtype 报表类型
      */
     public function export($rtype, $startDate, $endDate, $query) {
-        require_once (Gc::$nav_root_path . "misc" . DS . "sql" . DS . "report.php");
+        require_once(Gc::$nav_root_path . "misc" . DS . "sql" . DS . "report.php");
         $sql_report = $sqlReport[$rtype];
         $sql_report = str_replace(";", "", $sql_report);
         $out_header = $this->getSqlSelCols($sql_report);

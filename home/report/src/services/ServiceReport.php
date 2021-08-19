@@ -135,7 +135,11 @@ class ServiceReport extends Service
                 }
             }
         }
-        return " order by " . $result . " desc ";
+        if ( !empty($result) ) {
+            return " order by " . $result . " desc ";
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -151,7 +155,7 @@ class ServiceReport extends Service
     {
         $where_clause = "";
         if ($sql_report) $sql_report = str_replace(";", "", $sql_report);
-        if ( !empty($query) ) {
+        if ( !empty($query) && $query != "undefined" ) {
           $search_atom  = explode(" ", trim($query));
           $filterCols   = ServiceReport::getFilterCols( $sql_report );
           $where_sub    = array();
