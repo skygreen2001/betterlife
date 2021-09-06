@@ -65,9 +65,9 @@ if ( \$totalCount > 0 ) {
             \$endPoint = \$totalCount;
         }
 
-				\$reportSql   = "select * from (";
-				\$reportSql  .= \$sql_report;
-				\$reportSql  .= ") report_tmp " . \$where_clause . \$orderDes . " limit " . \$startPoint . "," . \$pageSize;
+        \$reportSql   = "select * from (";
+        \$reportSql  .= \$sql_report;
+        \$reportSql  .= ") report_tmp " . \$where_clause . \$orderDes . " limit " . \$startPoint . "," . \$pageSize;
         \$pageData = sqlExecute(\$reportSql);
     }
 }

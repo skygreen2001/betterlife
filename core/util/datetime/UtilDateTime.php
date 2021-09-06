@@ -262,6 +262,33 @@ class UtilDateTime extends Util
         return $result;
     }
 
+    /**
+     * 获取指定月份最后一天
+     * 示例:
+     *    功能: 获取2021年2月的最后1天
+     *    调用: UtilDateTime::getMonthLastDay("2021-02")
+     *    返回: 2021-02-28
+     * @param string $date 指定月份; 格式如同: 2021-02
+     * @return 指定月份最后一天
+     */
+    public static function getMonthLastDay($month) {
+        return date('Y-m-d', strtotime(date('Y-m-01', strtotime($month)) . ' +1 month -1 day'));
+    }
+
+    /**
+     * 获取指定日期指定天数前的日期时间
+     * 示例:
+     *    功能: 获取2021年2月28日前90天的日期
+     *    调用: UtilDateTime::getBeforeDaysDate("2021-02-28", 90)
+     *    返回: 2020-11-30
+     * @param string $date 指定日期; 格式如同: 2021-02-28
+     * @param int $days 指定天数
+     * @return 指定月份最后一天
+     */
+    public static function getBeforeDaysDate($date, $days) {
+       return date('Y-m-d', strtotime("-" . $days . " day", strtotime($date)));
+    }
+
 }
 //echo UtilDateTime::magicInfo("1979", "3", "10","XZ")
 ?>
