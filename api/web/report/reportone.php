@@ -6,7 +6,7 @@ $currentPage  = $_GET["page"];
 $pageSize     = $_GET["pageSize"];
 $startDate    = $_GET["startDate"];
 $endDate      = $_GET["endDate"];
-$query        = $_GET["query"];
+$query        = @$_GET["query"];
 $columns      = $_GET["columns"];
 
 $rtype        = $_GET["rtype"];
