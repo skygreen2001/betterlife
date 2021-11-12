@@ -55,18 +55,22 @@
 
 * **安装 composer**
 
-  安装composer: http://docs.phpcomposer.com/00-intro.html
+  - 安装composer: http://docs.phpcomposer.com/00-intro.html
+    - 升级composer: composer self-update
+    - 升级后回滚老版本: composer self-update --rollback 
+    - [阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
 
 * **安装目录下运行**
 
   安装目录是根目录下的install目录, 即本说明文件目录下
+  - cd install/
 
   - 运行composer
 
     ```
-    > composer install
+    > composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+    > composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist
     ```
-    [Mac电脑用户]: sudo composer install
 
 ### 其它安装
 

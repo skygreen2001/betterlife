@@ -10,6 +10,7 @@
 /install/vendor
 /install/bower_components
 /install/node_modules
+/install/composer.lock
 .DS_Store
 /misc/js/onlineditor
 home/betterlife/view/twig/tmp

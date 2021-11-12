@@ -1,11 +1,11 @@
 {
   "name": "skygreen/bb",
   "version": "1.0.0",
-  "description": "a mini framework designed to compatiable with other php framework like drupal,thinkphp",
+  "description": "a framework designed to easy read and rapid develop for chinese delevoper",
   "keywords": [
       "cms", "api", "php", "framework", "bb"
   ],
-  "homepage": "https://github.com/skygreen2001/betterlife.core",
+  "homepage": "https://github.com/skygreen2001/betterlife",
   "license": "GPL",
   "authors": [
       {
@@ -24,24 +24,14 @@
   "config":{
       "secure-http": false
   },
-  "repositories": [
-    {
-        "type": "pear",
-        "url": "https://pear.php.net"
-    }
-  ],
   "require": {
     "php"                : ">=5.2.0",
     "smarty/smarty"      : "^3.1",
-    "phpoffice/phpword"  : "^0.13.0",
     "phpoffice/phpspreadsheet": "^1.2",
-    "phpoffice/phpexcel" : "^1.8",
     "mustangostang/spyc" : "^0.6.2",
     "fusonic/linq"       : "^2.0",
     "adodb/adodb-php"    : ">=5.19",
-    "pear/pear_exception": "*",
-    "nelexa/zip"         : "^3.1",
-    "maximebf/debugbar"  : ">=1.0.0"
+    "nelexa/zip"         : "^3.1"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
@@ -50,11 +40,17 @@
     "symfony/symfony": "*"
   },
   "suggest": {
-    "pear/mdb2"          : "*",
+    "phpoffice/phpword"  : "^0.13.0",
+    "phpoffice/phpexcel" : "^1.8",
     "twig/twig"          : "^2.0",
     "symfony/flex"       : "^1.4",
     "symfony/yaml"       : ">=2.0.4",
-    "doctrine/cache"     : "^1.8"
+    "doctrine/cache"     : "^1.8",
+    "maximebf/debugbar"  : ">=1.0.0"
   },
-  "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project."
+  "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project.",
+  "_install-script" : {
+    "config": "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/",
+    "install": "composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist"
+  }
 }
