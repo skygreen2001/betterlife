@@ -41,7 +41,7 @@ if (contain($os,"Windows")) {
     echo "您使用的是MacOS系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     // echo "需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",12);
-    // echo "php_gd2|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
+    // echo "php_gd|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     // echo "需要修改php.ini文件，去掉以下行前的注释符号;<br/>" . str_repeat("&nbsp;",30);
     echo "* . 因为安全原因，需要手动在服务器上创建以下目录能够读写<br/>" . str_repeat("&nbsp;",30);
     echo "log|upload|templates_c<br/>" . str_repeat("&nbsp;",12);
@@ -81,7 +81,7 @@ APACHECONFIG;
     echo "您使用的是Ubuntu系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
-    echo "php_gd2|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
+    echo "php_gd|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     echo "* . 服务器下执行:<br/>" . str_repeat("&nbsp;",30);
     if ($phpver >= 7) {
         $pos1 = strpos($phpver, ".");
@@ -118,7 +118,7 @@ APACHECONFIG;
     echo "您使用的是linux系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
-    echo "php_gd2|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
+    echo "php_gd|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     echo "* . 如果是在Centos服务器下，执行:<br/>" . str_repeat("&nbsp;",30);
     echo "yum install php-gd<br/>" . str_repeat("&nbsp;",12);
     echo "* . 因为安全原因，需要手动在服务器上创建以下目录能够读写<br/>" . str_repeat("&nbsp;",30);
