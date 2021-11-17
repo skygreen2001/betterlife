@@ -77,6 +77,33 @@
   - [其它安装可选](install/README.md)
     - 后台【admin】在线编辑器使用百度的UEditor组件，需按该文档说明进行安装。
 
+### Docker安装
+
+* **帮助文档**
+
+  - [说明](install/docker/README.md)
+
+* **生产环境**
+  <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
+  <!-- laravel-demo/Dockerfile: https://github.com/khs1994-docker/laravel-demo/blob/master/Dockerfile -->
+  - docker build -t bb/betterlife --target=betterlife -f install/docker/prod/Dockerfile .
+  - docker build -t bb/nginx --target=nginx -f install/docker/prod/Dockerfile .
+  - docker network create betterlife
+  - docker run -dit --name=betterlife -p 9000:9000 --network=betterlife bb/betterlife
+  - docker run -dit --name=betterlife_nginx -p 80:80 --network=betterlife bb/nginx
+
+* **开发环境**
+  <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
+  <!-- laravel-demo/Dockerfile: https://github.com/khs1994-docker/laravel-demo/blob/master/Dockerfile -->
+  - docker build -t bb/betterlife_dev --target=betterlife -f install/docker/dev/Dockerfile .
+  - docker build -t bb/nginx_dev --target=nginx -f install/docker/dev/Dockerfile .
+  - docker network create betterlife
+  - docker run -dit --name=betterlife_dev -p 9000:9000 --network=betterlife bb/betterlife_dev
+  - docker run -dit --name=betterlife_dev_nginx -p 80:80 --network=betterlife bb/nginx_dev
+
+* **TODO**
+  - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
+
 ## 框架目录定义
 
   - core   : 框架核心支持文件
