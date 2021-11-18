@@ -27,6 +27,7 @@ class Gc {
         'prefix'   => 'bb_',//数据库表名前缀
         'debug'    => true//记录日志:数据库sql查询语句
     );
+    
     /**
      * 是否打开Debug模式
      * @var bool
