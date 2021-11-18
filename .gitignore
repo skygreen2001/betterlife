@@ -11,6 +11,7 @@
 /install/bower_components
 /install/node_modules
 /install/composer.lock
+/install/package-lock.json
 .DS_Store
 /misc/js/onlineditor
 home/betterlife/view/twig/tmp

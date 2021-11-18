@@ -145,19 +145,19 @@ APACHECONFIG;
     echo "*. 重启apache方式二: sudo service apache2 restart";
     $mysql_config = <<<MYSQLCONFIG
 
-                                +. 修改mysql的字符集为utf8
-                                        修改etc/my . cnf
-                                        [mysqld]
-                                            character_set_server = utf8
-                                            init_connect = 'SET NAMES utf8'
-                                        [client]
-                                            default-character-set = utf8
-                                        [mysql]
-                                            default-character-set = utf8
-                                +. 运行命令:sudo service mysqld restart
-                                +. 查看字符集：
-                                        mysql：
-                                            show variables like 'character_set%';
+            +. 修改mysql的字符集为utf8
+                    修改etc/my . cnf
+                    [mysqld]
+                        character_set_server = utf8
+                        init_connect = 'SET NAMES utf8'
+                    [client]
+                        default-character-set = utf8
+                    [mysql]
+                        default-character-set = utf8
+            +. 运行命令:sudo service mysqld restart
+            +. 查看字符集：
+                    mysql：
+                        show variables like 'character_set%';
 
 
 MYSQLCONFIG;
