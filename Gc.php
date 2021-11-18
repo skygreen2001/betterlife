@@ -18,12 +18,12 @@ class Gc {
     public static $database_config = array(
         'db_type'  => 0,//默认使用mysql数据库. EnumDbSource::DB_MYSQL=0, 具体定义参见Config_Db.php里EnumDbSource的定义
         'driver'   => 1,//数据库使用调用引擎. EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI, 具体定义参见Config_Db.php里EnumDbEngine的定义
-        'host'     => 'rm-uf6539dp3nm89917heo.mysql.rds.aliyuncs.com',//数据库主机[默认本地 localhost]
+        'host'     => '127.0.0.1',//数据库主机[默认本地 localhost]
         // 'host'     => '192.168.64.2',//数据库主机[默认本地 localhost]
         'port'     => '',//数据库端口
-        'database' => 'bb',//数据库名称
-        'username' => 'it8314tr1245sdfe',//数据库用户名
-        'password' => 'S53%0511%&vsde37',//数据库密码
+        'database' => 'betterlife',//数据库名称
+        'username' => 'root',//数据库用户名
+        'password' => '',//数据库密码
         'prefix'   => 'bb_',//数据库表名前缀
         'debug'    => true//记录日志:数据库sql查询语句
     );
@@ -55,7 +55,7 @@ class Gc {
      * @var string
      * @static
      */
-    public static $url_base="http://127.0.0.1/";//='http://localhost/betterlife/';//获取网站URL根路径
+    public static $url_base;//='http://localhost/betterlife/';//获取网站URL根路径
     /**
      * 网站根路径的物理路径
      * @var string
