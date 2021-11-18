@@ -34,6 +34,38 @@
 
   * [使用 nginx](nginx.md)
 
+## 本地运行服务器
+
+* **本地运行服务器**
+  > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
+
+  - PHP server
+    > php -S localhost:8000
+
+  - Python server
+    //Python 2.x
+    python -m SimpleHTTPServer
+
+    //Python 3.x
+    python -m http.server
+
+  - Npx in Node.js
+    npx http-server
+
+  - Node.js Server
+    > npm install http-server -g
+    > http-server . -p 8000
+
+  - Ruby server
+    > ruby -r webrick -e "s = WEBrick::HTTPServer.new(:Port => 8000, :DocumentRoot => Dir.pwd); trap('INT') { s.shutdown }; s.start"
+ 
+  - Lighttpd
+    > brew install lighttpd
+    - 编辑配置文件:lighttpd.conf
+      > http://redmine.lighttpd.net/projects/lighttpd/wiki/TutorialConfiguration
+
+    > lighttpd -f lighttpd.conf
+
 ## 性能调优
 
   * 性能调优框架: https://github.com/davidgilbertson/know-it-all

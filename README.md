@@ -47,6 +47,10 @@
 
   - 本地运行PHP server: php -S localhost:8000)
 
+### 安装检查
+  - [PHP安装检查](docs/deploy.md)
+    - 需在浏览器中运行查看()
+
 ### 安装目录
 
   - 安装目录: 以下安装都在根路径/install 目录下
@@ -79,7 +83,9 @@
 
 ### Docker安装
 
-* **帮助文档**
+如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑操作系统环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis), 可使用Docker安装
+
+* **Docker帮助文档**
 
   - [说明](install/docker/README.md)
 
@@ -89,8 +95,8 @@
   - docker build -t bb/betterlife --target=betterlife -f install/docker/prod/Dockerfile .
   - docker build -t bb/nginx --target=nginx -f install/docker/prod/Dockerfile .
   - docker network create betterlife
-  - docker run -dit --name=betterlife -p 9000:9000 --network=betterlife bb/betterlife
-  - docker run -dit --name=betterlife_nginx -p 80:80 --network=betterlife bb/nginx
+  - docker run -dit --name=betterlife -p 9000:9000 -v /Library/WebServer/Documents/bb:/var/www/html/betterlife --network=betterlife bb/betterlife
+  - docker run -dit --name=betterlife_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx
 
 * **开发环境**
   <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
@@ -98,11 +104,23 @@
   - docker build -t bb/betterlife_dev --target=betterlife -f install/docker/dev/Dockerfile .
   - docker build -t bb/nginx_dev --target=nginx -f install/docker/dev/Dockerfile .
   - docker network create betterlife
-  - docker run -dit --name=betterlife_dev -p 9000:9000 --network=betterlife bb/betterlife_dev
-  - docker run -dit --name=betterlife_dev_nginx -p 80:80 --network=betterlife bb/nginx_dev
+  - docker run -dit --name=betterlife_dev -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 9000:9000 --network=betterlife bb/betterlife_dev
+  - docker run -dit --name=betterlife_dev_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx_dev
+
+* **云平台**
+
+* [阿里云](https://market.aliyun.com/developer)
+* [Heroku](https://devcenter.heroku.com/categories/php)
+* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7)
 
 * **TODO**
   - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
+
+## 帮助文档
+
+* [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
+* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
+* [本地说明文档](docs/)
 
 ## 框架目录定义
 
@@ -134,13 +152,6 @@
     - upload/images    : 上传图片放置路径
     - upload/attachment: 批量导入/导出数据文件(如excel)放置目录
 
-## 帮助文档
-
-* [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
-* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
-* [本地说明文档](docs/)
-
-
 ## 开发工具
 
 * [Visual Studio Code](https://code.visualstudio.com/)
@@ -148,35 +159,15 @@
 * [Atom IDE](https://ide.atom.io/)
 * [Sublime](http://www.sublimetext.com)
 
-### 云部署
-
-- 感兴趣可以试试看，可忽略跳过云部署这部分
-
-* [阿里云](https://market.aliyun.com/developer)
-* [Heroku](https://devcenter.heroku.com/categories/php)
-* [docker](https://docs.docker.com)
-  * [The full PHP development environment for Docker](http://laradock.io)
-  * [PHPDocker](https://phpdocker.io/)
-  * [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
-  * [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
-  * [Docker for Beginners](https://github.com/docker/labs/tree/master/beginner/)
-  * [DevDock](https://github.com/iMacken/DevDock)
-* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
-
 ## 参考资料
 
 * **本框架帮助文档**
   > 早期文档: http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
-* **本地运行服务器**
-  > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
+
 * **安装Composer**
   > http://www.phpcomposer.com/
-* **下载Smarty**
-  > https://github.com/smarty-php/smarty
-* **下载PhpSpreadsheet**
-  > https://github.com/PHPOffice/PhpSpreadsheet
 
 ## 学习资料
 
 - [学习Symfony](docs/learn/SYMFONY.md)
-- PHP The Right Way: https://laravel-china.github.io/php-the-right-way/
+- [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)

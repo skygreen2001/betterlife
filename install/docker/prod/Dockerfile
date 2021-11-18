@@ -76,7 +76,7 @@ RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini \
       && chmod -R 777 log \
       && mkdir -p home/report/view/default/tmp/templates_c \
       && chmod -R 777 home/report/view/default/tmp/templates_c 
-
+WORKDIR ${BB_PATH}
 EXPOSE 9000
 
 FROM nginx:alpine as nginx
@@ -86,5 +86,8 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY --from=betterlife ${BB_PATH} ${BB_PATH}
 COPY install/docker/prod/wait-for-php.sh /wait-for-php.sh
 # RUN set -x ; rm -rf /etc/nginx/conf.d
+
+WORKDIR ${BB_PATH}
+EXPOSE 80
 
 ENTRYPOINT ["sh", "/wait-for-php.sh"]

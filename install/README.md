@@ -37,6 +37,7 @@
     ```
     > sudo gulp
     ```
+    - 说明: 因为ueditor打包需要安装grunt的原因，该命令行需执行两次。
 
   - 安装ueditor
 
@@ -86,7 +87,22 @@
     > sudo apt install php-zip
     ```
 
+### Mac电脑运行gulp提示: ReferenceError: primordials is not defined
+
+  - 安装nvm[Mac OS 下 NVM 的安装与使用]: https://www.jianshu.com/p/622ad36ee020
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+    - export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+  - nvm install 10.15.3
+
 ## 参考资料
+
+* **下载Smarty**
+  > https://github.com/smarty-php/smarty
+
+* **下载PhpSpreadsheet**
+  > https://github.com/PHPOffice/PhpSpreadsheet
 
 * **安装UEditor**
   > http://ueditor.baidu.com/website/download.html

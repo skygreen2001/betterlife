@@ -1,0 +1,5 @@
+
+/* UEditor 弹框的层级需设置最高，或者可能会被其他内容挡住，无法操作 */
+#edui_fixedlayer {
+    z-index: 19006 !important;
+}

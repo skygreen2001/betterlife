@@ -113,14 +113,12 @@
     
   - 安装PHP开发环境  
     - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
+    - [PHPDocker](https://phpdocker.io/)
+    - [DevDock](https://github.com/iMacken/DevDock)
     - [Docker Development Environment for PHP Apps](https://rodrigodelimavieira.com/docker-development-environment-for-php-apps-cju2vko5r000csms18kzo1tgl)
     - [Setting up PHP, PHP-FPM and NGINX for local development on DockerA primer on PHP on Docker under Windows 10](https://www.pascallandau.com/blog/php-php-fpm-and-nginx-on-docker-in-windows-10/)
 
 ## Kubernetes 初步
   - 使用 Docker Desktop 可以很方便的启用 Kubernetes: https://yeasy.gitbook.io/docker_practice/setup/docker-desktop
   - [Docker Desktop for Mac/Windows 开启 Kubernetes](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
-
-
-
-
 
