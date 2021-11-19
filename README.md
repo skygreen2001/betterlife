@@ -78,12 +78,19 @@
 
 ### 其它安装
 
-  - [其它安装可选](install/README.md)
+  - [安装UEditor](install/README.md)
     - 后台【admin】在线编辑器使用百度的UEditor组件，需按该文档说明进行安装。
+
+  - [安装示例数据库]
+    - 新建Mysql数据库:bb, 运行脚本: install/db/mysql/db_betterlife_new.sql
 
 ### Docker安装
 
 如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑操作系统环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis), 可使用Docker安装
+
+* **安装Docker**
+
+  - [Get Docker](https://docs.docker.com/get-docker/)
 
 * **Docker帮助文档**
 
@@ -98,6 +105,10 @@
   - docker run -dit --name=betterlife -p 9000:9000 -v /Library/WebServer/Documents/bb:/var/www/html/betterlife --network=betterlife bb/betterlife
   - docker run -dit --name=betterlife_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx
 
+  [说明]: 
+      - 本地物理机Web路径: /Library/WebServer/Documents/bb, 应修改为您本地的路径
+      - 容器里Web放置路径: /var/www/html/betterlife
+
 * **开发环境**
   <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
   <!-- laravel-demo/Dockerfile: https://github.com/khs1994-docker/laravel-demo/blob/master/Dockerfile -->
@@ -107,6 +118,10 @@
   - docker run -dit --name=betterlife_dev -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 9000:9000 --network=betterlife bb/betterlife_dev
   - docker run -dit --name=betterlife_dev_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx_dev
 
+  [说明]: 
+      - 本地物理机Web路径: /Library/WebServer/Documents/bb, 应修改为您本地的路径
+      - 容器里Web放置路径: /var/www/html/betterlife
+
 * **云平台**
 
 * [阿里云](https://market.aliyun.com/developer)
@@ -114,13 +129,14 @@
 * [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7)
 
 * **TODO**
+
   - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
 
 ## 帮助文档
 
 * [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
 * [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
-* [本地说明文档](docs/)
+* [本地说明文档](docs/README.md)
 
 ## 框架目录定义
 
