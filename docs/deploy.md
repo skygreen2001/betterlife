@@ -36,7 +36,8 @@
 
 ## 本地运行服务器
 
-* **本地运行服务器**
+* **本地运行服务器[静态Html网页]**
+
   > https://threejs.org/docs/index.html#manual/en/introduction/How-to-run-things-locally
 
   - PHP server

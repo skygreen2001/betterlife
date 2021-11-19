@@ -48,8 +48,8 @@
   - 本地运行PHP server: php -S localhost:8000)
 
 ### 安装检查
+
   - [PHP安装检查](docs/deploy.md)
-    - 需在浏览器中运行查看()
 
 ### 安装目录
 

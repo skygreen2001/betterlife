@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  betterlife:
+    container_name: bb
+    build:
+      context: ./
+      dockerfile: prod/Dockerfile
+      target: betterlife
+    working_dir: /var/www/html/betterlife
+    ports:
+      - 9000:9000
+    volumes:
+      - ./:/var/www/html/betterlife
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 
+      MYSQL_DB: betterlife
+
+  nginx:
+    container_name: bb_nginx
+    build:
+      context: ./
+      dockerfile: prod/Dockerfile
+      target: nginx
+    working_dir: /var/www/html/betterlife
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/html/betterlife
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - bb-mysql-data:/var/lib/mysql
+      - ../db/mysql:/docker-entrypoint-initdb.d/
+    environment: 
+      MYSQL_DATABASE: betterlife
+      MYSQL_ALLOW_EMPTY_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 
+
+volumes:
+  bb-mysql-data:

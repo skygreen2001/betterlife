@@ -50,6 +50,7 @@
   - 删除1到多个镜像: docker rmi IMAGE_ID1 IMAGE_ID2
   - 查看最新前3个的container: docker ps -n 3
   - 查看所有的container(包括停止的): docker ps -a
+  - 容器取名: docker container rename ef7b5043e9b4 bb
   - Docker stats for containers: docker stats
   - 开始一个container: docker start $CONTAINER_ID
     - 开始container: docker start $CONTAINER_NAME(docker run 需指定名称 --name $CONTAINER_NAME)
@@ -87,6 +88,8 @@
   - 网络列表: docker network list
 
   - docker-compose
+    - Build or rebuild services: docker-compose build
+    - 验证文件配置: docker-compose config
     - 后台启动: docker-compose up -d
     - List current running Containers: docker-compose ps
     - Close all running Containers: docker-compose stop
