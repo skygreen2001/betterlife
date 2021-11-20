@@ -86,7 +86,7 @@
 
 ### Docker安装
 
-如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑操作系统环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis), 可使用Docker安装
+如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑因为操作系统，无法完整搭建应用运行环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis，Mac Monterey版本后不再默认安装PHP), 可使用Docker安装
 
 * **安装Docker**
 
@@ -96,31 +96,17 @@
 
   - [说明](install/docker/README.md)
 
-* **生产环境**
-  <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
-  <!-- laravel-demo/Dockerfile: https://github.com/khs1994-docker/laravel-demo/blob/master/Dockerfile -->
-  - docker build -t bb/betterlife --target=betterlife -f install/docker/prod/Dockerfile .
-  - docker build -t bb/nginx --target=nginx -f install/docker/prod/Dockerfile .
-  - docker network create betterlife
-  - docker run -dit --name=betterlife -p 9000:9000 -v /Library/WebServer/Documents/bb:/var/www/html/betterlife --network=betterlife bb/betterlife
-  - docker run -dit --name=betterlife_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx
+* **Docker 运行应用**
 
-  [说明]: 
-      - 本地物理机Web路径: /Library/WebServer/Documents/bb, 应修改为您本地的路径
-      - 容器里Web放置路径: /var/www/html/betterlife
+  - 根路径下运行: docker-compose -f install/docker/docker-compose.yml up -d 
+  - 停止应用   : docker-compose -f install/docker/docker-compose.yml stop
 
-* **开发环境**
-  <!-- 实战多阶段构建 Laravel 镜像: https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel -->
-  <!-- laravel-demo/Dockerfile: https://github.com/khs1994-docker/laravel-demo/blob/master/Dockerfile -->
-  - docker build -t bb/betterlife_dev --target=betterlife -f install/docker/dev/Dockerfile .
-  - docker build -t bb/nginx_dev --target=nginx -f install/docker/dev/Dockerfile .
-  - docker network create betterlife
-  - docker run -dit --name=betterlife_dev -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 9000:9000 --network=betterlife bb/betterlife_dev
-  - docker run -dit --name=betterlife_dev_nginx -v /Library/WebServer/Documents/bb:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx_dev
+  - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down
+  - 删除生成的镜像: docker rmi docker_nginx docker_betterlife mysql:5.7
+  
+* **更多说明**
 
-  [说明]: 
-      - 本地物理机Web路径: /Library/WebServer/Documents/bb, 应修改为您本地的路径
-      - 容器里Web放置路径: /var/www/html/betterlife
+  - [说明](install/docker/SETUP.md)
 
 * **云平台**
 

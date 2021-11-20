@@ -4,14 +4,17 @@ services:
   betterlife:
     container_name: bb
     build:
-      context: ./
-      dockerfile: prod/Dockerfile
+      context: ../../
+      # context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      dockerfile: install/docker/Dockerfile
       target: betterlife
     working_dir: /var/www/html/betterlife
     ports:
       - 9000:9000
     volumes:
-      - ./:/var/www/html/betterlife
+      - ../../:/var/www/html/betterlife
+      # - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
+
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: root
@@ -21,14 +24,16 @@ services:
   nginx:
     container_name: bb_nginx
     build:
-      context: ./
-      dockerfile: prod/Dockerfile
+      context: ../../
+      # context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      dockerfile: install/docker/Dockerfile
       target: nginx
     working_dir: /var/www/html/betterlife
     ports:
       - 80:80
     volumes:
-      - ./:/var/www/html/betterlife
+      - ../../:/var/www/html/betterlife
+      # - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
 
   mysql:
     image: mysql:5.7
@@ -37,7 +42,7 @@ services:
       - 3306:3306
     volumes:
       - bb-mysql-data:/var/lib/mysql
-      - ../db/mysql:/docker-entrypoint-initdb.d/
+      - ./install/db/mysql:/docker-entrypoint-initdb.d/
     environment: 
       MYSQL_DATABASE: betterlife
       MYSQL_ALLOW_EMPTY_PASSWORD: root

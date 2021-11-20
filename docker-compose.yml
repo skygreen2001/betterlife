@@ -4,14 +4,15 @@ services:
   betterlife:
     container_name: bb
     build:
-      context: ./
-      dockerfile: install/docker/prod/Dockerfile
+      context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      dockerfile: install/docker/Dockerfile
       target: betterlife
     working_dir: /var/www/html/betterlife
     ports:
       - 9000:9000
     volumes:
-      - ./:/var/www/html/betterlife
+      - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
+
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: root
@@ -21,14 +22,14 @@ services:
   nginx:
     container_name: bb_nginx
     build:
-      context: ./
-      dockerfile: install/docker/prod/Dockerfile
+      context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      dockerfile: install/docker/Dockerfile
       target: nginx
     working_dir: /var/www/html/betterlife
     ports:
       - 80:80
     volumes:
-      - ./:/var/www/html/betterlife
+      - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
 
   mysql:
     image: mysql:5.7

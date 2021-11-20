@@ -89,12 +89,11 @@
 
   - docker-compose
     - Build or rebuild services: docker-compose build
-    - 验证文件配置: docker-compose config
+    - 查看验证文件配置: docker-compose config
     - 后台启动: docker-compose up -d
     - List current running Containers: docker-compose ps
     - Close all running Containers: docker-compose stop
     - 删除Delete all existing Containers: docker-compose down
-    - 查看配置: docker-compose config
     - Compose查看日志: docker-compose logs -f
 
 ## Docker Compose
