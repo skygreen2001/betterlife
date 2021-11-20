@@ -5,7 +5,7 @@ services:
     container_name: bb
     build:
       context: ../../
-      # context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
       dockerfile: install/docker/Dockerfile
       target: betterlife
     working_dir: /var/www/html/betterlife
@@ -13,7 +13,8 @@ services:
       - 9000:9000
     volumes:
       - ../../:/var/www/html/betterlife
-      # - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
+      # - ./:/var/www/html/betterlife # 本配置文件放置在根路径下使用这一行, 然后注释上一行
+      - /var/www/html/betterlife/install/vendor # 这一行的意思是容器里该文件夹不会被宿主机所覆盖
 
     environment:
       MYSQL_HOST: mysql
@@ -25,7 +26,7 @@ services:
     container_name: bb_nginx
     build:
       context: ../../
-      # context: ./ # 注释上一行，本配置文件放置在根路径下使用这一行
+      # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
       dockerfile: install/docker/Dockerfile
       target: nginx
     working_dir: /var/www/html/betterlife
@@ -33,7 +34,7 @@ services:
       - 80:80
     volumes:
       - ../../:/var/www/html/betterlife
-      # - ./:/var/www/html/betterlife # 注释上一行，本配置文件放置在根路径下使用这一行
+      # - ./:/var/www/html/betterlife # 本配置文件放置在根路径下使用这一行, 然后注释上一行
 
   mysql:
     image: mysql:5.7

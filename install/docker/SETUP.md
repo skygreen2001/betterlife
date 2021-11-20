@@ -27,8 +27,10 @@
   - 停止应用   : docker-compose stop
 
   - 删除所有的容器: docker-compose down
-  - 删除生成的镜像: docker rmi bb_nginx bb_betterlife  mysql:5.7
+  - 删除生成的镜像: docker rmi bb_nginx bb_betterlife mysql:5.7
 
+  - 复制容器文件到本地: 
+    - 复制安装的composer包文件到本地: docker cp bb:/var/www/html/betterlife/install/vendor/ $(pwd)/install/
 
 ## Docker 多阶段构建betterlife
 

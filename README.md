@@ -99,6 +99,7 @@
 * **Docker 运行应用**
 
   - 根路径下运行: docker-compose -f install/docker/docker-compose.yml up -d 
+  - 复制容器文件: docker cp bb:/var/www/html/install/vendor/ $(pwd)/install/vendor/
   - 停止应用   : docker-compose -f install/docker/docker-compose.yml stop
 
   - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down

@@ -16,6 +16,7 @@ FROM php:${PHP_VERSION}-fpm as betterlife
 # FROM php:${PHP_VERSION}-fpm-alpine as betterlife
 
 ARG BB_PATH=/var/www/html/betterlife/
+# ARG APP_VENDOR=/var/www/html/install/vendor/
 
 # 经确认，系统是Debian 11 “bullseye”系统
 # 设置Ubuntu国内镜像
@@ -66,10 +67,12 @@ RUN docker-php-ext-install mysqli zip \
     && docker-php-ext-install gd \
     && pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 
-COPY --from=composer /app/vendor/ ${BB_PATH}/install/vendor/
 # COPY . ${BB_PATH}
+COPY --from=composer /app/vendor/ ${BB_PATH}/install/vendor/
+# COPY --from=composer /app/vendor/ ${APP_VENDOR}/
+
 RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini \
-      && cd ${BB_PATH} \
+    #   && cd ${BB_PATH} \
       && mkdir -p upload \
       && chmod -R 777 upload \
       && mkdir -p log \
@@ -83,7 +86,7 @@ FROM nginx:alpine as nginx
 ARG BB_PATH=/var/www/html/betterlife/
 COPY install/docker/nginx.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/conf.d/default.conf
-COPY --from=betterlife ${BB_PATH} ${BB_PATH}
+# COPY --from=betterlife ${BB_PATH} ${BB_PATH}
 COPY install/docker/wait-for-php.sh /wait-for-php.sh
 # RUN set -x ; rm -rf /etc/nginx/conf.d
 
