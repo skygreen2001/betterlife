@@ -14,29 +14,38 @@ RUN set -x ; cd /app \
 
 
 # FROM node:12-alpine as ueditor
-# # Adding build tools to make yarn install work on Apple silicon / arm64 machines
-# # RUN apk add --no-cache python3 g++ make
-# WORKDIR /app
-# COPY install/bower.json install/gulpfile.js install/package.json ./install/
-# COPY misc/js/onlineditor/ueditor_bak/ ./misc/js/onlineditor/ueditor_bak/
-# # 将 alpine linux apk 的安装源改为国内镜像可解决安装 curl 速度慢的问题
-# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && apk add curl \
-#     && npm config set registry https://registry.npm.taobao.org \
-#     && cd install && npm install && npm install -g gulp \
-#     && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash \
-#     && export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \
-#      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \ 
-#     && nvm install 10.15.3 \
-#     && gulp 
-# # RUN npm install -g gulp \
-# #     && gulp \
-# #     && gulp ueditor_cp && gulp ueditor
-# # RUN yarn install --production
-# # CMD ["node", "src/index.js"]
+FROM node:10.15.3-alpine as ueditor
+# FROM baqend/docker-node:10.15.3 as ueditor
 
+RUN apk update && apk add git
 
+# docker Alpine Linux 国内镜像
+# https://furthergazer.top/article/2020/3/9/7.html
 
+# # 设置Ubuntu国内阿里云镜像
+# RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak \
+#     && echo "deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse" > /etc/apt/sources.list \
+#     && echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse" >> /etc/apt/sources.list \
+#     && echo "deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
 
+# RUN apt-get update && apt-get install -y git
+
+WORKDIR /app
+COPY install/bower.json install/gulpfile.js install/package.json ./install/
+COPY misc/js/onlineditor/ueditor_bak/ ./misc/js/onlineditor/ueditor_bak/
+
+# npm config set registry https://registry.npm.taobao.org \
+RUN npm config set registry http://registry.cnpmjs.org \
+    && cd install && npm install && npm install -g gulp \
+    && gulp && gulp ueditor_cp && gulp ueditor
+    
 FROM php:${PHP_VERSION}-fpm as betterlife
 # FROM php:${PHP_VERSION}-fpm-alpine as betterlife
 
@@ -44,7 +53,6 @@ ARG BB_PATH=/var/www/html/betterlife/
 # ARG APP_VENDOR=/var/www/html/install/vendor/
 
 # 经确认，系统是Debian 11 “bullseye”系统
-# 设置Ubuntu国内镜像
 # 阿里云Debian 镜像: https://developer.aliyun.com/mirror/debian
 # Debian 11 “bullseye” 配置指南: https://zhuanlan.zhihu.com/p/402267392
 # 清华大学开源软件镜像站: https://mirrors.tuna.tsinghua.edu.cn/help/debian/
@@ -96,6 +104,8 @@ RUN docker-php-ext-install mysqli zip \
 COPY --from=composer /app/vendor/ ${BB_PATH}/install/vendor/
 # COPY --from=composer /app/vendor/ ${APP_VENDOR}/
 
+COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}/misc/js/onlineditor/ueditor
+
 RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini \
     #   && cd ${BB_PATH} \
       && mkdir -p upload \
@@ -113,7 +123,6 @@ COPY install/docker/nginx.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/conf.d/default.conf
 # COPY --from=betterlife ${BB_PATH} ${BB_PATH}
 COPY install/docker/wait-for-php.sh /wait-for-php.sh
-# RUN set -x ; rm -rf /etc/nginx/conf.d
 
 WORKDIR ${BB_PATH}
 EXPOSE 80

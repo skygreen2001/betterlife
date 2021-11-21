@@ -5,7 +5,9 @@
   "directory": "misc/js",
   "dependencies": {
     "jquery": "^3.1.1",
-    "ueditor": "v1.4.3.3",
+    "ueditor": "v1.4.3.3"
+  },
+  "_dependencies": {
     "ckeditor": "#full/4.5.x"
   }
 }
