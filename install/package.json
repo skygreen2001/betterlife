@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:skygreen2001/betterlife.core.git"
+    "url": "git@github.com:skygreen2001/betterlife.git"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

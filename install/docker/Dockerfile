@@ -12,6 +12,31 @@ RUN set -x ; cd /app \
            --no-scripts \
            --prefer-dist
 
+
+# FROM node:12-alpine as ueditor
+# # Adding build tools to make yarn install work on Apple silicon / arm64 machines
+# # RUN apk add --no-cache python3 g++ make
+# WORKDIR /app
+# COPY install/bower.json install/gulpfile.js install/package.json ./install/
+# COPY misc/js/onlineditor/ueditor_bak/ ./misc/js/onlineditor/ueditor_bak/
+# # 将 alpine linux apk 的安装源改为国内镜像可解决安装 curl 速度慢的问题
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && apk add curl \
+#     && npm config set registry https://registry.npm.taobao.org \
+#     && cd install && npm install && npm install -g gulp \
+#     && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash \
+#     && export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \
+#      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \ 
+#     && nvm install 10.15.3 \
+#     && gulp 
+# # RUN npm install -g gulp \
+# #     && gulp \
+# #     && gulp ueditor_cp && gulp ueditor
+# # RUN yarn install --production
+# # CMD ["node", "src/index.js"]
+
+
+
+
 FROM php:${PHP_VERSION}-fpm as betterlife
 # FROM php:${PHP_VERSION}-fpm-alpine as betterlife
 
