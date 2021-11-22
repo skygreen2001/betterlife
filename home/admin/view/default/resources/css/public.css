@@ -3,3 +3,7 @@
 #edui_fixedlayer {
     z-index: 19006 !important;
 }
+
+.view dd img, .view dd video {
+    width: 90%;
+}

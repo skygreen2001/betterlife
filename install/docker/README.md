@@ -108,10 +108,10 @@
   - 安装PHP运行环境
     - [实战多阶段构建 Laravel 镜像](https://yeasy.gitbook.io/docker_practice/image/multistage-builds/laravel)
     - [使用 Docker Compose 搭建了一套 LNMP 环境](https://github.com/khs1994-docker/lnmp)
-    - [My Simple Approach to using Docker and PHP](https://bitpress.io/simple-approach-using-docker-with-php/)
     - [使用Docker部署LNMP+Redis环境](https://github.com/voocel/docker-lnmp)
     - [docker-php-ext-install.md](https://gist.github.com/giansalex/2776a4206666d940d014792ab4700d80)
     - [Environment variables in Compose](https://docs.docker.com/compose/environment-variables/)
+    - [My Simple Approach to using Docker and PHP](https://bitpress.io/simple-approach-using-docker-with-php/)
     - [laravel-demo](https://github.com/khs1994-docker/laravel-demo)
     
   - 安装PHP开发环境  
