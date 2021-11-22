@@ -31,8 +31,11 @@
 
   - 复制容器文件到本地: 
     - 复制安装的composer包文件到本地: docker cp bb:/var/www/html/betterlife/install/vendor/ $(pwd)/install/
+    - 复制安装好的UEditor包文件到本地: docker cp bb:/var/www/html/betterlife/misc/js/onlineditor/ueditor/ $(pwd)/misc/js/onlineditor/
 
 ## Docker 多阶段构建betterlife
+
+本方式可供学习Docker多阶段构建使用。
 
 ### 参考
   
@@ -53,8 +56,8 @@
     - [说明]: 
       - 本地物理机Web路径: `pwd`
       - 容器里Web放置路径: /var/www/html/betterlife
-      - 因为一般会使用专门的Mysql数据库，提供域名或者外网地址；只需修改Gc.php里相应的数据库配置即可
-      - 
+      - 如果使用如阿里云其他外网的Mysql数据库，提供域名或者外网地址；只需修改Gc.php里相应的数据库配置即可
+      
   - 停止应用     : docker stop betterlife betterlife_nginx
   - 删除所有的容器: docker rm betterlife betterlife_nginx
   - 删除生成的镜像: docker rmi bb/nginx bb/betterlife

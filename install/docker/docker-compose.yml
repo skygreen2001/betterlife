@@ -36,6 +36,8 @@ services:
     volumes:
       - ../../:/var/www/html/betterlife
       # - ./:/var/www/html/betterlife # 本配置文件放置在根路径下使用这一行, 然后注释上一行
+      - /var/www/html/betterlife/install/vendor # 这一行的意思是容器里该文件夹不会被宿主机所覆盖
+      - /var/www/html/betterlife/misc/js/onlineditor/ueditor # 这一行的意思是容器里该文件夹不会被宿主机所覆盖
 
   mysql:
     image: mysql:5.7
@@ -44,7 +46,8 @@ services:
       - 3306:3306
     volumes:
       - bb-mysql-data:/var/lib/mysql
-      - ./install/db/mysql:/docker-entrypoint-initdb.d/
+      - ../db/mysql:/docker-entrypoint-initdb.d/
+      # - ./install/db/mysql:/docker-entrypoint-initdb.d/ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
     environment: 
       MYSQL_DATABASE: betterlife
       MYSQL_ALLOW_EMPTY_PASSWORD: root

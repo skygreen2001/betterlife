@@ -70,7 +70,6 @@ RUN apt-get update && apt-get install -y \
 #     autoconf \
     vim
 
-
 RUN echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list \
     && echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
     && echo "deb http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
@@ -114,7 +113,7 @@ FROM nginx:alpine as nginx
 ARG BB_PATH=/var/www/html/betterlife/
 COPY install/docker/nginx.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/conf.d/default.conf
-# COPY --from=betterlife ${BB_PATH} ${BB_PATH}
+COPY --from=betterlife ${BB_PATH} ${BB_PATH}
 COPY install/docker/wait-for-php.sh /wait-for-php.sh
 
 WORKDIR ${BB_PATH}

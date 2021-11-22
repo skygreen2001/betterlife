@@ -1,18 +1,91 @@
-# 安装说明
+# 安装PHP第三方库和UEditor
 
-## 安装目录
-
-  - 安装目录: 以下安装都在根路径/install 目录下
+主要目标是安装PHP第三方库和UEditor。
 
 ## 推荐方式
 
-- 主要目标是安装 UEditor。
+### Docker方式
+
+* **安装Docker**
+
+  - [Get Docker](https://docs.docker.com/get-docker/)
+
+* **Docker帮助文档**
+
+  - [说明](docker/README.md)
+
+* **安装PHP第三方库**
+
+  如果开发者熟悉Docker，可使用Docker安装PHP第三方库，就无需在本地安装composer了。
+
+  在Docker容器内安装好UEditor，用修改过的UEditor备份文件(已先复制到容器内)覆盖，再将其复制到本地指定的文件路径下。
+
+  以下操作均在根路径下命令行中执行:
+
+  - 安装目录: 根路径
+  - 创建镜像
+    - docker build -t bb/composer --target=composer -f install/docker/Dockerfile .
+  - 运行容器应用 
+    - docker run -dit --name=betterlife_composer bb/composer
+  - 复制容器文件到本地: 
+    - 复制安装好的PHP第三方库文件到本地: docker cp betterlife_composer:/app/vendor/ $(pwd)/install/
+
+* **安装UEditor**
+
+  如果开发者熟悉Docker, 可使用Docker在容器内安装好UEditor, 用修改过的UEditor备份文件(已先复制到容器内)覆盖，再将其从容器里复制到宿主机本地指定路径下。
+
+  以下操作均在根路径下命令行中执行:
+
+  - 安装目录: 根路径
+  - 创建镜像
+    - docker build -t bb/ueditor --target=ueditor -f install/docker/Dockerfile .
+  - 运行容器应用 
+    - docker run -dit --name=betterlife_ueditor bb/ueditor
+  - 复制容器文件到本地: 
+    - 复制安装好的UEditor包文件到本地: docker cp betterlife_ueditor:/app/misc/js/onlineditor/ueditor/ $(pwd)/misc/js/onlineditor/
+
+## 本地方式
+
+### 安装PHP第三方库
+
+* **安装 composer**
+
+  - 安装composer: http://docs.phpcomposer.com/00-intro.html
+    - 升级composer: composer self-update
+    - 升级后回滚老版本: composer self-update --rollback 
+    - [阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
+
+* **安装目录下运行**
+
+  安装目录是根目录下的install目录, 即本说明文件目录下
+  - cd install/
+
+  - 运行composer
+
+    ```
+    > composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+    > composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist
+    ```
+
+### 安装UEditor
+
+#### 必备条件
+
+* **安装NodeJs**
+
+  下载地址: https://nodejs.org/en/download/
+
+#### 第一种方式
+
+- 使用Git、Node工具。
+
 - UEditor源码需用到Github库
   - [Github国内镜像网站](https://zhuanlan.zhihu.com/p/360677731)
   - Github源库: https://github.com/fex-team/ueditor.git
   - 镜像一    : https://github.com.cnpmjs.org/fex-team/ueditor.git
   - 镜像二    : https://hub.fastgit.org/fex-team/ueditor.git
 
+- 安装目录: 以下安装都在根路径/install 目录下
 - 命令行下运行:
 
     ```
@@ -25,57 +98,41 @@
     > cd ../../../install/ && rm -rf ueditor
     ```
 
-## 第二种方式
+#### 第二种方式
 
-- 以下步骤主要目标是安装 UEditor。
-- 该方式主要是通过打包工具安装UEditor。
-- 使用Node, gulp, npm, bower 等工具。
+- 使用Node, Gulp工具。
 
-* **安装NodeJs**
+- 安装目录: 以下安装都在根路径/install 目录下, 即本说明文件目录下
 
-  下载地址: https://nodejs.org/en/download/
-
-* **安装Gulp**
+- 全局运行npm
 
   ```
   > npm install -g gulp
   ```
 
-* **安装目录下运行**
+- 运行npm
 
-  安装目录是根目录下的install目录, 即本说明文件目录下
+  ```
+  > npm install
+  ```
+  [Mac电脑用户]: sudo npm install
 
-  - 运行npm
+- 运行gulp
 
-    ```
-    > npm install
-    ```
-    [Mac电脑用户]: sudo npm install
+  ```
+  > sudo gulp
+  ```
+  - 说明: 因为ueditor打包需要安装grunt的原因，该命令行需执行两次。
 
-  - 运行gulp
+- 安装ueditor
 
-    ```
-    > sudo gulp
-    ```
-    - 说明: 因为ueditor打包需要安装grunt的原因，该命令行需执行两次。
-
-  - 安装ueditor
-
-    ```
-    > sudo gulp ueditor_cp && sudo gulp ueditor
-    ```
+  ```
+  > sudo gulp ueditor_cp && sudo gulp ueditor
+  ```
 
 ## 手动方式
 
-* **安装Smarty | PHPExcel | UEditor**
-
-  - 下载Github库
-    - Smarty        : https://github.com/smarty-php/smarty
-    - PhpSpreadsheet: https://github.com/PHPOffice/PhpSpreadsheet
-
-  - 放置 Smarty 库, PhpExcel库
-    - 放置 Smarty 库 -> install/vendor/smarty/smarty/ 目录下
-    - 放置 PhpSpreadsheet 库 -> install/vendor/phpoffice/phpspreadsheet/ 目录下
+* **安装UEditor ｜ Smarty | PHPExcel**
 
   - 下载 在线编辑器: [UEditor](http://ueditor.baidu.com/website/download.html)
     - 下载 在线编辑器: [UEditor] [1.4.3.3 PHP 版本] UTF-8版
@@ -86,6 +143,14 @@
 
     [说明]
     > UEditor下载版本为:[1.4.3.3 PHP 版本] UTF-8版
+
+  - 下载Github库
+    - Smarty        : https://github.com/smarty-php/smarty
+    - PhpSpreadsheet: https://github.com/PHPOffice/PhpSpreadsheet
+
+  - 放置 Smarty 库, PhpExcel库
+    - 放置 Smarty 库 -> install/vendor/smarty/smarty/ 目录下
+    - 放置 PhpSpreadsheet 库 -> install/vendor/phpoffice/phpspreadsheet/ 目录下
 
 ## FAQ
 

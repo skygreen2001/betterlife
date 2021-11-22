@@ -79,7 +79,8 @@
 
   - 创建一个数据卷: docker volume create my-vol
   - 查看所有的数据卷: docker volume ls
-  - 查看数据卷信息: docker volume inspect todo-db
+  - 查看数据卷信息: docker volume inspect my-vol
+  - 删除数据卷: docker volume rm my-vol
   - 挂载数据卷: docker run -d -P --name web --mount source=my-vol,target=/usr/share/nginx/html nginx:alpine
                docker run -dp 82:80 -v my-vol:/usr/share/nginx/html nginx:alpine
   - 挂载主机目录: docker run -d -P --name web --mount type=bind,source=/Library/WebServer/Documents/,target=/usr/share/nginx/html nginx:alpine

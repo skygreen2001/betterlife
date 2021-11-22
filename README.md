@@ -1,4 +1,4 @@
-# betterlife
+# 只为更好
 
 符合中国开发者思维方式的快速开发的框架，设计初衷快捷、简单、实用。
 
@@ -51,38 +51,14 @@
 
   - [PHP安装检查](docs/deploy.md)
 
-### 安装目录
-
-  - 安装目录: 以下安装都在根路径/install 目录下
-
-### 安装PHP第三方库
-
-* **安装 composer**
-
-  - 安装composer: http://docs.phpcomposer.com/00-intro.html
-    - 升级composer: composer self-update
-    - 升级后回滚老版本: composer self-update --rollback 
-    - [阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
-
-* **安装目录下运行**
-
-  安装目录是根目录下的install目录, 即本说明文件目录下
-  - cd install/
-
-  - 运行composer
-
-    ```
-    > composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-    > composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist
-    ```
-
 ### 其它安装
 
-  - [安装UEditor](install/README.md)
+  - [安装PHP第三方库和UEditor](install/README.md)
+    - 安装PHP第三方库主要是用composer
     - 后台【admin】在线编辑器使用百度的UEditor组件，需按该文档说明进行安装。
 
   - [安装示例数据库]
-    - 新建Mysql数据库:bb, 运行脚本: install/db/mysql/db_betterlife_new.sql
+    - 新建Mysql数据库:betterlife, 运行脚本: install/db/mysql/db_betterlife.sql
 
 ### Docker安装
 
@@ -98,8 +74,7 @@
 
 * **Docker 运行应用**
 
-  - 根路径下运行: docker-compose -f install/docker/docker-compose.yml up -d 
-  - 复制容器文件: docker cp bb:/var/www/html/install/vendor/ $(pwd)/install/vendor/
+  - 根路径下运行: docker-compose -f install/docker/docker-compose.yml up -d
   - 停止应用   : docker-compose -f install/docker/docker-compose.yml stop
 
   - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down
