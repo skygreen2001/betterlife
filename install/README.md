@@ -6,10 +6,30 @@
 
 ## 推荐方式
 
+- 主要目标是安装 UEditor。
+- UEditor源码需用到Github库
+  - [Github国内镜像网站](https://zhuanlan.zhihu.com/p/360677731)
+  - Github源库: https://github.com/fex-team/ueditor.git
+  - 镜像一    : https://github.com.cnpmjs.org/fex-team/ueditor.git
+  - 镜像二    : https://hub.fastgit.org/fex-team/ueditor.git
+
+- 命令行下运行:
+
+    ```
+    > git clone https://github.com.cnpmjs.org/fex-team/ueditor.git -b dev-1.4.3.3
+    > npm config set registry https://registry.npm.taobao.org 
+    > cd ueditor && npm install  && npm install -g grunt && npm install -g grunt-cli && grunt default \
+    > cd ../../misc/js/onlineditor && mkdir ueditor \
+    > cp -rf ../../../install/ueditor/dist/utf8-php/* ueditor/ \
+    > cp -rf ueditor_bak/* ueditor/
+    > cd ../../../install/ && rm -rf ueditor
+    ```
+
+## 第二种方式
+
 - 以下步骤主要目标是安装 UEditor。
 - 该方式主要是通过打包工具安装UEditor。
-- 现阶段在Mac上无法正常使用Node和Gulp安装UEditor。
-- 现阶段在目标路径下已经按手动模式安装好了UEditor，该推荐方式是我期望在未来通过打包方式自动安装好UEditor组件。
+- 使用Node, gulp, npm, bower 等工具。
 
 * **安装NodeJs**
 
