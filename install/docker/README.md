@@ -1,12 +1,15 @@
 # Betterlife Docker README
 
 ## 开发初步
-  - [DaoCloud 镜像市场](https://hub.daocloud.io/)
+  - [Get Started with Docker](https://www.docker.com/get-started)
+  - [Get started with Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/)
   - [Reference documentation](https://docs.docker.com/reference/)
   - [Docker — 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/)
-  - [Samples](https://docs.docker.com/samples/)
+  - [Get started](https://docs.docker.com/get-started/)
   - [Docker for Beginners](https://github.com/docker/labs/tree/master/beginner/)
-  - [Download Docker Desktop](https://hub.docker.com/?overlay=onboarding)
+  - [Samples](https://docs.docker.com/samples/)
+  - [Docker Hub](https://hub.docker.com/?overlay=onboarding)
+  - [DaoCloud 镜像市场](https://hub.daocloud.io/)
   - 搜索镜像[PHP]: docker search php
   - 第一个docker应用: docker run hello-world
   - 开始启动nginx: docker run --detach --publish=80:80 --name=webserver nginx
@@ -23,13 +26,6 @@
   - 从宿主机拷贝文件到容器: docker cp 宿主机中要拷贝的文件名及其路径 容器名:要拷贝到容器里面对应的路径
     - docker cp /Users/master/Downloads/test.php 17dbf5447e99:/usr/share/nginx/html/
 
-  - 纠正时间
-    - 查看当前系统时间: date -R
-      - 结果时区是：-0500, 我需要的是东八区，这儿显示不是，所以需要设置一个时区 
-    - 运行tzselect: tzselect
-    - 在这里我们选择亚洲 Asia，确认之后选择中国（China)，最后选择北京(Beijing)
-    - cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-    - 再次查看时间date -R，已经修改为北京时间
   - [Image-building best practices](https://docs.docker.com/get-started/09_image_best/)
 
 ## Centos 安装 Docker
@@ -44,7 +40,6 @@
   - Play with Docker (PWD): https://labs.play-with-docker.com
 
 ## 常用指令
-  - [Get started with Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/)
   - docker --help
   - 列出镜像: docker images
   - 删除1到多个镜像: docker rmi IMAGE_ID1 IMAGE_ID2
@@ -66,7 +61,7 @@
 
   - 创建镜像并上传
     - 安全检查: docker scan getting-started [image-name]
-    - 检查创建中每次大小: docker image history getting-started [image-name]
+    - 检查创建中每层大小: docker image history getting-started [image-name]
     - 创建镜像: docker build -t getting-started [image-name] .
     - 运行创建的镜像: docker run -dp 3000:3000 getting-started [image-name]
     - 登录到docker hub: docker login -u [YOUR-USER-NAME]
@@ -75,7 +70,6 @@
     - hub上查询提交的镜像: https://hub.docker.com  -> 搜索:  YOUR-USER-NAME/getting-started
     - 如果本地已经存在，需要更新镜像: docker pull YOUR-USER-NAME/getting-started [image-name]
     - 运行推送的hub: docker run -dp 3000:3000 YOUR-USER-NAME/getting-started [image-name]
-
 
   - 创建一个数据卷: docker volume create my-vol
   - 查看所有的数据卷: docker volume ls
@@ -98,11 +92,28 @@
     - Compose查看日志: docker-compose logs -f
 
 ## Docker Compose
+  - [Overview of Docker Compose](https://docs.docker.com/compose/)
   - [Docker Compose](https://www.runoob.com/docker/docker-compose.html)
   - [Docker and Docker Compose](https://www.jhipster.tech/docker-compose/)
+  - [使用 docker-compose 构建你的项目](https://juejin.cn/post/6844904038627033095)
   - [Deploying Laravel, Nginx, and MySQL with Docker Compose](https://www.cloudsigma.com/deploying-laravel-nginx-and-mysql-with-docker-compose/)
   - [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
-  - [使用 docker-compose 构建你的项目](https://juejin.cn/post/6844904038627033095)
+
+## 在IDE中使用Docker
+  - [Docker in Visual Studio Code](https://code.visualstudio.com/docs/containers/overview)
+    - 所有Docker的指令操作: opening the Command Palette [⇧⌘P] and using Docker: 
+    - Docker commands | Docker Explorer | Docker Compose
+    - Docker Explorer -> HELP AND FEEDBACK -> Open Docker Extension Walkthrough
+  - [VSCode - Developing inside a Container](https://code.visualstudio.com/docs/remote/containers)
+  - [VSCode - Create a development container](https://code.visualstudio.com/docs/remote/create-dev-container)
+  - [VSCode - Remote development in Containers](https://code.visualstudio.com/docs/remote/containers-tutorial)
+    - VSCode安装extension: Remote - Containers
+  - [IDEA - Docker](https://www.jetbrains.com/help/idea/docker.html)
+  - [IDEA - 使用IDEA的Docker插件快速实现Docker镜像构建和部署](https://segmentfault.com/a/1190000022026960)
+
+## Docker开发
+  - [Language-specific guides](https://docs.docker.com/language/)
+  - [Develop with Docker](https://docs.docker.com/develop/)
 
 ## PHP
   - 安装PHP运行环境

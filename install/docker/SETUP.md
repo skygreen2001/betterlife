@@ -49,9 +49,11 @@
     - docker build -t bb/betterlife --target=betterlife -f install/docker/Dockerfile .
     - docker build -t bb/nginx --target=nginx -f install/docker/Dockerfile .
     - docker network create betterlife
+    - docker volume create betterlife_ueditor
+    - docker volume create betterlife_composer
   - 运行容器应用 
-    - docker run -dit --name=betterlife -p 9000:9000 -v `pwd`:/var/www/html/betterlife --network=betterlife bb/betterlife
-    - docker run -dit --name=betterlife_nginx -v `pwd`:/var/www/html/betterlife -p 80:80 --network=betterlife bb/nginx
+    - docker run -dit --name=betterlife -p 9000:9000 -v `pwd`:/var/www/html/betterlife -v betterlife_composer:/var/www/html/betterlife/install/vendor -v betterlife_ueditor:/var/www/html/betterlife/misc/js/onlineditor/ueditor --network=betterlife bb/betterlife
+    - docker run -dit --name=betterlife_nginx -v `pwd`:/var/www/html/betterlife  -v betterlife_composer:/var/www/html/betterlife/install/vendor -v betterlife_ueditor:/var/www/html/betterlife/misc/js/onlineditor/ueditor -p 80:80 --network=betterlife bb/nginx
 
     - [说明]: 
       - 本地物理机Web路径: `pwd`
