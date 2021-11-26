@@ -17,17 +17,42 @@
       - 生产服务器上需配置域名
       - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
 
+## 设置权限
+
+  - 由于是通过volume映射到容器内，容器内文件夹的权限由宿主机文件夹的权限决定，因此需要在宿主机本地执行以下指令赋予读写权限。
+  - 也可在容器运行起来后，进入容器内应用的文件位置执行以下指令赋予读写权限。
+  - 根路径下运行
+
+    ```
+      sudo mkdir -p upload
+      sudo chmod -R 777 upload
+      sudo mkdir -p log
+      sudo chmod -R 777 log
+      sudo mkdir -p home/betterlife/view/bootstrap/tmp/templates_c
+      sudo chmod -R 777 home/betterlife/view/bootstrap/tmp/templates_c
+      sudo mkdir -p home/admin/view/default/tmp/templates_c
+      sudo chmod -R 777 home/admin/view/default/tmp/templates_c
+      sudo mkdir -p home/model/view/default/tmp/templates_c
+      sudo chmod -R 777 home/model/view/default/tmp/templates_c
+      sudo mkdir -p home/report/view/default/tmp/templates_c
+      sudo chmod -R 777 home/report/view/default/tmp/templates_c
+    ```
+
 ## 在根路径下运行更便捷
 
   - 为了避免不使用Docker Compose的用户在根路径下看到docker的配置文件，将配置文件放在了install/docker目录下。
   - 对于经常使用Docker的用户，可以将配置文件放置到根路径下，这样就不需要每次启动关闭都需要带上配置文件的参数了。
   - 需要注意的是，需修改配置文件中的相关路径(配置文件中有注释说明，按要求调整即可)。
   - 修改后就可以简化启动和关闭指令了。
-  - 根路径下运行: docker-compose up -d
-  - 停止应用   : docker-compose stop
+
+  - 根路径下运行以下指令执行操作
+  - 创建运行: docker-compose up -d
+  - 运行应用: docker-compose start
+  - 停止应用: docker-compose stop
+  - 进入应用: docker exec -it bb /bin/bash
 
   - 删除所有的容器: docker-compose down
-  - 删除生成的镜像: docker rmi bb_nginx bb_betterlife mysql:5.7
+  - 删除生成的镜像: docker rmi bb bb_nginx mysql:5.7
 
   - 复制容器文件到本地: 
     - 复制安装的composer包文件到本地: docker cp bb:/var/www/html/betterlife/install/vendor/ $(pwd)/install/

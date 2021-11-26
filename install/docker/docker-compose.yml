@@ -3,6 +3,7 @@ version: "3.7"
 services:
   betterlife:
     container_name: bb
+    image: bb
     build:
       context: ../../
       # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
@@ -25,12 +26,15 @@ services:
 
   nginx:
     container_name: bb_nginx
+    image: bb_nginx
     build:
       context: ../../
       # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
       dockerfile: install/docker/Dockerfile
       target: nginx
     working_dir: /var/www/html/betterlife
+    depends_on:
+      - betterlife
     ports:
       - 80:80
     volumes:

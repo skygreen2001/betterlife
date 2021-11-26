@@ -7,6 +7,7 @@
     - attachment
     - log
     - home/admin/view/default/tmp/templates_c
+    - home/betterlife/view/bootstrap/tmp/templates_c
     - home/应用名称/view/default/tmp/templates_c
 
   * 修改以下配置
@@ -23,7 +24,7 @@
         php_curl
         php_mbstring
         php_mysqli
-        php_gd2
+        php_gd
         php_zip
         php_rar
 

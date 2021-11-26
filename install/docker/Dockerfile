@@ -99,13 +99,20 @@ COPY --from=composer /app/vendor/ ${BB_PATH}/install/vendor/
 COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}/misc/js/onlineditor/ueditor
 
 RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini
+    # && \
     # cd ${BB_PATH} && \
     # mkdir -p upload && \
     # chmod -R 777 upload && \
     # mkdir -p log && \
     # chmod -R 777 log && \
+    # mkdir -p home/betterlife/view/bootstrap/tmp/templates_c && \
+    # chmod -R 777 home/betterlife/view/bootstrap/tmp/templates_c && \
+    # mkdir -p home/admin/view/default/tmp/templates_c && \
+    # chmod -R 777 home/admin/view/default/tmp/templates_c && \
+    # mkdir -p home/model/view/default/tmp/templates_c && \
+    # chmod -R 777 home/model/view/default/tmp/templates_c && \
     # mkdir -p home/report/view/default/tmp/templates_c && \
-    # chmod -R 777 home/report/view/default/tmp/templates_c 
+    # chmod -R 777 home/report/view/default/tmp/templates_c
 
 #设置alpine系统时区
 ENV TZ=Asia/Shanghai

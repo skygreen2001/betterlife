@@ -74,11 +74,14 @@
 
 * **Docker 运行应用**
 
-  - 根路径下运行: docker-compose -f install/docker/docker-compose.yml up -d
-  - 停止应用   : docker-compose -f install/docker/docker-compose.yml stop
+  - 根路径下运行以下指令执行操作
+  - 创建运行: docker-compose -f install/docker/docker-compose.yml up -d
+  - 运行应用: docker-compose -f install/docker/docker-compose.yml start
+  - 停止应用: docker-compose -f install/docker/docker-compose.yml stop
+  - 进入应用: docker exec -it bb /bin/bash
 
   - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down
-  - 删除生成的镜像: docker rmi docker_nginx docker_betterlife mysql:5.7
+  - 删除生成的镜像: docker rmi bb_nginx bb mysql:5.7
   
 * **更多说明**
 

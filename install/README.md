@@ -91,7 +91,7 @@
     ```
     > git clone https://github.com.cnpmjs.org/fex-team/ueditor.git -b dev-1.4.3.3
     > npm config set registry https://registry.npm.taobao.org 
-    > cd ueditor && npm install  && npm install -g grunt && npm install -g grunt-cli && grunt default \
+    > cd ueditor && npm install && npm install -g grunt && npm install -g grunt-cli && grunt default \
     > cd ../../misc/js/onlineditor && mkdir ueditor \
     > cp -rf ../../../install/ueditor/dist/utf8-php/* ueditor/ \
     > cp -rf ueditor_bak/* ueditor/
@@ -104,7 +104,7 @@
 
 - 安装目录: 以下安装都在根路径/install 目录下, 即本说明文件目录下
 
-- 全局运行npm
+- 全局安装Gulp
 
   ```
   > npm install -g gulp
