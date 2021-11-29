@@ -9,30 +9,32 @@
 ## 下载源码
 
 * **Git安装**
+
   - 下载Git
     - Git SCM  : https://git-scm.com/downloads
     - Bitbucket: https://www.atlassian.com/git/tutorials/install-git
+
   - 下载betterlife 
     - https: https://github.com/skygreen2001/betterlife.git
     - git  : git@github.com:skygreen2001/betterlife.git
 
-  ```
-  > git clone https://github.com/skygreen2001/betterlife.git
-  或
-  > git clone git@github.com:skygreen2001/betterlife.git
-  ```
+    ```
+    > git clone https://github.com/skygreen2001/betterlife.git
+    或
+    > git clone git@github.com:skygreen2001/betterlife.git
+    ```
 
 * **Docker安装**
 
   - [Get Docker](https://docs.docker.com/get-docker/)
   - 下载betterlife
 
-  ```
-  > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
-  或
-  > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone git@github.com:skygreen2001/betterlife.git
-  ```
-  
+    ```
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
+    或
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone git@github.com:skygreen2001/betterlife.git
+    ```
+
 ## 通常安装
 
 ### 运行环境安装
