@@ -86,7 +86,7 @@
 
 * **Docker帮助文档**
 
-  - [说明](install/docker/README.md)
+  - [帮助文档](install/docker/README.md)
 
 * **Docker 运行应用**
 
@@ -99,9 +99,9 @@
   - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down
   - 删除生成的镜像: docker rmi bb_nginx bb mysql:5.7
   
-* **更多说明**
+* **安装后需知**
 
-  - [说明](install/docker/SETUP.md)
+  - [需知说明](install/docker/SETUP.md)
 
 * **云平台**
 
