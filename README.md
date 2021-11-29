@@ -107,9 +107,9 @@
 
 * **云平台**
 
-* [阿里云](https://market.aliyun.com/developer)
-* [Heroku](https://devcenter.heroku.com/categories/php)
-* [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7)
+  - [阿里云](https://market.aliyun.com/developer)
+  - [Heroku](https://devcenter.heroku.com/categories/php)
+  - [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7)
 
 * **TODO**
 
