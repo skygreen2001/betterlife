@@ -183,6 +183,9 @@
 
 ## 参考资料
 
+* **安装Composer**
+  > http://www.phpcomposer.com/
+
 * **下载Smarty**
   > https://github.com/smarty-php/smarty
 

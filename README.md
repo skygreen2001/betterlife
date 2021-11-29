@@ -8,16 +8,32 @@
 
 ## 下载源码
 
-* **通过Github官网下载**
-
-  官网地址: https://github.com/skygreen2001/betterlife.git
+* **Git安装**
+  - 下载Git
+    - Git SCM  : https://git-scm.com/downloads
+    - Bitbucket: https://www.atlassian.com/git/tutorials/install-git
+  - 下载betterlife 
+    - https: https://github.com/skygreen2001/betterlife.git
+    - git  : git@github.com:skygreen2001/betterlife.git
 
   ```
   > git clone https://github.com/skygreen2001/betterlife.git
+  或
   > git clone git@github.com:skygreen2001/betterlife.git
   ```
+
+* **Docker安装**
+
+  - [Get Docker](https://docs.docker.com/get-docker/)
+  - 下载betterlife
+
+  ```
+  > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
+  或
+  > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone git@github.com:skygreen2001/betterlife.git
+  ```
   
-## 安装说明
+## 通常安装
 
 ### 运行环境安装
 
@@ -60,7 +76,7 @@
   - [安装示例数据库]
     - 新建Mysql数据库:betterlife, 运行脚本: install/db/mysql/db_betterlife.sql
 
-### Docker安装
+## Docker安装
 
 如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑因为操作系统，无法完整搭建应用运行环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis，Mac Monterey版本后不再默认安装PHP), 可使用Docker安装
 
@@ -142,13 +158,6 @@
 
 ## 参考资料
 
-* **本框架帮助文档**
-  > 早期文档: http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html
-
-* **安装Composer**
-  > http://www.phpcomposer.com/
-
-## 学习资料
-
-- [学习Symfony](docs/learn/SYMFONY.md)
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
+- [学习Symfony](docs/learn/SYMFONY.md)
+- [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
