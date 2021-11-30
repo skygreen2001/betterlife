@@ -13,7 +13,7 @@
 /install/composer.lock
 /install/package-lock.json
 .DS_Store
-/misc/js/onlineditor
+/misc/js/onlineditor/ueditor
 home/betterlife/view/twig/tmp
 home/report/view/default/tmp/templates_c
 docker-compose.yml

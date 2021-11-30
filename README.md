@@ -8,7 +8,7 @@
 
 ## 下载源码
 
-下载地址: https://github.com/skygreen2001/betterlife.git
+下载地址: https://github.com/skygreen2001/betterlife
 
 * **Git安装**
 
@@ -28,7 +28,7 @@
   - 下载betterlife
 
     ```
-    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife.git
     ```
 
 ## 通常安装

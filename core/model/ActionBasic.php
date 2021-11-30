@@ -173,7 +173,7 @@ class ActionBasic extends BBObject
      */
     public function isDataHave($param)
     {
-        if ( array_key_exists($param, $this->data) ) {
+        if ( $this->data && is_array($this->data) && array_key_exists($param, $this->data) ) {
              return true;
         }
         return false;

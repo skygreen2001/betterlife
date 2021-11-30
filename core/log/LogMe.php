@@ -78,10 +78,10 @@ class LogMe extends BBObject
      */
     public static function logPath($destination) {
         if ( empty(Gc::$log_config["logpath"]) ) {
-            Gc::$log_config["logpath"] = Gc::$nav_root_path.Config_F::LOG_ROOT.DS;
+            Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
         }
-        if ( !endWith(Gc::$log_config["logpath"], DIRECTORY_SEPARATOR) ) {
-            Gc::$log_config["logpath"] .= DIRECTORY_SEPARATOR;
+        if ( !endWith(Gc::$log_config["logpath"], DS) ) {
+            Gc::$log_config["logpath"] .= DS;
         }
         if ( empty($destination) ) {
             $destination = Gc::$log_config["logpath"] . Gc::$appName . date('Y_m_d') . Config_F::SUFFIX_FILE_LOG;

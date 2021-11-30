@@ -21,7 +21,7 @@ class Exception_Mysqli extends Exception_Db
                 $category = Exception_Db::CATEGORY_MYSQL;
                 LogMe::log( "连接数据库失败:" . mysqli_connect_error(), EnumLogLevel::ERR );
                 self::recordException("连接数据库失败:".mysqli_connect_error(), $category,mysqli_connect_errno(),$extra);
-            }else{
+            } else {
                 $link = Manager_Db::newInstance()->currentdao()->getConnection();
             }
         }
