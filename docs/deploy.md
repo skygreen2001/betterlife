@@ -8,14 +8,16 @@
     - log
     - home/admin/view/default/tmp/templates_c
     - home/betterlife/view/bootstrap/tmp/templates_c
+    - home/report/view/default/tmp/templates_c
+    - home/model/view/default/tmp/templates_c
     - home/应用名称/view/default/tmp/templates_c
 
   * 修改以下配置
 
-    - http.conf
+    - 如果是apache，修改http.conf
       所有的Deny from all修改成  Allow from all
       需加载模块
-        LoadModule rewrite_module modules/mod_rewrite.so
+      - LoadModule rewrite_module modules/mod_rewrite.so
 
     - php.ini
       display_errors = Off
@@ -78,4 +80,4 @@
     https://hackernoon.com/10-things-i-learned-making-the-fastest-site-in-the-world-18a0e1cdf4a7#.ixcxhsx6x
 
   * 引用资源:
-      * Test a website's performance:  https://www.webpagetest.org/
+    - Test a website's performance: https://www.webpagetest.org/

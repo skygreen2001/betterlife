@@ -8,6 +8,8 @@
 
 ## 下载源码
 
+下载地址: https://github.com/skygreen2001/betterlife.git
+
 * **Git安装**
 
   - 下载Git
@@ -15,29 +17,23 @@
     - Bitbucket: https://www.atlassian.com/git/tutorials/install-git
 
   - 下载betterlife 
-    - https: https://github.com/skygreen2001/betterlife.git
-    - git  : git@github.com:skygreen2001/betterlife.git
 
-    ```
-    > git clone https://github.com/skygreen2001/betterlife.git
-    或
-    > git clone git@github.com:skygreen2001/betterlife.git
-    ```
+      ```
+      > git clone https://github.com/skygreen2001/betterlife.git
+      ```
 
 * **Docker安装**
 
-  - [Get Docker](https://docs.docker.com/get-docker/)
+  - [下载 Docker](https://docs.docker.com/get-docker/)
   - 下载betterlife
 
     ```
     > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
-    或
-    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone git@github.com:skygreen2001/betterlife.git
     ```
 
 ## 通常安装
 
-### 运行环境安装
+### 安装运行环境
 
   以下工具任选一种即可
 
@@ -110,10 +106,6 @@
   - [阿里云](https://market.aliyun.com/developer)
   - [Heroku](https://devcenter.heroku.com/categories/php)
   - [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7)
-
-* **TODO**
-
-  - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
 
 ## 帮助文档
 
