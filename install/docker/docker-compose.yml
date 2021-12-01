@@ -2,8 +2,8 @@ version: "3.7"
 
 services:
   betterlife:
-    container_name: bb
     image: bb
+    container_name: bb
     build:
       context: ../../
       # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
@@ -23,10 +23,11 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: 
       MYSQL_DB: betterlife
+    restart: on-failure
 
   nginx:
-    container_name: bb_nginx
     image: bb_nginx
+    container_name: bb_nginx
     build:
       context: ../../
       # context: ./ # 本配置文件放置在根路径下使用这一行, 然后注释上一行
@@ -42,6 +43,9 @@ services:
       # - ./:/var/www/html/betterlife # 本配置文件放置在根路径下使用这一行, 然后注释上一行
       - composer-data:/var/www/html/betterlife/install/vendor # 这一行的意思是容器里该文件夹不会被宿主机所覆盖
       - ueditor-data:/var/www/html/betterlife/misc/js/onlineditor/ueditor # 这一行的意思是容器里该文件夹不会被宿主机所覆盖
+    environment:
+      ENABLE_CRONTAB: "true"
+    restart: on-failure
 
   mysql:
     image: mysql:5.7
@@ -56,13 +60,30 @@ services:
       MYSQL_DATABASE: betterlife
       MYSQL_ALLOW_EMPTY_PASSWORD: root
       MYSQL_ROOT_PASSWORD: 
+      TZ: Asia/Shanghai
+    restart: on-failure
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:5.0.2
+  #   container_name: bb_phpmyadmin
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - mysql
+  #   environment:
+  #     PMA_HOST: mysql
+  #     TZ: Asia/Shanghai
+  #   restart: on-failure
 
   # redis:
-  #   container_name: bb_redis
   #   image: redis:4.0.1
+  #   container_name: bb_redis
   #   command: redis-server --requirepass yourpassword
   #   ports:
   #       - 6379:6379
+  #   environment:
+  #     TZ: Asia/Shanghai
+  #   restart: on-failure
 
 volumes:
   mysql-data:

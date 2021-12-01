@@ -51,6 +51,15 @@
     - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
     - 复制文件 install/docker/prod/.dockerignore 到根目录下。
+    - 在容器内运行还需修改Gc.php文件相应配置
+      - 数据库配置: $database_config
+        - $database_config -> host = "mysql"
+          - 数据库的主机需配置为mysql，这是因为容器mysql服务器在docker-compose.yml配置中的服务名称定义就是mysql，这样php才能连上数据库。
+          - 数据库其它配置也参考docker-compose.yml中mysql定义配置进行修改
+      - 网站路径配置: $url_base
+        - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
+        - 生产服务器上需配置域名
+        - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
     - 创建betterlife镜像提交到Docker Hub
 
       ```
@@ -89,6 +98,15 @@
   - 制作[ skygreen2001/bb, skygreen2001/bb_nginx ]镜像提交到Docker Hub
     - 需要制作两个镜像，一个是betterlife框架本身，另一个是nginx服务器，分开运行的两个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
+    - 在容器内运行还需修改Gc.php文件相应配置
+      - 数据库配置: $database_config
+        - $database_config -> host = "mysql"
+          - 数据库的主机需配置为mysql，这是因为容器mysql服务器在docker-compose.yml配置中的服务名称定义就是mysql，这样php才能连上数据库。
+          - 数据库其它配置也参考docker-compose.yml中mysql定义配置进行修改
+      - 网站路径配置: $url_base
+        - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
+        - 生产服务器上需配置域名
+        - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
     - 创建betterlife镜像提交到Docker Hub
 
       ```

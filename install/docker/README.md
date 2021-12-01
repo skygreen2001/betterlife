@@ -94,10 +94,9 @@
 ## Docker Compose
   - [Overview of Docker Compose](https://docs.docker.com/compose/)
   - [Docker Compose](https://www.runoob.com/docker/docker-compose.html)
-  - [Docker and Docker Compose](https://www.jhipster.tech/docker-compose/)
+  - [awesome compose](https://github.com/docker/awesome-compose)
+  - [LNMP - Docker 多容器间协作互连](https://github.com/twang2218/docker-lnmp)
   - [使用 docker-compose 构建你的项目](https://juejin.cn/post/6844904038627033095)
-  - [Deploying Laravel, Nginx, and MySQL with Docker Compose](https://www.cloudsigma.com/deploying-laravel-nginx-and-mysql-with-docker-compose/)
-  - [docker-compose搭建nginx+php+mysql](https://github.com/kkmike999/docker-compose-php-nginx-mysql)
 
 ## 在IDE中使用Docker
   - [Docker in Visual Studio Code](https://code.visualstudio.com/docs/containers/overview)
@@ -132,6 +131,12 @@
     - [Docker Development Environment for PHP Apps](https://rodrigodelimavieira.com/docker-development-environment-for-php-apps-cju2vko5r000csms18kzo1tgl)
     - [Setting up PHP, PHP-FPM and NGINX for local development on DockerA primer on PHP on Docker under Windows 10](https://www.pascallandau.com/blog/php-php-fpm-and-nginx-on-docker-in-windows-10/)
 
+  - lemp
+    - [novice](https://hub.docker.com/r/novice/lemp)
+      - [github](https://github.com/novice79/lemp)
+    - [adhocore](https://hub.docker.com/r/adhocore/lemp) 
+      - [github](https://github.com/adhocore/docker-lemp)
+    - [lnmp](https://hub.docker.com/r/2233466866/lnmp)
 ## Kubernetes 初步
   - 使用 Docker Desktop 可以很方便的启用 Kubernetes: https://yeasy.gitbook.io/docker_practice/setup/docker-desktop
   - [Docker Desktop for Mac/Windows 开启 Kubernetes](https://github.com/AliyunContainerService/k8s-for-docker-desktop)
