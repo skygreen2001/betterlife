@@ -61,18 +61,13 @@
 ## 其它
 
 - 从Docker Hub拉取betterlife镜像并运行
-  - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索:  skygreen2021/betterlife
+  - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索: skygreen2021/betterlife
   - 执行以下命令即可
   - [以下说明](LEARN.md#Apache)
   
   ```
-    mkdir betterlife && cd betterlife
-    mkdir -p install/db/mysql && cd install/db/mysql
-    curl -O https://raw.githubusercontent.com/skygreen2001/betterlife/master/install/db/mysql/db_betterlife.sql
-    cd ../../../
-    docker network create betterlife
-    docker run -itd --name mysql -p 3306:3306 -v `pwd`/install/db/mysql:/docker-entrypoint-initdb.d/ -v mysql-data:/var/lib/mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=root -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=betterlife --network=betterlife mysql
-    docker run -dit --name=betterlife -p 80:80 --network=betterlife skygreen2021/betterlife
+    docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife
+    docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
   ```
 
   - 停止应用     : docker stop betterlife mysql

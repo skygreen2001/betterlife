@@ -59,6 +59,10 @@
 
     XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
 
+  - [宝塔](https://www.bt.cn/)
+
+    宝塔面板是一款服务器管理软件，支持windows和linux系统
+
   - 本地运行PHP server: php -S localhost:8000)
 
 ### 安装检查

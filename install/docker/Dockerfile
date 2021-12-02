@@ -123,10 +123,10 @@ EXPOSE 9000
 
 FROM nginx:alpine as nginx
 ARG BB_PATH=/var/www/html/betterlife/
-COPY install/docker/nginx.conf /etc/nginx/conf.d/
+COPY install/docker/nginx/nginx.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/conf.d/default.conf
 # COPY --from=betterlife ${BB_PATH} ${BB_PATH}
-COPY install/docker/wait-for-php.sh /wait-for-php.sh
+COPY install/docker/nginx/wait-for-php.sh /wait-for-php.sh
 
 #设置alpine系统时区
 ENV TZ=Asia/Shanghai
