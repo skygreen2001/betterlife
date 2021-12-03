@@ -41,8 +41,16 @@
     - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索:  skygreen2021/betterlife
     - 运行betterlife框架: docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife
     - 容器运行成功后安装运行示例数据库: docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
-  
+
+    - 运行脚本汇总如下
+
+    ```
+      docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife
+      docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
+    ```
+
     - 开放数据库接口，本地可操作: docker run -dp 80:80 -p 3306:3306 --name betterlife -t skygreen2021/betterlife
+    - 其它docker run配置参数参考: [novice/lemp](https://hub.docker.com/r/novice/lemp)
     - 体验后删除betterlife框架
       - 删除betterlife框架容器及镜像: docker stop betterlife && docker rm betterlife && docker rmi skygreen2021/betterlife
 
@@ -148,9 +156,10 @@
       docker run -dit --name=bb_nginx -p 80:80 -v `pwd`:/var/www/html/betterlife  -v betterlife_composer:/var/www/html/betterlife/install/vendor -v betterlife_ueditor:/var/www/html/betterlife/misc/js/onlineditor/ueditor --network=betterlife skygreen2021/bb_nginx
     ```
 
-    - 停止应用     : docker stop bb bb_nginx mysql
-    - 删除所有的容器: docker rm bb bb_nginx mysql
-    - 删除生成的镜像: docker rmi skygreen2021/bb_nginx skygreen2021/bb mysql
+    - 体验后删除betterlife框架
+      - 停止应用     : docker stop bb bb_nginx mysql
+      - 删除所有的容器: docker rm bb bb_nginx mysql
+      - 删除生成的镜像: docker rmi skygreen2021/bb_nginx skygreen2021/bb mysql
 
 #### 创建镜像
 
