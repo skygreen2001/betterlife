@@ -49,10 +49,10 @@
       docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
     ```
 
-    - 开放数据库接口，本地可操作: docker run -dp 80:80 -p 3306:3306 --name betterlife -t skygreen2021/betterlife
-    - 其它docker run配置参数参考: [novice/lemp](https://hub.docker.com/r/novice/lemp)
-    - 体验后删除betterlife框架
-      - 删除betterlife框架容器及镜像: docker stop betterlife && docker rm betterlife && docker rmi skygreen2021/betterlife
+  - 开放数据库接口，本地可操作: docker run -dp 80:80 -p 3306:3306 --name betterlife -t skygreen2021/betterlife
+  - 其它docker run配置参数参考: [novice/lemp](https://hub.docker.com/r/novice/lemp)
+  - 体验后删除betterlife框架
+    - 删除betterlife框架容器及镜像: docker stop betterlife && docker rm betterlife && docker rmi skygreen2021/betterlife
 
 #### 创建镜像
 
@@ -60,14 +60,6 @@
     - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
     - 复制文件 install/docker/prod/.dockerignore 到根目录下。
-    - 在容器内运行还需修改Gc.php文件相应配置
-      - 数据库配置: $database_config
-        - $database_config -> host = "127.0.0.1"
-          - 数据库在容器内部,它的配置为本地: 127.0.0.1 或者 localhost。
-      - 网站路径配置: $url_base
-        - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
-        - 生产服务器上需配置域名
-        - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
     - 创建betterlife镜像提交到Docker Hub
 
       ```
@@ -105,9 +97,9 @@
       docker run -itd --name mysql -p 3306:3306 -v `pwd`/install/db/mysql:/docker-entrypoint-initdb.d/ -v mysql-data:/var/lib/mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=root -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=betterlife --network=betterlife mysql
     ```
 
-    - 体验后删除betterlife框架
-      - 删除betterlife框架容器及镜像: docker stop bb_apache && docker rm bb_apache && docker rmi skygreen2021/bb_apache
-      - 删除示例数据库容器及镜像     : docker stop mysql && docker rm mysql && docker rmi mysql
+  - 体验后删除betterlife框架
+    - 删除betterlife框架容器及镜像: docker stop bb_apache && docker rm bb_apache && docker rmi skygreen2021/bb_apache
+    - 删除示例数据库容器及镜像     : docker stop mysql && docker rm mysql && docker rmi mysql
 
 #### 创建镜像
 
@@ -119,10 +111,6 @@
       - 数据库配置: $database_config
         - $database_config -> host = "mysql"
           - 数据库的主机需配置为mysql，这是因为容器mysql服务器的容器名称定义就是mysql，这样php才能连上数据库。
-      - 网站路径配置: $url_base
-        - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
-        - 生产服务器上需配置域名
-        - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
     - 创建bb_apache镜像提交到Docker Hub
 
       ```
@@ -156,24 +144,26 @@
       docker run -dit --name=bb_nginx -p 80:80 -v `pwd`:/var/www/html/betterlife  -v betterlife_composer:/var/www/html/betterlife/install/vendor -v betterlife_ueditor:/var/www/html/betterlife/misc/js/onlineditor/ueditor --network=betterlife skygreen2021/bb_nginx
     ```
 
-    - 体验后删除betterlife框架
-      - 停止应用     : docker stop bb bb_nginx mysql
-      - 删除所有的容器: docker rm bb bb_nginx mysql
-      - 删除生成的镜像: docker rmi skygreen2021/bb_nginx skygreen2021/bb mysql
+  - 可在本地编辑php源文件，所见即所得，会立即在容器内生效运行生成结果。
+  - 在容器内运行还需修改Gc.php文件相应配置
+    - 数据库配置: $database_config
+      - $database_config -> host = "mysql"
+        - 数据库的主机需配置为mysql，这是因为容器mysql服务器的容器名称定义就是mysql，这样php才能连上数据库。
+    - 网站路径配置: $url_base
+      - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
+      - 生产服务器上需配置域名
+      - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
+
+  - 体验后删除betterlife框架
+    - 停止应用     : docker stop bb bb_nginx mysql
+    - 删除所有的容器: docker rm bb bb_nginx mysql
+    - 删除生成的镜像: docker rmi skygreen2021/bb_nginx skygreen2021/bb mysql
 
 #### 创建镜像
 
   - 制作[ skygreen2001/bb, skygreen2001/bb_nginx ]镜像提交到Docker Hub
     - 需要制作两个镜像，一个是betterlife框架本身，另一个是nginx服务器，分开运行的两个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
-    - 在容器内运行还需修改Gc.php文件相应配置
-      - 数据库配置: $database_config
-        - $database_config -> host = "mysql"
-          - 数据库的主机需配置为mysql，这是因为容器mysql服务器的容器名称定义就是mysql，这样php才能连上数据库。
-      - 网站路径配置: $url_base
-        - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
-        - 生产服务器上需配置域名
-        - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
     - 创建bb, bb_nginx镜像提交到Docker Hub
 
       ```

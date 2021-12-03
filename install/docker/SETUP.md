@@ -12,10 +12,6 @@
       - $database_config -> host = "mysql"
         - 数据库的主机需配置为mysql，这是因为容器mysql服务器在docker-compose.yml配置中的服务名称定义就是mysql，这样php才能连上数据库。
         - 数据库其它配置也参考docker-compose.yml中mysql定义配置进行修改
-    - 网站路径配置: $url_base
-      - 网站路径默认是不配置的，通过算法得到，但是在docker容器内，需要手动配置
-      - 生产服务器上需配置域名
-      - 本地配置一般是: $url_base="http://localhost/"; 或者 $url_base="http://127.0.0.1/";
 
 ## 设置权限
 

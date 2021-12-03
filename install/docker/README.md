@@ -134,13 +134,13 @@
   - lamp
     - [docker-lamp](https://hub.docker.com/r/mattrayner/lamp)
       - [github](https://github.com/mattrayner/docker-lamp)
-  - lemp
+  - lemp | lnmp
     - [novice](https://hub.docker.com/r/novice/lemp)
       - [github](https://github.com/novice79/lemp)
     - [adhocore](https://hub.docker.com/r/adhocore/lemp) 
       - [github](https://github.com/adhocore/docker-lemp)
-    - [lemp-docker](https://hub.docker.com/r/fbraz3/lnmp)
     - [lnmp](https://hub.docker.com/r/2233466866/lnmp)
+    - [宝塔Linux面板](https://hub.docker.com/r/btpanel/btpanel)
     
 ## Kubernetes 初步
   - 使用 Docker Desktop 可以很方便的启用 Kubernetes: https://yeasy.gitbook.io/docker_practice/setup/docker-desktop
