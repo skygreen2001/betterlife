@@ -35,6 +35,8 @@
 
 ### Lemp
 
+#### 运行镜像
+
   - 从Docker Hub下载运行betterlife框架。
     - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索:  skygreen2021/betterlife
     - 运行betterlife框架: docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife
@@ -43,6 +45,8 @@
     - 开放数据库接口，本地可操作: docker run -dp 80:80 -p 3306:3306 --name betterlife -t skygreen2021/betterlife
     - 体验后删除betterlife框架
       - 删除betterlife框架容器及镜像: docker stop betterlife && docker rm betterlife && docker rmi skygreen2021/betterlife
+
+#### 创建镜像
 
   - 制作[ skygreen2001/betterlife ]镜像提交到Docker Hub
     - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
@@ -71,13 +75,15 @@
 
 ### Apache
 
+#### 运行镜像
+
   - 从Docker Hub下载运行betterlife框架。
     - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索:  skygreen2021/bb_apache
     - 在工作目录下创建betterlife目录并进入: mkdir betterlife && cd betterlife
     - 创建网络: docker network create betterlife
     - 运行betterlife框架: docker run -dit --name=bb_apache -p 80:80 --network=betterlife skygreen2021/bb_apache
     - 本地创建所需示例数据库脚本所在路径: mkdir -p install/db
-    - 从容器里复制示例数据库脚本文件到本地docker cp bb_apache:/var/www/html/install/db/mysql $(pwd)/install/db
+    - 从容器里复制示例数据库脚本文件到本地: docker cp bb_apache:/var/www/html/install/db/mysql $(pwd)/install/db
     - 运行示例数据库: docker run -itd --name mysql -p 3306:3306 -v `pwd`/install/db/mysql:/docker-entrypoint-initdb.d/ -v mysql-data:/var/lib/mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=root -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=betterlife --network=betterlife mysql
 
     - 运行脚本汇总如下
@@ -94,6 +100,8 @@
     - 体验后删除betterlife框架
       - 删除betterlife框架容器及镜像: docker stop bb_apache && docker rm bb_apache && docker rmi skygreen2021/bb_apache
       - 删除示例数据库容器及镜像     : docker stop mysql && docker rm mysql && docker rmi mysql
+
+#### 创建镜像
 
   - 制作[ skygreen2001/bb_apache ]镜像提交到Docker Hub
     - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
@@ -121,7 +129,9 @@
       - 运行推送的hub: docker run -dp 80:80 skygreen2021/bb_apache
 
 ### Nginx
-  
+
+#### 运行镜像
+
   - 从Docker Hub拉取bb, bb_nginx镜像并运行
 
     ```
@@ -141,6 +151,8 @@
     - 停止应用     : docker stop bb bb_nginx mysql
     - 删除所有的容器: docker rm bb bb_nginx mysql
     - 删除生成的镜像: docker rmi skygreen2021/bb_nginx skygreen2021/bb mysql
+
+#### 创建镜像
 
   - 制作[ skygreen2001/bb, skygreen2001/bb_nginx ]镜像提交到Docker Hub
     - 需要制作两个镜像，一个是betterlife框架本身，另一个是nginx服务器，分开运行的两个镜像。
