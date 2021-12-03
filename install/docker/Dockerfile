@@ -135,4 +135,6 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 WORKDIR ${BB_PATH}
 EXPOSE 80
 
+# 本脚本无法在Windows上正常运行，因此被关闭掉，Linux可打开执行该脚本
+# 该脚本主要是docker容器会有日志提示连接上了php容器9000端口
 # ENTRYPOINT ["sh", "/wait-for-php.sh"]
