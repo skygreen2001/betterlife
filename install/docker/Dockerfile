@@ -135,4 +135,4 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 WORKDIR ${BB_PATH}
 EXPOSE 80
 
-ENTRYPOINT ["sh", "/wait-for-php.sh"]
+# ENTRYPOINT ["sh", "/wait-for-php.sh"]

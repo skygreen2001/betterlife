@@ -61,7 +61,7 @@
 
   - [宝塔](https://www.bt.cn/)
 
-    宝塔面板是一款服务器管理软件，支持windows和linux系统
+  - [PhpStud](https://www.xp.cn/)
 
   - 本地运行PHP server: php -S localhost:8000)
 

@@ -70,9 +70,9 @@
     docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
   ```
 
-  - 停止应用     : docker stop betterlife mysql
-  - 删除所有的容器: docker rm betterlife mysql
-  - 删除生成的镜像: docker rmi skygreen2021/betterlife mysql
+  - 停止应用     : docker stop betterlife
+  - 删除所有的容器: docker rm betterlife
+  - 删除生成的镜像: docker rmi skygreen2021/betterlife
   
 
 - [学习使用Docker实战betterlife](LEARN.md)

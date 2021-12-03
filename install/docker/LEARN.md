@@ -40,6 +40,7 @@
     - 运行betterlife框架: docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife
     - 容器运行成功后安装运行示例数据库: docker exec -it betterlife bash -c 'mysql betterlife < /var/www/install/db/mysql/db_betterlife.sql'
   
+    - 开放数据库接口，本地可操作: docker run -dp 80:80 -p 3306:3306 --name betterlife -t skygreen2021/betterlife
     - 体验后删除betterlife框架
       - 删除betterlife框架容器及镜像: docker stop betterlife && docker rm betterlife && docker rmi skygreen2021/betterlife
 
@@ -66,9 +67,7 @@
 
       - hub上查询提交的镜像: https://hub.docker.com  -> 搜索:  skygreen2021/betterlife
       - 如果本地已经存在，需要更新镜像: docker pull skygreen2021/betterlife
-      - 运行推送的hub: docker run -dp 80:80 skygreen2021/betterlife
-
-
+      - 运行推送的hub: docker run -dp 80:80 --name betterlife skygreen2021/betterlife
 
 ### Apache
 
@@ -80,6 +79,17 @@
     - 本地创建所需示例数据库脚本所在路径: mkdir -p install/db
     - 从容器里复制示例数据库脚本文件到本地docker cp bb_apache:/var/www/html/install/db/mysql $(pwd)/install/db
     - 运行示例数据库: docker run -itd --name mysql -p 3306:3306 -v `pwd`/install/db/mysql:/docker-entrypoint-initdb.d/ -v mysql-data:/var/lib/mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=root -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=betterlife --network=betterlife mysql
+
+    - 运行脚本汇总如下
+
+    ```
+      mkdir betterlife && cd betterlife
+      docker network create betterlife
+      docker run -dit --name=bb_apache -p 80:80 --network=betterlife skygreen2021/bb_apache
+      mkdir -p install/db
+      docker cp bb_apache:/var/www/html/install/db/mysql $(pwd)/install/db
+      docker run -itd --name mysql -p 3306:3306 -v `pwd`/install/db/mysql:/docker-entrypoint-initdb.d/ -v mysql-data:/var/lib/mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=root -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=betterlife --network=betterlife mysql
+    ```
 
     - 体验后删除betterlife框架
       - 删除betterlife框架容器及镜像: docker stop bb_apache && docker rm bb_apache && docker rmi skygreen2021/bb_apache
