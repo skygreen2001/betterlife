@@ -334,6 +334,7 @@ class Gc {
         if ( empty(Gc::$attachment_path) ) Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
         if ( empty(Gc::$url_base) ) {
             $baseurl = '';
+            if ( empty($_SERVER['SERVER_NAME']) ) $_SERVER['SERVER_NAME'] = "localhost";
             if ( isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='on') ) {
                 $baseurl = 'https://'.$_SERVER['SERVER_NAME'];
                 if ( self::$is_port && ( $_SERVER['SERVER_PORT'] != 443 ) ) $baseurl .= ':'.$_SERVER['SERVER_PORT'];
