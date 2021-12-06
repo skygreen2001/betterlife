@@ -1,12 +1,13 @@
 {
   "name": "skygreen2001/betterlife",
   "version": "1.0.0",
+  "type": "project",
   "description": "a framework designed to easy read and rapid develop for chinese delevoper",
   "keywords": [
       "cms", "api", "php", "framework", "bb"
   ],
   "homepage": "https://github.com/skygreen2001/betterlife",
-  "license": "GPL",
+  "license": "GPL-3.0-or-later",
   "authors": [
       {
           "name": "skygreen2001",
