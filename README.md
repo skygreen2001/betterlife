@@ -15,11 +15,16 @@
   - 下载Git
     - Git SCM  : https://git-scm.com/downloads
     - Bitbucket: https://www.atlassian.com/git/tutorials/install-git
+    - Git大全   : https://gitee.com/all-about-git
 
   - 下载betterlife 
 
       ```
       > git clone https://github.com/skygreen2001/betterlife.git
+      或
+      > git clone https://github.com.cnpmjs.org/skygreen2001/betterlife
+      或
+      > git clone https://gitee.com/skygreen2015/betterlife
       ```
 
 * **Docker安装**
@@ -63,7 +68,7 @@
 
   - [PhpStud](https://www.xp.cn/)
 
-  - 本地运行PHP server: php -S localhost:8000)
+  - 本地运行PHP server: php -S localhost:80
 
 ### 安装检查
 
