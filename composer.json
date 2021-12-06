@@ -18,15 +18,15 @@
   ],
   "autoload": {
     "psr-4": {
-      "App\\": "../core",
-      "Config\\": "../core/config"
+      "App\\": "core",
+      "Config\\": "core/config"
     },
     "exclude-from-classmap": [
         "**/templates_c/**"
     ]
     ,"_classmap" : [
-      "../core/main/Initializer.php",
-      "../init.php"
+      "core/main/Initializer.php",
+      "init.php"
     ]
   },
   "config":{
