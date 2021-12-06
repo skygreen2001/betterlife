@@ -23,8 +23,8 @@
     },
     "exclude-from-classmap": [
         "**/templates_c/**"
-    ]
-    ,"_classmap" : [
+    ],
+    "classmap" : [
       "core/main/Initializer.php",
       "init.php"
     ]
