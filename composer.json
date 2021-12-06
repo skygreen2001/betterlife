@@ -22,7 +22,7 @@
       "Config\\": "core/config"
     },
     "exclude-from-classmap": [
-        "**/Database/Migrations/**"
+        "**/templates_c/**"
     ],
     "classmap" : [
       "core/main/Initializer.php",
@@ -34,7 +34,7 @@
   },
   "require": {
     "php"                : ">=5.2.0",
-    "skygreen2001/betterlife": "^1.0.0"
+    "skygreen2001/betterlife": "dev-master@dev"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
@@ -43,6 +43,12 @@
       "source": "https://github.com/skygreen2001/betterlife",
       "docs": "https://skygreen2001.github.io/betterlife.gitbook/"
   },
+  "repositories": [
+    {
+       "type": "vcs",
+       "url": "https://github.com/skygreen2001/betterlife" 
+    }
+  ],
   "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project.",
   "_install-script" : {
     "config": "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/",

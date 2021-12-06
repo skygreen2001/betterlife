@@ -1,5 +1,5 @@
 {
-  "name": "skygreen/bb",
+  "name": "skygreen2001/betterlife",
   "version": "1.0.0",
   "description": "a framework designed to easy read and rapid develop for chinese delevoper",
   "keywords": [
@@ -15,8 +15,15 @@
           "role": "Developer For Better"
       }
   ],
-  "_autoload": {
-    "classmap" : [
+  "autoload": {
+    "psr-4": {
+      "App\\": "../core",
+      "Config\\": "../core/config"
+    },
+    "exclude-from-classmap": [
+        "**/templates_c/**"
+    ]
+    ,"_classmap" : [
       "../core/main/Initializer.php",
       "../init.php"
     ]
