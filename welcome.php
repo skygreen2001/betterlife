@@ -122,6 +122,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
           color: #888;
           background-color: #fefefe;
           letter-spacing: 2px;
+          transition: all 0.3s ease-in-out;
           -webkit-transition: all 0.3s ease-in-out;
           -moz-transition: all 0.3s ease-in-out;
           -ms-transition: all 0.3s ease-in-out;
@@ -130,6 +131,7 @@ if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168."
 
         footer:hover {
           background-color: #e8e8e8;
+          transition: all 0.3s ease-in-out;
           -webkit-transition: all 0.3s ease-in-out;
           -moz-transition: all 0.3s ease-in-out;
           -ms-transition: all 0.3s ease-in-out;
