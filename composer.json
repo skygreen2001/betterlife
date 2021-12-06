@@ -33,6 +33,7 @@
     "secure-http": false,
     "vendor-dir": "install/vendor"
   },
+  "minimum-stability": "stable",
   "require": {
     "php"                : ">=5.2.0",
     "smarty/smarty"      : "^3.1",
