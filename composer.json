@@ -33,8 +33,7 @@
       "secure-http": false
   },
   "require": {
-    "php"                : ">=5.2.0",
-    "skygreen2001/betterlife": "dev-master@dev"
+    "php"                : ">=5.2.0"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
