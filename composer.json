@@ -67,5 +67,14 @@
   "_install-script" : {
     "config": "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/",
     "install": "composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  },
+  "_uninstall": {
+    "repositories packagist": "解除镜像: composer config -g --unset repos.packagist"
   }
 }
