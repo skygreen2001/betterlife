@@ -7,7 +7,7 @@
       "cms", "api", "php", "framework", "bb"
   ],
   "homepage": "https://github.com/skygreen2001/betterlife",
-  "license": "GPL",
+  "license": "GPLv3",
   "authors": [
       {
           "name": "skygreen2001",
