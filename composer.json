@@ -1,5 +1,5 @@
 {
-  "name": "skygreen/bb",
+  "name": "skygreen2001/betterlife",
   "version": "1.0.0",
   "type": "project",
   "description": "a framework designed to easy read and rapid develop for chinese delevoper",
@@ -33,7 +33,8 @@
       "secure-http": false
   },
   "require": {
-    "php"                : ">=5.2.0"
+    "php"                : ">=5.2.0",
+    "skygreen2001/betterlife": "^1.0.0"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
