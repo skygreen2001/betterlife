@@ -36,6 +36,14 @@
     > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife.git
     ```
 
+* **Composer安装**
+
+  - 下载betterlife
+
+    ```
+    > composer create-project skygreen2001/betterlife betterlife
+    ```
+
 ## 通常安装
 
 ### 安装运行环境
@@ -98,12 +106,12 @@
 * **Docker 运行应用**
 
   - 根路径下运行以下指令执行操作
-  - 创建运行: docker-compose -f install/docker/docker-compose.yml up -d
-  - 运行应用: docker-compose -f install/docker/docker-compose.yml start
-  - 停止应用: docker-compose -f install/docker/docker-compose.yml stop
+  - 创建运行: docker-compose up -d
+  - 运行应用: docker-compose start
+  - 停止应用: docker-compose stop
   - 进入应用: docker exec -it bb /bin/bash
 
-  - 删除所有的容器: docker-compose -f install/docker/docker-compose.yml down
+  - 删除所有的容器: docker-compose down
   - 删除生成的镜像: docker rmi bb_nginx bb mysql:5.7
   
 * **安装后需知**

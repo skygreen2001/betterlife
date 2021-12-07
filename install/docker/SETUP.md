@@ -34,23 +34,9 @@
       sudo chmod -R 777 home/report/view/default/tmp/templates_c
     ```
 
-## 在根路径下运行更便捷
+## 复制容器文件到本地
 
-  - 为了避免不使用Docker Compose的用户在根路径下看到docker的配置文件，将配置文件放在了install/docker目录下。
-  - 对于经常使用Docker的用户，可以将配置文件放置到根路径下，这样就不需要每次启动关闭都需要带上配置文件的参数了。
-  - 需要注意的是，需修改配置文件中的相关路径(配置文件中有注释说明，按要求调整即可)。
-  - 修改后就可以简化启动和关闭指令了。
-
-  - 根路径下运行以下指令执行操作
-  - 创建运行: docker-compose up -d
-  - 运行应用: docker-compose start
-  - 停止应用: docker-compose stop
-  - 进入应用: docker exec -it bb /bin/bash
-
-  - 删除所有的容器: docker-compose down
-  - 删除生成的镜像: docker rmi bb bb_nginx mysql:5.7
-
-  - 复制容器文件到本地: 
+  - 该操作为可选项，根据自己的需求决定: 
     - 复制安装的composer包文件到本地: docker cp bb:/var/www/html/betterlife/install/vendor/ $(pwd)/install/
     - 复制安装好的UEditor包文件到本地: docker cp bb:/var/www/html/betterlife/misc/js/onlineditor/ueditor/ $(pwd)/misc/js/onlineditor/
 

@@ -24,7 +24,7 @@
     "exclude-from-classmap": [
         "**/templates_c/**"
     ],
-    "classmap" : [
+    "_classmap" : [
       "core/main/Initializer.php",
       "init.php"
     ]
@@ -46,15 +46,15 @@
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
   },
-  "conflict": {
+  "_conflict": {
     "symfony/symfony": "*"
   },
-  "suggest": {
+  "_suggest": {
     "smarty/smarty"      : ">=3.1.39",
     "phpoffice/phpspreadsheet": ">=1.16.0",
     "adodb/adodb-php"    : ">=5.20.12",
     "nelexa/zip"         : ">=3.3.3",
-    
+
     "phpoffice/phpword"  : "^0.13.0",
     "phpoffice/phpexcel" : "^1.8",
     "twig/twig"          : "^2.0",
@@ -68,7 +68,7 @@
     "config" : "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/",
     "install": "composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist"
   },
-  "repositories": {
+  "_repositories": {
     "packagist": {
       "type": "composer",
       "url" : "https://packagist.phpcomposer.com"

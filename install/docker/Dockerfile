@@ -1,7 +1,7 @@
 ARG PHP_VERSION=7.4
 
 FROM composer as composer
-COPY install/composer.json /app/
+COPY composer.json /app/
 # COPY install/composer.json install/composer.lock /app/
 RUN set -x ; cd /app && \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && \
@@ -13,7 +13,8 @@ RUN set -x ; cd /app && \
                 --prefer-dist
 
 
-FROM node:10.15.3-alpine as ueditor
+# FROM node:10.15.3-alpine as ueditor
+FROM node:17-alpine as ueditor
 
 # docker Alpine Linux 国内镜像
 # https://furthergazer.top/article/2020/3/9/7.html
@@ -33,7 +34,8 @@ RUN git clone https://github.com.cnpmjs.org/fex-team/ueditor.git -b dev-1.4.3.3 
 # 设置npm国内镜像源库
     npm config set registry https://registry.npm.taobao.org && \
     # npm config set registry http://registry.cnpmjs.org && \
-    cd ueditor && npm install && npm install -g grunt && npm install -g grunt-cli && grunt default && \
+    # cd ueditor && npm install && npm install -g grunt && npm install -g grunt-cli && grunt default && \
+    cd ueditor && npm install -g npm@8.2.0 && npm install && npm install -g --force grunt && npm install -g --force grunt-cli && grunt default && \
     cd ../misc/js/onlineditor && mkdir ueditor && \
     cp -rf ../../../ueditor/dist/utf8-php/* ueditor/ && \
     cp -rf ueditor_bak/* ueditor/
@@ -93,7 +95,7 @@ RUN docker-php-ext-install mysqli zip && \
     pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 
 # COPY . ${BB_PATH}
-COPY --from=composer /app/vendor/ ${BB_PATH}/install/vendor/
+COPY --from=composer /app/install/vendor/ ${BB_PATH}/install/vendor/
 # COPY --from=composer /app/vendor/ ${APP_VENDOR}/
 
 COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}/misc/js/onlineditor/ueditor
