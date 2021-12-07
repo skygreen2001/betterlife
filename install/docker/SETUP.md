@@ -45,7 +45,7 @@
 - 从Docker Hub拉取betterlife镜像并运行
   - Docker Hub上查询镜像: https://hub.docker.com  -> 搜索: skygreen2021/betterlife
   - 执行以下命令即可
-  - [以下说明](LEARN.md#Apache)
+  - [以下说明](LEARN.md#Lemp)
   
   ```
     docker run -dp 80:80 --name betterlife -t skygreen2021/betterlife

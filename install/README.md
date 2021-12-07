@@ -57,10 +57,7 @@
 
 * **安装目录下运行**
 
-  安装目录是根目录下的install目录, 即本说明文件目录下
-  - cd install/
-
-  - 运行composer
+  - 根路径下运行composer
 
     ```
     > composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/

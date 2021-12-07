@@ -95,10 +95,10 @@ RUN docker-php-ext-install mysqli zip && \
     pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 
 # COPY . ${BB_PATH}
-COPY --from=composer /app/install/vendor/ ${BB_PATH}/install/vendor/
+COPY --from=composer /app/install/vendor/ ${BB_PATH}install/vendor/
 # COPY --from=composer /app/vendor/ ${APP_VENDOR}/
 
-COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}/misc/js/onlineditor/ueditor
+COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}misc/js/onlineditor/ueditor
 
 RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini
     # && \

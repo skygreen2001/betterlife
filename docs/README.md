@@ -1,6 +1,6 @@
 # 欢迎来到 betterlife 框架
 
-* [开源下载地址](https://github.com/skygreen2001/betterlife.core)
+* [开源下载地址](https://github.com/skygreen2001/betterlife)
 * [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
 * [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
 
@@ -27,7 +27,7 @@
 
 如果使用 Wamp ｜ Lamp ｜ Mamp 发布该框架,它会被放置在www目录下
 访问框架根路径地址:
-    http://127.0.0.1/bb
+    http://127.0.0.1/betterlife
 
 可访问
 * 网站前台
@@ -54,7 +54,7 @@
 * 数据库原型设计  : MysqlWorkbench
 * 代码原型       : betterlife框架的代码生成工具
 * 页面原型设计    : Axure[推荐]
-* 设计图到静态页面 : Html5+Css3+Javascript
+* 设计图到静态页面 : Html5 + Css3 + Javascript
 * 部署工具       : 
                   Wamp(Windows) ｜ Mamp(Mac) ｜ Lamp(Linux) | XAMPP ｜ AMPPS
 * 中间件服务器    : Apache
@@ -70,39 +70,6 @@
          -> 静态标准Html页面+Css+[Javascript + Jquery ]
 
 * 逻辑层：整合数据层<=>表示层
-
-## 框架目录定义
-
-- core   : 框架核心支持文件
-- taglib : 自定义标签，您也可以在自己的应用中定义自定义标签
-- install: 安装目录
-- misc   : 引用第三方Js、Css、Image、Fonts资源目录
-- tools  : 开发项目中通常用到的工具，包括项目重用工具、代码生成工具、消除整站文件BOM头工具、压力测试工具等
-- home   : 应用目录，Web应用层所有代码都放在这里，每一个Web应用是一个子目录。
-           (每个应用目录名称需在Gc.php里的变量:$module_name里注册)
-
-  - admin     : 后台管理
-  - model     : 通用模版
-  - report    : 报表系统
-  - betterlife: 网站前台
-- api    : ajax请求服务端服务支持[手机或Web前端ajax请求返回json数据]
-- app    : 自适应html5Web网页[内嵌在手机App里]
-
-    - html5: 自适应html5Web网页[内嵌在手机App里]
-    - redis: Redis系统数据监控工具
-- log    : 日志目录，每天一个调试测试日志文件放在这里
-- upload : 后台上传文件(如图片、pdf)放置目录
-- docs   : 框架帮助说明文档
-
-- 重要的二级目录说明
-
-  - core/config      : 配置文件[各个功能模块]
-  - install/db       : 框架数据库测试数据
-  - api/mobile       : 手机端ajax请求服务端返回json数据
-  - api/web          : Pc端ajax请求服务端返回json数据
-  - upload/images    : 上传图片放置路径
-  - upload/attachment: 批量导入/导出数据文件(如excel)放置目录
-
 
 ## 一个重要的文件
 
@@ -154,3 +121,132 @@
 - 在发布到服务器上，无需修改任何编码即可默认进入网站前台，它是项目真正用户的界面入口。
 
 - 如框架的域名为: http://www.betterlife.com
+
+## 一步上手
+
+  - 在一个php文件里只需要一步,就可以使用这个框架带来的好处了
+
+    * 引用init.php文件(如果在根路径下)
+      示例:如果在根路径下引用:require_once("init.php");
+
+## 开始使用
+
+  现在可以使用这个框架了,如果习惯了sql的写法，可以通过直接使用函数:**sqlExecute**
+
+  例如:希望查看所有的博客记录
+  传统的sql语句:select * from bb_core_blog
+
+  完整的示例代码如下:
+
+  ```
+  <?php
+  require_once("init.php");
+  $blogs=sqlExecute("select * from bb_core_blog");
+  print_r($blogs);
+  ?>
+
+  输出打印显示如下:
+  Array
+  (
+      [0] => Array
+          (
+              [blog_id] => 1
+              [user_id] => 1
+              [blog_name] => Web在线编辑器
+              [blog_content] => 搜索关键字：在线编辑器
+  引自：<a href="http://paranimage.com/22-online-web-editor/" target="\_blank">http://paranimage.com/22-online-web-editor/</a>
+              [commitTime] => 1331953386
+              [updateTime] => 2013-12-26 15:27:05
+          )
+      ......
+
+  )
+  ```
+
+## 面向对象
+
+  以类方法:分页查询queryPage为例
+  ```
+  $blogs = Blog::queryPage(0,10);
+  print_r($blogs);
+
+  输出打印显示如下:
+
+  Array
+  (
+      [0] => Blog Object
+          (
+              [blog_id] => 1
+              [user_id] => 1
+              [blog_name] => Web在线编辑器
+              [blog_content] => 搜索关键字：在线编辑器
+  引自：<a href="http://paranimage.com/22-online-web-editor/" target="\_blank">http://paranimage.com/22-online-web-editor/</a>
+              [id:protected] =>
+              [commitTime] => 1331953386
+              [updateTime] => 2013-12-26 15:27:05
+          )
+      .....
+
+  )
+  ```
+
+## 代码生成
+
+  ****代码生成侧重于对新增功能模块、数据库表和代码的快速上手使用****
+
+  在新生成的项目里:bettercity
+
+  * 如果新项目的业务逻辑和主流程大致相同,那么可以考虑重用现有的数据库，使用［2.4数据库定义的小工具］里的工具[修改数据库表前缀名]
+
+      访问地址:http://127.0.0.1/bettercity/tools/tools/db/rename_db_prefix.php
+
+  * 如果新项目的业务逻辑和原项目的主流程不同,可以按照[2.数据库原型设计规范]定义数据库
+
+  在完成了新项目的数据库设计之后,就可以使用代码生成工具生成新项目的通用代码。
+
+  代码生成可通过访问框架本地首页地址:
+  http://127.0.0.1/bettercity/
+
+  下方应有以下文字链接:工程重用|数据库说明书|一键生成|帮助;
+  点击其中的文字链接:一键生成
+
+  一键生成链接地址:http://127.0.0.1/bettercity/tools/tools/autocode/db_onekey.php
+
+
+## 工程重用
+
+  ****项目重用侧重于对已有功能模块、数据库表和代码的重用****
+
+  项目重用即工程重用,是同一个功能的两种说法。
+
+  前面我们掌握了这个框架最基础的概念,接下来我们关注的是怎样根据自己项目的需要,快速搭建一个项目的框架;
+
+  工程重用可通过访问框架本地首页地址:
+  http://127.0.0.1/betterlife/
+
+  下方应有以下文字链接:工程重用|数据库说明书|一键生成|帮助;
+  点击其中的文字链接:工程重用
+
+  工程重用链接地址:http://127.0.0.1/betterlife/tools/dev/index.php
+
+  根据自己项目的需求修改相关项目配置:
+  * Web项目名称【中文】
+  * Web项目名称【英文】
+  * Web项目别名
+  * 输出Web项目路径
+  * 数据库名称
+  * 数据库表名前缀
+  * 帮助地址
+  * 重用类型
+
+  假设我们需要创建一个新的项目:bettercity
+
+  它的定义如下:
+  * Web项目名称【中文】:美好的城市-上海
+  * Web项目名称【英文】:bettercity
+  * Web项目别名        :Bc
+  * 输出Web项目路径    :bettercity
+  * 数据库名称         :bettercity
+  * 数据库表名前缀     :bc_
+  * 帮助地址           :默认的值,不变
+  * 重用类型           :通用版

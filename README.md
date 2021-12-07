@@ -126,9 +126,9 @@
 
 ## 帮助文档
 
+* [新手上路](docs/README.md)
 * [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
 * [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
-* [本地说明文档](docs/README.md)
 
 ## 框架目录定义
 
@@ -139,12 +139,14 @@
   - tools  : 开发项目中通常用到的工具，包括项目重用工具、代码生成工具、消除整站文件BOM头工具、压力测试工具等
   - home   : 应用目录，Web应用层所有代码都放在这里，每一个Web应用是一个子目录。
              (每个应用目录名称需在Gc.php里的变量:$module_name里注册)
+
     - admin     : 后台管理
     - model     : 通用模版
     - report    : 报表系统
     - betterlife: 网站前台
   - api    : ajax请求服务端服务支持[手机或Web前端ajax请求返回json数据]
   - app    :
+
     - html5: 自适应html5Web网页[内嵌在手机App里]
     - redis: Redis系统数据监控工具
   - log    : 日志目录，每天一个调试测试日志文件放在这里
@@ -152,9 +154,11 @@
   - docs   : 框架帮助说明文档
 
   - 重要的二级目录说明
+
     - core/config      : 配置文件[各个功能模块]
-    - install/db       : 框架数据库备份包括测试数据
+    - core/util        : 常用的工具类
     - core/include     : 常用的函数库
+    - install/db       : 框架数据库备份包括测试数据
     - api/mobile       : 手机端ajax请求服务端返回json数据
     - api/web          : Pc端ajax请求服务端返回json数据
     - upload/images    : 上传图片放置路径
