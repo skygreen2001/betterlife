@@ -24,10 +24,6 @@
     "exclude-from-classmap": [
         "**/templates_c/**"
     ]
-    ,"_classmap" : [
-      "../core/main/Initializer.php",
-      "../init.php"
-    ]
   },
   "config":{
     "secure-http": false
