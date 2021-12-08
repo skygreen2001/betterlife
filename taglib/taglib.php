@@ -96,7 +96,7 @@ function parseTag($matches) {
                 $invokeTag = new TagHrefClass($matches[1], $matches[2], $content);
                 break;
             default:
-                return "undefined tag: $invokeTag->getTagName()";
+                return "undefined tag: $tagname";
         }
         return $invokeTag->getHtml();
     } else {
