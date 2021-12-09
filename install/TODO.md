@@ -22,7 +22,6 @@
 
   - CodeIgnitor 4的开发模式显示debug 条
   - CodeIgnitor 4的错误异常显示页面
-  - Composer create-project (CodeIgnitor / laravel / symfony)
 
 
 # IDE之路
