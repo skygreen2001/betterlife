@@ -125,7 +125,7 @@
     - [laravel-demo](https://github.com/khs1994-docker/laravel-demo)
     
   - 安装PHP开发环境  
-    - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
+    - [Laradock is a full PHP development environment based on Docker](https://laradock.io/)
     - [PHPDocker](https://phpdocker.io/)
     - [DevDock](https://github.com/iMacken/DevDock)
     - [Docker Development Environment for PHP Apps](https://rodrigodelimavieira.com/docker-development-environment-for-php-apps-cju2vko5r000csms18kzo1tgl)

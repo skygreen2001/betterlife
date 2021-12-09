@@ -298,7 +298,7 @@ class Project_Refactor
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
-            $welcome_file = self::$save_dir."welcome.php";
+            $welcome_file = self::$save_dir . "welcome.php";
             $content      = file_get_contents($welcome_file);
             if ( !empty(self::$git_name) ) {
                 $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url = \"") + 17);
@@ -347,9 +347,9 @@ class Project_Refactor
                 $welcome_file = self::$save_dir . "welcome.php";
                 $content = file_get_contents($welcome_file);
                 if ( file_exists($welcome_file) ) {
-                    $ctrl    = substr($content,0,strpos($content,"<?php \$help_url=\"")+17);
-                    $ctrr    = substr($content,strpos($content,"<?php \$help_url=\"")+18);
-                    $ctrr    = substr($ctrr,strpos($ctrr,"\""));
+                    $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url=\"") + 17);
+                    $ctrr    = substr($content, strpos($content, "<?php \$help_url=\"") + 18);
+                    $ctrr    = substr($ctrr,strpos($ctrr, "\""));
                     $content = $ctrl.self::$git_name.$ctrr;
                     if ( self::$reuse_type != EnumReusePjType::FULL ) {
                         $content = str_replace("通用模版", "", $content);

@@ -57,7 +57,7 @@ class Dispatcher
                 }
                 $isValidRequet = true;
             }
-        }else {
+        } else {
           if ( !is_dir($index_dir . "action") && file_exists($index_dir . "index.php") ) {
             header("location:" . Gc::$url_base . Gc::$module_root . "/" . $moduleName . "/index.php");
             die();
@@ -84,9 +84,9 @@ class Dispatcher
         UnitTest::setUp();
         ob_start();
         $controller = $router->getController();
-        $action = $router->getAction();
-        $extras = $router->getExtras();
-        $data   = $router->getData();
+        $action     = $router->getAction();
+        $extras     = $router->getExtras();
+        $data       = $router->getData();
         if ( method_exists($current_action, "setData") ) {
             $current_action->setData( $data );
         } else {

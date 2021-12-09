@@ -179,6 +179,42 @@
       - hub上查询提交的镜像: https://hub.docker.com  -> 搜索:  skygreen2021/bb
       - 如果本地已经存在，需要更新镜像: docker pull skygreen2021/bb && docker pull skygreen2021/bb_nginx
   
-## TODO
+## 使用Laradock
 
-  - [Laradock is a full PHP development environment based on Docker](https://laradock.io/documentation/)
+  - [Laradock](https://laradock.io/)
+    - 修改/etc/hosts
+      - 添加一行: 199.232.68.133 raw.githubusercontent.com
+    - 下载betterlife: git clone https://github.com.cnpmjs.org/skygreen2001/betterlife 
+    - 下载Laradock  : git clone https://github.com.cnpmjs.org/Laradock/laradock.git
+    - 两个项目平级，如下
+      - betterlife
+      - laradock
+    - 重命名[ .env ]: cp .env.example .env
+    - 清空缓存(如果有的话): rm -rf ~/.laradock/data/mysql
+    - 在laradock根路径下做以下调整 
+      - 修改 .env: 
+        - CHANGE_SOURCE=true
+          - 说明: 使用国内镜像
+        - MYSQL_DATABASE=betterlife
+        - MYSQL_ALLOW_EMPTY_PASSWORD=root
+        - MYSQL_ROOT_PASSWORD=
+        - MYSQL_ENTRYPOINT_INITDB=../betterlife/install/db/mysql
+        - WORKSPACE_INSTALL_XDEBUG=true
+        - PHP_FPM_INSTALL_XDEBUG=true
+      - 修改docker-compose.yml
+        - 在mysql: environment: 下添加一行
+          - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
+      - 修改php-fpm/Dockerfile
+        - 在行: 771 : RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
+          - 下面新增一行: apt-get update -yqq && \
+      - 修改nginx/sites/default.conf
+        - 修改前: root /var/www/public;
+        - 修改后: root /var/www/betterlife;  
+      - 运行容器: docker-compose up -d nginx mysql phpmyadmin redis workspace
+    - 在betterlife根路径下需做以下操作
+    - 在容器内运行还需修改Gc.php文件相应配置
+      - 数据库配置: $database_config
+        - $database_config -> host = "mysql"
+    - 安装UEditor
+      - [参考【安装PHP第三方库和UEditor】的安装UEditor部分](../README.md)
+    - 打开浏览器运行: http://localhost

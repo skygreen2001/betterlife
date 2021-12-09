@@ -29,6 +29,8 @@
     - docker run -dit --name=betterlife_composer bb/composer
   - 复制容器文件到本地: 
     - 复制安装好的PHP第三方库文件到本地: docker cp betterlife_composer:/app/vendor/ $(pwd)/install/
+  - 删除容器和镜像
+    - docker stop betterlife_composer && docker rm betterlife_composer && docker rmi bb/composer
 
 * **安装UEditor**
 
@@ -43,6 +45,8 @@
     - docker run -dit --name=betterlife_ueditor bb/ueditor
   - 复制容器文件到本地: 
     - 复制安装好的UEditor包文件到本地: docker cp betterlife_ueditor:/app/misc/js/onlineditor/ueditor/ $(pwd)/misc/js/onlineditor/
+  - 删除容器和镜像
+    - docker stop betterlife_ueditor && docker rm betterlife_ueditor && docker rmi bb/ueditor
 
 ## 本地方式
 

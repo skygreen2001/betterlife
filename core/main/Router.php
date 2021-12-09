@@ -383,7 +383,7 @@ class Router
         $this->data["router"][self::VAR_MODULE] = $this->getController();
         $this->data["router"][self::VAR_ACTION] = $this->getAction();
         $this->data["router"][self::VAR_GROUP]  = $this->getModule();
-        $this->data=new DataObjectArray($this->data);
+        $this->data = new DataObjectArray( $this->data );
     }
 
     /**
