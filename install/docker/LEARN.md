@@ -204,9 +204,6 @@
       - 修改docker-compose.yml
         - 在mysql: environment: 下添加一行
           - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
-      - 修改php-fpm/Dockerfile
-        - 在行: 771 : RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
-          - 下面新增一行: apt-get update -yqq && \
       - 修改nginx/sites/default.conf
         - 修改前: root /var/www/public;
         - 修改后: root /var/www/betterlife;  

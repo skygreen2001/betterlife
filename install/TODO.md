@@ -22,6 +22,9 @@
 
   - CodeIgnitor 4的开发模式显示debug 条
   - CodeIgnitor 4的错误异常显示页面
+  - 框架安装脚本
+    - Lavarel的安装脚本: https://laravel.build/betterlife
+    - Symfony的安装脚本: https://get.symfony.com/cli/installer
 
 
 # IDE之路
