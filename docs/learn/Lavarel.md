@@ -40,13 +40,23 @@
 
 ## 安装Valet
   - Valet 是 Mac 极简主义者的 Laravel 开发环境。
+  - 确保 ~/.composer/vendor/bin 目录在系统的「PATH」中。
+
+    ```
+      vi ~/.bash_profile
+        > export PATH=$PATH:~/.composer/vendor/bin
+      source ~/.bash_profile
+      echo $PATH
+    ```
+
   - 安装Valet
 
-  ```
-    brew update && brew install php
-    composer global require laravel/valet
-    valet install
-  ```
+    ```
+      brew update && brew install php
+      composer global require laravel/valet
+      valet install
+    ```
+
   - 绑定应用: cd betterlife && valet link
   - 访问网站: http://betterlife.test/
     - http://betterlife[同应用目录名称].test/
@@ -74,6 +84,7 @@
         composer require laravel/ui
         php artisan ui bootstrap --auth
         npm install && npm run dev
+        npm run watch
     ```
 
 ## 创建应用: 博客
@@ -98,7 +109,7 @@
       - 会重置整个数据库。
   
   - 建模和创建模拟数据
-    - 建模和数据工厂: php artisan make:model --factory Link
+    - 建模和数据工厂: php artisan make:model --factory Blog
     - 在工厂类里定义模拟数据数据
       - 文件: database/factories/BlogFactory.php
       - 在definition()方法里添加代码
@@ -133,6 +144,32 @@
         ```
             \App\Models\Blog::first();
         ```
+  - Routing 和 Views
+    - 在文件 routes/web.php 里添加路由
+      ```
+        Route::get('/', function () {
+            $blogs = \App\Models\Blog::all();
+            return view('welcome', ['blogs' => $blogs]);
+        });
+      ```
+    - 修改文件: resources/views/welcome.blade.php
+      ```
+        <div class="blogs">
+        @foreach ($blogs as $blog)
+            <a href="{{ $blog->url }}">{{ $blog->title }}</a><br/>
+        @endforeach
+        </div>
+      ```
+    - 创建Form
+      - 新建路由
+        ```
+          Route::get('/submit', function () {
+              return view('submit');
+          });
+        ```
+      - 新建文件:  resources/views/submit.blade.php
+
+
 
 ## 学习资料
 
