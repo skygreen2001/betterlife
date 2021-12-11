@@ -163,13 +163,242 @@
     - 创建Form
       - 新建路由
         ```
-          Route::get('/submit', function () {
-              return view('submit');
+          Route::get('/edit', function () {
+              return view('edit');
           });
         ```
-      - 新建文件:  resources/views/submit.blade.php
+      - 新建文件:  resources/views/edit.blade.php
+        ```
+          @extends('layouts.app')
+          @section('content')
+              <div class="container">
+                  <div class="row">
+                      <h1>Submit a blog</h1>
+                  </div>
+                  <div class="row">
+                      <form action="/edit" method="post">
+                          @csrf
+                          @if ($errors->any())
+                              <div class="alert alert-danger" role="alert">
+                                  Please fix the following errors
+                              </div>
+                          @endif
+                          <div class="form-group">
+                              <label for="title">Title</label>
+                              <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Title" value="{{ old('title') }}">
+                              @error('title')
+                                  <div class="invalid-feedback">{{ $message }}</div>
+                              @enderror
+                          </div>
+                          <div class="form-group">
+                              <label for="url">Url</label>
+                              <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" placeholder="URL" value="{{ old('url') }}">
+                              @error('url')
+                                  <div class="invalid-feedback">{{ $message }}</div>
+                              @enderror
+                          </div>
+                          <div class="form-group">
+                              <label for="description">Description</label>
+                              <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="description">{{ old('description') }}</textarea>
+                              @error('description')
+                                  <div class="invalid-feedback">{{ $message }}</div>
+                              @enderror
+                          </div><br/>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                  </div>
+              </div>
+          @endsection
+        ```
+      - 在文件 routes/web.php 里新建提交博客路由
+        ```
+          use Illuminate\Http\Request;
 
+          Route::post('/edit', function (Request $request) {
+              $data = $request->validate([
+                  'title' => 'required|max:255',
+                  'url' => 'required|url|max:255',
+                  'description' => 'required|max:255',
+              ]);
+          
+              $blog = tap(new App\Models\Blog($data))->save();
+          
+              return redirect('/');
+          });
+        ```
+      - 修改app/Models/Blog.php
+        ```
+          <?php
 
+          namespace App\Models;
+
+          use Illuminate\Database\Eloquent\Factories\HasFactory;
+          use Illuminate\Database\Eloquent\Model;
+
+          class Blog extends Model
+          {
+              use HasFactory;
+              protected $fillable = [
+                  'title',
+                  'url',
+                  'description'
+              ];
+          }
+        ```
+
+  - 添加测试
+    - 测试Form提交
+      - 根路径下修改文件: phpunit.xml
+        - 配置使用SQLite(in-memory)数据库
+          ```
+            <php>
+                ... 
+                <env name="DB_CONNECTION" value="sqlite"/>
+                <env name="DB_DATABASE" value=":memory:"/>
+                ...
+            </php>
+          ```
+      - 删除Lavarel默认生成的Feature测试类: rm tests/Feature/ExampleTest.php
+      - 新建Feature测试类: php artisan make:test EditBlogsTest
+      - 在新建的文件: tests/Feature/EditBlogsTest.php 新增测试用例如下
+        - 合法有效的Blog保存进数据库
+        - 校验失败的Blog不能保存进数据库
+        - 不允许提交不符合格式的url
+        - 当字段长度超过255，校验失败
+        - 字段长度在255以内，校验成功
+        - 以上测试用例编码如下
+          ```
+            <?php
+
+            namespace Tests\Feature;
+
+            use Illuminate\Foundation\Testing\RefreshDatabase;
+            use Illuminate\Validation\ValidationException;
+            use Tests\TestCase;
+
+            class EditBlogsTest extends TestCase
+            {
+                use RefreshDatabase;
+                /**
+                * A basic feature test example.
+                *
+                * @return void
+                */
+                public function test_example()
+                {
+                    $response = $this->get('/');
+
+                    $response->assertStatus(200);
+                }
+
+                /** @test */
+                public function guest_can_submit_a_new_blog() {
+
+                    $response = $this->post('/edit', [
+                        'title' => 'Example Title',
+                        'url' => 'http://example.com',
+                        'description' => 'Example description.',
+                    ]);
+            
+                    $this->assertDatabaseHas('blogs', [
+                        'title' => 'Example Title'
+                    ]);
+            
+                    $response
+                        ->assertStatus(302)
+                        ->assertHeader('Location', url('/'));
+            
+                    $this
+                        ->get('/')
+                        ->assertSee('Example Title');
+                }
+                
+                /** @test */
+                public function blog_is_not_created_if_validation_fails() {
+
+                    $response = $this->post('/edit');
+                    $response->assertSessionHasErrors(['title', 'url', 'description']);
+                }
+                
+                /** @test */
+                public function blog_is_not_created_with_an_invalid_url() {
+
+                    $this->withoutExceptionHandling();
+                
+                    $cases = ['//invalid-url.com', '/invalid-url', 'foo.com'];
+                
+                    foreach ($cases as $case) {
+                        try {
+                            $response = $this->post('/edit', [
+                                'title' => 'Example Title',
+                                'url' => $case,
+                                'description' => 'Example description',
+                            ]);
+                        } catch (ValidationException $e) {
+                            $this->assertEquals(
+                                'The url must be a valid URL.',
+                                $e->validator->errors()->first('url')
+                            );
+                            continue;
+                        }
+                        $this->fail("The URL $case passed validation when it should have failed.");
+                    }
+                }
+                
+                /** @test */
+                public function max_length_fails_when_too_long() {
+
+                    $this->withoutExceptionHandling();
+            
+                    $title = str_repeat('a', 256);
+                    $description = str_repeat('a', 256);
+                    $url = 'http://';
+                    $url .= str_repeat('a', 256 - strlen($url));
+                
+                    try {
+                        $this->post('/edit', compact('title', 'url', 'description'));
+                    } catch(ValidationException $e) {
+                        $this->assertEquals(
+                            'The title must not be greater than 255 characters.',
+                            $e->validator->errors()->first('title')
+                        );
+                
+                        $this->assertEquals(
+                            'The url must not be greater than 255 characters.',
+                            $e->validator->errors()->first('url')
+                        );
+                
+                        $this->assertEquals(
+                            'The description must not be greater than 255 characters.',
+                            $e->validator->errors()->first('description')
+                        );
+                
+                        return;
+                    }
+                
+                    $this->fail('Max length should trigger a ValidationException');
+                }
+                
+                /** @test */
+                public function max_length_succeeds_when_under_max() {
+
+                    $url = 'http://';
+                    $url .= str_repeat('a', 255 - strlen($url));
+                
+                    $data = [
+                        'title' => str_repeat('a', 255),
+                        'url' => $url,
+                        'description' => str_repeat('a', 255),
+                    ];
+                
+                    $this->post('/edit', $data);
+                
+                    $this->assertDatabaseHas('blogs', $data);
+                }
+            }
+
+          ```
+      - 运行测试用例: php artisan test
 
 ## 学习资料
 
