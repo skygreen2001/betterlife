@@ -79,13 +79,42 @@
   - 初始化数据库: php artisan migrate
 
 ## 创建权限认证
-  - 
+  
+
+## 启动工具包
+
+- 创建权限认证: Laravel Breeze
+  ```
+    composer require laravel/breeze --dev
+    php artisan breeze:install
+    npm install && npm run dev
+    php artisan migrate
+    npm run watch
+  ```
+  - 老版简单的的权限认证
     ```
         composer require laravel/ui
         php artisan ui bootstrap --auth
         npm install && npm run dev
         npm run watch
     ```
+  - 使用Inertia.js前端Vue或React实现
+    ```
+      php artisan breeze:install vue
+      或
+      php artisan breeze:install react
+
+      npm install && npm run dev
+      php artisan migrate
+      npm run watch
+    ```
+  - 提供权限认证后台Api支持
+    - 提供给类似Next.js, Nuxt或其它类似的现代JavaScript应用程序权限认证功能
+      ```
+        php artisan breeze:install api
+        php artisan migrate
+      ```
+
 
 ## 创建应用: 博客
   - 创建表: blog
@@ -399,6 +428,8 @@
 
           ```
       - 运行测试用例: php artisan test
+
+
 
 ## 学习资料
 
