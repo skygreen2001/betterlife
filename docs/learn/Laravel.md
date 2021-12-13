@@ -1,8 +1,8 @@
-# 学习Lavarel
+# 学习Laravel
 
 ## 版本
 
-- Lavarel版本: 8.75.0
+- Laravel版本: 8.75.0
 
 ## 起步
 
@@ -78,26 +78,28 @@
     ```
   - 初始化数据库: php artisan migrate
 
-## 创建权限认证
-  
-
 ## 启动工具包
 
+- 创建权限认证: Laravel UI
+  ```
+      composer require laravel/ui
+      php artisan ui bootstrap --auth
+      npm install && npm run dev
+      npm run watch
+  ```
+  - views页面放置在resources/views目录下
+
 - 创建权限认证: Laravel Breeze
-  ```
-    composer require laravel/breeze --dev
-    php artisan breeze:install
-    npm install && npm run dev
-    php artisan migrate
-    npm run watch
-  ```
-  - 老版简单的的权限认证
+  - 使用Blade模版语言
     ```
-        composer require laravel/ui
-        php artisan ui bootstrap --auth
-        npm install && npm run dev
-        npm run watch
+      composer require laravel/breeze --dev
+      php artisan breeze:install
+      npm install && npm run dev
+      php artisan migrate
+      npm run watch
     ```
+    - views页面放置在resources/views目录下
+
   - 使用Inertia.js前端Vue或React实现
     ```
       php artisan breeze:install vue
@@ -108,16 +110,49 @@
       php artisan migrate
       npm run watch
     ```
+    - views页面放置在resources/js/Pages目录下
+
   - 提供权限认证后台Api支持
     - 提供给类似Next.js, Nuxt或其它类似的现代JavaScript应用程序权限认证功能
       ```
         php artisan breeze:install api
         php artisan migrate
       ```
+      - Netx.js实现: https://github.com/laravel/breeze-next
 
+- 创建权限认证: Laravel Jetstream
+  - Jetstream 官方文档:
+  - 安装Jetstream: composer require laravel/jetstream
+  - Jetstream 使用 Tailwind CSS 设计样式，并提供 Livewire 或 Inertia.js 驱动的前端脚手架技术栈。
+  - Livewire + Blade
+    ```
+      php artisan jetstream:install livewire
+
+      php artisan jetstream:install livewire --teams
+      npm install && npm run dev
+      php artisan migrate
+    ```
+    - views页面放置在resources/views目录下
+    
+  - Inertia + Vue
+    ```
+      php artisan jetstream:install inertia
+
+      php artisan jetstream:install inertia --teams
+      npm install && npm run dev
+      php artisan migrate
+    ```
+    - views页面放置在resources/js/Pages目录下
+
+  - 移除Jetstream
+    ```
+      composer remove laravel/jetstream
+    ```
+
+- 自定义权限认证: https://laravel.com/docs/8.x/authentication#authenticating-users
 
 ## 创建应用: 博客
-  - 创建表: blog
+  - 创建表: blogs
     ```
         php artisan make:migration create_blogs_table --create=blogs
     ```
@@ -287,7 +322,7 @@
                 ...
             </php>
           ```
-      - 删除Lavarel默认生成的Feature测试类: rm tests/Feature/ExampleTest.php
+      - 删除Laravel默认生成的Feature测试类: rm tests/Feature/ExampleTest.php
       - 新建Feature测试类: php artisan make:test EditBlogsTest
       - 在新建的文件: tests/Feature/EditBlogsTest.php 新增测试用例如下
         - 合法有效的Blog保存进数据库
@@ -429,14 +464,12 @@
           ```
       - 运行测试用例: php artisan test
 
-
-
 ## 学习资料
 
 - [官网](https://laravel.com/)
-- [安装Lavarel](https://laravel.com/docs/8.x/installation)
+- [安装Laravel](https://laravel.com/docs/8.x/installation)
 - [Laravel 8 中文文档](https://learnku.com/docs/laravel)
 - [Laravel News](https://laravel-news.com/)
   - [Building Your First Laravel Application](https://laravel-news.com/your-first-laravel-application)
 - [Laravel Valet](https://laravel.com/docs/8.x/valet) 
-  - [Valet中文文档](https://learnku.com/docs/laravel/8.x/valet/9358)
+  - [Valet中文文档](https://learnku.com/docs/laravel/8.5/valet/)
