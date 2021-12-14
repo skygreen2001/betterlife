@@ -75,7 +75,11 @@ class Initializer
         if ( strpos($class_name, "\\") > 0 ) {
             $parts = explode('\\', $class_name);
             $path  = implode('/', $parts) . '.php';
-            require_once($path);
+            $path  = Gc::$nav_root_path . $path;
+            // echo $path;
+            if ( file_exists($path) ) {
+                require_once($path);
+            }
         }
     }
 

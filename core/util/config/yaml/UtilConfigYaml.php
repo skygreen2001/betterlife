@@ -9,7 +9,8 @@
  * @author skygreen
  */
 class UtilConfigYaml extends UtilConfig{
-    function load ($file) {
+    
+    public function load($file) {
         if (file_exists($file) == false) { return false; }
         $this->_settings = Spyc::YAMLLoad($file);
     }
@@ -19,7 +20,7 @@ class UtilConfigYaml extends UtilConfig{
     */
     public static function main(){
         $settings = New UtilConfigYaml();
-        $settings->load(__DIR__.DS.'setting.yaml');
+        $settings->load( __DIR__ . DS . 'setting.yaml' );
         echo 'Yaml: ' . $settings->get('db.host') . '';
     }
 

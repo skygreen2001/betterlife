@@ -13,8 +13,8 @@ class UtilConfigJson extends UtilConfig
     /**
      * 加载Json配置文件
      */
-    public function load ($file) {
-        if (file_exists($file) == false) { return false; }
+    public function load($file) {
+        if ( file_exists($file) == false ) { return false; }
         $this->_settings = json_decode(file_get_contents($file),true);
     }
 
@@ -23,8 +23,8 @@ class UtilConfigJson extends UtilConfig
      */
     public static function main(){
         $settings = new UtilConfigJson();
-        $settings->load(__DIR__.DS.'config.json');
-        echo 'Json: host-' . $settings->get('db.host') . ',debug-'.$settings->get('debug') ;
+        $settings->load( __DIR__ . DS . 'config.json' );
+        echo 'Json: host-' . $settings->get('db.host') . ', debug-'.$settings->get('debug') ;
     }
 }
 ?>

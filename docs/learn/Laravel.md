@@ -1,10 +1,10 @@
-# 学习Laravel
+# Laravel从入门到实践
 
 ## 版本
 
 - Laravel版本: 8.75.0
 
-## 起步
+## 安装与配置
 
 ### 使用Docker
 
@@ -15,6 +15,20 @@
 
 - 安装项目: composer create-project laravel/laravel betterlife
 - 启动项目: cd betterlife && php artisan serve
+
+### 环境要求
+
+- PHP >= 7.3
+- PHP Extension
+  - BCMath
+  - Ctype
+  - Fileinfo
+  - JSON
+  - Mbstring
+  - OpenSSL
+  - PDO
+  - Tokenizer
+  - XML
 
 ### 查看命令集
 
@@ -38,7 +52,7 @@
   - tests    : 存放单元测试及功能测试代码
   - vendor   : 通过 Composer 安装的依赖包都存放在这里，通常该目录会放到 .gitignore 文件里以排除到版本控制系统之外
 
-## 安装Valet
+## Valet
   - Valet 是 Mac 极简主义者的 Laravel 开发环境。
   - 确保 ~/.composer/vendor/bin 目录在系统的「PATH」中。
 
@@ -56,6 +70,9 @@
       composer global require laravel/valet
       valet install
     ```
+  - 关闭Valet: valet stop
+  - 开启Valet: valet start
+  - 重启Valet: valet restart
 
   - 绑定应用: cd betterlife && valet link
   - 访问网站: http://betterlife.test/
@@ -63,6 +80,18 @@
     - 任何二级域名也可以访问，如: http://abc.betterlife.test
   - 查看列表: valet links
   - 取消绑定: valet unlink betterlife
+
+## Telescope
+  - Telescope 调试工具是本地 Laravel 开发环境的绝佳伴侣。
+  - Telescope 可以洞察进入应用程序的请求、异常、日志条目、数据库查询、队列任务、邮件、通知、缓存操作、计划任务、变量输出。
+  - 安装Telescope, 仅本地使用: 
+    ```
+      composer require laravel/telescope --dev
+      php artisan telescope:install
+      php artisan migrate
+    ```
+  - 浏览器访问Telescope: /telescope 
+    - 如当前应用: http://betterlife.test/telescope
 
 ## 安装数据库
   - 安装Dbngin: https://dbngin.com/
@@ -463,6 +492,22 @@
 
           ```
       - 运行测试用例: php artisan test
+
+
+
+
+
+## 部署
+
+- Nginx 配置: https://laravel.com/docs/8.x/deployment#nginx
+  - 网站根路径下应指向 public/index.php , 以确保网站配置文件配置项不暴露，及其它网站源码安全问题。
+
+- 生产环境性能优化
+  - Autoloader优化: composer install --optimize-autoloader --no-dev
+    - 确保根路径下保留composer.lock文件
+  - 配置优化     : php artisan config:cache
+  - Route加载优化: php artisan route:cache
+  - View加载优化 : php artisan view:cache
 
 ## 学习资料
 

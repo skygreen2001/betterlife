@@ -8,9 +8,10 @@
  * @subpackage ini
  * @author skygreen
  */
-class UtilConfigIni extends UtilConfig{
-    public function load ($file) {
-        if (file_exists($file) == false) { return false; }
+class UtilConfigIni extends UtilConfig
+{
+    public function load($file) {
+        if ( file_exists($file) == false ) { return false; }
         $this->_settings = parse_ini_file ($file, true);
     }
 
@@ -19,7 +20,7 @@ class UtilConfigIni extends UtilConfig{
     */
     public static function main(){
         $settings = new UtilConfigIni();
-        $settings->load(__DIR__.DS.'setting.ini');
+        $settings->load( __DIR__ . DS . 'setting.ini' );
         echo 'INI: ' . $settings->get('db.host') . '';
     }
 }

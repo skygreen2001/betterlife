@@ -9,7 +9,7 @@
  * @author skygreen
  */
 class UtilConfigPhp extends UtilConfig{
-    public function load ($file)
+    public function load($file)
     {
         if (file_exists($file) == false) { return false; }
         // Include file
@@ -25,8 +25,8 @@ class UtilConfigPhp extends UtilConfig{
 
     public function config($file)
     {
-        if (file_exists($file) == false) { return false; }
-        $result=require_once($file);
+        if ( file_exists($file) == false ) { return false; }
+        $result = require_once($file);
         // print_r($result);
         return $result;
     }
@@ -37,12 +37,12 @@ class UtilConfigPhp extends UtilConfig{
     public static function main(){
         // Load settings (PHP)
         $settings = new UtilConfigPhp();
-        $settings->load(__DIR__.DS."setting.php");
-        echo 'PHP:host-'. $settings->get('db.host').',name-'. $settings->get('db.name')."<br/>";
+        $settings->load( __DIR__ . DS . "setting.php" );
+        echo 'PHP:host-' . $settings->get('db.host') . ', name-' . $settings->get('db.name') . "<br/>";
 
         // Load config (PHP) 更简单
-        $config=$settings->config(__DIR__.DS."config.php");
-        echo 'PHP:host-'. $config['host'].',name-'. $config['name'];
+        $config = $settings->config( __DIR__ . DS . "config.php" );
+        echo 'PHP:host-' . $config['host'] . ', name-' . $config['name'];
     }
 }
 ?>

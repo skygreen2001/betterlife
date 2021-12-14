@@ -37,7 +37,8 @@
     "mustangostang/spyc" : "^0.6.2",
     "fusonic/linq"       : "^2.0",
     "adodb/adodb-php"    : ">=5.19",
-    "nelexa/zip"         : "^3.1"
+    "nelexa/zip"         : "^3.1",
+    "fakerphp/faker"     : "^1.17"
   },
   "require-dev": {
     "pagon/composer-packer": "0.1.x"

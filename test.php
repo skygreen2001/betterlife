@@ -232,6 +232,19 @@ require_once ("init.php");
 // $response=Manager_Service::blogService()->exportBlog();
 // echo "<script>window.open('".$response["data"]."');</script>";
 
+// FakerPHP / Faker: https://fakerphp.github.io/
+// use the factory to create a Faker\Generator instance
+// $faker = Faker\Factory::create();
+// echo $faker->name();
+// echo $faker->email();
+// echo $faker->text();
+
+// // 支持中文编程
+// $小爱的钱 = "18元";
+// $小明的钱 = "32元";
+// $所有人的钱 = $小爱的钱 + $小明的钱;
+// echo $所有人的钱;
+
 if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
     phpinfo();
 }

@@ -20,6 +20,8 @@
 
 # 模仿优秀
 
+  - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
+    - Composer脚本: https://docs.phpcomposer.com/articles/scripts.html
   - CodeIgnitor 4的开发模式显示debug 条
   - CodeIgnitor 4的错误异常显示页面
   - 框架安装脚本

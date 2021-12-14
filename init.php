@@ -1,7 +1,7 @@
 <?php
 header("Content-Type:text/html; charset=UTF-8");
-if (!defined('__DIR__')) define('__DIR__', dirname(__FILE__));
-if (!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+if ( !defined('__DIR__') ) define('__DIR__', dirname(__FILE__));
+if ( !defined('DS') ) define('DS', DIRECTORY_SEPARATOR);
 
 require_once 'Gc.php';//加载全局变量文件
 require_once 'core/main/Initializer.php';
@@ -16,9 +16,11 @@ function class_autoloader($class_name)
 {
     Initializer::autoload($class_name);
 }
+
 //使用composer的自动加载[必须放在spl_autoload_register的前面]
 $autoload_file = file_exists(Gc::$nav_root_path . "install/vendor/autoload.php") ? Gc::$nav_root_path . "install/vendor/autoload.php" : Gc::$nav_root_path . "install/autoload.php";
-include $autoload_file;
+require_once $autoload_file;
 
 spl_autoload_register("class_autoloader");
+
 Initializer::initialize();
