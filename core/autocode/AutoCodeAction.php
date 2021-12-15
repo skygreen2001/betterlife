@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 枚举类型：表示层生成类型定义
- +---------------------------------------<br/>
+ * -----------| 枚举类型：表示层生成类型定义 |-----------
  * @category betterlife
  * @package core.config
  * @author skygreen
@@ -24,7 +22,7 @@ class EnumAutoCodeViewType extends Enum {
 
 /**
  +---------------------------------<br/>
- * 工具类:自动生成代码-控制器<br/>
+ * -----------| 工具类:自动生成代码-控制器<br/>
  +---------------------------------<br/>
  * @category betterlife
  * @package core.autocode

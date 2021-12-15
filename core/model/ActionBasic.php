@@ -1,6 +1,6 @@
 <?php
 /**
- * 在线编辑器的类型
+ * -----------| 在线编辑器的类型 |-----------
  */
 class EnumOnlineEditorType extends Enum
 {
@@ -15,13 +15,11 @@ class EnumOnlineEditorType extends Enum
 }
 
 /**
- +----------------------------------------------<br/>
- * 所有控制器的父类<br/>
- * class_alias("Action","Controller");<br/>
- +----------------------------------------------
+ * -----------| 所有控制器的父类 |-----------
  * @category betterlife
  * @package core.model
  * @author skygreen
+ * > class_alias("ActionBasic", "Controller");
  */
 class ActionBasic extends BBObject
 {

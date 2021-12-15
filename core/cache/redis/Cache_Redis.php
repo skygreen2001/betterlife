@@ -1,23 +1,27 @@
 <?php
-/*
- +---------------------------------<br/>
- * 使用Redis作为系统缓存。<br/>
- * 使用方法: 添加以下内容到Config_Memcache中<br/>
- *     所有的缓存服务器Memcache 主机IP地址和端口配置<br/>
- *     保存数据是否需要压缩。 <br/>
- +---------------------------------
- * @see phpredis: https://github.com/phpredis/phpredis
- * @see install: https://github.com/phpredis/phpredis/blob/develop/INSTALL.markdown
- * @see 关于Mac安装PHP相关扩展出现Zend/zend_config.h缺失的问题记录: https://blog.51cto.com/vsfor/1892319
+/**
+ * -----------| 使用Redis作为系统缓存 |-----------
+ * 
+ * 使用方法: 添加以下内容到Config_Memcache中
+ * 
+ *     所有的缓存服务器Memcache 主机IP地址和端口配置
+ * 
+ *     保存数据是否需要压缩。
+ * 
+ * @link phpredis: https://github.com/phpredis/phpredis
+ * @link install: https://github.com/phpredis/phpredis/blob/develop/INSTALL.markdown
+ * @link 关于Mac安装PHP相关扩展出现Zend/zend_config.h缺失的问题记录: https://blog.51cto.com/vsfor/1892319
  *      - 在Mac系统目录下: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/usr/include/php
- * @see Mac 下编译 PHP 扩展遇到的一些问题: http://www.ishenping.com/ArtInfo/3703557.html
+ * @link Mac 下编译 PHP 扩展遇到的一些问题: http://www.ishenping.com/ArtInfo/3703557.html
  *      - 在Mac系统目录下: “/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/php”
- * @see redis服务的配置文件修改 bind ip,默认是bind 127.0.0.1 只允许本地连接 0.0.0.0允许任意ip,也可根据需要自己修改。
- * @see redis.conf 配置文件中设置: bind 127.0.0.1 192.168.64.2
+ * @link redis服务的配置文件修改 bind ip,默认是bind 127.0.0.1 只允许本地连接 0.0.0.0允许任意ip,也可根据需要自己修改。
+ * @link redis.conf 配置文件中设置: bind 127.0.0.1 192.168.64.2
+ * 
  * [以下为老的解决方案，已作废，仅供学习参考]
- *      @see Reference Method:http://code.google.com/p/phpredis/wiki/referencemethods
- *      @see php-redis:http://code.google.com/p/php-redis/
- *      @see PHP-redis中文说明:http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
+ * 
+ *      @link Reference Method: http://code.google.com/p/phpredis/wiki/referencemethods
+ *      @link php-redis: http://code.google.com/p/php-redis/
+ *      @link PHP-redis中文说明: http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
  * @category betterlife
  * @package core.cache
  * @author skygreen
@@ -132,9 +136,8 @@ class Cache_Redis extends Cache_Base
         return $result;
     }
 
-
     /**
-     * 计数:
+     * 计数: 所选择的DB所有键计数
      */
     public function countKeys()
     {
@@ -155,13 +158,22 @@ class Cache_Redis extends Cache_Base
 
     /**
      * 获取指定$key的类型
-     * @return
-     *     1: string: Redis::REDIS_STRING
-     *     2: set: Redis::REDIS_SET
-     *     3: list: Redis::REDIS_LIST
-     *     4: zset: Redis::REDIS_ZSET
-     *     5: hash: Redis::REDIS_HASH
-     *     0: other: Redis::REDIS_NOT_FOUND
+     * 
+     * 返回:
+     * 
+     *    1: string: Redis::REDIS_STRING
+     * 
+     *    2: set: Redis::REDIS_SET
+     * 
+     *    3: list: Redis::REDIS_LIST
+     * 
+     *    4: zset: Redis::REDIS_ZSET
+     * 
+     *    5: hash: Redis::REDIS_HASH
+     * 
+     *    0: other: Redis::REDIS_NOT_FOUND
+     * 
+     * @return int
      */
     public function getKeyType($key)
     {
@@ -173,7 +185,7 @@ class Cache_Redis extends Cache_Base
      * 根据类型显示转换成Redis的类型值
      */
     public function getKeyTypeByShow($typeShow) {
-        $type = "";
+        $type     = "";
         $typeShow = strtoupper($typeShow);
         switch ($typeShow) {
             case "STRINGS":
@@ -201,6 +213,7 @@ class Cache_Redis extends Cache_Base
         }
         return $type;
     }
+
     /**
      * 类型显示字符串
      */
@@ -242,32 +255,40 @@ class Cache_Redis extends Cache_Base
     }
 
     /**
-    * 在缓存里保存指定$key的数据<br/>
-    * 仅当存储空间中不存在键相同的数据时才保存<br/>
-    * @param string $key
-    * @param string|array|object $value
-    *        - 如果redis键值类型为string: 直接保存
-    *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
-    * @param string $type 键类型
-    *     1: string: Redis::REDIS_STRING
-    *     2: set: Redis::REDIS_SET
-    *     3: list: Redis::REDIS_LIST
-    *     4: zset: Redis::REDIS_ZSET
-    *     5: hash: Redis::REDIS_HASH
-    *     0: other: Redis::REDIS_NOT_FOUND
-    * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
-    * @return bool
-    */
+     * 在缓存里保存指定$key的数据
+     * 
+     * 仅当存储空间中不存在键相同的数据时才保存
+     * @param string $key
+     * @param string|array|object $value
+     *        - 如果redis键值类型为string: 直接保存
+     *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
+     * 
+     * @param string $type 键类型
+     * 
+     *     1: string: Redis::REDIS_STRING
+     * 
+     *     2: set: Redis::REDIS_SET
+     * 
+     *     3: list: Redis::REDIS_LIST
+     * 
+     *     4: zset: Redis::REDIS_ZSET
+     * 
+     *     5: hash: Redis::REDIS_HASH
+     * 
+     *     0: other: Redis::REDIS_NOT_FOUND
+     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
+     * @return bool
+     */
     public function save($key, $value, $type = Redis::REDIS_STRING, $expired = 86400)
     {
         if ( empty($key) ) return;
         if ( is_object($value) ) {
             $value = serialize($value);
         }
-        switch($type){
+        switch ($type) {
             case Redis::REDIS_STRING:
                 $this->redis->setNx($key, $value);
                 break;
@@ -346,8 +367,9 @@ class Cache_Redis extends Cache_Base
     }
 
    /**
-    * 在缓存里保存指定$key的数据 <br/>
-    * 与save和update不同，无论何时都保存 <br/>
+    * 在缓存里保存指定$key的数据
+    *
+    * 与save和update不同，无论何时都保存
     * @param string $key
     * @param string|array|object $value
     *        - 如果redis键值类型为string: 直接保存
@@ -453,8 +475,9 @@ class Cache_Redis extends Cache_Base
     }
 
    /**
-    * 在缓存里更新指定key的数据<br/>
-    * 仅当存储空间中存在键相同的数据时才保存<br/>
+    * 在缓存里更新指定key的数据
+    *
+    * 仅当存储空间中存在键相同的数据时才保存
     * @param string $key
     * @param string|array|object $value
     * @return bool
@@ -520,8 +543,10 @@ class Cache_Redis extends Cache_Base
     }
 
     /**
-     * 获取指定keys的值们。<br/>
+     * 获取指定keys的值们。
+     * 
      * 只取字符串
+     * 
      * 允许一次查询多个键值，减少通讯次数。
      * @param array $key
      * @return array

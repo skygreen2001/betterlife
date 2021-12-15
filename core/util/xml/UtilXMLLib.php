@@ -1,9 +1,8 @@
 <?php
 /**
- * ###################################################################################<br/>
- * # XML class: utility class to be used with PHP's XML handling functions <br/>
- * # XML和Array的转换<br/>
- * ###################################################################################<br/>
+ * -----------| XML class: utility class to be used with PHP's XML handling functions |-----------
+ * 
+ * XML和Array的转换
  * @category betterlife
  * @package util.xml
  * @author Keith Devens

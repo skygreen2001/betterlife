@@ -1,8 +1,6 @@
 <?php
 /**
- +----------------------------------------------<br/>
- * 后台管理所有控制器的父类<br/>
- +----------------------------------------------
+ * -----------| 后台管理所有控制器的父类 |-----------
  * @category betterlife
  * @package core.admin
  * @author skygreen
@@ -21,7 +19,7 @@ class ActionAdmin extends ActionBasic
             "admin.auth.login"
         );
 
-        if (!in_array($this->data["go"], $globalPage)&&!HttpSession::isHave('user_id')){
+        if ( !in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' ) ) {
             $this->redirect("auth","login");
         }
     }

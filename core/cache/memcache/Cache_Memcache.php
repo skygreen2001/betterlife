@@ -1,11 +1,10 @@
 <?php
-/*
- +---------------------------------<br/>
- * 使用memcached作为系统缓存。<br/>
+/**
+ * -----------| 使用memcached作为系统缓存 |-----------
+ * 
  * memcached客户端是memcache
- +---------------------------------
- * @see php memcached(windows linux) 的安装及应用:http://hi.baidu.com/jqxw4444/blog/item/67e0f68693461b2867096ef4.html
- * @see About Installing memcache on Windows for PHP :http://pureform.wordpress.com/2008/01/10/installing-memcache-on-windows-for-php/
+ * @link php memcached(windows linux) 的安装及应用:http://hi.baidu.com/jqxw4444/blog/item/67e0f68693461b2867096ef4.html
+ * @link About Installing memcache on Windows for PHP :http://pureform.wordpress.com/2008/01/10/installing-memcache-on-windows-for-php/
  * @category betterlife
  * @package core.cache
  * @author skygreen
@@ -86,8 +85,9 @@ class Cache_Memcache extends Cache_Base{
     }
 
     /**
-     * 在缓存里保存指定$key的数据<br/>
-     * 仅当存储空间中不存在键相同的数据时才保存<br/>
+     * 在缓存里保存指定$key的数据
+     * 
+     * 仅当存储空间中不存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
@@ -99,8 +99,9 @@ class Cache_Memcache extends Cache_Base{
     }
 
     /**
-     * 在缓存里保存指定$key的数据 <br/>
-     * 与save和update不同，无论何时都保存 <br/>
+     * 在缓存里保存指定$key的数据
+     * 
+     * 与save和update不同，无论何时都保存
      * @param string $key
      * @param string|array|object $value
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
@@ -112,8 +113,9 @@ class Cache_Memcache extends Cache_Base{
     }
 
     /**
-     * 在缓存里更新指定key的数据<br/>
-     * 仅当存储空间中存在键相同的数据时才保存<br/>
+     * 在缓存里更新指定key的数据
+     * 
+     * 仅当存储空间中存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
      * @return bool
@@ -146,7 +148,8 @@ class Cache_Memcache extends Cache_Base{
     }
 
     /**
-     * 获取指定keys的值们。<br/>
+     * 获取指定keys的值们
+     * 
      * 允许一次查询多个键值，减少通讯次数。
      * @param array $key
      * @return array
@@ -158,7 +161,7 @@ class Cache_Memcache extends Cache_Base{
     }
 
     /**
-     * 清除所有的对象。
+     * 清除所有的对象
      */
     public function clear()
     {

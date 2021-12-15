@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 工具类:自动生成代码-实体类<br/>
- +---------------------------------<br/>
+ * -----------| 工具类:自动生成代码-实体类 |-----------
  * @category betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
@@ -22,9 +20,10 @@ class AutoCodeDomain extends AutoCode
      */
     public static $enumClass;
     /**
-     * 数据对象生成定义的方式<br/>
-     * 1.所有的列定义的对象属性都是private,同时定义setter和getter方法。
-     * 2.所有的列定义的对象属性都是public。
+     * 数据对象生成定义的方式
+     * 
+     * 1. 所有的列定义的对象属性都是private,同时定义setter和getter方法。
+     * 2. 所有的列定义的对象属性都是public。
      */
     public static $type;
 
@@ -34,10 +33,10 @@ class AutoCodeDomain extends AutoCode
     private static $relation_spec_content = "";
     /**
      * 自动生成代码-实体类
-     * @param array|string $table_names
      * 示例如下：
-     *  1.array:array('bb_user_admin','bb_core_blog')
-     *  2.字符串:'bb_user_admin,bb_core_blog'
+     *    1. array:array('bb_user_admin','bb_core_blog')
+     *    2. 字符串:'bb_user_admin,bb_core_blog'
+     * @param array|string $table_names
      */
     public static function AutoCode($table_names = "")
     {
@@ -339,10 +338,10 @@ class AutoCodeDomain extends AutoCode
     }
 
     /**
-     * 生成数据对象之间关系规范定义<br/>
-     * 所有的数据对象关系:<br/>
-     * 一对一，一对多，多对多<br/>
-     * 包括*.has_one,belong_has_one,has_many,many_many,belongs_many_many. <br/>
+     * 生成数据对象之间关系规范定义
+     * 所有的数据对象关系:
+     * 一对一，一对多，多对多
+     * 包括 has_one, belong_has_one, has_many, many_many, belongs_many_many.
      * 参考说明:EnumTableRelation
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名称

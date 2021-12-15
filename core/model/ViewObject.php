@@ -1,19 +1,17 @@
 <?php
-  /**
-   +--------------------------------------------------<br/>
-   * 表示层对象，需要框架支持Flexy|Smarty<br/>
-   +--------------------------------------------------<br/>
-   * @category betterlife
-   * @package core.model
-   * @author skygreen
-   */
-  class ViewObject extends stdClass{  
+/**
+ * -----------| 表示层对象，需要框架支持Flexy|Smarty |-----------
+ * @category betterlife
+ * @package core.model
+ * @author skygreen
+ */
+ class ViewObject extends stdClass 
+ {
     /**
      * 当前Web应用路径
      * @var string 
      */  
     public $url_base;
-    
     /**
      * Css预加载语句【在未到页面之前的所有加载Css语句】
      * @var string 
@@ -55,8 +53,8 @@
     }
     
     /**
-    * 获取类名
-    */
+     * 获取类名
+     */
     public static function get_Class()
     {
        return get_class();

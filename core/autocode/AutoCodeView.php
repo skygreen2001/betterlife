@@ -1,9 +1,7 @@
 <?php
 
 /**
- +---------------------------------<br/>
- * 工具类:自动生成代码-前端默认的表示层
- +---------------------------------<br/>
+ * -----------| 工具类:自动生成代码-前端默认的表示层 |-----------
  * @category betterlife
  * @package core.autocode.view
  * @author skygreen skygreen2001@gmail.com
@@ -11,26 +9,35 @@
 class AutoCodeView extends AutoCode
 {
     /**
-     * 表示层生成定义的方式<br/>
-     * 0.生成前台所需的表示层页面。<br/>
-     * 1.生成标准的增删改查模板所需的表示层页面。<br/>
-     * 2.生成后台所需的表示层页面。<br/>
+     * 表示层生成定义的方式
+     * 
+     * 0.生成前台所需的表示层页面。
+     * 
+     * 1.生成标准的增删改查模板所需的表示层页面。
+     * 
+     * 2.生成后台所需的表示层页面。
+     * 
+     * @var int
      */
     public static $type;
     /**
      * View生成tpl所在的应用名称，默认同网站应用的名称
+     * @var string
      */
     public static $appName;
     /**
      * 表示层所在的目录
+     * @var string
      */
     public static $view_core;
     /**
      * 表示层完整的保存路径
+     * @var string
      */
     public static $view_dir_full;
     /**
      * 设置必需的路径
+     * @return void
      */
     public static function pathset()
     {
@@ -53,10 +60,14 @@ class AutoCodeView extends AutoCode
 
     /**
      * 自动生成代码-前端默认的表示层
-     * @param array|string $table_names
+     * 
      * 示例如下：
-     *  1.array:array('bb_user_admin','bb_core_blog')
-     *  2.字符串:'bb_user_admin,bb_core_blog'
+     * 
+     *    1.array:array('bb_user_admin','bb_core_blog')
+     * 
+     *    2.字符串:'bb_user_admin,bb_core_blog'
+     * 
+     * @param array|string $table_names
      */
     public static function AutoCode($table_names = "")
     {

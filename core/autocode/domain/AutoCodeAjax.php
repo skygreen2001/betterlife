@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 工具类:自动生成代码-Ajax请求数据<br/>
- +---------------------------------<br/>
+ * -----------| 工具类:自动生成代码-Ajax请求数据 |-----------
  * @category betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com

@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 功能:处理图片水印的方法。<br/>
- +---------------------------------
+ * -----------| 功能:处理图片水印的方法 |-----------
  * 参考:PHP function to image-watermark an image
  *      http://salman-w.blogspot.com/2008/11/watermark-your-images-with-another.html
  * 水印图片应当是以下推荐的格式:

@@ -1,25 +1,30 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 基于对象的增删改查XML节点数据项<br/>
- * 规则说明如下<br/>
- * 0.所有元素名为小写<br/>
- * 1.节点根名称为 类名+s：如Role为roles<br/>
- * 2.每一个节点为:类名(如role)<br/>
- * 3.节点下名为类的属性<br/>
- * 4.可有全局配置项，目录名为global(可选<br/>
- * 示例：<br/>
- *  <roles><br/>
- *    <global><br/>
- *      <dir_path>F:\testshare\</dir_path><br/>
- *    </global><br/>
- *    <role><br/>
- *      <id>1</id><br/>
- *      <name>管理者</name><br/>
- *      <sub_dir></sub_dir><br/>
- *    </role><br/>
- *  <roles><br/>
- +---------------------------------------<br/>
+ * -----------| 基于对象的增删改查XML节点数据项 |-----------
+ * 
+ * 规则说明如下
+ * 
+ * 0. 所有元素名为小写
+ * 1. 节点根名称为 类名+s：如Role为roles
+ * 2. 每一个节点为:类名(如role)
+ * 3. 节点下名为类的属性
+ * 4. 可有全局配置项，目录名为global(可选
+ * 
+ * @example 示例如下:
+ * 
+ * ```
+ *    <roles>
+ *        <global>
+ *            <dir_path>F:\testshare\</dir_path>
+ *        </global>
+ *        <role>
+ *            <id>1</id>
+ *            <name>管理者</name>
+ *            <sub_dir></sub_dir>
+ *        </role>
+ *    <roles>
+ * ```
+ * 
  * @category betterlife
  * @package util.xml
  * @author skygreen

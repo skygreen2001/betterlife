@@ -1,8 +1,9 @@
 <?php
 /**
- +-----------------------------------------<br/>
- * 所有Xml格式数据实体类的父类<br/>
- +-----------------------------------------<br/>
+ * -----------| 所有Xml格式数据实体类的父类 |-----------
+ * @category betterlife
+ * @package core.model
+ * @author skygreen
  */
 class XmlObject extends BBObject implements ArrayAccess
 {

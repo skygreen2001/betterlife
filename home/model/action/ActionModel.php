@@ -1,8 +1,6 @@
 <?php
 /**
- +----------------------------------------------<br/>
- * 所有Model应用控制器的父类<br/>
- +----------------------------------------------
+ * -----------| 所有Model应用控制器的父类 |-----------
  * @category betterlife
  * @package web.model
  * @author skygreen skygreen2001@gmail.com

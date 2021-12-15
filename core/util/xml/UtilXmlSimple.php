@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 采用SimpleXML处理Xml<br/>
- +---------------------------------------<br/>
+ * -----------| 采用SimpleXML处理Xml |-----------
  * @category betterlife
  * @package util.xml
  * @author skygreen
@@ -16,16 +14,16 @@ class UtilXmlSimple extends Util
      */
     public static function fileXmlToArray($filename)
     {
-      $sxi = new SimpleXmlIterator($filename, null, true);
-      $result=self::sxiToArray($sxi);
-      return $result;
+        $sxi    = new SimpleXmlIterator($filename, 0, true);
+        $result = self::sxiToArray($sxi);
+        return $result;
     }
     
     /**
      * Xml文件里的XML转换成Array
      * 特殊类型的xml文件:Xml文件定义里只有属性
      * @param string filename 文件名
-     * @example:
+     * @example 
      * <?xml version="1.0" encoding="utf-8"?>
      * <tasks>
      *      <task name="festival" cycle="custom" interval="3600" due_time="" last_time="" />
@@ -34,20 +32,20 @@ class UtilXmlSimple extends Util
      */
     public static function fileXmlAttributesToArray($filename)
     {
-        $resultXml=self::fileXmlToObject($filename);
-        $result=array();
-        if ($resultXml)
+        $resultXml = self::fileXmlToObject( $filename );
+        $result    = array();
+        if ( $resultXml )
         {
             foreach ($resultXml as $xml_attributes) 
             {
-                if ($xml_attributes)
+                if ( $xml_attributes )
                 { 
-                    $attributes=$xml_attributes->attributes();                   
-                    if ($attributes)
+                    $attributes = $xml_attributes->attributes();
+                    if ( $attributes )
                     {
                         $arrObjData = get_object_vars($attributes);
-                        $arrObjData=end($arrObjData);
-                        $result[]=$arrObjData;
+                        $arrObjData = end($arrObjData);
+                        $result[]   = $arrObjData;
                     }
                 }
             }
@@ -63,22 +61,21 @@ class UtilXmlSimple extends Util
     private static function sxiToArray($sxi)
     {
         $a = array();
-        for( $sxi->rewind(); $sxi->valid(); $sxi->next() ) {
-            if(!array_key_exists($sxi->key(), $a)){
+        for ( $sxi->rewind(); $sxi->valid(); $sxi->next() ) {
+            if ( !array_key_exists($sxi->key(), $a) ) {
                 $a[$sxi->key()] = array();
             }
-            if($sxi->hasChildren()){
-                $a[$sxi->key()][] = self::sxiToArray($sxi->current());
-            }
-            else{
-                $sxiCurrent=$sxi->current();
-                $tmp=array();
+            if( $sxi->hasChildren() ) {
+                $a[$sxi->key()][] = self::sxiToArray( $sxi->current() );
+            } else {
+                $sxiCurrent = $sxi->current();
+                $tmp        = array();
                 $tmp[self::XML_ELEMENT_TEXT] = strval($sxiCurrent);
-                $tmpAttr=@array_values((array)$sxiCurrent->attributes());
-                if (isset($tmpAttr)&&count($tmpAttr)>0){
-                    $tmp[self::XML_ELEMENT_ATTRIBUTES]=$tmpAttr[0];
+                $tmpAttr = @array_values((array)$sxiCurrent->attributes());
+                if ( isset($tmpAttr) && count($tmpAttr) > 0 ) {
+                    $tmp[self::XML_ELEMENT_ATTRIBUTES] = $tmpAttr[0];
                 }
-                $a[$sxi->key()][]=$tmp;
+                $a[$sxi->key()][] = $tmp;
             }
         }
         return $a;
@@ -91,7 +88,7 @@ class UtilXmlSimple extends Util
      */
     public static function fileXmlToObject($xml_filename)
     {
-        if (file_exists($xml_filename))
+        if ( file_exists($xml_filename) )
         {
             return simplexml_load_file($xml_filename);
         }
@@ -109,16 +106,16 @@ class UtilXmlSimple extends Util
         $arrData = array();
 
         // if input is object, convert into array
-        if (is_object($arrObjData)) {
+        if ( is_object($arrObjData) ) {
             $arrObjData = get_object_vars($arrObjData);
         }
 
-        if (is_array($arrObjData)) {
+        if ( is_array($arrObjData) ) {
             foreach ($arrObjData as $index => $value) {
-                if (is_object($value) || is_array($value)) {
+                if ( is_object($value) || is_array($value) ) {
                     $value = self::objectsIntoArray($value, $arrSkipIndices); // recursive call
                 }
-                if (in_array($index, $arrSkipIndices)) {
+                if ( in_array($index, $arrSkipIndices) ) {
                     continue;
                 }
                 $arrData[$index] = $value;
@@ -132,12 +129,11 @@ class UtilXmlSimple extends Util
      */
     public static function sample_flickr() 
     {
-        $content =file_get_contents(
-                "http://www.flickr.com/services/feeds/photos_public.gne");
-        $sx=simplexml_load_string($content);
+        $content = file_get_contents("http://www.flickr.com/services/feeds/photos_public.gne");
+        $sx      = simplexml_load_string($content);
         foreach ($sx->entry as $entry) {
-            echo "<a href='{$entry->link['href']}'>".$entry->title."</a><br/>";
-            echo $entry->content."<br/>";
+            echo "<a href='{$entry->link['href']}'>" . $entry->title . "</a><br/>";
+            echo $entry->content . "<br/>";
         }
     }
 

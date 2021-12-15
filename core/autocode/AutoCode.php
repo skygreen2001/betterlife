@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 所有自动生成代码工具的父类<br/>
- +---------------------------------<br/>
+ * -----------| 所有自动生成代码工具的父类 |-----------
  * @category betterlife
  * @package core.autocode
  * @author skygreen <skygreen2001@gmail.com>
@@ -63,10 +61,11 @@ class AutoCode extends BBObject
      */
     public static $relation_viewfield;
     /**
-     * 所有的数据对象关系:<br/>
-     * 一对一，一对多，多对多<br/>
-     * 包括*.has_one,belong_has_one,has_many,many_many,belongs_many_many. <br/>
-     * 参考说明:EnumTableRelation
+     * 所有的数据对象关系:
+     *    一对一，一对多，多对多
+     * 
+     * 包括 has_one, belong_has_one, has_many, many_many, belongs_many_many.
+     * 参考说明: EnumTableRelation
      * @var mixed
      */
     public static $relation_all;

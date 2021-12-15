@@ -95,19 +95,15 @@ function ping_url($url, $data = null)
 }
 
 /**
- +----------------------------------------------------------
  * 字符串命名风格转换
- * type
- * =0 将Java风格转换为C的风格
- * =1 将C风格转换为Java的风格
- +----------------------------------------------------------
+ * 
+ * - type = 0 将Java风格转换为C的风格
+ * - type = 1 将C风格转换为Java的风格
+ * 
  * @access protected
- +----------------------------------------------------------
  * @param string $name 字符串
  * @param integer $type 转换类型
- +----------------------------------------------------------
  * @return string
- +----------------------------------------------------------
  */
 function parse_name($name, $type = 0)
 {
@@ -278,107 +274,107 @@ function client_os()
     $agent = $_SERVER['HTTP_USER_AGENT'];
     $os    = false;
 
-    if ( eregi('win', $agent) && strpos($agent, '95'))
+    if ( mb_eregi('win', $agent) && strpos($agent, '95'))
     {
         $os = 'Windows 95';
     }
-    else if ( eregi('win 9x', $agent) && strpos($agent, '4.90'))
+    else if ( mb_eregi('win 9x', $agent) && strpos($agent, '4.90'))
     {
         $os = 'Windows ME';
     }
-    else if ( eregi('win', $agent) && ereg('98', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('98', $agent) )
     {
         $os = 'Windows 98';
     }
-    else if ( eregi('win', $agent) && eregi('nt 6.0', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('nt 6.0', $agent) )
     {
         $os = 'Windows Vista';
     }
-    else if ( eregi('win', $agent) && eregi('nt 6.1', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('nt 6.1', $agent) )
     {
         $os = 'Windows 7';
     }
-    else if ( eregi('win', $agent) && eregi('nt 5.1', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('nt 5.1', $agent) )
     {
         $os = 'Windows XP';
     }
-    else if ( eregi('win', $agent) && eregi('nt 5', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('nt 5', $agent) )
     {
         $os = 'Windows 2000';
     }
-    else if ( eregi('win', $agent) && eregi('nt', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('nt', $agent) )
     {
         $os = 'Windows NT';
     }
-    else if ( eregi('win', $agent) && ereg('32', $agent) )
+    else if ( mb_eregi('win', $agent) && mb_eregi('32', $agent) )
     {
         $os = 'Windows 32';
     }
-    else if ( eregi('linux', $agent) )
+    else if ( mb_eregi('linux', $agent) )
     {
         $os = 'Linux';
     }
-    else if ( eregi('unix', $agent) )
+    else if ( mb_eregi('unix', $agent) )
     {
         $os = 'Unix';
     }
-    else if ( eregi('sun', $agent) && eregi('os', $agent) )
+    else if ( mb_eregi('sun', $agent) && mb_eregi('os', $agent) )
     {
         $os = 'SunOS';
     }
-    else if ( eregi('ibm', $agent) && eregi('os', $agent) )
+    else if ( mb_eregi('ibm', $agent) && mb_eregi('os', $agent) )
     {
         $os = 'IBM OS/2';
     }
-    else if ( eregi('Mac', $agent) && eregi('PC', $agent) )
+    else if ( mb_eregi('Mac', $agent) && mb_eregi('PC', $agent) )
     {
         $os = 'Macintosh';
     }
-    else if ( eregi('PowerPC', $agent) )
+    else if ( mb_eregi('PowerPC', $agent) )
     {
         $os = 'PowerPC';
     }
-    else if ( eregi('AIX', $agent) )
+    else if ( mb_eregi('AIX', $agent) )
     {
         $os = 'AIX';
     }
-    else if ( eregi('HPUX', $agent) )
+    else if ( mb_eregi('HPUX', $agent) )
     {
         $os = 'HPUX';
     }
-    else if ( eregi('NetBSD', $agent) )
+    else if ( mb_eregi('NetBSD', $agent) )
     {
         $os = 'NetBSD';
     }
-    else if ( eregi('BSD', $agent) )
+    else if ( mb_eregi('BSD', $agent) )
     {
         $os = 'BSD';
     }
-    else if (ereg('OSF1', $agent) )
+    else if (mb_eregi('OSF1', $agent) )
     {
         $os = 'OSF1';
     }
-    else if (ereg('IRIX', $agent) )
+    else if (mb_eregi('IRIX', $agent) )
     {
         $os = 'IRIX';
     }
-    else if ( eregi('FreeBSD', $agent) )
+    else if ( mb_eregi('FreeBSD', $agent) )
     {
         $os = 'FreeBSD';
     }
-    else if ( eregi('teleport', $agent) )
+    else if ( mb_eregi('teleport', $agent) )
     {
         $os = 'teleport';
     }
-    else if ( eregi('flashget', $agent) )
+    else if ( mb_eregi('flashget', $agent) )
     {
         $os = 'flashget';
     }
-    else if ( eregi('webzip', $agent) )
+    else if ( mb_eregi('webzip', $agent) )
     {
         $os = 'webzip';
     }
-    else if ( eregi('offline', $agent) )
+    else if ( mb_eregi('offline', $agent) )
     {
         $os = 'offline';
     }
@@ -388,4 +384,3 @@ function client_os()
     }
     return $os;
 }
-?>

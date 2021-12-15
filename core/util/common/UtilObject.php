@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 功能:处理对象相关的方法类<br/>
- +---------------------------------
+ * -----------| 功能:处理对象相关的方法类 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -14,7 +12,7 @@ class UtilObject extends Util
     /**
      * 将对象转换成xml
      * @param object 数据对象
-     * @param $filterArray 需要过滤不生成的对象的field<br/>
+     * @param $filterArray 需要过滤不生成的对象的field
      * 示例：$filterArray=array("id","commitTime");
      * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
      * @return xml内容
@@ -83,7 +81,7 @@ class UtilObject extends Util
                     return null;
                 }
             } else if ( is_object($object) ) {
-                if ( ($object instanceof DataObject) || ($object instanceof RemoteObject) ) {
+                if ( ($object instanceof DataObject) ) {
                     $data = $object;
                 } else {
                     return null;
@@ -118,7 +116,7 @@ class UtilObject extends Util
             }
             if ( $data ) {
                 //去除数据对象规格定义
-                if ( ($data instanceof DataObject) || ($data instanceof RemoteObject) ) {
+                if ( ($data instanceof DataObject) ) {
                     unset($data->field_spec);
                     unset($data->real_fieldspec);
                 }

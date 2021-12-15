@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 功能:将多个文件压缩成zip文件的工具类<br/>
- +---------------------------------<br/>
+ * -----------| 功能:将多个文件压缩成zip文件的工具类 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -42,7 +40,7 @@ class UtilZipfile
     public $is_dir_info_include = false;
 
     /**
-     * Converts an Unix timestamp to a four byte DOS date and time format (date
+     * Converts an Unix timestamp to a four byte DOS date and time format (date 
      * in high two bytes, time in low two bytes allowing magnitude comparison).
      *
      * @param  integer  the current Unix timestamp
@@ -82,21 +80,21 @@ class UtilZipfile
     private function addFile($data, $name, $showName, $time = 0)
     {
         //$name=Util_String::utf82gbk($name);
-        if ($this->is_dir_info_include){
-            if (is_int($showName)){
-                $name    = str_replace(Gc::$nav_root_path, "", $name);
-                $name    = str_replace('\\', '/', $name);
-            }else{
-                $name=$showName;
+        if ( $this->is_dir_info_include ) {
+            if ( is_int($showName) ) {
+                $name = str_replace(Gc::$nav_root_path, "", $name);
+                $name = str_replace('\\', '/', $name);
+            } else {
+                $name = $showName;
             }
-        }else{
-            $name=basename($name);
-            if (!is_int($showName))$name=$showName;
+        } else {
+            $name = basename($name);
+            if ( !is_int($showName) ) $name = $showName;
         }
 
-        if(contain(strtolower(client_os()),"windows")) if (UtilString::is_utf8($name)) $name=UtilString::utf82gbk($name);
+        if ( contain(strtolower(client_os()), "windows") ) if ( UtilString::is_utf8( $name ) ) $name = UtilString::utf82gbk( $name );
 
-        $dtime      = dechex($this->unix2DosTime($time));
+        $dtime    = dechex($this->unix2DosTime($time));
         $hexdtime = '\x' . $dtime[6] . $dtime[7]
                   . '\x' . $dtime[4] . $dtime[5]
                   . '\x' . $dtime[2] . $dtime[3]
@@ -193,7 +191,10 @@ class UtilZipfile
      *
      * @param array 需要压缩的文件名的数组 relative/absolute path to be added in Zip File
      *              key 键是压缩后的文件名称，如果没有指定，则默认为原来的文件名称
-     * 示例:UtilZipFile::addFiles(array("abc.txt"=>Gc::$attachment_path."test.txt"),Gc::$attachment_path."test.zip");
+     * @example: 示例如下
+     * ```
+     *      UtilZipFile::addFiles(array("abc.txt"=>Gc::$attachment_path."test.txt"),Gc::$attachment_path."test.zip");
+     * ```
      *      就是将原来文件名为test.txt压缩到test.zip文件，它的新名称就是test.txt。
      * @access public
      */
@@ -237,11 +238,15 @@ class UtilZipfile
 
     /**
      * 将若干个文件压缩成一个文件下载
+     * 
      * 注释: 压缩的文件似乎只能在Windows操作系统下可以访问
-     * 调用示例:
-     *    1.UtilZipfile::zip(array(Gc::$attachment_path."attachment".DIRECTORY_SEPARATOR."20111221034439.xlsx","attachment".DIRECTORY_SEPARATOR."20111221034612.xlsx"),Gc::$attachment_path."goodjob.zip",true);
-     *    2.UtilZipFile::zip(array("a/b/c/abc.txt"=>Gc::$attachment_path."test.txt"),Gc::$attachment_path."test.zip");
-     *                      就是将原来文件名为test.txt压缩到test.zip文件，它的新名称就是test.txt。
+     * 
+     * @example: 示例如下
+     * 
+     *    1. UtilZipfile::zip( array(Gc::$attachment_path . "attachment" . DIRECTORY_SEPARATOR . "20111221034439.xlsx", "attachment" . DIRECTORY_SEPARATOR . "20111221034612.xlsx"), Gc::$attachment_path . "goodjob.zip", true);
+     *    2. UtilZipFile::zip( array("a/b/c/abc.txt" => Gc::$attachment_path . "test.txt"), Gc::$attachment_path . "test.zip");
+     * 
+     *       就是将原来文件名为abc.txt压缩到test.zip文件，它的新名称就是test.txt。
      * @param mixed $arr_filename 需要压缩的文件名称列表
      * @param mixed $outputfile 压缩后输出的压缩文件
      * @param bool $is_dir_info_include 是否包含文件夹在内,默认为false,即所有来自不同位置的文件都在压缩文件根目录下;$arr_filename如果没有指定key时有效，若指定可以则以key为基准，文件夹以/隔开
@@ -260,33 +265,42 @@ class UtilZipfile
 
     /**
      * 将指定文件和文件提及的附件如图片或者参考文档压缩成一个文件下载
+     * 
      * @link https://github.com/Ne-Lexa/php-zip#Documentation-ZipFile-addFile
+     * 
      * 前提条件:
+     * 
      *    - PHP 5.5
+     * 
      *    - 安装PhpZip: composer require nelexa/zip
+     * 
      * @param string $main_filename 主文件名称
      * @param string $out_zip_filename 输出zip文件名
      * @param string $attachment_source_dir 附件如图片或者参考文档所在目录
      * @param string $attachment_dest_dir 指定在压缩文件里附件如图片或者参考文档所在目录
      * @param string $password 默认没有密码，没有加密
-     * 示例
+     * @example: 示例如下
+     * ```
      *    $texFName   = Gc::$upload_path . "tex" . DS . $paperID . ".tex";
      *    $img_dir    = Gc::$upload_path . "tex" . DS ."img";
      *    $outputFile = Gc::$upload_path . "tex" . DS . "zip" . DS . "bb.zip";
      *    $password   = "1234";
      *    UtilZipfile::zip($texFName, $outputFile, $img_dir, "images");
+     * ```
      */
     public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password=null)
     {
         if ( !empty($out_zip_filename) && !empty($main_filename) ) {
             ini_set('memory_limit', '-1'); //取消内存限制
             $zipFile    = new \PhpZip\ZipFile();
-            $zip_method = \PhpZip\ZipFile::METHOD_DEFLATED;
+            // $zip_method = \PhpZip\ZipFile::METHOD_DEFLATED;
+            $zip_method = \PhpZip\Constants\ZipCompressionMethod::DEFLATED;
             $filename   = basename($main_filename);
             $zipFile->addFile($main_filename, $filename, $zip_method);
 
             if ( !empty($password) ) {
-                $encryptionMethod = \PhpZip\ZipFile::ENCRYPTION_METHOD_TRADITIONAL;
+                // $encryptionMethod = \PhpZip\ZipFile::ENCRYPTION_METHOD_TRADITIONAL;
+                $encryptionMethod = \PhpZip\Constants\ZipEncryptionMethod::PKWARE;
                 $zipFile->setReadPassword($password);
                 $zipFile->setPassword($password, $encryptionMethod);
             }
@@ -312,7 +326,7 @@ class UtilZipfile
         }
         $zipFile    = new \PhpZip\ZipFile();
         $zipFile->openFile($zip_filename);
-        UtilFileSystem::createDir($outputDir);
+        UtilFileSystem::createDir( $outputDir );
         $zipFile->extractTo($outputDir);
     }
 }
