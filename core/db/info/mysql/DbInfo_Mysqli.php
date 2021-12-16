@@ -1,8 +1,6 @@
 <?php
 /**
- +-------------------------------------<br/>
- * 获取Mysql数据库信息。
- +-------------------------------------<br/>
+ * -----------| 获取Mysql数据库信息 |-----------
  * @category betterlife
  * @package core.db.info
  * @subpackage mysql
@@ -38,7 +36,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      * @return TRUE/FALSE 是否已打开.
      */
     public static function extension_is_available()
-    { return function_exists('mysqli_prepare'); }
+    { 
+        return function_exists('mysqli_prepare'); 
+    }
 
     /**
      * 在mysql数据库中执行SQL脚本
@@ -97,9 +97,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $connection->query("SET NAMES " . Config_Db::$character);
 
         if ( file_exists($script_filename) ) {
-            $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
-            $query = implode("\n", $query);
-            $query = str_replace("&nbsp;", "--&nbsp--", $query);
+            $query  = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
+            $query   = implode("\n", $query);
+            $query   = str_replace("&nbsp;", "--&nbsp--", $query);
             $query_e = explode(';', $query);
 
             foreach ($query_e as $k => $v)
@@ -289,6 +289,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      * @param bool $isCommentFull 列名称是否获取完整的表列自定义注释，默认获取注释第一列
      * @return 表所有的列名称定义映射数组
      * 示例如下:
+     * 
      *     array('username'=>'用户名','password'=>'密码')
      */
     public function fieldMapNameList($table, $isCommentFull = false)
@@ -343,7 +344,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
 
     /**
      * 查看表在数据库里是否存在
+     * 
      * NOTE: Experimental; introduced for db-abstraction and may changed before 2.4 is released.
+     * 
      */
     public function hasTable($table)
     {
