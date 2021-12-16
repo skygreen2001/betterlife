@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 所有DAL(Data Access Layers)的父类<br/>
- +---------------------------------<br/>
+ * -----------| 所有DAL(Data Access Layers)的父类 |-----------
  * @category betterlife
  * @package core.db
  * @subpackage dal
@@ -28,7 +26,7 @@ abstract class Dal {
     /**
      * 连接符
      */
-    const EQUAL="=";
+    const EQUAL = "=";
     /**
      * 构造器
      * @param string $host
@@ -93,7 +91,9 @@ abstract class Dal {
 
     /**
      * 将数据对象里的显示属性进行清除
+     * 
      * 规范：数据对象里的显示属性以v_开始
+     * 
      * @param array $saParams 预编译准备SQL参数
      */
     protected function filterViewProperties($saParams)
@@ -161,12 +161,15 @@ abstract class Dal {
 
     /**
      * 获取插入或者更新的数据的类型。
+     * 
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对
-     * @param array $typeOf <br/>
-     *      0:通用的协议定义的类型标识，暂未实现。<br/>
-     *      1:PHP定义的数据类型标识，暂未实现。<br/>
-     *      2:Mdb2要求的类型标识。<br/>
+     * @param array $typeOf 
+     * 
+     *     - 0: 通用的协议定义的类型标识，暂未实现。
+     *     - 1: PHP定义的数据类型标识，暂未实现。
+     *     - 2: Mdb2要求的类型标识。
+     * 
      * @return array 获取插入或者更新的数据的field和field值类型键值对
      */
     public function getColumnTypes($object, $saParams, $typeOf = 1) {
@@ -181,7 +184,7 @@ abstract class Dal {
 
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
-     * @param stdClass $result 结果集
+     * @param stdClass|array $result 结果集
      * @return 值
      */
     protected function getValueIfOneValue($result){

@@ -1,9 +1,8 @@
 <?php
 /**
- +---------------------------------<br/>
- * 比较直观可看的SQL构造器<br/>
- * 是所有SQL构造器的父类<br/>
- +---------------------------------
+ * -----------| 比较直观可看的SQL构造器 |-----------
+ * 
+ * 是所有SQL构造器的父类
  * @category betterlife
  * @package core.db.sql
  * @subpackage crud
@@ -37,6 +36,7 @@ abstract class Crud_SQL {
     const SQL_FLAG_ID = "#id";
     /**
      * DB常规函数变量
+     * 
      * 如mysql 常规函数定义变量
      */
     const DB_FUNC_KEYWORD = array("find_in_set(", "concat(", "now(");
@@ -48,26 +48,38 @@ abstract class Crud_SQL {
     protected $isLike = false;
     /**
      * 值的替代范式，一般$isPreparedStatement=true时配合使用；
+     * 
      * 一般在insert的values和update的set里使用
+     * 
      * 当$type_rep为：
-     *   1：INSERT INTO REGISTRY (name, value) VALUES ($1,$2)
-     *   默认：INSERT INTO REGISTRY (name, value) VALUES (?,?)
-     * @var <type>
+     * 
+     *   1  : INSERT INTO REGISTRY (name, value) VALUES ($1,$2)
+     * 
+     *   默认: INSERT INTO REGISTRY (name, value) VALUES (?,?)
+     * 
+     * @var int
      */
     public $type_rep = 0;
     /**
      * 默认是where的值如何是字符串必须带引号。
-     * 但是表达关系的时候不能将where所带的值带引号，如：<br/>
+     * 
+     * 但是表达关系的时候不能将where所带的值带引号，如：
+     * 
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
-     * @var bool 是否忽略字符串值带引号。<br/>
+     * 
+     * @var bool 是否忽略字符串值带引号。
      */
     private $ignore_quotes = false;
 
     /**
      * 保证能实时开关该参数。
+     * 
      * 默认是where的值如何是字符串必须带引号。
-     * 但是表达关系的时候不能将where所带的值带引号，如：<br/>
+     * 
+     * 但是表达关系的时候不能将where所带的值带引号，如：
+     * 
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
+     * 
      * @param bool $ignore_quotes
      * @return Crud_SQL
      */
@@ -79,16 +91,17 @@ abstract class Crud_SQL {
 
     /**
      * 查询SQL语句where条件子语句
+     * 
      * @param mixex $clause where条件子语句
-     +------------------------------------------------------------------------------------------------<br/>
-     * 示例如下<br/>
-     * 0.$sql->select("id","name")->from("users")->where("id=1,name='sky'");<br/>
-     * 1.$sql->select("id","name")->from("users")->where("id=1","name='sky'");<br/>
-     * 2.$sql->select("id","name")->from("users")->where(array("id=1","name='sky'"));<br/>
-     * 3.$sql->select("id","name")->from("users")->where(array("id"=>"1","name"=>"sky"));<br/>
-     * 4.$sql->select("id","name")->from("users")->where(new User(id="1",name="green"));//即过滤条件对象<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
-     +-------------------------------------------------------------------------------------------------
+     * @example 示例如下
+     * 示例如下:
+     *    0. $sql->select("id","name")->from("users")->where("id=1,name='sky'");
+     *    1. $sql->select("id","name")->from("users")->where("id=1","name='sky'");
+     *    2. $sql->select("id","name")->from("users")->where(array("id=1","name='sky'"));
+     *    3. $sql->select("id","name")->from("users")->where(array("id"=>"1","name"=>"sky"));
+     *    4. $sql->select("id","name")->from("users")->where(new User(id="1",name="green"));//即过滤条件对象
+     * 
+     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
      * @return SQL构造器本身
      */
     public function where()
@@ -240,6 +253,7 @@ abstract class Crud_SQL {
 
     /**
      * 获取where语句
+     * 
      * @return string where语句
      */
     public function getWhereClause() {
@@ -255,15 +269,18 @@ abstract class Crud_SQL {
 
     /**
      * 过滤或条件
-     +------------------------------------------------------------------------------------------------<br/>
-     * 示例如下<br/>
-     * 0.$sql->select("id","name")->from("users")->whereOr("id=1,name='sky'");<br/>
-     * 1.$sql->select("id","name")->from("users")->whereOr("id=1","name='sky'");<br/>
-     * 2.$sql->select("id","name")->from("users")->whereOr(array("id=1","name='sky'"));<br/>
-     * 3.$sql->select("id","name")->from("users")->whereOr(array("id"=>"1","name"=>"sky"));<br/>
-     * 4.$sql->select("id","name")->from("users")->whereOr(new User(id="1",name="green"));//即过滤条件对象<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 or name='sky')<br/>
-     +-------------------------------------------------------------------------------------------------
+     * 
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *    0. $sql->select("id","name")->from("users")->whereOr("id=1,name='sky'");
+     *    1. $sql->select("id","name")->from("users")->whereOr("id=1","name='sky'");
+     *    2. $sql->select("id","name")->from("users")->whereOr(array("id=1","name='sky'"));
+     *    3. $sql->select("id","name")->from("users")->whereOr(array("id"=>"1","name"=>"sky"));
+     *    4. $sql->select("id","name")->from("users")->whereOr(new User(id="1",name="green"));//即过滤条件对象
+     * 
+     * 默认:SQL Where条件子语句。如：(id=1 or name='sky')
+     * 
      * @return SQL构造器本身
      */
     public function whereOr() {
@@ -277,14 +294,17 @@ abstract class Crud_SQL {
 
     /**
      * 过滤模糊条件
+     * 
      * 查询SQL语句where条件子语句
+     * 
      * @param mixex $clause where条件子语句
-     +------------------------------------------------------------------------------------------------<br/>
-     * 示例如下<br/>
-     * 3.$sql->select("id","name")->from("users")->whereLike(array("id"=>"1","name"=>"sky"));<br/>
-     * 4.$sql->select("id","name")->from("users")->whereLike(new User(id="1",name="green"));//即过滤条件对象<br/>
-     * 默认:SQL Where条件子语句。如：name like 'sky'<br/>
-     +-------------------------------------------------------------------------------------------------
+     * @example 示例如下
+     * 示例如下:
+     *     1.$sql->select("id","name")->from("users")->whereLike(array("id"=>"1","name"=>"sky"));
+     *     2.$sql->select("id","name")->from("users")->whereLike(new User(id="1",name="green"));//即过滤条件对象
+     * 
+     * 默认:SQL Where条件子语句。如：name like 'sky'
+     * 
      */
     public function whereLike() {
         $clause = func_get_args();
@@ -307,14 +327,18 @@ abstract class Crud_SQL {
     /**
      * 转换成标准的预处理SQL数组格式
      * @param object|string|array $param
-     * 示例如下：
-     *     未使用预处理SQL语句
-     *      0.允许对象如new User(id="1",name="green");
-     *      1.id=1,name='sky'
-     *      2.array("id=1","name='sky'")
-     *      3.array("id"=>"1","name"=>"sky")
+     * @example 示例如下:
+     * 示例如下:
+     * 
+     *      未使用预处理SQL语句
+     * 
+     *      0. 允许对象如new User(id="1",name="green");
+     *      1. id=1,name='sky'
+     *      2. array("id=1","name='sky'")
+     *      3. array("id"=>"1","name"=>"sky")
      * @return array key：列；value：值
-     * 示例如下：
+     * @example 示例如下
+     * 示例如下:
      *     array("id"=>"1","name"=>"sky")
      */
     public function parseValidInputParam($param)

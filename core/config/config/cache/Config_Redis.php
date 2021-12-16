@@ -1,15 +1,18 @@
 <?php
-  /**
- +---------------------------------<br/>
- * 分布式缓存:Redis的配置类<br/>
- * 应根据项目的需要修改相应的配置<br/>
- +---------------------------------<br/>
- * 帮助:https://github.com/nicolasff/phpredis
- * PHP-redis中文说明:http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
- * Reference Methods:http://code.google.com/p/phpredis/wiki/referencemethods
- * Redis:http://wenhui.ncu.me/category/webserver/redis
- * Rediska:http://rediska.geometria-lab.net/
- +---------------------------------<br/>
+/**
+ * -----------| 分布式缓存:Redis的配置类 |-----------
+ * 
+ * 应根据项目的需要修改相应的配置
+ * 
+ * 帮助: https://github.com/nicolasff/phpredis
+ * 
+ * PHP-redis中文说明: http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
+ * 
+ * Reference Methods: http://code.google.com/p/phpredis/wiki/referencemethods
+ * 
+ * Redis: http://wenhui.ncu.me/category/webserver/redis
+ * 
+ * Rediska: http://rediska.geometria-lab.net/
  * @category betterlife
  * @package core.config
  * @subpackage cache

@@ -1,11 +1,12 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * 比较直观可看的SQL查询构造器<br/>
- * 示例：<br/>
- *   $sql= new SQL_Select();<br/>
- *   $sql->select("id","name")->from("users")->where("id=1")->limit(1)->result();<br/>
- +--------------------------------------------------
+ * -----------| 比较直观可看的SQL查询构造器 |-----------
+ * 
+ * @example 示例:
+ * ```
+ *   $sql= new SQL_Select();
+ *   $sql->select("id","name")->from("users")->where("id=1")->limit(1)->result();
+ * ```
  * @category betterlife
  * @package core.db.sql.util.crud
  * @author skygreen
@@ -36,10 +37,14 @@ class Crud_Sql_Select extends Crud_SQL
     private $order;
     /**
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下：<br/>
-     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
-     *    1,10<br/> (相当于第1-第10条)
-     *    10 <br/>(相当于第1-第10条)
+     * 
+     * @example 示例如下：
+     * 
+     *    6,10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     * 
+     *    1,10 (相当于第1-第10条)
+     * 
+     *    10 (相当于第1-第10条)
      */
     private $limit;
     /**
@@ -53,10 +58,11 @@ class Crud_Sql_Select extends Crud_SQL
     //protected $selectSql  =     'SELECT%DISTINCT% %FIELDS% FROM %TABLE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT%';
 
     /**
-     * 查询获取的列值，参考格式如下<br/>
-     * 1.select("id","name")<br/>
-     * 2.select(array("id","name"))<br/>
-     * 3.select() 选择所有的列
+     * 查询获取的列值，参考格式如下
+     * 
+     * 1. select("id","name")
+     * 2. select(array("id","name"))
+     * 3. select() 选择所有的列
      */
     public function select()
     {
@@ -147,12 +153,18 @@ class Crud_Sql_Select extends Crud_SQL
     }
 
     /**
-     * 根据$order排序<br/>
-     * 默认为倒序<br/>
+     * 根据$order排序
+     * 
+     * 默认为倒序
+     * 
      * @param mixed $order
-     * 格式示例如下：<br/>
-     * 1:order("id asc")<br/>
-     * 2:order("name desc")<br/>
+     * 
+     * @example 示例如下:
+     * 
+     * 格式示例如下:
+     * 
+     *    1. order("id asc")
+     *    2. order("name desc")
      * @return Crud_Sql_Select
      */
     public function order($order)
@@ -168,10 +180,15 @@ class Crud_Sql_Select extends Crud_SQL
 
     /**
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下：<br/>
-     *    6,10<br/>  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
-     *    1,10<br/> (相当于第1-第10条)
-     *    10 <br/>(相当于第1-第10条)
+     * @example 示例如下:
+     * 示例如下:
+     * 
+     *    6,10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
+     * 
+     *    1,10 (相当于第1-第10条)
+     * 
+     *    10 (相当于第1-第10条)
+     * 
      * @param mixed $limit
      * @return Crud_Sql_Select
      */
@@ -195,10 +212,13 @@ class Crud_Sql_Select extends Crud_SQL
     }
 
     /**
-     * 分页数目:Postgres offset语法<br/>
-     * 示例如下：<br/>
-     *    1:0,10<br/>
-     *    2:10<br/>
+     * 分页数目:Postgres offset语法
+     * 
+     * 示例如下:
+     * 
+     *    1: 0,10
+     * 
+     *    2: 10
      * @param mixed $limit
      */
     public function offset($offset)

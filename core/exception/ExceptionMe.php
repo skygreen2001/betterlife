@@ -1,13 +1,12 @@
 <?php
 /**
- +----------------------------------------<br/>
- * 框架异常处理的父类<br/>
- +----------------------------------------<br/>
+ * -----------| 框架异常处理的父类 |-----------
  * @category betterlife
  * @package core.exception
  * @author zhouyuepu
  */
 abstract class ExceptionMe extends Exception {
+
     const CLASSNAME = __CLASS__;
 
     public static $messages = array();
@@ -26,9 +25,8 @@ abstract class ExceptionMe extends Exception {
         echo "</pre>";
     }
 
-
     /**
-     *记录异常信息
+     * 记录异常信息
      * @param 错误信息 $errorInfo
      * @param 发生错误信息的自定义类 $object
      * @param string $extra  补充存在多余调试信息
@@ -59,10 +57,11 @@ abstract class ExceptionMe extends Exception {
 
     /**
      * 显示异常信息
-     * 1：普通【文本样式】
-     * 2: 表方式【HTML样式】
-     * 3：树方式【HTML样式】
-     * 4：XML方式
+     * 
+     * 1. 普通【文本样式】
+     * 2. 表方式【HTML样式】
+     * 3. 树方式【HTML样式】
+     * 4. XML方式
      */
     public static function showMessage($type) {
         switch ($type) {
@@ -154,7 +153,7 @@ abstract class ExceptionMe extends Exception {
                 $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_LINE . '</td>';
                 $errorInfo .= '          <td>&nbsp;' . $value['line'] . "</td>";
                 $errorInfo .= '       </tr>';
-                if (!empty($value['param'])) {
+                if ( !empty($value['param']) ) {
                     $errorInfo .= '       <tr>';
                     $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                     $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_PARAMETER . '</td>';

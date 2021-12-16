@@ -1,22 +1,27 @@
 <?php
-
 /**
- +--------------------------------------------------<br/>
- * 功能参看PHP 5.3手册get_called_class方法<br/>
- * 以下方法是支持低于PHP 5.3版本的相同功能<br/>
- * 说明：<br/>
- *     该函数与引用经过改写<br/>
- *     主要是因为是应用中发现如果出现了换行，将无法找到静态引用的类<br/>
- *     主要针对以下情况：<br/>
- *     User::get(array("name"=>$user->getName(),<br/>
- *                   "password"=>md5($user->getPassword())));<br/>
- *     因为出现了换行 debug_backtrace的行号显示了下一行；就找不到上一行出现的类名了<br/>
- *     改写就是先找到debug_backtrace的行号，再向上找到第一个出现::的行，再进行匹配查找静态方法引用的类<br/>
- * line:progman at centrum dot sk<br/>
- * 10-Mar-2009 08:49<br/>
+ * 功能参看PHP 5.3手册get_called_class方法
+ * 
+ * 以下方法是支持低于PHP 5.3版本的相同功能
+ * 
+ * 说明:
+ * 
+ *     该函数与引用经过改写
+ * 
+ *     主要是因为是应用中发现如果出现了换行，将无法找到静态引用的类
+ * 
+ *     主要针对以下情况：
+ *     ```
+ *         User::get( array("name" => $user->getName(),
+ *                    "password" => md5($user->getPassword())) );
+ *     ```
+ * 
+ *     因为出现了换行 debug_backtrace的行号显示了下一行；就找不到上一行出现的类名了
+ * 
+ *     改写就是先找到debug_backtrace的行号，再向上找到第一个出现::的行，再进行匹配查找静态方法引用的类
+ *
  * @link http://php.net/manual/en/function.get-called-class.php
  * @link http://roygu.com/2010/07/php/php-5-2%E4%B8%ADget_called_class%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%BA%94%E7%94%A8.html
- +--------------------------------------------------<br/>
  */
 if ( !function_exists('get_called_class') ) {
     class class_tools
@@ -104,8 +109,9 @@ if ( !function_exists('file_put_contents') ) {
 }
 
 /**
- * 该函数只对Utf8编码的值进行Json编码。<br/>
- * 返回值的JSON编码呈现。 <br/>
+ * 该函数只对Utf8编码的值进行Json编码。
+ * 
+ * 返回值的JSON编码呈现。
  * @param mixed $value Utf8编码的值，除resource以外的类型，最常用的是array数组。
  * @return 值的JSON编码呈现
  */

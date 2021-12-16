@@ -1,6 +1,6 @@
 <?php
 /**
- * 数据对象间关系处理
+ * -----------| 数据对象间关系处理 |-----------
  * @category betterlife
  * @package core.model
  * @subpackage dataobject
@@ -8,8 +8,8 @@
  */
 class DataObjectRelation extends BBObject
 {
-      /**
-     * 获取多对多关系表名称定义，如无定义，则按默认规则查找指定表。<br/>
+    /**
+     * 获取多对多关系表名称定义，如无定义，则按默认规则查找指定表。
      * @param string $dataobject 当前数据对象
      * @param string $classname_has  多对多关系对象类名
      * @param string $classname_belong  从属于多对多关系对象类名
@@ -45,7 +45,7 @@ class DataObjectRelation extends BBObject
     }
 
     /**
-     * 获取数据对象关系类外键标识列名<br/>
+     * 获取数据对象关系类外键标识列名
      * @param string $dataobject 当前对象
      * @param string $classname 关系对应数据对象表类名。如UserDetail有一对一关系$belong_has_one包含User,则类名$classname为User。
      * @param string $instance_name 实例对象名称[只用于从属于一对一关系]
@@ -308,26 +308,31 @@ class DataObjectRelation extends BBObject
     }
 
     /**
-     +----------------------------------------------------<br>
-     * 数据对象存在多对多|从属于多对多关系时，因为存在一张中间表。<br>
-     * 因此它们的关系需要单独进行存储<br>
-     * 示例1【多对多-主控端】：<br>
-     *      $user = new User();<br>
-     *      $user->setId(2);<br>
-     *      $user->saveRelationForManyToMany( "roles", "3", array("commitTime" => date("Y-m-d H:i:s")) );<br>
-     *      说明:roles是在User数据对象中定义的变量：<br>
-     *      static $many_many = array(<br>
-     *        "roles" => "Role",<br>
-     *      );<br>
-     * 示例2【多对多-被控端】：<br>
+     * 数据对象存在多对多|从属于多对多关系时，因为存在一张中间表。
+     * 
+     * 因此它们的关系需要单独进行存储
+     * 
+     * 示例1【多对多-主控端】:
+     *   ```
+     *      $user = new User();
+     *      $user->setId(2);
+     *      $user->saveRelationForManyToMany( "roles", "3", array("commitTime" => date("Y-m-d H:i:s")) );
+     *      说明:roles是在User数据对象中定义的变量：
+     *      static $many_many = array(
+     *        "roles" => "Role",
+     *      );
+     *   ```
+     * 
+     * 示例2【多对多-被控端】:
+     *   ```
      *      $role = new Role();
      *      $role->setId(5);
      *      $role->saveRelationForManyToMany( "users", "6", array("commitTime" => date("Y-m-d H:i:s")) );
-     *      说明:users是在Role数据对象中定义的变量：<br>
+     *      说明:users是在Role数据对象中定义的变量：
      *      static $belongs_many_many = array(
      *        "users"=>"User",
      *      );
-     +----------------------------------------------------<br>
+     *   ```
      * @param string $dataobject 当前对象
      * @param mixed $relation_object 多对多|从属于多对多关系定义对象
      * @param mixed $relation_id_value 关系对象的主键ID值。
@@ -380,7 +385,9 @@ class DataObjectRelation extends BBObject
 
     /**
      * 同步删除取消了已有多对多关系、保存新增多对多关系
-     * 示例：<br>
+     * 
+     * 示例:
+     * 
      *     Blogcategory::saveDeleteRelateions( "blog_id", 1, "category_id", array(1, 2, 3, 4, 5, 6) );
      * @param string $classname 数据对象类名
      * @param string $id_name 主标识名称

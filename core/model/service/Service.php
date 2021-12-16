@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * 所有Service的父类<br/>
- +---------------------------------------------------
+ * -----------| 所有Service的父类 |-----------
  * @category betterlife
  * @package core.model
  * @subpackage service
@@ -23,7 +21,7 @@ class Service extends BBObject {
     /**
      * 获取数据对象属性映射表字段意义
      * @param string $dataobject 当前数据对象
-     * 可设定对象未定义的成员变量[但不建议这样做]<br/>
+     * 可设定对象未定义的成员变量[但不建议这样做]
      * @return array 表列名列表；键:列名,值:列注释说明
      */
     public static function fieldsMean($tablename)

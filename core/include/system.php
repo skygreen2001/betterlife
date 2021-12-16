@@ -98,6 +98,7 @@ function ping_url($url, $data = null)
  * 字符串命名风格转换
  * 
  * - type = 0 将Java风格转换为C的风格
+ * 
  * - type = 1 将C风格转换为Java的风格
  * 
  * @access protected
@@ -117,8 +118,11 @@ function parse_name($name, $type = 0)
 
 /**
  * 字母转换成数字【无视大小写，如a和A都返回1】
+ * 
  * 字母是26个,因此就是二十六进制。如果是AA就是AA=1*26+1=27,ZZ就是ZZ=26*26+26=702
+ * 
  * 字母a-z【A-Z】转换成数字就是1-26,如果是AA-ZZ转换成数字就是【27-702】
+ * 
  * @param string $alphabet 字母字符串
  * @return int 数字
  */

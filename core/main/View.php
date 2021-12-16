@@ -1,11 +1,13 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * View Egine<br/>
- * 用于Template Engine<br/>
- * 方便开发者在controller里通过$this->view->set(varname, value)控制<br/>
- * 以便在显示层页面里任意访问使用变量varname<br/>
- +--------------------------------------------------<br/>
+ * -----------| View Egine |-----------
+ * 
+ * 用于Template Engine
+ * 
+ * 方便开发者在controller里通过$this->view->set(varname, value)控制
+ * 
+ * 以便在显示层页面里任意访问使用变量varname
+ * 
  * @category betterlife
  * @package core.main
  * @author skygreen
@@ -30,7 +32,9 @@ class View {
     private $vars = array();
     /**
      * 显示页面上使用的变量存储对象
+     * 
      * 目前需模版是
+     * 
      *     Smarty:TEMPLATE_MODE_SMARTY
      */
     private $viewObject;
@@ -112,10 +116,15 @@ class View {
     /***********************************魔术方法**************************************************/
     /**
      * 说明：若每个具体的实现类希望不想实现set,get方法；
+     * 
      *      则将该方法复制到每个具体继承他的对象类内。
+     * 
      * 可设定对象未定义的成员变量[但不建议这样做]
+     * 
      * 可无需定义get方法和set方法
+     * 
      * 类定义变量访问权限设定需要是pulbic
+     * 
      * @param <type> $property
      */
     public function __call($method, $arguments) {
@@ -208,6 +217,7 @@ class View {
 
     /**
      * 当在同一种网站里使用多个模板的时候
+     * 
      * 通过本函数进行指定
      */
     public function setTemplate($template_mode, $moduleName, $templatefile = null) {
@@ -257,7 +267,7 @@ class View {
             case self::TEMPLATE_MODE_SMARTY:
                 $this->templateMode = self::TEMPLATE_MODE_SMARTY;
                 if ( !class_exists("Smarty") ) {
-                  die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。<br/></p>");
+                  die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。</p>");
                 }
                 $this->template = new Smarty();
                 if ( Smarty::SMARTY_VERSION >= 3.1 && class_exists("SmartyBC") ) {

@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 批量生成代码的配置<br/>
- +---------------------------------------
+ * -----------| 批量生成代码的配置 |-----------
  * @category betterlife
  * @package core.config.common
  * @author skygreen
@@ -13,7 +11,7 @@ class Config_AutoCode extends ConfigBB
      * 每次生成实体类和数据表一致
      * 一般是数据库表前缀Config_Db::$table_prefix为空的时候设置 DB_TABLE_DOMAIN_EQUAL= true，表名一般带有_的
      */
-    const DB_TABLE_DOMAIN_EQUAL = false;
+    const DB_TABLE_DOMAIN_EQUAL   = false;
     /**
      * 完整生成模式，需要时间较长，需调整php.ini中的执行时间参数
      * 主要是因为中间表的has_many生成后台显示js花费时间较长。

@@ -21,7 +21,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     protected $updateTime;
 
-    private static $name_id_property="id";
+    private static $name_id_property = "id";
 
     //<editor-fold defaultstate="collapsed" desc="默认列Setter和Getter">
     /**
@@ -30,7 +30,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function setId($id)
     {
-        $this->id=$id;
+        $this->id = $id;
     }
 
     /**
@@ -48,7 +48,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function setCommitTime($commitTime)
     {
-        $this->commitTime=$commitTime;
+        $this->commitTime = $commitTime;
     }
 
     /**
@@ -66,7 +66,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function setUpdateTime($updateTime)
     {
-        $this->updateTime=$updateTime;
+        $this->updateTime = $updateTime;
     }
 
     /**
@@ -82,37 +82,37 @@ class XmlObject extends BBObject implements ArrayAccess
 
     //<editor-fold defaultstate="collapsed" desc="魔术方法">
     /**
-     * 可设定对象未定义的成员变量[但不建议这样做]<br/>
+     * 可设定对象未定义的成员变量[但不建议这样做]
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @return mixed 属性值
      */
     public function __get($property)
     {
-        if (method_exists($this, "get".ucfirst($property))) {
-            $methodname="get".ucfirst($property);
+        if ( method_exists($this, "get" . ucfirst($property)) ) {
+            $methodname = "get" . ucfirst($property);
             return $this->{$methodname}();
-        }else {
-            if (!property_exists($dataobject,$property)) {
+        } else {
+            if ( !property_exists($this, $property) ) {
                 return @$this->{$property};
             }
         }
     }
 
     /**
-     * 可设定对象未定义的成员变量[但不建议这样做]<br/>
+     * 可设定对象未定义的成员变量[但不建议这样做]
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @param mixed $value 属性值
      */
     public function __set($property, $value)
     {
-        if (method_exists($this, "set".ucfirst($property))) {
-            $methodname="set".ucfirst($property);
+        if ( method_exists($this, "set".ucfirst($property)) ) {
+            $methodname = "set" . ucfirst($property);
             $this->{$methodname}($value);
-        }else {
-            if (!property_exists($this,$property)) {
-                $this->{$property}=$value;
+        } else {
+            if ( !property_exists($this, $property) ) {
+                $this->{$property} = $value;
             }
         }
     }
@@ -121,17 +121,17 @@ class XmlObject extends BBObject implements ArrayAccess
     //<editor-fold defaultstate="collapsed" desc="定义数组进入对象方式">
     public function offsetExists($key)
     {
-        $method="get".ucfirst($key);
-        return method_exists($this,$method);
+        $method = "get".ucfirst($key);
+        return method_exists($this, $method);
     }
     public function offsetGet($key)
     {
-        $method="get".ucfirst($key);
+        $method = "get" . ucfirst($key);
         return $this->$method();
     }
     public function offsetSet($key, $value)
     {
-        $method="set".ucfirst($key);
+        $method = "set" . ucfirst($key);
         $this->$method($value);
 //        $this->$key = $value;
     }
@@ -146,18 +146,21 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public static function address()
     {
-        return Gc::$nav_root_path.basename(__FILE__, Config_F::SUFFIX_FILE_PHP).Config_F::SUFFIX_FILE_XML;
+        return Gc::$nav_root_path . basename(__FILE__, Config_F::SUFFIX_FILE_PHP) . Config_F::SUFFIX_FILE_XML;
     }
 
     /**
      * 获取所有Xml对象的信息
+     * 
      * @param string $xmlObject_classname 具体的Xml对象类名
-     * @param string $filter 查询条件，在where后的条件<br/>
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
+     * @param string $filter 查询条件，在where后的条件
+     * 
+     * 示例如下：
+     * 
+     *      0. "id=1,name='sky'"
+     *      1. array("id=1","name='sky'")
+     *      2. array("id"=>"1","name"=>"sky")
+     *      3. 允许对象如new User(id="1",name="green");
      */
     public static function get($xmlObject_classname,$filter=null)
     {
@@ -180,23 +183,25 @@ class XmlObject extends BBObject implements ArrayAccess
 
     /**
      * Xml数据对象总计数
-     * @param object|string|array $filter<br/>
-     *      $filter 格式示例如下：<br/>
-     *          0.允许对象如new User(id="1",name="green");<br/>
-     *          1."id=1","name='sky'"<br/>
-     *          2.array("id=1","name='sky'")<br/>
-     *          3.array("id"=>"1","name"=>"sky")
+     * 
+     * @param object|string|array $filter
+     *      $filter 格式示例如下：
+     * 
+     *          0. 允许对象如new User(id="1",name="green");
+     *          1. "id=1","name='sky'"
+     *          2. array("id=1","name='sky'")
+     *          3. array("id"=>"1","name"=>"sky")
      * @return 对象总计数
      */
     public static function count()
     {
-        $result=0;
-        $classname=get_called_class();
-        $filename=call_user_func("$classname::address");
-        $spec_library=UtilXmlSimple::fileXmlToArray($filename);
-        if (($spec_library!=null)&&(count($spec_library))>0){
-            foreach ($spec_library as $dataobjets){
-                $result=count($dataobjets);
+        $result       = 0;
+        $classname    = get_called_class();
+        $filename     = call_user_func("$classname::address");
+        $spec_library = UtilXmlSimple::fileXmlToArray($filename);
+        if ( ($spec_library != null ) && ( count($spec_library) ) > 0 ) {
+            foreach ($spec_library as $dataobjets) {
+                $result = count($dataobjets);
             }
         }
         return $result;
@@ -208,16 +213,21 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param string|array $filter 过滤条件
-     * 示例如下：<br/>
+     * 
+     * 示例如下：
+     * 
      *      string[只有一个查询条件]
+     * 
      *      1. id="1"--精确查找
      *      2. name contain 'sky'--模糊查找
+     * 
      *      array[多个查询条件]
-     *      1.array("id"=>"1","name"=>"sky")<br/>--精确查找
-     *      2.array("id"=>"1","name contain 'sky'")<br/>--模糊查找
+     * 
+     *      1. array("id"=>"1","name"=>"sky")--精确查找
+     *      2. array("id"=>"1","name contain 'sky'")--模糊查找
      * @return mixed 对象分页
      */
-    public static function queryPage($startPoint,$endPoint,$filter=null,$xmlObject_classname)
+    public static function queryPage($startPoint, $endPoint, $filter = null, $xmlObject_classname)
     {
         if ( $xmlObject_classname == null ) {
             $classname = get_called_class();
@@ -240,17 +250,21 @@ class XmlObject extends BBObject implements ArrayAccess
     }
 
     /**
-    * 查看是否过滤条件允许的数据。
-    * @param array $blockAttr
-    * @param $filter filter 过滤条件
-    * 示例如下：<br/>
-    *      string[只有一个查询条件]
-    *      1. id="1"--精确查找
-    *      2. name contain 'sky'--模糊查找
-    *      array[多个查询条件]
-    *      1.array("id"=>"1","name"=>"sky")<br/>--精确查找
-    *      2.array("id"=>"1","name contain 'sky'")<br/>--模糊查找
-    */
+     * 查看是否过滤条件允许的数据。
+     * @param array $blockAttr
+     * @param $filter filter 过滤条件
+     * 示例如下:
+     * 
+     *      string[只有一个查询条件]
+     * 
+     *      1. id="1"--精确查找
+     *      2. name contain 'sky'--模糊查找
+     * 
+     *      array[多个查询条件]
+     * 
+     *      1. array("id"=>"1","name"=>"sky")--精确查找
+     *      2. array("id"=>"1","name contain 'sky'")--模糊查找
+     */
     public static function isValidData($blockAttr, $filter)
     {
         if ( empty($filter) ) return true;

@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 手机Mobile的配置<br/>
- +---------------------------------------
+ * -----------| 手机Mobile的配置 |-----------
  * @category betterlife
  * @package core.config
  * @author skygreen

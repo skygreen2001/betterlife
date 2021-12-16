@@ -1,9 +1,8 @@
 <?php
 /**
- +---------------------------------<br/>
- * 数据库操作管理<br/>
- * 所有的数据库都通过这里进行访问<br/>
- +---------------------------------<br/>
+ * -----------| 数据库操作管理 |-----------
+ * 
+ * 所有的数据库都通过这里进行访问
  * @category betterlife
  * @package core.db
  * @author skygreen <skygreen2001@gmail.com>
@@ -65,9 +64,11 @@ class Manager_Db extends Manager {
 
     /**
      * 重置 currentdao，可重新设置数据源
-     * 使用在多数据源操作里
-     * 示例如下:
      * 
+     * 使用在多数据源操作里
+     * @example 示例如下
+     * 示例如下:
+     * ```
      *   Gc::$database_config  = array(
      *        'host'     => '127.0.0.1',
      *        'port'     => '',
@@ -79,6 +80,7 @@ class Manager_Db extends Manager {
      *    Manager_Db::newInstance()->resetDao();
      *    $sql = "insert into blog(content) values ('test')"
      *    $id  = sqlExecute($sql);
+     * ```
      */
     public function resetDao(){
         $this->currentdao = null;
@@ -87,6 +89,7 @@ class Manager_Db extends Manager {
     
     /**
      * 全局设定一个Dao对象；
+     * 
      * 由开发者配置设定对象决定
      */
     public function dao() {

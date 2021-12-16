@@ -37,8 +37,10 @@ class ActionBasic extends BBObject
     public $description;
     /**
      * 在线编辑器,参考:EnumOnlineEditorType
-     * 1.CKEDITOR
-     * 4.UEDITOR
+     * 1. CKEDITOR
+     * 
+     * 4. UEDITOR
+     * 
      * @var mixed
      */
     public $online_editor = EnumOnlineEditorType::UEDITOR;//CKEDITOR
@@ -121,8 +123,9 @@ class ActionBasic extends BBObject
     }
 
     /**
-     * 加载通用的Css<br/>
-     * 默认:当前模板目录下:resources/css/index.css<br/>
+     * 加载通用的Css
+     * 
+     * 默认:当前模板目录下:resources/css/index.css
      */
     public function loadCss($defaultCssFile = "resources/css/index.css")
     {
@@ -143,8 +146,10 @@ class ActionBasic extends BBObject
     }
 
     /**
-     * 加载通用的Javascript库<br/>
-     * 默认:当前模板目录下:js/index.js<br/>
+     * 加载通用的Javascript库
+     * 
+     * 默认:当前模板目录下:js/index.js
+     * 
      * @param string $defaultJsFile 默认需加载JS文件
      */
     public function loadJs($defaultJsFile = "js/index.js")
@@ -206,11 +211,16 @@ class ActionBasic extends BBObject
      * @param mixed $action
      * @param mixed $method
      * @param array|string $querystringparam
-     * 示例：
+     * 示例:
+     * 
      *     index.php?g=betterlife&m=blog&a=write&pageNo=8&userId=5
+     * 
      *     $action：blog
+     * 
      *     $method：write
-     *     $querystring：pageNo=8&userId=5
+     * 
+     *     $querystring: pageNo=8&userId=5
+     * 
      *                   array('pageNo'=>8,'userId'=>5)
      */
     public function go($action, $method, $querystring = "")
@@ -223,13 +233,17 @@ class ActionBasic extends BBObject
      *
      * @param mixed $action
      * @param mixed $method
-     * @param array|string $querystringparam
-     * 示例：
+     * @param array|string $querystring
+     * 示例:
+     * 
      *     index.php?g=betterlife&m=blog&a=write&pageNo=8&userId=5
+     * 
      *     $action：blog
+     * 
      *     $method：write
-     *     $querystring：pageNo=8&userId=5
-     *                   array('pageNo'=>8,'userId'=>5)
+     * 
+     *     $querystring: pageNo=8&userId=5
+     *                   array('pageNo'=>8, 'userId'=>5)
      */
     public function redirect($action, $method, $querystring = "")
     {
@@ -251,7 +265,7 @@ class ActionBasic extends BBObject
             if ( is_array($querystring) || is_a($querystring, "DataObjectArray") ) {
                 $querystring_tmp = "";
                 foreach ($querystring as $key => $value) {
-                    if ($key == Router::VAR_DISPATCH) {
+                    if ( $key == Router::VAR_DISPATCH ) {
                          $querystring_tmp .= $key . "=" . $this->modulename . "." . $action . "." . $method . Router::URL_CONNECTOR;
                     } else {
                         if ( $value == "undefined" ) $value = 0;
@@ -261,7 +275,7 @@ class ActionBasic extends BBObject
                     }
                 }
                 $querystring = $querystring_tmp;
-                $querystring = substr($querystring, 0, strlen($querystring)-1);
+                $querystring = substr($querystring, 0, strlen($querystring) - 1);
             }
         }
 
@@ -282,7 +296,7 @@ class ActionBasic extends BBObject
              if ( Router::URL_PATHINFO_MODEL == Router::URL_PATHINFO_NORMAL ) {
                 header($Header_Location . Gc::$url_base . Router::VAR_GROUP . $CONNECTOR . $this->modulename . $CONNECTOR . Router::VAR_MODULE . $CONNECTOR . $action . $CONNECTOR .
                     Router::VAR_ACTION . $CONNECTOR . $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
-             }else{
+             } else {
                 header($Header_Location . Gc::$url_base . $this->modulename . $CONNECTOR . $action . $CONNECTOR .
                     $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
              }
@@ -515,5 +529,3 @@ class ActionBasic extends BBObject
         $this->view->set("description", $this->description);
     }
 }
-
-?>

@@ -1,10 +1,8 @@
 <?php
 /**
- +---------------------------------<br/>
- * Mdb2的配置类<br/>
+ * -----------| Mdb2的配置类 |-----------
  * @link http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
  * @link http://pear.php.net/manual/en/package.database.mdb2.intro-connect.php
- +---------------------------------
  * @link http://pear.php.net/package/DB/docs
  * @category betterlife
  * @package core.config.db
@@ -40,21 +38,21 @@ class Config_Mdb2 extends Config_Db{
      * @link http://pear.php.net/manual/en/package.database.mdb2.intro-connect.php
      * @return array ODBC所需的dsn
      */
-    public static function dsn($host=null,$port=null,$username=null,$password=null,$dbname=null,$dbtype=null) {      
-        if (isset($host)){
-            if (strlen($port)>0) {
-                $connecturl= $host.":".$port;
-            }else {
-                $connecturl= $host;
+    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null) {      
+        if ( isset($host) ) {
+            if ( strlen($port) > 0 ) {
+                $connecturl = $host . ":" . $port;
+            } else {
+                $connecturl = $host;
             }
-        }else{
-            if (strlen(self::$port)>0) {
-                $connecturl=self::$host.":".self::$port;
-            }else {
-                $connecturl=self::$host;
+        } else {
+            if ( strlen(self::$port) > 0 ) {
+                $connecturl = self::$host . ":" . self::$port;
+            } else {
+                $connecturl = self::$host;
             }
         }
-        $dsn=array(
+        $dsn = array(
           "hostspec" => $connecturl,
           "username" => $username,
           "password" => $password,
@@ -63,27 +61,27 @@ class Config_Mdb2 extends Config_Db{
         
         switch ($dbtype) {
             case EnumDbSource::DB_MYSQL:
-                $dsn["phptype"]="mysqli";
+                $dsn["phptype"] = "mysqli";
                 break;
             case EnumDbSource::DB_SQLITE2:
-                $dsn["phptype"] ="sqlite";
-                $dsn['mode']="0644";                
+                $dsn["phptype"] = "sqlite";
+                $dsn['mode']    = "0644";
                 break;
             case EnumDbSource::DB_SQLSERVER:
-                $dsn["phptype"] ="mssql";
+                $dsn["phptype"] = "mssql";
                 break;
             case EnumDbSource::DB_PGSQL:
-                $dsn["phptype"] ="pgsql";
+                $dsn["phptype"] = "pgsql";
                 break;
             case EnumDbSource::DB_INTERBASE:   
             case EnumDbSource::DB_FIREBIRD:
-                $dsn["phptype"] ="ibase";
+                $dsn["phptype"] = "ibase";
                 break;
             case EnumDbSource::DB_ORACLE:
                 /**
                  * @link http://pear.php.net/bugs/bug.php?id=4854
                  */
-                $dsn["phptype"]  = "oci8";
+                $dsn["phptype"] = "oci8";
                 break;
         }
         return $dsn;

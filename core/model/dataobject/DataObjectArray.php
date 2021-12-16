@@ -1,6 +1,7 @@
 <?php
 /**
- * 数组对象
+ * -----------| 数组对象 |-----------
+ * 
  * 可以以数组的方式访问数据对象
  * @category betterlife
  * @package core.model
@@ -23,7 +24,8 @@ class DataObjectArray extends BBObject implements ArrayAccess
     }
 
     /**
-     * 可设定对象未定义的成员变量[但不建议这样做]<br/>
+     * 可设定对象未定义的成员变量[但不建议这样做]
+     * 
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @return mixed 属性值
@@ -35,7 +37,8 @@ class DataObjectArray extends BBObject implements ArrayAccess
     }
 
     /**
-     * 可设定对象未定义的成员变量[但不建议这样做]<br/>
+     * 可设定对象未定义的成员变量[但不建议这样做]
+     * 
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @param mixed $value 属性值

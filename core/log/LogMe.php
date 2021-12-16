@@ -1,6 +1,7 @@
 <?php
 /**
- * 枚举类型：日志级别<br />
+ * -----------| 枚举类型：日志级别 |-----------
+ * 
  * 日志级别 从上到下，由低到高
  */
 class EnumLogLevel extends Enum
@@ -44,11 +45,12 @@ class EnumLogLevel extends Enum
 }
 
 /**
- +--------------------------------------<br/>
- * 日志处理类<br/>
- * 一般来讲，日志都通过log记录，由配置$logType决定它以什么方式打印出来。<br/>
+ * -----------| 日志处理类 |-----------
+ * 
+ * 一般来讲，日志都通过log记录，由配置$logType决定它以什么方式打印出来。
+ * 
  * 除非明确指明用log_console,log_file,log_db,log_firebug方式输出。
- +-------------------------------------------
+ * 
  * @category betterlife
  * @package log
  * @author skygreen <skygreen2001@gmail.com>
@@ -73,7 +75,8 @@ class LogMe extends BBObject
     }
 
     /**
-     * 获取日志文件路径。<br/>
+     * 获取日志文件路径。
+     * 
      * 前提条件：采用文件方式记录日志。
      */
     public static function logPath($destination) {
@@ -153,7 +156,7 @@ class LogMe extends BBObject
      * @param string $category 日志内容业务分类
      */
     public static function log_browser($message, $level = EnumLogLevel::INFO, $category = ""){
-        echo $message . "<br/>";
+        echo $message . "";
     }
 
     /**
@@ -216,9 +219,7 @@ class LogMe extends BBObject
     private static $log =   array();
 
     /**
-     +----------------------------------------------------------<br/>
-     * 记录日志 并且会过滤未经设置的级别<br/>
-     +----------------------------------------------------------
+     * 记录日志 并且会过滤未经设置的级别
      * @static
      * @access public
      * @param string $message 日志信息
@@ -239,9 +240,7 @@ class LogMe extends BBObject
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 日志保存<br/>
-     +----------------------------------------------------------
+     * 日志保存
      * @static
      * @access public
      * @param string $destination  写入目标
@@ -268,7 +267,7 @@ class LogMe extends BBObject
                     echo '</pre>';
                 }
                 self::save();
-                echo "您可以在日志文件中找到信息：" . Gc::$log_config["logpath"];
+                echo "您可以在日志文件中找到信息: " . Gc::$log_config["logpath"];
             }
         }
     }

@@ -1,8 +1,6 @@
 <?php
 /**
- +-----------------------------------<br/> 
- * A result-set from a MySQL database.<br/> 
- +-----------------------------------<br/> 
+ * -----------| A result-set from a MySQL database. |-----------
  * @category betterlife
  * @package core.db.sql.util.query
  * @subpackage mysql
@@ -43,7 +41,7 @@ class Query_Mysql extends Query {
                 $columnName = mysql_field_name($this->handle, $columnIdx);
                 // $value || !$ouput[$columnName] means that the *last* occurring value is shown
                 // !$ouput[$columnName] means that the *first* occurring value is shown
-                if(isset($value) || !isset($output[$columnName])) {
+                if ( isset($value) || !isset($output[$columnName]) ) {
                     $output[$columnName] = $value;
                 }
             }
@@ -55,5 +53,3 @@ class Query_Mysql extends Query {
 
 
 }
-
-?>

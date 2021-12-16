@@ -1,9 +1,6 @@
 <?php
-
 /**
- +--------------------------------------------------<br/>
- * 处理缓存的方式的类型<br/>
- +--------------------------------------------------<br/>
+ * -----------| 处理缓存的方式的类型 |-----------
  */
 class EnumCacheDriverType extends Enum{
     const REDIS      = 1;
@@ -29,11 +26,12 @@ class EnumCacheDriverType extends Enum{
 
 
 /**
- +--------------------------------------------------<br/>
- * 优化性能: 分布式缓存管理器<br/>
- +--------------------------------------------------<br/>
+ * -----------| 优化性能: 分布式缓存管理器 |-----------
+ * 
  * 使用第三方库: doctrine/cache
+ * 
  * 安装: composer require doctrine/cache
+ * 
  * @category betterlife
  * @package core.main
  * @author skygreen <skygreen2001@gmail.com>
@@ -73,7 +71,6 @@ class BBCache {
         }
         return self::$instance;
     }
-
 
     private function serverCache($cache_drive = EnumCacheDriverType::REDIS) {
         switch ($cache_drive){

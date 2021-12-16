@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * 初始化工作<br/>
- +--------------------------------------------------<br/>
+ * -----------| 初始化工作 |-----------
  * @category betterlife
  * @package core.main
  * @author skygreen <skygreen2001@gmail.com>
@@ -19,21 +17,30 @@ class Initializer
     const SUFFIX_FILE_PHP = ".php";
     /**
      * 框架核心所有的对象类对象文件
+     * 
      * @var array 二维数组
-     * 一维：模块名称
-     * 二维：对象类名称
+     * 
+     * 一维:模块名称
+     * 
+     * 二维: 对象类名称
+     * 
      */
     public static $coreFiles;
     /**
      * 开发者自定义所有类对象文件
+     * 
      * @var array 二维数组
-     * 一维：模块名称
-     * 二维：对象类名称
+     * 
+     * 一维: 模块名称
+     * 
+     * 二维: 对象类名称
+     * 
      * @static
      */
     public static $moduleFiles;
     /**
      * 框架核心类之外可直接加载加载类的路径
+     * 
      *［在core之外的其他根路径下的路径需autoload自动认知的］
      */
     public static $core_include_paths = array(
@@ -117,6 +124,10 @@ class Initializer
          */
         self::recordCoreClasses();
         /**
+         * 加载第三方库
+         */
+        self::loadLibrary();
+        /**
          * 加载自定义标签库
          */
         self::loadTaglibrary();
@@ -128,9 +139,10 @@ class Initializer
          * 其他需要初始化的工作
          */
         if (Gc::$dev_profile_on) {
-            Profiler::unmark(Wl::LOG_INFO_PROFILE_INIT);
+            Profiler::unmark( Wl::LOG_INFO_PROFILE_INIT );
         }
     }
+
     /**
      * 加载自定义标签库
      */
@@ -228,8 +240,8 @@ class Initializer
     }
 
     /**
-    * 加载通用函数库
-    */
+     * 加载通用函数库
+     */
     public static function loadCommonFunctionLibrarys()
     {
         $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
@@ -324,5 +336,23 @@ class Initializer
             $moduleDir = $module_dir . $moduleName . DS;
             load_module($moduleName, $moduleDir, Gc::$module_exclude_subpackage);
         }
+    }
+    
+    /**
+     * 加载自定义模块库
+     */
+    public static function loadLibrary()
+    {
+        $dir_library = Gc::$nav_root_path . Config_F::ROOT_INSTALL . DS . Config_F::ROOT_LIBRARY . DS;
+        /**
+         * 加载自定义模块库
+         */
+        $classname = "Library_Loader";
+        require_once($dir_library . $classname . self::SUFFIX_FILE_PHP);
+        Library_Loader::load_run();
+        /**
+         * 设置处理所有未捕获异常的用户定义函数
+         */
+        set_exception_handler('e_me');
     }
 }

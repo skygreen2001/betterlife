@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * Http Session 会话管理类<br/>
- +--------------------------------------------------<br/>
+ * -----------| Http Session 会话管理类 |-----------
  * @category betterlife
  * @package core.main
  * @author skygreen

@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------------------------<br/>
- * Http Cookie 管理类<br/>
- +--------------------------------------------------<br/>
+ * -----------| Http Cookie 管理类 |-----------
  * @category betterlife
  * @package core.main
  * @author skygreen

@@ -1,9 +1,8 @@
 <?php
 /**
- +-------------------------------------------------<br/>
- * 负责WEB URL的解析<br/>
- * 从用户请求的URL里获取Controller,Action和Parameter。<br/>
- +--------------------------------------------------<br/>
+ * -----------| 负责WEB URL的解析 |-----------
+ * 
+ * 从用户请求的URL里获取Controller,Action和Parameter。
  * @category betterlife
  * @package core.main
  * @author skygreen
@@ -12,17 +11,36 @@ class Router
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     //支持的URL模式
-    const URL_COMMON   = 0;   //普通模式
-    const URL_PATHINFO = 1;   //PATHINFO模式
-    const URL_REWRITE  = 2;   //REWRITE模式
-    const URL_COMPAT   = 3;   // 兼容模式
+    /**
+     * 支持的URL模式: 普通模式
+     */
+    const URL_COMMON   = 0;
+    /**
+     * 支持的URL模式: PATHINFO模式
+     */
+    const URL_PATHINFO = 1;
+    /**
+     * 支持的URL模式: REWRITE模式
+     */
+    const URL_REWRITE  = 2;
+    /**
+     * 支持的URL模式: 兼容模式
+     */
+    const URL_COMPAT   = 3;
     //支持的PATHINFO模式
-    const URL_PATHINFO_NORMAL  = 1;   //普通模式
-    const URL_PATHINFO_DEFAULT = 2;   //智能模式
+    /**
+     * 支持的PATHINFO模式: 普通模式
+     */
+    const URL_PATHINFO_NORMAL  = 1;
+    /**
+     * 支持的PATHINFO模式: 智能模式
+     */
+    const URL_PATHINFO_DEFAULT = 2;
     /**
      * PATHINFO 模式,使用数字1、2代表以下三种模式:
-     * 1 普通模式(参数没有顺序,例如/m/module/a/action/id/1);
-     * 2 智能模式(系统默认使用的模式，可自动识别模块和操作/module/action/id/1/ 或者 /module,action,id,1/...);
+     * 
+     * 1. 普通模式(参数没有顺序,例如/m/module/a/action/id/1);
+     * 2. 智能模式(系统默认使用的模式，可自动识别模块和操作/module/action/id/1/ 或者 /module,action,id,1/...);
      */
     const URL_PATHINFO_MODEL = 2;
 
@@ -60,15 +78,18 @@ class Router
      */
     const VAR_ACTION = 'a';
     /**
-    * 默认导航
-    * 规则：
-    *   dispatch=betterlife.auth.login
-    *   等同于：g=betterlife&m=auth&a=login
-    */
+     * 默认导航
+     * 
+     * 规则:
+     *
+     *   dispatch=betterlife.auth.login
+     * 
+     *   等同于：g=betterlife&m=auth&a=login
+     */
     const VAR_DISPATCH = 'go';
     /**
-    * 默认导航间的间隔点
-    */
+     * 默认导航间的间隔点
+     */
     const VAR_DISPATCH_DEPR = ".";
     /**
      *  默认路由获取变量
@@ -76,6 +97,7 @@ class Router
     const VAR_ROUTER = 'r';
     /**
      * PATHINFO 兼容模式获取变量例如 ?s=/module/action/method/id/1
+     * 
      * 后面的参数取决于URL_PATHINFO_MODEL 和 URL_PATHINFO_DEPR
      */
     const VAR_PATHINFO = 's';
@@ -109,29 +131,34 @@ class Router
     const URL_SLASH = "/";
     /**
      * URL变量与值之间的连接符号
+     * 
      * 示例：a=login
      */
     const URL_EQUAL = "=";
     /**
      * URL变量与变量之间的连接符号
+     * 
      * 示例：m=auth&a=login
      */
     const URL_CONNECTOR = "&";
     /**
      * URL变量与变量之间的连接符号
+     * 
      * 示例：m=auth&a=login
      */
     const URL_QUESTION = "?";
 
     /**
      * 额外的参数
+     * 
      * 用于
-     *    -Debug
-     *    -验证
-     *    -加密
+     * 
+     *    - Debug
+     *    - 验证
+     *    - 加密
      */
     public static $extrasList = array(
-            "XDEBUG_SESSION_START" => 1
+        "XDEBUG_SESSION_START" => 1
     );
     /**
      * @var string 当前文件名
@@ -289,7 +316,8 @@ class Router
 
     /**
      * 对加密过的链接地址进行解码
-     * 加密的url具有以下特征：
+     * 
+     * 加密的url具有以下特征:
      */
     private function url_mcrypt_decode()
     {
@@ -305,9 +333,10 @@ class Router
     }
 
     /**
-    * 支持通过go=admin.index.index的快捷方式进行导航<br/>
-    * 参考cs-cart的导航规则进行了改进。
-    */
+     * 支持通过go=admin.index.index的快捷方式进行导航
+     * 
+     * 参考cs-cart的导航规则进行了改进。
+     */
     private function resolveNavDispathParam()
     {
         $data = array_merge($_POST, $_GET);
@@ -387,13 +416,9 @@ class Router
     }
 
     /**
-     +----------------------------------------------------------
      * 获得实际的分组名称
-     +----------------------------------------------------------
      * @access private
-     +----------------------------------------------------------
      * @return string
-     +----------------------------------------------------------
      */
     public function getModule() {
         return $this->module;
@@ -425,13 +450,9 @@ class Router
     }
 
     /**
-     +----------------------------------------------------------
      * 路由检测
-     +----------------------------------------------------------
      * @access public
-     +----------------------------------------------------------
      * @return void
-     +----------------------------------------------------------
      */
     public static function routerCheck() {
         // 搜索路由映射 把路由名称解析为对应的模块和操作
@@ -520,13 +541,9 @@ class Router
     }
 
     /**
-     +----------------------------------------------------------
      * 分析PATH_INFO的参数
-     +----------------------------------------------------------
      * @access private
-     +----------------------------------------------------------
      * @return void
-     +----------------------------------------------------------
      */
     private static function parsePathInfo() {
         $pathInfo = array();
@@ -552,13 +569,9 @@ class Router
     }
 
     /**
-     +----------------------------------------------------------
      * 获得服务器的PATH_INFO信息
-     +----------------------------------------------------------
      * @access public
-     +----------------------------------------------------------
      * @return void
-     +----------------------------------------------------------
      */
     public static function getPathInfo() {
         if ( !empty($_GET[self::VAR_PATHINFO]) ) {

@@ -1,8 +1,6 @@
 <?php
 /**
- +----------------------------------------<br/>
- * MysqlI异常处理类<br/>
- +----------------------------------------<br/>
+ * -----------| MysqlI异常处理类 |-----------
  * @category betterlife
  * @package core.exception.db
  * @author zhouyuepu

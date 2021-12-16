@@ -1,17 +1,16 @@
 <?php
 /**
- +---------------------------------<br/>
- * 通过PDO调用数据库<br/>
- * @see http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html
- * @see http://www.leapsoul.cn/?p=651
+ * -----------| 通过PDO调用数据库 |-----------
+ * 
+ * @link http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html
+ * @link http://www.leapsoul.cn/?p=651
  * @todo 实现PDO通用的DAL访问方式
- +---------------------------------<br/>
  * @category betterlife
  * @package core.db.dal
  * @subpackage pdo
  * @author skygreen
  */
-class Dal_Pdo extends Dal  implements IDal
+class Dal_Pdo extends Dal implements IDal
 {
     /**
      * 连接数据库
@@ -25,7 +24,7 @@ class Dal_Pdo extends Dal  implements IDal
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
      * @return mixed 数据库连接
      */
-    public function connect($host=null,$port=null,$username=null,$password=null,$dbname=null,$dbtype=null,$engine=null)
+    public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
     {
         if (!isset($username)){
             $username=Config_Pdo::$username;
@@ -41,7 +40,7 @@ class Dal_Pdo extends Dal  implements IDal
         }
 
         try {
-            if ($dbtype==  EnumDbSource::DB_MICROSOFT_ACCESS) {
+            if ( $dbtype == EnumDbSource::DB_MICROSOFT_ACCESS ) {
                 $this->connection = new PDO(Config_Pdo::dsn($host,$port,$username,$password,$dbname,$dbtype,$engine));
             }else {
                 $this->connection = new PDO(Config_Pdo::dsn($host,$port,$username,$password,$dbname,$dbtype,$engine),$username,$password);
@@ -49,7 +48,7 @@ class Dal_Pdo extends Dal  implements IDal
             if ($dbtype==EnumDbSource::DB_MYSQL) {
                 $this->change_character_set($character_code=Config_Db::$character);
             }
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             Exception_Db::log($e->getMessage());
         }
     }
@@ -211,6 +210,7 @@ class Dal_Pdo extends Dal  implements IDal
      * 示例如下：
      *      1.id asc;
      *      2.name desc;
+     * @return mixed 对象分页
      */
     public function queryPage($object,$startPoint,$endPoint,$filter=null,$sort=Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {

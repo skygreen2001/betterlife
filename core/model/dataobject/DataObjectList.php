@@ -1,9 +1,10 @@
 <?php
 /**
- +-----------------------------------------<br/>
- * 参考java.util.ArrayList的方法命名定义<br/>
- * 改造成为对象列表容器。<br/>
- +-----------------------------------------<br/>
+ * -----------| 对象列表容器 |-----------
+ * 
+ * 参考java.util.ArrayList的方法命名定义
+ * 
+ * 改造成为对象列表容器。
  * @category betterlife
  * @package core.model
  * @author skygreen
@@ -19,6 +20,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
 
     /**
      * 获取列表所有对象的ID列表
+     * 
      * 对象按规范必需有ID字段
      * @return array
      */
@@ -53,6 +55,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
 
     /**
      * 查看列表指定索引的对象
+     * 
      * 索引从0开始
      * @param int $index
      */
@@ -74,9 +77,11 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
     public function size() {
         return parent::count();
     }
+    
     function isEmpty() {
         return $this->size() == 0;
     }
+
     public function getIterator() {
         return new ArrayIterator($this);
     }

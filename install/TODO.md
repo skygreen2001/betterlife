@@ -2,6 +2,7 @@
 # 基础
 
   - Symfony 的 DebugBar
+  - 自己算法生成站点地图(动态页面)
   - 各种数据库可以备份和导出导入互通
   - 创建yarn、node和npm的betterlife初始化
   - 数据库增加事务支持

@@ -1,6 +1,6 @@
 <?php
 /**
- * |----------- 所有管理类的父类 |-----------
+ * -----------| 所有管理类的父类 |-----------
  * @category betterlife
  * @package core
  * @author skygreen

@@ -159,6 +159,7 @@
     - core/util        : 常用的工具类
     - core/include     : 常用的函数库
     - install/db       : 框架数据库备份包括测试数据
+    - install/library  : 自定义功能模块
     - api/mobile       : 手机端ajax请求服务端返回json数据
     - api/web          : Pc端ajax请求服务端返回json数据
     - upload/images    : 上传图片放置路径

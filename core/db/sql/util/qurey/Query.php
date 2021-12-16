@@ -1,12 +1,13 @@
 <?php
 /**
- +-----------------------------------<br/>
- * Abstract query-result class.<br/>
+ * -----------| Abstract query-result class |-----------
  *
- * Primarily, the Query class takes care of the iterator plumbing, letting the subclasses focusing<br/>
- * on providing the specific data-access methods that are required: {@link nextRecord()}, {@link numRecords()}<br/>
- * and {@link seek()}<br/>
- +-----------------------------------<br/>
+ * Primarily, the Query class takes care of the iterator plumbing, letting the subclasses focusing
+ * 
+ * on providing the specific data-access methods that are required: {@link nextRecord()}, {@link numRecords()}
+ * 
+ * and {@link seek()}
+ * 
  * @category betterlife
  * @package core.db.sql.util.query
  * @author skygreen
@@ -40,8 +41,8 @@ abstract class Query implements Iterator {
     public function column($column = null) {
         $result = array();
 
-        while($record = $this->next()) {
-            if($column) $result[] = $record[$column];
+        while ($record = $this->next()) {
+            if ( $column ) $result[] = $record[$column];
             else $result[] = $record[key($record)];
         }
 
@@ -55,7 +56,7 @@ abstract class Query implements Iterator {
      */
     public function keyedColumn() {
         $column = array();
-        foreach($this as $record) {
+        foreach ($this as $record) {
             $val = $record[key($record)];
             $column[$val] = $val;
         }
@@ -68,7 +69,7 @@ abstract class Query implements Iterator {
      */
     public function map() {
         $column = array();
-        foreach($this as $record) {
+        foreach ($this as $record) {
             $key = reset($record);
             $val = next($record);
             $column[$key] = $val;
@@ -90,20 +91,20 @@ abstract class Query implements Iterator {
      */
     public function value() {
         $record = $this->next();
-        if($record) return $record[key($record)];
+        if ( $record ) return $record[key($record)];
     }
 
     /**
      * Return an HTML table containing the full result-set
      */
     public function table() {
-        $first = true;
+        $first  = true;
         $result = "<table>\n";
 
-        foreach($this as $record) {
-            if($first) {
+        foreach ($this as $record) {
+            if ( $first ) {
                 $result .= "<tr>";
-                foreach($record as $k => $v) {
+                foreach ($record as $k => $v) {
                     $result .= "<th>" . Convert::raw2xml($k) . "</th> ";
                  }
                 $result .= "</tr> \n";
@@ -118,7 +119,7 @@ abstract class Query implements Iterator {
             $first = false;
         }
 
-        if($first) return "No records found";
+        if ( $first ) return "No records found";
         return $result;
     }
 
@@ -128,7 +129,7 @@ abstract class Query implements Iterator {
      * @return array
      */
     public function rewind() {
-        if($this->queryHasBegun && $this->numRecords() > 0) {
+        if ( $this->queryHasBegun && $this->numRecords() > 0 ) {
             $this->queryHasBegun = false;
             return $this->seek(0);
         }
@@ -139,7 +140,7 @@ abstract class Query implements Iterator {
      * @return array
      */
     public function current() {
-        if(!$this->currentRecord) {
+        if ( !$this->currentRecord ) {
             return $this->next();
         } else {
             return $this->currentRecord;
@@ -180,8 +181,8 @@ abstract class Query implements Iterator {
      * @return boolean
      */
     public function valid() {
-        if(!$this->currentRecord) $this->next();
-         return $this->currentRecord !== false;
+        if ( !$this->currentRecord ) $this->next();
+        return $this->currentRecord !== false;
     }
 
     /**
@@ -203,4 +204,3 @@ abstract class Query implements Iterator {
      */
     abstract function seek($rowNum);
 }
-?>
