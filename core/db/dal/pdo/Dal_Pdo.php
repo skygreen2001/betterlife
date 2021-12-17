@@ -121,7 +121,7 @@ class Dal_Pdo extends Dal implements IDal
      *
      * @param mixed $sql SQL查询语句
      * @param string|class $object 需要生成注入的对象实体|类名称
-     * @return array 返回数组
+     * @return mixed 返回数据
      */
     public function sqlExecute($sql, $object = null)
     {
@@ -426,18 +426,24 @@ class Dal_Pdo extends Dal implements IDal
 
     /**
      * 查询得到单个对象实体
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：
-     *      0."id=1,name='sky'"
-     *      1.array("id=1","name='sky'")
-     *      2.array("id"=>"1","name"=>"sky")
-     *      3.允许对象如new User(id="1",name="green");
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
      * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 示例如下：
-     *      1.id asc;
-     *      2.name desc;
+     * 示例如下:
+     * 
+     *     1. id asc;
+     *     2. name desc;
+     * 
      * @return object 单个对象实体
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)

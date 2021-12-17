@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- *  使用PHP5自带的MySQL Extension<br/>
- +---------------------------------<br/>
+ * -----------| 使用PHP5自带的MySQL Extension |-----------
  * @category betterlife
  * @package core.db.object
  * @subpackage mysql
@@ -10,7 +8,7 @@
  */
 class Dao_Php5 extends Dao implements IDaoNormal
 {
-    public static $fetchmode= MYSQL_ASSOC;//MYSQL_ASSOC,MYSQL_NUM,MYSQL_BOTH
+    public static $fetchmode = MYSQL_ASSOC;//MYSQL_ASSOC,MYSQL_NUM,MYSQL_BOTH
 
     /**
      * 连接数据库
@@ -49,6 +47,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
 
     /**
      * 执行预编译SQL语句
+     * 
      * 无法防止SQL注入黑客技术
      */
     private function executeSQL()
@@ -64,6 +63,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
 
     /**
      * 将查询结果转换成业务层所认知的对象
+     * 
      * @param string $object 需要转换成的对象实体|类名称
      * @return 转换成的对象实体列表
      */
@@ -101,6 +101,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
 
     /**
      * 新建对象
+     * 
      * @param Object $object
      * @return int 保存对象记录的ID标识号
      */
@@ -228,22 +229,29 @@ class Dao_Php5 extends Dao implements IDaoNormal
      * 根据对象实体查询对象列表
      * @param string $object 需要查询的对象实体|类名称
      * @param string $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 示例如下：
-     *      1.id asc;
-     *      2.name desc;
+     * 示例如下:
+     * 
+     *     1. id asc;
+     *     2. name desc;
+     * 
      * @param string $limit 分页数目:同Mysql limit语法
-     * 示例如下：
+     * 示例如下:
+     * 
      *    0,10
+     * 
      * @return 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit=null)
+    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
@@ -276,18 +284,23 @@ class Dao_Php5 extends Dao implements IDaoNormal
 
     /**
      * 查询得到单个对象实体
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 示例如下：
-     *      1.id asc;
-     *      2.name desc;
+     * 示例如下:
+     * 
+     *     1.id asc;
+     *     2.name desc;
      * @return 单个对象实体
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
@@ -392,12 +405,15 @@ class Dao_Php5 extends Dao implements IDaoNormal
      * 对象总计数
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @return 对象总计数
      */
     public function count($object, $filter = null)
@@ -429,21 +445,28 @@ class Dao_Php5 extends Dao implements IDaoNormal
 
     /**
      * 对象分页
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 示例如下：
-     *      1.id asc;
-     *      2.name desc;
+     * 示例如下:
+     * 
+     *     1. id asc;
+     *     2. name desc;
+     * 
+     * @return mixed 对象分页
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -473,30 +496,30 @@ class Dao_Php5 extends Dao implements IDaoNormal
             return mysql_real_escape_string($sql);
         } else if ( function_exists('mysql_escape_string') ) {
             return mysql_escape_string($sql);
-        }else {
+        } else {
             return addslashes($sql);
         }
     }
 
     public function transBegin()
     {
-        $this->execute('SET AUTOCOMMIT=0');
-        $this->execute('START TRANSACTION'); // can also be BEGIN or
+        $this->execute( 'SET AUTOCOMMIT=0' );
+        $this->execute( 'START TRANSACTION' ); // can also be BEGIN or
         // BEGIN WORK
         return TRUE;
     }
 
     public function transCommit()
     {
-        $this->execute('COMMIT');
-        $this->execute('SET AUTOCOMMIT=1');
+        $this->execute( 'COMMIT' );
+        $this->execute( 'SET AUTOCOMMIT=1' );
         return TRUE;
     }
 
     public function transRollback()
     {
-        $this->execute('ROLLBACK');
-        $this->execute('SET AUTOCOMMIT=1');
+        $this->execute( 'ROLLBACK' );
+        $this->execute( 'SET AUTOCOMMIT=1' );
         return TRUE;
     }
 
@@ -515,7 +538,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
     public function character_set()
     {
         $charset = Config_C::CHARACTER_UTF8_MB4;
-        if($this->connection) $charset = mysql_client_encoding($this->connection);
+        if ( $this->connection ) $charset = mysql_client_encoding($this->connection);
         return $charset;
     }
 }

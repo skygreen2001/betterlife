@@ -1,11 +1,11 @@
 <?php
 /**
- +---------------------------------<br/>
- * 使用PHP5的MySQLi Extension<br/>
- * 前提条件：<br/>
- *     PHP 5<br/>
- *     Mysql 4.1.3以上版本<br/>
- +---------------------------------<br/>
+ * -----------| 使用PHP5的MySQLi Extension |-----------
+ * 
+ * 前提条件:
+ * 
+ *     - PHP 5
+ *     - Mysql 4.1.3以上版本
  * @category betterlife
  * @package core.db.object
  * @subpackage mysql
@@ -45,16 +45,19 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     }
 
     /**
-     * 执行预编译SQL语句<br/>
+     * 执行预编译SQL语句
+     * 
      * 可以防止SQL注入黑客技术
+     * 
+     * @return mixed
      */
     private function executeSQL()
     {
         try {
             if ( Config_Db::$debug_show_sql ) {
-                LogMe::log( "SQL:" . $this->sQuery );
+                LogMe::log( "SQL: " . $this->sQuery );
                 if ( !empty($this->saParams) ) {
-                    LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
+                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
                 }
             }
             if ( !empty($this->saParams) && is_array($this->saParams) ) {
@@ -66,7 +69,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             if ( !empty($this->saParams) && is_array($this->saParams) ) {
                 /*****************************************************************************
                  * START:执行预编译生成SQL语句
-                 * 说明：
+                 * 说明:
                  * 1.call_user_func_array需要传入的参数为Reference，而不是值；因此有下面一段特殊的代码
                  * 2.采用 call_user_func_array('mysqli_stmt_bind_param', $bind_params);
                  *   而不是$stmt->bind_param($bind_params[0],$bind_params[1]...), 是因为无法将数组分解
@@ -102,19 +105,21 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     }
 
     /**
-     *  直接执行SQL语句
-     * @param mixed $sql SQL查询|更新|删除语句
+     * 直接执行SQL语句
+     * @param mixed $sql   SQL查询|更新|删除语句
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @return array
-     *  1.执行查询语句返回对象数组<br/>
-     *  2.执行更新和删除SQL语句返回执行成功与否的true|null
+     * 返回
+     * 
+     *     1. 执行查询语句返回对象数组
+     *     2. 执行更新和删除SQL语句返回执行成功与否的true|null
      */
     public function sqlExecute($sqlstring, $object = null)
     {
         $result = null;
         try {
             if ( Config_Db::$debug_show_sql ) {
-                LogMe::log( "SQL:" . $sqlstring );
+                LogMe::log( "SQL: " . $sqlstring );
             }
             $this->stmt = $this->connection->prepare($sqlstring);
             Exception_Mysqli::record();
@@ -155,14 +160,17 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 对象总计数
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter
-     *      $filter 格式示例如下：<br/>
-     *          0.允许对象如new User(id="1",name="green");<br/>
-     *          1."id=1","name='sky'"<br/>
-     *          2.array("id=1","name='sky'")<br/>
-     *          3.array("id"=>"1","name"=>"sky")<br/>
-     * @return 对象总计数
+     * 
+     * $filter 格式示例如下:
+     * 
+     *     0. 允许对象如new User(id="1",name="green");
+     *     1. "id=1","name='sky'"
+     *     2. array("id=1","name='sky'")
+     *     3. array("id"=>"1","name"=>"sky")
+     * @return int 对象总计数
      */
     public function count($object, $filter = null)
     {
@@ -174,20 +182,25 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 对象总计数[多表关联查询]
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
-     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名]，在from后的多张表名，表名之间以逗号[,]隔开
-     * 示例如下：<br/>
-     *      0."table1,table2"<br/>
-     *      1.array("table1","table2")<br/>
-     *      2."class1,class2"<br/>
-     *      3.array("class1","class2")<br/>
+     * @param string|array $from   来自多张表或者多个类[必须是数据对象类名]，在from后的多张表名，表名之间以逗号[,]隔开
+     * 示例如下:
+     * 
+     *     0. "table1, table2"
+     *     1. array("table1", "table2")
+     *     2. "class1, class2"
+     *     3. array("class1", "class2")
+     * 
      * @param object|string|array $filter
-     *      $filter 格式示例如下：<br/>
-     *          0.允许对象如new User(id="1",name="green");<br/>
-     *          1."id=1","name='sky'"<br/>
-     *          2.array("id=1","name='sky'")<br/>
-     *          3.array("id"=>"1","name"=>"sky")<br/>
-     * @return 对象总计数
+     * $filter 格式示例如下:
+     * 
+     *     0. 允许对象如new User(id = "1", name = "green");
+     *     1. "id = 1", "name = 'sky'"
+     *     2. array("id = 1", "name = 'sky'")
+     *     3. array("id" => "1", "name" => "sky")
+     * 
+     * @return int 对象总计数
      */
     public function countMultitable($object, $from, $filter = null)
     {
@@ -202,13 +215,13 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $_SQL->isPreparedStatement = false;
             $this->sQuery = $_SQL->select( Crud_Sql_Select::SQL_COUNT )->from( $from )->where( $this->saParams )->result();
             if ( Config_Db::$debug_show_sql ) {
-                LogMe::log( "SQL:" . $this->sQuery );
+                LogMe::log( "SQL: " . $this->sQuery );
                 if ( !empty($this->saParams) ) {
-                    LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
+                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
                 }
             }
             if ( is_object($this->connection) ) {
-                $object_arr = $this->connection->query($this->sQuery);
+                $object_arr = $this->connection->query( $this->sQuery );
                 if ( $object_arr ) {
                     $row    = $object_arr->fetch_row();
                     $result = $row[0];
@@ -225,20 +238,27 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     /**
      * 对象分页
      * @param string|class $object 需要查询的对象实体|类名称
-     * @param int $startPoint  分页开始记录数
-     * @param int $endPoint    分页结束记录数
+     * @param int $startPoint      分页开始记录数
+     * @param int $endPoint        分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id=1,name='sky'"
+     *     1. array("id=1","name='sky'")
+     *     2. array("id"=>"1","name"=>"sky")
+     *     3. 允许对象如new User(id="1",name="green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *      1.id asc;<br/>
-     *      2.name desc;<br/>
+     * 默认为 id desc
+     * 
+     * 示例如下:
+     * 
+     *     - 1.id asc;
+     *     - 2.name desc;
+     * 
+     * @return mixed 对象分页
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -250,27 +270,37 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 对象分页[多表关联查询]
+     * 
      * @param string|class $object 需要查询的对象实体|类名称
-     * @param int $startPoint  分页开始记录数
-     * @param int $endPoint    分页结束记录数
+     * @param int $startPoint      分页开始记录数
+     * @param int $endPoint        分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
+     * 示例如下:
+     * 
+     *     0. "id = 1, name = 'sky'"
+     *     1. array("id = 1", "name = 'sky'")
+     *     2. array("id" => "1", "name" => "sky")
+     *     3. 允许对象如new User(id = "1", name = "green");
+     * 
      * @param string|array $from 来自多张表或者多个类[必须是数据对象类名]，在from后的多张表名，表名之间以逗号[,]隔开
-     * 示例如下：<br/>
-     *      0."table1,table2"<br/>
-     *      1.array("table1","table2")<br/>
-     *      2."class1,class2"<br/>
-     *      3.array("class1","class2")<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "table1, table2"
+     *     1. array("table1", "table2")
+     *     2. "class1, class2"
+     *     3. array("class1", "class2")
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *      1.id asc;<br/>
-     *      2.name desc;<br/>
+     * 默认为 id desc
+     * 
+     * 示例如下:
+     * 
+     *     - 1. id asc;
+     *     - 2. name desc;
+     * 
+     * @return mixed 对象分页
      */
     public function queryPageMultitable($object, $startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -344,25 +374,33 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 根据对象实体查询对象列表
+     * 
      * @param string $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下：<br/>
-     *      0."id=1,name='sky'"<br/>
-     *      1.array("id=1","name='sky'")<br/>
-     *      2.array("id"=>"1","name"=>"sky")<br/>
-     *      3.允许对象如new User(id="1",name="green");<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * 示例如下:
+     * 
+     *     0. "id = 1, name = 'sky'"
+     *     1. array("id = 1", "name = 'sky'")
+     *     2. array("id" => "1", "name" => "sky")
+     *     3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 默认为 id desc<br/>
-     * 示例如下：<br/>
-     *      1.id asc;<br/>
-     *      2.name desc;<br/>
+     * 默认为 id desc
+     * 示例如下:
+     * 
+     *     - 1. id asc;
+     *     - 2. name desc;
+     * 
      * @param string $limit 分页数目:同Mysql limit语法
-     * 示例如下：<br/>
-     *    0,10<br/>
-     * @return 列表:查询被列表的对象
+     * 示例如下:
+     * 
+     *     0,10
+     * 
+     * @return array 列表:查询被列表的对象
      */
-    public function get($object, $filter=null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit=null)
+    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
@@ -394,19 +432,23 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 查询得到单个对象实体
-     * @param string|class $object 需要查询的对象实体|类名称
+     * 
+     * @param string|class $object        需要查询的对象实体|类名称
      * @param object|string|array $filter 过滤条件
-     *      $filter 格式示例如下：<br/>
-     *          0.允许对象如new User(id="1",name="green");<br/>
-     *          1."id=1","name='sky'"<br/>
-     *          2.array("id=1","name='sky'")<br/>
-     *          3.array("id"=>"1","name"=>"sky")<br/>
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')<br/>
+     * $filter 格式示例如下:
+     *     0. 允许对象如new User(id = "1", name = "green");
+     *     1. "id = 1", "name = 'sky'"
+     *     2. array("id = 1", "name = 'sky'")
+     *     3. array("id" => "1", "name" => "sky")
+     * 
+     * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
+     * 
      * @param string $sort 排序条件
-     * 示例如下：
-     *      1.id asc;
-     *      2.name desc;
-     * @return 单个对象实体
+     * 示例如下:
+     * 
+     *     - 1. id asc;
+     *     - 2. name desc;
+     * @return object 单个对象实体
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
@@ -444,8 +486,8 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
      * @param string|class $object 需要查询的对象实体|类名称
-     * @param string $id 数据对象的唯一标识
-     * @return Object 对象
+     * @param string       $id     数据对象的唯一标识
+     * @return object 对象
      */
     public function get_by_id($object, $id)
     {
@@ -524,7 +566,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if ( Config_Db::$debug_show_sql ) {
-                    LogMe::log( "SQL:" . $this->sQuery );
+                    LogMe::log( "SQL: " . $this->sQuery );
                 }
                 $this->stmt = mysqli_prepare($this->connection, $this->sQuery);
                 $this->stmt->execute ();
@@ -565,14 +607,14 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     $this->stmt->free_result ();
                     $this->stmt->close();
                     $result = true;
-                }else{
+                } else {
                     $result = false;
                 }
             } catch (Exception $exc) {
                 Exception_Mysqli::record( $exc->getTraceAsString() );
                 $result = false;
             }
-        }else {
+        } else {
             e( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return $result;
@@ -588,7 +630,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         $id = $dataobject->getId();
         if ( isset($id) ) {
             $result = $this->update( $dataobject );
-        }else{
+        } else {
             $result = $this->save( $dataobject );
         }
         return $result;
@@ -597,7 +639,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     /**
      * 处理当传入参数为NULL的情况
      * @param string $sQuery SQL
-     * @param array $saParams
+     * @param array  $saParams
      * @return string
      */
     private static function preparse_prepared($sQuery, &$saParams)
@@ -626,14 +668,19 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     }
 
     /**
-     * 获取mysqli_stmt_bind_param所需的参数类型<br/>
-     * 格式如下：<br/>
-     * 1.i corresponding variable has type integer<br/>
-     * 2.d corresponding variable has type double<br/>
-     * 3.s corresponding variable has type string<br/>
-     * 4.b corresponding variable is a blob and will be sent in packets<br/>
-     * @todo第四种情况b;大多数情况下不需要；需要再进行特定的编码<br/>
-     * 参数类型参考Mysql 5:mysqli_bind_param<br/>
+     * 获取mysqli_stmt_bind_param所需的参数类型
+     * 
+     * 格式如下:
+     * 
+     *     1. i corresponding variable has type integer
+     *     2. d corresponding variable has type double
+     *     3. s corresponding variable has type string
+     *     4. b corresponding variable is a blob and will be sent in packets
+     * 
+     * @todo第四种情况b;大多数情况下不需要；需要再进行特定的编码
+     * 
+     * 参数类型参考Mysql 5:mysqli_bind_param
+     * 
      * @param pointer $saParams
      * @return string
      */
@@ -661,13 +708,14 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 显示数据库的字符集
+     * @return string
      */
     public function character_set()
     {
         $charset = Config_C::CHARACTER_UTF8_MB4;
         if ( $this->connection ) $charset = $this->connection->character_set_name();
         return $charset;
-//        echo Wl::INFO_DB_CHARACTER." {$charset}<br/>";
+//        echo Wl::INFO_DB_CHARACTER." {$charset}";
     }
 }
 ?>

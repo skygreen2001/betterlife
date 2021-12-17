@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 所有数据库访问对象的父类<br/>
- +---------------------------------<br/>
+ * -----------| 所有数据库访问对象的父类 |-----------
  * @category betterlife
  * @package core.db.object
  * @author skygreen
@@ -149,8 +147,10 @@ abstract class Dao
 
     /**
      * 将数据对象里的显示属性进行清除
+     * 
      * 规范：数据对象里的显示属性以v_开始
      * @param array $saParams 预编译准备SQL参数
+     * @return array 数据对象里的显示属性
      */
     protected function filterViewProperties($saParams)
     {
@@ -199,9 +199,11 @@ abstract class Dao
      * 获取插入或者更新的数据的类型。
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对
-     * @param array $typeOf <br/>
-     *      0:通用的协议定义的类型标识，暂未实现。<br/>
-     *      1:PHP定义的数据类型标识，暂未实现。<br/>
+     * @param array $typeOf 
+     * 
+     *     - 0: 通用的协议定义的类型标识，暂未实现。
+     *     - 1: PHP定义的数据类型标识，暂未实现。
+     * 
      * @return array 获取插入或者更新的数据的field和field值类型键值对
      */
     public function getColumnTypes($object, $saParams, $typeOf = 1)
@@ -215,8 +217,11 @@ abstract class Dao
 
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
+     * 
      * 如果是数据对象，返回数组对象
+     * 
      * 如果是基础类型如int等一般是统计函数count,sum,max,min，直接返回值
+     * 
      * @param array $result 结果集
      * @return 值
      */

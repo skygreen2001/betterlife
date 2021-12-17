@@ -339,6 +339,7 @@ abstract class Crud_SQL {
      * @return array key：列；value：值
      * @example 示例如下
      * 示例如下:
+     * 
      *     array("id"=>"1","name"=>"sky")
      */
     public function parseValidInputParam($param)
