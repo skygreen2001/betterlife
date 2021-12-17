@@ -1,11 +1,9 @@
 <?php
 /**
- +---------------------------------------------------
- * File/Directory manipulation
+ * -----------| File/Directory manipulation |-----------
  *
  * PHP versions 4 and 5
  *
- +---------------------------------------------------
  * @category betterlife
  * @package core.main
  * @subpackage helper

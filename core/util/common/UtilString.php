@@ -109,13 +109,9 @@ class UtilString extends Util
     }
 
     /**
-     +----------------------------------------------------------
      * 检查字符串是否是UTF8编码
-     +----------------------------------------------------------
      * @param string $string 字符串
-     +----------------------------------------------------------
      * @return Boolean
-     +----------------------------------------------------------
      */
     public static function is_utf8($str)
     {
@@ -173,10 +169,14 @@ class UtilString extends Util
 
     /**
      * 在windows下获取中文文件名
+     * 
      * php的一些小函数，尤其是文件系统的小函数，总是有一些不能正常处理中文的情况发生，
+     * 
      * 在使用的时候要注意了，要么尽量避免使用中文文件名，要么自己写一些放心的小函数替代他们。
+     * 
      * 如pathinfo在处理带有英文连字符“-”的中文文件名时，得到的结果是错误的
-     * @see php的pathinfo()函数处理中文问题解决办法:http://www.92csz.com/48/1198.html
+     * 
+     * @link php的pathinfo()函数处理中文问题解决办法: http://www.92csz.com/48/1198.html
      * @param mixed $filepath 文件全名称
      */
     public static function chinese_filename($filepath)
@@ -216,14 +216,14 @@ class UtilString extends Util
 
     /**
      * 截取指定的字符串到指定长度。
-     * 1.英文按单词截取指定长度数的单词。
-     * 2.中文按单字截取指定长度数的字。
+     * 
+     *     1. 英文按单词截取指定长度数的单词。
+     *     2. 中文按单字截取指定长度数的字。
      * @param $string the original string
      * @param $count  the word count
      * @param $ellipsis  TRUE to add "..." or use a string to define other character
      * @param $count  the word count
-     * @return
-     * trimmed string with ellipsis added if it was truncated
+     * @return string trimmed string with ellipsis added if it was truncated
      */
     public static function word_trim($string, $count, $ellipsis = true, $isChinese = true)
     {
@@ -251,20 +251,15 @@ class UtilString extends Util
     }
 
     /**
-     +----------------------------------------------------------
      * 字符串截取，支持中文和其他编码
-     +----------------------------------------------------------
      * @static
      * @access public
-     +----------------------------------------------------------
      * @param string $str 需要转换的字符串
      * @param string $start 开始位置
      * @param string $length 截取长度
      * @param string $charset 编码格式
      * @param string $suffix 截断显示字符
-     +----------------------------------------------------------
      * @return string
-     +----------------------------------------------------------
      */
     public static function msubstr($str, $start = 0, $length = 0, $charset = "utf-8", $suffix = true)
     {
@@ -284,17 +279,16 @@ class UtilString extends Util
     }
 
     /**
-     +----------------------------------------------------------
      * 产生随机字串，可用来自动生成密码
+     * 
      * 默认长度6位 字母和数字混合 支持中文
-     +----------------------------------------------------------
      * @param string $len 长度
      * @param string $type 字串类型
+     * 
      * 0 字母 1 数字 2 大写字母 3 小写字母 4 中文 5 百家姓 其它 混合
+     * 
      * @param string $addChars 额外字符
-     +----------------------------------------------------------
      * @return string
-     +----------------------------------------------------------
      */
     public static function rand_string($len = 6, $type = '', $addChars = '')
     {
@@ -339,16 +333,14 @@ class UtilString extends Util
     }
 
     /**
-     +----------------------------------------------------------
      * 生成一定数量的随机数，并且不重复
-     +----------------------------------------------------------
      * @param integer $number 数量
      * @param string $len 长度
      * @param string $type 字串类型
+     * 
      * 0 字母 1 数字 其它 混合
-     +----------------------------------------------------------
+     * 
      * @return array
-     +----------------------------------------------------------
      */
     public static function build_count_rand($number, $length = 4, $mode = 1)
     {
@@ -373,16 +365,15 @@ class UtilString extends Util
     }
 
     /**
-     +----------------------------------------------------------
-     *  带格式生成随机字符 支持批量生成
-     *  但可能存在重复
-     +----------------------------------------------------------
+     * 带格式生成随机字符 支持批量生成
+     * 
+     * 但可能存在重复
      * @param string $format 字符格式
+     * 
      *     # 表示数字 * 表示字母和数字 $ 表示字母 . 小写字母
+     * 
      * @param integer $number 生成数量
-     +----------------------------------------------------------
      * @return string | array
-     +----------------------------------------------------------
      */
     public static function build_format_rand($format, $number = 1)
     {
@@ -416,9 +407,10 @@ class UtilString extends Util
     }
 
     /**
-    * 去除Html标签
-    * str 需要截去的对象
-    */
+     * 去除Html标签
+     * 
+     * str 需要截去的对象
+     */
     public static function delhtml($str){   //清除HTML标签
         $st = -1; //开始
         $et = -1; //结束

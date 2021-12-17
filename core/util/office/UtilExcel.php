@@ -1,10 +1,9 @@
 <?php
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 /**
- +---------------------------------<br/>
- * 功能:处理Excel相关的事宜方法。<br/>
+ * -----------| 功能:处理Excel相关的事宜方法 |-----------
+ * 
  * PhpSpreadsheet's documentation: https://phpspreadsheet.readthedocs.io
- +---------------------------------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -12,16 +11,17 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 class UtilExcel extends Util
 {
     /**
-    * 将数组转换成Excel文件
-    * 示例:
-    *     1.直接下载:UtilExcel::arraytoExcel($arr_output_header,$regions,"regions.xlsx",true);
-    *     2.保存到本地指定路径:
-    * @param array $arr_output_header 头信息数组
-    * @param array $excelarr 需要导出的数据的数组
-    * @param string $outputFileName 输出文件路径
-    * @param bool $isDirectDownload 是否直接下载。默认是否，保存到本地文件路径
-    * @param bool $isExcel2007 是否使用 Excel2007
-    */
+     * 将数组转换成Excel文件
+     * 示例:
+     * 
+     *     1. 直接下载:UtilExcel::arraytoExcel($arr_output_header,$regions,"regions.xlsx",true);
+     *     2. 保存到本地指定路径:
+     * @param array $arr_output_header 头信息数组
+     * @param array $excelarr          需要导出的数据的数组
+     * @param string $outputFileName   输出文件路径
+     * @param bool $isDirectDownload   是否直接下载。默认是否，保存到本地文件路径
+     * @param bool $isExcel2007        是否使用 Excel2007
+     */
     public static function arraytoExcel($arr_output_header, $excelarr, $outputFileName = null, $isDirectDownload = false, $isExcel2007 = false)
     {
         $pv = (float) phpversion();
@@ -140,13 +140,15 @@ class UtilExcel extends Util
      * @param array $arr_import_header 头信息数组
      * @param string $sheetIndexOrName Excel文件sheet序号或者sheet名称
      * 测试用例:
-     *    $blog_path = Gc::$upload_path . "blog.xls";
-     *    $arr_import_header = Service::fieldsMean( Blog::tablename() );
-     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header);
-     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, 1);
-     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "blog");
-     *    $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "博客");
-     *    print_pre($content, true);
+     * ```
+     *     $blog_path = Gc::$upload_path . "blog.xls";
+     *     $arr_import_header = Service::fieldsMean( Blog::tablename() );
+     *     $content = UtilExcel::exceltoArray($blog_path, $arr_import_header);
+     *     $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, 1);
+     *     $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "blog");
+     *     $content = UtilExcel::exceltoArray($blog_path, $arr_import_header, "博客");
+     *     print_pre($content, true);
+     * ```
      * 
      * @return array
      */
@@ -284,8 +286,10 @@ class UtilExcel extends Util
     /**
      * 将数组转换成CSV文件
      * 示例:
-     *     1.直接下载:UtilExcel::arraytoCsv($arr_output_header, $regions, "regions.csv", true);
-     *     2.保存到本地指定路径:
+     * 
+     *     1. 直接下载:UtilExcel::arraytoCsv($arr_output_header, $regions, "regions.csv", true);
+     *     2. 保存到本地指定路径
+     * 
      * @param array $arr_output_header 头信息数组
      * @param array $excelarr 需要导出的数据的数组
      * @param string $outputFileName 输出文件路径
@@ -351,9 +355,11 @@ class UtilExcel extends Util
     }
     /**
      * 从CSV文件获取行数据转换成数组
+     * 
      * @param string $importFileName 导入CSV文件名称(包括完整的文件路径)
      * @param array $arr_import_header 头信息数组
-     *  参数示例如下:
+     * 参数示例如下:
+     * ```
      *      $arr_import_header = array(
      *          "a1" => "列头1",
      *          "a2" => "列头2",
@@ -362,14 +368,17 @@ class UtilExcel extends Util
      *          "a5" => "列头5",
      *          "a6" => "列头6"
      *      );
+     * ```
      * 说明
-     *    CSV文件第一行是列头说明，即每一列的文字说明，数据应从第二列开始
-     * 测试用例:
-     *    $blog_path = Gc::$upload_path . "blog.xls";
-     *    $arr_import_header = Service::fieldsMean( Blog::tablename() );
-     *    $content = UtilExcel::csvtoArray($blog_path, $arr_import_header);
-     *    print_pre($content, true);
      * 
+     *     CSV文件第一行是列头说明，即每一列的文字说明，数据应从第二列开始
+     * 测试用例:
+     * ```
+     *     $blog_path = Gc::$upload_path . "blog.xls";
+     *     $arr_import_header = Service::fieldsMean( Blog::tablename() );
+     *     $content = UtilExcel::csvtoArray($blog_path, $arr_import_header);
+     *     print_pre($content, true);
+     * ```
      * @return array
      */
     public static function csvtoArray($importFileName, $arr_import_header = null)

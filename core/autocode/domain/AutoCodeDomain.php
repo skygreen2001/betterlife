@@ -22,8 +22,9 @@ class AutoCodeDomain extends AutoCode
     /**
      * 数据对象生成定义的方式
      * 
-     * 1. 所有的列定义的对象属性都是private,同时定义setter和getter方法。
-     * 2. 所有的列定义的对象属性都是public。
+     *     1. 所有的列定义的对象属性都是private,同时定义setter和getter方法。
+     * 
+     *     2. 所有的列定义的对象属性都是public。
      */
     public static $type;
 
@@ -33,9 +34,11 @@ class AutoCodeDomain extends AutoCode
     private static $relation_spec_content = "";
     /**
      * 自动生成代码-实体类
-     * 示例如下：
-     *    1. array:array('bb_user_admin','bb_core_blog')
-     *    2. 字符串:'bb_user_admin,bb_core_blog'
+     * 
+     * 示例如下:
+     * 
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
      * @param array|string $table_names
      */
     public static function AutoCode($table_names = "")
@@ -123,9 +126,7 @@ class AutoCodeDomain extends AutoCode
                     }
                     $result = "<?php\r\n".
                               "/**\r\n".
-                              " *---------------------------------------<br/>\r\n".
-                              " * 枚举类型:$comment  <br/>\r\n".
-                              " *---------------------------------------<br/>\r\n".
+                              " * -----------| 枚举类型:$comment |-----------\r\n".
                               " * @category $category\r\n".
                               " * @package domain\r\n".
                               " * @subpackage enum\r\n".
@@ -219,7 +220,7 @@ class AutoCodeDomain extends AutoCode
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    private static function tableToDataObjectDefine($tablename,$fieldInfo)
+    private static function tableToDataObjectDefine($tablename, $fieldInfo)
     {
         $result = "<?php\r\n";
         if ( (self::$tableInfoList != null) && ( count(self::$tableInfoList) > 0) && ( array_key_exists("$tablename", self::$tableInfoList ) ) ) {
@@ -234,17 +235,15 @@ class AutoCodeDomain extends AutoCode
             }else{
                 $table_comment = " * " . $table_comment . "<br/>\r\n";
             }
-        }else{
-            $table_comment = "关于$tablename的描述";
+        } else {
+            $table_comment = "关于 $tablename 的描述";
         }
         $category  = Gc::$appName;
         $author    = self::$author;
         $package   = self::getPackage($tablename);
         $classname = self::getClassname($tablename);
         $result   .= "/**\r\n".
-                     " +---------------------------------------<br/>\r\n".
-                     "$table_comment".
-                     " +---------------------------------------\r\n".
+                     " * -----------| $table_comment |-----------\r\n".
                      " * @category $category\r\n".
                      " * @package $package\r\n".
                      " * @author $author\r\n".
@@ -339,10 +338,15 @@ class AutoCodeDomain extends AutoCode
 
     /**
      * 生成数据对象之间关系规范定义
+     * 
      * 所有的数据对象关系:
+     * 
      * 一对一，一对多，多对多
-     * 包括 has_one, belong_has_one, has_many, many_many, belongs_many_many.
-     * 参考说明:EnumTableRelation
+     * 
+     * 包括 has_one,  belong_has_one, has_many, many_many, belongs_many_many.
+     * 
+     * 参考说明: EnumTableRelation
+     * 
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名称
      */
@@ -390,7 +394,7 @@ class AutoCodeDomain extends AutoCode
                 $classname_lc = $classname;
                 $classname_lc = lcfirst($classname_lc);
                 foreach ($belong_has_one as $key => $value) {
-                    if ( $value == $classname_lc."_p" ) {
+                    if ( $value == $classname_lc . "_p" ) {
                         self::$relation_spec_comment = "     * 外键特殊定义声明: FOREIGN_ID\r\n";
                         self::$relation_spec_content = "        EnumDataSpec::FOREIGN_ID => array(\r\n".
                                                        "            \"" . $classname_lc . "_p" . "\" => \"parent_id\"\r\n".
@@ -456,7 +460,9 @@ class AutoCodeDomain extends AutoCode
 
     /**
      * 不符合规范的表定义需要用规格在数据文件里进行说明
-     * 1.移除默认字段:commitTime,updateTime
+     * 
+     * 移除默认字段: commitTime, updateTime
+     * 
      * @param array $fieldInfo 表列信息列表
      * @param string $tablename 表名称
      */
@@ -492,7 +498,7 @@ class AutoCodeDomain extends AutoCode
      * @param array $fieldInfo 表列信息列表
      * @param string $tablename 表名称
      */
-    private static function domainEnumShow($fieldInfo,$tablename)
+    private static function domainEnumShow($fieldInfo, $tablename)
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field){
@@ -507,7 +513,7 @@ class AutoCodeDomain extends AutoCode
                                "    /**\r\n".
                                "     * 显示" . $comment . "\r\n".
                                "     */\r\n";
-                    $enumclassname = self::enumClassName($fieldname,$tablename);
+                    $enumclassname = self::enumClassName($fieldname, $tablename);
                     $result .= "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                "    {\r\n".
                                "        return {$enumclassname}::{$fieldname}Show( \${$fieldname} );\r\n".
@@ -670,12 +676,12 @@ class AutoCodeDomain extends AutoCode
      */
     private static function getPackage($tablename)
     {
-        $pacre=str_replace(Config_Db::$table_prefix, "", $tablename);
-        $pacre=str_replace(Config_Db::TABLENAME_RELATION,Config_Db::TABLENAME_DIR_RELATION, $pacre);
-        $package=str_replace("_", ".", $pacre);
-        $packageSplit=explode(".", $package);
-        unset($packageSplit[count($packageSplit)-1]);
-        $package= implode(".", $packageSplit);
+        $pacre   = str_replace(Config_Db::$table_prefix, "", $tablename);
+        $pacre   = str_replace(Config_Db::TABLENAME_RELATION, Config_Db::TABLENAME_DIR_RELATION, $pacre);
+        $package = str_replace("_", ".", $pacre);
+        $packageSplit = explode(".", $package);
+        unset($packageSplit[count($packageSplit) - 1]);
+        $package = implode(".", $packageSplit);
         return $package;
     }
 
@@ -684,7 +690,7 @@ class AutoCodeDomain extends AutoCode
      * @param string $tablename 表名称
      * @param string $definePhpFileContent 生成的代码
      */
-    private static function saveDataObjectDefineToDir($tablename,$definePhpFileContent)
+    private static function saveDataObjectDefineToDir($tablename, $definePhpFileContent)
     {
         $package   = self::getPackage($tablename);
         $classname = self::getClassname($tablename);
@@ -700,11 +706,11 @@ class AutoCodeDomain extends AutoCode
      * @param string $enumclassname 枚举类名称
      * @param string $definePhpFileContent 生成的代码
      */
-    private static function saveEnumDefineToDir($enumclassname,$definePhpFileContent)
+    private static function saveEnumDefineToDir($enumclassname, $definePhpFileContent)
     {
-        $filename = $enumclassname.".php";
-        $relative_path=str_replace(self::$save_dir, "", self::$domain_dir_full . self::$enum_dir . DS . $filename);
-        AutoCodePreviewReport::$enum_files[$enumclassname]=$relative_path;
-        return self::saveDefineToDir(self::$domain_dir_full . self::$enum_dir, $filename, $definePhpFileContent);
+        $filename      = $enumclassname . ".php";
+        $relative_path = str_replace(self::$save_dir, "", self::$domain_dir_full . self::$enum_dir . DS . $filename);
+        AutoCodePreviewReport::$enum_files[$enumclassname] = $relative_path;
+        return self::saveDefineToDir( self::$domain_dir_full . self::$enum_dir, $filename, $definePhpFileContent );
     }
 }

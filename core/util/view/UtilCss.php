@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------<br/>
- * 定义样式<br/>
- +--------------------------------
+ * -----------| 定义样式 |-----------
  * @category betterlife
  * @package util.view
  * @author skygreen
@@ -461,5 +459,3 @@ class UtilCss extends Util
     }
 
 }
-
-?>

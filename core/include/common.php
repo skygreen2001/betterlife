@@ -246,4 +246,68 @@ function unicode2utf8($str)
     return $str;
 }
 
-?>
+/**
+ * Simple conversion of HTML to plaintext.
+ *
+ * @param string $data Input data
+ * @param bool $preserveLinks
+ * @param int $wordWrap
+ * @param array $config
+ * @return string
+ */
+function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
+{
+    $defaultConfig = array('PreserveLinks' => false, 'ReplaceBoldAsterisk' => true, 'CompressWhitespace' => true, 'ReplaceImagesWithAlt' => true);
+    if (isset($config)) {
+        $config = array_merge($defaultConfig, $config);
+    } else {
+        $config = $defaultConfig;
+    }
+    $data = preg_replace("/<style([^A-Za-z0-9>][^>]*)?>.*?<\\/style[^>]*>/is", "", $data);
+    $data = preg_replace("/<script([^A-Za-z0-9>][^>]*)?>.*?<\\/script[^>]*>/is", "", $data);
+    if ($config['ReplaceBoldAsterisk']) {
+        $data = preg_replace('%<(strong|b)( [^>]*)?>|</(strong|b)>%i', '*', $data);
+    }
+    // Expand hyperlinks
+    if (!$preserveLinks && !$config['PreserveLinks']) {
+        $data = preg_replace_callback('/<a[^>]*href\\s*=\\s*"([^"]*)">(.*?)<\\/a>/i', function ($matches) {
+            return html2raw($matches[2]) . "[{$matches['1']}]";
+        }, $data);
+        $data = preg_replace_callback('/<a[^>]*href\\s*=\\s*([^ ]*)>(.*?)<\\/a>/i', function ($matches) {
+            return html2raw($matches[2]) . "[{$matches['1']}]";
+        }, $data);
+    }
+    // Replace images with their alt tags
+    if ($config['ReplaceImagesWithAlt']) {
+        $data = preg_replace('/<img[^>]*alt *= *"([^"]*)"[^>]*>/i', ' \\1 ', $data);
+        $data = preg_replace('/<img[^>]*alt *= *([^ ]*)[^>]*>/i', ' \\1 ', $data);
+    }
+    // Compress whitespace
+    if ($config['CompressWhitespace']) {
+        $data = preg_replace("/\\s+/", " ", $data);
+    }
+    // Parse newline tags
+    $data = preg_replace("/\\s*<[Hh][1-6]([^A-Za-z0-9>][^>]*)?> */", "\n\n", $data);
+    $data = preg_replace("/\\s*<[Pp]([^A-Za-z0-9>][^>]*)?> */", "\n\n", $data);
+    $data = preg_replace("/\\s*<[Dd][Ii][Vv]([^A-Za-z0-9>][^>]*)?> */", "\n\n", $data);
+    $data = preg_replace("/\n\n\n+/", "\n\n", $data);
+    $data = preg_replace("/<[Bb][Rr]([^A-Za-z0-9>][^>]*)?> */", "\n", $data);
+    $data = preg_replace("/<[Tt][Rr]([^A-Za-z0-9>][^>]*)?> */", "\n", $data);
+    $data = preg_replace("/<\\/[Tt][Dd]([^A-Za-z0-9>][^>]*)?> */", "    ", $data);
+    $data = preg_replace('/<\\/p>/i', "\n\n", $data);
+    // Replace HTML entities
+    $data = html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+    // Remove all tags (but optionally keep links)
+    // strip_tags seemed to be restricting the length of the output
+    // arbitrarily. This essentially does the same thing.
+    if (!$preserveLinks && !$config['PreserveLinks']) {
+        $data = preg_replace('/<\\/?[^>]*>/', '', $data);
+    } else {
+        $data = strip_tags($data, '<a>');
+    }
+    // Wrap
+    if ($wordWrap) {
+        $data = wordwrap(trim($data), $wordWrap);
+    }
+    return trim($data);
+}

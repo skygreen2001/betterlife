@@ -1,21 +1,32 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 这个功能用在Linux上 需要配合Sendmail使用
+ * -----------| 这个功能用在Linux上 需要配合Sendmail使用 |-----------
+ * 
  * 该功能尚未投入实际应用
+ * 
  * 本类里PHP方法: ereg 已过时，需找到替换方法
+ * 
  * 本类只可用于学习，暂不考虑投入实用
+ * 
  * 参考这篇文章:http://www.jacmoe.dk/how-to-send-test-emails-using-php-mail-from-your-local-wamp-installation
+ * 
  * Window下sendmail下载:http://glob.com.au/sendmail/
+ * 
  * 要使邮件函数可用，PHP 需要已安装且正在运行的邮件系统。
+ * 
  * 要使用的程序是由 php.ini 文件中的配置设置定义的。
+ * 
  * 在Windows上要找到一个可以匿名发邮件的邮件服务器，然后修改php.ini相关部分
+ * 
  * 或者安装一个hMailServer,下载地址:http://www.hmailserver.com/；尚待验证
- * Mailer objects are responsible for actually sending emails.<br/>
- * The default Mailer class will use PHP's mail() function.<br/>
- * @see http://www.silverstripe.com<br/>
- *      class:Mailer|Email<br/>
- +---------------------------------------<br/>
+ * 
+ * Mailer objects are responsible for actually sending emails.
+ * 
+ * The default Mailer class will use PHP's mail() function.
+ * 
+ * @link http://www.silverstripe.com
+ * 
+ * class: Mailer | Email
  * @category betterlife
  * @package util.email
  * @author silverstripe
@@ -28,7 +39,7 @@ class UtilEmailPhp extends Util
      */
     public static function validEmailAddress($address)
     {
-        return ereg('^([a-zA-Z0-9_+\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$', $address);
+        return mb_ereg('^([a-zA-Z0-9_+\.\-]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$', $address);
     }
 
 
@@ -53,26 +64,27 @@ class UtilEmailPhp extends Util
      * @param string $str
      * @return boolean
      *
-     * @see http://code.iamcal.com/php/rfc822/rfc822.phps
+     * @link http://code.iamcal.com/php/rfc822/rfc822.phps
      * @copyright Cal Henderson <cal@iamcal.com>
+     * 
      *     This code is licensed under a Creative Commons Attribution-ShareAlike 2.5 License
+     * 
      *     http://creativecommons.org/licenses/by-sa/2.5/
      */
     public static function is_valid_address($email)
     {
-        $qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
-        $dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
-        $atom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c'.
-                '\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+';
-        $quoted_pair = '\\x5c[\\x00-\\x7f]';
+        $qtext          = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
+        $dtext          = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
+        $atom           = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+';
+        $quoted_pair    = '\\x5c[\\x00-\\x7f]';
         $domain_literal = "\\x5b($dtext|$quoted_pair)*\\x5d";
-        $quoted_string = "\\x22($qtext|$quoted_pair)*\\x22";
-        $domain_ref = $atom;
-        $sub_domain = "($domain_ref|$domain_literal)";
-        $word = "($atom|$quoted_string)";
-        $domain = "$sub_domain(\\x2e$sub_domain)*";
-        $local_part = "$word(\\x2e$word)*";
-        $addr_spec = "$local_part\\x40$domain";
+        $quoted_string  = "\\x22($qtext|$quoted_pair)*\\x22";
+        $domain_ref     = $atom;
+        $sub_domain     = "($domain_ref|$domain_literal)";
+        $word           = "($atom|$quoted_string)";
+        $domain         = "$sub_domain(\\x2e$sub_domain)*";
+        $local_part     = "$word(\\x2e$word)*";
+        $addr_spec      = "$local_part\\x40$domain";
 
         return preg_match("!^$addr_spec$!", $email) ? 1 : 0;
     }
@@ -90,7 +102,7 @@ class UtilEmailPhp extends Util
      */
     public static function sendPlain($from, $to, $subject, $plainContent, $attachedFiles = false, $customheaders = false)
     {
-        return self::plaintextEmail($to, $from, $subject, $plainContent, $attachedFiles, $customheaders);
+        return self::plaintextEmail( $to, $from, $subject, $plainContent, $attachedFiles, $customheaders );
     }
 
     /**
@@ -100,39 +112,43 @@ class UtilEmailPhp extends Util
      */
     public static function sendHTML($from, $to, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
-        return self::htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles, $customheaders, $plainContent, $inlineImages);
+        return self::htmlEmail( $to, $from, $subject, $htmlContent, $attachedFiles, $customheaders, $plainContent, $inlineImages );
     }
 
-    /*
+    /**
      * Sends an email as a both HTML and plaintext
-     *   $attachedFiles should be an array of file names
-     *    - if you pass the entire $_FILES entry, the user-uploaded filename will be preserved
-     *   use $plainContent to override default plain-content generation
+     * 
+     * @param mixed $attachedFiles should be an array of file names
+     * 
+     *     - if you pass the entire $_FILES entry, the user-uploaded filename will be preserved
+     *       use $plainContent to override default plain-content generation
      *
      * @return bool
      */
     private static function htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
-        if ($customheaders && is_array($customheaders) == false) {
+        if ( $customheaders && is_array($customheaders) == false ) {
             echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
-            dieprintr($headers);
+            // dieprintr($customheaders);
+            print_r($customheaders);
+            die();
         }
 
         $subjectIsUnicode = (strpos($subject,"&#") !== false);
-        $bodyIsUnicode = (strpos($htmlContent,"&#") !== false);
-        $plainEncoding = "";
+        $bodyIsUnicode    = (strpos($htmlContent,"&#") !== false);
+        $plainEncoding    = "";
 
         // We generate plaintext content by default, but you can pass custom stuff
         $plainEncoding = '';
-        if(!$plainContent) {
+        if ( !$plainContent ) {
             $plainContent = self::xml2raw($htmlContent);
-            if(isset($bodyIsUnicode) && $bodyIsUnicode) $plainEncoding = "base64";
+            if ( isset($bodyIsUnicode) && $bodyIsUnicode ) $plainEncoding = "base64";
         }
 
 
         // If the subject line contains extended characters, we must encode the
         $subject = self::xml2raw($subject);
-        if(isset($subjectIsUnicode) && $subjectIsUnicode)
+        if ( isset($subjectIsUnicode) && $subjectIsUnicode )
             $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
 
@@ -147,7 +163,7 @@ class UtilEmailPhp extends Util
 
 
         // Add basic wrapper tags if the body tag hasn't been given
-        if(stripos($htmlContent, '<body') === false) {
+        if ( stripos($htmlContent, '<body') === false ) {
             $htmlContent =
                     "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" .
                     "<HTML><HEAD>\n" .
@@ -160,37 +176,37 @@ class UtilEmailPhp extends Util
                     "</HTML>";
         }
 
-        if($inlineImages) {
-            $htmlPart = self::wrapImagesInline($htmlContent);
+        if ( $inlineImages ) {
+            $htmlPart = self::wrapImagesInline( $htmlContent );
         } else {
             $headers["Content-Transfer-Encoding"] = "quoted-printable";
-            $htmlPart = self::processHeaders($headers, wordwrap(self::QuotedPrintable_encode($htmlContent),120));
+            $htmlPart = self::processHeaders( $headers, wordwrap(self::QuotedPrintable_encode( $htmlContent ),120) );
         }
 
-        list($messageBody, $messageHeaders) = self::encodeMultipart(array($plainPart,$htmlPart), "multipart/alternative");
+        list($messageBody, $messageHeaders) = self::encodeMultipart( array($plainPart,$htmlPart), "multipart/alternative" );
 
         // Messages with attachments are handled differently
-        if($attachedFiles && is_array($attachedFiles)) {
+        if ( $attachedFiles && is_array($attachedFiles) ) {
 
             // The first part is the message itself
-            $fullMessage = self::processHeaders($messageHeaders, $messageBody);
+            $fullMessage  = self::processHeaders( $messageHeaders, $messageBody );
             $messageParts = array($fullMessage);
 
             // Include any specified attachments as additional parts
-            foreach($attachedFiles as $file) {
-                if(isset($file['tmp_name']) && isset($file['name'])) {
-                    $messageParts[] = self::encodeFileForEmail($file['tmp_name'], $file['name']);
+            foreach ($attachedFiles as $file) {
+                if ( isset($file['tmp_name']) && isset($file['name']) ) {
+                    $messageParts[] = self::encodeFileForEmail( $file['tmp_name'], $file['name'] );
                 } else {
-                    $messageParts[] = self::encodeFileForEmail($file);
+                    $messageParts[] = self::encodeFileForEmail( $file );
                 }
             }
 
             // We further wrap all of this into another multipart block
-            list($fullBody, $headers) = self::encodeMultipart($messageParts, "multipart/mixed");
+            list($fullBody, $headers) = self::encodeMultipart( $messageParts, "multipart/mixed" );
 
             // Messages without attachments do not require such treatment
         } else {
-            $headers = $messageHeaders;
+            $headers  = $messageHeaders;
             $fullBody = $messageBody;
         }
 
@@ -198,48 +214,48 @@ class UtilEmailPhp extends Util
         $headers["From"] = self::validEmailAddr($from);
 
         // Messages with the X-SilverStripeMessageID header can be tracked
-        if(isset($customheaders["X-SilverStripeMessageID"]) && defined('BOUNCE_EMAIL')) {
+        if ( isset($customheaders["X-SilverStripeMessageID"]) && defined('BOUNCE_EMAIL') ) {
             $bounceAddress = BOUNCE_EMAIL;
         } else {
             $bounceAddress = $from;
         }
 
         // Strip the human name from the bounce address
-        if(ereg('^([^<>]*)<([^<>]+)> *$', $bounceAddress, $parts)) $bounceAddress = $parts[2];
+        if ( mb_ereg('^([^<>]*)<([^<>]+)> *$', $bounceAddress, $parts) ) $bounceAddress = $parts[2];
 
         // $headers["Sender"]         = $from;
-        $headers["X-Mailer"]    = X_MAILER;
-        if (!isset($customheaders["X-Priority"])) $headers["X-Priority"]    = 3;
+        $headers["X-Mailer"] = X_MAILER;
+        if ( !isset($customheaders["X-Priority"]) ) $headers["X-Priority"] = 3;
 
         $headers = array_merge((array)$headers, (array)$customheaders);
 
         // the carbon copy header has to be 'Cc', not 'CC' or 'cc' -- ensure this.
-        if (isset($headers['CC'])) {
+        if ( isset($headers['CC']) ) {
             $headers['Cc'] = $headers['CC'];
             unset($headers['CC']);
         }
-        if (isset($headers['cc'])) {
+        if ( isset($headers['cc']) ) {
             $headers['Cc'] = $headers['cc'];
             unset($headers['cc']);
         }
 
         // the carbon copy header has to be 'Bcc', not 'BCC' or 'bcc' -- ensure this.
-        if (isset($headers['BCC'])) {
-            $headers['Bcc']=$headers['BCC'];
+        if ( isset($headers['BCC']) ) {
+            $headers['Bcc'] = $headers['BCC'];
             unset($headers['BCC']);
         }
-        if (isset($headers['bcc'])) {
-            $headers['Bcc']=$headers['bcc'];
+        if ( isset($headers['bcc']) ) {
+            $headers['Bcc'] = $headers['bcc'];
             unset($headers['bcc']);
         }
 
 
         // Send the email
-        $headers = self::processHeaders($headers);
-        $to = self::validEmailAddr($to);
+        $headers = self::processHeaders( $headers );
+        $to      = self::validEmailAddr( $to );
 
         // Try it without the -f option if it fails
-        if(!($result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress"))) {
+        if ( !( $result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") ) ) {
             $result = mail($to, $subject, $fullBody, $headers);
         }
 
@@ -252,44 +268,45 @@ class UtilEmailPhp extends Util
     private static function plaintextEmail($to, $from, $subject, $plainContent, $attachedFiles, $customheaders = false)
     {
         $subjectIsUnicode = false;
-        $plainEncoding = false; // Not ensurely where this is supposed to be set, but defined it false for now to remove php notices
+        $plainEncoding    = false; // Not ensurely where this is supposed to be set, but defined it false for now to remove php notices
 
-        if ($customheaders && is_array($customheaders) == false) {
+        if ( $customheaders && is_array($customheaders) == false ) {
             echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
-            dieprintr($headers);
+            print_r($customheaders);
+            die();
         }
 
         if(strpos($subject,"&#") !== false) $subjectIsUnicode = true;
 
         // If the subject line contains extended characters, we must encode it
         $subject = self::xml2raw($subject);
-        if($subjectIsUnicode)
+        if ( $subjectIsUnicode )
             $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
         // Make the plain text part
-        $headers["Content-Type"] = "text/plain; charset=\"utf-8\"";
+        $headers["Content-Type"]              = "text/plain; charset=\"utf-8\"";
         $headers["Content-Transfer-Encoding"] = $plainEncoding ? $plainEncoding : "quoted-printable";
 
-        $plainContent = ($plainEncoding == "base64") ? chunk_split(base64_encode($plainContent),60) : self::QuotedPrintable_encode($plainContent);
+        $plainContent = ($plainEncoding == "base64") ? chunk_split(base64_encode($plainContent),60) : self::QuotedPrintable_encode( $plainContent );
 
         // Messages with attachments are handled differently
-        if(is_array($attachedFiles)) {
+        if ( is_array($attachedFiles) ) {
             // The first part is the message itself
-            $fullMessage = self::processHeaders($headers, $plainContent);
+            $fullMessage  = self::processHeaders($headers, $plainContent);
             $messageParts = array($fullMessage);
 
             // Include any specified attachments as additional parts
-            foreach($attachedFiles as $file) {
-                if(isset($file['tmp_name']) && isset($file['name'])) {
-                    $messageParts[] = self::encodeFileForEmail($file['tmp_name'], $file['name']);
+            foreach ($attachedFiles as $file) {
+                if ( isset($file['tmp_name']) && isset($file['name']) ) {
+                    $messageParts[] = self::encodeFileForEmail( $file['tmp_name'], $file['name'] );
                 } else {
-                    $messageParts[] =self::encodeFileForEmail($file);
+                    $messageParts[] = self::encodeFileForEmail( $file );
                 }
             }
 
 
             // We further wrap all of this into another multipart block
-            list($fullBody, $headers) = self::encodeMultipart($messageParts, "multipart/mixed");
+            list($fullBody, $headers) = self::encodeMultipart( $messageParts, "multipart/mixed" );
 
             // Messages without attachments do not require such treatment
         } else {
@@ -297,41 +314,40 @@ class UtilEmailPhp extends Util
         }
 
         // Email headers
-        $headers["From"]         = self::validEmailAddr($from);
-        $bounceAddress = $from;
+        $headers["From"] = self::validEmailAddr($from);
+        $bounceAddress   = $from;
 
         // $headers["Sender"]         = $from;
-        $headers["X-Mailer"]    = X_MAILER;
-        if(!isset($customheaders["X-Priority"])) {
-            $headers["X-Priority"]    = 3;
+        $headers["X-Mailer"] = X_MAILER;
+        if ( !isset($customheaders["X-Priority"]) ) {
+            $headers["X-Priority"] = 3;
         }
 
         $headers = array_merge((array)$headers, (array)$customheaders);
 
         // the carbon copy header has to be 'Cc', not 'CC' or 'cc' -- ensure this.
-        if (isset($headers['CC'])) {
+        if ( isset($headers['CC']) ) {
             $headers['Cc'] = $headers['CC'];
             unset($headers['CC']);
         }
-        if (isset($headers['cc'])) {
+        if ( isset($headers['cc']) ) {
             $headers['Cc'] = $headers['cc'];
             unset($headers['cc']);
         }
 
         // Send the email
-        $headers = self::processHeaders($headers);
-        $to = self::validEmailAddr($to);
+        $headers = self::processHeaders( $headers );
+        $to      = self::validEmailAddr( $to );
 
         // Try it without the -f option if it fails
-        if(!$result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress"))
+        if ( !$result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") )
             $result = mail($to, $subject, $fullBody, $headers);
 
-        if($result)
-            return array($to,$subject,$fullBody,$headers);
+        if ( $result )
+            return array($to, $subject, $fullBody, $headers);
 
         return false;
     }
-
 
     /**
      * Convert XML to raw text.
@@ -339,13 +355,14 @@ class UtilEmailPhp extends Util
      * @todo Currently &#xxx; entries are stripped; they should be converted
      */
     private static function xml2raw($val) {
-        if(is_array($val)) {
-            foreach($val as $k => $v) $val[$k] = self::xml2raw($v);
+        if ( is_array($val) ) {
+            foreach ($val as $k => $v) $val[$k] = self::xml2raw( $v );
             return $val;
         } else {
             // More complex text needs to use html2raw instead
-            if(strpos($val,'<') !== false) return self::html2raw($val);
-            else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
+            // if ( strpos($val, '<' ) !== false ) return self::html2raw( $val );
+            // else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
+            html_entity_decode($val, ENT_QUOTES, 'UTF-8');
         }
     }
 
@@ -353,12 +370,11 @@ class UtilEmailPhp extends Util
     {
         $separator = "----=_NextPart_" . preg_replace('/[^0-9]/','',rand() * 10000000000);
 
-
         $headers["MIME-Version"] = "1.0";
         $headers["Content-Type"] = "$contentType; boundary=\"$separator\"";
         $headers["Content-Transfer-Encoding"] = "7bit";
 
-        if($contentType == "multipart/alternative") {
+        if ( $contentType == "multipart/alternative" ) {
             //$baseMessage = "This is an encoded HTML message.  There are two parts: a plain text and an HTML message, open whatever suits you better.";
             $baseMessage = "\nThis is a multi-part message in MIME format.";
         } else {
@@ -368,8 +384,7 @@ class UtilEmailPhp extends Util
 
 
         $separator = "\n--$separator\n";
-        $body = "$baseMessage\n" .
-                $separator . implode("\n".$separator, $parts) . "\n" . trim($separator) . "--";
+        $body      = "$baseMessage\n" . $separator . implode("\n" . $separator, $parts) . "\n" . trim($separator) . "--";
 
         return array($body, $headers);
     }
@@ -384,19 +399,19 @@ class UtilEmailPhp extends Util
         $_INLINED_IMAGES = null;
 
         // Make the HTML part
-        $headers["Content-Type"] = "text/html; charset=\"utf-8\"";
+        $headers["Content-Type"]              = "text/html; charset=\"utf-8\"";
         $headers["Content-Transfer-Encoding"] = "quoted-printable";
-        $multiparts[] = self::processHeaders($headers, self::QuotedPrintable_encode($replacedContent));
+        $multiparts[] = self::processHeaders( $headers, self::QuotedPrintable_encode( $htmlContent ) );
 
         // Make all the image parts
         global $_INLINED_IMAGES;
-        foreach($_INLINED_IMAGES as $url => $cid) {
-            $multiparts[] = self::encodeFileForEmail($url, false, "inline", "Content-ID: <$cid>\n");
+        foreach ($_INLINED_IMAGES as $url => $cid) {
+            $multiparts[] = self::encodeFileForEmail( $url, false, "inline", "Content-ID: <$cid>\n" );
         }
 
         // Merge together in a multipart
-        list($body, $headers) = self::encodeMultipart($multiparts, "multipart/related");
-        return self::processHeaders($headers, $body);
+        list($body, $headers) = self::encodeMultipart( $multiparts, "multipart/related" );
+        return self::processHeaders( $headers, $body );
     }
 
     /**
@@ -405,9 +420,9 @@ class UtilEmailPhp extends Util
     private static function processHeaders($headers, $body = false)
     {
         $res = '';
-        if(is_array($headers)) while(list($k, $v) = each($headers))
+        if ( is_array($headers) ) while(list($k, $v) = each($headers))
                 $res .= "$k: $v\n";
-        if($body) $res .= "\n$body";
+        if ( $body ) $res .= "\n$body";
         return $res;
     }
 
@@ -451,43 +466,43 @@ class UtilEmailPhp extends Util
      */
     private static function encodeFileForEmail($file, $destFileName = false, $disposition = NULL, $extraHeaders = "")
     {
-        if(!$file) {
+        if ( !$file ) {
             user_error("encodeFileForEmail: not passed a filename and/or data", E_USER_WARNING);
             return;
         }
 
-        if (is_string($file)) {
+        if ( is_string($file) ) {
             $file = array('filename' => $file);
-            $fh = fopen($file['filename'], "rb");
-            if ($fh) {
-                while(!feof($fh)) $file['contents'] .= fread($fh, 10000);
+            $fh   = fopen($file['filename'], "rb");
+            if ( $fh ) {
+                while (!feof($fh)) $file['contents'] .= fread($fh, 10000);
                 fclose($fh);
             }
         }
 
         // Build headers, including content type
-        if(!$destFileName) $base = basename($file['filename']);
+        if ( !$destFileName ) $base = basename($file['filename']);
         else $base = $destFileName;
 
-        $mimeType = $file['mimetype'] ? $file['mimetype'] : self::getMimeType($file['filename']);
-        if(!$mimeType) $mimeType = "application/unknown";
+        $mimeType = $file['mimetype'] ? $file['mimetype'] : self::getMimeType( $file['filename'] );
+        if ( !$mimeType ) $mimeType = "application/unknown";
 
-        if (empty($disposition)) $disposition = isset($file['contentLocation']) ? 'inline' : 'attachment';
+        if ( empty($disposition) ) $disposition = isset($file['contentLocation']) ? 'inline' : 'attachment';
 
         // Encode for emailing
-        if (substr($file['mimetype'], 0, 4) != 'text') {
+        if ( substr($file['mimetype'], 0, 4) != 'text' ) {
             $encoding = "base64";
             $file['contents'] = chunk_split(base64_encode($file['contents']));
         } else {
             // This mime type is needed, otherwise some clients will show it as an inline attachment
             $mimeType = 'application/octet-stream';
             $encoding = "quoted-printable";
-            $file['contents'] = self::QuotedPrintable_encode($file['contents']);
+            $file['contents'] = self::QuotedPrintable_encode( $file['contents'] );
         }
 
         $headers = "Content-type: $mimeType;\n\tname=\"$base\"\n".
-                "Content-Transfer-Encoding: $encoding\n".
-                "Content-Disposition: $disposition;\n\tfilename=\"$base\"\n" ;
+                   "Content-Transfer-Encoding: $encoding\n".
+                   "Content-Disposition: $disposition;\n\tfilename=\"$base\"\n" ;
 
         if ( isset($file['contentLocation']) ) $headers .= 'Content-Location: ' . $file['contentLocation'] . "\n" ;
 

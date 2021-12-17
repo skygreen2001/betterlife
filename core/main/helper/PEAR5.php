@@ -1,9 +1,8 @@
 <?php
 /**
- +---------------------------------<br/>
- * This is only meant for PHP 5 to get rid of certain strict warning<br/>
- * that doesn't get hidden since it's in the shutdown function<br/>
- +---------------------------------<br/>
+ * This is only meant for PHP 5 to get rid of certain strict warning
+ * 
+ * that doesn't get hidden since it's in the shutdown function
  * @category betterlife
  * @package core.main.helper
  * @subpackage dal

@@ -239,7 +239,7 @@ class AutoCodeDomainJava extends AutoCode
                 $table_comment=" * ".$table_comment."<br/>\r\n";
             }
         }else{
-            $table_comment="关于$tablename的描述";
+            $table_comment="关于 $tablename 的描述";
         }
         $category  = Gc::$appName;
         $author    = self::$author;
@@ -249,9 +249,7 @@ class AutoCodeDomainJava extends AutoCode
         if(!contains($package,"domain"))$package="domain".$package;
         $result.="[importPackage]".
                  "/**\r\n".
-                 " +---------------------------------------<br/>\r\n".
-                 "$table_comment".
-                 " +---------------------------------------\r\n".
+                 " * -----------| $table_comment |-----------\r\n".
                  " * @category $category\r\n".
                  " * @package $package\r\n".
                  " * @author $author\r\n".

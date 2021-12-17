@@ -8,9 +8,7 @@
 /// Enable multiple timers to aid profiling of performance over sections of code
 
 /**
- +------------------------------------------------------------------------------<br/>
- * Execution time profiler. <br/>
- +------------------------------------------------------------------------------<br/>
+ * -----------| Execution time profiler |-----------
  * @category betterlife
  * @package core.main
  * @subpackage helper

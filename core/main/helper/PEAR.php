@@ -1,12 +1,10 @@
 <?php
 /**
- +---------------------------------------------------<br/>
- * PEAR, the PHP Extension and Application Repository
+ * -----------| PEAR, the PHP Extension and Application Repository |-----------
  *
  * PEAR class and PEAR_Error class
  *
  * PHP versions 4 and 5
- +---------------------------------------------------
  * @category betterlife
  * @package core.main
  * @subpackage helper

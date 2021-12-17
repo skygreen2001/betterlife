@@ -1,22 +1,26 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 发邮件的类<br/>
+ * -----------| 发邮件的类 |-----------
+ * 
  * 推荐使用UtilEmailer.php
+ * 
  * 本类已不再维护
- * 本类里PHP方法: ereg 已过时，需找到替换方法才可正常使用
- * 调用UtilEmailSmtp()发邮件<br/>
- *   $fromaddress = "xxx@xxx.com";<br/>
- *   $toaddress = "xxx@xxx.com";<br/>
- *   $mailsubject = "测试邮件";<br/>
- *   $mailbody = "<a href='http://www.sohu.com'>怎么办我想想</a>";<br/>
- *   $Email = new UtilEmailSmtp();<br/>
- *   if($Email->sendmail($fromaddress, $toaddress, $mailsubject, $mailbody)){<br/>
- *       $mailinfo = "邮件已发送";<br/>
- *   }else{<br/>
- *       $mailinfo = "发送不成功";<br/>
- *   }<br/>
- +---------------------------------------<br/>
+ * 
+ * 本类里PHP方法: mb_ereg 已过时，需找到替换方法才可正常使用
+ * 
+ * 调用UtilEmailSmtp()发邮件
+ * ```
+ *     $fromaddress = "xxx@xxx.com";
+ *     $toaddress = "xxx@xxx.com";
+ *     $mailsubject = "测试邮件";
+ *     $mailbody = "<a href='http://www.sohu.com'>怎么办我想想</a>";
+ *     $Email = new UtilEmailSmtp();
+ *     if ( $Email->sendmail( $fromaddress, $toaddress, $mailsubject, $mailbody ) ) {
+ *         $mailinfo = "邮件已发送";
+ *     } else {
+ *         $mailinfo = "发送不成功";
+ *     }
+ * ```
  * @category betterlife
  * @package util.email
  * @author skygreen
@@ -324,4 +328,3 @@ class UtilEmailSmtp extends Util
     }
 
 }
-?>

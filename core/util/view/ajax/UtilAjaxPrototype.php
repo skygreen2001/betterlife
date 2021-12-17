@@ -1,9 +1,6 @@
 <?php
-
 /**
- +---------------------------------<br/>
- * 工具类：Prototype[Javascript Ajax 框架]<br/>
- +---------------------------------
+ * -----------| 工具类：Prototype[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -12,6 +9,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
 {
     /**
      * 动态加载Prototype:Ajax Javascript Framework库
+     * 
      * @link http://api.prototypejs.org/Prototype/
      * @link https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js
      * @param string $version javascript框架的版本号

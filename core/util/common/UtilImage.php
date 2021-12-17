@@ -8,16 +8,11 @@
 class UtilImage
 {
     /**
-     +---------------------------------------------------------
-     * 取得图像信息<br/>
-     +----------------------------------------------------------
+     * 取得图像信息
      * @static
      * @access public
-     +----------------------------------------------------------
      * @param string $image 图像文件名
-     +----------------------------------------------------------
      * @return mixed
-     +----------------------------------------------------------
      */
     public static function getImageInfo($img)
     {
@@ -39,20 +34,16 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 显示服务器图像文件<br/>
-     * 支持URL方式<br/>
-     +----------------------------------------------------------
+     * 显示服务器图像文件
+     * 
+     * 支持URL方式
      * @static
      * @access public
-     +----------------------------------------------------------
      * @param string $imgFile 图像文件名
-     * @param string $text 文字字符串
-     * @param string $width 图像宽度
-     * @param string $height 图像高度
-     +----------------------------------------------------------
+     * @param string $text    文字字符串
+     * @param string $width   图像宽度
+     * @param string $height  图像高度
      * @return void
-     +----------------------------------------------------------
      */
     public static function showImg($imgFile, $text = '', $width = 80, $height = 30)
     {
@@ -89,12 +80,12 @@ class UtilImage
 
     /**
      * 从中心开始往外裁剪
-     * @param mixed $src_file 源文件，若不指定，则为相对路径
-     * @param mixed $dim_file 目标文件，若不指定，则为相对路径
-     * @param mixed $dimWidth 目标尺寸，若不写"%"，则为指定大小
+     * 
+     * @param mixed $src_file  源文件，若不指定，则为相对路径
+     * @param mixed $dim_file  目标文件，若不指定，则为相对路径
+     * @param mixed $dimWidth  目标尺寸，若不写"%"，则为指定大小
      * @param mixed $dimHeight 目标尺寸，若不写"%"，则为指定大小
-     * @return 图片
-     * @else return  false
+     * @return 图片 else false
      */
     public static function cenCutImg($src_file, $dim_file, $dimWidth, $dimHeight)
     {
@@ -105,7 +96,7 @@ class UtilImage
             //设置src_file的信息
             $srcWidth  = $info['width'];
             $srcHeight = $info['height'];
-            $type = empty($type) ? $info['type'] : $type;
+            $type = $info['type'];
             $type = strtolower($type);
             unset($info);
 
@@ -113,7 +104,7 @@ class UtilImage
             if ( contain( $dimWidth, "%" ) )
             {
                 $dimWidth = substr($dimWidth, 0, (strlen($dimWidth) - 1));
-                $dimWidth = $srcWidth * $maxWidth / 100;
+                $dimWidth = $srcWidth * $srcWidth / 100;
             }
             else
                 $mWidth = $dimWidth;
@@ -144,7 +135,7 @@ class UtilImage
             if ( $type != 'gif' && function_exists("imagecreatetruecolor") ) {
                 $dim = imagecreatetruecolor($dimWidth, $dimHeight);
             } else {
-                $dim = imagecreate($$dimWidthxx, $dimHeight);
+                $dim = imagecreate($dimWidth, $dimHeight);
             }
 
             if ( 'gif' == $type || 'png' == $type ) {
@@ -187,23 +178,18 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成缩略图<br/>
-     +----------------------------------------------------------
+     * 生成缩略图
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $image 原图文件名 示例: http://www.skygreen2001.com/upload/images/123.jpg
-     * @param string $thumbname 缩略图文件名 示例: d://abc.jpg 则指向d盘下面
-     * @param string $type 图像格式.如:jpg,png,gif
-     * @param string $maxWidth 宽度 若带"%"  则表示比例
-     * @param string $maxHeight 高度
+     * @param string  $image 原图文件名 示例: http://www.skygreen2001.com/upload/images/123.jpg
+     * @param string  $thumbname 缩略图文件名 示例: d://abc.jpg 则指向d盘下面
+     * @param string  $type 图像格式.如:jpg,png,gif
+     * @param string  $maxWidth 宽度 若带"%"  则表示比例
+     * @param string  $maxHeight 高度
      * @param boolean $interlace 启用隔行扫描,默认true
      * @param boolean $isStrict 是否严格按尺寸来缩放，默认false是取宽高中的最小值成比例缩放
      * @param boolean $is_echo_output 是否直接输出图片
-     +----------------------------------------------------------
      * @return void
-     +----------------------------------------------------------
      */
     public static function thumb($image, $thumbname, $type = '', $maxWidth = 200, $maxHeight = 50, $interlace = true, $isStrict = false, $is_echo_output = false)
     {
@@ -331,21 +317,16 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 根据给定的字符串生成图像<br/>
-     +----------------------------------------------------------
+     * 根据给定的字符串生成图像
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $string  字符串
-     * @param string $font 字体信息 fontface,fontsize 或者 array(fontface,fontsize)
-     * @param string $size  图像大小 width,height 或者 array(width,height)
-     * @param string $type 图像格式 默认PNG
+     * @param string $string   字符串
+     * @param string $font     字体信息 fontface,fontsize 或者 array(fontface,fontsize)
+     * @param string $size     图像大小 width,height 或者 array(width,height)
+     * @param string $type     图像格式 默认PNG
      * @param integer $disturb 是否干扰 1 点干扰 2 线干扰 3 复合干扰 0 无干扰
-     * @param bool $border  是否加边框 array(color)
-     +----------------------------------------------------------
+     * @param bool $border     是否加边框 array(color)
      * @return string
-     +----------------------------------------------------------
      */
     public static function buildString($string, $rgb = array(), $filename = '', $type = 'png', $disturb = 1, $border = true, $font = 'simhei.ttf,8', $size = array(48, 22))
     {
@@ -395,20 +376,15 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成图像验证码<br/>
-     +----------------------------------------------------------
+     * 生成图像验证码
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $length  位数
-     * @param string $mode  类型
-     * @param string $type 图像格式
+     * @param string $length 位数
+     * @param string $mode   类型
+     * @param string $type   图像格式
      * @param string $width  宽度
-     * @param string $height  高度
-     +----------------------------------------------------------
+     * @param string $height 高度
      * @return string
-     +----------------------------------------------------------
      */
     public static function buildImageVerify($length = 4, $mode = 1, $type = 'png', $width = 48, $height = 22, $verifyName = 'verify')
     {
@@ -441,20 +417,15 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成图像验证码<br/>
-     +----------------------------------------------------------
+     * 生成图像验证码
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $length  位数
-     * @param string $mode  类型
-     * @param string $type 图像格式
+     * @param string $length 位数
+     * @param string $mode   类型
+     * @param string $type   图像格式
      * @param string $width  宽度
-     * @param string $height  高度
-     +----------------------------------------------------------
+     * @param string $height 高度
      * @return string
-     +----------------------------------------------------------
      */
     public static function buildImageVerifyAdvanced($length = 4, $mode = 1, $type = 'png', $width = 48, $height = 22, $verifyName = 'verify')
     {
@@ -496,17 +467,14 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成中文验证码<br/>
-     +----------------------------------------------------------
+     * 生成中文验证码
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param ints $length 位数
-     * @param string $type 图像格式
-     * @param string $width  宽度
-     * @param string $height  高度
-     * @param string $fontface 字体信息 fontface,fontsize 或者 array(fontface,fontsize)
+     * @param ints $length      位数
+     * @param string $type      图像格式
+     * @param string $width     宽度
+     * @param string $height    高度
+     * @param string $fontface  字体信息 fontface,fontsize 或者 array(fontface,fontsize)
      * @param Image $verifyName 中文验证码
      */
     public static function GBVerify($length = 4,$type = 'png', $width = 180, $height = 50, $fontface = 'simhei.ttf', $verifyName = 'verify')
@@ -540,17 +508,12 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 把图像转换成字符显示<br/>
-     +----------------------------------------------------------
+     * 把图像转换成字符显示
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $image  要显示的图像
+     * @param string $image 要显示的图像
      * @param string $type  图像类型，默认自动获取
-     +----------------------------------------------------------
      * @return string
-     +----------------------------------------------------------
      */
     public static function showASCIIImg($image, $string = '', $type = '')
     {
@@ -583,18 +546,13 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成高级图像验证码<br/>
-     +----------------------------------------------------------
+     * 生成高级图像验证码
      * @static
      * @access public
-     +----------------------------------------------------------
-     * @param string $type 图像格式
+     * @param string $type   图像格式
      * @param string $width  宽度
-     * @param string $height  高度
-     +----------------------------------------------------------
+     * @param string $height 高度
      * @return string
-     +----------------------------------------------------------
      */
     public static function showAdvVerify($type = 'png',$width = 180, $height = 40, $verifyName = 'verifyCode')
     {
@@ -630,19 +588,14 @@ class UtilImage
     }
 
     /**
-     +---------------------------------------------------------
-     * 生成UPC-A条形码<br/>
-     +----------------------------------------------------------
+     * 生成UPC-A条形码
      * @static
      * @access public
-     +----------------------------------------------------------
      * @param string $code UPC-A编码
      * @param string $type 图像格式
-     * @param string $lw  单元宽度
-     * @param string $hi  条码高度
-     +----------------------------------------------------------
+     * @param string $lw   单元宽度
+     * @param string $hi   条码高度
      * @return string
-     +----------------------------------------------------------
      */
     public static function UPCA($code,$type='png',$lw=2,$hi=100)
     {

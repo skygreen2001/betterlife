@@ -92,9 +92,7 @@ class AutoCodeService extends AutoCode
         $section_content = $result["section_content"];
         $e_result = "<?php\r\n" .
                     "/**\r\n" .
-                    " +---------------------------------------<br/>\r\n" .
-                    " * 服务类:所有Service的管理类<br/>\r\n" .
-                    " +---------------------------------------\r\n" .
+                    " * -----------| 服务类:所有Service的管理类 |-----------\r\n" .
                     " * @category $category\r\n" .
                     " * @package $package\r\n" .
                     " * @author $author\r\n" .
@@ -184,9 +182,7 @@ class AutoCodeService extends AutoCode
         $author   = self::$author;
         $package  = self::$package;
         $result  .= "/**\r\n" .
-                    " +---------------------------------------<br/>\r\n" .
-                    " * $table_comment<br/>\r\n" .
-                    " +---------------------------------------\r\n" .
+                    " * -----------| $table_comment |-----------\r\n" .
                     " * @category $category\r\n" .
                     " * @package $package\r\n";
         $result .= " * @author $author\r\n" .

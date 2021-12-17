@@ -1,6 +1,7 @@
 <?php
 /**
  * -----------| 功能:处理文件目录相关的事宜方法 |-----------
+ * 
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -41,11 +42,11 @@ class UtilFileSystem extends Util
     }
 
     /**
-    * 文件重命名
-    * @param string $source 原文件名
-    * @param string $dest 新文件名
-    * @return bool 是否重命名成功。
-    */
+     * 文件重命名
+     * @param string $source 原文件名
+     * @param string $dest 新文件名
+     * @return bool 是否重命名成功。
+     */
     public static function file_rename($source, $dest)
     {
         if ( PHP_OS == 'WINNT' ) {
@@ -78,6 +79,7 @@ class UtilFileSystem extends Util
 
     /**
      * 保存内容到指定文件。
+     * 
      * 如果该文件不存在，则创建该文件。
      * @param string $filename 文件名
      * @param string $content  内容
@@ -99,7 +101,8 @@ class UtilFileSystem extends Util
     }
 
     /**
-     * 移除文件夹<br/>
+     * 移除文件夹
+     * 
      * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用！
      * @param string $dir 目录
      */
@@ -126,6 +129,7 @@ class UtilFileSystem extends Util
 
     /**
      * 复制源路径下所有的文件和子目录到目标路径下
+     * 
      * [文件系统函数: copy](https://www.php.net/manual/zh/function.copy.php)
      * @param string $src 源路径目录
      * @param string $dst 目标路径目录
@@ -159,7 +163,7 @@ class UtilFileSystem extends Util
 
     /**
      * 手机接口上传文件Base64数据
-     * @param sting $base64_string 上传文件Base64数据
+     * @param string $base64_string 上传文件Base64数据
      * @param string $uploadPath 文件路径或者文件名
      * @return array 返回信息数组
      */
@@ -178,12 +182,14 @@ class UtilFileSystem extends Util
 
     /**
      * 服务器上传文件
+     * 
      * 需要调整php.ini的配置项:post_max_size|upload_max_filesize
+     * 
      * @param mixed $files 上传的文件对象
      * @param string $uploadPath 文件路径或者文件名
-     * @param sting $uploadFieldName 上传文件的input组件的名称
+     * @param string $uploadFieldName 上传文件的input组件的名称
      * @param boolean $is_permit_same_filename 是否允许文件重名
-     * @param sting $file_permit_upload_size 上传文件大小尺寸,单位是M
+     * @param string $file_permit_upload_size 上传文件大小尺寸,单位是M
      * @return array 返回信息数组
      */
     public static function uploadFile($files, $uploadPath, $uploadFieldName = "upload_file", $is_permit_same_filename = false, $file_permit_upload_size = 2)
@@ -210,7 +216,7 @@ class UtilFileSystem extends Util
                         $errorInfo = "文件写入到临时文件夹出错";//Failed to write to the temporary folder.
                         break;
                 }
-                $errorInfo .= "<br/>[错误号：" . $files[$uploadFieldName]["error"] . "],详情查看：<br/>http://php.net/manual/zh/features.file-upload.errors.php";
+                $errorInfo .= "[错误号：" . $files[$uploadFieldName]["error"] . "],详情查看：http://php.net/manual/zh/features.file-upload.errors.php";
                 return array('success' => false, 'msg' => $errorInfo);
             } else {
                 //获得临时文件名
@@ -245,9 +251,7 @@ class UtilFileSystem extends Util
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 查看指定目录下的子目录<br/>
-     +----------------------------------------------------------
+     * 查看指定目录下的子目录
      * @static
      * @access public
      * @param string $dir 指定目录
@@ -307,16 +311,15 @@ class UtilFileSystem extends Util
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 查看指定目录下的所有文件<br/>
-     +----------------------------------------------------------
+     * 查看指定目录下的所有文件
      * @static
      * @access public
      * @param string $dir 指定目录
      * @param string|array $agreesuffix 是否要求文件后缀名为指定
-     *        1.当$agreesuffix='*'为查找所有后缀名的文件
-     *        2.当$agreesuffix='php'为查找所有php后缀名的文件
-     *        3.当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
+     * 
+     *     1. 当$agreesuffix='*'为查找所有后缀名的文件
+     *     2. 当$agreesuffix='php'为查找所有php后缀名的文件
+     *     3. 当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
      * @return array
      */
     public static function getAllFilesInDirectory($dir, $agreesuffix = array("php"))
@@ -334,9 +337,7 @@ class UtilFileSystem extends Util
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 查看指定目录下所有的目录<br/>
-     +----------------------------------------------------------
+     * 查看指定目录下所有的目录
      * @static
      * @access public
      * @param string $dir 指定目录
@@ -376,11 +377,13 @@ class UtilFileSystem extends Util
 
     /**
      * 递归执行查看指定目录下的所有文件[完美解决中文文件名的问题]
+     * 
      * @param string $dir 指定目录
      * @param string|array $agreesuffix 是否要求文件后缀名为指定
-     *        1.当$agreesuffix='*'为查找所有后缀名的文件
-     *        2.当$agreesuffix='php'为查找所有php后缀名的文件
-     *        3.当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
+     * 
+     *     1. 当$agreesuffix='*'为查找所有后缀名的文件
+     *     2. 当$agreesuffix='php'为查找所有php后缀名的文件
+     *     3. 当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
      * @return array
      */
     private static function searchAllFilesInDirectory($path, $data, $agreesuffix = array("php"))
@@ -460,10 +463,14 @@ class UtilFileSystem extends Util
 
     /**
      * 截取视频指定时间的图片
+     * 
      * 需要在服务器上安装ffmpeg: http://ffmpeg.org
+     * 
      * 安装如下:
+     * 
      *    - 下载ffmpeg: curl -O http://ffmpeg.org/releases/ffmpeg-4.3.2.tar.bz2
      *    - 安装ffmpeg:
+     *      ```
      *      tar -jxvf ffmpeg-4.3.2.tar.bz2 && cd ffmpeg-4.3.2/
      *      apt-get install yasm
      *      ./configure --enable-shared --prefix=/usr/local/ffmpeg
@@ -478,7 +485,10 @@ class UtilFileSystem extends Util
      *               export PATH=$FFMPEG_HOME/bin:$PATH
      *      source /etc/profile
      *      ffmpeg -version 
+     *      ```
+     * 
      * 示例: ffmpeg -ss 2 -i good.mp4 -y -frames:v 1 -f image2 good.jpg
+     * 
      * @param string $videoPath 视频文件路径
      * @param string $outputPath 输出图片路径, 如果没有输入图片路径就放在视频同目录下
      * @param int $width 图片宽度

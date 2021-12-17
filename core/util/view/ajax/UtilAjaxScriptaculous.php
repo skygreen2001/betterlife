@@ -1,9 +1,6 @@
 <?php
-
 /**
- +---------------------------------<br/>
- * 工具类：Scriptaculous[Javascript Ajax 框架]<br/>
- +---------------------------------
+ * -----------| 工具类：Scriptaculous[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -30,14 +27,14 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      * @param string $callback Javascript调用的回执方法名。
      * @return 发送Ajax请求的语句
      */
-    public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null)
+    public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
-        $result="";
-        $result.= "<script type='text/javascript'>";
+        $result  = "";
+        $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="Scriptaculous">
-        $result.="";
+        $result .= "";
         //</editor-fold>
-        $result.= "</script>";
+        $result .=  "</script>";
         return $result;
     }
 
@@ -49,15 +46,15 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      * @param enum $response_type 返回的数据类型
      * @return string 回调函数
      */
-    public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML)
+    public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML)
     {
-        $class_name=str_replace("RO","",$local_service_flag);
+        $class_name = str_replace("RO", "", $local_service_flag);
 
-        if (!self::$IsHtmlBody){
+        if ( !self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
-            self::$IsHtmlBody=true;
+            self::$IsHtmlBody = true;
         }
-        return $result;
+        // return $result;
     }
 }
 

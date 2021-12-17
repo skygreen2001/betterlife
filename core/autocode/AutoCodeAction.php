@@ -21,9 +21,7 @@ class EnumAutoCodeViewType extends Enum {
 }
 
 /**
- +---------------------------------<br/>
- * -----------| 工具类:自动生成代码-控制器<br/>
- +---------------------------------<br/>
+ * -----------| 工具类:自动生成代码-控制器 |-----------
  * @category betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
@@ -31,10 +29,11 @@ class EnumAutoCodeViewType extends Enum {
 class AutoCodeAction extends AutoCode
 {
     /**
-     * 控制器生成定义的方式<br/>
-     * 0.前端Action，继承基本Action。<br/>
-     * 1.生成标准的增删改查模板Action，继承基本Action。<br/>
-     * 2.生成后台Action，继承基本Action。<br/>
+     * 控制器生成定义的方式
+     * 
+     *     - 0: 前端Action，继承基本Action。
+     *     - 1: 生成标准的增删改查模板Action，继承基本Action。
+     *     - 2: 生成后台Action，继承基本Action。
      */
     public static $type;
     /**
@@ -70,9 +69,10 @@ class AutoCodeAction extends AutoCode
     /**
      * 自动生成代码-控制器
      * @param array|string $table_names
-     * 示例如下：
-     *  1.array:array('bb_user_admin','bb_core_blog')
-     *  2.字符串:'bb_user_admin,bb_core_blog'
+     * 示例如下:
+     * 
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
      */
     public static function AutoCode( $table_names = "" )
     {
@@ -109,7 +109,7 @@ class AutoCodeAction extends AutoCode
                 break;
         }
         $link_action_dir_href = "file:///".str_replace("\\", "/", self::$action_dir_full);
-        self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_action_dir_href . "'>" . self::$action_dir_full . "</a></font><br/><br/>";
+        self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_action_dir_href . "'>" . self::$action_dir_full . "</a></font>";
 
         $fieldInfos = self::fieldInfosByTable_names( $table_names );
         foreach ( $fieldInfos as $tablename => $fieldInfo ) {
@@ -121,14 +121,14 @@ class AutoCodeAction extends AutoCode
             if ( !empty($definePhpFileContent) ) {
                 if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ){
                     $classname         = self::saveActionDefineToDir( $tablename, $definePhpFileContent );
-                    self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
+                    self::$showReport .= "生成导出完成:$tablename => $classname!";
                 }else{
-                    self::$showReport .= $definePhpFileContent."<br/>";
+                    self::$showReport .= $definePhpFileContent."";
                 }
             }
         }
 
-        self::$showReport.= '</div><br/>';
+        self::$showReport.= '</div>';
         $category_cap = Gc::$appName;
         $category_cap = ucfirst($category_cap);
         /**
@@ -184,9 +184,7 @@ class AutoCodeAction extends AutoCode
         }
 
         $result .= "/**\r\n".
-                   " +---------------------------------------<br/>\r\n".
-                   " * 控制器:$table_comment<br/>\r\n".
-                   " +---------------------------------------\r\n".
+                   " * -----------| 控制器:$table_comment |-----------\r\n".
                    " * @category $category\r\n".
                    " * @package $package\r\n".
                    " * @author $author\r\n".
@@ -670,9 +668,7 @@ class AutoCodeAction extends AutoCode
         if ( self::$type == 1 ) $action_parent = "ActionModel";
         $result = "<?php\r\n".
                   "/**\r\n".
-                  " +---------------------------------------<br/>\r\n".
-                  " * 控制器:首页导航<br/>\r\n".
-                  " +---------------------------------------\r\n".
+                  " * -----------| 控制器:首页导航 |-----------\r\n".
                   " * @category $category\r\n".
                   " * @package $package\r\n".
                   " * @author $author\r\n".

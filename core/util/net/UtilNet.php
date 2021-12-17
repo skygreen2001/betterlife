@@ -1,7 +1,7 @@
 <?php
 /**
  +---------------------------------<br/>
- * 工具类：网络<br/>
+ * -----------| 工具类：网络 |-----------
  +---------------------------------
  * @category betterlife
  * @package util.net
@@ -44,7 +44,7 @@ class UtilNet extends Util
     /**
      * 获取网站的根路径
     *  @param string $with_file 如指定文件名。
-     * @return 网站的根路径
+     * @return string 网站的根路径
      */
     public static function urlbase()
     {
@@ -159,6 +159,7 @@ class UtilNet extends Util
 
     /**
      * 将url query字符串转换成数组
+     * 
      * Returns the url query as associative array
      * @example http://php.net/manual/en/function.parse-url.php
      * @param    string    query

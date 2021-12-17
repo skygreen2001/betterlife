@@ -1,10 +1,8 @@
 <?php
-
 /**
- +---------------------------------<br/>
- * 工具类：YUI[Javascript Ajax 框架]<br/>
+ * -----------| 工具类：YUI[Javascript Ajax 框架] |-----------
+ * 
  * Yahoo! User Interface Library (YUI)<br/>
- +---------------------------------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen

@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------<br/>
- * 定义 CKEeditor 在线编辑器<br/>
- +--------------------------------
+ * -----------| 定义 CKEeditor 在线编辑器 |-----------
  * @category betterlife
  * @package util.view
  * @subpackage onlinediotr

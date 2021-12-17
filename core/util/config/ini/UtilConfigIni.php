@@ -1,8 +1,6 @@
 <?php
 /**
- +-------------------------------------<br/>
- * 工具类：读取Ini配置文件类<br/>
- +-------------------------------------<br/>
+ * -----------| 工具类：读取Ini配置文件类 |-----------
  * @category betterlife
  * @package util.config
  * @subpackage ini
@@ -16,8 +14,8 @@ class UtilConfigIni extends UtilConfig
     }
 
     /**
-    * 调用方法
-    */
+     * 调用方法
+     */
     public static function main(){
         $settings = new UtilConfigIni();
         $settings->load( __DIR__ . DS . 'setting.ini' );

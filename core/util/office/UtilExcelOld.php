@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 功能:处理Excel相关的事宜方法。<br/>
- +---------------------------------
+ * -----------| 功能:处理Excel相关的事宜方法 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -11,15 +9,18 @@
 class UtilExcelOld extends Util
 {
     /**
-    * 将数组转换成Excel文件
-    * 示例:
-    *     1.直接下载:UtilExcel::arraytoExcel($arr_output_header,$regions,"regions.xlsx",true);
-    *     2.保存到本地指定路径:
-    * @param array $arr_output_header 头信息数组
-    * @param array $excelarr 需要导出的数据的数组
-    * @param string $outputFileName 输出文件路径
-    * @param bool $isDirectDownload 是否直接下载。默认是否，保存到本地文件路径
-    */
+     * 将数组转换成Excel文件
+     * 
+     * 示例:
+     * 
+     *     1. 直接下载:UtilExcel::arraytoExcel($arr_output_header,$regions,"regions.xlsx",true);
+     *     2. 保存到本地指定路径
+     * 
+     * @param array $arr_output_header 头信息数组
+     * @param array $excelarr 需要导出的数据的数组
+     * @param string $outputFileName 输出文件路径
+     * @param bool $isDirectDownload 是否直接下载。默认是否，保存到本地文件路径
+     */
     public static function arraytoExcel($arr_output_header, $excelarr, $outputFileName = null, $isDirectDownload = false, $isExcel2007 = false)
     {
         UtilFileSystem::createDir( dirname($outputFileName) );

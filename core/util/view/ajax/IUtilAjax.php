@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
- * 接口:Javascript Ajax 框架的工具类实现接口
- +---------------------------------<br/>
+ * -----------| 接口:Javascript Ajax 框架的工具类实现接口 |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author zhouyuepu
@@ -34,5 +32,3 @@ interface IUtilAjax {
      */
     public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML);
 }
-
-?>

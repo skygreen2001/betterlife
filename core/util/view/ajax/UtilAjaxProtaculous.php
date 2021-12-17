@@ -1,9 +1,6 @@
 <?php
-
 /**
- +---------------------------------<br/>
- * 工具类：Protaculous[Javascript Ajax 框架]<br/>
- +---------------------------------
+ * -----------| 工具类：Protaculous[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen

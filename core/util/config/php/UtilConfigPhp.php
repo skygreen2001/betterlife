@@ -1,14 +1,13 @@
 <?php
 /**
- +-------------------------------------<br/>
- * 工具类：读取php配置文件类 <br/>
- +-------------------------------------<br/>
+ * -----------| 工具类：读取php配置文件类 |-----------
  * @category betterlife
  * @package util.caonfig
  * @subpackage php
  * @author skygreen
  */
 class UtilConfigPhp extends UtilConfig{
+    
     public function load($file)
     {
         if (file_exists($file) == false) { return false; }
@@ -32,8 +31,8 @@ class UtilConfigPhp extends UtilConfig{
     }
 
     /**
-    * 调用方法
-    */
+     * 调用方法
+     */
     public static function main(){
         // Load settings (PHP)
         $settings = new UtilConfigPhp();

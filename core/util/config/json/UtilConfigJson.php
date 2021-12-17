@@ -1,8 +1,6 @@
 <?php
 /**
- +-------------------------------------<br/>
- * 工具类：读取Json配置文件类<br/>
- +-------------------------------------<br/>
+ * -----------| 工具类：读取Json配置文件类 |-----------
  * @category betterlife
  * @package util.config
  * @subpackage ini
@@ -15,7 +13,7 @@ class UtilConfigJson extends UtilConfig
      */
     public function load($file) {
         if ( file_exists($file) == false ) { return false; }
-        $this->_settings = json_decode(file_get_contents($file),true);
+        $this->_settings = json_decode(file_get_contents($file), true);
     }
 
     /**

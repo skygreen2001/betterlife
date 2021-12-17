@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 生成报表[模板文件]
- +---------------------------------------
+ * -----------| 生成报表[模板文件] |-----------
  * @category betterlife
  * @package core.autocode
  * @author skygreen <skygreen2001@gmail.com>
@@ -102,9 +100,7 @@ API;
 $action_template = <<<ACTION
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:报表<br/>
- +---------------------------------------
+ * -----------| 控制器:报表 |-----------
  * @category report
  * @package web.admin.action
  * @author skygreen skygreen2001@gmail.com
@@ -292,9 +288,7 @@ JS;
 $service_template = <<<SERVICE
 <?php
 /**
- +---------------------------------------<br/>
- * 服务类:报表服务<br/>
- +---------------------------------------
+ * -----------| 服务类:报表服务 |-----------
  * @category admin
  * @package services
  * @author skygreen skygreen2001@gmail.com

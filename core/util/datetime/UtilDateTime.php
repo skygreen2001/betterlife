@@ -1,7 +1,7 @@
 <?php
 /**
-* 输出日期时间的格式
-*/
+ * -----------| 输出日期时间的格式 |-----------
+ */
 class EnumDateTimeFormat extends Enum
 {
     /**
@@ -19,8 +19,8 @@ class EnumDateTimeFormat extends Enum
 }
 
 /**
-* 输出日期时间的格式
-*/
+ * -----------| 显示日期时间的样式 |-----------
+ */
 class EnumDateTimeShow extends Enum
 {
     /**
@@ -38,9 +38,7 @@ class EnumDateTimeShow extends Enum
 }
 
 /**
- +---------------------------------<br/>
- * 功能:处理通用的日期时间方法。<br/>
- +---------------------------------
+ * -----------| 功能:处理通用的日期时间方法 |-----------
  * @category betterlife
  * @package util.common
  * @subpackage datetime
@@ -83,19 +81,19 @@ class UtilDateTime extends Util
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 获取现在的日期时间显示<br/>
+     * 获取现在的日期时间显示
+     * 
      * 输出不同数据格式的日期｜时间｜日期时间
+     * 
      * @param int $type 输出数据类型
-     * 0:输出数据类型：Timestamp<br/>
-     * 1:输出数据类型：日期时间<br/>
-     * 2:输出数据类型：日期时间字符串形式<br/>
+     *     - 0: 输出数据类型：Timestamp
+     *     - 1: 输出数据类型：日期时间
+     *     - 2: 输出数据类型：日期时间字符串形式
      *
      * @param int $timeformat 显示日期时间类型
-     * 0:格式：年-月-日 小时:分钟:秒<br/>
-     * 1:格式：年-月-日<br/>
-     * 2:格式：小时:分钟:秒<br/>
-     +----------------------------------------------------------<br/>
+     *     - 0: 格式：年-月-日 小时:分钟:秒
+     *     - 1: 格式：年-月-日
+     *     - 2: 格式：小时:分钟:秒
      */
     public static function now($type = EnumDateTimeFormat::DATE, $timeformat = EnumDateTimeShow::DATETIME)
     {
@@ -156,18 +154,14 @@ class UtilDateTime extends Util
     }
 
     /**
-     +----------------------------------------------------------<br/>
-     * 是否为闰年<br/>
-     +----------------------------------------------------------
+     * 是否为闰年
      * @static
      * @access public
-     * @param int $year  年数
+     * @param int $year 年数
      * @return string
-     +----------------------------------------------------------
      * @throws ThinkExecption
-     +----------------------------------------------------------
      */
-    public static function isLeapYear($year='')
+    public static function isLeapYear($year = '')
     {
         if ( empty($year) ) {
             return false;
@@ -177,19 +171,14 @@ class UtilDateTime extends Util
 
 
     /**
-     +----------------------------------------------------------<br/>
-     *  判断日期 所属 干支 生肖 星座<br/>
-     *  type 参数：XZ 星座 GZ 干支 SX 生肖<br/>
-     +----------------------------------------------------------
+     * 判断日期 所属 干支 生肖 星座
+     * 
+     * type 参数：XZ 星座 GZ 干支 SX 生肖
      * @static
      * @access public
-     +----------------------------------------------------------
      * @param string $type  获取信息类型
-     +----------------------------------------------------------
      * @return string
-     +----------------------------------------------------------
      * @throws ThinkExecption
-     +----------------------------------------------------------
      */
     public static function magicInfo($year, $month, $day, $type = "SX")
     {
@@ -264,9 +253,13 @@ class UtilDateTime extends Util
 
     /**
      * 获取指定月份最后一天
+     * 
      * 示例:
+     * 
      *    功能: 获取2021年2月的最后1天
+     * 
      *    调用: UtilDateTime::getMonthLastDay("2021-02")
+     * 
      *    返回: 2021-02-28
      * @param string $date 指定月份; 格式如同: 2021-02
      * @return 指定月份最后一天

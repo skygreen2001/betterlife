@@ -1,8 +1,6 @@
 <?php
 /**
- +--------------------------------<br/>
- * 定义 UEditor 在线编辑器<br/>
- +--------------------------------
+ * -----------| 定义 UEditor 在线编辑器 |-----------
  * @category betterlife
  * @package util.view
  * @subpackage onlinediotr
@@ -33,7 +31,9 @@ class UtilUeditor extends Util
 
     /**
      * 预加载UEditor的JS函数
+     * 
      * 如何阻止div标签自动转换为p标签:http://fex-team.github.io/ueditor/#qa-allowDivToP
+     * 
      * @param string $textarea_id 在线编辑器所在的内容编辑区域TextArea的ID
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用
      * @param string form_id  在线编辑器所在的Form的ID

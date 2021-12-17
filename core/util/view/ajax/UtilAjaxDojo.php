@@ -1,9 +1,6 @@
 <?php
-
 /**
- +---------------------------------<br/>
- * 工具类：Dojo[Javascript Ajax 框架]<br/>
- +---------------------------------
+ * -----------| 工具类：Dojo[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -182,5 +179,3 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         return $result;
     }
 }
-
-?>
