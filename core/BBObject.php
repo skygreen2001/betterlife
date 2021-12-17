@@ -14,7 +14,6 @@ class EnumReturnType extends Enum
     const ARRAYTYPE=1;
 }
 
-
 /**
  * -----------| 所有对象的基类 |-----------
  * @category betterlife
