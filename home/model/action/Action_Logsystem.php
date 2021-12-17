@@ -43,20 +43,20 @@ class Action_Logsystem extends ActionModel
         if (!empty($_POST)) {
             $logsystem = $this->model->Logsystem;
             $id = $logsystem->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $logsystem->update();
             } else {
                 $id = $logsystem->save();
             }
-            if ($isRedirect){
-                $this->redirect("logsystem", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "logsystem", "view", "id=$id" );
                 exit;
             }
         }
         $logsystemId = $this->data["id"];
-        $logsystem = Logsystem::get_by_id($logsystemId);
-        $this->view->set("logsystem", $logsystem);
+        $logsystem   = Logsystem::get_by_id( $logsystemId );
+        $this->view->set( "logsystem", $logsystem );
     }
     /**
      * 删除系统日志

@@ -43,7 +43,7 @@ class Action_Category extends ActionModel
         if (!empty($_POST)) {
             $category = $this->model->Category;
             $id = $category->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])){
                 $result=$this->uploadImg($_FILES, "icon_url", "icon_url", "category");
                 if ($result&&($result['success']==true)){
@@ -58,14 +58,14 @@ class Action_Category extends ActionModel
             } else {
                 $id = $category->save();
             }
-            if ($isRedirect){
-                $this->redirect("category", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "category", "view", "id=$id" );
                 exit;
             }
         }
         $categoryId = $this->data["id"];
-        $category = Category::get_by_id($categoryId);
-        $this->view->set("category", $category);
+        $category   = Category::get_by_id( $categoryId );
+        $this->view->set( "category", $category );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'intro' );
     }

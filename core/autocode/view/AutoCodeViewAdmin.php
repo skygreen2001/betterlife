@@ -350,7 +350,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                         "        {if \${$instancename}.{$value}}\r\n".
                                         "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$realId}}\";\r\n".
                                         "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";\r\n".
-                                        "        select_{$value} =  new Array(select_{$value});\r\n".
+                                        "        select_{$value} = new Array(select_{$value});\r\n".
                                         "        {/if}\r\n\r\n";
                     $belong_has_ones[$realId] = $relation_content;
                 }
@@ -367,9 +367,9 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $instancename_rela = self::getInstancename( $talname_rela );
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName( $key );
-                    $rela_js_content  .= "        var select_{$instancename_rela} =  new Array();\r\n".
+                    $rela_js_content  .= "        var select_{$instancename_rela} = new Array();\r\n".
                                          "        {if \${$instancename}.{$value}}\r\n".
-                                         "        select_{$instancename_rela} =  new Array({count(\${$instancename}.{$value})});\r\n".
+                                         "        select_{$instancename_rela} = new Array({count(\${$instancename}.{$value})});\r\n".
                                          "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
                                          "        var $instancename_rela       = {};\r\n".
                                          "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";\r\n".
@@ -445,7 +445,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                             "        {if isset(\${$instancename}->{$fieldname})}\r\n".
                                             "        select_{$fieldname}.id   = \"{\$" . $instancename . "->" . $fieldname . "}\";\r\n".
                                             "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
-                                            "        select_{$fieldname} =  new Array(select_{$fieldname});\r\n".
+                                            "        select_{$fieldname} = new Array(select_{$fieldname});\r\n".
                                             "        {/if}\r\n".
                                             "    </script>\r\n";
                           break;

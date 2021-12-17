@@ -43,7 +43,7 @@ class Action_Blog extends ActionModel
         if (!empty($_POST)) {
             $blog = $this->model->Blog;
             $id = $blog->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])){
                 $result=$this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
                 if ($result&&($result['success']==true)){
@@ -60,18 +60,18 @@ class Action_Blog extends ActionModel
             }
             $blogTags = $this->data["tags_id"];
             Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
-            if ($isRedirect){
-                $this->redirect("blog", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "blog", "view", "id=$id" );
                 exit;
             }
         }
         $blogId = $this->data["id"];
-        $blog = Blog::get_by_id($blogId);
-        $this->view->set("blog", $blog);
-        $users = User::get("", "user_id asc");
-        $this->view->set("users", $users);
-        $categorys = Category::get("", "category_id asc");
-        $this->view->set("categorys", $categorys);
+        $blog   = Blog::get_by_id( $blogId );
+        $this->view->set( "blog", $blog );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
+        $categorys = Category::get( "", "category_id asc" );
+        $this->view->set( "categorys", $categorys );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'blog_content' );
     }

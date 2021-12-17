@@ -42,7 +42,7 @@
         {if $logsystem.priority}
         select_priority.id   = "{$logsystem.priority}";
         select_priority.text = "{$logsystem.priorityShow}";
-        select_priority =  new Array(select_priority);
+        select_priority = new Array(select_priority);
         {/if}
 
         $.edit.select2('#priority', "api/web/data/logsystemPriority.json", select_priority);

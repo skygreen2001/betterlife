@@ -43,22 +43,22 @@ class Action_Region extends ActionModel
         if (!empty($_POST)) {
             $region = $this->model->Region;
             $id = $region->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $region->update();
             } else {
                 $id = $region->save();
             }
-            if ($isRedirect){
-                $this->redirect("region", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "region", "view", "id=$id" );
                 exit;
             }
         }
         $regionId = $this->data["id"];
-        $region = Region::get_by_id($regionId);
-        $this->view->set("region", $region);
-        $region_ps = Region::get("", "region_id asc");
-        $this->view->set("region_ps", $region_ps);
+        $region   = Region::get_by_id( $regionId );
+        $this->view->set( "region", $region );
+        $region_ps = Region::get( "", "region_id asc" );
+        $this->view->set( "region_ps", $region_ps );
     }
     /**
      * 删除地区

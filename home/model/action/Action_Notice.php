@@ -43,20 +43,20 @@ class Action_Notice extends ActionModel
         if (!empty($_POST)) {
             $notice = $this->model->Notice;
             $id = $notice->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $notice->update();
             } else {
                 $id = $notice->save();
             }
-            if ($isRedirect){
-                $this->redirect("notice", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "notice", "view", "id=$id" );
                 exit;
             }
         }
         $noticeId = $this->data["id"];
-        $notice = Notice::get_by_id($noticeId);
-        $this->view->set("notice", $notice);
+        $notice   = Notice::get_by_id( $noticeId );
+        $this->view->set( "notice", $notice );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'notice_content' );
     }

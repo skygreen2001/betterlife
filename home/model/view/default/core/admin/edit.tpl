@@ -60,20 +60,20 @@
         {if $admin.department}
         select_department.id   = "{$admin.department.department_id}";
         select_department.text = "{$admin.department.department_name}";
-        select_department =  new Array(select_department);
+        select_department = new Array(select_department);
         {/if}
 
         var select_roletype = {};
         {if $admin.roletype}
         select_roletype.id   = "{$admin.roletype}";
         select_roletype.text = "{$admin.roletypeShow}";
-        select_roletype =  new Array(select_roletype);
+        select_roletype = new Array(select_roletype);
         {/if}
         var select_seescope = {};
         {if $admin.seescope}
         select_seescope.id   = "{$admin.seescope}";
         select_seescope.text = "{$admin.seescopeShow}";
-        select_seescope =  new Array(select_seescope);
+        select_seescope = new Array(select_seescope);
         {/if}
 
         $.edit.select2('#department_id', "", select_department);

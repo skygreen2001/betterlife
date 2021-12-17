@@ -42,14 +42,14 @@
         {if $region.region_p}
         select_region_p.id   = "{$region.region_p.region_id}";
         select_region_p.text = "{$region.region_p.region_name}";
-        select_region_p =  new Array(select_region_p);
+        select_region_p = new Array(select_region_p);
         {/if}
 
         var select_region_type = {};
         {if $region.region_type}
         select_region_type.id   = "{$region.region_type}";
         select_region_type.text = "{$region.region_typeShow}";
-        select_region_type =  new Array(select_region_type);
+        select_region_type = new Array(select_region_type);
         {/if}
 
         $.edit.select2('#region_type', "api/web/data/regionRegion_type.json", select_region_type);

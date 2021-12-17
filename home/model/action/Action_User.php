@@ -43,7 +43,7 @@ class Action_User extends ActionModel
         if (!empty($_POST)) {
             $user = $this->model->User;
             $id = $user->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $user->update();
             } else {
@@ -53,14 +53,14 @@ class Action_User extends ActionModel
             Usernotice::saveDeleteRelateions( "user_id", $id, "notice_id", $userNotice );
             $userRole = $this->data["role_id"];
             Userrole::saveDeleteRelateions( "user_id", $id, "role_id", $userRole );
-            if ($isRedirect){
-                $this->redirect("user", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "user", "view", "id=$id" );
                 exit;
             }
         }
         $userId = $this->data["id"];
-        $user = User::get_by_id($userId);
-        $this->view->set("user", $user);
+        $user   = User::get_by_id( $userId );
+        $this->view->set( "user", $user );
     }
     /**
      * 删除用户

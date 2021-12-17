@@ -43,20 +43,20 @@ class Action_Tags extends ActionModel
         if (!empty($_POST)) {
             $tags = $this->model->Tags;
             $id = $tags->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $tags->update();
             } else {
                 $id = $tags->save();
             }
-            if ($isRedirect){
-                $this->redirect("tags", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "tags", "view", "id=$id" );
                 exit;
             }
         }
         $tagsId = $this->data["id"];
-        $tags = Tags::get_by_id($tagsId);
-        $this->view->set("tags", $tags);
+        $tags   = Tags::get_by_id( $tagsId );
+        $this->view->set( "tags", $tags );
     }
     /**
      * 删除标签

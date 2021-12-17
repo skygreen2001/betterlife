@@ -25,7 +25,7 @@
         <tr class="entry"><th class="head">区</th><td class="content">{$userdetail.district}</td></tr>
         <tr class="entry"><th class="head">家庭住址</th><td class="content">{$userdetail.address}</td></tr>
         <tr class="entry"><th class="head">QQ号</th><td class="content">{$userdetail.qq}</td></tr>
-        <tr class="entry"><th class="head">会员性别</th><td class="content">{$userdetail.sex}</td></tr>
+        <tr class="entry"><th class="head">会员性别</th><td class="content">{$userdetail.sexShow}</td></tr>
         <tr class="entry"><th class="head">生日</th><td class="content">{$userdetail.birthday}</td></tr>
         <tr class="entry v_g_b"><td colspan="2" class="v_g_t"><h3>¶ <span>其他信息</span></h3></td></tr>
         <tr class="entry"><th class="head">标识</th><td class="content">{$userdetail.userdetail_id}</td></tr>

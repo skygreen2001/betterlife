@@ -107,11 +107,17 @@ function startWith($haystack, $needle, $strict = true)
  */
 function endWith($haystack, $needle, $strict = true)
 {
+    if ( empty($needle) ) {
+        return false;
+    }
     if ( !$strict ) {
         $haystack = strtoupper($haystack);
         $needle   = strtoupper($needle);
     }
-    return (strpos(strrev($haystack), strrev($needle)) === 0);
+    if ( !empty(strrev($needle)) ) {
+        return (strpos(strrev($haystack), strrev($needle)) === 0);
+    }
+    return false;
 }
 
 /**

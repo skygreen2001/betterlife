@@ -46,9 +46,9 @@
 
     <script type="text/javascript">
     $(function() {
-        var select_notice =  new Array();
+        var select_notice = new Array();
         {if $user.notices}
-        select_notice =  new Array({count($user.notices)});
+        var select_notice = new Array({count($user.notices)});
         {foreach $user.notices as $notice}
 
         var notice       = {};
@@ -58,9 +58,9 @@
         {/foreach}
         {/if}
 
-        var select_role =  new Array();
+        var select_role = new Array();
         {if $user.roles}
-        select_role =  new Array({count($user.roles)});
+        var select_role = new Array({count($user.roles)});
         {foreach $user.roles as $role}
 
         var role       = {};

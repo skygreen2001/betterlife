@@ -43,24 +43,24 @@ class Action_Rolefunctions extends ActionModel
         if (!empty($_POST)) {
             $rolefunctions = $this->model->Rolefunctions;
             $id = $rolefunctions->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $rolefunctions->update();
             } else {
                 $id = $rolefunctions->save();
             }
-            if ($isRedirect){
-                $this->redirect("rolefunctions", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "rolefunctions", "view", "id=$id" );
                 exit;
             }
         }
         $rolefunctionsId = $this->data["id"];
-        $rolefunctions = Rolefunctions::get_by_id($rolefunctionsId);
-        $this->view->set("rolefunctions", $rolefunctions);
-        $roles = Role::get("", "role_id asc");
-        $this->view->set("roles", $roles);
-        $functionss = Functions::get("", "functions_id asc");
-        $this->view->set("functionss", $functionss);
+        $rolefunctions   = Rolefunctions::get_by_id( $rolefunctionsId );
+        $this->view->set( "rolefunctions", $rolefunctions );
+        $roles = Role::get( "", "role_id asc" );
+        $this->view->set( "roles", $roles );
+        $functionss = Functions::get( "", "functions_id asc" );
+        $this->view->set( "functionss", $functionss );
     }
     /**
      * 删除角色拥有功能

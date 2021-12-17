@@ -69,14 +69,14 @@
         {if $userdetail.user}
         select_user.id   = "{$userdetail.user.user_id}";
         select_user.text = "{$userdetail.user.username}";
-        select_user =  new Array(select_user);
+        select_user = new Array(select_user);
         {/if}
 
         var select_sex = {};
         {if $userdetail.sex}
         select_sex.id   = "{$userdetail.sex}";
         select_sex.text = "{$userdetail.sexShow}";
-        select_sex =  new Array(select_sex);
+        select_sex = new Array(select_sex);
         {/if}
 
         $.edit.select2('#user_id', "", select_user);

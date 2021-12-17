@@ -43,24 +43,24 @@ class Action_Blogtags extends ActionModel
         if (!empty($_POST)) {
             $blogtags = $this->model->Blogtags;
             $id = $blogtags->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $blogtags->update();
             } else {
                 $id = $blogtags->save();
             }
-            if ($isRedirect){
-                $this->redirect("blogtags", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "blogtags", "view", "id=$id" );
                 exit;
             }
         }
         $blogtagsId = $this->data["id"];
-        $blogtags = Blogtags::get_by_id($blogtagsId);
-        $this->view->set("blogtags", $blogtags);
-        $blogs = Blog::get("", "blog_id asc");
-        $this->view->set("blogs", $blogs);
-        $tagss = Tags::get("", "tags_id asc");
-        $this->view->set("tagss", $tagss);
+        $blogtags   = Blogtags::get_by_id( $blogtagsId );
+        $this->view->set( "blogtags", $blogtags );
+        $blogs = Blog::get( "", "blog_id asc" );
+        $this->view->set( "blogs", $blogs );
+        $tagss = Tags::get( "", "tags_id asc" );
+        $this->view->set( "tagss", $tagss );
     }
     /**
      * 删除博客标签

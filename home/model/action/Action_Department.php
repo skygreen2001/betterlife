@@ -43,20 +43,20 @@ class Action_Department extends ActionModel
         if (!empty($_POST)) {
             $department = $this->model->Department;
             $id = $department->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $department->update();
             } else {
                 $id = $department->save();
             }
-            if ($isRedirect){
-                $this->redirect("department", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "department", "view", "id=$id" );
                 exit;
             }
         }
         $departmentId = $this->data["id"];
-        $department = Department::get_by_id($departmentId);
-        $this->view->set("department", $department);
+        $department   = Department::get_by_id( $departmentId );
+        $this->view->set( "department", $department );
     }
     /**
      * 删除用户所属部门

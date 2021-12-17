@@ -43,7 +43,7 @@ class Action_Role extends ActionModel
         if (!empty($_POST)) {
             $role = $this->model->Role;
             $id = $role->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $role->update();
             } else {
@@ -51,14 +51,14 @@ class Action_Role extends ActionModel
             }
             $roleFunctions = $this->data["functions_id"];
             Rolefunctions::saveDeleteRelateions( "role_id", $id, "functions_id", $roleFunctions );
-            if ($isRedirect){
-                $this->redirect("role", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "role", "view", "id=$id" );
                 exit;
             }
         }
         $roleId = $this->data["id"];
-        $role = Role::get_by_id($roleId);
-        $this->view->set("role", $role);
+        $role   = Role::get_by_id( $roleId );
+        $this->view->set( "role", $role );
     }
     /**
      * 删除角色

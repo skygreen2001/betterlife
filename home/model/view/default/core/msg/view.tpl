@@ -10,7 +10,7 @@
         <tr class="entry"><th class="head">发送者名称</th><td class="content">{$msg.senderName}</td></tr>
         <tr class="entry"><th class="head">接收者名称</th><td class="content">{$msg.receiverName}</td></tr>
         <tr class="entry"><th class="head">发送内容</th><td class="content">{$msg.content}</td></tr>
-        <tr class="entry"><th class="head">消息状态</th><td class="content">{$msg.status}</td></tr>
+        <tr class="entry"><th class="head">消息状态</th><td class="content">{$msg.statusShow}</td></tr>
         <tr class="entry v_g_b"><td colspan="2" class="v_g_t"><h3>¶ <span>其他信息</span></h3></td></tr>
         <tr class="entry"><th class="head">标识</th><td class="content">{$msg.msg_id}</td></tr>
         <tr class="entry"><th class="head">提交时间</th><td class="content">{$msg.commitTime|date_format:"%Y-%m-%d %H:%M"}</td></tr>

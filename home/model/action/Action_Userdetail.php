@@ -43,7 +43,7 @@ class Action_Userdetail extends ActionModel
         if (!empty($_POST)) {
             $userdetail = $this->model->Userdetail;
             $id = $userdetail->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if (!empty($_FILES)&&!empty($_FILES["profile"]["name"])){
                 $result=$this->uploadImg($_FILES, "profile", "profile", "userdetail");
                 if ($result&&($result['success']==true)){
@@ -58,16 +58,16 @@ class Action_Userdetail extends ActionModel
             } else {
                 $id = $userdetail->save();
             }
-            if ($isRedirect){
-                $this->redirect("userdetail", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "userdetail", "view", "id=$id" );
                 exit;
             }
         }
         $userdetailId = $this->data["id"];
-        $userdetail = Userdetail::get_by_id($userdetailId);
-        $this->view->set("userdetail", $userdetail);
-        $users = User::get("", "user_id asc");
-        $this->view->set("users", $users);
+        $userdetail   = Userdetail::get_by_id( $userdetailId );
+        $this->view->set( "userdetail", $userdetail );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
     }
     /**
      * 删除用户详细信息

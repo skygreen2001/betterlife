@@ -64,14 +64,14 @@
         {if $comment.user}
         select_user.id   = "{$comment.user.user_id}";
         select_user.text = "{$comment.user.username}";
-        select_user =  new Array(select_user);
+        select_user = new Array(select_user);
         {/if}
 
         var select_blog = {};
         {if $comment.blog}
         select_blog.id   = "{$comment.blog.blog_id}";
         select_blog.text = "{$comment.blog.blog_name}";
-        select_blog =  new Array(select_blog);
+        select_blog = new Array(select_blog);
         {/if}
 
 

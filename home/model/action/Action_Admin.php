@@ -43,22 +43,22 @@ class Action_Admin extends ActionModel
         if (!empty($_POST)) {
             $admin = $this->model->Admin;
             $id = $admin->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $admin->update();
             } else {
                 $id = $admin->save();
             }
-            if ($isRedirect){
-                $this->redirect("admin", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "admin", "view", "id=$id" );
                 exit;
             }
         }
         $adminId = $this->data["id"];
-        $admin = Admin::get_by_id($adminId);
-        $this->view->set("admin", $admin);
-        $departments = Department::get("", "department_id asc");
-        $this->view->set("departments", $departments);
+        $admin   = Admin::get_by_id( $adminId );
+        $this->view->set( "admin", $admin );
+        $departments = Department::get( "", "department_id asc" );
+        $this->view->set( "departments", $departments );
     }
     /**
      * 删除系统管理人员

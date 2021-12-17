@@ -55,14 +55,14 @@
         {if $rolefunctions.role}
         select_role.id   = "{$rolefunctions.role.role_id}";
         select_role.text = "{$rolefunctions.role.role_name}";
-        select_role =  new Array(select_role);
+        select_role = new Array(select_role);
         {/if}
 
         var select_functions = {};
         {if $rolefunctions.functions}
         select_functions.id   = "{$rolefunctions.functions.functions_id}";
         select_functions.text = "{$rolefunctions.functions.url}";
-        select_functions =  new Array(select_functions);
+        select_functions = new Array(select_functions);
         {/if}
 
 

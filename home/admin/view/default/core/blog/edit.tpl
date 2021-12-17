@@ -51,7 +51,7 @@
                           <label for="blog_name" class="col-sm-2 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="blog_name" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name}"/>
+                              <input id="blog_name" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name|default:''}"/>
                             </div>
                           </div>
                       </div>
@@ -84,14 +84,17 @@
                           <label for="blog_content" class="col-sm-2 control-label">内容</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog.blog_content}</textarea>
+                              <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog.blog_content|default:''}</textarea>
                             </div>
                           </div>
                       </div>
                       <div class="form-group">
                           <label for="isPublic" class="col-sm-2 control-label">公开</label>
                           <div class="col-sm-9">
-                              <input class="form-control" id="isPublic" type="checkbox" name="isPublic" {if $blog.isPublic} checked {/if} data-on-text="是" data-off-text="否" />
+                              <input class="form-control" id="isPublic" type="checkbox" name="isPublic" 
+                                {if ( $blog && $blog.isPublic && ($blog.isPublic == true) ) } checked {/if}
+                                data-on-text="是" data-off-text="否" />
+                              
                           </div>
                       </div>
                       <div class="form-group">
@@ -139,12 +142,12 @@
         {if $blog.category}
         select_category.id   = "{$blog.category.category_id}";
         select_category.text = "{$blog.category.name}";
-        select_category =  new Array(select_category);
+        select_category = new Array(select_category);
         {/if}
 
-        var select_tags =  new Array();
+        var select_tags = new Array();
         {if $blog.tagss}
-        select_tags =  new Array({count($blog.tagss)});
+        select_tags = new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
         var tags       = {};
@@ -158,7 +161,7 @@
         {if $blog.status}
         select_status.id   = "{$blog.status}";
         select_status.text = "{$blog.statusShow}";
-        select_status =  new Array(select_status);
+        select_status = new Array(select_status);
         {/if}
     </script>
     <script src="{$template_url}js/normal/edit.js"></script>

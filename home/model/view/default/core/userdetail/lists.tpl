@@ -30,15 +30,14 @@
             <td class="content">{$userdetail.district}</td>
             <td class="content">{$userdetail.address}</td>
             <td class="content">{$userdetail.qq}</td>
-            <td class="content">{$userdetail.sex}</td>
+            <td class="content">{$userdetail.sexShow}</td>
             <td class="content">{$userdetail.birthday}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.userdetail.view&amp;id={$userdetail.userdetail_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.userdetail.edit&amp;id={$userdetail.userdetail_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.userdetail.delete&amp;id={$userdetail.userdetail_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>
         {/foreach}
     </table>
-
+    <div class="page-control-bar" align="center"><my:page src='{$url_base}index.php?go=model.userdetail.lists' /></div>
     <div class="footer" align="center">
-        <div><my:page src='{$url_base}index.php?go=model.userdetail.lists' /></div>
         <my:a href='{$url_base}index.php?go=model.userdetail.edit&amp;pageNo={$smarty.get.pageNo|default:"1"}'>新建</my:a><my:a href='{$url_base}index.php?go=model.index.index'>返回首页</my:a>
     </div>
 </div>

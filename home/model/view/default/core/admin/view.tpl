@@ -10,8 +10,8 @@
         <tr class="entry"><th class="head">用户名</th><td class="content">{$admin.username}</td></tr>
         <tr class="entry"><th class="head">真实姓名</th><td class="content">{$admin.realname}</td></tr>
         <tr class="entry"><th class="head">密码</th><td class="content">{$admin.password}</td></tr>
-        <tr class="entry"><th class="head">扮演角色</th><td class="content">{$admin.roletype}</td></tr>
-        <tr class="entry"><th class="head">视野</th><td class="content">{$admin.seescope}</td></tr>
+        <tr class="entry"><th class="head">扮演角色</th><td class="content">{$admin.roletypeShow}</td></tr>
+        <tr class="entry"><th class="head">视野</th><td class="content">{$admin.seescopeShow}</td></tr>
         <tr class="entry"><th class="head">登录次数</th><td class="content">{$admin.loginTimes}</td></tr>
         <tr class="entry v_g_b"><td colspan="2" class="v_g_t"><h3>¶ <span>其他信息</span></h3></td></tr>
         <tr class="entry"><th class="head">管理员标识</th><td class="content">{$admin.admin_id}</td></tr>

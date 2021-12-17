@@ -43,22 +43,22 @@ class Action_Loguser extends ActionModel
         if (!empty($_POST)) {
             $loguser = $this->model->Loguser;
             $id = $loguser->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $loguser->update();
             } else {
                 $id = $loguser->save();
             }
-            if ($isRedirect){
-                $this->redirect("loguser", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "loguser", "view", "id=$id" );
                 exit;
             }
         }
         $loguserId = $this->data["id"];
-        $loguser = Loguser::get_by_id($loguserId);
-        $this->view->set("loguser", $loguser);
-        $users = User::get("", "user_id asc");
-        $this->view->set("users", $users);
+        $loguser   = Loguser::get_by_id( $loguserId );
+        $this->view->set( "loguser", $loguser );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'log_content' );
     }

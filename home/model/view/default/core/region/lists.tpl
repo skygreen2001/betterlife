@@ -5,8 +5,7 @@
     <table class="viewdoblock">
         <tr class="entry">
             <th class="header">标识</th>
-            <th class="header">父地区</th>
-            <th class="header">父地区[全]</th>
+            <th class="header">目录层级[全]</th>
             <th class="header">父地区标识</th>
             <th class="header">地区名称</th>
             <th class="header">地区类型</th>
@@ -16,11 +15,10 @@
         {foreach item=region from=$regions}
         <tr class="entry">
             <td class="content">{$region.region_id}</td>
-            <td class="content">{$region.region.region_name}</td>
             <td class="content">{$region.regionShowAll}</td>
             <td class="content">{$region.parent}</td>
             <td class="content">{$region.region_name}</td>
-            <td class="content">{$region.region_type}</td>
+            <td class="content">{$region.region_typeShow}</td>
             <td class="content">{$region.level}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.region.view&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.region.edit&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.region.delete&amp;id={$region.region_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>

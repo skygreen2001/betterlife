@@ -43,20 +43,20 @@ class Action_Functions extends ActionModel
         if (!empty($_POST)) {
             $functions = $this->model->Functions;
             $id = $functions->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $functions->update();
             } else {
                 $id = $functions->save();
             }
-            if ($isRedirect){
-                $this->redirect("functions", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "functions", "view", "id=$id" );
                 exit;
             }
         }
         $functionsId = $this->data["id"];
-        $functions = Functions::get_by_id($functionsId);
-        $this->view->set("functions", $functions);
+        $functions   = Functions::get_by_id( $functionsId );
+        $this->view->set( "functions", $functions );
     }
     /**
      * 删除功能信息

@@ -59,14 +59,14 @@
         {if $loguser.user}
         select_user.id   = "{$loguser.user.user_id}";
         select_user.text = "{$loguser.user.username}";
-        select_user =  new Array(select_user);
+        select_user = new Array(select_user);
         {/if}
 
         var select_userType = {};
         {if $loguser.userType}
         select_userType.id   = "{$loguser.userType}";
         select_userType.text = "{$loguser.userTypeShow}";
-        select_userType =  new Array(select_userType);
+        select_userType = new Array(select_userType);
         {/if}
 
         $.edit.select2('#user_id', "", select_user);

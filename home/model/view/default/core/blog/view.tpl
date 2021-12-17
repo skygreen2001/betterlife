@@ -22,9 +22,9 @@
                 {/if}
             </td>
         </tr>
-        <tr class="entry"><th class="head">是否公开</th><td class="content">{$blog.isPublic}</td></tr>
+        <tr class="entry"><th class="head">是否公开</th><td class="content">{$blog.isPublicShow}</td></tr>
         <tr class="entry"><th class="head">博客内容</th><td class="content">{$blog.blog_content}</td></tr>
-        <tr class="entry"><th class="head">状态</th><td class="content">{$blog.status}</td></tr>
+        <tr class="entry"><th class="head">状态</th><td class="content">{$blog.statusShow}</td></tr>
         <tr class="entry"><th class="head">发布日期</th><td class="content">{$blog.publish_date}</td></tr>
         <tr class="entry">
             <th class="head">标签</th>

@@ -91,19 +91,19 @@
         {if $blog.user}
         select_user.id   = "{$blog.user.user_id}";
         select_user.text = "{$blog.user.username}";
-        select_user =  new Array(select_user);
+        select_user = new Array(select_user);
         {/if}
 
         var select_category = {};
         {if $blog.category}
         select_category.id   = "{$blog.category.category_id}";
         select_category.text = "{$blog.category.name}";
-        select_category =  new Array(select_category);
+        select_category = new Array(select_category);
         {/if}
 
-        var select_tags =  new Array();
+        var select_tags = new Array();
         {if $blog.tagss}
-        var select_tags =  new Array({count($blog.tagss)});
+        var select_tags = new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
         var tags       = {};

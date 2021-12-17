@@ -5,11 +5,10 @@
     <table class="viewdoblock">
         <tr class="entry"><td colspan="2" class="v_g_t"><h3>¶ <span>基本信息</span></h3></td></tr>
         <tr class="entry"><th class="head">标识</th><td class="content">{$region.region_id}</td></tr>
-        <tr class="entry"><th class="head">父地区</th><td class="content">{$region.region.region_name}</td></tr>
-        <tr class="entry"><th class="head">父地区[全]</th><td class="content">{$region.regionShowAll}</td></tr>
+        <tr class="entry"><th class="head">目录层级[全]</th><td class="content">{$region.regionShowAll}</td></tr>
         <tr class="entry"><th class="head">父地区标识</th><td class="content">{$region.parent_id}</td></tr>
         <tr class="entry"><th class="head">地区名称</th><td class="content">{$region.region_name}</td></tr>
-        <tr class="entry"><th class="head">地区类型</th><td class="content">{$region.region_type}</td></tr>
+        <tr class="entry"><th class="head">地区类型</th><td class="content">{$region.region_typeShow}</td></tr>
         <tr class="entry"><th class="head">目录层级</th><td class="content">{$region.level}</td></tr>
         <tr class="entry v_g_b"><td colspan="2" class="v_g_t"><h3>¶ <span>其他信息</span></h3></td></tr>
         <tr class="entry"><th class="head">标识</th><td class="content">{$region.region_id}</td></tr>

@@ -43,24 +43,24 @@ class Action_Comment extends ActionModel
         if (!empty($_POST)) {
             $comment = $this->model->Comment;
             $id = $comment->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $comment->update();
             } else {
                 $id = $comment->save();
             }
-            if ($isRedirect){
-                $this->redirect("comment", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "comment", "view", "id=$id" );
                 exit;
             }
         }
         $commentId = $this->data["id"];
-        $comment = Comment::get_by_id($commentId);
-        $this->view->set("comment", $comment);
-        $users = User::get("", "user_id asc");
-        $this->view->set("users", $users);
-        $blogs = Blog::get("", "blog_id asc");
-        $this->view->set("blogs", $blogs);
+        $comment   = Comment::get_by_id( $commentId );
+        $this->view->set( "comment", $comment );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
+        $blogs = Blog::get( "", "blog_id asc" );
+        $this->view->set( "blogs", $blogs );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'comment' );
     }

@@ -7,7 +7,7 @@
         <tr class="entry"><th class="head">标识</th><td class="content">{$logsystem.logsystem_id}</td></tr>
         <tr class="entry"><th class="head">日志记录时间</th><td class="content">{$logsystem.logtime}</td></tr>
         <tr class="entry"><th class="head">分类</th><td class="content">{$logsystem.ident}</td></tr>
-        <tr class="entry"><th class="head">优先级</th><td class="content">{$logsystem.priority}</td></tr>
+        <tr class="entry"><th class="head">优先级</th><td class="content">{$logsystem.priorityShow}</td></tr>
         <tr class="entry"><th class="head">日志内容</th><td class="content">{$logsystem.message}</td></tr>
         <tr class="entry v_g_b"><td colspan="2" class="v_g_t"><h3>¶ <span>其他信息</span></h3></td></tr>
         <tr class="entry"><th class="head">标识</th><td class="content">{$logsystem.logsystem_id}</td></tr>

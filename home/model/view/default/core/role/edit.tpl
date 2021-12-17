@@ -36,7 +36,9 @@
 
     <script type="text/javascript">
     $(function() {
-        var select_functions =  new Array({count($role.functionss)});
+        var select_functions = new Array();
+        {if $role.functionss}
+        var select_functions = new Array({count($role.functionss)});
         {foreach $role.functionss as $functions}
 
         var functions       = {};
@@ -44,6 +46,7 @@
         functions.text      = "{$functions.url}";
         select_functions[{$functions@index}] = functions;
         {/foreach}
+        {/if}
 
 
         $.edit.select2('#functions_id', "api/web/select/functions.php", select_functions);

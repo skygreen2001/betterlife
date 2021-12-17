@@ -26,9 +26,9 @@
             <td class="content">{$blog.sequenceNo}</td>
             <td class="content">{$blog.category.name}</td>
             <td class="content">{$blog.category_id}</td>
-            <td class="content">{$blog.isPublic}</td>
+            <td class="content">{$blog.isPublicShow}</td>
             <td class="content">{$blog.blog_content}</td>
-            <td class="content">{$blog.status}</td>
+            <td class="content">{$blog.statusShow}</td>
             <td class="content">{$blog.publish_date}</td>
             <td class="btnCol"><my:a href="{$url_base}index.php?go=model.blog.view&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">查看</my:a>|<my:a href="{$url_base}index.php?go=model.blog.edit&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">修改</my:a>|<my:a href="{$url_base}index.php?go=model.blog.delete&amp;id={$blog.blog_id}&amp;pageNo={$smarty.get.pageNo|default:"1"}">删除</my:a></td>
         </tr>

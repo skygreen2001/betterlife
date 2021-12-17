@@ -43,24 +43,24 @@ class Action_Usernotice extends ActionModel
         if (!empty($_POST)) {
             $usernotice = $this->model->Usernotice;
             $id = $usernotice->getId();
-            $isRedirect=true;
+            $isRedirect = true;
             if ( !empty($id) ) {
                 $usernotice->update();
             } else {
                 $id = $usernotice->save();
             }
-            if ($isRedirect){
-                $this->redirect("usernotice", "view", "id=$id");
+            if ( $isRedirect ){
+                $this->redirect( "usernotice", "view", "id=$id" );
                 exit;
             }
         }
         $usernoticeId = $this->data["id"];
-        $usernotice = Usernotice::get_by_id($usernoticeId);
-        $this->view->set("usernotice", $usernotice);
-        $users = User::get("", "user_id asc");
-        $this->view->set("users", $users);
-        $notices = Notice::get("", "notice_id asc");
-        $this->view->set("notices", $notices);
+        $usernotice   = Usernotice::get_by_id( $usernoticeId );
+        $this->view->set( "usernotice", $usernotice );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
+        $notices = Notice::get( "", "notice_id asc" );
+        $this->view->set( "notices", $notices );
     }
     /**
      * 删除用户收到通知

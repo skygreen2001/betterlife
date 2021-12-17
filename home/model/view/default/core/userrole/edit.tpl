@@ -55,14 +55,14 @@
         {if $userrole.user}
         select_user.id   = "{$userrole.user.user_id}";
         select_user.text = "{$userrole.user.username}";
-        select_user =  new Array(select_user);
+        select_user = new Array(select_user);
         {/if}
 
         var select_role = {};
         {if $userrole.role}
         select_role.id   = "{$userrole.role.role_id}";
         select_role.text = "{$userrole.role.role_name}";
-        select_role =  new Array(select_role);
+        select_role = new Array(select_role);
         {/if}
 
 
