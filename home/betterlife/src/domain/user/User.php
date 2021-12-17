@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 用户<br/>
- +---------------------------------------
+ * -----------| 用户 |-----------
  * @category betterlife
  * @package user
  * @author skygreen skygreen2001@gmail.com
@@ -51,27 +49,28 @@ class User extends DataObject
     /**
      * 一对一关系
      */
-    static $has_one=array(
-        "userdetail"=>"Userdetail"
+    static $has_one = array(
+        "userdetail" => "Userdetail"
     );
 
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "blogs"=>"Blog",
-        "comments"=>"Comment",
-        "logusers"=>"Loguser",
-        "usernotices"=>"Usernotice",
-        "userroles"=>"Userrole"
+    static $has_many = array(
+        "blogs" => "Blog",
+        "comments" => "Comment",
+        "logusers" => "Loguser",
+        "usernotices" => "Usernotice",
+        "userroles" => "Userrole",
+        "userdetails" => "Userdetail"
     );
 
     /**
      * 多对多关系
      */
-    static $many_many=array(
-        "notices"=>"Notice",
-        "roles"=>"Role"
+    static $many_many = array(
+        "notices" => "Notice",
+        "roles" => "Role"
     );
 
 }

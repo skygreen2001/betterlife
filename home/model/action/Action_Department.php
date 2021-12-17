@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:用户所属部门<br/>
- +---------------------------------------
+ * -----------| 控制器:用户所属部门 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com

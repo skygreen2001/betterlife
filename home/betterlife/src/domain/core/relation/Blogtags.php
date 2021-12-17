@@ -1,9 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 博客标签<br/>
- * 博客标签<br/>
- +---------------------------------------
+ * -----------| 博客标签博客标签 |-----------
  * @category betterlife
  * @package core.relation
  * @author skygreen skygreen2001@gmail.com
@@ -34,7 +31,7 @@ class Blogtags extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
+    static $belong_has_one = array(
         "blog" => "Blog",
         "tags" => "Tags"
     );
@@ -43,7 +40,7 @@ class Blogtags extends DataObject
      * 表中不存在的默认列定义:commitTime,updateTime
      * @var mixed
      */
-    public $field_spec = array(
+    public $field_spec=array(
         EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
@@ -51,3 +48,4 @@ class Blogtags extends DataObject
     );
 
 }
+

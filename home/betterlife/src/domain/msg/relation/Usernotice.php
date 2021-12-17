@@ -1,9 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 用户收到通知<br/>
- * 用户收到通知<br/>
- +---------------------------------------
+ * -----------| 用户收到通知用户收到通知 |-----------
  * @category betterlife
  * @package msg.relation
  * @author skygreen skygreen2001@gmail.com
@@ -34,9 +31,9 @@ class Usernotice extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "user"=>"User",
-        "notice"=>"Notice"
+    static $belong_has_one = array(
+        "user" => "User",
+        "notice" => "Notice"
     );
 
 }

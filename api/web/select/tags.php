@@ -5,7 +5,7 @@ require_once ("../../../init.php");
 $query        = @$_GET["term"];
 $where_clause = "";
 if (!empty($query)){
-  $where_clause  = "(";
+  $where_clause = "(";
   $search_atom = explode(" ", trim($query));
   array_walk($search_atom, function(&$value, $key){
     $value = " ( title LIKE '%" . $value . "%' ) ";

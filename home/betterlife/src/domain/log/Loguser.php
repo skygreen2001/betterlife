@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 用户日志<br/>
- +---------------------------------------
+ * -----------| 用户日志 |-----------
  * @category betterlife
  * @package log
  * @author skygreen skygreen2001@gmail.com
@@ -43,8 +41,8 @@ class Loguser extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "user"=>"User"
+    static $belong_has_one = array(
+        "user" => "User"
     );
     /**
      * 规格说明
@@ -52,7 +50,7 @@ class Loguser extends DataObject
      * @var mixed
      */
     public $field_spec=array(
-        EnumDataSpec::REMOVE=>array(
+        EnumDataSpec::REMOVE => array(
             'updateTime'
         ),
     );
@@ -76,7 +74,7 @@ class Loguser extends DataObject
      */
     public static function userTypeShow($userType)
     {
-        return EnumUserType::userTypeShow($userType);
+        return EnumUserType::userTypeShow( $userType );
     }
 
 }

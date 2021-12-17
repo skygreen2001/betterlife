@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:通知<br/>
- +---------------------------------------
+ * -----------| 控制器:通知 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -60,7 +58,7 @@ class Action_Notice extends ActionModel
         $notice = Notice::get_by_id($noticeId);
         $this->view->set("notice", $notice);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('notice_content');
+        $this->load_onlineditor( 'notice_content' );
     }
     /**
      * 删除通知

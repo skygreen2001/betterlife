@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 用户详细信息<br/>
- +---------------------------------------
+ * -----------| 用户详细信息 |-----------
  * @category betterlife
  * @package user
  * @author skygreen skygreen2001@gmail.com
@@ -96,8 +94,8 @@ class Userdetail extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "user"=>"User"
+    static $belong_has_one = array(
+        "user" => "User"
     );
 
     /**
@@ -121,7 +119,7 @@ class Userdetail extends DataObject
      */
     public static function sexShow($sex)
     {
-        return EnumSex::sexShow($sex);
+        return EnumSex::sexShow( $sex );
     }
 
 }

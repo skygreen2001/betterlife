@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:用户日志<br/>
- +---------------------------------------
+ * -----------| 控制器:用户日志 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -62,7 +60,7 @@ class Action_Loguser extends ActionModel
         $users = User::get("", "user_id asc");
         $this->view->set("users", $users);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('log_content');
+        $this->load_onlineditor( 'log_content' );
     }
     /**
      * 删除用户日志

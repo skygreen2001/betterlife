@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:消息<br/>
- +---------------------------------------
+ * -----------| 控制器:消息 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -60,7 +58,7 @@ class Action_Msg extends ActionModel
         $msg = Msg::get_by_id($msgId);
         $this->view->set("msg", $msg);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('content');
+        $this->load_onlineditor( 'content' );
     }
     /**
      * 删除消息

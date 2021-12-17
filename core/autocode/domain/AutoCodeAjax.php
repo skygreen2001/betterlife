@@ -42,7 +42,7 @@ class AutoCodeAjax extends AutoCodeView
                   default:
                     break;
                 }
-                $editApiRela = self::relationFieldShow($instancename, $classname, $fieldInfo);
+                $editApiRela = self::relationFieldShow( $instancename, $classname, $fieldInfo );
             }
         }
         $classNameField = self::getShowFieldName( $classname );

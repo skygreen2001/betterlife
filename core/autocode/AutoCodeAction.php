@@ -239,7 +239,7 @@ class AutoCodeAction extends AutoCode
 
             $isImage       = self::columnIsImage($fieldname, $field_comment);
             if ( $isImage ) {
-                $viewImgContent .= "        if (!empty(\$$instancename->$fieldname)){\r\n".
+                $viewImgContent .= "        if ( !empty(\$$instancename->$fieldname) ) {\r\n".
                                    "            \$$instancename->$fieldname = Gc::\$upload_url . \"images/\" . \$$instancename->$fieldname;\r\n".
                                    "        }\r\n";
                 $editImgContent .= "            if ( !empty(\$_FILES) && !empty(\$_FILES[\"$fieldname\"][\"name\"]) ){\r\n".
@@ -248,7 +248,7 @@ class AutoCodeAction extends AutoCode
                                    "                    if ( array_key_exists('file_name', \$result) ) \$$instancename->$fieldname = \$result['file_name'];\r\n".
                                    "                } else {\r\n".
                                    "                    \$isRedirect = false;\r\n".
-                                   "                    \$this->view->set(\"message\",\$result[\"msg\"]);\r\n".
+                                   "                    \$this->view->set( \"message\", \$result[\"msg\"] );\r\n".
                                    "                }\r\n".
                                    "            }\r\n";
             }
@@ -286,9 +286,9 @@ class AutoCodeAction extends AutoCode
                   "    public function view()\r\n".
                   "    {\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \${$instancename} = $classname::get_by_id(\${$instancename}Id);\r\n".
+                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );\r\n".
                   $viewImgContent.
-                  "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
+                  "        \$this->view->set( \"$instancename\", \$$instancename );\r\n".
                   "    }\r\n".
                   "    /**\r\n".
                   "     * 编辑{$table_comment}\r\n".
@@ -308,8 +308,8 @@ class AutoCodeAction extends AutoCode
                   "            }\r\n".
                   "        }\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \$$instancename   = $classname::get_by_id(\${$instancename}Id);\r\n".
-                  "        \$this->view->set(\"$instancename\", \$$instancename);\r\n".
+                  "        \$$instancename   = $classname::get_by_id( \${$instancename}Id );\r\n".
+                  "        \$this->view->set( \"$instancename\", \$$instancename );\r\n".
                   $relation_content.
                   $editTextareaContent.
                   "    }\r\n".
@@ -319,8 +319,8 @@ class AutoCodeAction extends AutoCode
                   "    public function delete()\r\n".
                   "    {\r\n".
                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \$isDelete = $classname::deleteByID(\${$instancename}Id);\r\n".
-                  "        return array(\"info\" => 200, \"data\"  => \${$instancename}Id);\r\n".
+                  "        \$isDelete = $classname::deleteByID( \${$instancename}Id );\r\n".
+                  "        return array(\"info\" => 200, \"data\" => \${$instancename}Id);\r\n".
                   "    }\r\n";
         $import = "\r\n".
                   "    /**\r\n".
@@ -330,9 +330,9 @@ class AutoCodeAction extends AutoCode
                   "    public function import()\r\n".
                   "    {\r\n".
                   "        if ( !empty(\$_FILES) ){\r\n".
-                  "            return Manager_Service::{$instancename}Service()->import(\$_FILES);\r\n".
+                  "            return Manager_Service::{$instancename}Service()->import( \$_FILES );\r\n".
                   "        }\r\n".
-                  "        return array(\"error\" => 500,\"info\"  => \"No Data\");\r\n".
+                  "        return array(\"error\" => 500,\"info\" => \"No Data\");\r\n".
                   "    }\r\n";
 
         $classNameField   = self::getShowFieldName( $classname );
@@ -347,7 +347,7 @@ class AutoCodeAction extends AutoCode
                   "        if ( !empty(\$filter_name) && !empty(\$this->data[\"query\"]) ) {\r\n" .
                   "            \$filter = array(\$filter_name => \$this->data[\"query\"]);\r\n" .
                   "        }\r\n" .
-                  "        return Manager_Service::{$instancename}Service()->export{$classname}(\$filter);\r\n" .
+                  "        return Manager_Service::{$instancename}Service()->export{$classname}( \$filter );\r\n" .
                   "    }\r\n";
         $result .= $import . $export;
         return $result;
@@ -475,18 +475,18 @@ class AutoCodeAction extends AutoCode
                    "        if (!empty(\$_POST)) {\r\n".
                    "            \${$instancename} = \$this->model->{$classname};\r\n".
                    "            \$id = \${$instancename}->getId();\r\n".
-                   "            \$isRedirect=true;\r\n".
+                   "            \$isRedirect = true;\r\n".
                    self::uploadImgInEdit($instancename,$fieldInfo).
                    $editBitContent.
                    $rela_m2m_content.
-                   "            if (\$isRedirect){\r\n".
-                   "                \$this->redirect(\"{$instancename}\", \"view\", \"id=\$id\");\r\n".
+                   "            if ( \$isRedirect ){\r\n".
+                   "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );\r\n".
                    "                exit;\r\n".
                    "            }\r\n".
                    "        }\r\n".
                    "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                   "        \${$instancename} = {$classname}::get_by_id(\${$instancename}Id);\r\n".
-                   "        \$this->view->set(\"{$instancename}\", \${$instancename});\r\n".
+                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );\r\n".
+                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );\r\n".
                    $relation_content;
         $text_area_fieldname = array();
         foreach ($fieldInfo as $fieldname => $field)
@@ -530,8 +530,8 @@ class AutoCodeAction extends AutoCode
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
                     $realId            = DataObjectSpec::getRealIDColumnName($key);
-                    $relation_content .= "        \${$value}s = {$key}::get(\"\", \"$realId asc\");\r\n".
-                                         "        \$this->view->set(\"{$value}s\", \${$value}s);\r\n";
+                    $relation_content .= "        \${$value}s = {$key}::get( \"\", \"$realId asc\" );\r\n".
+                                         "        \$this->view->set( \"{$value}s\", \${$value}s );\r\n";
                 }
             }
 

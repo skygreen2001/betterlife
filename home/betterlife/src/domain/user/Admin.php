@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 系统管理人员<br/>
- +---------------------------------------
+ * -----------| 系统管理人员 |-----------
  * @category betterlife
  * @package user
  * @author skygreen skygreen2001@gmail.com
@@ -70,8 +68,8 @@ class Admin extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "department"=>"Department"
+    static $belong_has_one = array(
+        "department" => "Department"
     );
 
     /**
@@ -107,7 +105,7 @@ class Admin extends DataObject
      */
     public static function roletypeShow($roletype)
     {
-        return EnumRoletype::roletypeShow($roletype);
+        return EnumRoletype::roletypeShow( $roletype );
     }
 
     /**
@@ -117,7 +115,7 @@ class Admin extends DataObject
      */
     public static function seescopeShow($seescope)
     {
-        return EnumSeescope::seescopeShow($seescope);
+        return EnumSeescope::seescopeShow( $seescope );
     }
 
 }

@@ -1,9 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 角色拥有功能<br/>
- * 角色拥有功能<br/>
- +---------------------------------------
+ * -----------| 角色拥有功能角色拥有功能 |-----------
  * @category betterlife
  * @package user.relation
  * @author skygreen skygreen2001@gmail.com
@@ -34,9 +31,9 @@ class Rolefunctions extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "role"=>"Role",
-        "functions"=>"Functions"
+    static $belong_has_one = array(
+        "role" => "Role",
+        "functions" => "Functions"
     );
     /**
      * 规格说明
@@ -44,7 +41,7 @@ class Rolefunctions extends DataObject
      * @var mixed
      */
     public $field_spec=array(
-        EnumDataSpec::REMOVE=>array(
+        EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
         ),

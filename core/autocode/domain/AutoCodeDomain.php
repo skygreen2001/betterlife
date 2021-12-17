@@ -143,17 +143,17 @@ class AutoCodeDomain extends AutoCode
                                        "     */\r\n".
                                        "    const $enumname='$enumvalue';\r\n";
                     }
-                    $result  .="\r\n";
-                    $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
-                    $comment  =str_replace("\r", "     * ", $comment);
-                    $comment  =str_replace("\n", "     * ", $comment);
-                    $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
-                    $result  .="    /**\r\n".
-                               "     * 显示".$comment."<br/>\r\n".
-                               "     */\r\n".
-                               "    public static function {$fieldname}Show(\${$fieldname})\r\n".
-                               "    {\r\n".
-                               "        switch(\${$fieldname}){\r\n";
+                    $result  .= "\r\n";
+                    $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = str_replace("\r", "     * ", $comment);
+                    $comment  = str_replace("\n", "     * ", $comment);
+                    $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $result  .= "    /**\r\n".
+                                "     * 显示".$comment."<br/>\r\n".
+                                "     */\r\n".
+                                "    public static function {$fieldname}Show(\${$fieldname})\r\n".
+                                "    {\r\n".
+                                "        switch(\${$fieldname}){\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']) ;
                         $enumcomment = $enum_column['comment'];
@@ -230,10 +230,10 @@ class AutoCodeDomain extends AutoCode
                 $table_comment_arr = preg_split("/[\s,]+/", $table_comment);
                 $table_comment     = "";
                 foreach ($table_comment_arr as $tcomment) {
-                    $table_comment .= " * $tcomment<br/>\r\n";
+                    $table_comment .= $tcomment;
                 }
-            }else{
-                $table_comment = " * " . $table_comment . "<br/>\r\n";
+            } else {
+                $table_comment = $table_comment;
             }
         } else {
             $table_comment = "关于 $tablename 的描述";
@@ -548,7 +548,7 @@ class AutoCodeDomain extends AutoCode
                     $fieldname_up  = ucfirst($fieldname);
                     $result  .= "    public function get{$fieldname_up}Show()\r\n".
                                 "    {\r\n".
-                                "        return self::{$fieldname}Show(\$this->{$fieldname});\r\n".
+                                "        return self::{$fieldname}Show( \$this->{$fieldname} );\r\n".
                                 "    }\r\n";
                 }
             }

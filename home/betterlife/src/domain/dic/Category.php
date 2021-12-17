@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 博客分类<br/>
- +---------------------------------------
+ * -----------| 博客分类 |-----------
  * @category betterlife
  * @package dic
  * @author skygreen skygreen2001@gmail.com
@@ -51,8 +49,8 @@ class Category extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "blogs"=>"Blog"
+    static $has_many = array(
+        "blogs" => "Blog"
     );
 
 }

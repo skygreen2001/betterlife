@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 标签<br/>
- +---------------------------------------
+ * -----------| 标签 |-----------
  * @category betterlife
  * @package dic
  * @author skygreen skygreen2001@gmail.com
@@ -39,15 +37,15 @@ class Tags extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "blogtagss"=>"Blogtags"
+    static $has_many = array(
+        "blogtagss" => "Blogtags"
     );
 
     /**
      * 从属于多对多关系
      */
-    static $belongs_many_many=array(
-        "blogs"=>"Blog"
+    static $belongs_many_many = array(
+        "blogs" => "Blog"
     );
 
 }

@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:评论<br/>
- +---------------------------------------
+ * -----------| 控制器:评论 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -64,7 +62,7 @@ class Action_Comment extends ActionModel
         $blogs = Blog::get("", "blog_id asc");
         $this->view->set("blogs", $blogs);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('comment');
+        $this->load_onlineditor( 'comment' );
     }
     /**
      * 删除评论

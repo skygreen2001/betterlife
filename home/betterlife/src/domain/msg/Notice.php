@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 通知<br/>
- +---------------------------------------
+ * -----------| 通知 |-----------
  * @category betterlife
  * @package msg
  * @author skygreen skygreen2001@gmail.com
@@ -39,15 +37,15 @@ class Notice extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "usernotices"=>"Usernotice"
+    static $has_many = array(
+        "usernotices" => "Usernotice"
     );
 
     /**
      * 从属于多对多关系
      */
-    static $belongs_many_many=array(
-        "users"=>"User"
+    static $belongs_many_many = array(
+        "users" => "User"
     );
 
 }

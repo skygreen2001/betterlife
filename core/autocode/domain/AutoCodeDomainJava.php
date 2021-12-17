@@ -10,7 +10,7 @@ class AutoCodeDomainJava extends AutoCode
     /**
      * Java 实体类所在的Package名称
      */
-    public static $package_name="com.bb.domain";
+    public static $package_name = "com.bb.domain";
     /**
      * 实体数据对象类完整的保存路径
      */
@@ -24,9 +24,10 @@ class AutoCodeDomainJava extends AutoCode
      */
     public static $enumClass;
     /**
-     * 数据对象生成定义的方式<br/>
-     * 1.所有的列定义的对象属性都是private,同时定义setter和getter方法。
-     * 2.所有的列定义的对象属性都是public。
+     * 数据对象生成定义的方式
+     * 
+     *     1. 所有的列定义的对象属性都是private,同时定义setter和getter方法。
+     *     2. 所有的列定义的对象属性都是public。
      */
     public static $type;
     /**
@@ -42,43 +43,43 @@ class AutoCodeDomainJava extends AutoCode
      */
     public static function AutoCode()
     {
-        self::$app_dir=Gc::$appName;
-        self::$domain_dir_full=self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS.self::$dir_src . DS.self::$domain_dir.DS;
+        self::$app_dir = Gc::$appName;
+        self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$dir_src . DS. self::$domain_dir . DS;
         self::init();
-        if (self::$isOutputCss)self::$showReport.= UtilCss::form_css()."\r\n";
-        self::$enumClass="";
-        self::$showReport.= '<div id="Content_11" style="display:none;">';
-        $link_domain_dir_href="file:///".str_replace("\\", "/", self::$domain_dir_full);
-        self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_domain_dir_href."'>".self::$domain_dir_full."</a></font><br/><br/>";
+        if ( self::$isOutputCss)self::$showReport .= UtilCss::form_css() . "\r\n";
+        self::$enumClass      = "";
+        self::$showReport    .= '<div id="Content_11" style="display:none;">';
+        $link_domain_dir_href = "file:///".str_replace("\\", "/", self::$domain_dir_full);
+        self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . "'>" . self::$domain_dir_full . "</a></font>";
 
         foreach (self::$fieldInfos as $tablename=>$fieldInfo){
-           $defineJavaFileContent=self::tableToDataObjectDefine($tablename,$fieldInfo);
-           if (isset(self::$save_dir)&&!empty(self::$save_dir)&&isset($defineJavaFileContent)){
-               $classname=self::saveDataObjectDefineToDir($tablename,$defineJavaFileContent);
-               self::$showReport.= "生成导出完成:$tablename=>$classname!<br/>";
-           }else{
-               self::$showReport.= $defineJavaFileContent."<br/>";
-           }
-           self::tableToEnumClass($tablename,$fieldInfo);
+            $defineJavaFileContent = self::tableToDataObjectDefine( $tablename, $fieldInfo );
+            if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($defineJavaFileContent) ) {
+                $classname         = self::saveDataObjectDefineToDir( $tablename, $defineJavaFileContent );
+                self::$showReport .= "生成导出完成: $tablename => $classname!";
+            } else {
+                self::$showReport .= $defineJavaFileContent . "";
+            }
+            self::tableToEnumClass( $tablename, $fieldInfo );
         }
-        self::$showReport.= "</div><br/>";
-        self::$showReport.= AutoCodeFoldHelper::foldEffectCommon("Content_12");
-        self::$showReport.= "<font color='#237319'>生成枚举类型↓</font><br/>";
-        self::$showReport.= '</a>';
-        self::$showReport.= '<div id="Content_12" style="display:none;">';
-        self::$showReport.= "<font color='#AAA'>存储路径:<a target='_blank' href='".$link_domain_dir_href.self::$enum_dir."'>".self::$domain_dir_full.self::$enum_dir."</a></font><br/><br/>";
-        self::$showReport.= self::$enumClass;
-        self::$showReport.= "</div>";
+        self::$showReport .= "</div>";
+        self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_12");
+        self::$showReport .= "<font color='#237319'>生成枚举类型↓</font>";
+        self::$showReport .= '</a>';
+        self::$showReport .= '<div id="Content_12" style="display:none;">';
+        self::$showReport .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . self::$enum_dir . "'>" . self::$domain_dir_full . self::$enum_dir . "</a></font>";
+        self::$showReport .= self::$enumClass;
+        self::$showReport .= "</div>";
     }
 
     /**
      * 用户输入需求
      */
-    public static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
+    public static function UserInput($title = "",  $inputArr = null, $default_value = "", $more_content = "")
     {
-        $inputArr=array(
-            "1"=>"对象属性都是private,定义setter和getter方法。",
-            "2"=>"所有的列定义的对象属性都是public"
+        $inputArr = array(
+            "1" => "对象属性都是private,定义setter和getter方法。",
+            "2" => "所有的列定义的对象属性都是public"
         );
 
         $url_base=Gc::$url_base;
@@ -91,7 +92,7 @@ class AutoCodeDomainJava extends AutoCode
             if(!endwith($url_base,$domainSubDir))$url_base.=$domainSubDir;
         }
         $db_domian_php=$url_base."tools/tools/autocode/layer/domain/db_domain.php";
-        $more_content="<br/><br/><a href='$db_domian_php' target='_blank'>生成本框架使用的数据对象实体类</a>";
+        $more_content="<a href='$db_domian_php' target='_blank'>生成本框架使用的数据对象实体类</a>";
         parent::UserInput("一键生成Java实体类数据对象定义层",$inputArr,"1",$more_content);
     }
 
@@ -119,9 +120,9 @@ class AutoCodeDomainJava extends AutoCode
                     $package_name=self::$package_name;
                     $result= "package $package_name.enumtype;\r\n\r\n".
                              "/**\r\n".
-                             " *---------------------------------------<br/>\r\n".
-                             " * 枚举类型:$comment  <br/> \r\n".
-                             " *---------------------------------------<br/>\r\n".
+                             " *---------------------------------------\r\n".
+                             " * 枚举类型:$comment   \r\n".
+                             " *---------------------------------------\r\n".
                              " * @category $category\r\n".
                              " * @package domain\r\n".
                              " * @subpackage enum \r\n".
@@ -142,9 +143,9 @@ class AutoCodeDomainJava extends AutoCode
                     $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
                     $comment  =str_replace("\r", "     * ", $comment);
                     $comment  =str_replace("\n", "     * ", $comment);
-                    $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $comment  =str_replace("     * ", "\r\n     * ", $comment);
                     $result.="    /** \r\n".
-                             "     * 显示".$comment."<br/>\r\n".
+                             "     * 显示".$comment."\r\n".
                              "     */\r\n".
                              "    public static String {$fieldname}Show(char {$fieldname})\r\n".
                              "    {\r\n".
@@ -158,12 +159,12 @@ class AutoCodeDomainJava extends AutoCode
                     $result.="       }\r\n";
                     $result.="       return \"未知\";\r\n".
                              "    }\r\n\r\n";
-                    $comment=explode("<br/>",$comment);
+                    $comment=explode("",$comment);
                     if (count($comment)>0){
                         $comment=$comment[0];
                     }
                     $result.="    /** \r\n".
-                             "     * 根据{$comment}显示文字获取{$comment}<br/>\r\n".
+                             "     * 根据{$comment}显示文字获取{$comment}\r\n".
                              "     * @param mixed \${$fieldname}Show {$comment}显示文字\r\n".
                              "     */\r\n".
                              "    public static char {$fieldname}ByShow(String {$fieldname}Show)\r\n".
@@ -184,7 +185,7 @@ class AutoCodeDomainJava extends AutoCode
                     }
                     $result.="    }\r\n\r\n";
                     $result.="}\r\n";
-                    self::$enumClass.="生成导出完成:".$tablename."[".$fieldname."]=>".self::saveEnumDefineToDir($enumclassname,$result)."!<br/>";
+                    self::$enumClass.="生成导出完成:".$tablename."[".$fieldname."]=>".self::saveEnumDefineToDir($enumclassname,$result)."!";
                 }
             }
         }
@@ -233,10 +234,10 @@ class AutoCodeDomainJava extends AutoCode
                 $table_comment_arr=preg_split("/[\s,]+/", $table_comment);
                 $table_comment="";
                 foreach ($table_comment_arr as $tcomment){
-                    $table_comment.=" * $tcomment<br/>\r\n";
+                    $table_comment.=" * $tcomment\r\n";
                 }
             }else{
-                $table_comment=" * ".$table_comment."<br/>\r\n";
+                $table_comment=" * ".$table_comment."\r\n";
             }
         }else{
             $table_comment="关于 $tablename 的描述";
@@ -265,7 +266,7 @@ class AutoCodeDomainJava extends AutoCode
                         $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
                         $comment  =str_replace("\r", "     * ", $comment);
                         $comment  =str_replace("\n", "     * ", $comment);
-                        $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
+                        $comment  =str_replace("     * ", "\r\n     * ", $comment);
                         $result  .=
                                     "    /**\r\n".
                                     "     * ".$comment."\r\n".
@@ -326,7 +327,7 @@ class AutoCodeDomainJava extends AutoCode
     }
 
     /**
-     * 获取关系表所在的package<br/>
+     * 获取关系表所在的package
      * @param string $relation_classname 关系表名称
      */
     private static function relation_class_package($relation_classname,$isImportList=true)
@@ -343,10 +344,10 @@ class AutoCodeDomainJava extends AutoCode
     }
 
     /**
-     * 生成数据对象之间关系规范定义<br/>
-     * 所有的数据对象关系:<br/>
-     * 一对一，一对多，多对多<br/>
-     * 包括*.has_one,belong_has_one,has_many,many_many,belongs_many_many. <br/>
+     * 生成数据对象之间关系规范定义
+     * 所有的数据对象关系:
+     * 一对一，一对多，多对多
+     * 包括*.has_one,belong_has_one,has_many,many_many,belongs_many_many. 
      * 参考说明:EnumTableRelation
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名称
@@ -488,10 +489,10 @@ class AutoCodeDomainJava extends AutoCode
                     $comment  =str_replace("\r\n", "     * ", $field["Comment"]);
                     $comment  =str_replace("\r", "     * ", $comment);
                     $comment  =str_replace("\n", "     * ", $comment);
-                    $comment  =str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $comment  =str_replace("     * ", "\r\n     * ", $comment);
                     $result.= "\r\n".
                               "    /** \r\n".
-                              "     * 显示".$comment."<br/>\r\n".
+                              "     * 显示".$comment."\r\n".
                               "     */\r\n";
                     $enumclassname=self::enumClassName($fieldname,$tablename);
                     $fieldname_up=ucfirst($fieldname);

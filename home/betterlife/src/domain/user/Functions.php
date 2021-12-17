@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 功能信息<br/>
- +---------------------------------------
+ * -----------| 功能信息 |-----------
  * @category betterlife
  * @package user
  * @author skygreen skygreen2001@gmail.com
@@ -28,15 +26,15 @@ class Functions extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "rolefunctionss"=>"Rolefunctions"
+    static $has_many = array(
+        "rolefunctionss" => "Rolefunctions"
     );
 
     /**
      * 从属于多对多关系
      */
-    static $belongs_many_many=array(
-        "roles"=>"Role"
+    static $belongs_many_many = array(
+        "roles" => "Role"
     );
 
 }

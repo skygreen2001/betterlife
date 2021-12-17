@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 用户所属部门<br/>
- +---------------------------------------
+ * -----------| 用户所属部门 |-----------
  * @category betterlife
  * @package user
  * @author skygreen skygreen2001@gmail.com
@@ -59,8 +57,8 @@ class Department extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "admins"=>"Admin"
+    static $has_many = array(
+        "admins" => "Admin"
     );
 
 }

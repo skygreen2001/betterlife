@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:地区<br/>
- +---------------------------------------
+ * -----------| 控制器:地区 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -28,7 +26,6 @@ class Action_Region extends ActionModel
         }
         $this->view->set("regions", $regions);
     }
-
     /**
      * 查看地区
      */

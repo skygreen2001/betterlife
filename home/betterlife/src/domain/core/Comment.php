@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 评论<br/>
- +---------------------------------------
+ * -----------| 评论 |-----------
  * @category betterlife
  * @package core
  * @author skygreen skygreen2001@gmail.com
@@ -39,9 +37,10 @@ class Comment extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
+    static $belong_has_one = array(
         "user" => "User",
         "blog" => "Blog"
     );
 
 }
+

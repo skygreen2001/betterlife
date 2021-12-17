@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:博客<br/>
- +---------------------------------------
+ * -----------| 控制器:博客 |-----------
  * @category betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
@@ -75,7 +73,7 @@ class Action_Blog extends ActionModel
         $categorys = Category::get("", "category_id asc");
         $this->view->set("categorys", $categorys);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor('blog_content');
+        $this->load_onlineditor( 'blog_content' );
     }
     /**
      * 删除博客

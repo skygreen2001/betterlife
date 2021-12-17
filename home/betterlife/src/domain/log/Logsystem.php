@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 系统日志<br/>
- +---------------------------------------
+ * -----------| 系统日志 |-----------
  * @category betterlife
  * @package log
  * @author skygreen skygreen2001@gmail.com
@@ -57,7 +55,7 @@ class Logsystem extends DataObject
      * @var mixed
      */
     public $field_spec=array(
-        EnumDataSpec::REMOVE=>array(
+        EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
         ),
@@ -94,7 +92,7 @@ class Logsystem extends DataObject
      */
     public static function priorityShow($priority)
     {
-        return EnumPriority::priorityShow($priority);
+        return EnumPriority::priorityShow( $priority );
     }
 
 }

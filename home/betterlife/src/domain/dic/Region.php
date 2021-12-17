@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 地区<br/>
- +---------------------------------------
+ * -----------| 地区 |-----------
  * @category betterlife
  * @package dic
  * @author skygreen skygreen2001@gmail.com
@@ -50,8 +48,8 @@ class Region extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "region_p"=>"Region"
+    static $belong_has_one = array(
+        "region_p" => "Region"
     );
     /**
      * 规格说明
@@ -60,7 +58,7 @@ class Region extends DataObject
      * @var mixed
      */
     public $field_spec=array(
-        EnumDataSpec::REMOVE=>array(
+        EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
         ),
@@ -83,13 +81,6 @@ class Region extends DataObject
     }
 
     /**
-     * 显示父地区[全]
-     */
-    public function getRegionShowAll() {
-        return self::regionShowAll( $this->parent_id, $this->level );
-    }
-    
-    /**
      * 显示地区类型<br/>
      * 0:国家-country<br/>
      * 1:省-province<br/>
@@ -99,7 +90,7 @@ class Region extends DataObject
      */
     public static function region_typeShow($region_type)
     {
-        return EnumRegionType::region_typeShow($region_type);
+        return EnumRegionType::region_typeShow( $region_type );
     }
 
     /**
@@ -107,7 +98,15 @@ class Region extends DataObject
      */
     public static function maxlevel()
     {
-        return Region::select("max(level)");//return 3;
+        return Region::select( "max(level)" );//return 3;
+    }
+
+    /**
+     * 显示父地区[全]
+     */
+    public function getRegionShowAll()
+    {
+        return self::regionShowAll( $this->parent_id, $this->level );
     }
 
     /**
@@ -127,5 +126,6 @@ class Region extends DataObject
         }
         return $regionShowAll;
     }
+
 }
 

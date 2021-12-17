@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 消息<br/>
- +---------------------------------------
+ * -----------| 消息 |-----------
  * @category betterlife
  * @package msg
  * @author skygreen skygreen2001@gmail.com
@@ -79,7 +77,7 @@ class Msg extends DataObject
      */
     public static function statusShow($status)
     {
-        return EnumMsgStatus::statusShow($status);
+        return EnumMsgStatus::statusShow( $status );
     }
 
 }

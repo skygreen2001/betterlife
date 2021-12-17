@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 博客<br/>
- +---------------------------------------
+ * -----------| 博客 |-----------
  * @category betterlife
  * @package core
  * @author skygreen skygreen2001@gmail.com
@@ -51,7 +49,7 @@ class Blog extends DataObject
      * 0: 不公开<br/>
      * 1: 公开<br/>
      * 默认为1: 公开<br/>
-     *
+     * 
      * @var bit
      * @access public
      */
@@ -68,7 +66,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     *
+     * 
      * @var enum
      * @access public
      */
@@ -84,24 +82,24 @@ class Blog extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one=array(
-        "user"=>"User",
-        "category"=>"Category"
+    static $belong_has_one = array(
+        "user" => "User",
+        "category" => "Category"
     );
 
     /**
      * 一对多关系
      */
-    static $has_many=array(
-        "comments"=>"Comment",
-        "blogtagss"=>"Blogtags"
+    static $has_many = array(
+        "comments" => "Comment",
+        "blogtagss" => "Blogtags"
     );
 
     /**
      * 多对多关系
      */
-    static $many_many=array(
-        "tagss"=>"Tags"
+    static $many_many = array(
+        "tagss" => "Tags"
     );
 
     /**
@@ -110,7 +108,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     *
+     * 
      */
     public function getStatusShow()
     {
@@ -123,7 +121,7 @@ class Blog extends DataObject
      * 1:进行中-run<br/>
      * 100:已结束-end<br/>
      * 400:已删除-del<br/>
-     *
+     * 
      */
     public static function statusShow($status)
     {
@@ -136,7 +134,7 @@ class Blog extends DataObject
      * 0: 不公开<br/>
      * 1: 公开<br/>
      * 默认为1: 公开<br/>
-     *
+     * 
      */
     public function isPublicShow()
     {
@@ -146,3 +144,4 @@ class Blog extends DataObject
         return "否";
     }
 }
+
