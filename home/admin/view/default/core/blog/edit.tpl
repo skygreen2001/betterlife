@@ -59,7 +59,7 @@
                           <label for="sequenceNo" class="col-sm-2 control-label">序号</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog.sequenceNo}"/>
+                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog.sequenceNo|default:100}"/>
                             </div>
                           </div>
                       </div>
@@ -92,7 +92,7 @@
                           <label for="isPublic" class="col-sm-2 control-label">公开</label>
                           <div class="col-sm-9">
                               <input class="form-control" id="isPublic" type="checkbox" name="isPublic" 
-                                {if ( $blog && $blog.isPublic && ($blog.isPublic == true) ) } checked {/if}
+                                {if $blog && $blog.isPublic} checked {/if}
                                 data-on-text="是" data-off-text="否" />
                               
                           </div>
@@ -101,7 +101,7 @@
                           <label for="publish_dateStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="publish_date">
-                                  <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date}"/>
+                                  <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date|default:''}"/>
                                   <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
                               </div>
                           </div>
@@ -139,14 +139,14 @@
     {include file="$templateDir/layout/normal/footer.tpl"}
     <script type="text/javascript">
         var select_category = {};
-        {if $blog.category}
+        {if $blog && $blog.category}
         select_category.id   = "{$blog.category.category_id}";
         select_category.text = "{$blog.category.name}";
         select_category = new Array(select_category);
         {/if}
 
         var select_tags = new Array();
-        {if $blog.tagss}
+        {if $blog && $blog.tagss}
         select_tags = new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 
@@ -158,7 +158,7 @@
         {/if}
 
         var select_status = {};
-        {if $blog.status}
+        {if $blog && $blog.status}
         select_status.id   = "{$blog.status}";
         select_status.text = "{$blog.statusShow}";
         select_status = new Array(select_status);
@@ -173,9 +173,11 @@
             
             // 在线编辑器设置默认样式
             ue_blog_content.ready(function(){
+        
                 UE.dom.domUtils.setStyles(ue_blog_content.body, {
                     'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                 });
+              
             });
           });
         </script>

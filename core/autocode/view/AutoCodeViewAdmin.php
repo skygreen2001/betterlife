@@ -347,7 +347,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                         "                                  {/foreach}\r\n".
                                         "                              </select>\r\n";
                     $rela_js_content .= "        var select_{$value} = {};\r\n".
-                                        "        {if \${$instancename}.{$value}}\r\n".
+                                        "        {if \${$instancename} && \${$instancename}.{$value}}\r\n".
                                         "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$realId}}\";\r\n".
                                         "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";\r\n".
                                         "        select_{$value} = new Array(select_{$value});\r\n".
@@ -368,7 +368,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName( $key );
                     $rela_js_content  .= "        var select_{$instancename_rela} = new Array();\r\n".
-                                         "        {if \${$instancename}.{$value}}\r\n".
+                                         "        {if \${$instancename} && \${$instancename}.{$value}}\r\n".
                                          "        select_{$instancename_rela} = new Array({count(\${$instancename}.{$value})});\r\n".
                                          "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
                                          "        var $instancename_rela       = {};\r\n".
@@ -403,7 +403,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment . "</label>\r\n".
                                       "                          <div class=\"col-sm-9\">\r\n".
                                       "                              <div class=\"clearfix\">\r\n".
-                                      "                                  <textarea class=\"form-control\" id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment ."\">{\$" . $instancename . "." . $fieldname . "}</textarea>\r\n".
+                                      "                                  <textarea class=\"form-control\" id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment ."\">{\$" . $instancename . "." . $fieldname . "|default:''}</textarea>\r\n".
                                       "                              </div>\r\n".
                                       "                          </div>\r\n";
                     // $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
@@ -436,13 +436,15 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                              <div class=\"clearfix\">\r\n";
                     switch ($datatype) {
                         case "bit":
-                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" {if \$" . $instancename . "." . $fieldname . "} checked {/if} data-on-text=\"是\" data-off-text=\"否\" />\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" \r\n".
+                                            "                                         {if \$" . $instancename . " && \$" . $instancename . "." . $fieldname . "} checked {/if} \r\n".
+                                            "                                         data-on-text=\"是\" data-off-text=\"否\" />\r\n";
                           break;
                         case "enum":
                           $edit_contents .= "                                  <select id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" class=\"form-control\"></select>\r\n";
                           $enumJsContent .= "    <script type=\"text/javascript\">\r\n".
                                             "        var select_{$fieldname} = {};\r\n".
-                                            "        {if isset(\${$instancename}->{$fieldname})}\r\n".
+                                            "        {if \${$instancename} && isset(\${$instancename}->{$fieldname})}\r\n".
                                             "        select_{$fieldname}.id   = \"{\$" . $instancename . "->" . $fieldname . "}\";\r\n".
                                             "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
                                             "        select_{$fieldname} = new Array(select_{$fieldname});\r\n".
@@ -451,7 +453,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                           break;
                         case "date":
                           $edit_contents .= "                                  <div class=\"input-group col-sm-9 datetimeStyle\" id=\"" . $fieldname . "\">\r\n".
-                                            "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n".
+                                            "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "|default:''}\"/>\r\n".
                                             "                                      <span class=\"input-group-addon\"><i class=\"fa fa-calendar bigger-110\"></i></span>\r\n".
                                             "                                  </div>\r\n";
                           break;
@@ -460,7 +462,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                           $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "|default:100}\"/>\r\n";
                           break;
                         default:
-                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "}\"/>\r\n";
+                          $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "|default:''}\"/>\r\n";
                           break;
                     }
                     $edit_contents .= "                              </div>\r\n".
