@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:博客<br/>
- +---------------------------------------
+ * -----------| 控制器:博客 |-----------
  * @category betterlife
  * @package web.front.action
  * @author skygreen skygreen2001@gmail.com

@@ -23,7 +23,7 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name}"/></td></tr>
+            <tr class="entry"><th class="head">博客标题</th><td class="content"><input type="text" class="edit" name="blog_name" value="{$blog.blog_name|default:''}"/></td></tr>
             <tr class="entry"><th class="head">排序</th><td class="content"><input type="number" class="edit" name="sequenceNo" value="{$blog.sequenceNo|default:100}"/></td></tr>
             <tr class="entry">
                 <th class="head">分类</th>
@@ -49,17 +49,17 @@
             <tr class="entry">
                 <th class="head">是否公开</th>
                 <td class="content">
-                    <input type="radio" id="isPublic1" name="isPublic" value="1" {if $blog.isPublic} checked {/if} /><label for="isPublic1" class="radio_label">是</label>
-                    <input type="radio" id="isPublic0" name="isPublic" value="0" {if !$blog.isPublic} checked {/if}/><label for="isPublic0" class="radio_label">否</label>
+                    <input type="radio" id="isPublic1" name="isPublic" value="1" {if $blog && $blog.isPublic} checked {/if} /><label for="isPublic1" class="radio_label">是</label>
+                    <input type="radio" id="isPublic0" name="isPublic" value="0" {if $blog && !$blog.isPublic} checked {/if}/><label for="isPublic0" class="radio_label">否</label>
                 </td>
             </tr>
             <tr class="entry">
                 <th class="head">博客内容</th>
                 <td class="content">
-                    <textarea id="blog_content" name="blog_content">{$blog.blog_content}</textarea>
+                    <textarea id="blog_content" name="blog_content">{$blog.blog_content|default:''}</textarea>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="publish_date" value="{$blog.publish_date}"/></td></tr>
+            <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="publish_date" value="{$blog.publish_date|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">标签</th>
                 <td class="content select">
@@ -88,21 +88,21 @@
     $(function() {
         $.edit.fileBrowser("#icon_url", "#icon_urlTxt", "#icon_urlDiv");
         var select_user = {};
-        {if $blog.user}
+        {if $blog && $blog.user}
         select_user.id   = "{$blog.user.user_id}";
         select_user.text = "{$blog.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_category = {};
-        {if $blog.category}
+        {if $blog && $blog.category}
         select_category.id   = "{$blog.category.category_id}";
         select_category.text = "{$blog.category.name}";
         select_category = new Array(select_category);
         {/if}
 
         var select_tags = new Array();
-        {if $blog.tagss}
+        {if $blog && $blog.tagss}
         var select_tags = new Array({count($blog.tagss)});
         {foreach $blog.tagss as $tags}
 

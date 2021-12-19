@@ -11,7 +11,7 @@
         <form name="roleForm" method="post"><input type="hidden" name="role_id" value="{$role.role_id}"/>
         <table class="viewdoblock">
             {if $role}<tr class="entry"><th class="head">角色标识</th><td class="content">{$role.role_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">角色名称</th><td class="content"><input type="text" class="edit" name="role_name" value="{$role.role_name}"/></td></tr>
+            <tr class="entry"><th class="head">角色名称</th><td class="content"><input type="text" class="edit" name="role_name" value="{$role.role_name|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">功能信息</th>
                 <td class="content select">
@@ -37,7 +37,7 @@
     <script type="text/javascript">
     $(function() {
         var select_functions = new Array();
-        {if $role.functionss}
+        {if $role && $role.functionss}
         var select_functions = new Array({count($role.functionss)});
         {foreach $role.functionss as $functions}
 

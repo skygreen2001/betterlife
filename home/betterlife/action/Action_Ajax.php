@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:Ajax请求服务<br/>
- +---------------------------------------
+ * -----------| 控制器:Ajax请求服务 |-----------
  * @category betterlife
  * @package  web.front
  * @author skygreen skygreen2001@gmail.com

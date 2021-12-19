@@ -52,14 +52,14 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $userrole.user}
+        {if $userrole && $userrole.user}
         select_user.id   = "{$userrole.user.user_id}";
         select_user.text = "{$userrole.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_role = {};
-        {if $userrole.role}
+        {if $userrole && $userrole.role}
         select_role.id   = "{$userrole.role.role_id}";
         select_role.text = "{$userrole.role.role_name}";
         select_role = new Array(select_role);

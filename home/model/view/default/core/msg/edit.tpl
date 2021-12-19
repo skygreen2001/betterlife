@@ -14,12 +14,12 @@
             {if $msg}<tr class="entry"><th class="head">标识</th><td class="content">{$msg.msg_id}</td></tr>{/if}
             <tr class="entry"><th class="head">发送者</th><td class="content"><input type="number" class="edit" name="senderId" value="{$msg.senderId|default:100}"/></td></tr>
             <tr class="entry"><th class="head">接收者</th><td class="content"><input type="number" class="edit" name="receiverId" value="{$msg.receiverId|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">发送者名称</th><td class="content"><input type="text" class="edit" name="senderName" value="{$msg.senderName}"/></td></tr>
-            <tr class="entry"><th class="head">接收者名称</th><td class="content"><input type="text" class="edit" name="receiverName" value="{$msg.receiverName}"/></td></tr>
+            <tr class="entry"><th class="head">发送者名称</th><td class="content"><input type="text" class="edit" name="senderName" value="{$msg.senderName|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">接收者名称</th><td class="content"><input type="text" class="edit" name="receiverName" value="{$msg.receiverName|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">发送内容</th>
                 <td class="content">
-                    <textarea id="content" name="content">{$msg.content}</textarea>
+                    <textarea id="content" name="content">{$msg.content|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">

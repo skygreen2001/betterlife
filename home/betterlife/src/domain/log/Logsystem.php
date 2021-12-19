@@ -75,7 +75,7 @@ class Logsystem extends DataObject
      */
     public function getPriorityShow()
     {
-        return self::priorityShow($this->priority);
+        return self::priorityShow( $this->priority );
     }
 
     /**

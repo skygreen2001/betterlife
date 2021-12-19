@@ -26,7 +26,7 @@
             <tr class="entry">
                 <th class="head">评论</th>
                 <td class="content">
-                    <textarea id="comment" name="comment">{$comment.comment}</textarea>
+                    <textarea id="comment" name="comment">{$comment.comment|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -61,14 +61,14 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $comment.user}
+        {if $comment && $comment.user}
         select_user.id   = "{$comment.user.user_id}";
         select_user.text = "{$comment.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_blog = {};
-        {if $comment.blog}
+        {if $comment && $comment.blog}
         select_blog.id   = "{$comment.blog.blog_id}";
         select_blog.text = "{$comment.blog.blog_name}";
         select_blog = new Array(select_blog);

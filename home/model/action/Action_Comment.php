@@ -12,7 +12,7 @@ class Action_Comment extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Comment extends ActionModel
         $comments = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $comments = Comment::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $comments = Comment::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("comments", $comments);
+        $this->view->set( "comments", $comments );
     }
     /**
      * 查看评论
@@ -32,8 +32,8 @@ class Action_Comment extends ActionModel
     public function view()
     {
         $commentId = $this->data["id"];
-        $comment = Comment::get_by_id($commentId);
-        $this->view->set("comment", $comment);
+        $comment   = Comment::get_by_id( $commentId );
+        $this->view->set( "comment", $comment );
     }
     /**
      * 编辑评论
@@ -49,7 +49,7 @@ class Action_Comment extends ActionModel
             } else {
                 $id = $comment->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "comment", "view", "id=$id" );
                 exit;
             }
@@ -70,8 +70,8 @@ class Action_Comment extends ActionModel
     public function delete()
     {
         $commentId = $this->data["id"];
-        $isDelete = Comment::deleteByID($commentId);
-        $this->redirect("comment", "lists", $this->data);
+        $isDelete = Comment::deleteByID( $commentId );
+        $this->redirect( "comment", "lists", $this->data );
     }
 }
 

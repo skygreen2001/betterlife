@@ -12,7 +12,7 @@ class Action_Msg extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Msg extends ActionModel
         $msgs = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $msgs = Msg::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $msgs = Msg::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("msgs", $msgs);
+        $this->view->set( "msgs", $msgs );
     }
     /**
      * 查看消息
@@ -32,8 +32,8 @@ class Action_Msg extends ActionModel
     public function view()
     {
         $msgId = $this->data["id"];
-        $msg = Msg::get_by_id($msgId);
-        $this->view->set("msg", $msg);
+        $msg   = Msg::get_by_id( $msgId );
+        $this->view->set( "msg", $msg );
     }
     /**
      * 编辑消息
@@ -49,7 +49,7 @@ class Action_Msg extends ActionModel
             } else {
                 $id = $msg->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "msg", "view", "id=$id" );
                 exit;
             }
@@ -66,8 +66,8 @@ class Action_Msg extends ActionModel
     public function delete()
     {
         $msgId = $this->data["id"];
-        $isDelete = Msg::deleteByID($msgId);
-        $this->redirect("msg", "lists", $this->data);
+        $isDelete = Msg::deleteByID( $msgId );
+        $this->redirect( "msg", "lists", $this->data );
     }
 }
 

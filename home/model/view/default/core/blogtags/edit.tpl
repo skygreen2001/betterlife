@@ -52,14 +52,14 @@
     <script type="text/javascript">
     $(function() {
         var select_blog = {};
-        {if $blogtags.blog}
+        {if $blogtags && $blogtags.blog}
         select_blog.id   = "{$blogtags.blog.blog_id}";
         select_blog.text = "{$blogtags.blog.blog_name}";
         select_blog = new Array(select_blog);
         {/if}
 
         var select_tags = {};
-        {if $blogtags.tags}
+        {if $blogtags && $blogtags.tags}
         select_tags.id   = "{$blogtags.tags.tags_id}";
         select_tags.text = "{$blogtags.tags.title}";
         select_tags = new Array(select_tags);

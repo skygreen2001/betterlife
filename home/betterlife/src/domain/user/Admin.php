@@ -82,7 +82,7 @@ class Admin extends DataObject
      */
     public function getRoletypeShow()
     {
-        return self::roletypeShow($this->roletype);
+        return self::roletypeShow( $this->roletype );
     }
 
     /**
@@ -92,7 +92,7 @@ class Admin extends DataObject
      */
     public function getSeescopeShow()
     {
-        return self::seescopeShow($this->seescope);
+        return self::seescopeShow( $this->seescope );
     }
 
     /**

@@ -12,7 +12,7 @@ class Action_Blog extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Blog extends ActionModel
         $blogs = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $blogs = Blog::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $blogs = Blog::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("blogs", $blogs);
+        $this->view->set( "blogs", $blogs );
     }
     /**
      * 查看博客
@@ -32,8 +32,8 @@ class Action_Blog extends ActionModel
     public function view()
     {
         $blogId = $this->data["id"];
-        $blog = Blog::get_by_id($blogId);
-        $this->view->set("blog", $blog);
+        $blog   = Blog::get_by_id( $blogId );
+        $this->view->set( "blog", $blog );
     }
     /**
      * 编辑博客
@@ -44,13 +44,13 @@ class Action_Blog extends ActionModel
             $blog = $this->model->Blog;
             $id = $blog->getId();
             $isRedirect = true;
-            if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])){
-                $result=$this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
-                if ($result&&($result['success']==true)){
-                    if (array_key_exists('file_name',$result))$blog->icon_url = $result['file_name'];
-                }else{
-                    $isRedirect=false;
-                    $this->view->set("message",$result["msg"]);
+            if ( !empty($_FILES)&&!empty($_FILES["icon_url"]["name"]) ) {
+                $result = $this->uploadImg( $_FILES, "icon_url", "icon_url", "blog" );
+                if ( $result && ( $result['success'] == true ) ) {
+                    if ( array_key_exists('file_name', $result) ) $blog->icon_url = $result['file_name'];
+                } else {
+                    $isRedirect = false;
+                    $this->view->set( "message", $result["msg"] );
                 }
             }
             if ( !empty($id) ) {
@@ -60,7 +60,7 @@ class Action_Blog extends ActionModel
             }
             $blogTags = $this->data["tags_id"];
             Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "blog", "view", "id=$id" );
                 exit;
             }
@@ -81,8 +81,8 @@ class Action_Blog extends ActionModel
     public function delete()
     {
         $blogId = $this->data["id"];
-        $isDelete = Blog::deleteByID($blogId);
-        $this->redirect("blog", "lists", $this->data);
+        $isDelete = Blog::deleteByID( $blogId );
+        $this->redirect( "blog", "lists", $this->data );
     }
 }
 

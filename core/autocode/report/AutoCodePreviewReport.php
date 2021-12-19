@@ -148,7 +148,7 @@ MODEL;
             if( self::$service_files && (count(self::$service_files)>0) ) {
                 $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$service_files, "front" );
+                $moreContent .= self::groupFileContentsStatus( self::$service_files, "admin" );
 
                 //生成服务管理器
                 $title             = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";

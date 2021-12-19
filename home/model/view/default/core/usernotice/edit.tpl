@@ -52,14 +52,14 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $usernotice.user}
+        {if $usernotice && $usernotice.user}
         select_user.id   = "{$usernotice.user.user_id}";
         select_user.text = "{$usernotice.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_notice = {};
-        {if $usernotice.notice}
+        {if $usernotice && $usernotice.notice}
         select_notice.id   = "{$usernotice.notice.notice_id}";
         select_notice.text = "{$usernotice.notice.noticeType}";
         select_notice = new Array(select_notice);

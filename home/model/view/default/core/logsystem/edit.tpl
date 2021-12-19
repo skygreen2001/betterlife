@@ -11,15 +11,15 @@
         <form name="logsystemForm" method="post"><input type="hidden" name="logsystem_id" value="{$logsystem.logsystem_id}"/>
         <table class="viewdoblock">
             {if $logsystem}<tr class="entry"><th class="head">标识</th><td class="content">{$logsystem.logsystem_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">日志记录时间</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="logtime" value="{$logsystem.logtime}"/></td></tr>
-            <tr class="entry"><th class="head">分类</th><td class="content"><input type="text" class="edit" name="ident" value="{$logsystem.ident}"/></td></tr>
+            <tr class="entry"><th class="head">日志记录时间</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="logtime" value="{$logsystem.logtime|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">分类</th><td class="content"><input type="text" class="edit" name="ident" value="{$logsystem.ident|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">优先级</th>
                 <td class="content select">
                     <select id="priority" name="priority" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">日志内容</th><td class="content"><input type="text" class="edit" name="message" value="{$logsystem.message}"/></td></tr>
+            <tr class="entry"><th class="head">日志内容</th><td class="content"><input type="text" class="edit" name="message" value="{$logsystem.message|default:''}"/></td></tr>
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -39,7 +39,7 @@
     <script type="text/javascript">
     $(function() {
         var select_priority = {};
-        {if $logsystem.priority}
+        {if $logsystem && $logsystem.priority}
         select_priority.id   = "{$logsystem.priority}";
         select_priority.text = "{$logsystem.priorityShow}";
         select_priority = new Array(select_priority);

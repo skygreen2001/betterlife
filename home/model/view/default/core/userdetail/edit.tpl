@@ -22,7 +22,7 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$userdetail.realname}"/></td></tr>
+            <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$userdetail.realname|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">头像</th>
                 <td class="content">
@@ -37,15 +37,15 @@
             <tr class="entry"><th class="head">省</th><td class="content"><input type="number" class="edit" name="province" value="{$userdetail.province|default:100}"/></td></tr>
             <tr class="entry"><th class="head">市</th><td class="content"><input type="number" class="edit" name="city" value="{$userdetail.city|default:100}"/></td></tr>
             <tr class="entry"><th class="head">区</th><td class="content"><input type="number" class="edit" name="district" value="{$userdetail.district|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address}"/></td></tr>
-            <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq}"/></td></tr>
+            <tr class="entry"><th class="head">家庭住址</th><td class="content"><input type="text" class="edit" name="address" value="{$userdetail.address|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">QQ号</th><td class="content"><input type="text" class="edit" name="qq" value="{$userdetail.qq|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">会员性别</th>
                 <td class="content select">
                     <select id="sex" name="sex" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="birthday" value="{$userdetail.birthday}"/></td></tr>
+            <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="birthday" value="{$userdetail.birthday|default:''}"/></td></tr>
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -66,14 +66,14 @@
     $(function() {
         $.edit.fileBrowser("#profile", "#profileTxt", "#profileDiv");
         var select_user = {};
-        {if $userdetail.user}
+        {if $userdetail && $userdetail.user}
         select_user.id   = "{$userdetail.user.user_id}";
         select_user.text = "{$userdetail.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_sex = {};
-        {if $userdetail.sex}
+        {if $userdetail && $userdetail.sex}
         select_sex.id   = "{$userdetail.sex}";
         select_sex.text = "{$userdetail.sexShow}";
         select_sex = new Array(select_sex);

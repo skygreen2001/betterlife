@@ -110,11 +110,11 @@ function endWith($haystack, $needle, $strict = true)
     if ( empty($needle) ) {
         return false;
     }
-    if ( !$strict ) {
-        $haystack = strtoupper($haystack);
-        $needle   = strtoupper($needle);
-    }
     if ( !empty(strrev($needle)) ) {
+        if ( !$strict ) {
+            $haystack = strtoupper($haystack);
+            $needle   = strtoupper($needle);
+        }
         return (strpos(strrev($haystack), strrev($needle)) === 0);
     }
     return false;

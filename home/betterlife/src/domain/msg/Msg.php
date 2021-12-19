@@ -66,7 +66,7 @@ class Msg extends DataObject
      */
     public function getStatusShow()
     {
-        return self::statusShow($this->status);
+        return self::statusShow( $this->status );
     }
 
     /**

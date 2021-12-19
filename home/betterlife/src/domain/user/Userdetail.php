@@ -107,7 +107,7 @@ class Userdetail extends DataObject
      */
     public function getSexShow()
     {
-        return self::sexShow($this->sex);
+        return self::sexShow( $this->sex );
     }
 
     /**

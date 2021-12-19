@@ -22,9 +22,9 @@
                     </select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$admin.username}"/></td></tr>
-            <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$admin.realname}"/></td></tr>
-            <tr class="entry"><th class="head">密码</th><td class="content"><input type="text" class="edit" name="password" value="{$admin.password}"/></td></tr>
+            <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$admin.username|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">真实姓名</th><td class="content"><input type="text" class="edit" name="realname" value="{$admin.realname|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">密码</th><td class="content"><input type="text" class="edit" name="password" value="{$admin.password|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">扮演角色</th>
                 <td class="content select">
@@ -57,20 +57,20 @@
     <script type="text/javascript">
     $(function() {
         var select_department = {};
-        {if $admin.department}
+        {if $admin && $admin.department}
         select_department.id   = "{$admin.department.department_id}";
         select_department.text = "{$admin.department.department_name}";
         select_department = new Array(select_department);
         {/if}
 
         var select_roletype = {};
-        {if $admin.roletype}
+        {if $admin && $admin.roletype}
         select_roletype.id   = "{$admin.roletype}";
         select_roletype.text = "{$admin.roletypeShow}";
         select_roletype = new Array(select_roletype);
         {/if}
         var select_seescope = {};
-        {if $admin.seescope}
+        {if $admin && $admin.seescope}
         select_seescope.id   = "{$admin.seescope}";
         select_seescope.text = "{$admin.seescopeShow}";
         select_seescope = new Array(select_seescope);

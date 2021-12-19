@@ -12,7 +12,7 @@ class Action_Tags extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Tags extends ActionModel
         $tagss = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $tagss = Tags::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $tagss = Tags::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("tagss", $tagss);
+        $this->view->set( "tagss", $tagss );
     }
     /**
      * 查看标签
@@ -32,8 +32,8 @@ class Action_Tags extends ActionModel
     public function view()
     {
         $tagsId = $this->data["id"];
-        $tags = Tags::get_by_id($tagsId);
-        $this->view->set("tags", $tags);
+        $tags   = Tags::get_by_id( $tagsId );
+        $this->view->set( "tags", $tags );
     }
     /**
      * 编辑标签
@@ -49,7 +49,7 @@ class Action_Tags extends ActionModel
             } else {
                 $id = $tags->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "tags", "view", "id=$id" );
                 exit;
             }
@@ -64,8 +64,8 @@ class Action_Tags extends ActionModel
     public function delete()
     {
         $tagsId = $this->data["id"];
-        $isDelete = Tags::deleteByID($tagsId);
-        $this->redirect("tags", "lists", $this->data);
+        $isDelete = Tags::deleteByID( $tagsId );
+        $this->redirect( "tags", "lists", $this->data );
     }
 }
 

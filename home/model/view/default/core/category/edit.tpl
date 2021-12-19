@@ -13,7 +13,7 @@
         <table class="viewdoblock">
             {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category.category_id}</td></tr>{/if}
             <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category.name}"/></td></tr>
+            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category.name|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">图标</th>
                 <td class="content">
@@ -27,7 +27,7 @@
             <tr class="entry">
                 <th class="head">说明</th>
                 <td class="content">
-                    <textarea id="intro" name="intro">{$category.intro}</textarea>
+                    <textarea id="intro" name="intro">{$category.intro|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">

@@ -11,7 +11,7 @@
         <form name="functionsForm" method="post"><input type="hidden" name="functions_id" value="{$functions.functions_id}"/>
         <table class="viewdoblock">
             {if $functions}<tr class="entry"><th class="head">标识</th><td class="content">{$functions.functions_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">允许访问的URL权限</th><td class="content"><input type="text" class="edit" name="url" value="{$functions.url}"/></td></tr>
+            <tr class="entry"><th class="head">允许访问的URL权限</th><td class="content"><input type="text" class="edit" name="url" value="{$functions.url|default:''}"/></td></tr>
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

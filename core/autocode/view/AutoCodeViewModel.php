@@ -186,7 +186,7 @@ class AutoCodeViewModel extends AutoCodeView
         $editMulSelColumn = "";
         $editM2MSelColumn = "";
 
-        if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
+        if ( array_key_exists($classname, self::$relation_all) )$relationSpec = self::$relation_all[ $classname ];
         if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
         {
             //从属一对一关系规范定义(如果存在)
@@ -203,7 +203,7 @@ class AutoCodeViewModel extends AutoCodeView
                                          "                        {/foreach}\r\n".
                                          "                    </select>\r\n";
                     $rela_js_content .= "        var select_{$value} = {};\r\n".
-                                        "        {if \${$instancename}.{$value}}\r\n".
+                                        "        {if \${$instancename} && \${$instancename}.{$value}}\r\n".
                                         "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$re_realId}}\";\r\n".
                                         "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";\r\n".
                                         "        select_{$value} = new Array(select_{$value});\r\n".
@@ -225,7 +225,7 @@ class AutoCodeViewModel extends AutoCodeView
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName( $key );
                     $rela_js_content  .= "        var select_{$instancename_rela} = new Array();\r\n".
-                                         "        {if \${$instancename}.{$value}}\r\n".
+                                         "        {if \${$instancename} && \${$instancename}.{$value}}\r\n".
                                          "        var select_{$instancename_rela} = new Array({count(\${$instancename}.{$value})});\r\n".
                                          "        {foreach \${$instancename}.{$value} as \$$instancename_rela}\r\n\r\n".
                                          "        var $instancename_rela       = {};\r\n".
@@ -273,7 +273,7 @@ class AutoCodeViewModel extends AutoCodeView
                     $edit_contents .= "            <tr class=\"entry\">\r\n".
                                       "                <th class=\"head\">$field_comment</th>\r\n".
                                       "                <td class=\"content\">\r\n".
-                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\">{\${$instancename}.$fieldname}</textarea>\r\n".
+                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\">{\${$instancename}.$fieldname|default:''}</textarea>\r\n".
                                       "                </td>\r\n".
                                       "            </tr>\r\n";
                 } else if ( $isImage ) {
@@ -308,13 +308,13 @@ class AutoCodeViewModel extends AutoCodeView
                           $edit_contents .= "            <tr class=\"entry\">\r\n".
                                             "                <th class=\"head\">$field_comment</th>\r\n".
                                             "                <td class=\"content\">\r\n".
-                                            "                    <input type=\"radio\" id=\"{$fieldname}1\" name=\"{$fieldname}\" value=\"1\" {if \${$instancename}.{$fieldname}} checked {/if} /><label for=\"{$fieldname}1\" class=\"radio_label\">是</label>\r\n".
-                                            "                    <input type=\"radio\" id=\"{$fieldname}0\" name=\"{$fieldname}\" value=\"0\" {if !\${$instancename}.{$fieldname}} checked {/if}/><label for=\"{$fieldname}0\" class=\"radio_label\">否</label>\r\n".
+                                            "                    <input type=\"radio\" id=\"{$fieldname}1\" name=\"{$fieldname}\" value=\"1\" {if \${$instancename} && \${$instancename}.{$fieldname}} checked {/if} /><label for=\"{$fieldname}1\" class=\"radio_label\">是</label>\r\n".
+                                            "                    <input type=\"radio\" id=\"{$fieldname}0\" name=\"{$fieldname}\" value=\"0\" {if \${$instancename} && !\${$instancename}.{$fieldname}} checked {/if}/><label for=\"{$fieldname}0\" class=\"radio_label\">否</label>\r\n".
                                             "                </td>\r\n".
                                             "            </tr>\r\n";
                           break;
                         case "date":
-                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" placeholder=\"yyyy-mm-dd\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" placeholder=\"yyyy-mm-dd\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:''}\"/></td></tr>\r\n";
                           break;
                         case "enum":
                           $edit_contents .= "            <tr class=\"entry\">\r\n".
@@ -332,13 +332,13 @@ class AutoCodeViewModel extends AutoCodeView
                           $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:100}\"/></td></tr>\r\n";
                           break;
                         default:
-                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname}\"/></td></tr>\r\n";
+                          $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:''}\"/></td></tr>\r\n";
                           break;
                     }
 
                     if ( $datatype == 'enum' ) {
                         $enumJsContent .= "        var select_{$fieldname} = {};\r\n".
-                                          "        {if \${$instancename}.{$fieldname}}\r\n".
+                                          "        {if \${$instancename} && \${$instancename}.{$fieldname}}\r\n".
                                           "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
                                           "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";\r\n".
                                           "        select_{$fieldname} = new Array(select_{$fieldname});\r\n".

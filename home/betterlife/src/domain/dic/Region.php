@@ -77,7 +77,7 @@ class Region extends DataObject
      */
     public function getRegion_typeShow()
     {
-        return self::region_typeShow($this->region_type);
+        return self::region_typeShow( $this->region_type );
     }
 
     /**

@@ -11,10 +11,10 @@
         <form name="userForm" method="post"><input type="hidden" name="user_id" value="{$user.user_id}"/>
         <table class="viewdoblock">
             {if $user}<tr class="entry"><th class="head">用户标识</th><td class="content">{$user.user_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$user.username}"/></td></tr>
-            <tr class="entry"><th class="head">用户密码</th><td class="content"><input type="text" class="edit" name="password" value="{$user.password}"/></td></tr>
-            <tr class="entry"><th class="head">邮箱地址</th><td class="content"><input type="text" class="edit" name="email" value="{$user.email}"/></td></tr>
-            <tr class="entry"><th class="head">手机电话</th><td class="content"><input type="text" class="edit" name="cellphone" value="{$user.cellphone}"/></td></tr>
+            <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$user.username|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">用户密码</th><td class="content"><input type="text" class="edit" name="password" value="{$user.password|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">邮箱地址</th><td class="content"><input type="text" class="edit" name="email" value="{$user.email|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">手机电话</th><td class="content"><input type="text" class="edit" name="cellphone" value="{$user.cellphone|default:''}"/></td></tr>
             <tr class="entry"><th class="head">访问次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$user.loginTimes|default:100}"/></td></tr>
             <tr class="entry">
                 <th class="head">通知</th>
@@ -47,7 +47,7 @@
     <script type="text/javascript">
     $(function() {
         var select_notice = new Array();
-        {if $user.notices}
+        {if $user && $user.notices}
         var select_notice = new Array({count($user.notices)});
         {foreach $user.notices as $notice}
 
@@ -59,7 +59,7 @@
         {/if}
 
         var select_role = new Array();
-        {if $user.roles}
+        {if $user && $user.roles}
         var select_role = new Array({count($user.roles)});
         {foreach $user.roles as $role}
 

@@ -12,7 +12,7 @@ class Action_Usernotice extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Usernotice extends ActionModel
         $usernotices = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $usernotices = Usernotice::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $usernotices = Usernotice::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("usernotices", $usernotices);
+        $this->view->set( "usernotices", $usernotices );
     }
     /**
      * 查看用户收到通知
@@ -32,8 +32,8 @@ class Action_Usernotice extends ActionModel
     public function view()
     {
         $usernoticeId = $this->data["id"];
-        $usernotice = Usernotice::get_by_id($usernoticeId);
-        $this->view->set("usernotice", $usernotice);
+        $usernotice   = Usernotice::get_by_id( $usernoticeId );
+        $this->view->set( "usernotice", $usernotice );
     }
     /**
      * 编辑用户收到通知
@@ -49,7 +49,7 @@ class Action_Usernotice extends ActionModel
             } else {
                 $id = $usernotice->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "usernotice", "view", "id=$id" );
                 exit;
             }
@@ -68,8 +68,8 @@ class Action_Usernotice extends ActionModel
     public function delete()
     {
         $usernoticeId = $this->data["id"];
-        $isDelete = Usernotice::deleteByID($usernoticeId);
-        $this->redirect("usernotice", "lists", $this->data);
+        $isDelete = Usernotice::deleteByID( $usernoticeId );
+        $this->redirect( "usernotice", "lists", $this->data );
     }
 }
 

@@ -32,7 +32,7 @@
             <tr class="entry">
                 <th class="head">日志详情</th>
                 <td class="content">
-                    <textarea id="log_content" name="log_content">{$loguser.log_content}</textarea>
+                    <textarea id="log_content" name="log_content">{$loguser.log_content|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -56,14 +56,14 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $loguser.user}
+        {if $loguser && $loguser.user}
         select_user.id   = "{$loguser.user.user_id}";
         select_user.text = "{$loguser.user.username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_userType = {};
-        {if $loguser.userType}
+        {if $loguser && $loguser.userType}
         select_userType.id   = "{$loguser.userType}";
         select_userType.text = "{$loguser.userTypeShow}";
         select_userType = new Array(select_userType);

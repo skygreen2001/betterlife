@@ -12,7 +12,7 @@ class Action_Loguser extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Loguser extends ActionModel
         $logusers = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $logusers = Loguser::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("logusers", $logusers);
+        $this->view->set( "logusers", $logusers );
     }
     /**
      * 查看用户日志
@@ -32,8 +32,8 @@ class Action_Loguser extends ActionModel
     public function view()
     {
         $loguserId = $this->data["id"];
-        $loguser = Loguser::get_by_id($loguserId);
-        $this->view->set("loguser", $loguser);
+        $loguser   = Loguser::get_by_id( $loguserId );
+        $this->view->set( "loguser", $loguser );
     }
     /**
      * 编辑用户日志
@@ -49,7 +49,7 @@ class Action_Loguser extends ActionModel
             } else {
                 $id = $loguser->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "loguser", "view", "id=$id" );
                 exit;
             }
@@ -68,8 +68,8 @@ class Action_Loguser extends ActionModel
     public function delete()
     {
         $loguserId = $this->data["id"];
-        $isDelete = Loguser::deleteByID($loguserId);
-        $this->redirect("loguser", "lists", $this->data);
+        $isDelete = Loguser::deleteByID( $loguserId );
+        $this->redirect( "loguser", "lists", $this->data );
     }
 }
 

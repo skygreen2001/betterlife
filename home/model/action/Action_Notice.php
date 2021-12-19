@@ -12,7 +12,7 @@ class Action_Notice extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
+        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,9 +22,9 @@ class Action_Notice extends ActionModel
         $notices = null;
         if ( $count > 0 ) {
             $bb_page = TagPageService::init($nowpage,$count);
-            $notices = Notice::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
+            $notices = Notice::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
-        $this->view->set("notices", $notices);
+        $this->view->set( "notices", $notices );
     }
     /**
      * 查看通知
@@ -32,8 +32,8 @@ class Action_Notice extends ActionModel
     public function view()
     {
         $noticeId = $this->data["id"];
-        $notice = Notice::get_by_id($noticeId);
-        $this->view->set("notice", $notice);
+        $notice   = Notice::get_by_id( $noticeId );
+        $this->view->set( "notice", $notice );
     }
     /**
      * 编辑通知
@@ -49,7 +49,7 @@ class Action_Notice extends ActionModel
             } else {
                 $id = $notice->save();
             }
-            if ( $isRedirect ){
+            if ( $isRedirect ) {
                 $this->redirect( "notice", "view", "id=$id" );
                 exit;
             }
@@ -66,8 +66,8 @@ class Action_Notice extends ActionModel
     public function delete()
     {
         $noticeId = $this->data["id"];
-        $isDelete = Notice::deleteByID($noticeId);
-        $this->redirect("notice", "lists", $this->data);
+        $isDelete = Notice::deleteByID( $noticeId );
+        $this->redirect( "notice", "lists", $this->data );
     }
 }
 

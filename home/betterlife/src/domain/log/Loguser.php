@@ -63,7 +63,7 @@ class Loguser extends DataObject
      */
     public function getUserTypeShow()
     {
-        return self::userTypeShow($this->userType);
+        return self::userTypeShow( $this->userType );
     }
 
     /**

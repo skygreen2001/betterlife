@@ -11,15 +11,15 @@
         <form name="regionForm" method="post"><input type="hidden" name="region_id" value="{$region.region_id}"/>
         <table class="viewdoblock">
             {if $region}<tr class="entry"><th class="head">标识</th><td class="content">{$region.region_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">父地区标识</th><td class="content"><input type="text" class="edit" name="parent_id" value="{$region.parent_id}"/></td></tr>
-            <tr class="entry"><th class="head">地区名称</th><td class="content"><input type="text" class="edit" name="region_name" value="{$region.region_name}"/></td></tr>
+            <tr class="entry"><th class="head">父地区标识</th><td class="content"><input type="text" class="edit" name="parent_id" value="{$region.parent_id|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">地区名称</th><td class="content"><input type="text" class="edit" name="region_name" value="{$region.region_name|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">地区类型</th>
                 <td class="content select">
                     <select id="region_type" name="region_type" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">目录层级</th><td class="content"><input type="text" class="edit" name="level" value="{$region.level}"/></td></tr>
+            <tr class="entry"><th class="head">目录层级</th><td class="content"><input type="text" class="edit" name="level" value="{$region.level|default:''}"/></td></tr>
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -39,14 +39,14 @@
     <script type="text/javascript">
     $(function() {
         var select_region_p = {};
-        {if $region.region_p}
+        {if $region && $region.region_p}
         select_region_p.id   = "{$region.region_p.region_id}";
         select_region_p.text = "{$region.region_p.region_name}";
         select_region_p = new Array(select_region_p);
         {/if}
 
         var select_region_type = {};
-        {if $region.region_type}
+        {if $region && $region.region_type}
         select_region_type.id   = "{$region.region_type}";
         select_region_type.text = "{$region.region_typeShow}";
         select_region_type = new Array(select_region_type);

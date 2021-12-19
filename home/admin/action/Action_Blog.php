@@ -2,7 +2,7 @@
 /**
  * -----------| 控制器:博客 |-----------
  * @category betterlife
- * @package web.model.action
+ * @package web.back.admin
  * @author skygreen skygreen2001@gmail.com
  */
 class Action_Blog extends ActionAdmin
@@ -12,6 +12,7 @@ class Action_Blog extends ActionAdmin
      */
     public function lists()
     {
+        
     }
     /**
      * 查看博客
@@ -19,7 +20,7 @@ class Action_Blog extends ActionAdmin
     public function view()
     {
         $blogId = $this->data["id"];
-        $blog   = Blog::get_by_id($blogId);
+        $blog   = Blog::get_by_id( $blogId );
         if ( !empty($blog->icon_url) ) {
             $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
@@ -32,15 +33,15 @@ class Action_Blog extends ActionAdmin
     {
         if ( !empty($_POST) ) {
             $blog = $this->model->Blog;
-            $id   = $blog->getId();
+            $id = $blog->getId();
             $isRedirect = true;
-            if ( !empty($_FILES) && !empty($_FILES["icon_url"]["name"]) ){
-                $result = $this->uploadImg( $_FILES, "icon_url", "icon_url", "blog" );
-                if ( $result && ( $result['success'] == true ) ){
+            if ( !empty($_FILES) && !empty($_FILES["icon_url"]["name"]) ) {
+                $result = $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
+                if ( $result && ( $result['success'] == true ) ) {
                     if ( array_key_exists('file_name', $result) ) $blog->icon_url = $result['file_name'];
                 } else {
                     $isRedirect = false;
-                    $this->view->set( "message",$result["msg"] );
+                    $this->view->set( "message", $result["msg"] );
                 }
             }
             if ( $blog->isPublic == 'on' ) $blog->isPublic = 1; else $blog->isPublic = 0;
@@ -49,10 +50,8 @@ class Action_Blog extends ActionAdmin
             } else {
                 $id = $blog->save();
             }
-
             $blogTags = $this->data["tags_id"];
             Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
-
             if ( $isRedirect ) {
                 $this->redirect( "blog", "view", "id=$id" );
                 exit;
@@ -61,6 +60,8 @@ class Action_Blog extends ActionAdmin
         $blogId = $this->data["id"];
         $blog   = Blog::get_by_id( $blogId );
         $this->view->set( "blog", $blog );
+        $users = User::get( "", "user_id asc" );
+        $this->view->set( "users", $users );
         $categorys = Category::get( "", "category_id asc" );
         $this->view->set( "categorys", $categorys );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
@@ -71,7 +72,7 @@ class Action_Blog extends ActionAdmin
      */
     public function delete()
     {
-        $blogId   = $this->data["id"];
+        $blogId = $this->data["id"];
         $isDelete = Blog::deleteByID( $blogId );
         return array("info" => 200, "data" => $blogId);
     }
@@ -82,11 +83,12 @@ class Action_Blog extends ActionAdmin
      */
     public function import()
     {
-        if ( !empty($_FILES) ){
+        if ( !empty($_FILES) ) {
             return Manager_Service::blogService()->import( $_FILES );
         }
         return array("error" => 500,"info" => "No Data");
     }
+
     /**
      * 导出博客
      */
@@ -102,3 +104,4 @@ class Action_Blog extends ActionAdmin
         return Manager_Service::blogService()->exportBlog( $filter );
     }
 }
+
