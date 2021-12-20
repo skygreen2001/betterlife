@@ -452,32 +452,32 @@ class AutoCodeAction extends AutoCode
 
         foreach ($fieldInfo as $fieldname => $field)
         {
-            $field_comment = $field["Comment"];
+            // $field_comment = $field["Comment"];
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                // $editBitContent .= "\r\n";
+                $editBitContent .= "            if ( \${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;\r\n";
                 break;
             }
         }
-        $editBitContent = "            if ( !empty(\$id) ) {\r\n".
-                          $editBitContent.
-                          "                \${$instancename}->update();\r\n".
-                          "            } else {\r\n".
-                          "                \$id = \${$instancename}->save();\r\n".
-                          "            }\r\n";
+        $editContent = $editBitContent.
+                       "            if ( !empty(\$id) ) {\r\n".
+                       "                \${$instancename}->update();\r\n".
+                       "            } else {\r\n".
+                       "                \$id = \${$instancename}->save();\r\n".
+                       "            }\r\n";
 
         $result .= "    /**\r\n".
                    "     * 编辑{$table_comment}\r\n".
                    "     */\r\n".
                    "    public function edit()\r\n".
                    "    {\r\n".
-                   "        if (!empty(\$_POST)) {\r\n".
+                   "        if ( !empty(\$_POST) ) {\r\n".
                    "            \${$instancename} = \$this->model->{$classname};\r\n".
-                   "            \$id = \${$instancename}->getId();\r\n".
+                   "            \$id         = \${$instancename}->getId();\r\n".
                    "            \$isRedirect = true;\r\n".
                    self::uploadImgInEdit( $instancename, $fieldInfo ).
-                   $editBitContent.
+                   $editContent.
                    $rela_m2m_content.
                    "            if ( \$isRedirect ) {\r\n".
                    "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );\r\n".

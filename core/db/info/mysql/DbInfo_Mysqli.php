@@ -6,7 +6,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class DbInfo_Mysqli extends  DbInfo implements IDbInfo
+class DbInfo_Mysqli extends DbInfo implements IDbInfo
 {
     /**
     * Mysql的版本号
@@ -48,7 +48,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
     {
         if ( !self::extension_is_available() )
         {
-            LogMe::log('默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions');
+            LogMe::log( '默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions' );
             return FALSE;
         }
 
@@ -97,7 +97,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         $connection->query("SET NAMES " . Config_Db::$character);
 
         if ( file_exists($script_filename) ) {
-            $query  = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
+            $query   = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
             $query   = implode("\n", $query);
             $query   = str_replace("&nbsp;", "--&nbsp--", $query);
             $query_e = explode(';', $query);
@@ -122,9 +122,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
                 $stmt->free_result();
                 $stmt->close();
             }
-            LogMe::log( "数据库操作成功，无异常！" );
+            LogMe::log( "数据库操作成功，无异常!" );
         } else {
-            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: '. $script_filename );
+            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename );
         }
     }
 
@@ -140,7 +140,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli($host, $port, $username, $password, $dbname)->getConnection();
+        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli( $host, $port, $username, $password, $dbname )->getConnection();
     }
 
     /**
@@ -378,6 +378,8 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
 
     /**
      * 获取数据库创建表的定义
+     * @param string $tableName
+     * @return mixed
      */
     public function getDbSqlDefinition($tableName)
     {
@@ -393,7 +395,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
      * @param bool $showqueries 是否显示profile信息
      * @return Query_Mysql
      */
-    private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries=false)
+    private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
         
         if ( Config_Db::$debug_show_sql ) {
@@ -408,7 +410,7 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
             }
         }
 
-        if( Config_Db::$debug_show_sql ) {
+        if ( Config_Db::$debug_show_sql ) {
             $endtime = microtime(true);
             LogMe::log( "\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n" );
         }
@@ -417,10 +419,9 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         return null;
     }
 
-
     /**
      * 获取查询结果
-     * @return 查询结果
+     * @return Query_Mysql 查询结果
      */
     private function getQueryResult()
     {
@@ -439,10 +440,10 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
                 $result = array();
                 while ($this->stmt->fetch()) {
                     if ( count($row) == 1 ) {
-                        foreach($row as $key => $val) {
+                        foreach ($row as $key => $val) {
                             $result[] = $val;
                         }
-                    }else{
+                    } else {
                         $c = new stdClass();
                         foreach ($row as $key => $val) {
                             $c->{$key} = $val;
@@ -457,7 +458,4 @@ class DbInfo_Mysqli extends  DbInfo implements IDbInfo
         return $result;
     }
 
-
 }
-
-?>

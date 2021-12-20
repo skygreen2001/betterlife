@@ -40,9 +40,9 @@ class Action_Notice extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $notice = $this->model->Notice;
-            $id = $notice->getId();
+            $id         = $notice->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $notice->update();

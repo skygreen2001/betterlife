@@ -40,9 +40,9 @@ class Action_Loguser extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $loguser = $this->model->Loguser;
-            $id = $loguser->getId();
+            $id         = $loguser->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $loguser->update();

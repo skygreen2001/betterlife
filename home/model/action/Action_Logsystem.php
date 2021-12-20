@@ -40,9 +40,9 @@ class Action_Logsystem extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $logsystem = $this->model->Logsystem;
-            $id = $logsystem->getId();
+            $id         = $logsystem->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $logsystem->update();

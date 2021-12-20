@@ -36,8 +36,8 @@ class Query_Mysql extends Query {
     public function nextRecord() {
         // Coalesce rather than replace common fields.
         $data = @mysql_fetch_row($this->handle);
-        if($data) {
-            foreach($data as $columnIdx => $value) {
+        if ( $data ) {
+            foreach ($data as $columnIdx => $value) {
                 $columnName = mysql_field_name($this->handle, $columnIdx);
                 // $value || !$ouput[$columnName] means that the *last* occurring value is shown
                 // !$ouput[$columnName] means that the *first* occurring value is shown

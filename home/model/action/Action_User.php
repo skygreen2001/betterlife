@@ -40,9 +40,9 @@ class Action_User extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $user = $this->model->User;
-            $id = $user->getId();
+            $id         = $user->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $user->update();

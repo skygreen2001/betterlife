@@ -40,9 +40,9 @@ class Action_Blog extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
-            $blog = $this->model->Blog;
-            $id = $blog->getId();
+        if ( !empty($_POST) ) {
+            $blog       = $this->model->Blog;
+            $id         = $blog->getId();
             $isRedirect = true;
             if ( !empty($_FILES)&&!empty($_FILES["icon_url"]["name"]) ) {
                 $result = $this->uploadImg( $_FILES, "icon_url", "icon_url", "blog" );
@@ -53,6 +53,7 @@ class Action_Blog extends ActionModel
                     $this->view->set( "message", $result["msg"] );
                 }
             }
+            if ( $blog->isPublic == '1' ) $blog->isPublic = 1; else $blog->isPublic = 0;
             if ( !empty($id) ) {
                 $blog->update();
             } else {

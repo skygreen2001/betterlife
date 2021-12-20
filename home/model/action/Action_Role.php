@@ -40,9 +40,9 @@ class Action_Role extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $role = $this->model->Role;
-            $id = $role->getId();
+            $id         = $role->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $role->update();

@@ -40,9 +40,9 @@ class Action_Msg extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $msg = $this->model->Msg;
-            $id = $msg->getId();
+            $id         = $msg->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $msg->update();

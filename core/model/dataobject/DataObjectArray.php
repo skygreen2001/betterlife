@@ -69,7 +69,7 @@ class DataObjectArray extends BBObject implements ArrayAccess
     }
     public function offsetSet($key, $value)
     {
-        $this->$key=$value;
+        $this->$key = $value;
     }
     public function offsetUnset($key)
     {

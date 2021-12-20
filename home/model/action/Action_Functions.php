@@ -40,9 +40,9 @@ class Action_Functions extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $functions = $this->model->Functions;
-            $id = $functions->getId();
+            $id         = $functions->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $functions->update();

@@ -360,8 +360,8 @@ class UtilEmailPhp extends Util
             return $val;
         } else {
             // More complex text needs to use html2raw instead
-            // if ( strpos($val, '<' ) !== false ) return self::html2raw( $val );
-            // else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
+            if ( strpos($val, '<' ) !== false ) return html2raw( $val );
+            else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
             html_entity_decode($val, ENT_QUOTES, 'UTF-8');
         }
     }
@@ -396,7 +396,7 @@ class UtilEmailPhp extends Util
     private static  function wrapImagesInline($htmlContent)
     {
         global $_INLINED_IMAGES;
-        $_INLINED_IMAGES = null;
+        // $_INLINED_IMAGES = null;
 
         // Make the HTML part
         $headers["Content-Type"]              = "text/html; charset=\"utf-8\"";

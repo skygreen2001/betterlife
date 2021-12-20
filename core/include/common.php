@@ -255,6 +255,7 @@ function unicode2utf8($str)
 /**
  * Simple conversion of HTML to plaintext.
  *
+ * @see https://github.com/silverstripe/silverstripe-framework/blob/4/src/Core/Convert.php
  * @param string $data Input data
  * @param bool $preserveLinks
  * @param int $wordWrap
@@ -264,18 +265,18 @@ function unicode2utf8($str)
 function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
 {
     $defaultConfig = array('PreserveLinks' => false, 'ReplaceBoldAsterisk' => true, 'CompressWhitespace' => true, 'ReplaceImagesWithAlt' => true);
-    if (isset($config)) {
+    if ( isset($config) ) {
         $config = array_merge($defaultConfig, $config);
     } else {
         $config = $defaultConfig;
     }
     $data = preg_replace("/<style([^A-Za-z0-9>][^>]*)?>.*?<\\/style[^>]*>/is", "", $data);
     $data = preg_replace("/<script([^A-Za-z0-9>][^>]*)?>.*?<\\/script[^>]*>/is", "", $data);
-    if ($config['ReplaceBoldAsterisk']) {
+    if ( $config['ReplaceBoldAsterisk'] ) {
         $data = preg_replace('%<(strong|b)( [^>]*)?>|</(strong|b)>%i', '*', $data);
     }
     // Expand hyperlinks
-    if (!$preserveLinks && !$config['PreserveLinks']) {
+    if ( !$preserveLinks && !$config['PreserveLinks'] ) {
         $data = preg_replace_callback('/<a[^>]*href\\s*=\\s*"([^"]*)">(.*?)<\\/a>/i', function ($matches) {
             return html2raw($matches[2]) . "[{$matches['1']}]";
         }, $data);
@@ -284,12 +285,12 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
         }, $data);
     }
     // Replace images with their alt tags
-    if ($config['ReplaceImagesWithAlt']) {
+    if ( $config['ReplaceImagesWithAlt'] ) {
         $data = preg_replace('/<img[^>]*alt *= *"([^"]*)"[^>]*>/i', ' \\1 ', $data);
         $data = preg_replace('/<img[^>]*alt *= *([^ ]*)[^>]*>/i', ' \\1 ', $data);
     }
     // Compress whitespace
-    if ($config['CompressWhitespace']) {
+    if ( $config['CompressWhitespace'] ) {
         $data = preg_replace("/\\s+/", " ", $data);
     }
     // Parse newline tags
@@ -306,14 +307,69 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
     // Remove all tags (but optionally keep links)
     // strip_tags seemed to be restricting the length of the output
     // arbitrarily. This essentially does the same thing.
-    if (!$preserveLinks && !$config['PreserveLinks']) {
+    if ( !$preserveLinks && !$config['PreserveLinks'] ) {
         $data = preg_replace('/<\\/?[^>]*>/', '', $data);
     } else {
         $data = strip_tags($data, '<a>');
     }
     // Wrap
-    if ($wordWrap) {
+    if ( $wordWrap ) {
         $data = wordwrap(trim($data), $wordWrap);
     }
     return trim($data);
 }
+
+// /**
+//  * Tests {@link html2raw()}
+//  * 
+//  * 仅供测试函数: html2raw
+//  */
+// function testHtml2raw()
+// {
+//     $val1 = 'This has a <strong>strong tag</strong>.';
+//     echo html2raw($val1); //This has a *strong tag*.
+//     echo "<br/>";
+
+//     $val1 = 'This has a <b class="test" style="font-weight: bold">b tag with attributes</b>.';
+//     echo html2raw($val1); //This has a *b tag with attributes*.
+//     echo "<br/>";
+
+//     $val2 = 'This has a <strong class="test" style="font-weight: bold">strong tag with attributes</STRONG>.';
+//     echo html2raw($val2); //This has a *strong tag with attributes*.
+//     echo "<br/>";
+
+//     $val3 = '<script type="application/javascript">Some really nasty javascript here</script>';
+//     echo html2raw($val3); //Script tags are completely removed
+
+//     $val4 = '<style type="text/css">Some really nasty CSS here</style>';
+//     echo html2raw($val4); //Style tags are completely removed
+
+//     $val5 = '<script type="application/javascript">Some really nasty 
+//                                                     multiline javascript here</script>';
+//     echo html2raw($val5); //Multiline script tags are completely removed
+
+//     $val6 = '<style type="text/css">Some really nasty
+//     multiline CSS here</style>';
+//     echo html2raw($val6); //Multiline style tags are completely removed
+
+//     $val7 = '<p>That&#39;s absolutely correct</p>';   
+//     echo html2raw($val7); //Single quotes are decoded correctly
+//     echo "<br/>";
+    
+//     $val8 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' . 'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ' . 'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ' . 'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla ' . 'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ' . 'deserunt mollit anim id est laborum.';
+//     echo html2raw($val8); //Test long text is unwrapped
+//     echo "<br/>";
+
+//      $var9 = <<<PHP
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+// do eiusmod tempor incididunt ut labore et dolore magna
+// aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+// ullamco laboris nisi ut aliquip ex ea commodo consequat.
+// Duis aute irure dolor in reprehenderit in voluptate velit
+// esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+// occaecat cupidatat non proident, sunt in culpa qui officia
+// deserunt mollit anim id est laborum.
+// PHP;
+//     echo html2raw($val8, false, 60); //Test long text is unwrapped
+//     echo "<br/>";
+// }

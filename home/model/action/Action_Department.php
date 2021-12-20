@@ -40,9 +40,9 @@ class Action_Department extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $department = $this->model->Department;
-            $id = $department->getId();
+            $id         = $department->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $department->update();

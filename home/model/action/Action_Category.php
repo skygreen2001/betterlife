@@ -40,9 +40,9 @@ class Action_Category extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $category = $this->model->Category;
-            $id = $category->getId();
+            $id         = $category->getId();
             $isRedirect = true;
             if ( !empty($_FILES)&&!empty($_FILES["icon_url"]["name"]) ) {
                 $result = $this->uploadImg( $_FILES, "icon_url", "icon_url", "category" );

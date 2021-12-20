@@ -40,9 +40,9 @@ class Action_Admin extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $admin = $this->model->Admin;
-            $id = $admin->getId();
+            $id         = $admin->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $admin->update();

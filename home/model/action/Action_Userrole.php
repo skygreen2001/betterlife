@@ -40,9 +40,9 @@ class Action_Userrole extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $userrole = $this->model->Userrole;
-            $id = $userrole->getId();
+            $id         = $userrole->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $userrole->update();

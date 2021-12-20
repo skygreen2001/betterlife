@@ -40,9 +40,9 @@ class Action_Region extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $region = $this->model->Region;
-            $id = $region->getId();
+            $id         = $region->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $region->update();

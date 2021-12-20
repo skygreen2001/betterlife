@@ -40,9 +40,9 @@ class Action_Blogtags extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $blogtags = $this->model->Blogtags;
-            $id = $blogtags->getId();
+            $id         = $blogtags->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $blogtags->update();

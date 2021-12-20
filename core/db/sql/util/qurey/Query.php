@@ -94,6 +94,24 @@ abstract class Query implements Iterator {
         if ( $record ) return $record[key($record)];
     }
 
+
+    /**
+     * Ensure that text is properly escaped for XML.
+     * 
+     * @see http://www.w3.org/TR/REC-xml/#dt-escape
+     * @param array|string $val String to escape, or array of strings
+     * @return array|string
+     */
+    public static function raw2xml($val) {
+        if ( is_array($val) ) {
+            foreach($val as $k => $v) $val[$k] = self::raw2xml($v);
+            return $val;
+        } else {
+            return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
+        }
+    }
+
+
     /**
      * Return an HTML table containing the full result-set
      */
@@ -105,14 +123,14 @@ abstract class Query implements Iterator {
             if ( $first ) {
                 $result .= "<tr>";
                 foreach ($record as $k => $v) {
-                    $result .= "<th>" . Convert::raw2xml($k) . "</th> ";
+                    $result .= "<th>" . self::raw2xml($k) . "</th> ";
                  }
                 $result .= "</tr> \n";
             }
 
             $result .= "<tr>";
             foreach($record as $k => $v) {
-                $result .= "<td>" . Convert::raw2xml($v) . "</td> ";
+                $result .= "<td>" . self::raw2xml($v) . "</td> ";
             }
             $result .= "</tr> \n";
 

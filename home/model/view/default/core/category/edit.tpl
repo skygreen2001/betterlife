@@ -46,7 +46,19 @@
         </div>
     </div>
     {if ($online_editor == 'UEditor')}
-        <script>pageInit_ue_intro();</script>
+        <script>
+        $(function() {
+            pageInit_ue_intro();
+
+            // 在线编辑器设置默认样式
+            ue_intro.ready(function(){
+                UE.dom.domUtils.setStyles(ue_intro.body, {
+                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                });
+            });
+
+        });
+        </script>
     {/if}
     <script type="text/javascript">
     $(function() {

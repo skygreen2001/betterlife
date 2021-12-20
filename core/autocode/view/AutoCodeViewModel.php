@@ -264,9 +264,9 @@ class AutoCodeViewModel extends AutoCodeView
             }
 
             $idColumnName = DataObjectSpec::getRealIDColumnName( $classname );
-            if ( self::isNotColumnKeywork( $fieldname ) ){
+            if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $isImage = self::columnIsImage( $fieldname, $field_comment );
-                $isImage = self::columnIsImage( $fieldname, $field_comment );
+                // $isImage = self::columnIsImage( $fieldname, $field_comment );
                 if ( $idColumnName == $fieldname ) {
                     $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$fieldname}</td></tr>{/if}\r\n";
                 } else if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
@@ -288,7 +288,7 @@ class AutoCodeViewModel extends AutoCodeView
                                       "                    </div>\r\n".
                                       "                </td>\r\n".
                                       "            </tr>\r\n";
-                    $edit_js_content= "        \$.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");\r\n";
+                    $edit_js_content = "        \$.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");\r\n";
                 } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
                     $field_comment  = str_replace( "标识", "", $field_comment );
                     $field_comment  = str_replace( "编号", "", $field_comment );
@@ -335,8 +335,7 @@ class AutoCodeViewModel extends AutoCodeView
                           $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:''}\"/></td></tr>\r\n";
                           break;
                     }
-
-                    if ( $datatype == 'enum' ) {
+                    if ( contain( $datatype, 'enum' ) ) {
                         $enumJsContent .= "        var select_{$fieldname} = {};\r\n".
                                           "        {if \${$instancename} && \${$instancename}.{$fieldname}}\r\n".
                                           "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";\r\n".
@@ -355,7 +354,13 @@ class AutoCodeViewModel extends AutoCodeView
             $ueEditor_prepare = "";
             foreach ($text_area_fieldname as $key => $value) {
                 // $ckeditor_prepare .= "ckeditor_replace_$key();";
-                $ueEditor_prepare .= "pageInit_ue_$key();";
+                $ueEditor_prepare .= "pageInit_ue_$key();\r\n\r\n" .
+                                     "            // 在线编辑器设置默认样式\r\n" .
+                                     "            ue_{$key}.ready(function(){\r\n" .
+                                     "                UE.dom.domUtils.setStyles(ue_{$key}.body, {\r\n" .
+                                     "                    'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
+                                     "                });\r\n".
+                                     "            });\r\n";
             }
             $textareapreparesentence = "";
 //             $textareapreparesentence = <<<EDIT
@@ -370,7 +375,11 @@ class AutoCodeViewModel extends AutoCodeView
 // EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == 'UEditor')}
-        <script>$ueEditor_prepare</script>
+        <script>
+        $(function() {
+            $ueEditor_prepare
+        });
+        </script>
     {/if}
 UETC;
         }

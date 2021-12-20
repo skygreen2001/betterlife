@@ -40,9 +40,9 @@ class Action_Userdetail extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $userdetail = $this->model->Userdetail;
-            $id = $userdetail->getId();
+            $id         = $userdetail->getId();
             $isRedirect = true;
             if ( !empty($_FILES)&&!empty($_FILES["profile"]["name"]) ) {
                 $result = $this->uploadImg( $_FILES, "profile", "profile", "userdetail" );

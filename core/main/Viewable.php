@@ -46,7 +46,7 @@ class Viewable extends BBObject implements ArrayAccess
     public function offsetSet($key, $value)
     {
         $method = "set".ucfirst($key);
-        $this->$method($value);
+        $this->$method( $value );
 //        $this->$key = $value;
     }
 

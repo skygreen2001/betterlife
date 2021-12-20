@@ -40,9 +40,9 @@ class Action_Comment extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $comment = $this->model->Comment;
-            $id = $comment->getId();
+            $id         = $comment->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $comment->update();

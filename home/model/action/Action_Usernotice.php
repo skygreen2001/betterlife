@@ -40,9 +40,9 @@ class Action_Usernotice extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $usernotice = $this->model->Usernotice;
-            $id = $usernotice->getId();
+            $id         = $usernotice->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $usernotice->update();

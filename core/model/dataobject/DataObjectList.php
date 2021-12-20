@@ -78,7 +78,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
         return parent::count();
     }
     
-    function isEmpty() {
+    public function isEmpty() {
         return $this->size() == 0;
     }
 
@@ -97,14 +97,14 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
     /**
      * 转换成数组
      */
-    public function toArray(){
+    public function toArray() {
         return iterator_to_array($this->getIterator(), true);
     }
     /**
      * 转换成xml文档
      * @return string xml文档
      */
-    public function toXml(){
+    public function toXml() {
         if ( $this->count() > 0 ){
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
@@ -125,7 +125,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      * 转换成xml文档
      * @return string xml文档
      */
-    public function toJson(){
+    public function toJson() {
         if ( $this->count() > 0) {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
@@ -145,5 +145,3 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
     }
     //</editor-fold>
 }
-
-?>

@@ -40,9 +40,9 @@ class Action_Tags extends ActionModel
      */
     public function edit()
     {
-        if (!empty($_POST)) {
+        if ( !empty($_POST) ) {
             $tags = $this->model->Tags;
-            $id = $tags->getId();
+            $id         = $tags->getId();
             $isRedirect = true;
             if ( !empty($id) ) {
                 $tags->update();

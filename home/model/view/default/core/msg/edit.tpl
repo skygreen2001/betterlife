@@ -38,7 +38,19 @@
         </div>
     </div>
     {if ($online_editor == 'UEditor')}
-        <script>pageInit_ue_content();</script>
+        <script>
+        $(function() {
+            pageInit_ue_content();
+
+            // 在线编辑器设置默认样式
+            ue_content.ready(function(){
+                UE.dom.domUtils.setStyles(ue_content.body, {
+                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                });
+            });
+
+        });
+        </script>
     {/if}
 
 {/block}

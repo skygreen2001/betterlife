@@ -9,12 +9,12 @@
     {* <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> *}
     <script type="text/javascript" src="{$template_url}js/public.js"></script>
     {$viewObject->css_ready|default:""}
-    {$viewObject->js_ready|default:""}
   </head>
   {php}
      flush();
   {/php}
   <body>
     {block name=body}{/block}
+    {$viewObject->js_ready|default:""}
   </body>
 </html>
