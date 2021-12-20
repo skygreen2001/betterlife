@@ -62,10 +62,10 @@ class UtilUeditor extends Util
                 "
             );
         } else {
-            if (empty($configString)){
+            if ( empty($configString) ) {
                 $configString = self::toolbar_normal();
             }
-            UtilJavascript::loadJsContentReady($viewObject, "
+            UtilJavascript::loadJsContentReady( $viewObject, "
                 var ue_{$textarea_id};
                 function pageInit_ue_{$textarea_id}()
                 {
@@ -82,5 +82,3 @@ class UtilUeditor extends Util
     }
 
 }
-
-?>

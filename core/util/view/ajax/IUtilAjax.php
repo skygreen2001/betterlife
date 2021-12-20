@@ -10,7 +10,7 @@ interface IUtilAjax {
      * 动态加载Ajax Javascript Framework库
      * @param string $version Ajax框架的运行版本
      */
-    public static function load($version="");
+    public static function load($version = "");
     
     /**
      * 发送Ajax请求的语句
@@ -21,7 +21,7 @@ interface IUtilAjax {
      * @param string $callback Javascript调用的回执方法名。
      * @return 发送Ajax请求的语句
      */
-    public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null);
+    public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null);
     
     /**
      * 生成Javascript的回调函数
@@ -30,5 +30,5 @@ interface IUtilAjax {
      * @param enum $response_type 返回的数据类型
      * @return string 回调函数
      */
-    public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML);
+    public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML);
 }

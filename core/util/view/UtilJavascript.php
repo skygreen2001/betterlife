@@ -84,7 +84,7 @@ class UtilJavascript extends Util
     {
         $result        = self::loadDefaultAjax(); 
         $loadJsLibrary = UtilAjax::name() . ucfirst(UtilAjax::$ajax_fw_name_default);
-        $result       .= call_user_func_array("$loadJsLibrary::ajaxRequstStatement", array($url, $dataArray, $method,$response_type,$callback)); 
+        $result       .= call_user_func_array("$loadJsLibrary::ajaxRequstStatement", array($url, $dataArray, $method, $response_type, $callback)); 
         return $result;
     }   
     //</editor-fold>

@@ -12,10 +12,10 @@ class UtilAjaxProtaculous extends UtilAjax implements IUtilAjax
      * @param string $version javascript框架的版本号
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      */
-    public static function load($version="",$viewObject=null)
+    public static function load($version = "", $viewObject = null)
     {
-        self::loadAjaxJs(EnumJsFramework::JS_FW_PROTOTYPE,$version,$viewObject);
-        self::loadAjaxJs(EnumJsFramework::JS_FW_SCRIPTACULOUS,$version,$viewObject);
+        self::loadAjaxJs( EnumJsFramework::JS_FW_PROTOTYPE, $version, $viewObject );
+        self::loadAjaxJs( EnumJsFramework::JS_FW_SCRIPTACULOUS, $version, $viewObject );
     }
 
     /**
@@ -28,14 +28,14 @@ class UtilAjaxProtaculous extends UtilAjax implements IUtilAjax
      * @param string $callback Javascript调用的回执方法名。
      * @return 发送Ajax请求的语句
      */
-    public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null)
+    public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
-        $result="";
-        $result.= "<script type='text/javascript'>";
+        $result  = "";
+        $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="Protaculous">
-        $result.="";
+        $result .= "";
         //</editor-fold>
-        $result.= "</script>";
+        $result .= "</script>";
         return $result;
     }
 
@@ -47,16 +47,15 @@ class UtilAjaxProtaculous extends UtilAjax implements IUtilAjax
      * @param enum $response_type 返回的数据类型
      * @return string 回调函数
      */
-    public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML)
+    public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML)
     {
-        $class_name=str_replace("RO","",$local_service_flag);
-
-        if (!self::$IsHtmlBody){
+        // $class_name = str_replace("RO", "", $local_service_flag);
+        $result = "";
+        if ( !self::$IsHtmlBody ) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
-            self::$IsHtmlBody=true;
+            self::$IsHtmlBody = true;
         }
+
         return $result;
     }
 }
-
-?>

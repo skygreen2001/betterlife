@@ -14,8 +14,8 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $version javascript框架的版本号
      */
-    public static function loadReady($viewObject=null,$version="1.6.1"){
-        self::load($version,$viewObject);
+    public static function loadReady($viewObject = null, $version = "1.6.1") {
+        self::load( $version, $viewObject );
     }
 
     /**
@@ -25,40 +25,40 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param string $version javascript框架的版本号
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      */
-    public static function load($version="1.6.1",$viewObject=null)
+    public static function load($version = "1.6.1", $viewObject = null)
     {
-        if (self::$IsGoogleApi){
-            if (self::$IsDebug){
-                if ($viewObject)
+        if ( self::$IsGoogleApi ) {
+            if ( self::$IsDebug ) {
+                if ( $viewObject )
                 {
-                    self::loadJsReady($viewObject,"https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js");
-                }else{
-                    self::loadJs("https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js");
+                    self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
+                } else {
+                    self::loadJs( "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
                 }
-            }else{
-                if ($viewObject)
+            } else {
+                if ( $viewObject )
                 {
-                    self::loadJsReady($viewObject,"https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js");
-                }else{
-                    self::loadJs("https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js");
+                    self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js" );
+                } else {
+                    self::loadJs( "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js" );
                 }
             }
-        }else{
-            $ajax_root="misc/js/ajax/";
-            $group=EnumJsFramework::JS_FW_JQUERY;
-            if (self::$IsDebug){
-                if ($viewObject)
+        } else {
+            $ajax_root = "misc/js/ajax/";
+            $group     = EnumJsFramework::JS_FW_JQUERY;
+            if ( self::$IsDebug ) {
+                if ( $viewObject )
                 {
-                    self::loadJsReady($viewObject,$ajax_root.$group."/".$group."-".$version.".js");
-                }else{
-                    self::loadJs($ajax_root.$group."/".$group."-".$version.".js");
+                    self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
+                } else {
+                    self::loadJs( $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
                 }
-            }else{
-                if ($viewObject)
+            } else {
+                if ( $viewObject )
                 {
-                    self::loadJsReady($viewObject,$ajax_root.$group."/".$group."-".$version.".min.js");
-                }else{
-                    self::loadJs($ajax_root.$group."/".$group."-".$version.".min.js");
+                    self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".min.js" );
+                } else {
+                    self::loadJs( $ajax_root . $group . "/" . $group . "-" . $version . ".min.js" );
                 }
             }
         }
@@ -69,19 +69,19 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param string $version JQueryUI的版本号
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      */
-    public static function loadJqueryUI($viewObject=null,$version="1.8")
+    public static function loadJqueryUI($viewObject = null, $version = "1.8")
     {
-        if (self::$IsGoogleApi){
-            if (self::$IsDebug){
-                UtilJavascript::loadJsReady($viewObject,"https://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.js");
-            }else{
-                UtilJavascript::loadJsReady($viewObject,"http://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.min.js");
+        if ( self::$IsGoogleApi ) {
+            if ( self::$IsDebug ) {
+                UtilJavascript::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.js" );
+            } else {
+                UtilJavascript::loadJsReady($viewObject, "http://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.min.js" );
             }
-        }else{
-            if (self::$IsDebug){
-                UtilJavascript::loadJsReady($viewObject,"ajax/jquery/jqueryui/jquery-ui.js",true);
-            }else{
-                UtilJavascript::loadJsReady($viewObject,"ajax/jquery/jqueryui/jquery-ui.min.js",true);
+        } else {
+            if ( self::$IsDebug ) {
+                UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.js", true );
+            } else {
+                UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.min.js", true );
             }
         }
     }
@@ -95,15 +95,15 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param string $callback Javascript调用的回执方法名。
      * @return 发送Ajax请求的语句
      */
-    public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null)
+    public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
-        $result="";
-        $result.= "<script type='text/javascript'>";
+        $result  = "";
+        $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="JQuery">
         //@link http://api.jquery.com/jQuery.ajax/
-        if((is_array($dataArray))&&(count($dataArray)>0))
+        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
         {
-            $data=json_encode($dataArray);
+            $data = json_encode($dataArray);
 //            $data="{";
 //            foreach ($dataArray as $key => $value) {
 //              $data.=$key.":'".$value."'".",";
@@ -112,34 +112,34 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
 //            $data.="}";
         }
 
-        $result.= "$.ajax({";
-        $result.= "url:'".$url."',";
-        $result.= "type:'".$method."',";
-        $result.= "dataType:'".$response_type."',";
-        $result.= "beforeSend  : function (XMLHttpRequest) {
+        $result .=  "$.ajax({";
+        $result .= "url:'" . $url . "',";
+        $result .= "type:'" . $method . "',";
+        $result .= "dataType:'" . $response_type . "',";
+        $result .= "beforeSend  : function (XMLHttpRequest) {
             XMLHttpRequest.setRequestHeader('response_type','$response_type');
         },";
-        if (isset($data)){
-            $result.= "data:".$data.",";
+        if ( isset($data) ) {
+            $result .= "data:" . $data . ",";
         }
-        if (isset($callback)){
-            $result.= "success:".$callback.",";
+        if ( isset($callback) ) {
+            $result .= "success:" . $callback . ",";
         }
-        if (Gc::$dev_debug_on){
-            $result.= "error: function(xhr,status,errMsg){
+        if ( Gc::$dev_debug_on ) {
+            $result .= "error: function(xhr,status,errMsg){
                       console.log(status,':',errMsg);
                   },";
-            $result.= "statusCode: {
+            $result .= "statusCode: {
                 404: function() {
                   alert('无法找到该页面！');
                 }
               }";
-        }else{
-            $result=substr($result, 0,  strlen($result)-1);
+        } else {
+            $result  = substr($result, 0,  strlen($result) - 1);
         }
-        $result.= "})";
+        $result .= "})";
         //</editor-fold>
-        $result.= "</script>";
+        $result .= "</script>";
         return $result;
     }
 
@@ -150,18 +150,18 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param enum $response_type 返回的数据类型
      * @return string 回调函数
      */
-    public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML)
+    public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML)
     {
-        $class_name=str_replace("RO","",$local_service_flag);
+        $class_name  = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="JQuery">
-        $result="
+        $result      = "
                 function(data) {";
-        if (!self::$IsHtmlBody){
-            $result.="
+        if ( !self::$IsHtmlBody ) {
+            $result .= "
                         $('h1').append('$class_name');";
         }
-        if ($response_type==EnumResponseType::XML){
-            $result.="
+        if ( $response_type == EnumResponseType::XML ) {
+            $result .= "
                         $(data).find('$class_name').each(function(i){
                             if ($(this).children()){
                                 $(this).children().each(function(i){
@@ -173,23 +173,20 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
                                 });
                             }
                         });";
-        }
-        else if ($response_type==EnumResponseType::JSON){
-            $result.="
+        } else if ( $response_type == EnumResponseType::JSON ) {
+            $result .= "
                         $.each(data,function(key, val) {
                             $('ol').append('<li>'+key+':'+val+'</li>');
                         });
                  ";
         }
-        $result.="}";
+        $result .= "}";
         //</editor-fold>
-        if (!self::$IsHtmlBody){
+        if ( !self::$IsHtmlBody ) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
-            self::$IsHtmlBody=true;
+            self::$IsHtmlBody = true;
         }
         return $result;
     }
 
 }
-
-?>

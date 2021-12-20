@@ -14,18 +14,18 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
      * @param string $version javascript框架的版本号
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      */
-    public static function load($version="",$viewObject=null)
+    public static function load($version = "", $viewObject = null)
     {
-        if (self::$IsGoogleApi)
+        if ( self::$IsGoogleApi )
         {
-            if ($viewObject)
+            if ( $viewObject )
             {
-                self::loadJsReady($viewObject,"https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js");
-            }else{
-                self::loadJs("https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js");
+                self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js" );
+            } else {
+                self::loadJs( "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js" );
             }
-        }else{
-            self::loadAjaxJs(EnumJsFramework::JS_FW_DOJO,$version,$viewObject);
+        } else {
+            self::loadAjaxJs( EnumJsFramework::JS_FW_DOJO, $version, $viewObject );
         }
     }
 
@@ -33,24 +33,24 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
      * 发送Ajax请求的语句
      * @param string $url 通信的Url地址。
      * @param array $dataArray 传送的数据。
-     * @param array $method HTTP的标准协议动词【get|post|put|delete】。
+     * @param string $method HTTP的标准协议动词【get|post|put|delete】。
      * @param enum $response_type 返回的数据类型
      * @param string $callback Javascript调用的回执方法名。
      * @return 发送Ajax请求的语句
      */
-    public static function ajaxRequstStatement($url,$dataArray,$method,$response_type=EnumResponseType::XML,$callback=null)
+    public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
-        $result="";
-        if (!empty ($callback))
+        $result = "";
+        if ( !empty ($callback) )
         {
-            $url_base=UtilNet::urlbase();
-            $result=self::loadJsSentence("misc/js/util/xmltojson.js");  
+            // $url_base = UtilNet::urlbase();
+            $result = self::loadJsSentence( "misc/js/util/xmltojson.js" );
         }
-        $result.= "<script type='text/javascript'>";
+        $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="dojo">
-        if((is_array($dataArray))&&(count($dataArray)>0))
+        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
         {
-            $data=json_encode($dataArray);
+            $data = json_encode($dataArray);
 //            $data="{";
 //            foreach ($dataArray as $key => $value) {
 //              $data.=$key.":'".$value."'".",";
@@ -58,29 +58,29 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
 //            $data=substr($data, 0, strlen($data)-1);
 //            $data.="}";
         }
-        $result.="
+        $result .= "
             //Deferred对象允许用同步调用的写法写异步调用
             var deferredResult = ";
-        $method=strtoupper($method);
+        $method  = strtoupper($method);
         switch ($method) {
             case EnumHttpMethod::POST:
-                $result.="
+                $result .= "
                     dojo.xhrPost({";
-                break;;
+                break;
             case EnumHttpMethod::GET:
-                $result.="
+                $result .= "
                     dojo.xhrGet({";
-                break;;
+                break;
             case EnumHttpMethod::PUT:
-                $result.="
+                $result .= "
                     dojo.xhrPut({";
-                break;;
+                break;
             case EnumHttpMethod::DELETE:
-                $result.="
+                $result .= "
                     dojo.xhrDelete({";
-                break;;
+                break;
         }
-        $result.="
+        $result .= "
                 url: '$url',
                 content: $data,
                 handleAs:'$response_type', //得到的response将被认为是JSON，并自动转为object
@@ -88,14 +88,14 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                     'response_type':'$response_type'
                 }
             });";
-        if (isset($callback)){
-            $result.="
+        if ( isset($callback) ) {
+            $result .= "
                 //当响应结果可用时再调用回调函数
                 deferredResult.then($callback);
             ";
         }
 
-        $result.="
+        $result .= "
             error: function(error, ioargs) {
                 var message = '';
                 switch (ioargs.xhr.status) {
@@ -117,7 +117,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
             };";
 
         //</editor-fold>
-        $result.= "</script>";
+        $result .= "</script>";
         return $result;
     }
 
@@ -128,21 +128,21 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
      * @param enum $response_type 返回的数据类型
      * @return string 回调函数
      */
-    public static function callbackForJsFramework($local_service_flag,$response_type=EnumResponseType::XML)
+    public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML)
     {
-        $class_name=str_replace("RO","",$local_service_flag);
+        $class_name = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="dojo">
-        $result="function(response) {
+        $result     = "function(response) {
                     if (response==null){
                       console.log('请求失败！检查头信息是否是application/xml或者application/json :(');
                       return ;
                     }";
-        if (!self::$IsHtmlBody){
-            $result.="
+        if ( !self::$IsHtmlBody ) {
+            $result .= "
                     dojo.byId('object_name').innerHTML='$class_name';";
         }
-        if ($response_type==EnumResponseType::JSON){
-            $result.="
+        if ( $response_type == EnumResponseType::JSON ) {
+            $result .= "
                       //var responseJson = dojo.fromJson(response);
                       var responseJson =response;
                       for(var item in responseJson) {
@@ -150,9 +150,8 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                          dojo.place('<li>'+item+':'+value+'</li>', 'properties','last');
                       }
                   }";
-        }
-        else if ($response_type==EnumResponseType::XML){
-            $result.="
+        } else if ( $response_type == EnumResponseType::XML ) {
+            $result .= "
                       var objectJson = xmltoJson(response);
                       for(var item in objectJson) {
                          var value = objectJson[item];
@@ -172,9 +171,9 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                   }";
         }
         //</editor-fold>
-        if (!self::$IsHtmlBody){
+        if ( !self::$IsHtmlBody ) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
-            self::$IsHtmlBody=true;
+            self::$IsHtmlBody = true;
         }
         return $result;
     }

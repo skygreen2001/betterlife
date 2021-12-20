@@ -12,9 +12,9 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      * @param string $version javascript框架的版本号
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      */
-    public static  function load($version="",$viewObject=null)
+    public static function load($version = "", $viewObject = null)
     {
-        self::loadAjaxJs(EnumJsFramework::JS_FW_SCRIPTACULOUS,$version,$viewObject);
+        self::loadAjaxJs( EnumJsFramework::JS_FW_SCRIPTACULOUS, $version, $viewObject );
     }
 
     /**
@@ -34,7 +34,7 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
         //<editor-fold defaultstate="collapsed" desc="Scriptaculous">
         $result .= "";
         //</editor-fold>
-        $result .=  "</script>";
+        $result .= "</script>";
         return $result;
     }
 
@@ -48,13 +48,13 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
      */
     public static function callbackForJsFramework($local_service_flag, $response_type = EnumResponseType::XML)
     {
-        $class_name = str_replace("RO", "", $local_service_flag);
-
-        if ( !self::$IsHtmlBody) {
+        // $class_name = str_replace("RO", "", $local_service_flag);
+        $result     = "";
+        if ( !self::$IsHtmlBody ) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
             self::$IsHtmlBody = true;
         }
-        // return $result;
+        return $result;
     }
 }
 

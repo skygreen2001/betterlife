@@ -1,15 +1,59 @@
 <?php
-
+/**
+ * 使用JS框架
+ */
 class EnumJsFramework extends Enum
 {
-    const JS_FW_JQUERY="jquery";
-    const JS_FW_PROTOTYPE="prototype";
-    const JS_FW_YUI="yui";
-    const JS_FW_MOOTOOLS="mootools";
-    const JS_FW_DOJO="dojo";
-    const JS_FW_SCRIPTACULOUS="scriptaculous";
-    const JS_FW_PROTACULOUS="protaculous";
+    const JS_FW_JQUERY        = "jquery";
+    const JS_FW_PROTOTYPE     = "prototype";
+    const JS_FW_YUI           = "yui";
+    const JS_FW_MOOTOOLS      = "mootools";
+    const JS_FW_EXTJS         = "extjs";
+    const JS_FW_DOJO          = "dojo";
+    const JS_FW_SCRIPTACULOUS = "scriptaculous";
+    const JS_FW_PROTACULOUS   = "protaculous";
 }
+
+/**
+ * 请求响应的数据类型
+ */
+class EnumResponseType extends Enum 
+{
+    const JSON       = "json";
+    const XML        = "xml";
+    const HTML       = "html";
+    const JSONP      = "jsonp";
+    const TEXT       = "text";
+    const SERIALIZED = "serialized";
+}
+
+/**
+ * HTTP的标准协议动词
+ */
+class EnumHttpMethod extends Enum
+{
+    /**
+     * 即常见的url Get方式。
+     */
+    const GET     = "GET";
+    /**
+     * 即常见的url Post方式。
+     */
+    const POST    = "POST";
+    /**
+     * PUT Restful中更新数据
+     */
+    const PUT     = "PUT";
+    /**
+     * DELETE Restful中删除数据
+     */
+    const DELETE  = "DELETE";
+    /**
+     * 暂未实现启用
+     */
+    const OPTIONS = "OPTIONS";
+}
+
 
 /**
  * -----------| 所有Javascript Ajax 框架的工具类的父类 |-----------
@@ -24,27 +68,27 @@ class UtilAjax extends Util
      * 对JS进行Gzip操作的路径
      * @var string
      */
-    protected static $JS_GZIP="misc/js/gzip.php?js=";
+    protected static $JS_GZIP              = "misc/js/gzip.php?js=";
     /**
      * JS框架名称键名称
      * @var string
      */
-    protected static $JS_FLAG_GROUP="g";
+    protected static $JS_FLAG_GROUP        = "g";
     /**
      * JS框架版本键名称
-     * @var type
+     * @var string
      */
-    protected static $JS_FLAG_VERSION="v";
+    protected static $JS_FLAG_VERSION      = "v";
     /**
      * 默认使用的Ajax框架名称
      * @var string
      */
-    public static $ajax_fw_name_default = EnumJsFramework::JS_FW_JQUERY;//JS_FW_JQUERY
+    public static $ajax_fw_name_default    = EnumJsFramework::JS_FW_JQUERY;//JS_FW_JQUERY
     /**
      * 默认使用的Ajax框架版本
      * @var string
      */
-    public static $ajax_fw_version_default="3.2.1"; //1.6.1
+    public static $ajax_fw_version_default = "3.2.1"; //1.6.1
     /**
      * 推荐的Ajax框架和可使用的版本。
      * 
@@ -53,7 +97,7 @@ class UtilAjax extends Util
      * @link http://code.google.com/intl/zh-CN/apis/libraries/devguide.html
      * @var array
      */
-    public static $ajax_fw_list=array(
+    public static $ajax_fw_list = array(
         "jquery"    => "3.2.1",   //JQuery可使用1.5.0以上版本。
         "prototype" => "1.7.0.0", //Prototype可使用1.6.0.2以上版本。
         "yui"       => "3.3.0",   //YUI可使用3.3.0以上版本。
@@ -67,26 +111,26 @@ class UtilAjax extends Util
      * @link http://code.google.com/intl/zh-CN/apis/libraries/devguide.html
      * @var bool
      */
-    public static $IsGoogleApi=false;
+    public static $IsGoogleApi = false;
     /**
      * 加载过的Js文件。
      * $value Js文件名
      * @var array
      */
-    public static $JsLoaded=array();
+    public static $JsLoaded    = array();
     /**
      * 回调函数的内容会显示在页面上，当一次调用多个Ajax请求时，因此只需要写一次<html><body>。
      * 
      * 该状态记录是否已经显示出过<html><body>
      * @var bool
      */
-    public static $IsHtmlBody=false;
+    public static $IsHtmlBody  = false;
     /**
      * 是否允许调试
      *
      * @var mixed
      */
-    public static $IsDebug=true;
+    public static $IsDebug     = true;
     //</editor-fold>
     /**
      * 初始化方能加载枚举类型。
@@ -165,7 +209,7 @@ class UtilAjax extends Util
     public static function loadJsReady($viewobject, $jsFile, $isGzip = false, $jsFlag = null, $version = "")
     {
         if ( $viewobject instanceof ViewObject ) {
-            if ( !isset($viewobject->js_ready ) || empty($viewobject->js_ready) ) {
+            if ( !isset($viewobject->js_ready) || empty($viewobject->js_ready) ) {
                 $viewobject->js_ready = "";
             }
             $viewobject->js_ready .= self::loadJsSentence( $jsFile, $isGzip, $jsFlag, $version );
@@ -212,7 +256,7 @@ class UtilAjax extends Util
                     $js_gzip = str_replace("\\", "/", $js_gzip);
 
                     if ( contain( strtolower(php_uname()), "darwin" ) ) {
-                        $js_gzip = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
+                        $js_gzip   = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
 
                         $start_str = substr($js_gzip, 0, strpos($js_gzip, "/"));
                         $url_basei = substr($url_base, 0, strlen($url_base) - 1);
@@ -226,15 +270,15 @@ class UtilAjax extends Util
                 if ( in_array($jsFile, self::$JsLoaded) ) {
                     return ;
                 }
-                if ( startWith($jsFile, "http") ) {
+                if ( startWith( $jsFile, "http" ) ) {
                     $result = "    <script type=\"text/javascript\" src=\"" . $jsFile . "\"></script>\r\n";
                 } else {
                     if ( contain( strtolower(php_uname()), "darwin") ) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                        $jsFile = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $jsFile;
+                        $jsFile       = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $jsFile;
 
                         $start_str = substr($jsFile, 0,strpos($jsFile, "/"));
-                        $url_basei = substr($url_base, 0,strlen($url_base)-1);
+                        $url_basei = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
                         if ( $start_str == $end_str ) $jsFile = str_replace($end_str . "/", "", $jsFile);
                     }
@@ -252,7 +296,7 @@ class UtilAjax extends Util
      */
     public static function loadJsContent($jsContent)
     {
-        echo self::loadJsContentSentence($jsContent);
+        echo self::loadJsContentSentence( $jsContent );
     }
 
     /**
@@ -260,13 +304,13 @@ class UtilAjax extends Util
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $jsContent：Js内容的语句
      */
-    public static function loadJsContentReady($viewobject,$jsContent)
+    public static function loadJsContentReady($viewobject, $jsContent)
     {
-        if ($viewobject instanceof ViewObject){
-            if (!isset($viewobject->js_ready)||empty($viewobject->js_ready)){
-                $viewobject->js_ready="";
+        if ( $viewobject instanceof ViewObject ) {
+            if ( !isset($viewobject->js_ready) || empty($viewobject->js_ready) ) {
+                $viewobject->js_ready = "";
             }
-            $viewobject->js_ready.=self::loadJsContentSentence($jsContent);
+            $viewobject->js_ready .= self::loadJsContentSentence( $jsContent );
         }
     }
 
@@ -276,15 +320,13 @@ class UtilAjax extends Util
      */
     public static function loadJsContentSentence($jsContent)
     {
-        if (!contain($jsContent,"<script")){
-            $result="    <script type=\"text/javascript\">\r\n";
-            $result.="        ".$jsContent."\r\n";
-            $result.="    </script>\r\n";
-        }else{
-            $result.=$jsContent;
+        if ( !contain( $jsContent, "<script" ) ) {
+            $result  = "    <script type=\"text/javascript\">\r\n";
+            $result .= "        " . $jsContent . "\r\n";
+            $result .= "    </script>\r\n";
+        } else {
+            $result  = $jsContent;
         }
         return $result;
     }
 }
-
-?>
