@@ -26,7 +26,7 @@
             <tr class="entry">
                 <th class="head">评论</th>
                 <td class="content">
-                    <textarea id="comment" name="comment">{$comment.comment|default:''}</textarea>
+                    <textarea id="comment" name="comment" rows="6" cols="60" placeholder="评论">{$comment.comment|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -58,15 +58,17 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            pageInit_ue_comment();
+            if ( typeof UE != 'undefined' ) {
+                pageInit_ue_comment();
 
-            // 在线编辑器设置默认样式
-            ue_comment.ready(function(){
-                UE.dom.domUtils.setStyles(ue_comment.body, {
-                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                // 在线编辑器设置默认样式
+                ue_comment.ready(function(){
+                    UE.dom.domUtils.setStyles(ue_comment.body, {
+                        'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                    });
                 });
-            });
 
+            }
         });
         </script>
     {/if}

@@ -56,7 +56,7 @@
             <tr class="entry">
                 <th class="head">博客内容</th>
                 <td class="content">
-                    <textarea id="blog_content" name="blog_content">{$blog.blog_content|default:''}</textarea>
+                    <textarea id="blog_content" name="blog_content" rows="6" cols="60" placeholder="博客内容">{$blog.blog_content|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry"><th class="head">发布日期</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="publish_date" value="{$blog.publish_date|default:''}"/></td></tr>
@@ -84,15 +84,17 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            pageInit_ue_blog_content();
+            if ( typeof UE != 'undefined' ) {
+                pageInit_ue_blog_content();
 
-            // 在线编辑器设置默认样式
-            ue_blog_content.ready(function(){
-                UE.dom.domUtils.setStyles(ue_blog_content.body, {
-                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                // 在线编辑器设置默认样式
+                ue_blog_content.ready(function(){
+                    UE.dom.domUtils.setStyles(ue_blog_content.body, {
+                        'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                    });
                 });
-            });
 
+            }
         });
         </script>
     {/if}

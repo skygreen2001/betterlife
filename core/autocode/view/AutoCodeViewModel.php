@@ -273,7 +273,7 @@ class AutoCodeViewModel extends AutoCodeView
                     $edit_contents .= "            <tr class=\"entry\">\r\n".
                                       "                <th class=\"head\">$field_comment</th>\r\n".
                                       "                <td class=\"content\">\r\n".
-                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\">{\${$instancename}.$fieldname|default:''}</textarea>\r\n".
+                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment ."\">{\${$instancename}.$fieldname|default:''}</textarea>\r\n".
                                       "                </td>\r\n".
                                       "            </tr>\r\n";
                 } else if ( $isImage ) {
@@ -355,12 +355,12 @@ class AutoCodeViewModel extends AutoCodeView
             foreach ($text_area_fieldname as $key => $value) {
                 // $ckeditor_prepare .= "ckeditor_replace_$key();";
                 $ueEditor_prepare .= "pageInit_ue_$key();\r\n\r\n" .
-                                     "            // 在线编辑器设置默认样式\r\n" .
-                                     "            ue_{$key}.ready(function(){\r\n" .
-                                     "                UE.dom.domUtils.setStyles(ue_{$key}.body, {\r\n" .
-                                     "                    'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
-                                     "                });\r\n".
-                                     "            });\r\n";
+                                     "                // 在线编辑器设置默认样式\r\n" .
+                                     "                ue_{$key}.ready(function(){\r\n" .
+                                     "                    UE.dom.domUtils.setStyles(ue_{$key}.body, {\r\n" .
+                                     "                        'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
+                                     "                    });\r\n".
+                                     "                });\r\n";
             }
             $textareapreparesentence = "";
 //             $textareapreparesentence = <<<EDIT
@@ -377,7 +377,9 @@ class AutoCodeViewModel extends AutoCodeView
     {if (\$online_editor == 'UEditor')}
         <script>
         $(function() {
-            $ueEditor_prepare
+            if ( typeof UE != 'undefined' ) {
+                $ueEditor_prepare
+            }
         });
         </script>
     {/if}

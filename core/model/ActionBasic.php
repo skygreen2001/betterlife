@@ -337,16 +337,19 @@ class ActionBasic extends BBObject
                 if ( empty($viewObject) ) {
                     $this->view->viewObject = new ViewObject();
                 }
-                UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.config.js" );
-                if ( UtilAjax::$IsDebug ) {
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.js" );
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.js" );
-                } else {
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.min.js" );
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.min.js" );
+                
+                $uc_file = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
+                if ( file_exists($uc_file) ) {
+                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.config.js" );
+                    if ( UtilAjax::$IsDebug ) {
+                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.js" );
+                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.js" );
+                    } else {
+                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.min.js" );
+                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.min.js" );
+                    }
+                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/lang/zh-cn/zh-cn.js" );
                 }
-                UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/lang/zh-cn/zh-cn.js" );
-
                 if ( is_array($textarea_ids) && ( count($textarea_ids) > 0 ) ) {
                     for ($i = 0; $i < count($textarea_ids); $i++) {
                         UtilUeditor::loadJsFunction( $textarea_ids[$i], $this->view->viewObject, null );

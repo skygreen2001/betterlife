@@ -43,41 +43,43 @@ class UtilUeditor extends Util
     {
         $is_toolbar_full      = false;
         $info_install_ueditor = "";
-        $uc_file = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
         $ue_readme_url = Gc::$url_base . "install" . DS . "README.md";
+        $uc_file       = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
         if ( !file_exists($uc_file) ) {
             $info_install_ueditor = '<div class=\"alert alert-danger\" role=\"alert\">很遗憾不能正常显示在线编辑器! <a target="_blank" href=\"' . $ue_readme_url . '\" class=\"alert-link\">请下载帮助文档后按要求安装好UEditor</a>.</div>';
-        }
-
-        if ( $is_toolbar_full ) {
             UtilJavascript::loadJsContentReady( $viewObject, "
-                var ue_{$textarea_id};
-                function pageInit_ue_{$textarea_id}()
-                {
-                    ue_{$textarea_id} = UE.getEditor('{$textarea_id}',{
-                        allowDivTransToP: false
-                    });
-                }
                 $('#$textarea_id').before('$info_install_ueditor');
                 "
             );
         } else {
-            if ( empty($configString) ) {
-                $configString = self::toolbar_normal();
-            }
-            UtilJavascript::loadJsContentReady( $viewObject, "
-                var ue_{$textarea_id};
-                function pageInit_ue_{$textarea_id}()
-                {
-                    ue_{$textarea_id} = UE.getEditor('{$textarea_id}', {
-                        toolbars: $configString,
-                        allowDivTransToP: false
-                    });
-                    $.edit.ueditorFullscreen('$textarea_id');
+            if ( $is_toolbar_full ) {
+                UtilJavascript::loadJsContentReady( $viewObject, "
+                    var ue_{$textarea_id};
+                    function pageInit_ue_{$textarea_id}()
+                    {
+                        ue_{$textarea_id} = UE.getEditor('{$textarea_id}',{
+                            allowDivTransToP: false
+                        });
+                    }
+                    "
+                );
+            } else {
+                if ( empty($configString) ) {
+                    $configString = self::toolbar_normal();
                 }
-                $('#$textarea_id').before('$info_install_ueditor');
-                "
-            );
+                UtilJavascript::loadJsContentReady( $viewObject, "
+                    var ue_{$textarea_id};
+                    function pageInit_ue_{$textarea_id}()
+                    {
+                        ue_{$textarea_id} = UE.getEditor('{$textarea_id}', {
+                            toolbars: $configString,
+                            allowDivTransToP: false
+                        });
+                        $.edit.ueditorFullscreen('$textarea_id');
+                    }
+                    "
+                );
+            }
         }
     }
 

@@ -27,7 +27,7 @@
             <tr class="entry">
                 <th class="head">说明</th>
                 <td class="content">
-                    <textarea id="intro" name="intro">{$category.intro|default:''}</textarea>
+                    <textarea id="intro" name="intro" rows="6" cols="60" placeholder="说明">{$category.intro|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -48,15 +48,17 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            pageInit_ue_intro();
+            if ( typeof UE != 'undefined' ) {
+                pageInit_ue_intro();
 
-            // 在线编辑器设置默认样式
-            ue_intro.ready(function(){
-                UE.dom.domUtils.setStyles(ue_intro.body, {
-                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                // 在线编辑器设置默认样式
+                ue_intro.ready(function(){
+                    UE.dom.domUtils.setStyles(ue_intro.body, {
+                        'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                    });
                 });
-            });
 
+            }
         });
         </script>
     {/if}

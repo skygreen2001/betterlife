@@ -17,7 +17,7 @@
             <tr class="entry">
                 <th class="head">通知内容</th>
                 <td class="content">
-                    <textarea id="notice_content" name="notice_content">{$notice.notice_content|default:''}</textarea>
+                    <textarea id="notice_content" name="notice_content" rows="6" cols="60" placeholder="通知内容">{$notice.notice_content|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -38,15 +38,17 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            pageInit_ue_notice_content();
+            if ( typeof UE != 'undefined' ) {
+                pageInit_ue_notice_content();
 
-            // 在线编辑器设置默认样式
-            ue_notice_content.ready(function(){
-                UE.dom.domUtils.setStyles(ue_notice_content.body, {
-                    'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                // 在线编辑器设置默认样式
+                ue_notice_content.ready(function(){
+                    UE.dom.domUtils.setStyles(ue_notice_content.body, {
+                        'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
+                    });
                 });
-            });
 
+            }
         });
         </script>
     {/if}

@@ -407,7 +407,13 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                              </div>\r\n".
                                       "                          </div>\r\n";
                     // $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
-                    $ueEditor_prepare .= "pageInit_ue_$fieldname();";
+                    $ueEditor_prepare .= "pageInit_ue_$fieldname();".
+                                         "                // 在线编辑器设置默认样式\r\n" .
+                                         "                ue_{$fieldname}.ready(function(){\r\n" .
+                                         "                    UE.dom.domUtils.setStyles(ue_{$fieldname}.body, {\r\n" .
+                                         "                        'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
+                                         "                    });\r\n".
+                                         "                });\r\n";
                 } else if ( $isImage ) {
                     $hasImgFormFlag = "enctype=\"multipart/form-data\"";
                     $edit_contents .= "                          <label for=\"$fieldname\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>\r\n".
@@ -494,7 +500,9 @@ class AutoCodeViewAdmin extends AutoCodeView
     {if (\$online_editor == "UEditor")}
         <script>
           $(function(){
-            $ueEditor_prepare
+            if ( typeof UE != 'undefined' ) {
+              $ueEditor_prepare
+            }
           });
         </script>
     {/if}

@@ -41,7 +41,7 @@ class Action_Blog extends ActionModel
     public function edit()
     {
         if ( !empty($_POST) ) {
-            $blog       = $this->model->Blog;
+            $blog = $this->model->Blog;
             $id         = $blog->getId();
             $isRedirect = true;
             if ( !empty($_FILES)&&!empty($_FILES["icon_url"]["name"]) ) {
