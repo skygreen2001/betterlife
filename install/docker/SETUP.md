@@ -40,6 +40,14 @@
     - 复制安装的composer包文件到本地: docker cp bb:/var/www/html/betterlife/install/vendor/ $(pwd)/install/
     - 复制安装好的UEditor包文件到本地: docker cp bb:/var/www/html/betterlife/misc/js/onlineditor/ueditor/ $(pwd)/misc/js/onlineditor/
 
+## 本地开发调试应用
+
+  - 使用调试工具: Xdebug
+  - 使用开发工具: Visual Studio Code
+  - 修改配置文件: install/docker/Dockerfile
+    - 取消调试注释部分: debug with xdebug 
+  - 在 Visual Studio Code 里开启调试模式
+  
 ## 其它
 
 - 从Docker Hub拉取betterlife镜像并运行
@@ -56,9 +64,8 @@
   - 删除所有的容器: docker rm betterlife
   - 删除生成的镜像: docker rmi skygreen2021/betterlife
   
-
 - [学习使用Docker实战betterlife](LEARN.md)
   - 这一部分主要用于学习使用Docker实战betterlife，有空的时间可以看看，这一部分主要包括:
     - Docker 多阶段构建betterlife
     - 上传到Docker Hub分享给大家使用betterlife框架
-
+  - 使用Laradock

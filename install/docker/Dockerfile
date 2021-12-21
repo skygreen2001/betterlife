@@ -88,11 +88,16 @@ RUN apt-get install -y \
 # # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# # Install extensions for php
+# Install extensions for php
 RUN docker-php-ext-install mysqli zip && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd && \
     pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
+
+# debug with xdebug: start
+# RUN pecl install xdebug && docker-php-ext-enable xdebug
+# COPY install/docker/dev/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
+# debug with xdebug: end
 
 # COPY . ${BB_PATH}
 COPY --from=composer /app/install/vendor/ ${BB_PATH}install/vendor/
