@@ -6,12 +6,12 @@ require_once ("../../../init.php");
 if (isset($_REQUEST["s"]))
 {    
     echo file_get_contents(Gc::$upload_path."clipboard.txt");
-}else if (isset($_POST["content"])&&!empty($_POST["content"]))
+} else if (isset($_POST["content"])&&!empty($_POST["content"]))
 {
     file_put_contents(Gc::$upload_path."clipboard.txt",$_POST["content"]);
     echo  $_POST["content"];
     echo "<br/><a href='".Gc::$url_base."clipboard.php"."'>继续</a><br/>";
-}else {
+} else {
     echo  '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
     echo "<head>\r\n";     

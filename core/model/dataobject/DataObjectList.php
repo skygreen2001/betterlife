@@ -82,6 +82,12 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
         return $this->size() == 0;
     }
 
+    /**
+     * Create a new iterator from an ArrayObject instance
+     * @return ArrayIterator — An iterator from an ArrayObject.
+     * @throws Exception — on failure.
+     */
+    #[\ReturnTypeWillChange]
     public function getIterator() {
         return new ArrayIterator($this);
     }

@@ -181,7 +181,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal {
                 $result = false;
             }
         } else {
-            e( Wl::ERROR_INFO_UPDATE_ID, $this );
+           x( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return $result;
     }

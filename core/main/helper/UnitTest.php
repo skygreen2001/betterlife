@@ -62,7 +62,7 @@ class UnitTest {
         if (empty($actual)) $actual = "null/false";
         if ("failed"==$result || empty($result)) {
             $result = "<font color='red'><strong>failed</strong></font>";
-        }else {
+        } else {
             $result = "<font color='green'><strong>passed</strong></font>";
         }
         $trace = self::getTrace();

@@ -318,7 +318,7 @@ class ActionBasic extends BBObject
                 header($Header_Location . Gc::$url_base . Router::URL_INDEX . Router::URL_QUESTION . Router::VAR_GROUP . $CONNECTOR . $this->modulename . $CONNECTOR_VAR . Router::VAR_MODULE . $CONNECTOR . $action . $CONNECTOR_VAR .
                         Router::VAR_ACTION . $CONNECTOR . $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
             }
-        }elseif ( $urlMode == Router::URL_COMPAT ) {
+        } elseif ( $urlMode == Router::URL_COMPAT ) {
             header($Header_Location . Gc::$url_base . Router::URL_INDEX . Router::URL_QUESTION . Router::VAR_PATHINFO . Router::URL_EQUAL . $CONNECTOR_VAR . $this->modulename . $CONNECTOR_VAR . $action . $CONNECTOR_VAR .
                     $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
         }

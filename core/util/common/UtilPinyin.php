@@ -86,7 +86,7 @@ class UtilPinyin
     {
         if($_Num>0 && $_Num<160 ){
                 return chr($_Num);
-        }elseif($_Num<-20319 || $_Num>-10247){
+        } elseif($_Num<-20319 || $_Num>-10247){
                 return '';
         } else {
                 foreach($_Data as $k=>$v){ if($v<=$_Num) break; }
@@ -99,14 +99,14 @@ class UtilPinyin
         $_String = '';
         if($_C < 0x80){
                 $_String .= $_C;
-        }elseif($_C < 0x800) {
+        } elseif($_C < 0x800) {
                 $_String .= chr(0xC0 | $_C>>6);
                 $_String .= chr(0x80 | $_C & 0x3F);
-        }elseif($_C < 0x10000){
+        } elseif($_C < 0x10000){
                 $_String .= chr(0xE0 | $_C>>12);
                 $_String .= chr(0x80 | $_C>>6 & 0x3F);
                 $_String .= chr(0x80 | $_C & 0x3F);
-        }elseif($_C < 0x200000) {
+        } elseif($_C < 0x200000) {
                 $_String .= chr(0xF0 | $_C>>18);
                 $_String .= chr(0x80 | $_C>>12 & 0x3F);
                 $_String .= chr(0x80 | $_C>>6 & 0x3F);

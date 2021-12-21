@@ -304,7 +304,7 @@ class HugeAmountDataPush
                                 $fieldname_f=strtoupper($fieldname);
                                 if(contain($fieldname_f,"ID")){
                                     $values[$fieldname]=rand(1,self::$num-1);
-                                }else {
+                                } else {
                                     $num=UtilString::build_count_rand(1);
                                     $values[$fieldname] = $num[0];
                                 }
@@ -423,7 +423,7 @@ class HugeAmountDataPush
                             $fieldname_f=strtoupper($fieldname);
                             if(contain($fieldname_f,"ID")){
                                 $values[$fieldname]=rand(1,self::$num-1);
-                            }else {
+                            } else {
                                 $num=UtilString::build_count_rand(1);
                                 $values[$fieldname] = $num[0];
                             }
@@ -746,7 +746,7 @@ class UtilHugeAmount
     {
         if (in_array($tablename, Config_Db::$orm)) {
             $classname=array_search($tablename, Config_Db::$orm);
-        }else {
+        } else {
             $classnameSplit= explode("_", $tablename);
             $classnameSplit=array_reverse($classnameSplit);
             $classname=ucfirst($classnameSplit[0]);

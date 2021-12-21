@@ -23,15 +23,15 @@ class Dispatcher
         $isValidRequet = false;
         $controller    = $router->getController();
         if ( $controller == Router::URL_DEFAULT_CONTROLLER ) {
-          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
-          return;
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            return;
         }
         $moduleName = $router->getModule();
         if ( $moduleName && array_key_exists($moduleName, Initializer::$moduleFiles) ) {
-          $moduleFile = Initializer::$moduleFiles[$moduleName];
+            $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
-          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
-          return;
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            return;
         }
         $action_controller = ActionBasic::ROUTINE_CLASS_PREFIX . ucfirst($controller);
         if ( array_key_exists($action_controller, $moduleFile) ) {
@@ -56,13 +56,13 @@ class Dispatcher
                 $isValidRequet = true;
             }
         } else {
-          if ( !is_dir($index_dir . "action") && file_exists($index_dir . "index.php") ) {
-            header("location:" . Gc::$url_base . Gc::$module_root . "/" . $moduleName . "/index.php");
-            die();
-          }
+            if ( !is_dir($index_dir . "action") && file_exists($index_dir . "index.php") ) {
+                header("location:" . Gc::$url_base . Gc::$module_root . "/" . $moduleName . "/index.php");
+                die();
+            }
 
-          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
-          return;
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            return;
         }
         if ( !$isValidRequet ) {
             LogMe::record(Wl::ERROR_INFO_CONTROLLER_UNKNOWN);
@@ -128,8 +128,8 @@ class Dispatcher
             }
 
         } else {
-          include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
-          return;
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            return;
         }
         UnitTest::tearDown();
         return $view;
@@ -183,7 +183,7 @@ class Dispatcher
                 echo($msg);
             }
             exit();
-        }else {
+        } else {
             $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
             if ( $time != 0 )
                 $str .= $msg;

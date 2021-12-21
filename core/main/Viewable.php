@@ -16,6 +16,7 @@ class Viewable extends BBObject implements ArrayAccess
      * @return bool
      * @abstracting ArrayAccess
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($key) {
         $method = "get" . ucfirst($key);
         return method_exists($this, $method);
@@ -43,6 +44,7 @@ class Viewable extends BBObject implements ArrayAccess
      * @return void
      * @abstracting ArrayAccess
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
         $method = "set".ucfirst($key);
@@ -57,6 +59,7 @@ class Viewable extends BBObject implements ArrayAccess
      * @return void
      * @abstracting ArrayAccess
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         unset($this->$key);

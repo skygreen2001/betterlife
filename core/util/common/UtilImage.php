@@ -28,7 +28,7 @@ class UtilImage
                     "mime"   => $imageInfo['mime']
             );
             return $info;
-        }else {
+        } else {
             return false;
         }
     }
@@ -345,7 +345,7 @@ class UtilImage
         $height = 22;
         if ( $type != 'gif' && function_exists('imagecreatetruecolor') ) {
             $im = @imagecreatetruecolor($width, $height);
-        }else {
+        } else {
             $im = @imagecreate($width, $height);
         }
         if ( empty($rgb) ) {
@@ -435,7 +435,7 @@ class UtilImage
         $width = ($length * 10 + 10) > $width ? $length * 10 + 10 : $width;
         if ( $type!='gif' && function_exists('imagecreatetruecolor')) {
             $im = @imagecreatetruecolor($width, $height);
-        }else {
+        } else {
             $im = @imagecreate($width, $height);
         }
         $r = Array(225,255,255,223);

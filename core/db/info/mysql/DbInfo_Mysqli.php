@@ -414,7 +414,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             $endtime = microtime(true);
             LogMe::log( "\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n" );
         }
-        if ( !$this->stmt && $errorLevel && $this->connection ) e( "无法运行查询语句: $sqlstring | " . mysqli_error($this->connection), $this );
+        if ( !$this->stmt && $errorLevel && $this->connection )x( "无法运行查询语句: $sqlstring | " . mysqli_error($this->connection), $this );
         if ( $this->stmt ) return $result;
         return null;
     }

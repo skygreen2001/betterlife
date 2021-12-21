@@ -22,6 +22,8 @@
 
 # 模仿优秀
 
+  - 表示层View整合Blade Templates
+  - Symfony Console: 打造命令行工具
   - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
     - Composer脚本: https://docs.phpcomposer.com/articles/scripts.html
   - CodeIgnitor 4的开发模式显示debug 条
@@ -30,10 +32,9 @@
     - Lavarel的安装脚本: https://laravel.build/betterlife
     - Symfony的安装脚本: https://get.symfony.com/cli/installer
 
-
 # IDE之路
 
-  - 开发Sublime|Atom|eclipse IDE 插件工具？
+  - 开发Visual Studio Code｜Sublime|Atom|eclipse IDE 插件工具？
   - php 创建初始化:yo（nodejs npm）
   - php ide electron／atom(coffeescript)
   - 开发APICloud 下载包

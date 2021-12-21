@@ -80,7 +80,7 @@ class UtilXmlObject extends Util
             foreach($data as $key=>$value) {
                 $child->addChild($key, $value);
             }
-        }else {
+        } else {
             $this->createXmlObject($object);
         }
         $this->xml->asXML($this->filename);

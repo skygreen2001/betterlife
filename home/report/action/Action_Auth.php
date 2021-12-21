@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------------<br/>
- * 控制器:访问授权<br/>
- +---------------------------------------
+ * -----------| 控制器:访问授权 |-----------
  * @category betterlife
  * @package web.admin.action
  * @author skygreen skygreen2001@gmail.com
@@ -26,14 +24,14 @@ class Action_Auth extends ActionReport
         $this->view->set("message","");
         if(HttpSession::isHave('user_id')) {
             $this->redirect("index","index");
-        }else if (!empty($_POST)) {
+        } else if (!empty($_POST)) {
             $user = $this->model->Admin;
             $userdata = Admin::get_one(array("username"=>$user->username,
                     "password"=>$user->getPassword()));
                     LogMe::log($userdata);
             if (empty($userdata)) {
                 $this->view->set("message","用户名或者密码错误");
-            }else {
+            } else {
                 HttpSession::set('user_id',$userdata->admin_id);
                 HttpSession::set('username',$user->username);
                 $this->redirect("index","index");

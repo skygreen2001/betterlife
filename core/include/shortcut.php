@@ -7,7 +7,7 @@
 /**
  * 自定义异常处理缩写表示
  */
-function e($errorInfo, $object = null, $code = 0, $extra = null) {
+function x($errorInfo, $object = null, $code = 0, $extra = null) {
     ExceptionMe::recordException( $errorInfo, $object, $code, $extra );
 }
 

@@ -203,8 +203,8 @@ class Dao_Php5 extends Dao implements IDaoNormal
                 Exception_Db::record( $exc->getTraceAsString() );
                 $result = false;
             }
-        }else {
-            e( Wl::ERROR_INFO_UPDATE_ID, $this );
+        } else {
+           x( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return true;
     }

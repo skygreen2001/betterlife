@@ -17,7 +17,7 @@ class Gc {
         'db_type'  => 0,//默认使用mysql数据库. EnumDbSource::DB_MYSQL=0, 具体定义参见Config_Db.php里EnumDbSource的定义
         'driver'   => 1,//数据库使用调用引擎. EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI, 具体定义参见Config_Db.php里EnumDbEngine的定义
         'host'     => '127.0.0.1',//数据库主机[默认本地 localhost]
-        // 'host'     => '192.168.64.2',//数据库主机[默认本地 localhost]
+        // 'host'     => 'mysql',//数据库主机[docker mysql host]
         'port'     => '',//数据库端口
         'database' => 'betterlife',//数据库名称
         'username' => 'root',//数据库用户名
@@ -31,7 +31,7 @@ class Gc {
      * @var bool
      * @static
      */
-    public static $dev_debug_on = true;
+    public static $dev_debug_on    = true;
     /**
      * 是否开放php提供的debug信息
      * @var bool
@@ -39,7 +39,7 @@ class Gc {
      */
     public static $dev_php_debug_on = false;
     /**
-     * 网站应用的名称<br/>
+     * 网站应用的名称
      * 展示给网站用户
      * @var string
      * @static
@@ -48,7 +48,7 @@ class Gc {
     /**
      * 网站应用的版本
      */
-    public static $version = '1.0.0';
+    public static $version   = '1.0.0';
     /**
      * 网站根路径的URL路径
      * @var string
@@ -62,11 +62,11 @@ class Gc {
      */
     public static $nav_root_path;//='C:\\wamp\\www\\betterlife\\';
     /**
-     * 框架文件所在的路径 <br/>
-     * 有两种策略可以部署<br/>
-     * 1.框架和应用整合在一起；则路径同$nav_root_path   <br/>
-     * 2.框架和应用分开，在php.ini里设置include_path='';添加框架所在的路径<br/>
-     *                   则可以直接通过  <br/>
+     * 框架文件所在的路径 
+     * 有两种策略可以部署
+     * 1.框架和应用整合在一起；则路径同$nav_root_path   
+     * 2.框架和应用分开，在php.ini里设置include_path='';添加框架所在的路径
+     *                   则可以直接通过  
      * @var string
      * @static
      */
@@ -105,48 +105,55 @@ class Gc {
 
     //<editor-fold desc='开发者使用设置'>
     /**
-     * 网站应用的名称<br/>
+     * 网站应用的名称
+     * 
      * 在网站运行程序中使用，不展示给网站用户；如标识日志文件的默认名称等等。
+     * 
      * @var string
      * @static
      */
-    public static $appName='betterlife';
+    public static $appName       = 'betterlife';
     /**
      * 应用名的缩写
      */
-    public static $appName_alias='bb';
+    public static $appName_alias = 'bb';
     /**
-     * 业务应用部署的根目录<br/>
-     * 说明：该框架采用模块组建的方式<br/>
-     * 每一个遵循该框架的网站业务应用都部署在该目录下<br/>
+     * 业务应用部署的根目录
+     * 
+     * 说明: 该框架采用模块组建的方式
+     * 
+     * 每一个遵循该框架的网站业务应用都部署在该目录下
+     * 
      * @var string
      * @static
      */
-    public static $module_root='home';
+    public static $module_root   = 'home';
     /**
      * 开发者可在同一个web里部署多个业务应用
+     * 
      * $moduleName里定义的是每个业务应用所在的根目录路径
      * @var array
      * @static
      */
-    public static $module_names=array(
+    public static $module_names  = array(
         'betterlife',
         'model',
         'admin',
         'report',
     );
     /**
-     * URL访问模式,可选参数0、1、2、3,代表以下四种模式：<br/>
-     * 0 (普通模式);<br/>
-     * 1 (PATHINFO 模式); eg:<br/>
-     * 2 (REWRITE  模式); 需要打开.htaccess里的注释行: RewriteEngine On;
-     *                    eg: http://localhost/betterlife/betterlife/auth/login<br/>
-     * 3 兼容模式(通过一个GET变量将PATHINFO传递给dispather，默认为s index.php?s=/module/action/id/1)<br/>
+     * URL访问模式,可选参数0、1、2、3,代表以下四种模式:
+     * 
+     * - 0 (普通模式);
+     * - 1 (PATHINFO 模式); eg: ?s=/module/action/method/id/1
+     * - 2 (REWRITE  模式); 需要打开.htaccess里的注释行: RewriteEngine On;
+     *                     eg: http://localhost/betterlife/betterlife/auth/login
+     * - 3 兼容模式(通过一个GET变量将PATHINFO传递给dispather，默认为s index.php?s=/module/action/id/1)
      * 当URL_DISPATCH_ON开启后有效; 默认为PATHINFO 模式，提供最好的用户体验和SEO支持
      * @var int
      * @static
      */
-    public static $url_model = 0;
+    public static $url_model    = 0;
     /**
      * 是否打开Smarty Debug Console窗口
      * @var bool
@@ -160,14 +167,19 @@ class Gc {
      */
     public static $dev_profile_on = false;
     /**
-     * 模板模式<br/>
-     * 本框架自带四种开源模板支持<br/>
-     * 1:Smarty<br/>
-     * 2:Twig<br/>
-     * 3:PHPTemplate<br/>
-     * 0:不支持任何模板<br/>
+     * 模板模式
+     * 
+     * 本框架自带四种开源模板支持
+     * 
+     * - 1: Smarty
+     * - 2: Twig
+     * - 3: PHPTemplate
+     * - 0: 不支持任何模板
+     * 
      * 默认在这里指定支持其中一种；
-     * 若在开发中需要用到多种模板技术,需在使用时通过View进行指定使用<br/>
+     * 
+     * 若在开发中需要用到多种模板技术,需在使用时通过View进行指定使用
+     * 
      * 当模板为1:Smarty时，模板的标签写法参考/home/betterlife/view/default/core/blog/display.tpl
      * @var int
      * @static
@@ -175,68 +187,93 @@ class Gc {
     public static $template_mode = 1; // View::TEMPLATE_MODE_TWIG;
     /**
      * 每个模块可以定义自己的模板模式
+     * 
      * 如果没有定义，则使用$template_mode默认定义的名称，一般都是1:Smarty
      * @var mixed
      */
     public static $template_mode_every = array(
-        // 'betterlife'=>2,// View::TEMPLATE_MODE_TWIG
+        'betterlife' => 1,
+        // 'betterlife' => 2,// View::TEMPLATE_MODE_TWIG
     );
     /**
-     * 开发者自定义当前使用模板目录名<br/>
-     * 示例：D:\wamp\www\betterlife\home\betterlife\view\default<br/>
-     *       default即自定义当前使用模板目录名
+     * 开发者自定义当前使用模板目录名
+     * 
+     * @example 示例:
+     * 示例如下:
+     * 
+     *     D:\wamp\www\betterlife\home\betterlife\view\default
+     * 
+     *     default即自定义当前使用模板目录名
      * @var string
      * @static
      */
     public static $self_theme_dir = 'default';
     /**
      * 每个模块可以定义自己显示的模板名
+     * 
      * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
+     * 
      * @var mixed
      */
     public static $self_theme_dir_every = array(
-        // 'betterlife'=>'twig',
-        'betterlife'=>'bootstrap',
-        // 'model'=>'bootstrap'
+        // 'betterlife' => 'twig'
+        'betterlife' => 'bootstrap',
+        // 'model'      => 'bootstrap'
     );
     /**
-    * 模板文件后缀名称<br/>
-    * 一般为.tpl,.php,.html,.htm;<br/>
-    * 一般不支持开源模板的时候，使用.php后缀名；即仍可以使用php语法；但不利于逻辑层和页面设计html代码分离<br/>
-    * 模板文件一般通用tpl后缀；也有开源模板通常使用html或者htm后缀名；实际上后缀名为任何名称都可以<br/>
-    * @var string
-    * @static
-    */
-    public static $template_file_suffix = '.tpl'; // '.twig';
+     * 模板文件后缀名称
+     * 
+     * 一般为.tpl,.twig,.php,.html,.htm;
+     * 
+     * 一般不支持开源模板的时候，使用.php后缀名；即仍可以使用php语法；但不利于逻辑层和页面设计html代码分离
+     * 
+     * 模板文件一般通用tpl后缀；也有开源模板通常使用html或者htm后缀名；实际上后缀名为任何名称都可以
+     * 
+     * @var string
+     * @static
+     */
+    public static $template_file_suffix = '.tpl';
+    // public static $template_file_suffix = '.twig';
     /**
      * 每个模块可以定义自己的模板后缀名
+     * 
      * 如果没有定义，则使用$template_file_suffix默认定义的名称，一般都是.tpl
      * @var mixed
      */
     public static $template_file_suffix_every = array(
-        // 'betterlife'=>'.twig',
+        'betterlife' => '.tpl',
+        // 'betterlife' => '.twig',
     );
     /**
-     * 所有无需预加载的 业务应用所在的根目录路径下的子目录<br/>
-     * 举例：<br/>
-     *      view在module目录下<br/>
+     * 所有无需预加载的 业务应用所在的根目录路径下的子目录
+     * 
+     * @example 示例:
+     * 示例如下:
+     * 
+     *      view在module目录下
+     * 
      *      主要为html,javascript,css文件；不是类对象文件，因此无需预加载
+     * 
      * @var array
      * @static
      */
-    public static $module_exclude_subpackage=array(
+    public static $module_exclude_subpackage = array(
         'view',
     );
     /**
      * 是否在线性能优化
+     * 
      * @var mixed
      */
     public static $is_online_optimize = false;
     /**
-     * @string 页面字符集<br/>
-     * 一般分为：<br/>
-     * UTF-8<br/>
-     * GBK<br/>
+     * @string 页面字符集
+     * 
+     * 一般分为:
+     * 
+     *    - UTF-8
+     *    - GBK
+     * 
      * 最终可以由用户选择
      * @var string
      * @static
@@ -261,18 +298,19 @@ class Gc {
      */
     //<editor-fold defaultstate='collapsed' desc='邮件的设置'>
     public static $email_config = array(
-        'SMTP' => 'smtp.sina.com.cn',
-        'smtp_port' => '25',
+        'SMTP'          => 'smtp.sina.com.cn',
+        'smtp_port'     => '25',
         'sendmail_from' => 'skygreen2001@sina.com',
         /**
-         * 可在php.ini中设置sendmail_path，无法通过ini_set实时设置，因为它只能在php.ini或者httpd.conf中设置。<br/>
+         * 可在php.ini中设置sendmail_path，无法通过ini_set实时设置，因为它只能在php.ini或者httpd.conf中设置。
+         * 
          * 因为官网文档【http://php.net/manual/en/mail.configuration.php】：sendmail_path '/usr/sbin/sendmail -t -i' PHP_INI_SYSTEM
          */
         //'sendmail_path'=>'C:\wamp\sendmail\sendmail.exe -t',
         /**
          * 通过邮件发送日志的目的者
          */
-        'mailto' => 'skygreen@sohu.com'
+        'mailto' => 'skygreen_2001@sina.com'
     );
     //</editor-fold>
     /**
@@ -283,22 +321,27 @@ class Gc {
     //<editor-fold defaultstate='collapsed' desc='日志的设置'>
     public static $log_config = array(
         /**
-         * 默认日志记录的方式。<br/>
-         * 一般来讲，日志都通过log记录，由本配置决定它在哪里打印出来。<br/>
+         * 默认日志记录的方式。
+         * 
+         * 一般来讲，日志都通过log记录，由本配置决定它在哪里打印出来。
+         * 
          * 可通过邮件发送重要日志，可在数据库或者文件中记录日志。也可以通过Firebug显示日志。
+         * 
          * EnumLogType::FILE : 3
          */
-        'logType' => EnumLogType::FILE,
+        'logType'          => EnumLogType::FILE,
         /**
          * 允许记录的日志级别
          */
         'log_record_level' => array('EMERG','ALERT','CRIT','ERR','INFO'),
         /**
-         * 日志文件路径<br/>
-         * 可指定日志文件放置的路径<br/>
+         * 日志文件路径
+         * 
+         * 可指定日志文件放置的路径
+         * 
          * 如果为空不设置，则在网站应用根目录下新建一个log目录，放置在它下面
          */
-        'logpath' => '',
+        'logpath'       => '',
         /**
          * 检测日志文件大小，超过配置大小则备份日志文件重新生成，单位为字节
          */
@@ -306,12 +349,12 @@ class Gc {
         /**
          * 日志记录的时间格式
          */
-        'timeFormat' => '%Y-%m-%d %H:%M:%S',
+        'timeFormat'    => '%Y-%m-%d %H:%M:%S',
         /**
          * 通过邮件发送日志的配置。
          */
         'config_mail_log' => array(
-            'subject' => '重要的日志事件',
+            'subject'     => '重要的日志事件',
             'mailBackend' => '',
         ),
         'log_table' => 'bb_log_log',

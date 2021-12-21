@@ -46,7 +46,7 @@ class Model {
             }
         }
         if ( !$isExistModel ) {
-            e( Wl::ERROR_INFO_MODEL_EXISTS . " {$model}" );
+           x( Wl::ERROR_INFO_MODEL_EXISTS . " {$model}" );
         }
     }
     /**

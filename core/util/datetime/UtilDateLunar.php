@@ -303,7 +303,7 @@ class UtilDateLunar
                     $t = $i + 2;
                     $e = 1;
                     break;
-                }else if ($between < $yearMonth[$i])
+                } else if ($between < $yearMonth[$i])
                 {
                     $t = $i + 1;
                     $e = $between - (empty($yearMonth[$i - 1]) ? 0 : $yearMonth[$i - 1]) + 1;
@@ -344,16 +344,16 @@ class UtilDateLunar
             if ($num <= 10)
             {
                 $res = '初' . $dateHash[$num];
-            }else if ($num > 10 && $num < 20)
+            } else if ($num > 10 && $num < 20)
             {
                 $res = '十' . $dateHash[$num - 10];
-            }else if ($num == 20)
+            } else if ($num == 20)
             {
                 $res = "二十";
-            }else if ($num > 20 && $num < 30)
+            } else if ($num > 20 && $num < 30)
             {
                 $res = "廿" . $dateHash[$num - 20];
-            }else if ($num == 30)
+            } else if ($num == 30)
             {
                 $res = "三十";
             }

@@ -388,7 +388,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }
-        if ( !$handle && $errorLevel && $this->connection ) e( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
+        if ( !$handle && $errorLevel && $this->connection )x( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
         if ( $handle ) return new Query_Mysql($handle);
         return null;
     }

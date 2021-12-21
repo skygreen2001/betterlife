@@ -160,7 +160,7 @@ abstract class ExceptionMe extends Exception {
                     $errorInfo .= '          <td>&nbsp;';
                     if (is_string($value['param'][0])) {
                         $errorInfo .= implode(' | ',$value['param']);
-                    }else if (is_object($value['param'][0])) {
+                    } else if (is_object($value['param'][0])) {
                         foreach ($value['param'] as $object) {
                             $errorInfo .= $object->classname() . " | ";
                         }

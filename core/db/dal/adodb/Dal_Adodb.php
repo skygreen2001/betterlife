@@ -281,7 +281,7 @@ class Dal_Adodb extends Dal implements IDal
                 $result = false;
             }
         } else {
-            e( Wl::ERROR_INFO_UPDATE_ID, $this );
+           x( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return $result;
     }
@@ -530,7 +530,7 @@ class Dal_Adodb extends Dal implements IDal
             if ( ( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type ) ) {
                 $this->stmt = $this->connection->Execute( $sqlstring );
                 return true;
-            }elseif ( Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type ) {
+            } elseif ( Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type ) {
                 $this->stmt = $this->connection->Execute( $sqlstring );
                 $autoId     = $this->connection->Insert_ID();
                 if ( !$autoId) {

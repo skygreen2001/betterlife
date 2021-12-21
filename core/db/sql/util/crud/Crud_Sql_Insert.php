@@ -55,7 +55,7 @@ class Crud_Sql_Insert extends Crud_SQL {
                 } else {
                     $this->values .= "?,";
                 }
-            }else {
+            } else {
                 $this->values .= "'" . $value . "',";
             }
         }

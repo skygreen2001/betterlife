@@ -110,7 +110,7 @@ function parse_name($name, $type = 0)
 {
     if( $type ) {
         return ucfirst(preg_replace("/_([a-zA-Z])/e", "strtoupper('\\1')", $name));
-    }else {
+    } else {
         $name = preg_replace("/[A-Z]/", "_\\0", $name);
         return strtolower(trim($name, "_"));
     }

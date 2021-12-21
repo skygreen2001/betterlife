@@ -120,7 +120,7 @@ abstract class Dao
         if ( $object instanceof DataObject ) {
             return DataObjectSpec::getRealIDColumnName( $object );
         }
-        e( Wl::ERROR_INFO_EXTENDS_CLASS );
+       x( Wl::ERROR_INFO_EXTENDS_CLASS );
     }
 
     /**
@@ -135,12 +135,12 @@ abstract class Dao
                 if ( (new $object()) instanceof DataObject ) {
                     $this->classname = $object;
                     return true;
-                }else {
-                    e( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
+                } else {
+                   x( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
                     return false;
                 }
             }
-        }else {
+        } else {
             return $this->validObjectParameter( $object );
         }
     }
@@ -176,11 +176,11 @@ abstract class Dao
             if ( $object instanceof DataObject ) {
                 $this->classname = $object->classname();
             } else {
-                e( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
+               x( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
                 return false;
             }
-        }else {
-            e( Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME, $this );
+        } else {
+           x( Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME, $this );
             return false;
         }
         return true;

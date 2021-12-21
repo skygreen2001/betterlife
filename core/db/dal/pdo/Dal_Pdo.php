@@ -339,7 +339,7 @@ class Dal_Pdo extends Dal implements IDal
                 $result         = false;
             }
         } else {
-            e( Wl::ERROR_INFO_UPDATE_ID, $this );
+           x( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return $result;
     }

@@ -183,8 +183,8 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal {
                 Exception_Db::log( $exc->getTraceAsString() );
                 $result = false;
             }
-        }else {
-            e( Wl::ERROR_INFO_UPDATE_ID, $this );
+        } else {
+           x( Wl::ERROR_INFO_UPDATE_ID, $this );
         }
         return $result;
     }

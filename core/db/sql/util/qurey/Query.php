@@ -146,6 +146,7 @@ abstract class Query implements Iterator {
      * Makes use of {@link seek()} and {@link numRecords()}, takes care of the plumbing.
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function rewind() {
         if ( $this->queryHasBegun && $this->numRecords() > 0 ) {
             $this->queryHasBegun = false;
@@ -187,6 +188,7 @@ abstract class Query implements Iterator {
      * Makes use of {@link nextRecord()}, takes care of the plumbing.
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function next() {
         $this->queryHasBegun = true;
         $this->currentRecord = $this->nextRecord();
@@ -198,6 +200,7 @@ abstract class Query implements Iterator {
      * Iterator function implementation. Check if the iterator is pointing to a valid item.
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function valid() {
         if ( !$this->currentRecord ) $this->next();
         return $this->currentRecord !== false;

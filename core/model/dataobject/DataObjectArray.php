@@ -58,19 +58,56 @@ class DataObjectArray extends BBObject implements ArrayAccess
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="定义数组进入对象方式">
+    /**
+     * Whether a offset exists
+     * 
+     * @param mixed $key — An offset to check for.
+     * @access public
+     * @return bool
+     * @abstracting ArrayAccess
+     */
+    #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
         if ( $this->$key ) return true;
         return method_exists($this, $key);
     }
+
+    /**
+     * Offset to retrieve
+     * 
+     * @param mixed $key — The offset to retrieve.
+     * @access public
+     * @return mixed — Can return all value types.
+     * @abstracting ArrayAccess
+     */
     public function offsetGet($key)
     {
         return $this->$key;
     }
+
+    /**
+     * Offset to set
+     * @param mixed $key — The offset to assign the value to.
+     * @param mixed $value — The value to set.
+     * @access public
+     * @return void
+     * @abstracting ArrayAccess
+     */
+    #[\ReturnTypeWillChange]
     public function offsetSet($key, $value)
     {
         $this->$key = $value;
     }
+
+    /**
+     * Offset to unset
+     * @param mixed $key — The offset to unset.
+     * @access public
+     * @return void
+     * @abstracting ArrayAccess
+     */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         unset($this->$key);
