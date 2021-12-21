@@ -245,6 +245,25 @@ require_once ("init.php");
 // $所有人的钱 = $小爱的钱 + $小明的钱;
 // echo $所有人的钱;
 
-if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+// // 可使用Laravel的Helper方法
+// // [dd()](https://laravel.com/docs/8.x/helpers#method-dd)
+// $value1 = "Hello";
+// $value2 = "World";
+// $value3 = "Skygreen";
+// dd($value1, $value2, $value3);
+
+// // [可使用Laravel的Collections](https://laravel.com/docs/8.x/collections)
+// use Illuminate\Support\Collection;
+// use Illuminate\Support\Str;
+// Collection::macro('toUpper', function () {
+//     return $this->map(function ($value) {
+//         return Str::upper($value);
+//     });
+// });
+// $collection = collect(['first', 'second']);
+// $upper = $collection->toUpper();
+// echo $upper;
+
+if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) ) {
     phpinfo();
 }
