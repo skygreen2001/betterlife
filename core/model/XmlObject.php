@@ -166,7 +166,7 @@ class XmlObject extends BBObject implements ArrayAccess
     {
         if ($xmlObject_classname==null){
             $classname=get_called_class();
-        }else{
+        } else {
             $classname=$xmlObject_classname;
         }
         $filename=call_user_func("$classname::address");

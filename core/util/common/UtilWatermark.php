@@ -101,7 +101,7 @@ class UtilWatermark
         $uploaded_file_path = self::$uploaded_image_destination . $temp_file_name;
         if (self::$is_always_output_jpg){
             $processed_file_path = self::$processed_image_destination . preg_replace('/\\.[^\\.]+$/', '.jpg', $temp_file_name);
-        }else{
+        } else {
             $processed_file_path = self::$processed_image_destination . $temp_file_name;
 
         }
@@ -246,11 +246,11 @@ class UtilWatermark
 
         if (self::$is_always_output_jpg){
             imagejpeg($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
-        }else{
+        } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
             if ($source_type==IMAGETYPE_PNG){
                 $imageOutputFunction($image, $output_file_path);
-            }else{
+            } else {
                 $imageOutputFunction($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
             }
         }
@@ -356,11 +356,11 @@ class UtilWatermark
 
         if (self::$is_always_output_jpg){
             imagejpeg($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
-        }else{
+        } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
             if ($source_type==IMAGETYPE_PNG){
                 $imageOutputFunction($image, $output_file_path);
-            }else{
+            } else {
                 $imageOutputFunction($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
             }
         }
@@ -473,11 +473,11 @@ class UtilWatermark
 
         if (self::$is_always_output_jpg){
             imagejpeg($source_gd_image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
-        }else{
+        } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
             if ($source_type==IMAGETYPE_PNG){
                 $imageOutputFunction($source_gd_image, $output_file_path);
-            }else{
+            } else {
                 $imageOutputFunction($source_gd_image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
             }
         }

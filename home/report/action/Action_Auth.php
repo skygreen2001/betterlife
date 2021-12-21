@@ -57,7 +57,7 @@ class Action_Auth extends ActionReport
                 $user->save();
                 HttpSession::set('user_id',$user->admin_id);
                 $this->redirect("index","index");
-            }else{
+            } else {
                 $this->view->color="red";
                 $this->view->set("message","该用户名已有用户注册！");
             }

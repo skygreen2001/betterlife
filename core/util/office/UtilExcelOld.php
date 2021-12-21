@@ -29,7 +29,7 @@ class UtilExcelOld extends Util
         if ( $isExcel2007 ) {
             if ( !function_exists("zip_open") ) { LogMe::log( "后台下载功能需要Zip模块支持,名称:php_zip<br/>", EnumLogLevel::ALERT ); die(); }
             $objWriter = new PHPExcel_Writer_Excel2007($objExcel);
-        }else{
+        } else {
             $objWriter = new PHPExcel_Writer_Excel5($objExcel);
         }
         $objExcel->setActiveSheetIndex(0);

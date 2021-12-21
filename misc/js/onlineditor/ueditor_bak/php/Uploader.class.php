@@ -123,10 +123,10 @@ class Uploader
             $this->stateInfo = $this->stateMap[0];
         }
 
-        $url_base=UtilNet::urlbase();
+        $url_base = UtilNet::urlbase();
 
         if (contain(strtolower(php_uname()),"darwin")){
-            $file_sub_dir=str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
+            $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
             if (contain($file_sub_dir,"home".DS))
                 $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"home".DS));
             $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);

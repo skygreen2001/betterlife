@@ -10,11 +10,11 @@ if(startWith($contents,"<?php")){
         if ($contents)file_put_contents("../../../welcome.php",$contents);
         echo "还原成功！显示welcome页面！<br/>";
         echo "<a href=\"".Gc::$url_base."tools/tools/web/deploy.php\">线上部署</a><br/>";
-    }else{
+    } else {
         echo "<a href=\"".Gc::$url_base."tools/tools/web/deploy.php?recover=yes\">还原</a>【至开发导航首页】<br>";
     }
     echo "<a href=\"".Gc::$url_base."\" target='_blank'>返回首页</a><br/>";
-}else{
+} else {
     $redirect_head=<<<REDIRECT_HEAD
 <?php
 require_once ("Gc.php");

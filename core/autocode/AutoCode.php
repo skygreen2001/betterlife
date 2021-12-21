@@ -407,7 +407,7 @@ class AutoCode extends BBObject
                                 'comment' => $cn_en_arr[0]
                             );
                         }
-                    }else{
+                    } else {
                         $enum_columnDefine[] = array(
                             'name'    => strtolower($part_arr[0]),
                             'value'   => strtolower($part_arr[0]),

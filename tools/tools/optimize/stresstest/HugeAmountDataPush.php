@@ -127,7 +127,7 @@ class HugeAmountDataPush
             self::$fieldInfos[$tablename][$fieldname]["Key"]=$field["Key"];
             if ($field["Null"]=='NO'){
                 self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"]=false;
-            }else{
+            } else {
                 self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"]=true;
             }
         }
@@ -140,13 +140,13 @@ class HugeAmountDataPush
         if ($isRelationTable) {
             if ($count>=self::$num){
                 $count=0;
-            }else{
+            } else {
                 self::$cache_result.="delete from $tablename;\r\n";
                 self::$cache_result.=self::relationTableData($tablename,$classname,$fields);
                 $count=self::$num;
             }
             self::$num_relation_table+=1;
-        }else{
+        } else {
             //需要注入初始化数据,默认注入20条
             if ($count<=0){
                 self::$cache_result.=self::tableInitData($tablename,$classname,$fields);
@@ -154,7 +154,7 @@ class HugeAmountDataPush
             }
             if ($count>=self::$num){
                 $count=0;
-            }else{
+            } else {
                 $fieldnames=implode(",",$fields);
                 /*循环出需要执行的SQL语句*/
                 while ($count< self::$num) {
@@ -286,11 +286,11 @@ class HugeAmountDataPush
                                 $counter[$second_field]=1;
                             }
                         }
-                    }else{
+                    } else {
                         $second_field=$fieldname;
                         $counter[$fieldname]+=1;
                     }
-                }else{
+                } else {
                     $type=$field_arr[$fieldname]["Type"];
                     $typep=UtilHugeAmount::column_type($type);
                     switch ($typep) {
@@ -300,7 +300,7 @@ class HugeAmountDataPush
                             $tmp=strtoupper($fieldname);
                             if ($tmp=="COMMITTIME"){
                                 $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP)."'";
-                            }else{
+                            } else {
                                 $fieldname_f=strtoupper($fieldname);
                                 if(contain($fieldname_f,"ID")){
                                     $values[$fieldname]=rand(1,self::$num-1);
@@ -331,33 +331,33 @@ class HugeAmountDataPush
                             if ($isUsername){
                                 $num=rand(1,2);
                                 $text=UtilString::rand_string(1,5).UtilString::rand_string($num,4);
-                            }else{
+                            } else {
                                 $isName=UtilHugeAmount::columnIsName($tablename,$fieldname);
                                 if ($isName){
                                     $num=rand(2,8);
                                     $text=UtilString::rand_string($num,4);
-                                }else{
+                                } else {
                                     $isTextArea=UtilHugeAmount::columnIsTextArea($fieldname,$typep);
                                     if ($isTextArea){
                                         $text=implode(UtilString::build_format_rand(".",50));
-                                    }else{
+                                    } else {
                                         $isImage   =UtilHugeAmount::columnIsImage($fieldname,$comment);
                                         if ($isImage){
                                             $suffix=array("jpg","png","gif");
                                             $order=rand(0,count($suffix)-1);
                                             $text=Gc::$upload_url."images/".implode(UtilString::build_format_rand(".",8)).".".$suffix[$order];
-                                        }else{
+                                        } else {
                                             $isEmail   =UtilHugeAmount::columnIsEmail($fieldname,$comment);
                                             if ($isEmail){
                                                 $num=rand(6,30);
                                                 $domain=array("gmail.com","hotmail.com","qq.com","yahoo.com","sina.com","sohu.com","163.com","263.net");
                                                 $order=rand(0,count($domain)-1);
                                                 $text=implode(UtilString::build_format_rand(".",$num))."@".$domain[$order];
-                                            }else{
+                                            } else {
                                                 $isPasswd  =UtilHugeAmount::columnIsPassword($tablename,$fieldname);
                                                 if ($isPasswd){
                                                     $text=implode(UtilString::build_format_rand("#",6));
-                                                }else{
+                                                } else {
                                                     $isMobile=UtilHugeAmount::columnIsMobile($fieldname,$comment);
                                                     if ($isMobile) {
                                                         $text=UtilMobile::randMobile(1);
@@ -419,7 +419,7 @@ class HugeAmountDataPush
                         $tmp=strtoupper($fieldname);
                         if ($tmp=="COMMITTIME"){
                             $values[$fieldname] = "'".UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP)."'";
-                        }else{
+                        } else {
                             $fieldname_f=strtoupper($fieldname);
                             if(contain($fieldname_f,"ID")){
                                 $values[$fieldname]=rand(1,self::$num-1);
@@ -450,33 +450,33 @@ class HugeAmountDataPush
                         if ($isUsername){
                             $num=rand(1,2);
                             $text=UtilString::rand_string(1,5).UtilString::rand_string($num,4);
-                        }else{
+                        } else {
                             $isName=UtilHugeAmount::columnIsName($tablename,$fieldname);
                             if ($isName){
                                 $num=rand(2,8);
                                 $text=UtilString::rand_string($num,4);
-                            }else{
+                            } else {
                                 $isTextArea=UtilHugeAmount::columnIsTextArea($fieldname,$typep);
                                 if ($isTextArea){
                                     $text=implode(UtilString::build_format_rand(".",50));
-                                }else{
+                                } else {
                                     $isImage   =UtilHugeAmount::columnIsImage($fieldname,$comment);
                                     if ($isImage){
                                         $suffix=array("jpg","png","gif");
                                         $order=rand(0,count($suffix)-1);
                                         $text=Gc::$upload_url."images/".implode(UtilString::build_format_rand(".",8)).".".$suffix[$order];
-                                    }else{
+                                    } else {
                                         $isEmail   =UtilHugeAmount::columnIsEmail($fieldname,$comment);
                                         if ($isEmail){
                                             $num=rand(6,30);
                                             $domain=array("gmail.com","hotmail.com","qq.com","yahoo.com","sina.com","sohu.com","163.com","263.net");
                                             $order=rand(0,count($domain)-1);
                                             $text=implode(UtilString::build_format_rand(".",$num))."@".$domain[$order];
-                                        }else{
+                                        } else {
                                             $isPasswd  =UtilHugeAmount::columnIsPassword($tablename,$fieldname);
                                             if ($isPasswd){
                                                 $text=implode(UtilString::build_format_rand("#",6));
-                                            }else{
+                                            } else {
                                                 $isMobile=UtilHugeAmount::columnIsMobile($fieldname,$comment);
                                                 if ($isMobile) {
                                                     $text=UtilMobile::randMobile(1);
@@ -600,7 +600,7 @@ class UtilHugeAmount
         if (((self::column_length($column_type)>=500)&&(!contain($column_name,"IMAGES"))&&(!contain($column_name,"LINK"))&&(!contain($column_name,"ICO")))
              ||(contains($column_name,array("INTRO","MEMO","CONTENT")))||(self::column_type($column_type)=='text')||(self::column_type($column_type)=='longtext')){  //&&(!contain($column_name,"addr"))
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -698,7 +698,7 @@ class UtilHugeAmount
     {
         if (UtilString::contain($type,"(")){
             list($typep,$length)=split('[()]', $type);
-        }else{
+        } else {
             $length=1;
         }
         return $length;
@@ -712,7 +712,7 @@ class UtilHugeAmount
     {
         if (UtilString::contain($type,"(")){
             list($typep,$length)=split('[()]', $type);
-        }else{
+        } else {
             $typep=$type;
         }
         return $typep;

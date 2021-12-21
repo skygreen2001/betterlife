@@ -261,7 +261,7 @@ class Mysqldumper {
             $tail = strtolower(substr($str,strrpos($str,")")-strlen($str)));
             if(strstr($tail,'memory')||strstr($tail,'heap')){
                 return $body." TYPE=HEAP{shopexdump_create_specification};";
-            }else{
+            } else {
                 return $body." TYPE=MyISAM{shopexdump_create_specification};";
             }
     }

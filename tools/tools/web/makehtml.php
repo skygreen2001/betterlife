@@ -10,7 +10,7 @@ require_once ("../../../init.php");
 Gc::$dev_profile_on=true;
 $html_dir=Gc::$nav_root_path."html".DS;
 UtilFileSystem::createDir($html_dir);
-Gc::$url_base=UtilNet::urlbase();
+Gc::$url_base = UtilNet::urlbase();
 /**
  * 是否输出返回静态页面信息
  */
@@ -76,7 +76,7 @@ function runphp($go,$pararm=null)
     }
     $result=Dispatcher::dispatch(new Router());
     if (!empty($result)){
-        if (Gc::$is_online_optimize){
+        if ( Gc::$is_online_optimize ) {
             if (contain($result,"<body")){
                /************************start:整个Html页面去除注释，换行，空格********************/
                 $result=preg_replace("/<\!--(.*?)-->/","",$result);//去掉html里的注释
@@ -100,7 +100,7 @@ function runphp($go,$pararm=null)
 require_once ("../../../init.php");
 $html_dir=Gc::$nav_root_path."html".DS;
 UtilFileSystem::createDir($html_dir);
-$url_base=UtilNet::urlbase();
+$url_base = UtilNet::urlbase();
 echo "/".str_repeat("*",40)."start:生成首页".str_repeat("*",40)."<br/>";
 $htmlcontent=file_get_contents($url_base."index.php?go=model.index.index");
 file_put_contents($html_dir."index.html",$htmlcontent);

@@ -56,7 +56,7 @@ class AutoCodeValidate extends AutoCode
                 if (!array_key_exists($realId_upper, $fieldInfo_upperkey)){
                     $table_error["invalid_idname"][$tablename]=$realId;
                 }
-            }else{
+            } else {
                 $table_error["unlocation_domain"][]=$tablename;
             }
             foreach ($fieldInfo as $fieldname=>$field)
@@ -93,12 +93,12 @@ class AutoCodeValidate extends AutoCode
                 foreach ($table_error[$key] as $first=>$second) {
                     if (is_numeric($first)){
                         $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$second."<br/>\r\n";
-                    }else{
+                    } else {
                         if (is_array($second)){
                             foreach ($second as $field_name) {
                                 $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$first."->".$field_name."<br/>\r\n";
                             }
-                        }else{
+                        } else {
                             $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$first."->".$second."<br/>\r\n";
                         }
                     }

@@ -22,7 +22,7 @@ class Config_Mysql extends Config_Db {
             } else {
                 return $host;
             }
-        }else{
+        } else {
             if ( strlen(self::$port) > 0 ) {
                 return self::$host . ":" . self::$port;
             } else {

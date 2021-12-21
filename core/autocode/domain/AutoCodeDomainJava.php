@@ -84,8 +84,8 @@ class AutoCodeDomainJava extends AutoCode
 
         $url_base=Gc::$url_base;
         if (contain(strtolower(php_uname()),"darwin")){
-            $url_base=UtilNet::urlbase();
-            $file_sub_dir=str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])).DS;
+            $url_base = UtilNet::urlbase();
+            $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
             if (contain($file_sub_dir,"tools".DS))
                 $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
             $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
@@ -180,7 +180,7 @@ class AutoCodeDomainJava extends AutoCode
                     if (!empty($enum_columnDefine)&&(count($enum_columnDefine)>0)){
                         $enumname=strtoupper($enum_columnDefine[0]['name']);
                         $result.="       return {$enumname};\r\n";
-                    }else{
+                    } else {
                         $result.="       return null;\r\n";
                     }
                     $result.="    }\r\n\r\n";
@@ -236,10 +236,10 @@ class AutoCodeDomainJava extends AutoCode
                 foreach ($table_comment_arr as $tcomment){
                     $table_comment.=" * $tcomment\r\n";
                 }
-            }else{
+            } else {
                 $table_comment=" * ".$table_comment."\r\n";
             }
-        }else{
+        } else {
             $table_comment="关于 $tablename 的描述";
         }
         $category  = Gc::$appName;

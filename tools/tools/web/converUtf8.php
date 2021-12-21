@@ -14,7 +14,7 @@ if (isset($_REQUEST["detect_dir"])&&!empty($_REQUEST["detect_dir"]))
             if ($isUpdate){
                 if($encode==false){
                     $contents = mb_convert_encoding( $contents, 'UTF-8','Unicode');
-                }else{
+                } else {
                     $contents= iconv($encode,"UTF-8",$contents);
                 }
                 $isGood=file_put_contents($file,$contents);
@@ -22,7 +22,7 @@ if (isset($_REQUEST["detect_dir"])&&!empty($_REQUEST["detect_dir"]))
         }
     }
 
-}else{
+} else {
     $inputArr=array(
          "1"=>"否",
          "2"=>"是"
@@ -37,7 +37,7 @@ if (isset($_REQUEST["detect_dir"])&&!empty($_REQUEST["detect_dir"]))
             <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
     echo "<head>\r\n";
     echo UtilCss::form_css()."\r\n";
-    $url_base=UtilNet::urlbase();
+    $url_base = UtilNet::urlbase();
     //echo "<script type='text/javascript' src='".$url_base."misc/js/util/file.js'></script>";
     echo "</head>";
     echo "<body>";

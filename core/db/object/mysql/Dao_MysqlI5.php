@@ -88,7 +88,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                         array_unshift($bind_params, $this->stmt);
                         if ( is_object($bind_params[0]) ) {
                             call_user_func_array('mysqli_stmt_bind_param', $bind_params);
-                        }else{
+                        } else {
                             Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
                         }
                     }

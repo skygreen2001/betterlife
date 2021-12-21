@@ -61,7 +61,7 @@ class AutoCodeDomain extends AutoCode
            if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ) {
                $classname         = self::saveDataObjectDefineToDir( $tablename, $definePhpFileContent );
                self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
-           }else{
+           } else {
                self::$showReport .= $definePhpFileContent . "<br/>";
            }
            self::tableToEnumClass( $tablename, $fieldInfo );

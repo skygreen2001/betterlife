@@ -28,7 +28,7 @@ if (!isset($old_prefix)||!isset($old_prefix)){
     echo "</div>";
     echo "</body>";
     echo "</html>";
-}else{
+} else {
     $tableList=Manager_Db::newInstance()->dbinfo()->tableList();
     $symbol_connect="_";
     if (empty($new_prefix)) $symbol_connect_new=""; else $symbol_connect_new="_";

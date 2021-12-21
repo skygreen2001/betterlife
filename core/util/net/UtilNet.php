@@ -77,13 +77,13 @@ class UtilNet extends Util
         if(isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS'])){
             $baseurl = 'https://'.$_SERVER['HTTP_HOST'];
             if($_SERVER['SERVER_PORT']!=443)$baseurl.=':'.$_SERVER['SERVER_PORT'];
-        }else{
+        } else {
             $baseurl = 'http://'.$_SERVER['HTTP_HOST'];
             if($_SERVER['SERVER_PORT']!=80)$baseurl.=':'.$_SERVER['SERVER_PORT'];
         }
         if($with_file){
             $baseurl.=$_SERVER['SCRIPT_NAME'];
-        }else{
+        } else {
             $baseDir = dirname($_SERVER['SCRIPT_NAME']);
             $baseurl.=($baseDir == '\\' ? '' : $baseDir).'/';
         }
@@ -111,7 +111,7 @@ class UtilNet extends Util
         if(strpos($_SERVER["HTTP_USER_AGENT"],'MSIE')){
             $fname = urlencode($fname);
             header('Content-type: '.$mimeType);
-        }else{
+        } else {
             header('Content-type: '.$mimeType.';charset=utf-8');
         }
         header("Content-Disposition: attachment; filename=\"".$fname.'"');

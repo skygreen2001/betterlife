@@ -20,7 +20,7 @@ class CheckBOMTask
         if (isset($_GET['dir'])){
           $basedir=$_GET['dir'];
           self::checkdir($basedir);
-        }else{
+        } else {
           self::checkdir($checkDir);
           //checkdir("../../../misc/js/");
           //checkdir("../../../core/");
@@ -41,13 +41,13 @@ class CheckBOMTask
               if (!is_dir($basedir."/".$file)) {
                   if (self::$isRemoveBom){
                       echo "filename: $basedir/$file ".self::checkBOM("$basedir/$file")." <br>";
-                  }else{
+                  } else {
                       $cb=self::checkBOM("$basedir/$file");
                       if ($cb){
                         echo "filename: $basedir/$file ".$cb." <br>";
                       }
                   }
-              }else{
+              } else {
                   $dirname = $basedir."/".$file;
                   self::checkdir($dirname);
               }
@@ -71,7 +71,7 @@ class CheckBOMTask
         } else {
            return ("<font color=red>BOM found.</font>");
         }
-      }else{
+      } else {
         //if (self::$isRemoveBom) return ("BOM Not Found."); else return "";
       }
     }

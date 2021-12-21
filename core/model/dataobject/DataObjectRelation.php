@@ -39,7 +39,7 @@ class DataObjectRelation extends BBObject
             // $tablename.=Config_Db::TABLENAME_RELATION.Config_Db::TABLENAME_CONCAT;
             // $tablename.=strtolower($classname_has.$classname_belong);
             return $tablename;
-        }else{
+        } else {
             LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );
         }
     }
@@ -375,10 +375,10 @@ class DataObjectRelation extends BBObject
                 }
                 $sQuery = $_SQL->insert($relation_table)->values($array_properties)->result();
                 return DataObject::dao()->sqlExecute( $sQuery );
-            }else{
+            } else {
                 LogMe::log( $dataobject->classname() . "在多对多关系中对" . $relation_object . ":" . $relation_id_value . "映射不正确，请确认代码中变量定义是否正确！" );
             }
-        }else{
+        } else {
             LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );
         }
     }

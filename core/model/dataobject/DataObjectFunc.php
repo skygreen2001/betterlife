@@ -516,7 +516,7 @@ class DataObjectFunc
             $min_string = "min($column_name)";
             $sQuery     = $_SQL->select($min_string)->from($tablename)->where($filter)->result();
             return DataObject::dao()->sqlExecute( $sQuery );
-        }else{
+        } else {
             return -1;
         }
     }
@@ -544,7 +544,7 @@ class DataObjectFunc
             $sum_string = "sum($column_name)";
             $sQuery     = $_SQL->select($sum_string)->from($tablename)->where($filter)->result();
             return DataObject::dao()->sqlExecute( $sQuery );
-        }else{
+        } else {
             return -1;
         }
     }

@@ -13,7 +13,7 @@ if(file_exists($old_file)){
 $new_file = $_GET["new_file"];
 if ( file_exists($new_file) ) {
     $new_content = file_get_contents($new_file);
-}else{
+} else {
     die("新文件不存在！");
 }
 

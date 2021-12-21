@@ -314,7 +314,7 @@ class Dal_Adodb extends Dal implements IDal
         }
        // if ($this->stmt){
        //    $numrows = $this->stmt->RecordCount();
-       // }else{
+       // } else {
        //    $numrows=0;
        // }
         //if ($numrows>=1) {

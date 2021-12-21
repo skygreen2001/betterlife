@@ -338,7 +338,7 @@ class AutoCodeConfig extends AutoCode
                                         '@value' => $instance_name
                                     );
 
-                                }else{
+                                } else {
                                     $instance_name    .= "s";
                                     $is_create_hasmany = true;
                                     if ( ( !Config_AutoCode::AUTOCONFIG_CREATE_FULL ) && ( self::isMany2ManyByClassname( $classname ) ) ) {
@@ -459,7 +459,7 @@ class AutoCodeConfig extends AutoCode
                     $xpath_str   = implode(" or ", $xpath_arr);
                     $dataobjects = $classes->xpath("//class[$xpath_str]");
                 }
-            }else{
+            } else {
                 $dataobjects = $classes->xpath("//class");
             }
             if ( $dataobjects ) {

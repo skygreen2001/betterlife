@@ -3,7 +3,7 @@ require_once ("../../../../init.php");
 
 if (isset($_REQUEST["type"])&&!empty($_REQUEST["type"])){
     $type=$_REQUEST["type"];
-}else{
+} else {
     $type=1;
 }
 if (isset($_REQUEST["save_dir"])&&!empty($_REQUEST["save_dir"]))

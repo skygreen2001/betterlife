@@ -77,7 +77,7 @@ class UtilPinyin
         }
         if ($isRemainOtherChars){
             return $_Res;
-        }else{
+        } else {
             return preg_replace("/[^a-z0-9]*/", '', $_Res);
         }
     }
@@ -88,7 +88,7 @@ class UtilPinyin
                 return chr($_Num);
         }elseif($_Num<-20319 || $_Num>-10247){
                 return '';
-        }else{
+        } else {
                 foreach($_Data as $k=>$v){ if($v<=$_Num) break; }
                 return $k;
         }

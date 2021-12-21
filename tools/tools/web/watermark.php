@@ -66,7 +66,7 @@ if(isset($_REQUEST["type"])){
         echo '<br />水印图片保存为: <a href="' .Gc::$upload_url. $result["url"] . '" target="_blank">' . $result["file_path"] . '</a>';
         echo "<br /><a href='".Gc::$url_base."tools/tools/web/watermark.php'>返回</a>";
     }
-}else{
+} else {
     $html=<<<FORMCONTENT
     <body><br/><br/><br/><br/><br/>
         <div align='center' height='450'>

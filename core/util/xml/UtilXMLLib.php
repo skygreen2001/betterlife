@@ -93,7 +93,7 @@ class XML
                         }
                         $count++;
                     }
-                }else{
+                } else {
                     for ($i=$start_flag; $i <= $end_flag; $i++) {
                         if (array_key_exists("attributes",self::$values[$current_flags[$i]])){
                             $key= $count." attr";

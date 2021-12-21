@@ -38,7 +38,7 @@ class UtilExcel extends Util
             if ( !function_exists("zip_open") ) { LogMe::log( "后台下载功能需要Zip模块支持,名称:php_zip<br/>", EnumLogLevel::ALERT ); die(); }
             $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objExcel);
             $objWriter->setOffice2003Compatibility(true);
-        }else{
+        } else {
             $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xls($objExcel);
         }
         $objExcel->setActiveSheetIndex(0);

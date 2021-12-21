@@ -206,7 +206,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
             $columnName = DataObjectSpec::getRealIDColumnName( $this );
             unset($this->real_fieldspec);
             return $this->$columnName;
-        }else{
+        } else {
             unset($this->real_fieldspec);
             return null;
         }

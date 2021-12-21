@@ -122,7 +122,7 @@ class AutoCodeAction extends AutoCode
                 if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ) {
                     $classname         = self::saveActionDefineToDir( $tablename, $definePhpFileContent );
                     self::$showReport .= "生成导出完成:$tablename => $classname!";
-                }else{
+                } else {
                     self::$showReport .= $definePhpFileContent."";
                 }
             }

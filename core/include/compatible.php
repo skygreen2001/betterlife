@@ -76,7 +76,7 @@ if ( !function_exists('get_called_class') ) {
                 } else {
                     return $matches[1][self::$i];
                 }
-            }else{
+            } else {
                 return null;
             }
         }

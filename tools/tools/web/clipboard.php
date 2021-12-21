@@ -16,7 +16,7 @@ if (isset($_REQUEST["s"]))
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
     echo "<head>\r\n";     
     echo UtilCss::form_css()."\r\n";
-    $url_base=UtilNet::urlbase();
+    $url_base = UtilNet::urlbase();
     echo "</head>";     
     echo "<body>";   
     echo "<h1 align='center'>剪贴板</h1>";

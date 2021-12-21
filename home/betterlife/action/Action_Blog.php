@@ -63,7 +63,7 @@ class Action_Blog extends Action
             $blog_content        = $blog->blog_content;
             $this->view->message = "博客提交成功";
             $this->view->color   = "green";
-        }else{
+        } else {
             $blog_id = @$this->data["blog_id"];
             $view    = new View_Blog( $this );
             if ( count($_GET) > 0 && $blog_id ) {

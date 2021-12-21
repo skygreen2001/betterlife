@@ -1,6 +1,7 @@
 
 # 基础
 
+  - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
   - Symfony 的 DebugBar
   - 自己算法生成站点地图(动态页面)
   - 各种数据库可以备份和导出导入互通

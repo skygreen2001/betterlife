@@ -210,13 +210,13 @@ class Initializer
             if ( defined('E_DEPRECATED') ) {
                 if ( Gc::$dev_php_debug_on ) {
                     error_reporting( E_ALL ^ E_DEPRECATED);
-                }else{
+                } else {
                     error_reporting( E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
                 }
             }
             else error_reporting(E_ALL ^ E_WARNING);
             ini_set('display_errors', 1);
-        }else{
+        } else {
             error_reporting(0);
         }
         self::$IS_CGI = substr(PHP_SAPI, 0,3) == 'cgi' ? 1 : 0;
