@@ -1,7 +1,7 @@
 <?php
 require_once("Gc.php");
 require_once("core/include/common.php");
-if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+if( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", '.test') ) ) {
     header("location:" . Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index");
     die();
 }
