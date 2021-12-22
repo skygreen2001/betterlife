@@ -312,12 +312,12 @@ class Dal_Adodb extends Dal implements IDal
         if ( empty($this->stmt) ) {
             Exception_Db::log( $this->connection->ErrorMsg() . "" );
         }
-       // if ($this->stmt){
+       // if ( $this->stmt ) {
        //    $numrows = $this->stmt->RecordCount();
        // } else {
-       //    $numrows=0;
+       //    $numrows = 0;
        // }
-        //if ($numrows>=1) {
+        //if ( $numrows >= 1 ) {
             $result = array();
             if ( is_object($object) ) {
                 $classname = get_class($object);
@@ -326,7 +326,7 @@ class Dal_Adodb extends Dal implements IDal
             }
             // 循环输出
             if ( $this->stmt ) {
-                foreach ($this->stmt as $row){//需要和GetAll配合使用
+                foreach ($this->stmt as $row) {//需要和GetAll配合使用
                 //while ($row = $this->stmt->FetchNextObject()) { 需要和Execute配合使用
                     if ( empty($object) ) {
                         if ( count($row) == 1 ) {
@@ -335,7 +335,7 @@ class Dal_Adodb extends Dal implements IDal
                             }
                         } else {
                             $rowObject = new stdClass();
-                            foreach($row as $key => $val) {
+                            foreach ($row as $key => $val) {
                                 $rowObject->{$key} = $val;
                             }
                         }

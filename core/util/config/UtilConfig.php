@@ -20,8 +20,8 @@ class UtilConfig extends Util
     private static $current;
     public static $config = 1;
 
-    public static function Instance(){
-        switch (self::$config){
+    public static function Instance() {
+        switch (self::$config) {
             case self::$config_xml:
                 self::$current = new UtilConfigXml();
                 break;

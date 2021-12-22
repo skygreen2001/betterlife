@@ -23,7 +23,7 @@ function index() {
         //接入成功后的其他处理
         // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"]; // 虚拟机可能禁止register_globals导致无法获取body数据
         $postStr = file_get_contents("php://input");
-        if (!empty($postStr)){
+        if ( !empty($postStr) ) {
             libxml_disable_entity_loader(true);//安全防护
             $postObj      = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;

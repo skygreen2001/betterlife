@@ -80,73 +80,75 @@ class Profiler {
     }
 
     /**
-    *   Start an individual timer
-    *   This will pause the running timer and place it on a stack.
-    *   @param string $name name of the timer
-    *   @param string optional $desc description of the timer
-    */
-    function startTimer($name, $desc="" ){
-        $this->trace.="start   $name\n";
-        $n=array_push( $this->stack, $this->cur_timer );
+     *   Start an individual timer
+     * 
+     *   This will pause the running timer and place it on a stack.
+     *   @param string $name name of the timer
+     *   @param string optional $desc description of the timer
+     */
+    function startTimer($name, $desc="" ) {
+        $this->trace .= "start   $name\n";
+        $n = array_push( $this->stack, $this->cur_timer );
         $this->__suspendTimer( $this->stack[$n-1] );
         $this->startTime[$name] = $this->getMicroTime();
-        $this->cur_timer=$name;
+        $this->cur_timer = $name;
         $this->description[$name] = $desc;
-        if (!array_key_exists($name,$this->count))
+        if ( !array_key_exists($name, $this->count) )
             $this->count[$name] = 1;
         else
             $this->count[$name]++;
     }
 
     /**
-    *   Stop an individual timer
-    *   Restart the timer that was running before this one
-    *   @param string $name name of the timer
-    */
-    function stopTimer($name){
-        $this->trace.="stop    $name\n";
+     *   Stop an individual timer
+     * 
+     *   Restart the timer that was running before this one
+     *   @param string $name name of the timer
+     */
+    function stopTimer($name) {
+        $this->trace .= "stop    $name\n";
         $this->endTime[$name] = $this->getMicroTime();
-        if (!array_key_exists($name, $this->running))
-            $this->running[$name] = $this->elapsedTime($name);
+        if ( !array_key_exists($name, $this->running) )
+            $this->running[$name] = $this->elapsedTime( $name );
         else
-            $this->running[$name] += $this->elapsedTime($name);
-        $this->cur_timer=array_pop($this->stack);
+            $this->running[$name] += $this->elapsedTime( $name );
+        $this->cur_timer = array_pop($this->stack);
         $this->__resumeTimer($this->cur_timer);
     }
 
     /**
-    *   measure the elapsed time of a timer without stoping the timer if
-    *   it is still running
-    */
-    function elapsedTime($name){
+     *   measure the elapsed time of a timer without stoping the timer if
+     *   it is still running
+     */
+    function elapsedTime($name) {
         // This shouldn't happen, but it does once.
-        if (!array_key_exists($name,$this->startTime))
+        if ( !array_key_exists($name, $this->startTime) )
             return 0;
 
-        if(array_key_exists($name,$this->endTime)){
+        if ( array_key_exists($name,$this->endTime) ) {
             return ($this->endTime[$name] - $this->startTime[$name]);
         } else {
-            $now=$this->getMicroTime();
-            return ($now - $this->startTime[$name]);
+            $now = $this->getMicroTime();
+            return ( $now - $this->startTime[$name] );
         }
     }//end start_time
 
     /**
-    *   Measure the elapsed time since the profile class was initialised
-    *
-    */
-    function elapsedOverall(){
+     *   Measure the elapsed time since the profile class was initialised
+     *
+     */
+    function elapsedOverall() {
         $oaTime = $this->getMicroTime() - $this->initTime;
         return($oaTime);
     }//end start_time
 
     /**
-    *   print out a log of all the timers that were registered
-    *
-    */
+     *   print out a log of all the timers that were registered
+     *
+     */
     function printTimers($enabled=false)
     {
-        if($this->output_enabled||$enabled){
+        if ( $this->output_enabled || $enabled ) {
             $TimedTotal = 0;
             $tot_perc = 0;
             ksort($this->description);
@@ -190,9 +192,9 @@ class Profiler {
         }
     }
 
-    function printTrace( $enabled=false )
+    function printTrace( $enabled = false )
     {
-        if($this->trace_enabled||$enabled){
+        if ( $this->trace_enabled || $enabled ) {
             print("<pre>");
             print("Trace\n$this->trace\n\n");
             print("</pre>");
@@ -202,35 +204,35 @@ class Profiler {
     /// Internal Use Only Functions
 
     /**
-    * Get the current time as accuratly as possible
-    *
-    */
-    function getMicroTime(){
-        $tmp=explode(' ', microtime());
-        $rt=$tmp[0]+$tmp[1];
+     * Get the current time as accuratly as possible
+     *
+     */
+    function getMicroTime() {
+        $tmp = explode(' ', microtime());
+        $rt  = $tmp[0] + $tmp[1];
         return $rt;
     }
 
     /**
-    * resume  an individual timer
-    *
-    */
-    function __resumeTimer($name){
-        $this->trace.="resume  $name\n";
+     * resume  an individual timer
+     *
+     */
+    function __resumeTimer($name) {
+        $this->trace .= "resume  $name\n";
         $this->startTime[$name] = $this->getMicroTime();
     }
 
     /**
-    *   suspend  an individual timer
-    *
-    */
-    function __suspendTimer($name){
-        $this->trace.="suspend $name\n";
+     *   suspend  an individual timer
+     *
+     */
+    function __suspendTimer($name) {
+        $this->trace .= "suspend $name\n";
         $this->endTime[$name] = $this->getMicroTime();
-        if (!array_key_exists($name, $this->running))
-            $this->running[$name] = $this->elapsedTime($name);
+        if ( !array_key_exists($name, $this->running) )
+            $this->running[$name] = $this->elapsedTime( $name );
         else
-            $this->running[$name] += $this->elapsedTime($name);
+            $this->running[$name] += $this->elapsedTime( $name );
     }
 }
 ?>

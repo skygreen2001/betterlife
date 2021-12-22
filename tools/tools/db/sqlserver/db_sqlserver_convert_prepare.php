@@ -32,9 +32,9 @@ if ( $isComment ) {
     echo "4.表名头字母大写<br/><br/>";
     echo "--在MySQL的配置文件中my.ini [mysqld] 中增加一行<br/>";
     echo "--lower_case_table_names=0<br/>";
-    echo "--参数解释：<br/>";
-    echo "--0：区分大小写<br/>";
-    echo "--1：不区分大小写<br/>";
+    echo "--参数解释: <br/>";
+    echo "--0: 区分大小写<br/>";
+    echo "--1: 不区分大小写<br/>";
     echo "5.初始化commitTime<br/>";
     echo "<br/>";
 }
@@ -114,7 +114,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
     $comments = str_replace("\r", "\\r", $comments);
     $comments = str_replace("\n", "\\n", $comments);
     echo "alter table $tablename change column $old_fieldname ID ".$fieldInfos[$tablename][$old_fieldname]["Type"]." auto_increment COMMENT '".$comments."';<br/>";
-    // if (!Manager_Db::newInstance()->dbinfo()->hasUnique($tablename,array("ID",$old_fieldname))){
+    // if ( !Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) ) ) {
     //     echo "alter table $tablename add unique(ID);<br/>";
     // }
 }

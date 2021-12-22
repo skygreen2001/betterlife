@@ -135,7 +135,7 @@ class UtilAjax extends Util
     /**
      * 初始化方能加载枚举类型。
      */
-    public static function init(){}
+    public static function init() {}
 
     /**
      * @return string 当前类名

@@ -33,7 +33,7 @@ class Application
         require_once ("Gc.php");
 
         if ( !empty($environment) ) {
-            foreach ($environment as $key => $value){
+            foreach ($environment as $key => $value) {
                 if ( isset(Gc::$$key) ) {
                     Gc::$$key = $value;
                 }
@@ -43,7 +43,7 @@ class Application
         require_once ("init.php");
 
         if ( !empty($environment) ) {
-            foreach ($environment as $key => $value){
+            foreach ($environment as $key => $value) {
                 if ( isset(Config_Db::$$key) ) {
                     Config_Db::$$key = $value;
                 }

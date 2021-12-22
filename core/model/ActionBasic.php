@@ -160,7 +160,7 @@ class ActionBasic extends BBObject
             $defaultJsFile = $this->view->template_url . $defaultJsFile;
         }
         $viewObject = $this->view->viewObject;
-        if ( empty($viewObject) ){
+        if ( empty($viewObject) ) {
             $this->view->viewObject = new ViewObject();
         }
         if ( $this->view->viewObject ) {
@@ -391,7 +391,7 @@ class ActionBasic extends BBObject
     public function uploadImgs($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10, $isReturnAll = false)
     {
         $result = array();
-        if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
+        if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ) {
             if ( ( is_array($files[$uploadFlag]["name"]) ) && count($files[$uploadFlag]["name"]) > 0 ) {
                 /**
                  *  允许同名name:$uploadFlag的多个文件上传,其上传的文件格式如下
@@ -481,7 +481,7 @@ class ActionBasic extends BBObject
     public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10, $is_permit_same_filename = false)
     {
         $result = array();
-        if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ){
+        if ( !empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"]) ) {
             $path_r     = explode('.', $files[$uploadFlag]["name"]);
             $tmptail    = end($path_r);
             $upload_url = $upload_dir;
@@ -501,7 +501,7 @@ class ActionBasic extends BBObject
             }
             // print_pre($file_name, true);
             $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size );
-            if ( $result && ( $result['success'] == true ) ){
+            if ( $result && ( $result['success'] == true ) ) {
                 $result['file_name'] = $file_name;
             } else {
                 return $result;

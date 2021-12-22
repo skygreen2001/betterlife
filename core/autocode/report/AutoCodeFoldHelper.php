@@ -29,17 +29,17 @@ class AutoCodeFoldHelper extends AutoCode
 </style>
 <script type="text/javascript">
 <!--展开函数-->
-function show_showdiv(){
-    for (var i=0;i<=53;i++){
+function show_showdiv() {
+    for (var i=0;i<=53;i++) {
         if (document.getElementById("Content_"+i))document.getElementById("Content_"+i).style.display='block';
     }
 }
 <!--收起函数-->
-function hidden_hiddendiv(){
-    for (var i=1;i<=5;i++){
+function hidden_hiddendiv() {
+    for (var i=1;i<=5;i++) {
         if (document.getElementById("Content_"+i))document.getElementById("Content_"+i).style.display='block';
     }
-    for (var i=11;i<=53;i++){
+    for (var i=11;i<=53;i++) {
         if (document.getElementById("Content_"+i))document.getElementById("Content_"+i).style.display='none';
     }
 }

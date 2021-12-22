@@ -60,7 +60,7 @@ class UtilReflection extends Util
     public static function getClassConsts($object) 
     {
         $class = object_reflection($object);
-        if ( isset ($class) ){
+        if ( isset ($class) ) {
             $consts = $class->getConstants();
 //            foreach ($consts as $constant => $value) {
 //                echo "$constant = $value\n";

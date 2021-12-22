@@ -24,7 +24,7 @@ class Crud_Sql_Update extends Crud_SQL {
      * @return SQL构造器本身
      */
     public function update($tableorclassName) {
-        if ( class_exists($tableorclassName) ){
+        if ( class_exists($tableorclassName) ) {
             $this->tableName = Config_Db::orm( $tableorclassName );
         } else {
             $this->tableName = $tableorclassName;

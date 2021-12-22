@@ -16,7 +16,7 @@ class UtilConfigIni extends UtilConfig
     /**
      * 调用方法
      */
-    public static function main(){
+    public static function main() {
         $settings = new UtilConfigIni();
         $settings->load( __DIR__ . DS . 'setting.ini' );
         echo 'INI: ' . $settings->get('db.host') . '';

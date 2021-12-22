@@ -1,8 +1,6 @@
 <?php
 /**
- +---------------------------------<br/>
  * -----------| 工具类：网络 |-----------
- +---------------------------------
  * @category betterlife
  * @package util.net
  * @author skygreen
@@ -35,7 +33,7 @@ class UtilNet extends Util
     public static function hostname()
     {
         $addrs = array();
-        if(isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
+        if ( isset($_SERVER['HTTP_X_FORWARDED_HOST']) ) {
             $addrs = array_reverse( explode( ',',  $_SERVER['HTTP_X_FORWARDED_HOST'] ) );
         }
         return isset($addrs[0]) ? trim($addrs[0]) : $_SERVER['HTTP_HOST'];
@@ -185,17 +183,17 @@ class UtilNet extends Util
     public static function client_ip()
     {
         //php获取ip的算法
-        if ($HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"])
+        if ($_SERVER["HTTP_X_FORWARDED_FOR"])
         {
-            $ip = $HTTP_SERVER_VARS["HTTP_X_FORWARDED_FOR"];
+            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
         }
-        elseif ($HTTP_SERVER_VARS["HTTP_CLIENT_IP"])
+        elseif ($_SERVER["HTTP_CLIENT_IP"])
         {
-            $ip = $HTTP_SERVER_VARS["HTTP_CLIENT_IP"];
+            $ip = $_SERVER["HTTP_CLIENT_IP"];
         }
-        elseif ($HTTP_SERVER_VARS["REMOTE_ADDR"])
+        elseif ($_SERVER["REMOTE_ADDR"])
         {
-            $ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
+            $ip = $_SERVER["REMOTE_ADDR"];
         }
         elseif (getenv("HTTP_X_FORWARDED_FOR"))
         {

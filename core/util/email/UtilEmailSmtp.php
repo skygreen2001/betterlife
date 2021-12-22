@@ -59,65 +59,65 @@ class UtilEmailSmtp extends Util
      * @param string $isHtml_mailtype 邮件内容是否html格式，如果不是就是纯文本
      * @param string $additional_headers 附加的邮件头信息
      */
-    public function sendmail($fromaddress,$toaddress,$subject="",$content ="",$isHtml_mailtype=true,$cc ="",$bcc ="",$additional_headers = "")
+    public function sendmail($fromaddress, $toaddress, $subject = "", $content = "", $isHtml_mailtype = true, $cc = "", $bcc = "", $additional_headers = "")
     {
-        $mail_from = $this->get_address($this->strip_comment($fromaddress));
-        $content = preg_replace('/(^|(\r\n))(\\.)/', '\\1.\\3', $content);
-        if (!self::$is_utf8){
-            if (UtilString::is_utf8($content))$content=UtilString::utf82gbk($content);
+        $mail_from = $this->get_address( $this->strip_comment( $fromaddress ) );
+        $content   = preg_replace('/(^|(\r\n))(\\.)/', '\\1.\\3', $content);
+        if ( !self::$is_utf8 ) {
+            if ( UtilString::is_utf8( $content ) ) $content = UtilString::utf82gbk( $content );
         }
         $header= "MIME-Version:1.0\r\n";
-        if($isHtml_mailtype=="HTML") {
-            $charset="gbk";
-            if (self::$is_utf8)$charset="utf-8";
+        if ( $isHtml_mailtype == "HTML" ) {
+            $charset = "gbk";
+            if ( self::$is_utf8 ) $charset="utf-8";
             $header .= "Content-Type:text/html charset=\"$charset\"\r\n";// charset=\"utf-8\"
         }
-        $header .= "To: ".$toaddress."\r\n";
-        if ($cc != "") {
-            $header .= "Cc: ".$cc."\r\n";
+        $header .= "To: " . $toaddress . "\r\n";
+        if ( $cc != "" ) {
+            $header .= "Cc: " . $cc . "\r\n";
         }
-        $header .= "Disposition-Notification-To：".$fromaddress ."\r\n";
-        $header .= "From: $fromaddress<".$fromaddress.">\r\n";
-        if (!self::$is_utf8){
-            if (UtilString::is_utf8($subject))$subject_send=UtilString::utf82gbk($subject);
+        $header .= "Disposition-Notification-To：" . $fromaddress . "\r\n";
+        $header .= "From: $fromaddress<" . $fromaddress . ">\r\n";
+        if ( !self::$is_utf8 ) {
+            if ( UtilString::is_utf8( $subject ) ) $subject_send = UtilString::utf82gbk( $subject );
         }
-        $header_echo=$header;
-        $header .= "Subject: ".$subject_send."\r\n";
-        $header_echo.="Subject: ".$subject."\r\n";
-        $later = $additional_headers;
-        $later .= "Date: ".date("r")."\r\n";
-        $later .= "X-Mailer:By Redhat (PHP/".phpversion().")\r\n";
+        $header_echo  = $header;
+        $header      .= "Subject: " . $subject_send . "\r\n";
+        $header_echo .= "Subject: " . $subject . "\r\n";
+        $later        = $additional_headers;
+        $later       .= "Date: ".date("r")."\r\n";
+        $later       .= "X-Mailer:By Redhat (PHP/".phpversion().")\r\n";
         list($msec, $sec) = explode(" ", microtime());
-        $later .= "Message-ID: <".date("YmdHis", $sec).".".($msec*1000000).".".$mail_from.">\r\n";
-        $header .=$later;
-        $header_echo.=$later;
-        $TO = explode(",", $this->strip_comment($toaddress));
+        $later       .= "Message-ID: <".date("YmdHis", $sec).".".($msec*1000000).".".$mail_from.">\r\n";
+        $header      .= $later;
+        $header_echo .= $later;
+        $TO           = explode(",", $this->strip_comment( $toaddress ));
 
-        if ($cc != "") {
-            $TO = array_merge($TO, explode(",", $this->strip_comment($cc)));
+        if ( $cc != "" ) {
+            $TO = array_merge($TO, explode(",", $this->strip_comment( $cc )));
         }
 
-        if ($bcc != "") {
-            $TO = array_merge($TO, explode(",", $this->strip_comment($bcc)));
+        if ( $bcc != "" ) {
+            $TO = array_merge($TO, explode(",", $this->strip_comment( $bcc )));
         }
 
         $sent = TRUE;
         foreach ($TO as $rcpt_to) {
-            $rcpt_to = $this->get_address($rcpt_to);
-            if (!$this->smtp_sockopen($rcpt_to)) {
-                $this->log_write("Error: Cannot send email to ".$rcpt_to."");
+            $rcpt_to = $this->get_address( $rcpt_to );
+            if ( !$this->smtp_sockopen( $rcpt_to ) ) {
+                $this->log_write( "Error: Cannot send email to " . $rcpt_to . "" );
                 $sent = FALSE;
                 continue;
             }
-            self::$host_name=UtilNet::hostname();
-            if ($this->smtp_send(self::$host_name, $mail_from, $rcpt_to, $header, $content)) {
-                $this->log_write("E-mail has been sent to <".$rcpt_to.">");
+            self::$host_name = UtilNet::hostname();
+            if ( $this->smtp_send( self::$host_name, $mail_from, $rcpt_to, $header, $content ) ) {
+                $this->log_write( "E-mail has been sent to <" . $rcpt_to . ">" );
             } else {
-                $this->log_write("Error: Cannot send email to <".$rcpt_to.">");
+                $this->log_write( "Error: Cannot send email to <" . $rcpt_to . ">");
                 $sent = FALSE;
             }
             fclose($this->sock);
-            $this->log_write("Disconnected from remote host");
+            $this->log_write( "Disconnected from remote host" );
         }
         echo "<br>";
         echo $header_echo;
@@ -127,17 +127,17 @@ class UtilEmailSmtp extends Util
     /* Private Functions */
 
     public function smtp_send($helo, $from, $to, $header, $body = "") {
-        if (!$this->smtp_putcmd("HELO", $helo)) {
-            return $this->smtp_error("sending HELO command");
+        if ( !$this->smtp_putcmd( "HELO", $helo ) ) {
+            return $this->smtp_error( "sending HELO command" );
         }
 
-        if(self::$auth) {
-            if (!$this->smtp_putcmd("AUTH LOGIN", base64_encode(self::$user))) {
-                return $this->smtp_error("sending HELO command");
+        if ( self::$auth ) {
+            if ( !$this->smtp_putcmd( "AUTH LOGIN", base64_encode(self::$user) ) ) {
+                return $this->smtp_error( "sending HELO command" );
             }
 
-            if (!$this->smtp_putcmd("", base64_encode(self::$pass))) {
-                return $this->smtp_error("sending HELO command");
+            if ( !$this->smtp_putcmd( "", base64_encode(self::$pass) ) ) {
+                return $this->smtp_error( "sending HELO command" );
             }
         }
 
@@ -228,7 +228,7 @@ class UtilEmailSmtp extends Util
         $response = str_replace("\r\n", "", fgets($this->sock, 512));
         $this->smtp_debug($response."\n");
 
-        if (!ereg("^[23]", $response)) {
+        if (!mb_ereg("^[23]", $response)) {
             fputs($this->sock, "QUIT\r\n");
             fgets($this->sock, 512);
             $this->log_write("Error: Remote host returned \"".$response);
@@ -261,7 +261,7 @@ class UtilEmailSmtp extends Util
 
     public function strip_comment($address) {
         $comment = "\\([^()]*\\)";
-        while (ereg($comment, $address)) {
+        while (mb_ereg($comment, $address)) {
             $address = preg_replace($comment, '', $address);
         }
 

@@ -1,9 +1,8 @@
 <?php
 /**
- +----------------------------------------------------------------------
- * PHPMailer language file: refer to English translation for definitive list
+ * -----------| PHPMailer language file: refer to English translation for definitive list |-----------
+ * 
  * Simplified Chinese Version
- +----------------------------------------------------------------------
  * @category betterlie
  * @package util.email
  * @subpackage phpmailer

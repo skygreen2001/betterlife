@@ -78,34 +78,26 @@ class UtilDateLunar
     {
         $yearData = self::$lunarInfo[$year - self::$MIN_YEAR];
         
-        if  ((self::getLeapMonth($year)>0)&&($month>self::getLeapMonth($year))){
-            $month+=1;
+        if ( ( self::getLeapMonth( $year ) > 0) && ( $month > self::getLeapMonth( $year ) ) ) {
+            $month += 1;
         }
-        $between = self::getDaysBetweenLunar($year, $month, $date);
-
-        $res = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
-
-        $res = date('Y-m-d', $res + $between * 24 * 60 * 60);
-
+        $between = self::getDaysBetweenLunar( $year, $month, $date );
+        $res   = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
+        $res   = date('Y-m-d', $res + $between * 24 * 60 * 60);
         //$day = split_date($res);
-        $day = explode("-",$res);
-
-        $year = $day[0];
-
+        $day   = explode("-", $res);
+        $year  = $day[0];
         $month = $day[1];
-
-        $day = $day[2];
-
+        $day   = $day[2];
         return array($year, $month, $day);
-    }  
-    
+    }
     /**
      * 判断是否是闰年
      * @param year
      */
     public static function isLeapYear($year)
     {
-        return (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0));
+        return ( ( $year % 4 == 0 && $year % 100 != 0 ) || ( $year % 400 == 0 ) );
     }
 
     /**
@@ -118,7 +110,7 @@ class UtilDateLunar
         $earth = array('申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未');
 
         $year = $year . '';
-        return $sky[$year{3}] . $earth[$year % 12];
+        return $sky[$year[3]] . $earth[$year % 12];
     }
 
     /**
@@ -138,7 +130,7 @@ class UtilDateLunar
      */
     public static function getSolarMonthDays($year, $month)
     {
-        $monthHash = array('1' => 31, '2' => self::isLeapYear($year) ? 29 : 28, '3' => 31, '4' => 30, '5' => 31, '6' => 30, '7' => 31, '8' => 31, '9' => 30, '10' => 31, '11' => 30, '12' => 31);
+        $monthHash = array('1' => 31, '2' => self::isLeapYear( $year ) ? 29 : 28, '3' => 31, '4' => 30, '5' => 31, '6' => 30, '7' => 31, '8' => 31, '9' => 30, '10' => 31, '11' => 30, '12' => 31);
         return $monthHash["$month"];
     }
 
@@ -149,7 +141,7 @@ class UtilDateLunar
      */
     public static function getLunarMonthDays($year, $month)
     {
-        $monthData = self::getLunarMonths($year);
+        $monthData = self::getLunarMonths( $year );
         return $monthData[$month - 1];
     }
 
@@ -160,7 +152,7 @@ class UtilDateLunar
     public static function getLunarMonths($year)
     {
 
-        $yearData = self::$lunarInfo[$year - self::$MIN_YEAR];
+        $yearData  = self::$lunarInfo[$year - self::$MIN_YEAR];
         $leapMonth = $yearData[0];
 
         $bit = decbin($yearData[3]);
@@ -190,7 +182,7 @@ class UtilDateLunar
     public static function getLunarYearDays($year)
     {
         $yearData = self::$lunarInfo[$year - self::$MIN_YEAR];
-        $monthArray = self::getLunarYearMonths($year);
+        $monthArray = self::getLunarYearMonths( $year );
         $len = count($monthArray);
         return ($monthArray[$len - 1] == 0 ? $monthArray[$len - 2] : $monthArray[$len - 1]);
     }
@@ -198,11 +190,11 @@ class UtilDateLunar
     public static function getLunarYearMonths($year)
     {
         //debugger;
-        $monthData = self::getLunarMonths($year);
-        $res = array();
+        $monthData = self::getLunarMonths( $year );
+        $res  = array();
         $temp = 0;
         $yearData = self::$lunarInfo[$year - self::$MIN_YEAR];
-        $len = ($yearData[0] == 0 ? 12 : 13);
+        $len      = ($yearData[0] == 0 ? 12 : 13);
         for ($i = 0; $i < $len; $i++)
         {
             $temp = 0;
@@ -282,19 +274,17 @@ class UtilDateLunar
         $t = 0;
         $e = 0;
         $leapMonth = 0;
-        $m = '';
+        $m         = '';
 
-        if ($between == 0)
-        {
+        if ( $between == 0 ) {
             array_push($lunarArray, $year, '正月', '初一');
             $t = 1;
             $e = 1;
-        } else
-        {
-            $year = $between > 0 ? $year : ($year - 1);
+        } else {
+            $year      = $between > 0 ? $year : ($year - 1);
             $yearMonth = self::getLunarYearMonths($year);
             $leapMonth = self::getLeapMonth($year);
-            $between = $between > 0 ? $between : (self::getLunarYearDays($year) + $between);
+            $between   = $between > 0 ? $between : ( self::getLunarYearDays( $year ) + $between );
 
             for ($i = 0; $i < 13; $i++)
             {
@@ -303,21 +293,20 @@ class UtilDateLunar
                     $t = $i + 2;
                     $e = 1;
                     break;
-                } else if ($between < $yearMonth[$i])
-                {
+                } else if ($between < $yearMonth[$i]) {
                     $t = $i + 1;
-                    $e = $between - (empty($yearMonth[$i - 1]) ? 0 : $yearMonth[$i - 1]) + 1;
+                    $e = $between - ( empty($yearMonth[$i - 1]) ? 0 : $yearMonth[$i - 1] ) + 1;
                     break;
                 }
             }
-            $m = ($leapMonth != 0 && $t == $leapMonth + 1) ? ('闰' . self::getCapitalNum($t - 1, true)) : self::getCapitalNum(($leapMonth != 0 && $leapMonth + 1 < $t ? ($t - 1) : $t), true);
+            $m = ( $leapMonth != 0 && $t == $leapMonth + 1 ) ? ( '闰' . self::getCapitalNum( $t - 1, true ) ) : self::getCapitalNum( ( $leapMonth != 0 && $leapMonth + 1 < $t ? ( $t - 1 ) : $t ), true );
 
-            array_push($lunarArray, $year, $m, self::getCapitalNum($e, false));
+            array_push($lunarArray, $year, $m, self::getCapitalNum( $e, false ));
         }
-        array_push($lunarArray, self::getLunarYearName($year));
+        array_push($lunarArray, self::getLunarYearName( $year ));
         //天干地支
         array_push($lunarArray, $t, $e);
-        array_push($lunarArray, self::getYearZodiac($year));
+        array_push($lunarArray, self::getYearZodiac( $year ));
         //12生肖
         array_push($lunarArray, $leapMonth);
         //闰几月
@@ -331,30 +320,23 @@ class UtilDateLunar
      */
     public static function getCapitalNum($num, $isMonth)
     {
-        $isMonth = $isMonth || false;
-        $dateHash = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
+        $isMonth   = $isMonth || false;
+        $dateHash  = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
         $monthHash = array('0' => '', '1' => '正月', '2' => '二月', '3' => '三月', '4' => '四月', '5' => '五月', '6' => '六月', '7' => '七月', '8' => '八月', '9' => '九月', '10' => '十月', '11' => '冬月', '12' => '腊月');
-        $res = '';
+        $res       = '';
 
-        if ($isMonth)
-        {
+        if ($isMonth) {
             $res = $monthHash[$num];
-        } else
-        {
-            if ($num <= 10)
-            {
+        } else {
+            if ($num <= 10) {
                 $res = '初' . $dateHash[$num];
-            } else if ($num > 10 && $num < 20)
-            {
+            } else if ($num > 10 && $num < 20) {
                 $res = '十' . $dateHash[$num - 10];
-            } else if ($num == 20)
-            {
+            } else if ($num == 20) {
                 $res = "二十";
-            } else if ($num > 20 && $num < 30)
-            {
+            } else if ($num > 20 && $num < 30) {
                 $res = "廿" . $dateHash[$num - 20];
-            } else if ($num == 30)
-            {
+            } else if ($num == 30) {
                 $res = "三十";
             }
         }
@@ -362,4 +344,3 @@ class UtilDateLunar
     }
 
 }
-?>

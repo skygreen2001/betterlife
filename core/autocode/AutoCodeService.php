@@ -669,7 +669,7 @@ class AutoCodeService extends AutoCode
             if ( array_key_exists($classname, self::$relation_viewfield) ) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
-                foreach ($fieldInfo as $fieldname => $field){
+                foreach ($fieldInfo as $fieldname => $field) {
                     if ( array_key_exists($fieldname, $relationSpecs) ) {
                         $relationShow = $relationSpecs[$fieldname];
                         foreach ($relationShow as $key => $value) {
@@ -795,7 +795,7 @@ class AutoCodeService extends AutoCode
             if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::column_type($field["Type"]);
                 $field_comment = $field["Comment"];
-                if ( ($datatype == 'int') && (contains($field_comment, array("日期", "时间")) || contains($field_comment, array("date", "time"))) )
+                if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
                 {
                     if ( $isImport ) {
                         $result .= "                            if ( isset(\${$instance_name}->$fieldname) ) \${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp( UtilExcel::exceltimtetophp( \${$instance_name}->$fieldname ) );\r\n";
@@ -859,7 +859,7 @@ class AutoCodeService extends AutoCode
             if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::column_type($field["Type"]);
                 $field_comment = $field["Comment"];
-                if ( ($datatype == 'int' ) && ( contains($field_comment, array("日期", "时间") ) || contains($field_comment, array("date", "time"))) )
+                if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
                 {
                     $result .= $blankPre . "                if ( \${$instance_name}->{$fieldname} ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::timestampToDateTime( \${$instance_name}->{$fieldname} );\r\n";
                 }

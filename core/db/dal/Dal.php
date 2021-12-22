@@ -77,13 +77,13 @@ abstract class Dal {
      * @param mixed $object 对象实体|对象名称
      * @return string 基于主键的sql语句,如主键列名为user_id,则返回"user_id"
      */
-    protected function sql_id($object){
+    protected function sql_id($object) {
         if ( is_string($object) ) {
             if ( class_exists($object) ) {
                 $object=new $object();
             }
         }
-        if ( $object instanceof DataObject){
+        if ( $object instanceof DataObject ) {
             return DataObjectSpec::getRealIDColumnName( $object );
         }
        x( Wl::ERROR_INFO_EXTENDS_CLASS);
@@ -187,13 +187,13 @@ abstract class Dal {
      * @param stdClass|array $result 结果集
      * @return 值
      */
-    protected function getValueIfOneValue($result){
-        if ( ($result != null) && (count($result) == 1) ) {
+    protected function getValueIfOneValue($result) {
+        if ( ( $result != null ) && ( count($result) == 1 ) ) {
             if ( $result[0] instanceof stdClass ) {
                 $tmp = UtilObject::object_to_array( $result[0] );
                 if ( count($tmp) == 1 ) {
                    $tmp_values = array_values($tmp);
-                   $result = $tmp_values[0];
+                   $result     = $tmp_values[0];
                 }
             }
         }

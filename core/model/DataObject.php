@@ -340,7 +340,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 获取当前数据对象的表名
      */
-    public static function tablename(){
+    public static function tablename() {
         return Config_Db::orm( get_called_class() );
     }
 

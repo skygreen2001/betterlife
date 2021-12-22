@@ -25,7 +25,7 @@ class EnumMsgStatus extends Enum
      */
     public static function statusShow($status)
     {
-        switch($status){
+        switch ($status) {
             case self::UNREAD:
                 return "未读";
             case self::READ:
@@ -40,7 +40,7 @@ class EnumMsgStatus extends Enum
      */
     public static function statusByShow($statusShow)
     {
-        switch($statusShow){
+        switch ($statusShow) {
             case "未读":
                 return self::UNREAD;
             case "已读":
@@ -54,7 +54,7 @@ class EnumMsgStatus extends Enum
      */
     public static function statusEnumKey($status)
     {
-        switch($status){
+        switch ($status) {
             case '0':
                 return "UNREAD";
             case '1':

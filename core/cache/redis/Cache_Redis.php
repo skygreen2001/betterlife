@@ -392,7 +392,7 @@ class Cache_Redis extends Cache_Base
             }
         }
         // $type = Redis::REDIS_SET;
-        switch($type){
+        switch ($type) {
             case Redis::REDIS_STRING:
                 $this->redis->setEx($key, $expired, $value);
                 break;
@@ -506,7 +506,7 @@ class Cache_Redis extends Cache_Base
     {
         if ( empty($key) ) return;
         $type = $this->getKeyType($key);
-        switch($type){
+        switch ($type) {
             case Redis::REDIS_STRING :
                 $data = $this->redis->get($key);
                 break;

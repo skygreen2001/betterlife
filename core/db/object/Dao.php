@@ -50,10 +50,10 @@ abstract class Dao
      */
     public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null,$dbtype=null)
     {
-        if (isset($dbtype)){
-            $this->setdbType($dbtype);
+        if ( isset($dbtype) ) {
+            $this->setdbType( $dbtype );
         }
-        $this->connect($host, $port, $username, $password, $dbname);
+        $this->connect( $host, $port, $username, $password, $dbname );
     }
 
     /**
@@ -156,8 +156,8 @@ abstract class Dao
     {
         if ( isset($saParams) && is_array($saParams) ) {
             $keys = array_keys($saParams);
-            foreach ($keys as $key){
-                if ( strpos((substr($key,0,2)),"v_") !== false ) {
+            foreach ($keys as $key) {
+                if ( strpos((substr($key, 0, 2)), "v_") !== false ) {
                     unset($saParams[$key]);
                 }
             }

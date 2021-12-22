@@ -15,15 +15,15 @@ class AutoCodeAjax extends AutoCodeView
     public static function api_web_admin($tablename, $fieldInfo)
     {
         $appname      = self::$appName;
-        $classname    = self::getClassname($tablename);
-        $instancename = self::getInstancename($tablename);
-        $realId       = DataObjectSpec::getRealIDColumnName($classname);
+        $classname    = self::getClassname( $tablename );
+        $instancename = self::getInstancename( $tablename );
+        $realId       = DataObjectSpec::getRealIDColumnName( $classname );
         $editApiImg   = "";
         $editApiRela  = "";
-        foreach ($fieldInfo as $fieldname=>$field)
+        foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ){
+            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
@@ -108,7 +108,7 @@ class AutoCodeAjax extends AutoCodeView
                             if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
                             $i_name = $key;
                             $i_name = lcfirst($i_name);
-                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ){
+                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
                                 $result .= "    if ( !empty(\${$instance_name}->$fieldname) ) {\r\n".
                                            "      \${$i_name}_i = $key::get_by_id(\${$instance_name}->$fieldname);\r\n".
                                            "      if ( \${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;\r\n".

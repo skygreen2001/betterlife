@@ -91,13 +91,13 @@ class Dal_Mdb2 extends Dal implements IDal
                     $result[] = $c;
                 }
             } else {
-                if ( count($row) == 1 ){
-                    foreach($row as $key => $val) {
+                if ( count($row) == 1 ) {
+                    foreach ($row as $key => $val) {
                         $result[] = $val;
                     }
                 } else {
                     $c = new stdClass();
-                    foreach($row as $key => $val) {
+                    foreach ($row as $key => $val) {
                         $c->{$key} = $val;
                     }
                     $result[] = $c;
@@ -140,7 +140,7 @@ class Dal_Mdb2 extends Dal implements IDal
             $sql_s      = preg_replace("/\s/", "", $sql);
             $sql_s      = strtolower($sql_s);
             if ( !empty($result) && !is_array($result) ) {
-                if ( !(contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(") ) ) ) {
+                if ( !( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(") ) ) ) {
                     $tmp      = $result;
                     $result   = null;
                     $result[] = $tmp;

@@ -20,7 +20,7 @@ class Enum {
      * @param string $value 指定的枚举值
      * @return bool 指定的枚举值是否存在
      */
-    public static function isEnumValue($value){
+    public static function isEnumValue($value) {
        if ( !empty($value) ) {
            $class  = new ReflectionClass( get_called_class() );
            $consts = $class->getConstants();
@@ -39,7 +39,7 @@ class Enum {
      * @param string $value 指定的枚举键
      * @return bool 指定的枚举键是否存在
      */
-    public static function isEnumKey($key){
+    public static function isEnumKey($key) {
         if ( !empty($key) ) {
             $consts = self::allEnums();
             if ( isset($consts) ) {
@@ -56,7 +56,7 @@ class Enum {
      * @param mixed $data 数据对象数组|数据对象。如:array(user,user)
      * @param mixed $property_name  属性名【可以一次指定多个属性名】
      */
-    public static function propertyShow($data, $property_name){
+    public static function propertyShow($data, $property_name) {
         $class_name = get_called_class();
         if ( !empty($class_name) )
         {
@@ -68,7 +68,7 @@ class Enum {
                 $class_property_name = array_merge($class_property_name, $property_name);
             }
             if ( is_array($data) && ( count($data) > 0) ) {
-                foreach ($data as $record){
+                foreach ($data as $record) {
                     array_walk($record, array("Enum", 'property_alter'), $class_property_name);
                 }
             } else if ( is_object($data) ) {

@@ -31,13 +31,13 @@ class DataObjectRelation extends BBObject
             $m_m_class = ucfirst(strtolower($classname_has . $classname_belong));
             $tablename = Config_Db::orm( $m_m_class );
 
-            // $tablename =Config_Db::orm($classname_has);
-            // $tncount=explode(Config_Db::TABLENAME_CONCAT,$tablename);
-            // if (count($tncount)>2){
-            //     $tablename= substr($tablename,0,strrpos($tablename, Config_Db::TABLENAME_CONCAT));
+            // $tablename = Config_Db::orm( $classname_has );
+            // $tncount   = explode(Config_Db::TABLENAME_CONCAT, $tablename);
+            // if ( count($tncount) > 2) {
+            //     $tablename = substr($tablename, 0, strrpos($tablename, Config_Db::TABLENAME_CONCAT));
             // }
-            // $tablename.=Config_Db::TABLENAME_RELATION.Config_Db::TABLENAME_CONCAT;
-            // $tablename.=strtolower($classname_has.$classname_belong);
+            // $tablename .= Config_Db::TABLENAME_RELATION . Config_Db::TABLENAME_CONCAT;
+            // $tablename .= strtolower($classname_has . $classname_belong);
             return $tablename;
         } else {
             LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );
@@ -339,7 +339,7 @@ class DataObjectRelation extends BBObject
      * @param array $other_column_values  其他列值键值对【冗余字段便于查询的数据列值】，如有一列：记录关系创建时间。
      * @return mixed 保存对象后的主键
      */
-    public static function saveRelationForManyToMany($dataobject, $relation_object, $relation_id_value, $other_column_values = null){
+    public static function saveRelationForManyToMany($dataobject, $relation_object, $relation_id_value, $other_column_values = null) {
         if ( $dataobject instanceof DataObject ) {
             $properties = UtilReflection::getClassStaticProperties( $dataobject );
             $properties = DataObjectSpec::removeNotObjectDataField($properties, $dataobject);

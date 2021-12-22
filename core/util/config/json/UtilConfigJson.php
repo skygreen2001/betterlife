@@ -19,7 +19,7 @@ class UtilConfigJson extends UtilConfig
     /**
      * 调用方法
      */
-    public static function main(){
+    public static function main() {
         $settings = new UtilConfigJson();
         $settings->load( __DIR__ . DS . 'config.json' );
         echo 'Json: host-' . $settings->get('db.host') . ', debug-'.$settings->get('debug') ;

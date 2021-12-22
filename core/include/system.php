@@ -137,7 +137,7 @@ function alphatonumber($alphabet)
         for ($j = 1; $j <= $count; $j++) {
             $number = 1;
             $alphabet[$j-1] = strtoupper($alphabet[$j-1]);
-            for($i = 'A'; $i <= 'Z'; $i++){
+            for ($i = 'A'; $i <= 'Z'; $i++) {
                 if ( $alphabet[$j-1] == $i ) {
                     break;
                 }
@@ -176,7 +176,7 @@ function system_dir_info($dir_name, $info_dir_name = "" )
                    "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
                    "sudo mkdir -p " . $info_dir_name . "<br/>" . str_repeat("&nbsp;",40);
         $info   .= "sudo chmod -R 0777 " . $info_dir_name . "</p>";
-        // if (!$isMac){
+        // if ( !$isMac ) {
         //     $info .=
         //         "sudo chown -R www-data:www-data " . self::$save_dir . "<br/>" . str_repeat("&nbsp;",8) .
         //         "sudo chmod -R 0755 " . self::$save_dir . "</p>";

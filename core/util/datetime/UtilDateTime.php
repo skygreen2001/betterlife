@@ -110,7 +110,7 @@ class UtilDateTime extends Util
                 break;
         }
 
-        switch ($type){
+        switch ($type) {
             case EnumDateTimeFormat::TIMESTAMP:
                 return UtilDateTime::dateToTimestamp( $now );
             case EnumDateTimeFormat::DATE:
@@ -194,7 +194,7 @@ class UtilDateTime extends Util
                     $i = 0;
                 } else {
                     for ($i = 1; $i < 12; $i++) {
-                        if ( ( 100 * $m + $d ) >= $Zone[$i] && ( 100 * $m + $d ) < $Zone[$i + 1]){
+                        if ( ( 100 * $m + $d ) >= $Zone[$i] && ( 100 * $m + $d ) < $Zone[$i + 1]) {
                             break;
                         }
                     }

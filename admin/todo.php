@@ -56,18 +56,18 @@
         width: 100%;
         z-index: 1000;
       }
-      @media (max-width: 450px){
+      @media (max-width: 450px) {
         .index #page1 .section-header-container{
           position: relative;
           padding: 40px;
         }
       }
-      @media (min-width: 320px){
+      @media (min-width: 320px) {
         .index #page1 .lead .btn{
           font-size: 16px;
         }
       }
-      @media (min-height: 1000px){
+      @media (min-height: 1000px) {
         .bb-lead-core{
           position: absolute;
           margin: auto 0;
@@ -196,7 +196,7 @@
       $(".bb-lead-core").css({"height":height});
       if ( isAds ) $(".us").removeClass("pure");
       $(window).scroll(function() {
-        $('.contact-info').each(function(){
+        $('.contact-info').each(function() {
           var imagePos = $(this).offset().top;
           var topOfWindow = $(window).scrollTop();
           if (imagePos < topOfWindow+550) {

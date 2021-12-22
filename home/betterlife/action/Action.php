@@ -18,7 +18,7 @@ class Action extends ActionBasic
             Gc::$appName . ".auth.login",
             Gc::$appName . ".index.index"
         );
-        if ( !in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' ) ){
+        if ( !in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' ) ) {
             // $this->redirect("auth","login");
         }
     }

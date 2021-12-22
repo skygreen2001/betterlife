@@ -30,7 +30,7 @@ class HttpSession
     public static function isHave($key)
     {
         // die(sys_get_temp_dir());
-        if ( !isset($_SESSION) ){
+        if ( !isset($_SESSION) ) {
             self::init();
         }
         return isset($_SESSION[$key]);

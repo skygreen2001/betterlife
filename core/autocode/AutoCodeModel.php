@@ -32,7 +32,7 @@ class AutoCodeModel extends AutoCode
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
-        if(Config_AutoCode::ONLY_DOMAIN){
+        if ( Config_AutoCode::ONLY_DOMAIN ) {
             self::$showReport .= "</div>";
 
             //将新添加的内容放置在文件最后作为可覆盖的内容
@@ -168,7 +168,7 @@ class AutoCodeModel extends AutoCode
 
                 $overwrite_not_dir_str .=
                     "sudo chmod -R 0777 " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
-                // if (!$isMac){
+                // if ( !$isMac ) {
                 //     $info .=
                 //         "sudo chown -R www-data:www-data " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8) .
                 //         "sudo chmod -R 0755 " . $overwrite_not_dir . "</p>";

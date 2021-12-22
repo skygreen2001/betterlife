@@ -33,7 +33,7 @@ class UtilConfigPhp extends UtilConfig{
     /**
      * 调用方法
      */
-    public static function main(){
+    public static function main() {
         // Load settings (PHP)
         $settings = new UtilConfigPhp();
         $settings->load( __DIR__ . DS . "setting.php" );

@@ -206,7 +206,7 @@ TPL;
 
 
 $js_template = <<<JS
-\$(function(){
+\$(function() {
     //Datatables中文网[帮助]: http://datatables.club/
     if (\$.dataTable) {
         var infoTable = \$('#infoTable').DataTable({
@@ -228,11 +228,11 @@ $js_template = <<<JS
                     // Retrieve dynamic parameters
                     var dt_params = $('#infoTable').data('dt_params');
                     // Add dynamic parameters to the data object sent to the server
-                    if(dt_params){ $.extend(d, dt_params); }
+                    if ( dt_params ) { $.extend(d, dt_params); }
                     return d;
                 },
                 //可以对返回的结果进行改写
-                "dataFilter": function(data){
+                "dataFilter": function(data) {
                     return data;
                 }
             },
@@ -247,7 +247,7 @@ $js_template = <<<JS
             "columns": [
 $jsColumns
             ],
-            "initComplete":function(){
+            "initComplete":function() {
                 \$.dataTable.filterDisplay();
             },
             "drawCallback": function( settings ) {
@@ -257,10 +257,10 @@ $jsColumns
         });
         \$.dataTable.doFilter(infoTable);
 
-        \$("#btn-report-export").click(function(){
+        \$("#btn-report-export").click(function() {
             var params = infoTable.ajax.params();
             params = "&query=" + params.query + "&startDate=" + params.startDate + "&endDate=" + params.endDate;
-            \$.getJSON("index.php?go=report.report{$reportEname}.export{$reportEname}" + params, function(response){
+            \$.getJSON("index.php?go=report.report{$reportEname}.export{$reportEname}" + params, function(response) {
                 window.open(response.data);
             });
         });

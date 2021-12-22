@@ -54,10 +54,10 @@ class AutoCodeDomain extends AutoCode
         self::$showReport     .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . "'>" . self::$domain_dir_full . "</a></font><br/><br/>";
 
         $fieldInfos=self::fieldInfosByTable_names( $table_names );
-        foreach ($fieldInfos as $tablename => $fieldInfo){
+        foreach ($fieldInfos as $tablename => $fieldInfo) {
            //print_r($fieldInfo);
            //self::$showReport.="<br/>";
-           $definePhpFileContent=self::tableToDataObjectDefine($tablename,$fieldInfo);
+           $definePhpFileContent = self::tableToDataObjectDefine( $tablename, $fieldInfo );
            if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ) {
                $classname         = self::saveDataObjectDefineToDir( $tablename, $definePhpFileContent );
                self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
@@ -67,7 +67,7 @@ class AutoCodeDomain extends AutoCode
            self::tableToEnumClass( $tablename, $fieldInfo );
         }
         self::$showReport .= "</div><br/>";
-        self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_12");
+        self::$showReport .= AutoCodeFoldHelper::foldEffectCommon( "Content_12" );
         self::$showReport .= '<font color="#237319">生成枚举类型↓</font><br/>';
         self::$showReport .= '</a>';
         self::$showReport .= '<div id="Content_12" style="display:none;">';
@@ -112,9 +112,9 @@ class AutoCodeDomain extends AutoCode
     {
         $category  = Gc::$appName;
         $author    = self::$author;
-        foreach ($fieldInfo as $fieldname => $field){
-            $datatype = self::comment_type($field["Type"]);
-            if ($datatype == 'enum'){
+        foreach ($fieldInfo as $fieldname => $field) {
+            $datatype = self::comment_type( $field["Type"] );
+            if ( $datatype == 'enum' ) {
                 $enumclassname     = self::enumClassName( $fieldname, $tablename );
                 $enum_columnDefine = self::enumDefines( $field["Comment"] );
                 if ( isset($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) )
@@ -153,7 +153,7 @@ class AutoCodeDomain extends AutoCode
                                 "     */\r\n".
                                 "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                 "    {\r\n".
-                                "        switch(\${$fieldname}){\r\n";
+                                "        switch(\${$fieldname}) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']) ;
                         $enumcomment = $enum_column['comment'];
@@ -173,7 +173,7 @@ class AutoCodeDomain extends AutoCode
                                "     */\r\n".
                                "    public static function {$fieldname}ByShow(\${$fieldname}Show)\r\n".
                                "    {\r\n".
-                               "        switch(\${$fieldname}Show){\r\n";
+                               "        switch(\${$fieldname}Show) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']);
                         $enumcomment = $enum_column['comment'];
@@ -193,7 +193,7 @@ class AutoCodeDomain extends AutoCode
                                "     */\r\n".
                                "    public static function {$fieldname}EnumKey(\${$fieldname})\r\n".
                                "    {\r\n".
-                               "        switch(\${$fieldname}){\r\n";
+                               "        switch(\${$fieldname}) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname  = strtoupper($enum_column['name']);
                         $enumvalue = $enum_column['value'];
@@ -501,7 +501,7 @@ class AutoCodeDomain extends AutoCode
     private static function domainEnumShow($fieldInfo, $tablename)
     {
         $result = "";
-        foreach ($fieldInfo as $fieldname => $field){
+        foreach ($fieldInfo as $fieldname => $field) {
             if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::comment_type( $field["Type"] );
                 if ( $datatype == 'enum' ) {
@@ -513,7 +513,7 @@ class AutoCodeDomain extends AutoCode
                                "    /**\r\n".
                                "     * 显示" . $comment . "\r\n".
                                "     */\r\n";
-                    $enumclassname = self::enumClassName($fieldname, $tablename);
+                    $enumclassname = self::enumClassName( $fieldname, $tablename );
                     $result .= "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                "    {\r\n".
                                "        return {$enumclassname}::{$fieldname}Show( \${$fieldname} );\r\n".

@@ -55,8 +55,8 @@ class Manager_Db extends Manager {
      * 返回当前使用的Dao
      * @return object 当前使用的Dao
      */
-    public function currentdao(){
-        if ( $this->currentdao == null ){
+    public function currentdao() {
+        if ( $this->currentdao == null ) {
             $this->dao();
         }
         return $this->currentdao;
@@ -82,7 +82,7 @@ class Manager_Db extends Manager {
      *    $id  = sqlExecute($sql);
      * ```
      */
-    public function resetDao(){
+    public function resetDao() {
         $this->currentdao = null;
         $this->dao_static = null;
     }

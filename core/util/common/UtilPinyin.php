@@ -64,18 +64,18 @@ class UtilPinyin
         $_Data = array_combine($_TDataKey, $_TDataValue);
         arsort($_Data);
         reset($_Data);
-        if($_Code!= 'gb2312') {
+        if ( $_Code != 'gb2312' ) {
             $_String = self::_U2_Utf8_Gb($_String);
         }
         $_Res = '';
-        for($i=0; $i<strlen($_String); $i++) {
-                $_P = ord(substr($_String, $i, 1));
-                if($_P>160) {
-                        $_Q = ord(substr($_String, ++$i, 1)); $_P = $_P*256 + $_Q - 65536;
-                }
-                $_Res .= self::_Pinyin($_P, $_Data);
+        for ($i = 0; $i < strlen($_String); $i++) {
+            $_P = ord(substr($_String, $i, 1));
+            if ( $_P > 160 ) {
+                $_Q = ord(substr($_String, ++$i, 1)); $_P = $_P*256 + $_Q - 65536;
+            }
+            $_Res .= self::_Pinyin( $_P, $_Data );
         }
-        if ($isRemainOtherChars){
+        if ( $isRemainOtherChars ) {
             return $_Res;
         } else {
             return preg_replace("/[^a-z0-9]*/", '', $_Res);
@@ -84,33 +84,33 @@ class UtilPinyin
 
     private static function _Pinyin($_Num, $_Data)
     {
-        if($_Num>0 && $_Num<160 ){
-                return chr($_Num);
-        } elseif($_Num<-20319 || $_Num>-10247){
-                return '';
+        if ( $_Num > 0 && $_Num < 160 ) { 
+            return chr($_Num);
+        } elseif ( $_Num < -20319 || $_Num > -10247 ) {
+            return '';
         } else {
-                foreach($_Data as $k=>$v){ if($v<=$_Num) break; }
-                return $k;
+            foreach ($_Data as $k => $v) { if ( $v <= $_Num ) break; }
+            return $k;
         }
     }
 
     private static function _U2_Utf8_Gb($_C)
     {
         $_String = '';
-        if($_C < 0x80){
-                $_String .= $_C;
-        } elseif($_C < 0x800) {
-                $_String .= chr(0xC0 | $_C>>6);
-                $_String .= chr(0x80 | $_C & 0x3F);
-        } elseif($_C < 0x10000){
-                $_String .= chr(0xE0 | $_C>>12);
-                $_String .= chr(0x80 | $_C>>6 & 0x3F);
-                $_String .= chr(0x80 | $_C & 0x3F);
-        } elseif($_C < 0x200000) {
-                $_String .= chr(0xF0 | $_C>>18);
-                $_String .= chr(0x80 | $_C>>12 & 0x3F);
-                $_String .= chr(0x80 | $_C>>6 & 0x3F);
-                $_String .= chr(0x80 | $_C & 0x3F);
+        if ( $_C < 0x80 ) {
+            $_String .= $_C;
+        } elseif ( $_C < 0x800 ) {
+            $_String .= chr(0xC0 | $_C>>6);
+            $_String .= chr(0x80 | $_C & 0x3F);
+        } elseif ( $_C < 0x10000 ) {
+            $_String .= chr(0xE0 | $_C>>12);
+            $_String .= chr(0x80 | $_C>>6 & 0x3F);
+            $_String .= chr(0x80 | $_C & 0x3F);
+        } elseif ( $_C < 0x200000 ) {
+            $_String .= chr(0xF0 | $_C>>18);
+            $_String .= chr(0x80 | $_C>>12 & 0x3F);
+            $_String .= chr(0x80 | $_C>>6 & 0x3F);
+            $_String .= chr(0x80 | $_C & 0x3F);
         }
         return iconv('UTF-8', 'GB2312', $_String);
     }

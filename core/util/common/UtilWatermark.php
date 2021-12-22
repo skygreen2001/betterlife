@@ -76,11 +76,11 @@ class UtilWatermark
      * 3:左下角[SouthWest] 2:正下角[South] 1:右下角[SouthEast]
      * @return mixed bool 生成失败;array[file_path:生成水印图片的物理路径,url:生成水印图片的网络路径,origin_file_path:原图片物理路径,origin_url:原图片网络路径]
      */
-    public static function upload_watermark_source_files($files,$uploadFieldName="upload_file",$watermark_image_filename="watermark.png",$direction=1)
+    public static function upload_watermark_source_files($files, $uploadFieldName = "upload_file", $watermark_image_filename = "watermark.png", $direction = 1)
     {
-        if (empty(self::$uploaded_image_destination))self::init();
-        if (!file_exists($watermark_image_filename)){
-            LogMe::log("水印图片不存在:".$watermark_image_filename);
+        if ( empty(self::$uploaded_image_destination) ) self::init();
+        if ( !file_exists($watermark_image_filename) ) {
+            LogMe::log( "水印图片不存在:" . $watermark_image_filename );
             exit;
         }
         $temp_file_path = $files[$uploadFieldName]['tmp_name'];
@@ -99,18 +99,17 @@ class UtilWatermark
         }
 
         $uploaded_file_path = self::$uploaded_image_destination . $temp_file_name;
-        if (self::$is_always_output_jpg){
+        if ( self::$is_always_output_jpg ) {
             $processed_file_path = self::$processed_image_destination . preg_replace('/\\.[^\\.]+$/', '.jpg', $temp_file_name);
         } else {
             $processed_file_path = self::$processed_image_destination . $temp_file_name;
-
         }
-        UtilFileSystem::createDir(dirname($uploaded_file_path));
-        UtilFileSystem::createDir(dirname($processed_file_path));
+        UtilFileSystem::createDir( dirname($uploaded_file_path) );
+        UtilFileSystem::createDir( dirname($processed_file_path) );
         move_uploaded_file($temp_file_path, $uploaded_file_path);
         return $uploaded_file_path;
 
-//        $result = self::create_watermark($uploaded_file_path, $processed_file_path,$watermark_image_filename, $direction);
+//        $result = self::create_watermark( $uploaded_file_path, $processed_file_path,$watermark_image_filename, $direction );
 //        return $result;
     }
 
@@ -118,7 +117,7 @@ class UtilWatermark
      * 给图片添加文字水印 可控制位置，旋转，多行文字
      * @param string $source_file_path  图片地址
      * @param string $output_file_path  新图片地址 默认使用后缀命名图片
-     * @param array $watermark_content 水印文字（多行以'|'分割）
+     * @param string $watermark_content 水印文字（多行以'|'分割）
      * @param int $direction 水印位置:水印所在的方位，默认为右下角
      * 9:左上角[NorthWest] 8:正上角[North] 7:右上角[NorthEast]
      * 6:中左角[West]      5:中部[Center]  4:中右角[East]
@@ -129,21 +128,21 @@ class UtilWatermark
     public static function createWordsWatermark($source_file_path, $output_file_path, $watermark_content, $direction = 1,$font_color="255,255,255")
     {
         $font_type = Gc::$upload_path."font".DS."msyh.ttc"; //字体
-        if (!file_exists($font_type))die("请在指定路径下放置指定字体文件，默认是微软雅黑字体:".$font_type);
+        if ( !file_exists($font_type) ) die("请在指定路径下放置指定字体文件，默认是微软雅黑字体:" . $font_type);
 
         $font_size = 22; //字体大小
-        $angle=0;//旋转角度  允许值:0-90 270-360不含
+        $angle     = 0;//旋转角度  允许值:0-90 270-360不含
 
         $imageCreateFunctionArr = array('image/jpeg' => 'imagecreatefromjpeg', 'image/png' => 'imagecreatefrompng', 'image/gif' => 'imagecreatefromgif');
         $imageOutputFunctionArr = array('image/jpeg' => 'imagejpeg', 'image/png' => 'imagepng', 'image/gif' => 'imagegif');
 
         $imgsize = getimagesize($source_file_path);
-        if (empty($imgsize)) return false; //not image
-        list($imgWidth, $imgHeight, $source_type,$size_desc) = $imgsize;
+        if ( empty($imgsize) ) return false; //not image
+        list($imgWidth, $imgHeight, $source_type, $size_desc) = $imgsize;
         $mime = $imgsize['mime'];//获取图片的mime类型
 
-        if (!isset($imageCreateFunctionArr[$mime])) return false; //do not have create img function
-        if (!isset($imageOutputFunctionArr[$mime])) return false; //do not have output img function
+        if ( !isset($imageCreateFunctionArr[$mime]) ) return false; //do not have create img function
+        if ( !isset($imageOutputFunctionArr[$mime]) ) return false; //do not have output img function
 
         $imageCreateFun = $imageCreateFunctionArr[$mime];
 
@@ -215,8 +214,8 @@ class UtilWatermark
         }
 
         //如果有angle旋转角度，则重新设置 top ,left 坐标值
-        if ($angle != 0) {
-            if ($angle < 90) {
+        if ( $angle != 0 ) {
+            if ( $angle < 90 ) {
                 $diffTop = ceil(sin($angle * M_PI / 180) * $textWidth);
 
                 if (in_array($direction, array(7, 8, 9))) {// 上部 top 值增加
@@ -226,13 +225,13 @@ class UtilWatermark
                         $pointTop += ceil(($textWidth - $imgHeight / 2) / 2);
                     }
                 }
-            } elseif ($angle > 270) {
+            } elseif ( $angle > 270 ) {
                 $diffTop = ceil(sin((360 - $angle) * M_PI / 180) * $textWidth);
 
-                if (in_array($direction, array(1, 2, 3))) {// 上部 top 值增加
+                if ( in_array($direction, array(1, 2, 3)) ) {// 上部 top 值增加
                     $pointTop -= $diffTop;
-                } elseif (in_array($direction, array(4, 5, 6))) {// 中部 top 值根据图片总高判断
-                    if ($textWidth > ceil($imgHeight / 2)) {
+                } elseif ( in_array($direction, array(4, 5, 6)) ) {// 中部 top 值根据图片总高判断
+                    if ( $textWidth > ceil($imgHeight / 2) ) {
                         $pointTop = ceil(($imgHeight - $diffTop) / 2);
                     }
                 }
@@ -244,23 +243,23 @@ class UtilWatermark
         }
 
 
-        if (self::$is_always_output_jpg){
-            imagejpeg($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
+        if ( self::$is_always_output_jpg ) {
+            imagejpeg($image, $output_file_path, self:: WATERMARK_OUTPUT_QUALITY);
         } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
-            if ($source_type==IMAGETYPE_PNG){
+            if ( $source_type == IMAGETYPE_PNG ) {
                 $imageOutputFunction($image, $output_file_path);
             } else {
-                $imageOutputFunction($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
+                $imageOutputFunction($image, $output_file_path, self:: WATERMARK_OUTPUT_QUALITY);
             }
         }
         imagedestroy($image);// 释放内存
 
-        $uploaded_url =str_replace(Gc::$upload_path,"",$source_file_path);
-        $uploaded_url=str_replace(DIRECTORY_SEPARATOR,"/",$uploaded_url);
-        $processed_url=str_replace(Gc::$upload_path,"",$output_file_path);
-        $processed_url=str_replace(DIRECTORY_SEPARATOR,"/",$processed_url);
-        return array("file_path"=>$output_file_path,"url"=>$processed_url,"origin_file_path"=>$source_file_path,"origin_url"=>$uploaded_url);
+        $uploaded_url  = str_replace(Gc::$upload_path, "", $source_file_path);
+        $uploaded_url  = str_replace(DIRECTORY_SEPARATOR, "/", $uploaded_url);
+        $processed_url = str_replace(Gc::$upload_path, "", $output_file_path);
+        $processed_url = str_replace(DIRECTORY_SEPARATOR, "/", $processed_url);
+        return array("file_path" => $output_file_path, "url" => $processed_url, "origin_file_path" => $source_file_path, "origin_url" => $uploaded_url);
     }
 
     /**
@@ -274,25 +273,25 @@ class UtilWatermark
      * @param string $font_color //字体颜色;如:255,255,255
      * @return mixed bool 生成失败;array[file_path:生成水印图片的物理路径,url:生成水印图片的网络路径,origin_file_path:原图片物理路径,origin_url:原图片网络路径]
      */
-    public static function watermark_text($source_file_path, $output_file_path,$watermark_content,$direction=1,$font_color="255,255,255")
+    public static function watermark_text($source_file_path, $output_file_path, $watermark_content, $direction = 1, $font_color = "255,255,255")
     {
         $font_type = Gc::$upload_path."font".DS."msyh.ttc"; //字体
-        if (!file_exists($font_type))die("请在指定路径下放置指定字体文件，默认是微软雅黑字体:".$font_type);
+        if ( !file_exists($font_type) ) die("请在指定路径下放置指定字体文件，默认是微软雅黑字体:" . $font_type);
         $font_size = 22; //字体大小
         $angle=0;//旋转角度
 
         UtilFileSystem::createDir(dirname($source_file_path));
         UtilFileSystem::createDir(dirname($output_file_path));
 
-        if (empty($watermark_content))$watermark_content=Gc::$site_name;
-        $imgsize=getimagesize($source_file_path);
-        list($width, $height, $source_type,$size_desc) = $imgsize;
-        if ($source_type === NULL)return false;
+        if ( empty($watermark_content) ) $watermark_content = Gc::$site_name;
+        $imgsize = getimagesize($source_file_path);
+        list($width, $height, $source_type, $size_desc) = $imgsize;
+        if ( $source_type === NULL )return false;
 
         $imageCreateFunctionArr = array('image/jpeg' => 'imagecreatefromjpeg', 'image/png' => 'imagecreatefrompng', 'image/gif' => 'imagecreatefromgif');
         $imageOutputFunctionArr = array('image/jpeg' => 'imagejpeg', 'image/png' => 'imagepng', 'image/gif' => 'imagegif');
 
-        $mime=$imgsize["mime"];
+        $mime  = $imgsize["mime"];
 
         $image = imagecreatetruecolor($width, $height);
         $font_color = imagecolorallocatealpha($image, intval($font_color[0]), intval($font_color[1]), intval($font_color[2]) ,100-self::WATERMARK_OVERLAY_OPACITY);
@@ -302,83 +301,85 @@ class UtilWatermark
 
         imagecopyresampled($image, $image_src, 0, 0, 0, 0, $width, $height, $width, $height);
 
-        $offset_x=ceil($width/20);
-        $offset_y=ceil($height/150);
+        $offset_x = ceil($width/20);
+        $offset_y = ceil($height/150);
 
-        $textSize = imagettfbbox($font_size, $angle, $font_type, $watermark_content);
-        $overlay_width = $textSize[2] - $textSize[1]; //文字的最大宽度
+        $textSize       = imagettfbbox($font_size, $angle, $font_type, $watermark_content);
+        $overlay_width  = $textSize[2] - $textSize[1]; //文字的最大宽度
         $overlay_height = $textSize[1] - $textSize[7]; //文字的高度
         $overlay_height = $overlay_height + 3; //文字的行高
 
-        if (($direction>3)&&($offset_y<$overlay_height))$offset_y+= $overlay_height;
+        if ( ( $direction > 3 ) && ( $offset_y < $overlay_height ) ) $offset_y += $overlay_height;
 
         //是否可以添加文字水印 只有图片的可以容纳文字水印时才添加
-        if ($overlay_width + 40 > $width || $overlay_height + 40 > $height)return false; //图片太小了，无法添加文字水印
+        if ( $overlay_width + 40 > $width || $overlay_height + 40 > $height ) return false; //图片太小了，无法添加文字水印
 
         switch ($direction) {
            case 2:
              //ALIGN BOTTOM
-             imagettftext($image, $font_size, $angle, ($width - $overlay_width)/2+$offset_x,$height - $overlay_height-$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, ( $width - $overlay_width ) / 2 + $offset_x, $height - $overlay_height - $offset_y, $font_color, $font_type, $watermark_content);
              break;
            case 3:
              //ALIGN BOTTOM, LEFT
-             imagettftext($image, $font_size, $angle, 0+$offset_x,$height - $overlay_height-$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, 0 + $offset_x, $height - $overlay_height - $offset_y, $font_color, $font_type, $watermark_content);
              break;
            case 4:
              //ALIGN Center, Right
-             imagettftext($image, $font_size, $angle, $width - $overlay_width-$offset_x,($height - $overlay_height)/2, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, $width - $overlay_width-$offset_x, ( $height - $overlay_height ) / 2, $font_color, $font_type, $watermark_content);
              break;
            case 5:
              //ALIGN Center, Center
-             imagettftext($image, $font_size, $angle,($width - $overlay_width)/2+$offset_x,($height - $overlay_height)/2, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, ( $width - $overlay_width ) / 2 + $offset_x, ( $height - $overlay_height ) / 2, $font_color, $font_type, $watermark_content);
              break;
            case 6:
              //ALIGN Center, LEFT
-             imagettftext($image, $font_size, $angle, 0+$offset_x,($height - $overlay_height)/2+$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, 0 + $offset_x, ( $height - $overlay_height ) / 2 + $offset_y, $font_color, $font_type, $watermark_content);
              break;
            case 7:
              //ALIGN TOP, RIGHT
-             imagettftext($image, $font_size, $angle,$width - $overlay_width-$offset_x,0+$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, $width - $overlay_width - $offset_x, 0 + $offset_y, $font_color, $font_type, $watermark_content);
              break;
            case 8:
              //ALIGN TOP
-             imagettftext($image, $font_size, $angle, ($width - $overlay_width)/2+$offset_x,0+$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, ( $width - $overlay_width ) / 2 + $offset_x, 0 + $offset_y, $font_color, $font_type, $watermark_content);
              break;
            case 9:
              //ALIGN TOP, LEFT
-             imagettftext($image, $font_size, $angle, 0+$offset_x,0+$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, 0 + $offset_x, 0 + $offset_y, $font_color, $font_type, $watermark_content);
              break;
            default:
              //ALIGN BOTTOM, RIGHT
-             imagettftext($image, $font_size, $angle, $width - $overlay_width-$offset_x,$height - $overlay_height-$offset_y, $font_color, $font_type, $watermark_content);
+             imagettftext($image, $font_size, $angle, $width - $overlay_width - $offset_x, $height - $overlay_height - $offset_y, $font_color, $font_type, $watermark_content);
              break;
         }
 
-        if (self::$is_always_output_jpg){
-            imagejpeg($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
+        if ( self::$is_always_output_jpg ) {
+            imagejpeg($image, $output_file_path, self:: WATERMARK_OUTPUT_QUALITY);
         } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
-            if ($source_type==IMAGETYPE_PNG){
+            if ( $source_type == IMAGETYPE_PNG ) {
                 $imageOutputFunction($image, $output_file_path);
             } else {
-                $imageOutputFunction($image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
+                $imageOutputFunction($image, $output_file_path, self:: WATERMARK_OUTPUT_QUALITY);
             }
         }
         imagedestroy($image);
-        if(self::$is_delete_source_image)unlink($source_file_path);
-        $uploaded_url =str_replace(Gc::$upload_path,"",$source_file_path);
-        $uploaded_url=str_replace(DIRECTORY_SEPARATOR,"/",$uploaded_url);
-        $processed_url=str_replace(Gc::$upload_path,"",$output_file_path);
-        $processed_url=str_replace(DIRECTORY_SEPARATOR,"/",$processed_url);
-        return array("file_path"=>$output_file_path,"url"=>$processed_url,"origin_file_path"=>$source_file_path,"origin_url"=>$uploaded_url);
+        if ( self::$is_delete_source_image ) unlink($source_file_path);
+        $uploaded_url  = str_replace(Gc::$upload_path, "", $source_file_path);
+        $uploaded_url  = str_replace(DIRECTORY_SEPARATOR, "/", $uploaded_url);
+        $processed_url = str_replace(Gc::$upload_path, "", $output_file_path);
+        $processed_url = str_replace(DIRECTORY_SEPARATOR, "/", $processed_url);
+        return array("file_path" => $output_file_path, "url" => $processed_url, "origin_file_path" => $source_file_path, "origin_url" => $uploaded_url);
     }
 
     /**
      * 处理在原图像上加水印
+     * 
      * @param mixed $source_file_path 源图片路径
      * @param mixed $output_file_path 处理后输出图片路径
      * @param string $watermark_image_filename 水印图片的路径
      * @param int $direction 水印所在的方位，默认为右下角
+     * 
      * 9:左上角[NorthWest] 8:正上角[North] 7:右上角[NorthEast]
      * 6:中左角[West]      5:中部[Center]  4:中右角[East]
      * 3:左下角[SouthWest] 2:正下角[South] 1:右下角[SouthEast]
@@ -471,8 +472,8 @@ class UtilWatermark
              break;
         }
 
-        if (self::$is_always_output_jpg){
-            imagejpeg($source_gd_image, $output_file_path,self:: WATERMARK_OUTPUT_QUALITY);
+        if ( self::$is_always_output_jpg ) {
+            imagejpeg($source_gd_image, $output_file_path, self:: WATERMARK_OUTPUT_QUALITY);
         } else {
             $imageOutputFunction = $imageOutputFunctionArr[$mime];
             if ($source_type==IMAGETYPE_PNG){

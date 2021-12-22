@@ -66,8 +66,8 @@ class AutoCodeConfig extends AutoCode
         self::init();
 
         $fieldInfos = self::fieldInfosByTable_names( $table_names );
-        foreach ($fieldInfos as $tablename=>$fieldInfo){
-            $classname = self::getClassname($tablename);
+        foreach ($fieldInfos as $tablename=>$fieldInfo) {
+            $classname = self::getClassname( $tablename );
             $current_class_config = array(
                 '@attributes' => array(
                     "name"=>$classname
@@ -84,9 +84,9 @@ class AutoCodeConfig extends AutoCode
             $relationShows = $current_class_config["relationShows"]["show"];
 
             //添加查询条件配置
-            $conditions    = self::conditionsToConfig($classname,$tablename,$fieldInfo,$conditions);
+            $conditions    = self::conditionsToConfig( $classname, $tablename, $fieldInfo, $conditions );
             //表关系主键显示配置
-            $relationShows = self::relationShowsToConfig($classname,$fieldInfo,$relationShows);
+            $relationShows = self::relationShowsToConfig( $classname, $fieldInfo, $relationShows );
 
             $current_class_config["conditions"]["condition"] = $conditions;
             $current_class_config["relationShows"]["show"]   = $relationShows;
@@ -106,16 +106,16 @@ class AutoCodeConfig extends AutoCode
                 );
             }
         }
-        foreach ($fieldInfos as $tablename => $fieldInfo){
-            $classname = self::getClassname($tablename);
+        foreach ($fieldInfos as $tablename => $fieldInfo) {
+            $classname = self::getClassname( $tablename );
             $current_class_config = self::$config_classes["class"][self::$table_key_map[$classname]];
             foreach ($relation_keys as  $relation_key) {
                 $relation_fives[$relation_key] = $current_class_config[$relation_key];
             }
             //数据对象之间关系配置
-            $relation_fives = self::relationFives($classname,$tablename,$fieldInfo,$relation_fives);
+            $relation_fives = self::relationFives( $classname, $tablename, $fieldInfo, $relation_fives );
             foreach ($relation_keys as $relation_key) {
-                $current_class_config[$relation_key]  = $relation_fives[$relation_key];
+                $current_class_config[$relation_key] = $relation_fives[$relation_key];
             }
             self::$config_classes["class"][self::$table_key_map[$classname]] = $current_class_config;
         }
@@ -133,13 +133,13 @@ class AutoCodeConfig extends AutoCode
         UtilFileSystem::createDir( $dir_autocode );
         $result = UtilArray::saveXML( $filename, self::$config_classes, "classes" );
 
-        if ( !file_exists($filename) ){
+        if ( !file_exists($filename) ) {
             system_dir_info($dir_autocode);
         } else {
             self::$showPreviewReport .= "<div style='width: 1000px; margin-left: 80px;'>";
             self::$showPreviewReport .= "<a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showCreateConfigXml').style.display=(document.getElementById('showCreateConfigXml').style.display=='none')?'':'none')\">显示生成代码配置文件报告</a>";
             self::$showPreviewReport .= "<div id='showCreateConfigXml' style='display: none;'>";
-            self::$showPreviewReport .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功生成配置文件：<font color='#0000FF'><a target='_blank' href='".self::$url_config_xml."'>".$filename."</a></font><br /><br />";
+            self::$showPreviewReport .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功生成配置文件: <font color='#0000FF'><a target='_blank' href='".self::$url_config_xml."'>".$filename."</a></font><br /><br />";
             self::$showPreviewReport .= "</div>";
             self::$showPreviewReport .= "</div>";
         }
@@ -257,7 +257,7 @@ class AutoCodeConfig extends AutoCode
      * 而实体类的主键是通过实体类的命名规则生成，当没有实体类的时候就需要通过表定义和主键的定义规则来确定该实体类的主键
      * 优先判断规则为:
      * 表名+"_id"  > "id" > 表名+"id" 
-     * @param array $classname 数据对象类名
+     * @param string $classname 数据对象类名
      * @param array $fieldInfo 表列信息列表
      */
     private static function getRealIDByTable($classname, $fieldInfo) {

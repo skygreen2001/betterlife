@@ -411,7 +411,7 @@ class UtilString extends Util
      * 
      * str 需要截去的对象
      */
-    public static function delhtml($str){   //清除HTML标签
+    public static function delhtml($str) {   //清除HTML标签
         $st = -1; //开始
         $et = -1; //结束
         $stmp = array();

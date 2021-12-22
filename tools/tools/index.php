@@ -129,7 +129,7 @@ $url_base = UtilNet::urlbase();
             this.$Spin.show();
             setTimeout(() => {
                 this.$Spin.hide();
-                $(function(){
+                $(function() {
                   $("#tools-box").css("display", "block");
                 });
             }, 1000);

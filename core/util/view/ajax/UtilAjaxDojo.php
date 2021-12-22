@@ -133,7 +133,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         $class_name = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="dojo">
         $result     = "function(response) {
-                    if (response==null){
+                    if ( response == null ) {
                       console.log('请求失败！检查头信息是否是application/xml或者application/json :(');
                       return ;
                     }";
@@ -144,8 +144,8 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         if ( $response_type == EnumResponseType::JSON ) {
             $result .= "
                       //var responseJson = dojo.fromJson(response);
-                      var responseJson =response;
-                      for(var item in responseJson) {
+                      var responseJson = response;
+                      for (var item in responseJson) {
                          var value = responseJson[item];
                          dojo.place('<li>'+item+':'+value+'</li>', 'properties','last');
                       }
@@ -153,14 +153,14 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         } else if ( $response_type == EnumResponseType::XML ) {
             $result .= "
                       var objectJson = xmltoJson(response);
-                      for(var item in objectJson) {
+                      for (var item in objectJson) {
                          var value = objectJson[item];
-                         if(typeof(value) == 'object') {
+                         if (typeof(value) == 'object') {
                             for(var subitem in value) {
                                var subvalue = value[subitem];
                                for(var childitem in subvalue) {
                                   var childvalue = subvalue[childitem];
-                                  if (subitem!='#text'){
+                                  if (subitem!='#text') {
                                       dojo.place('<li>'+subitem+':'+childvalue+'</li>', 'properties','last');
                                   }
                                }

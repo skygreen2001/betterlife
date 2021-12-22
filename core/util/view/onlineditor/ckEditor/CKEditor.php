@@ -391,7 +391,7 @@ class CKEditor
                 } else if ( count($handlers) == 1 ) {
                     $_config['on'][$eventName] = '@@' . $handlers[0];
                 } else {
-                    $_config['on'][$eventName] = '@@function (ev){';
+                    $_config['on'][$eventName] = '@@function (ev) {';
                     foreach ($handlers as $handler => $code) {
                         $_config['on'][$eventName] .= '(' . $code . ')(ev);';
                     }

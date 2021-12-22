@@ -32,7 +32,7 @@ class UtilNumber extends Util{
      * @param string $str
      * @return int 返回数字。
      */
-    public static function parseInt($str){
+    public static function parseInt($str) {
         return (int) preg_replace('/[^0-9\.]+/', '', $str);
     }    
 }

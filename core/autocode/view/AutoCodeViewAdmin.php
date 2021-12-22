@@ -409,7 +409,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     // $ckeditor_prepare .= "ckeditor_replace_$fieldname();";
                     $ueEditor_prepare .= "pageInit_ue_$fieldname();".
                                          "                // 在线编辑器设置默认样式\r\n" .
-                                         "                ue_{$fieldname}.ready(function(){\r\n" .
+                                         "                ue_{$fieldname}.ready(function() {\r\n" .
                                          "                    UE.dom.domUtils.setStyles(ue_{$fieldname}.body, {\r\n" .
                                          "                        'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
                                          "                    });\r\n".
@@ -490,7 +490,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 //     {if (\$online_editor=="CKEditor")}
 //         {\$editorHtml}
 //         <script>
-//         $(function(){
+//         $(function() {
 //             $ckeditor_prepare
 //         });
 //         </script>
@@ -499,7 +499,7 @@ class AutoCodeViewAdmin extends AutoCodeView
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == "UEditor")}
         <script>
-          $(function(){
+          $(function() {
             if ( typeof UE != 'undefined' ) {
               $ueEditor_prepare
             }

@@ -250,7 +250,7 @@ class DataObjectSpec
     /**
      * 初始化方法
      */
-    public static function init(){}
+    public static function init() {}
 
     //<editor-fold defaultstate="collapsed" desc="数据对象的列规格的处理维护方法">
     /**
@@ -304,7 +304,7 @@ class DataObjectSpec
     /**
      * 获取指定数据对象当前唯一标识列名
      * @param mixed $dataobject 数据对象实体|对象名称
-     * @return 数据对象当前唯一标识列名
+     * @return string 数据对象当前唯一标识列名
      */
     public static function getRealIDColumnNameStatic($dataobject)
     {
@@ -354,7 +354,7 @@ class DataObjectSpec
      * @param mixed $obj 指明所属的对象
      * @return array DataObject对象定义的非数据对象属性被过滤掉后的数据对象数组
      */
-    public static function removeNotObjectDataField($arrDataObject,$obj){
+    public static function removeNotObjectDataField($arrDataObject, $obj) {
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FIELD_SPEC]);
         //unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FIELD_SPEC_DEFAULT]);
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY]);
@@ -364,7 +364,7 @@ class DataObjectSpec
         unset($arrDataObject[self::NAME_REAL_FIELDSPEC]);
         unset($arrDataObject["currentDao"]);
         $field_spec = self::real_field_spec( $obj );
-        if ( isset($field_spec) ){
+        if ( isset($field_spec) ) {
             if ( array_key_exists(EnumDataSpec::REMOVE, $field_spec) ) {
                 $field_spec_remove = $field_spec[EnumDataSpec::REMOVE];
                 foreach ($field_spec_remove as $value) {
@@ -395,9 +395,9 @@ class DataObjectSpec
      * @param object $dataobject 当前对象
      * @return array 当前数据对象的列规格说明
      */
-    public static function real_field_spec($dataobject){
+    public static function real_field_spec($dataobject) {
         if ( !isset($dataobject->real_fieldspec) ) {
-            $dataobject->real_fieldspec = self::real_field_spec_static($dataobject);
+            $dataobject->real_fieldspec = self::real_field_spec_static( $dataobject );
             //var_dump($dataobject->real_fieldspec);
         }
         return $dataobject->real_fieldspec;
@@ -439,7 +439,7 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * @param string $columnName 列名称
      */
-    public static function isColumnRemove($dataobject, $columnName){
+    public static function isColumnRemove($dataobject, $columnName) {
         if ( $dataobject instanceof DataObject ) {
             $field_spec_remove = self::getRealColumnName( $dataobject, EnumDataSpec::REMOVE );
             if ( is_array($field_spec_remove) ) {
@@ -461,7 +461,7 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * @return string 数据对象当前唯一标识列名
      */
-    public static function getRealIDColumnName($dataobject){
+    public static function getRealIDColumnName($dataobject) {
         if ( is_string($dataobject) ) {
             if ( class_exists($dataobject) ) {
                 $dataobject = new $dataobject();

@@ -199,21 +199,21 @@ class XmlObject extends BBObject implements ArrayAccess
      *      2. array("id"=>"1","name"=>"sky")
      *      3. 允许对象如new User(id="1",name="green");
      */
-    public static function get($xmlObject_classname,$filter=null)
+    public static function get($xmlObject_classname, $filter = null)
     {
-        if ($xmlObject_classname==null){
+        if ( $xmlObject_classname == null ) {
             $classname=get_called_class();
         } else {
             $classname=$xmlObject_classname;
         }
-        $filename=call_user_func("$classname::address");
-        $spec_library=UtilXmlSimple::fileXmlToArray($filename);
-        $result=array();
-        $classname = lcfirst($classname);
+        $filename     = call_user_func("$classname::address");
+        $spec_library = UtilXmlSimple::fileXmlToArray( $filename );
+        $result       = array();
+        $classname    = lcfirst($classname);
         foreach ($spec_library[$classname] as $block)
         {
-            $blockAttr=$block[Util::XML_ELEMENT_ATTRIBUTES];
-            $result[]=$blockAttr;
+            $blockAttr = $block[Util::XML_ELEMENT_ATTRIBUTES];
+            $result[]  = $blockAttr;
         }
         return $result;
     }
@@ -332,7 +332,7 @@ class XmlObject extends BBObject implements ArrayAccess
                }
            }
         } else {
-            foreach ($filter as $key => $value){
+            foreach ($filter as $key => $value) {
                 if ( is_int($key) ) {
                    $condition = explode("contain", $value);
                    if ( count($condition) == 2 ) {
@@ -377,7 +377,7 @@ class XmlObject extends BBObject implements ArrayAccess
         $this->id  = str_replace(".", "", $this->id);
         $child->addAttribute(self::$name_id_property, $this->id);
         foreach($data as $key => $value) {
-            if ( $value != null && !endWith($key, "Show")){
+            if ( $value != null && !endWith($key, "Show")) {
                 $value=htmlentities($value, ENT_COMPAT, "UTF-8");
                 $child->addAttribute($key, $value);
             }
@@ -449,7 +449,7 @@ class XmlObject extends BBObject implements ArrayAccess
         $xml       = UtilXmlSimple::fileXmlToObject($filename);
         $classname= lcfirst($classname);
         $xml_child=$xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
-        foreach ($xml_child  as $el){
+        foreach ($xml_child  as $el) {
             if ( $el[self::$name_id_property] == $node )
             {
                 $domRef = dom_import_simplexml($el);

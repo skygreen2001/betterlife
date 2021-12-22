@@ -66,8 +66,8 @@ class Cache_Memcached_Client extends Cache_Base
         $config['debug'] = Gc::$dev_debug_on;
         $config['persistant'] = Config_Memcache::$is_persistant;
         $this->obj = new Memcached_Client($config);
-//        if(!$this->obj->connect($host, $port)){
-//            LogMe::log('不能连接上memcached服务器;Host:'.self::$host.",Port:".self::$port,EnumLogLevel::ERR);
+//        if ( !$this->obj->connect($host, $port) ) {
+//            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port , EnumLogLevel::ERR );
 //        }
 
         //$version = $this->obj->getVersion();

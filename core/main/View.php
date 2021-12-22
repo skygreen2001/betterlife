@@ -58,7 +58,7 @@ class View {
      * @param array 显示层需要使用的全局变量
      */
     protected static $view_global=array();
-    private function init_view_global(){
+    private function init_view_global() {
         self::$view_global = array(
             "isDev"         => Gc::$dev_debug_on,
             "url_base"      => Gc::$url_base,
@@ -204,8 +204,8 @@ class View {
     /**
      * @return string 模板文件所在的目录
      */
-    public function template_url_dir(){
-        return @Gc::$url_base . str_replace("\\","/",$this->getTemplate_View_Dir());
+    public function template_url_dir() {
+        return @Gc::$url_base . str_replace("\\", "/", $this->getTemplate_View_Dir());
     }
 
     /**
@@ -232,7 +232,7 @@ class View {
     * 获取模板文件完整的路径
     *
     */
-    private function getTemplate_View_Dir(){
+    private function getTemplate_View_Dir() {
         $result = "";
         if ( strlen(Gc::$module_root) > 0 ) {
             $result .= Gc::$module_root . DS;
@@ -280,7 +280,7 @@ class View {
                 $this->template->compile_check = true;
                 $this->template->allow_php_templates = true;
                 // 开启自定义安全机制
-                if ( class_exists("Smarty_Security") ){
+                if ( class_exists("Smarty_Security") ) {
                     $my_security_policy = new Smarty_Security($this->template);
                     $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName);
                     $my_security_policy->allow_php_tag = true;

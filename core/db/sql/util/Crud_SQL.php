@@ -138,14 +138,14 @@ abstract class Crud_SQL {
                                 $detailclause = implode(",", $detailclause);
                                 if ( !empty($detailclause) ) {
                                     $detailclause = $this->parseValidInputParam( $detailclause );
-                                    if ( is_string($detailclause) ){
+                                    if ( is_string($detailclause) ) {
                                         $this->whereClause = $detailclause;
                                     }
                                 } else {
                                     return $this;
                                 }
                             } else {
-                                $detailclause = implode(" and ", $detailclause);
+                                $detailclause      = implode(" and ", $detailclause);
                                 $this->whereClause = $detailclause;
                                 return $this;
                             }
@@ -375,7 +375,7 @@ abstract class Crud_SQL {
             if ( is_string($filterc["value"]) && contains( $filterc["value"], array("=", self::SQL_LIKE) ) ) {
                 $f_values = $param;
                 foreach ($f_values as $key => $value) {
-                    if ( is_numeric($key) && ( self::isComplicatedCondition($value) ) ){
+                    if ( is_numeric($key) && ( self::isComplicatedCondition($value) ) ) {
                         if ( contain($value, "(") && contain($value, ")") ) {
                             $result[] = $value;
                         } else {
@@ -416,7 +416,7 @@ abstract class Crud_SQL {
                 foreach ($param as $key => $value) {
                     if ( $this->isPreparedStatement ) {
                         $isFilter = true;
-                        if ( contains( $value, array('"', "'") ) && ( contains( strtolower($value), array('like','between') ) ) ){
+                        if ( contains( $value, array('"', "'") ) && ( contains( strtolower($value), array('like','between') ) ) ) {
                             if ( ( contain( strtolower($value), 'like') && ( (substr_count($value, '"') % 2 == 0 ) || ( substr_count($value, "'") % 2 == 0 ) ) ) ||
                                 ( contain( strtolower($value), 'between' ) && ( ( substr_count($value, '"') % 4 == 0 ) || ( substr_count($value, "'") % 4 == 0 ) ) ) ) {
                                 $isFilter = false;

@@ -3,10 +3,10 @@ $url_base = UtilNet::urlbase();
 $form_css = UtilCss::form_css();
 $default_dir=Gc::$nav_root_path."model".DS;
 $show_select_lists = "";
-if (!empty($inputArr)){
+if ( !empty($inputArr) ) {
     foreach ($inputArr as $key => $value) {
-        $selectd="";
-        if ($default_value==$key) $selectd = 'selected="selected"';
+        $selectd = "";
+        if ( $default_value == $key ) $selectd = 'selected="selected"';
         $show_select_lists .= "      <option value=\"$key\" $selectd>$value</option>";
     }
 $show_select_lists_model = <<<SHOWTABLELIST

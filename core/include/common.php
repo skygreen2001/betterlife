@@ -10,7 +10,7 @@ function sqlExecute($sqlstring, $object = null)
     if ( empty($sqlstring) ) {
         return null;
     }
-    if ( $object ){
+    if ( $object ) {
         if ( is_bool($object) )$object = null;
         return Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
     } else {

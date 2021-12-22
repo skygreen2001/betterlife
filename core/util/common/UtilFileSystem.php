@@ -92,10 +92,10 @@ class UtilFileSystem extends Util
         }
         self::createDir( dirname($filename) );
         $cFile = fopen($filename, 'w');
-        if ( $cFile ){
+        if ( $cFile ) {
             file_put_contents($filename, $content);
         } else {
-            LogMe::log( "创建文件:" . $filename . "失败！" );
+            LogMe::log( "创建文件:" . $filename . "失败!" );
         }
         if ( $cFile ) fclose($cFile);
     }
@@ -223,7 +223,7 @@ class UtilFileSystem extends Util
                 $path_r    = explode('.', $files[$uploadFieldName]["name"]);
                 $tmptail   = end($path_r);
                 $temp_name = basename($uploadPath);
-                if ( contain($temp_name, ".") ){
+                if ( contain($temp_name, ".") ) {
                     $temp_name = "";
                     self::createDir( dirname($uploadPath) );
                 } else {
@@ -239,7 +239,7 @@ class UtilFileSystem extends Util
                     if ( !$IsUploadSucc ) {
                         return array('success' => false, 'msg' => '文件上传失败，通知系统管理员!');
                     }
-                    if ( empty($temp_name) ){
+                    if ( empty($temp_name) ) {
                         $temp_name = basename($uploadPath);
                     }
                     return array('success' => true,'file_showname'=>$files[$uploadFieldName]["name"],'file_name' => $temp_name);

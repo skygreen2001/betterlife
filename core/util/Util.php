@@ -19,7 +19,7 @@ class Util extends BBObject {
      * 垃圾回收，全称为Garbage Collection
      * @param mixed $value
      */
-    public static function gc(&$value){
+    public static function gc(&$value) {
         $value = null;
         unset($value);
     }

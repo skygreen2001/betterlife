@@ -454,7 +454,7 @@ class AutoCode extends BBObject
         if ( contains( $column_name, array("THUMBNAIL", "PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC") ) ) {
             return true;
         }
-        if ( contains( $column_comment, array("图像地址", "图片地址")) ){
+        if ( contains( $column_comment, array("图像地址", "图片地址")) ) {
             return true;
         }
         return false;
@@ -580,7 +580,7 @@ class AutoCode extends BBObject
                 if ( contain( $fieldname_filter, $classname_filter ) ) return $fieldname;
             }
         }
-        if ( $isReturnNull ){
+        if ( $isReturnNull ) {
             return "";
         } else {
             return "name";

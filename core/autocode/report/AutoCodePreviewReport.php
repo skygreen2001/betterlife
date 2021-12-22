@@ -92,25 +92,25 @@ MODEL;
         $moreContent .= str_replace("[title]", $title, $module_model);
         $moreContent  = str_replace("[module_name]", "ajax", $moreContent);
 
-        if( self::$json_admin_files && ( count(self::$json_admin_files) > 0 ) ){
+        if( self::$json_admin_files && ( count(self::$json_admin_files) > 0 ) ) {
             $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>枚举后台所需数据Json文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
             $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "ajax" );
         }
 
-        if( self::$api_admin_files && ( count(self::$api_admin_files) > 0 ) ){
+        if( self::$api_admin_files && ( count(self::$api_admin_files) > 0 ) ) {
             $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>列表后台所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
             $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "ajax" );
         }
 
-        if( self::$api_select_files && ( count(self::$api_select_files) > 0 ) ){
+        if( self::$api_select_files && ( count(self::$api_select_files) > 0 ) ) {
             $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>编辑所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
             $moreContent .= self::groupFileContentsStatus( self::$api_select_files, "ajax" );
         }
 
-        if( Config_AutoCode::ONLY_DOMAIN ){
+        if( Config_AutoCode::ONLY_DOMAIN ) {
             $showResult = self::modelShowDetailReport( $table_names, $moreContent );
             return $showResult;
         }
@@ -164,19 +164,19 @@ MODEL;
             }
 
             // 生成后台管理表示层页面
-            if( self::$admin_layout_menu && ( count(self::$admin_layout_menu) > 0 ) ){
+            if( self::$admin_layout_menu && ( count(self::$admin_layout_menu) > 0 ) ) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>布局菜单页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
                 $moreContent .= self::groupFileContentsStatus( self::$admin_layout_menu, "admin" );
             }
 
-            if( self::$view_admin_files && ( count(self::$view_admin_files) > 0 ) ){
+            if( self::$view_admin_files && ( count(self::$view_admin_files) > 0 ) ) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
                 $moreContent .= self::groupFileContentsStatus( self::$view_admin_files, "admin" );
             }
 
-            if( self::$js_admin_files && ( count(self::$js_admin_files) > 0 ) ){
+            if( self::$js_admin_files && ( count(self::$js_admin_files) > 0 ) ) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层Js文件</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
                 $moreContent .= self::groupFileContentsStatus( self::$js_admin_files, "admin" );
@@ -210,7 +210,7 @@ MODEL;
             $moreContent      .= self::groupFileContentsStatus( array($model_index_file), "model" );
 
             // 生成标准的增删改查模板表示层页面
-            if( self::$view_model_files && ( count(self::$view_model_files) > 0 ) ){
+            if( self::$view_model_files && ( count(self::$view_model_files) > 0 ) ) {
                 $title        = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
                 $moreContent .= self::groupFileContentsStatus( self::$view_model_files, "model" );
@@ -221,7 +221,7 @@ MODEL;
         return $showResult;
     }
 
-    private static function model(){
+    private static function model() {
         $url_base = self::$url_base;
         $url_base = substr($url_base, 0, strlen($url_base)-1);
         $model = <<<MODEL
@@ -301,8 +301,8 @@ MODEL;
         if(checkbox)checkbox.checked = source.checked;
 
         var checkboxes = document.getElementsByName(overwriteEle + '[]');
-        if(checkboxes){
-            for(var i=0, n=checkboxes.length;i<n;i++) {
+        if (checkboxes) {
+            for(var i = 0, n = checkboxes.length; i < n;i++) {
                 checkboxes[i].checked = source.checked;
             }
         }

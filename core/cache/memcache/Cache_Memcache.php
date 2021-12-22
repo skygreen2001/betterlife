@@ -64,8 +64,8 @@ class Cache_Memcache extends Cache_Base{
         {
             $this->obj->addServer($cache_server[0], $cache_server[1]);
         }
-//        if(!$this->obj->connect($host, $port)){
-//            LogMe::log('不能连接上memcached服务器;Host:'.self::$host.",Port:".self::$port,EnumLogLevel::ERR);
+//        if ( !$this->obj->connect($host, $port) ) {
+//            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port, EnumLogLevel::ERR );
 //        }
     }
 

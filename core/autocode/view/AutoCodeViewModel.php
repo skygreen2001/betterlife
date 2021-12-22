@@ -21,7 +21,7 @@ class AutoCodeViewModel extends AutoCodeView
         $result      = "";
         $appname     = self::$appName;
         if ( $tableInfos!=null && count($tableInfos)>0 ) {
-            foreach ($tableInfos as $tablename => $tableInfo){
+            foreach ($tableInfos as $tablename => $tableInfo) {
                 $table_comment = $tableInfos[$tablename]["Comment"];
                 if ( contain($table_comment,"\r") || contain($table_comment,"\n") ) {
                     $table_comment = preg_split("/[\s,]+/", $table_comment);
@@ -356,7 +356,7 @@ class AutoCodeViewModel extends AutoCodeView
                 // $ckeditor_prepare .= "ckeditor_replace_$key();";
                 $ueEditor_prepare .= "pageInit_ue_$key();\r\n\r\n" .
                                      "                // 在线编辑器设置默认样式\r\n" .
-                                     "                ue_{$key}.ready(function(){\r\n" .
+                                     "                ue_{$key}.ready(function() {\r\n" .
                                      "                    UE.dom.domUtils.setStyles(ue_{$key}.body, {\r\n" .
                                      "                        'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'\r\n" .
                                      "                    });\r\n".
@@ -367,7 +367,7 @@ class AutoCodeViewModel extends AutoCodeView
 //     {if (\$online_editor=='CKEditor')}
 //         {\$editorHtml}
 //         <script>
-//         $(function(){
+//         $(function() {
 //             $ckeditor_prepare
 //         });
 //         </script>
@@ -386,7 +386,7 @@ class AutoCodeViewModel extends AutoCodeView
 UETC;
         }
         $edit_js_content .= $rela_js_content . $enumJsContent;
-        if ( !empty($edit_js_content) ){
+        if ( !empty($edit_js_content) ) {
             $edit_js_content= "    <script type=\"text/javascript\">\r\n".
                               "    \$(function() {\r\n".
                               $edit_js_content . "\r\n".
@@ -477,9 +477,9 @@ UETC;
                                 $realId = DataObjectSpec::getRealIDColumnName( $key_r );
                                 if ( empty($realId) ) $realId = $key;
                                 $show_fieldname = "";
-                                if ( (!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r) ){
+                                if ( ( !array_key_exists($value_r, $fieldInfo) ) || ( $classname == $key_r ) ) {
                                     $show_fieldname = $value_r;
-                                    if ( $realId != $key ){
+                                    if ( $realId != $key ) {
                                         $key_m = $key;
                                         if ( contain($key,"_id") ) {
                                             $key_m = str_replace("_id", "", $key_m);
@@ -490,7 +490,7 @@ UETC;
                                         // }
                                     }
                                     if ( $show_fieldname == "name" ) {
-                                        $show_fieldname = strtolower($key_r)."_".$value_r;
+                                        $show_fieldname = strtolower($key_r) . "_" . $value_r;
                                     }
                                 } else {
                                     if ( $value_r == "name" ) {
@@ -499,7 +499,7 @@ UETC;
                                 }
                                 if ( !array_key_exists($show_fieldname, $fieldInfo) ) {
                                     $field_comment = $value;
-                                    $field_comment = self::columnCommentKey($field_comment,$key);
+                                    $field_comment = self::columnCommentKey( $field_comment, $key );
 
                                     $talname_rela   = self::getTablename( $key_r );
                                     $insname_rela   = self::getInstancename( $talname_rela );

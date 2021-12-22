@@ -1,23 +1,23 @@
 <?php
 /**
-* 检查清除文件头的Bom
-* @link http://www.qinbin.me/removal-of-the-bom-header-php-file/
-*/
+ * 检查清除文件头的Bom
+ * @link http://www.qinbin.me/removal-of-the-bom-header-php-file/
+ */
 class CheckBOMTask
 {
     /**
-    * 是否需要清除文件头的Bom
-    * @var mixed
-    */
+     * 是否需要清除文件头的Bom
+     * @var mixed
+     */
     private static $isRemoveBom=false;
     /**
-    * 检查文件头是否有Bom
-    * @param mixed $isRemoveBom 是否需要清除文件头的Bom
-    */
-    public static function run($isRemoveBom=false,$checkDir="../../../")
+     * 检查文件头是否有Bom
+     * @param mixed $isRemoveBom 是否需要清除文件头的Bom
+     */
+    public static function run($isRemoveBom = false, $checkDir = "../../../")
     {
         self::$isRemoveBom=$isRemoveBom;
-        if (isset($_GET['dir'])){
+        if ( isset($_GET['dir']) ) {
           $basedir=$_GET['dir'];
           self::checkdir($basedir);
         } else {

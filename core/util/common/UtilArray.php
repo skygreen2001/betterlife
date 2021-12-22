@@ -183,7 +183,7 @@ class UtilArray extends Util
      */
     public static function xml_to_array($xml, $rootNodeName = 'data')
     {
-        if ( is_string($xml) ){
+        if ( is_string($xml) ) {
             $xmlSxe = new SimpleXMLElement($xml);
         } else {
             $xmlSxe = $xml;
@@ -365,7 +365,7 @@ class UtilArray extends Util
     }
 
     /**
-     *  return depth of given array
+     * return depth of given array
      * if Array is a string ArrayDepth() will return 0
      * usage: int ArrayDepth(array Array)
      */
@@ -373,13 +373,13 @@ class UtilArray extends Util
     {
         $DepthCount++;
         if ( is_array($Array) ) {
-            foreach ($Array as $Key => $Value){
+            foreach ($Array as $Key => $Value) {
                 $DepthArray[] = ArrayDepth($Value, $DepthCount);
             }
         } else {
             return $DepthCount;
         }
-        foreach ($DepthArray as $Value){
+        foreach ($DepthArray as $Value) {
             $Depth = $Value > $Depth ? $Value : $Depth;
         }
         return $Depth;

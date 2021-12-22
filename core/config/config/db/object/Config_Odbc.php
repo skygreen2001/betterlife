@@ -40,7 +40,7 @@ class Config_Odbc extends Config_Db {
      * @param string $dbname 数据库名称
      * @return string dsn ODBC所需的dsn字符串
      */
-    public static function dsn($dbname = null){
+    public static function dsn($dbname = null) {
         if ( isset($dbname) ) {
             return $dbname;
         } else {

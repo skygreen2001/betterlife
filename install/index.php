@@ -67,7 +67,7 @@ APACHECONFIG;
         echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod -R 0777 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if (empty(Gc::$log_config["logpath"])){
+    if ( empty(Gc::$log_config["logpath"]) ) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];
@@ -102,7 +102,7 @@ APACHECONFIG;
         echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if (empty(Gc::$log_config["logpath"])){
+    if ( empty(Gc::$log_config["logpath"]) ) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];
@@ -130,7 +130,7 @@ APACHECONFIG;
         echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if (empty(Gc::$log_config["logpath"])){
+    if ( empty(Gc::$log_config["logpath"]) ) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];

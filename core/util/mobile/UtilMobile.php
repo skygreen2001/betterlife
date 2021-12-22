@@ -14,10 +14,10 @@ class UtilMobile extends Util
      * @author niujiazhu
      * @return array
      */
-    public static function randMobile($num = 1){
+    public static function randMobile($num = 1) {
         //手机号2-3位为数组
         $numberPlace = array(30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 50, 51, 58, 59, 89);
-        for ($i = 0; $i < $num; $i++){
+        for ($i = 0; $i < $num; $i++) {
             $mobile   = 1;
             $mobile  .= $numberPlace[rand(0, count($numberPlace) - 1)];
             $mobile  .= str_pad(rand(0, 99999999), 8, 0, STR_PAD_LEFT);
@@ -29,9 +29,9 @@ class UtilMobile extends Util
     /**
      * 验证是否手机号码
      *
-     * @param mixed $phonenum
+     * @param mixed $phonenumber
      */
-    public static function isMobile($phonenum)
+    public static function isMobile($phonenumber)
     {
         if ( preg_match("/1[3458]{1}\d{9}$/", $phonenumber) ) {
             return true;

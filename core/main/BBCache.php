@@ -73,7 +73,7 @@ class BBCache {
     }
 
     private function serverCache($cache_drive = EnumCacheDriverType::REDIS) {
-        switch ($cache_drive){
+        switch ($cache_drive) {
            case EnumCacheDriverType::REDIS:
                 $cache = new Cache_Redis();
                 break;

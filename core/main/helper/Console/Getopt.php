@@ -21,9 +21,7 @@
 require_once 'PEAR.php';
 
 /**
- +--------------------------------------<br/>
- * Command-line options parsing class.<br/>
- +--------------------------------------
+ * -----------| Command-line options parsing class. |-----------
  * @category betterlife
  * @package core.main.helper
  * @author Andrei Zmievski <andrei@php.net>

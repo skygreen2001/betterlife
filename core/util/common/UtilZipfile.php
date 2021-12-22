@@ -200,7 +200,7 @@ class UtilZipfile
      */
     private function addFiles($files)/*Only Pass Array*/
     {
-        if ( is_array($files) ){
+        if ( is_array($files) ) {
             foreach ($files as $showName => $file)
             {
                 if ( contain(strtolower(php_uname()),"windows") ) if ( UtilString::is_utf8( $file ) ) $file = UtilString::utf82gbk( $file );
@@ -212,10 +212,10 @@ class UtilZipfile
             }
         } else if ( is_string($files) ) {
             if ( contain(strtolower(php_uname()),"windows") ) if ( UtilString::is_utf8( $files ) ) $files = UtilString::utf82gbk( $files );
-            if ( is_file($files) ){
+            if ( is_file($files) ) {
                 $data     = implode("",file($files));
                 $showName = basename($files);
-                $this->addFile($data, $files, $showName);
+                $this->addFile( $data, $files, $showName );
             }
         }
     }

@@ -111,11 +111,11 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      * @return string xml文档
      */
     public function toXml() {
-        if ( $this->count() > 0 ){
+        if ( $this->count() > 0 ) {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
             $dataobjectsArr = array();
-            foreach ($this as $dataobject){
+            foreach ($this as $dataobject) {
               $dataobjectArr = $dataobject->toArray();
               $dataobjectsArr[$dataobject->$id_name] = $dataobjectArr;
             }
@@ -136,7 +136,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
             $dataobjectsArr = array();
-            foreach ($this as $dataobject){
+            foreach ($this as $dataobject) {
               $dataobjectArr = $dataobject->toArray();
               $dataobjectsArr[$dataobject->$id_name] = $dataobjectArr;
             }

@@ -75,7 +75,7 @@ foreach (\$columns as \$key => \$column) {
 
 \$page{$classname}s = {$classname}::queryPageByPageNo( \$page, \$where_clause, \$page_size, \$orderDes );
 \$data = \$page{$classname}s["data"];
-if (\$data){
+if ( \$data ) {
   foreach (\$data as \$key => \${$instancename}) {
 $editApiRela
 $editApiImg
@@ -102,7 +102,7 @@ echo json_encode(\$result);
 API_WEB;
 
 $js_template = <<<JS
-\$(function(){
+\$(function() {
     //Datatables中文网[帮助]: http://datatables.club/
     if (\$.dataTable) {
         var infoTable = \$('#infoTable').DataTable({
@@ -120,7 +120,7 @@ $js_template = <<<JS
                     return d;
                 },
                 //可以对返回的结果进行改写
-                "dataFilter": function(data){
+                "dataFilter": function(data) {
                     return data;
                 }
             },
@@ -142,21 +142,21 @@ $statusColumnDefs
 $idColumnDefs
              }
             ],
-            "initComplete":function(){
+            "initComplete":function() {
                 \$.dataTable.filterDisplay();
             },
-            "drawCallback": function( settings ) {
+            "drawCallback": function(settings) {
                 \$.dataTable.pageNumDisplay(this);
                 \$.dataTable.filterDisplay();
             }
         });
         \$.dataTable.doFilter(infoTable);
 
-        \$("#btn-{$instancename}-import").click(function(){
+        \$("#btn-{$instancename}-import").click(function() {
             \$("#upload_file").trigger('click');
         });
 
-        \$("#upload_file").change(function(){
+        \$("#upload_file").change(function() {
             var data = new FormData();
             data.append('upload_file', \$("#upload_file").get(0).files[0]);
             \$.ajax({
@@ -164,11 +164,11 @@ $idColumnDefs
                 url: "index.php?go=admin.{$instancename}.import",
                 data: data,
                 success: function(response) {
-                    if (response && response.success){
-                        bootbox.alert("导入{$table_comment}成功！");
+                    if (response && response.success) {
+                        bootbox.alert("导入{$table_comment}成功!");
                         infoTable.draw();
                     } else {
-                        bootbox.alert("导入{$table_comment}失败！");
+                        bootbox.alert("导入{$table_comment}失败!");
                     }
                     \$("#upload_file").val("");
 
@@ -182,9 +182,9 @@ $idColumnDefs
             });
         });
 
-        \$("#btn-{$instancename}-export").click(function(){
+        \$("#btn-{$instancename}-export").click(function() {
             var query = \$("#input-search").val();
-            \$.getJSON("index.php?go=admin.{$instancename}.export&query=" + query, function(response){
+            \$.getJSON("index.php?go=admin.{$instancename}.export&query=" + query, function(response) {
                 window.open(response.data);
             });
         });
@@ -240,7 +240,7 @@ $js_sub_template_img = <<<JS_IMG
                         result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$altImgVal + '" /></a>';
 
                         \$("body").off('click', 'a#imgUrl' + $realId);
-                        \$("body").on('click', 'a#imgUrl' + $realId, function(){
+                        \$("body").on('click', 'a#imgUrl' + $realId, function() {
                             var imgLink = \$('a#imgUrl' + $realId + " img").attr('src');
                             \$('#imagePreview').attr('src', imgLink);
                             \$('#imagePreview-link').attr('href', imgLink);
@@ -256,7 +256,7 @@ JS_IMG;
 
 $js_sub_template_bit = <<<JS_BIT
                 {"orderable": false, "targets": $row_no,
-                 "render"   : function(data,type,row){
+                 "render"   : function(data,type,row) {
                     if ( data == 1 ) {
                         return '是';
                     } else {
@@ -269,7 +269,7 @@ JS_BIT;
 
 $js_sub_template_status = <<<JS_STATUS
                 {"orderable": false, "targets": $row_no,
-                 "render"   : function(data, type, row){
+                 "render"   : function(data, type, row) {
                     switch (data) {
 $status_switch_show
                       default:
@@ -281,24 +281,24 @@ JS_STATUS;
 
 $js_sub_template_id = <<<JS_ID
                 {"orderable": false, "targets": $row_no,
-                 "render"   : function(data, type, row){
+                 "render"   : function(data, type, row) {
                     var result = \$.templates("#actionTmpl").render({ "id"  : data });
 
                     \$("body").off('click', 'a#info-view' + data);
-                    \$("body").on('click', "a#info-view"+data, function(){
+                    \$("body").on('click', "a#info-view"+data, function() {
                         location.href = 'index.php?go={$appname}.{$instancename}.view&id=' + data;
                     });
 
                     \$("body").off('click', 'a#info-edit' + data);
-                    \$("body").on('click', "a#info-edit"+data, function(){
+                    \$("body").on('click', "a#info-edit"+data, function() {
                         location.href = 'index.php?go={$appname}.{$instancename}.edit&id=' + data;
                     });
 
                     \$("body").off('click', 'a#info-dele' + data);
-                    \$("body").on('click', 'a#info-dele' + data, function(){//删除
-                        bootbox.confirm("确定要删除该{$table_comment}:" + data + "?",function(result){
-                            if ( result == true ){
-                                \$.get("index.php?go={$appname}.{$instancename}.delete&id="+data, function(response, status){
+                    \$("body").on('click', 'a#info-dele' + data, function() {//删除
+                        bootbox.confirm("确定要删除该{$table_comment}:" + data + "?",function(result) {
+                            if ( result == true ) {
+                                \$.get("index.php?go={$appname}.{$instancename}.delete&id="+data, function(response, status) {
                                     \$( 'a#info-dele' + data ).parent().parent().css("display", "none");
                                 });
                             }

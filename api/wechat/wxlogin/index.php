@@ -13,7 +13,7 @@ class WxLogin {
   const APPID = "微信小程序APPID";
   const APPSECRET = "微信小程序APPSECRET";
 
-  public static function open_id($code){
+  public static function open_id($code) {
     $appId = self::APPID;
     $appSecret = self::APPSECRET;
 

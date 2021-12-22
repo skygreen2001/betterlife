@@ -317,11 +317,11 @@ class Config_Db extends ConfigBB
      * @return 根据表名称返回对象名称定义
      * @final
      */
-    final public static function tom($tablename){
+    final public static function tom($tablename) {
         if ( in_array($tablename, self::$orm) ) {
             return array_search($tablename, self::$orm);//在Config_Db::$orm里手动配置类与表的对应关系
         } else {
-            return self::tomByRule($tablename);
+            return self::tomByRule( $tablename );
         }
     }
 
@@ -349,7 +349,7 @@ class Config_Db extends ConfigBB
         $class          = new ReflectionClass( $classname );
         $filename       = strtolower(dirname($class->getFileName()));
         $subDirname     = substr($filename, strpos($filename, $class_root_dir) + strlen($class_root_dir) + 1);
-        if ($subDirname){
+        if ( $subDirname ) {
             $subDirname = str_replace(DIRECTORY_SEPARATOR, self::TABLENAME_CONCAT, $subDirname);
             $subDirname = str_replace(self::TABLENAME_DIR_RELATION, self::TABLENAME_RELATION, $subDirname);
             $subDirname = $subDirname . self::TABLENAME_CONCAT;
@@ -373,8 +373,8 @@ class Config_Db extends ConfigBB
         $classnamepart  = array_reverse($classnamepart);
         $maybeClassname = "";
         foreach ($classnamepart as $name) {
-            $maybeClassname = ucfirst($name).$maybeClassname;
-            if (class_exists($maybeClassname)){
+            $maybeClassname = ucfirst($name) . $maybeClassname;
+            if ( class_exists($maybeClassname) ) {
                 $classname = $maybeClassname;
                 return $classname;
             }

@@ -86,7 +86,7 @@ class Service extends BBObject {
      * 转换成数组
      * @return int
      */
-    public static function toArray(){
+    public static function toArray() {
         $servicename = get_called_class();
         $result      = null;
         $services = array();

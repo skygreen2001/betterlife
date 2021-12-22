@@ -16,7 +16,7 @@ class AutoCodeOneKey extends AutoCode
         $filename       = $dest_directory."autocode.config.xml";
         AutoCodeValidate::run();
         if ( Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
-        if ( !file_exists($filename) ){
+        if ( !file_exists($filename) ) {
             AutoCodeConfig::run();
             die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码！</div>");
         }
@@ -55,7 +55,7 @@ class AutoCodeOneKey extends AutoCode
         AutoCodeView::AutoCode( $table_names );
         self::$showReport      .= AutoCodeFoldHelper::foldafterviewdefault();
 
-        if(Config_AutoCode::SHOW_PREVIEW_REPORT){
+        if ( Config_AutoCode::SHOW_PREVIEW_REPORT ) {
             echo "<div style='width: 1000px; margin-left: 24px;'>";
             echo "  <a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
             echo "  <div id='showPrepareWork' style='display: none;'>";

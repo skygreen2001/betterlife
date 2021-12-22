@@ -109,7 +109,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log($message, $level = EnumLogLevel::INFO, $category = ''){
+    public static function log($message, $level = EnumLogLevel::INFO, $category = '') {
         if ( self::isNeedLog( $level ) ) {
             switch (Gc::$log_config["logType"]) {
                 case EnumLogType::SYSTEM:
@@ -143,7 +143,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_console($message, $level = EnumLogLevel::INFO, $category = ""){
+    public static function log_console($message, $level = EnumLogLevel::INFO, $category = "") {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
         Log::singleton( 'console', '', $category, $conf )->log($message, $level);
@@ -155,7 +155,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_browser($message, $level = EnumLogLevel::INFO, $category = ""){
+    public static function log_browser($message, $level = EnumLogLevel::INFO, $category = "") {
         echo $message . "";
     }
 
@@ -165,7 +165,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_file($message, $level = EnumLogLevel::INFO, $category = ""){
+    public static function log_file($message, $level = EnumLogLevel::INFO, $category = "") {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
         Log::singleton( 'file', self::logPath( $category ), $category, $conf )->log($message, $level);

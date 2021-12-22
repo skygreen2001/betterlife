@@ -245,7 +245,7 @@ class UtilImage
             $srcImg    = $createFun($image);
 
             //创建缩略图
-            if ( $actualType != 'gif' && function_exists('imagecreatetruecolor') ){
+            if ( $actualType != 'gif' && function_exists('imagecreatetruecolor') ) {
                 $thumbImg = imagecreatetruecolor($width, $height);
                 if ( $actualType == 'png' ) {
                     self::setTransparency( $thumbImg, $srcImg );
@@ -282,7 +282,7 @@ class UtilImage
             $imageFun  = 'image' . $actualType;
             $image_dir = dirname($thumbname);
             UtilFileSystem::createDir( $image_dir );
-            if ( 'jpg' == $actualType || 'jpeg' == $actualType ){
+            if ( 'jpg' == $actualType || 'jpeg' == $actualType ) {
                 $imageFun($thumbImg, $thumbname, 100); //默认75% 保真quality: 0-100
                 if ($is_echo_output) {
                     $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
@@ -292,7 +292,7 @@ class UtilImage
                 if ($is_echo_output) {
                     $imageFun($thumbImg, null, 6);//默认6,压缩等级：0-9
                 }
-            } else if ( 'gif' == $actualType ){
+            } else if ( 'gif' == $actualType ) {
                 $imageFun($thumbImg, $thumbname);
                 if ($is_echo_output) {
                     $imageFun($thumbImg);
@@ -574,13 +574,13 @@ class UtilImage
         $stringColor = imagecolorallocate($im, rand(0, 100), rand(0, 100), 255);
         // 添加干扰
         /*
-        for($i=0;$i<10;$i++){
-            $fontcolor=imagecolorallocate($im,mt_rand(0,255),mt_rand(0,255),mt_rand(0,255));
-            imagearc($im,mt_rand(-10,$width),mt_rand(-10,$height),mt_rand(30,300),mt_rand(20,200),55,44,$fontcolor);
+        for ($i = 0; $i < 10; $i++) {
+            $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
+            imagearc($im, mt_rand(-10, $width), mt_rand(-10, $height), mt_rand(30, 300), mt_rand(20, 200), 55, 44, $fontcolor);
         }
-        for($i=0;$i<255;$i++){
-            $fontcolor=imagecolorallocate($im,mt_rand(0,255),mt_rand(0,255),mt_rand(0,255));
-            imagesetpixel($im,mt_rand(0,$width),mt_rand(0,$height),$fontcolor);
+        for ($i = 0; $i < 255; $i++) {
+            $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
+            imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $fontcolor);
         }*/
         imagestring($im, 5, 5, 1, "0 1 2 3 4 5 6 7 8 9", $numberColor);
         imagestring($im, 5, 5, 20, $letter, $stringColor);
