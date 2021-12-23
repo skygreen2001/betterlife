@@ -76,6 +76,9 @@ function runphp($go, $pararm = null)
             $_GET[$key] = $value;
         }
     }
+    /**
+     * @var string
+     */
     $result = Dispatcher::dispatch( new Router() );
     if ( !empty($result) ) {
         if ( Gc::$is_online_optimize ) {
