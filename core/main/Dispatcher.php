@@ -16,6 +16,7 @@ class Dispatcher
      * WEB URL的转发
      * @global Action $app
      * @param Router $router
+     * @return void
      */
     public static function dispatch($router)
     {

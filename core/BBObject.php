@@ -29,9 +29,9 @@ abstract class BBObject
      * @param $name 属性名称
      * @param $value  属性值
      */
-    public function __set($name ,$value)
+    public function __set($name, $value)
     {
-        if(property_exists($this,$name))
+        if ( property_exists($this, $name) )
             $this->$name = $value;
     }
 
@@ -43,7 +43,7 @@ abstract class BBObject
      */
     public function __get($name)
     {
-        return isset($this->$name)?$this->$name:null;
+        return isset($this->$name) ? $this->$name : null;
     }
     
     /***********************************魔术方法**************************************************/

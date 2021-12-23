@@ -71,11 +71,11 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
             $result .= "onSuccess:" . $callback . ",";
         }
         if ( Gc::$dev_debug_on ) {
-            $result .= "onException: function(transport,e){
+            $result .= "onException: function(transport,e) {
                  console.log('请求失败！ :(||||'+e.name+':'+e.message);
             },";
             $result .= "
-                  onFailure: function(request){
+                  onFailure: function(request) {
                     console.log('请求失败！ :(');
                   }\r\n";
         } else {
@@ -121,11 +121,11 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
                   var objectJson = xmltoJson(responseXml);
                   for(var item in objectJson) {
                          var value = objectJson[item];
-                         if(typeof(value) == 'object') {
+                         if (typeof(value) == 'object') {
                             for(var subitem in value) {
                                 var subvalue = value[subitem];
                                 for(var childitem in subvalue) {
-                                  if (subitem!='#text'){
+                                  if (subitem!='#text') {
                                     var childvalue = subvalue[childitem];
                                     ol.insert({bottom:'<li>'+subitem+':'+childvalue+'</li>'});
                                   }

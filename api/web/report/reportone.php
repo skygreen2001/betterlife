@@ -1,6 +1,6 @@
 <?php
-require_once ("../../../init.php");
-require_once ("../../../misc/sql/report.php");
+require_once("../../../init.php");
+require_once("../../../misc/sql/report.php");
 $draw         = $_GET["draw"];
 $currentPage  = $_GET["page"];
 $pageSize     = $_GET["pageSize"];
@@ -12,11 +12,11 @@ $columns      = $_GET["columns"];
 $rtype        = $_GET["rtype"];
 $sql_report   = $sqlReport[$rtype];
 $sql_report   = str_replace(";", "", $sql_report);
-$where_clause = ServiceReport::getWhereClause($sql_report, $query, $startDate, $endDate, $columns);
-$orderDes     = ServiceReport::getOrderBy($sql_report);
+$where_clause = ServiceReport::getWhereClause( $sql_report, $query, $startDate, $endDate, $columns );
+$orderDes     = ServiceReport::getOrderBy( $sql_report );
 
 $countSql   = "select count(*) from (" . $sql_report . ") report_tmp " . $where_clause;
-$totalCount  = sqlExecute($countSql);
+$totalCount = sqlExecute($countSql);
 $pageData   = array();
 $pageCount  = 0;
 if ( $totalCount > 0 ) {
@@ -32,33 +32,33 @@ if ( $totalCount > 0 ) {
             $endPoint = $totalCount;
         }
 
-				$reportSql   = "select * from (";
-				$reportSql  .= $sql_report;
-				$reportSql  .= ") report_tmp " . $where_clause . $orderDes . " limit " . $startPoint . "," . $pageSize;
+        $reportSql   = "select * from (";
+        $reportSql  .= $sql_report;
+        $reportSql  .= ") report_tmp " . $where_clause . $orderDes . " limit " . $startPoint . "," . $pageSize;
         $pageData = sqlExecute($reportSql);
     }
 }
 
 $result = array(
-  'data' => $pageData,
-  'draw' => $draw,
-  'recordsFiltered' => $totalCount,
-  'recordsTotal' => $totalCount
+    'data' => $pageData,
+    'draw' => $draw,
+    'recordsFiltered' => $totalCount,
+    'recordsTotal'    => $totalCount
 );
 
-if( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) || Gc::$dev_debug_on ) {
-  //调试使用的信息
-  $result["debug"] = array(
-    'param' => array(
-      'columns' => $columns,
-      'query'     => $query,
-      'page'      => $currentPage,
-      'pageSize'  => $pageSize,
-      'startDate' => $startDate,
-      'endDate'   => $endDate
-    ),
-    'sql'   => $reportSql,
-    'where' => $where_clause
-  );
+if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::$dev_debug_on ) {
+    //调试使用的信息
+    $result["debug"] = array(
+        'param' => array(
+            'columns'   => $columns,
+            'query'     => $query,
+            'page'      => $currentPage,
+            'pageSize'  => $pageSize,
+            'startDate' => $startDate,
+            'endDate'   => $endDate
+        ),
+        'sql'   => $reportSql,
+        'where' => $where_clause
+    );
 }
 echo json_encode($result);

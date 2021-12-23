@@ -100,7 +100,7 @@ class View_Blog extends ViewObject
     public $blog;
     public $blogs;
     public $countBlogs;
-    public function count_comments($blog_id){
+    public function count_comments($blog_id) {
         return Comment::count( "blog_id=" . $blog_id );
     }
 }

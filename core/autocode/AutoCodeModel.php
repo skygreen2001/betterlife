@@ -104,7 +104,7 @@ class AutoCodeModel extends AutoCode
     public static function createManageService($table_names = "")
     {
         $file_manage_service_file=Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
-        if( file_exists($file_manage_service_file) )
+        if ( file_exists($file_manage_service_file) )
         {
             $tableList = self::tableListByTable_names($table_names);
             $content   = file_get_contents($file_manage_service_file);
@@ -145,12 +145,12 @@ class AutoCodeModel extends AutoCode
             file_put_contents($file_overwrite, $content) or
             $overwrite_not_arr[]=$dir_overwrite;
         }
-        if( count($overwrite_not_arr) > 0 ) {
+        if ( count($overwrite_not_arr) > 0 ) {
             $overwrite_not_dir_str = "";
             $overwrite_not_run_arr = array();
             $app_dir               = "model";
             foreach ($overwrite_not_arr as $overwrite_not_dir) {
-                if( contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
+                if ( contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
                 {
                     if ( !in_array(Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr) ) {
                         $overwrite_not_run_arr[] = Gc::$nav_root_path . Gc::$module_root.DS.$app_dir.DS;

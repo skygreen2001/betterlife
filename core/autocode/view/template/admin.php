@@ -7,43 +7,43 @@ $classname_rela = isset($classname_rela) ? $classname_rela : "";
 $column_contents = isset($column_contents) ? $column_contents : "";
 $imgColumnDefs = isset($imgColumnDefs) ? $imgColumnDefs : "";
 $classNameField = isset($classNameField) ? $classNameField : "";
-$editApiRela = isset($editApiRela) ? $editApiRela : "";
-$editApiImg = isset($editApiImg) ? $editApiImg : "";
-$classname_rela = isset($classname_rela) ? $classname_rela : "";
-$instancename_rela = isset($instancename_rela) ? $instancename_rela : "";
-$realId_m2m = isset($realId_m2m) ? $realId_m2m : "";
-$imgColumnDefs = isset($imgColumnDefs) ? $imgColumnDefs : "";
-$bitColumnDefs = isset($bitColumnDefs) ? $bitColumnDefs : "";
-$statusColumnDefs = isset($statusColumnDefs) ? $statusColumnDefs : "";
-$idColumnDefs = isset($idColumnDefs) ? $idColumnDefs : "";
-$editImgColumn = isset($editImgColumn) ? $editImgColumn : "";
-$editDateColumn = isset($editDateColumn) ? $editDateColumn : "";
-$editEnumColumn = isset($editEnumColumn) ? $editEnumColumn : "";
-$editMulSelColumn = isset($editMulSelColumn) ? $editMulSelColumn : "";
-$editM2MSelColumn = isset($editM2MSelColumn) ? $editM2MSelColumn : "";
-$editBitColumn = isset($editBitColumn) ? $editBitColumn : "";
-$editValidRules = isset($editValidRules) ? $editValidRules : "";
-$editValidMsg = isset($editValidMsg) ? $editValidMsg : "";
-$row_no = isset($row_no) ? $row_no : "";
-$altImgVal = isset($altImgVal) ? $altImgVal : "";
-$status_switch_show = isset($status_switch_show) ? $status_switch_show : "";
-$showColumns = isset($showColumns) ? $showColumns : "";
-$commitTimeStr = isset($commitTimeStr) ? $commitTimeStr : "";
-$updateTimeStr = isset($updateTimeStr) ? $updateTimeStr : "";
-$hasImgFormFlag = isset($hasImgFormFlag) ? $hasImgFormFlag : "";
-$edit_contents = isset($edit_contents) ? $edit_contents : "";
-$enumJsContent = isset($enumJsContent) ? $enumJsContent : "";
-$rela_js_content = isset($rela_js_content) ? $rela_js_content : "";
-$ueTextareacontents = isset($ueTextareacontents) ? $ueTextareacontents : "";
-$edit_json_enums = isset($edit_json_enums) ? $edit_json_enums : "";
-$navbar_menus = isset($navbar_menus) ? $navbar_menus : "";
-$sidebar_menus = isset($sidebar_menus) ? $sidebar_menus : "";
+$editApiRela             = isset($editApiRela) ? $editApiRela : "";
+$editApiImg              = isset($editApiImg) ? $editApiImg : "";
+$classname_rela          = isset($classname_rela) ? $classname_rela : "";
+$instancename_rela       = isset($instancename_rela) ? $instancename_rela : "";
+$realId_m2m              = isset($realId_m2m) ? $realId_m2m : "";
+$imgColumnDefs           = isset($imgColumnDefs) ? $imgColumnDefs : "";
+$bitColumnDefs           = isset($bitColumnDefs) ? $bitColumnDefs : "";
+$statusColumnDefs        = isset($statusColumnDefs) ? $statusColumnDefs : "";
+$idColumnDefs            = isset($idColumnDefs) ? $idColumnDefs : "";
+$editImgColumn           = isset($editImgColumn) ? $editImgColumn : "";
+$editDateColumn          = isset($editDateColumn) ? $editDateColumn : "";
+$editEnumColumn          = isset($editEnumColumn) ? $editEnumColumn : "";
+$editMulSelColumn        = isset($editMulSelColumn) ? $editMulSelColumn : "";
+$editM2MSelColumn        = isset($editM2MSelColumn) ? $editM2MSelColumn : "";
+$editBitColumn           = isset($editBitColumn) ? $editBitColumn : "";
+$editValidRules          = isset($editValidRules) ? $editValidRules : "";
+$editValidMsg            = isset($editValidMsg) ? $editValidMsg : "";
+$row_no                  = isset($row_no) ? $row_no : "";
+$altImgVal               = isset($altImgVal) ? $altImgVal : "";
+$status_switch_show      = isset($status_switch_show) ? $status_switch_show : "";
+$showColumns             = isset($showColumns) ? $showColumns : "";
+$commitTimeStr           = isset($commitTimeStr) ? $commitTimeStr : "";
+$updateTimeStr           = isset($updateTimeStr) ? $updateTimeStr : "";
+$hasImgFormFlag          = isset($hasImgFormFlag) ? $hasImgFormFlag : "";
+$edit_contents           = isset($edit_contents) ? $edit_contents : "";
+$enumJsContent           = isset($enumJsContent) ? $enumJsContent : "";
+$rela_js_content         = isset($rela_js_content) ? $rela_js_content : "";
+$ueTextareacontents      = isset($ueTextareacontents) ? $ueTextareacontents : "";
+$edit_json_enums         = isset($edit_json_enums) ? $edit_json_enums : "";
+$navbar_menus            = isset($navbar_menus) ? $navbar_menus : "";
+$sidebar_menus           = isset($sidebar_menus) ? $sidebar_menus : "";
 $admin_modal_img_preview = isset($admin_modal_img_preview) ? $admin_modal_img_preview : "";
 
-$api_web_template = <<<API_WEB
+$api_web_template        = <<<API_WEB
 <?php
 // error_reporting(0);
-require_once ("../../../init.php");
+require_once("../../../init.php");
 
 \$draw         = \$_GET["draw"];
 \$page         = \$_GET["page"];
@@ -190,7 +190,7 @@ $idColumnDefs
         });
     }
 
-    if( \$(".content-wrapper .edit form").length ) {
+    if ( \$(".content-wrapper .edit form").length ) {
 $editImgColumn
 $editDateColumn
 $editEnumColumn

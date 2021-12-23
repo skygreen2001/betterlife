@@ -24,7 +24,7 @@ class EnumSeescope extends Enum
      */
     public static function seescopeShow($seescope)
     {
-        switch($seescope){
+        switch ($seescope) {
             case self::SELF:
                 return "只能查看自己的信息";
             case self::ALL:
@@ -39,7 +39,7 @@ class EnumSeescope extends Enum
      */
     public static function seescopeByShow($seescopeShow)
     {
-        switch($seescopeShow){
+        switch ($seescopeShow) {
             case "只能查看自己的信息":
                 return self::SELF;
             case "查看所有的信息":
@@ -53,7 +53,7 @@ class EnumSeescope extends Enum
      */
     public static function seescopeEnumKey($seescope)
     {
-        switch($seescope){
+        switch ($seescope) {
             case '0':
                 return "SELF";
             case '1':

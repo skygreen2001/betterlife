@@ -1,6 +1,7 @@
 <?php
 /*
  * PHP function to image-watermark an image
+ * 
  * http://salman-w.blogspot.com/2008/11/watermark-your-images-with-another.html
  *
  * Writes the given watermark image on the specified image
@@ -8,27 +9,29 @@
  *
  *
  */
-require_once ("../../../init.php");
+require_once("../../../init.php");
 /**
  * 创建水印的类型
- * 0:文字水印
- * 1:图片水印
- * 2:多行文字水印
+ *  0: 文字水印
+ *  1: 图片水印
+ *  2: 多行文字水印
  * 默认是文字水印
+ * 
  */
-$type_create_watermark=1;
-//图片水印:是否上传文件]
-$is_watermark_file_upload=true;
+$type_create_watermark    = 1;
 
-if(isset($_REQUEST["type"])){
-    if(isset($_REQUEST["type"]))$type_create_watermark=$_REQUEST["type"];
-    if(isset($_REQUEST["d"]))$direction=$_REQUEST["d"];
-    if(isset($_REQUEST["f"]))$is_watermark_file_upload=$_REQUEST["f"];
-    $default_img_filename="1.jpg";
-    $source_file_path=Gc::$upload_path."watermark".DS."originals".DS.$default_img_filename;
-    if($is_watermark_file_upload){
-        if (isset($_FILES["upload_file"])&&!empty($_FILES["upload_file"])){
-            $source_file_path     = UtilWatermark::upload_watermark_source_files($_FILES,'upload_file',"watermark.png",$direction);
+//图片水印:是否上传文件]
+$is_watermark_file_upload = true;
+
+if ( isset($_REQUEST["type"]) ) {
+    if ( isset($_REQUEST["type"]) )$type_create_watermark = $_REQUEST["type"];
+    if ( isset($_REQUEST["d"]) ) $direction = $_REQUEST["d"];
+    if ( isset($_REQUEST["f"]) ) $is_watermark_file_upload = $_REQUEST["f"];
+    $default_img_filename = "1.jpg";
+    $source_file_path     = Gc::$upload_path . "watermark" . DS . "originals" . DS . $default_img_filename;
+    if ( $is_watermark_file_upload ) {
+        if ( isset($_FILES["upload_file"] ) && !empty($_FILES["upload_file"]) ) {
+            $source_file_path     = UtilWatermark::upload_watermark_source_files( $_FILES, 'upload_file', "watermark.png", $direction );
             $default_img_filename = basename($source_file_path);
         }
     }
@@ -36,38 +39,38 @@ if(isset($_REQUEST["type"])){
     switch ($type_create_watermark) {
        case 0:
             /********************************* 添加文字水印 *******************************/
-            $result=UtilWatermark::watermark_text(
+            $result = UtilWatermark::watermark_text(
                 $source_file_path,
-                Gc::$upload_path."watermark".DS."images".DS.$default_img_filename,
-                Gc::$site_name,$direction);
+                Gc::$upload_path . "watermark" . DS . "images" . DS . $default_img_filename,
+                Gc::$site_name, $direction);
             break;
        case 1:
             /********************************* 添加图片水印 ******************************/
             $result = UtilWatermark::create_watermark(
                 $source_file_path,
-                Gc::$upload_path."watermark".DS."images".DS.$default_img_filename,
-                "watermark.png",$direction);
-             break;
+                Gc::$upload_path . "watermark" . DS . "images" . DS . $default_img_filename,
+                "watermark.png", $direction);
+            break;
        case 2:
             /********************************* 添加多行文字水印 ******************************/
             $result = UtilWatermark::createWordsWatermark(
                 $source_file_path,
-                Gc::$upload_path."watermark".DS."images".DS.$default_img_filename,
+                Gc::$upload_path . "watermark" . DS . "images" . DS . $default_img_filename,
                 '完美生活|betterlife',
-                $direction,"255,0,0"
+                $direction, "255,0,0"
             );
-             break;
+            break;
     }
-    if ($result === false) {
+    if ( $result === false ) {
         echo '<br>对图片进行水印处理时发生错误.';
     } else {
-        if (!UtilWatermark::$is_delete_source_image)
-            echo '<br />原图片保存为  : <a href="' .Gc::$upload_url. $result["origin_url"] . '" target="_blank">' . $result["origin_file_path"] . '</a>';
-        echo '<br />水印图片保存为: <a href="' .Gc::$upload_url. $result["url"] . '" target="_blank">' . $result["file_path"] . '</a>';
-        echo "<br /><a href='".Gc::$url_base."tools/tools/web/watermark.php'>返回</a>";
+        if ( !UtilWatermark::$is_delete_source_image )
+            echo '<br />原图片保存为  : <a href="' . Gc::$upload_url . $result["origin_url"] . '" target="_blank">' . $result["origin_file_path"] . '</a>';
+        echo '<br />水印图片保存为: <a href="' .Gc::$upload_url . $result["url"] . '" target="_blank">' . $result["file_path"] . '</a>';
+        echo "<br /><a href='" . Gc::$url_base . "tools/tools/web/watermark.php'>返回</a>";
     }
 } else {
-    $html=<<<FORMCONTENT
+    $html = <<<FORMCONTENT
     <body><br/><br/><br/><br/><br/>
         <div align='center' height='450'>
         <form method="post" enctype="multipart/form-data">
@@ -86,5 +89,3 @@ FORMCONTENT;
     echo UtilCss::form_css();
     echo $html;
 }
-
-?>

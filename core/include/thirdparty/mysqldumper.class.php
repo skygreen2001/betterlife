@@ -97,33 +97,33 @@ class Mysqldumper {
 
 
 
-    function multiDump($filename,$fileid,$sizelimit,$backdir,$ignoreList=null) {
+    function multiDump($filename, $fileid, $sizelimit, $backdir, $ignoreList = null) {
         // Set line feed
         $ret = true;
-        $lf = "\r\n";
+        $lf  = "\r\n";
         $lencount = 0;
-        $bakfile = $backdir."/multibak_".$filename."_".($fileid+1).".sql";
-        if($ignoreList){
+        $bakfile  = $backdir . "/multibak_" . $filename . "_" . ( $fileid + 1 ) . ".sql";
+        if ( $ignoreList ) {
             $ignoreList = array_flip($ignoreList);
         }
 
         $fw = @fopen($bakfile, "wb");
-        if(!$fw) exit("����Ŀ¼{$backdir}����д");
-        $resource = mysql_connect($this->getHost(), $this->getDBuser(), $this->getDBpassword(),true);
+        if ( !$fw ) exit("����Ŀ¼{$backdir}����д");
+        $resource = mysql_connect($this->getHost(), $this->getDBuser(), $this->getDBpassword(), true);
         mysql_select_db($this->getDbname(), $resource);
-        if(!constant("DB_OLDVERSION"))
-                mysql_query("SET NAMES '".MYSQL_CHARSET_NAME."'",$resource);
+        if ( !constant("DB_OLDVERSION") )
+            mysql_query("SET NAMES '" . MYSQL_CHARSET_NAME . "'", $resource);
 
         $result = mysql_query("SHOW TABLES");
         $tables = $this->result2Array(0, $result);
         foreach ($tables as $tblval) {
-            if(substr($tblval,0,strlen(DB_PREFIX))==DB_PREFIX)
+            if ( substr($tblval, 0, strlen(DB_PREFIX)) == DB_PREFIX )
                 $tablearr[] = $tblval;
         }
         // Set header
-        fwrite($fw, "#". $lf);
-        fwrite($fw,  "# SHOPEX SQL MultiVolumn Dump ID:".($fileid+1) . $lf);
-        fwrite($fw,  "# Version ". $GLOBALS['SHOPEX_THIS_VERSION']. $lf);
+        fwrite($fw, "#" . $lf);
+        fwrite($fw,  "# SHOPEX SQL MultiVolumn Dump ID:" . ( $fileid + 1 ) . $lf);
+        fwrite($fw,  "# Version ". $GLOBALS['SHOPEX_THIS_VERSION'] . $lf);
         fwrite($fw,  "# ". $lf);
         fwrite($fw,  "# Host: " . $this->getHost() . $lf);
         fwrite($fw,  "# Server version: ". mysql_get_server_info() . $lf);
@@ -132,13 +132,13 @@ class Mysqldumper {
         fwrite($fw,  "#");
 
         // Generate dumptext for the tables.
-        $i=0;
-        for($j=$this->tableid;$j<count($tablearr);$j++){
+        $i = 0;
+        for ($j = $this->tableid; $j < count($tablearr); $j++) {
             $tblval = $tablearr[$j];
             $table_prefix = constant('DB_PREFIX');
-            $subname = substr($tblval,strlen($table_prefix));
-            $written_tbname = '{shopexdump_table_prefix}'.$subname;
-            if($this->startid ==-1)
+            $subname = substr($tblval, strlen($table_prefix));
+            $written_tbname = '{shopexdump_table_prefix}' . $subname;
+            if ( $this->startid == -1 )
             {
                 fwrite($fw,  $lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
                 $lencount += strlen($lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
@@ -148,7 +148,7 @@ class Mysqldumper {
                 $lencount += strlen("#". $lf . "# Table structure for table `$tblval`" . $lf);
                 // Generate DROP TABLE statement when client wants it to.
                 mysql_query("ALTER TABLE `$tblval` comment ''");
-                if($this->isDroptables()) {
+                if ( $this->isDroptables() ) {
                     fwrite($fw,  "DROP TABLE IF EXISTS `$written_tbname`;" . $lf);
                     $lencount += strlen("DROP TABLE IF EXISTS `$written_tbname`;" . $lf);
                 }
@@ -161,21 +161,21 @@ class Mysqldumper {
                 $lencount += strlen($tmp_value. $lf.$lf);
                 $this->startid = 0;
             }
-            if($lencount>$sizelimit*1000)
+            if ( $lencount>$sizelimit*1000)
             {
                 $this->tableid = $j;
                 $this->startid = 0;
                 $ret = false;
                 break;
             }
-            if(isset($ignoreList['sdb_'.$subname])){
+            if ( isset($ignoreList['sdb_'.$subname]) ) {
                 $this->startid = -1;
                 continue;
             }
             fwrite($fw,  "#". $lf . "# Dumping data for table `$tblval`". $lf . "#" . $lf);
             $lencount += strlen("#". $lf . "# Dumping data for table `$tblval`". $lf . "#" . $lf);
             $result = mysql_query("SELECT * FROM `$tblval`");
-            if(!@mysql_data_seek($result,$this->startid))
+            if ( !@mysql_data_seek($result,$this->startid) )
             {
                 $this->startid = -1;
                 continue;
@@ -186,8 +186,8 @@ class Mysqldumper {
                     $insertdump .= "INSERT INTO `$written_tbname` VALUES (";
                     $arr = $this->object2Array($row);
 
-                    foreach($arr as $key => $value) {
-                        if(!is_null($value))
+                    foreach ($arr as $key => $value) {
+                        if ( !is_null($value) )
                         {
                             $value = $this->utftrim(mysql_escape_string($value));
                             $insertdump .= "'$value',";
@@ -195,11 +195,11 @@ class Mysqldumper {
                         else
                             $insertdump .= "NULL,";
                     }
-                    $insertline = rtrim($insertdump,',') . ");";
-                    fwrite($fw,  $insertline);
+                    $insertline = rtrim($insertdump, ',') . ");";
+                    fwrite($fw, $insertline);
                     $lencount += strlen($insertline);
                     $this->startid++;
-                    if($lencount>$sizelimit*1000)
+                    if ( $lencount > $sizelimit * 1000 )
                     {
                         $ret = false;
                         $this->tableid = $j;
@@ -220,10 +220,10 @@ class Mysqldumper {
     // Private function object2Array.
     function object2Array($obj) {
         $array = null;
-        if(is_object($obj)) {
+        if ( is_object($obj) ) {
             $array = array();
             foreach (get_object_vars($obj) as $key => $value) {
-                if(is_object($value))
+                if ( is_object($value) )
                     $array[$key] = $this->object2Array($value);
                 else
                     $array[$key] = $value;
@@ -233,10 +233,10 @@ class Mysqldumper {
     }
 
     // Private function loadObjectList.
-    function loadObjectList($key='', $resource) {
+    function loadObjectList($key = '', $resource) {
         $array = array();
         while ($row = mysql_fetch_object($resource)) {
-            if ($key)
+            if ( $key )
                 $array[$row->$key] = $row;
             else
                 $array[] = $row;
@@ -257,49 +257,49 @@ class Mysqldumper {
 
     function formatcreate($str)
     {
-            $body = substr($str,0,strrpos($str,")")+1);
-            $tail = strtolower(substr($str,strrpos($str,")")-strlen($str)));
-            if(strstr($tail,'memory')||strstr($tail,'heap')){
-                return $body." TYPE=HEAP{shopexdump_create_specification};";
-            } else {
-                return $body." TYPE=MyISAM{shopexdump_create_specification};";
-            }
+        $body = substr($str,0,strrpos($str,")")+1);
+        $tail = strtolower(substr($str,strrpos($str,")")-strlen($str)));
+        if ( strstr($tail, 'memory') || strstr($tail, 'heap') ) {
+            return $body." TYPE=HEAP{shopexdump_create_specification};";
+        } else {
+            return $body." TYPE=MyISAM{shopexdump_create_specification};";
+        }
     }
 
     //�����һ���Ƿ��ǰ��UTF-8����
     function utftrim($str)
     {
         $found = false;
-        for($i=0;$i<4&&$i<strlen($str);$i++)
+        for ($i = 0; $i < 4 && $i < strlen($str); $i++)
         {
             $ord = ord(substr($str,strlen($str)-$i-1,1));
             //UTF-8���ķ�{��/��/���ֽ���},��һλ�ֱ�Ϊ11110xxx(>192),1110xxxx(>192),110xxxxx(>192);����ȥ��λ������10xxxxxx(<192)
             //����ASCII�붼��0xxxxxxx
-            if($ord> 192)
+            if ($ord> 192)
             {
                 $found = true;
                 break;
             }
-            if ($i==0 && $ord < 128){
+            if ($i==0 && $ord < 128) {
                 break;
             }
         }
 
-        if($found)
+        if ($found)
         {
-            if($ord>240)
+            if ($ord>240)
             {
-                if($i==3) return $str;
+                if ($i==3) return $str;
                 else return substr($str,0,strlen($str)-$i-1);
             }
-            elseif($ord>224)
+            elseif ($ord>224)
             {
-                if($i>=2) return $str;
+                if ($i>=2) return $str;
                 else return substr($str,0,strlen($str)-$i-1);
             }
             else
             {
-                if($i>=1) return $str;
+                if ($i>=1) return $str;
                 else return substr($str,0,strlen($str)-$i-1);
             }
         }

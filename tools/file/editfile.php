@@ -1,17 +1,17 @@
 <?php
     require_once("../../init.php");
-    $urlbase=UtilNet::urlbase();
-    if (contain(strtolower(php_uname()),"darwin")){
+    $urlbase = UtilNet::urlbase();
+    if ( contain( strtolower(php_uname()), "darwin" ) ) {
         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-        if (contain($file_sub_dir,"tools".DS))
-            $file_sub_dir=substr($file_sub_dir,0,strpos($file_sub_dir,"tools".DS));
-        $domainSubDir=str_replace($_SERVER["DOCUMENT_ROOT"]."/", "", $file_sub_dir);
-        if(!endwith($urlbase,$domainSubDir))$urlbase.=$domainSubDir;
+        if ( contain( $file_sub_dir, "tools" . DS ) )
+            $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
+        $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
+        if ( !endwith( $urlbase, $domainSubDir ) ) $urlbase .= $domainSubDir;
     }
-    if(isset($_POST)&&isset($_POST["code"])){
-        $code=$_POST["code"];
-        $file=$_GET["f"];
-        file_put_contents($file,$code);
+    if ( isset($_POST) && isset($_POST["code"]) ) {
+        $code = $_POST["code"];
+        $file = $_GET["f"];
+        file_put_contents($file, $code);
     }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -33,13 +33,13 @@
         });
     </script>
 
-<?php  echo UtilCss::form_css()."\r\n"; ?>
+<?php  echo UtilCss::form_css() . "\r\n"; ?>
 </head>
 <body>
     <div align="center">
 <?php
-  $edit_filename=$_GET["f"];
-  $content=file_get_contents($edit_filename);
+  $edit_filename = $_GET["f"];
+  $content       = file_get_contents($edit_filename);
   echo '<a style="cursor:pointer;" onclick="window.history.back();">返回</a><br/>';
 ?>
         <form method="post">

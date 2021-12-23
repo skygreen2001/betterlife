@@ -56,7 +56,7 @@ class XML
             for ($i=0; $i < count($current_flags); $i+=2) {
                 $start = $current_flags[$i] + 1;
                 if (array_key_exists($i + 1, $current_flags))$end = $current_flags[$i + 1]-1;
-                if (array_key_exists("attributes",self::$values[$current_flags[$i]])){
+                if (array_key_exists("attributes",self::$values[$current_flags[$i]])) {
                     $key_attr= $count." attr";
                     $result[$root][$keyword_meta][$key_attr]=self::$values[$current_flags[$i]]["attributes"];
                 }
@@ -70,21 +70,21 @@ class XML
     public static function parseElements($start, $end,$keyword_meta)
     {
         $result=array();
-        if (array_key_exists($keyword_meta, self::$tags)){
+        if (array_key_exists($keyword_meta, self::$tags)) {
             $current_flags =self::$tags[$keyword_meta];
-            if (!empty($current_flags)){
+            if (!empty($current_flags)) {
                 $start_flag=array_search($start,$current_flags);
                 $end_flag=array_search($end,$current_flags);
                 $keys=array_keys(self::$tags);
                 $keyword_meta_key=array_search($keyword_meta,$keys);
 
                 $count=0;
-                if ($keyword_meta_key+1<count($keys)){
+                if ($keyword_meta_key+1<count($keys)) {
                     $next_keyword_meta=$keys[$keyword_meta_key+1];
                     for ($i=$start_flag; $i < $end_flag; $i+=2) {
                         $start = $current_flags[$i] + 1;
                         $end = $current_flags[$i + 1]-1;
-                        if (array_key_exists("attributes",self::$values[$current_flags[$i]])){
+                        if (array_key_exists("attributes",self::$values[$current_flags[$i]])) {
                             $key= $count." attr";
                             $result[$keyword_meta][$key]=self::$values[$current_flags[$i]]["attributes"];
                             $result[$keyword_meta][$count] = self::parseElements($start, $end,$next_keyword_meta);
@@ -95,7 +95,7 @@ class XML
                     }
                 } else {
                     for ($i=$start_flag; $i <= $end_flag; $i++) {
-                        if (array_key_exists("attributes",self::$values[$current_flags[$i]])){
+                        if (array_key_exists("attributes",self::$values[$current_flags[$i]])) {
                             $key= $count." attr";
                             $result[$keyword_meta][$key]=self::$values[$current_flags[$i]]["attributes"];
                         }

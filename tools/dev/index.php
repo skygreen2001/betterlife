@@ -1,5 +1,5 @@
 <?php
-require_once ("../../init.php");
+require_once("../../init.php");
 set_time_limit(0);
 /**
  * 重用类型
@@ -22,29 +22,38 @@ class EnumReusePjType extends Enum
 
 /**
  * Web项目代码重用
+ * 
  * 在项目开发中，往往商业模式是可以重用的
+ * 
  * 只要在原有的代码基础上稍作修改即可，一般不需要高级开发者花费太多的时间
+ * 
  * 在公司运作中，只需初级开发者找到文字修改或者换肤即可很快重用代码变身成新的项目
+ * 
  * 本开发工具提供图像化界面方便开发者快速重用现有代码生成新的项目
+ * 
  * 输入:
- *        项目路径|项目名称【中文-英文】|项目别名
- *        重用类型
- *            1.完整版【同现有版本一样】
- *            2.精简版【只包括框架核心-包括MVC,前后台】
- *            3.MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
+ *     项目路径|项目名称【中文-英文】|项目别名
+ *     重用类型
+ *        1. 完整版【同现有版本一样】
+ *        2. 精简版【只包括框架核心-包括MVC,前后台】
+ *        3. MINI版【只包括框架核心-只包括了DAO,不包括显示组件、Service层等】
+ * 
  * 处理流程操作:
- *        1.复制整个项目到新的路径
- *        2.修改Gc.php相关配置
- *        3.修改Config_Db.php[数据库名称|数据库表名前缀]
- *        4.修改帮助地址
- *        5.修改应用文件夹名称
- *        6.重命名后台Action_Betterlife为新应用类
- *      精简版还执行了以下操作
- *            1.清除在大部分项目中不需要的目录
- *            2.清除在大部分项目中不需要的文件
- *            3.清除缓存相关的文件
- *            4.清除mysql|sqlite|postgres以外的其他数据库引擎
- *            5.清除common大部分工程无需的文件
+ * 
+ *        1. 复制整个项目到新的路径
+ *        2. 修改Gc.php相关配置
+ *        3. 修改Config_Db.php[数据库名称|数据库表名前缀]
+ *        4. 修改帮助地址
+ *        5. 修改应用文件夹名称
+ *        6. 重命名后台Action_Betterlife为新应用类
+ * 
+ * 精简版还执行了以下操作
+ * 
+ *        1. 清除在大部分项目中不需要的目录
+ *        2. 清除在大部分项目中不需要的文件
+ *        3. 清除缓存相关的文件
+ *        4. 清除mysql|sqlite|postgres以外的其他数据库引擎
+ *        5. 清除common大部分工程无需的文件
  * @author skygreen2001@gmail.com
  */
 class Project_Refactor
@@ -105,13 +114,13 @@ class Project_Refactor
     private static function IgnoreDir()
     {
         foreach (self::$ignore_dir as $ignore_dir) {
-            $toDeleteDir = self::$save_dir.$ignore_dir;
+            $toDeleteDir = self::$save_dir . $ignore_dir;
             if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
             @mkdir($toDeleteDir);
         }
 
-        if( is_dir(self::$save_dir.Gc::$module_root.DS."business") )
-            UtilFileSystem::deleteDir( self::$save_dir.Gc::$module_root.DS."business" );
+        if ( is_dir(self::$save_dir . Gc::$module_root . DS . "business") )
+            UtilFileSystem::deleteDir( self::$save_dir . Gc::$module_root . DS . "business" );
     }
 
     /**
@@ -120,49 +129,50 @@ class Project_Refactor
     private static function IgnoreFiles()
     {
         foreach (self::$ignore_files as $ignore_file) {
-            $toDeleteFile = self::$save_dir.$ignore_file;
+            $toDeleteFile = self::$save_dir . $ignore_file;
             if ( file_exists($toDeleteFile) ) unlink($toDeleteFile);
         }
     }
 
     /**
      * 清除除Mysql以外的其他数据库引擎文件
-     * 1.配置文件:config/db
-     * 2.数据库引擎文件:core/db/
-     * 3.数据库备份:db/
+     * 
+     *     1. 配置文件:config/db
+     *     2. 数据库引擎文件:core/db/
+     *     3. 数据库备份:db/
      */
     private static function IgnoreAllDbEngineExceptMysql()
     {
         $root_config = "config";
         //1.清除配置文件:config/db
-        $ignore_config_db_dir = self::$save_dir.$root_config.DS."config".DS."db".DS;
-        $toDeleteDir  = $ignore_config_db_dir."dal".DS;
-        if( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
-        $toDeleteFile = $ignore_config_db_dir."object".DS."Config_Mssql.php";
+        $ignore_config_db_dir = self::$save_dir . $root_config . DS . "config" . DS . "db" . DS;
+        $toDeleteDir  = $ignore_config_db_dir . "dal" . DS;
+        if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Mssql.php";
         if ( file_exists($toDeleteFile) ) unlink($toDeleteFile);
-        $toDeleteFile = $ignore_config_db_dir."object".DS."Config_Odbc.php";
-        if(file_exists($toDeleteFile))unlink($toDeleteFile);
+        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Odbc.php";
+        if ( file_exists($toDeleteFile) ) unlink($toDeleteFile);
 
         //2.数据库引擎文件:core/db/
-        $root_core = "core";
-        $ignore_core_db_dir=self::$save_dir . $root_core.DS."db".DS;
-        $toDeleteDir=$ignore_core_db_dir."dal".DS;
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        $toDeleteDir=$ignore_core_db_dir."object".DS."odbc".DS;
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
-        $toDeleteDir=$ignore_core_db_dir."object".DS."sqlserver".DS;
-        if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
+        $root_core          = "core";
+        $ignore_core_db_dir = self::$save_dir . $root_core . DS . "db" . DS;
+        $toDeleteDir        = $ignore_core_db_dir . "dal" . DS;
+        if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        $toDeleteDir        = $ignore_core_db_dir . "object" . DS . "odbc" . DS;
+        if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        $toDeleteDir        = $ignore_core_db_dir . "object" . DS . "sqlserver" . DS;
+        if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
 
         //3.数据库备份:db/
-        $ignore_db_dirs=array(
+        $ignore_db_dirs = array(
             "microsoft access",
             "postgres",
             "sqlite",
             "sqlserver"
         );
         foreach ($ignore_db_dirs as $ignore_db_dir) {
-            $toDeleteDir=self::$save_dir."db".DS.$ignore_db_dir;
-            if(is_dir($toDeleteDir))UtilFileSystem::deleteDir($toDeleteDir);
+            $toDeleteDir = self::$save_dir . "db" . DS . $ignore_db_dir;
+            if ( is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
         }
     }
 
@@ -212,7 +222,7 @@ class Project_Refactor
         } else {
             self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称别名</font></div>");
         }
-        if( isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"]) )
+        if ( isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"]) )
         {
             self::$db_name = $_REQUEST["dbname"];
         } else {
@@ -253,7 +263,7 @@ class Project_Refactor
 
             UtilFileSystem::createDir( self::$save_dir );
             foreach ($include_dirs as $include_dir) {
-                if( is_dir( Gc::$nav_root_path . $include_dir . DS ) ) {
+                if ( is_dir( Gc::$nav_root_path . $include_dir . DS ) ) {
                     smartCopy(Gc::$nav_root_path . $include_dir . DS, self::$save_dir . $include_dir . DS);
                 }
             }
@@ -429,7 +439,7 @@ class Project_Refactor
                       }
                     }
                     $del_model_view_dir = $toDeleteDir . DS . "view" . DS . "default" . DS . "core";
-                    if( is_dir( $del_model_view_dir ) ) UtilFileSystem::deleteDir( $del_model_view_dir);
+                    if ( is_dir( $del_model_view_dir ) ) UtilFileSystem::deleteDir( $del_model_view_dir);
                     UtilFileSystem::createDir( $del_model_view_dir );
 
                     self::IgnoreAllDbEngineExceptMysql();
@@ -547,8 +557,8 @@ class Project_Refactor
      */
     public static function UserInput($errorInfo = "")
     {
-        $title="一键重用Web项目代码";
-        if( empty($_REQUEST["save_dir"]) ){
+        $title = "一键重用Web项目代码";
+        if ( empty($_REQUEST["save_dir"]) ) {
             $pj_name_cn    = Gc::$site_name;
             $pj_name_en    = Gc::$appName;
             $pj_name_alias = Gc::$appName_alias;
@@ -572,7 +582,7 @@ class Project_Refactor
             $table_prefix  = self::$table_prefix;
             $git_name      = self::$git_name;
         }
-        $inputArr=array(
+        $inputArr = array(
             EnumReusePjType::SIMPLE => "精简版",
             EnumReusePjType::FULL   => "完整版",
             EnumReusePjType::MINI   => "MINI版"
@@ -602,7 +612,7 @@ class Project_Refactor
         echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
         echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
         $selectd_str = "";
-        if (!empty($inputArr)){
+        if ( !empty($inputArr) ) {
             echo "<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重用类型:</label><select name='reuse_type'>\r\n";
             foreach ($inputArr as $key=>$value) {
                 if ( isset($reuse_type) ) {
@@ -625,8 +635,10 @@ class Project_Refactor
 /**
  * Copy file or folder from source to destination, it can do
  * recursive copy as well and is very smart
+ * 
  * It recursively creates the dest file or directory path if there weren't exists
  * Situtaions :
+ * 
  * - Src:/home/test/file.txt ,Dst:/home/test/b ,Result:/home/test/b -> If source was file copy file.txt name with b as name to destination
  * - Src:/home/test/file.txt ,Dst:/home/test/b/ ,Result:/home/test/b/file.txt -> If source was file Creates b directory if does not exsits and copy file.txt into it
  * - Src:/home/test ,Dst:/home/ ,Result:/home/test/** -> If source was directory copy test directory and all of its content into dest
@@ -638,6 +650,7 @@ class Project_Refactor
  *  - Auto destination technique should be possible to turn off
  *  - Supporting callback function
  *  - May prevent some issues on shared enviroments : http://us3.php.net/umask
+ * 
  * @param $source //file or folder
  * @param $dest ///file or folder
  * @param $options //folderPermission,filePermission
@@ -662,8 +675,8 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
         chmod($__dest, $options['filePermission']);
 
     } elseif ( is_dir($source) ) {
-        if ( $dest[strlen($dest)-1]=='/' ) {
-            if ( $source[strlen($source)-1]=='/' ) {
+        if ( $dest[strlen($dest)-1] == '/' ) {
+            if ( $source[strlen($source)-1] == '/' ) {
                 //Copy only contents
             } else {
                 //Change parent itself and its contents
@@ -672,7 +685,7 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
                 chmod($dest,$options['filePermission']);
             }
         } else {
-            if ( $source[strlen($source)-1] == '/' ) {
+            if ( $source[strlen($source) - 1] == '/' ) {
                 //Copy parent directory with new name and all its content
                 @mkdir($dest, $options['folderPermission']);
                 chmod($dest, $options['filePermission']);
@@ -704,7 +717,6 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
     }
     return $result;
 }
-
 
 //控制器:运行Web项目代码重用
 if ( isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) ) {

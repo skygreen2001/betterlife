@@ -31,7 +31,7 @@ SQLCONFIG;
 
 $api_template = <<<API
 <?php
-require_once ("../../../init.php");
+require_once("../../../init.php");
 
 \$draw         = \$_GET["draw"];
 \$currentPage  = \$_GET["page"];
@@ -42,7 +42,7 @@ require_once ("../../../init.php");
 \$columns      = \$_GET["columns"];
 
 \$sql_report   = " $reportSql ";
-\$where_clause = ServiceReport::getWhereClause(\$sql_report, \$query, \$startDate, \$endDate, \$columns);
+\$where_clause = ServiceReport::getWhereClause( \$sql_report, \$query, \$startDate, \$endDate, \$columns );
 \$orderDes     = "$reptOrderBy";
 
 \$countSql   = "select count(*) from (" . \$sql_report . ") report_tmp " . \$where_clause;
@@ -71,26 +71,26 @@ if ( \$totalCount > 0 ) {
 }
 
 \$result = array(
-  'data' => \$pageData,
-  'draw' => \$draw,
-  'recordsFiltered' => \$totalCount,
-  'recordsTotal' => \$totalCount
+    'data' => \$pageData,
+    'draw' => \$draw,
+    'recordsFiltered' => \$totalCount,
+    'recordsTotal'    => \$totalCount
 );
 
-if( contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) || Gc::\$dev_debug_on ) {
-  //调试使用的信息
-  \$result["debug"] = array(
-    'param' => array(
-      'columns'   => \$columns,
-      'query'     => \$query,
-      'page'      => \$currentPage,
-      'pageSize'  => \$pageSize,
-      'startDate' => \$startDate,
-      'endDate'   => \$endDate
-    ),
-    'sql'   => \$reportSql,
-    'where' => \$where_clause
-  );
+if ( contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::\$dev_debug_on ) {
+    //调试使用的信息
+    \$result["debug"] = array(
+        'param' => array(
+            'columns'   => \$columns,
+            'query'     => \$query,
+            'page'      => \$currentPage,
+            'pageSize'  => \$pageSize,
+            'startDate' => \$startDate,
+            'endDate'   => \$endDate
+        ),
+        'sql'   => \$reportSql,
+        'where' => \$where_clause
+    );
 }
 echo json_encode(\$result);
 
@@ -302,7 +302,7 @@ class Service$reportEname extends ServiceReport
     public function export$reportEname(\$startDate, \$endDate, \$query) {
         \$sql_report = " $reportSql ";
         \$out_header = \$this->getSqlSelCols(\$sql_report);
-        \$whereState = ServiceReport::getWhereClause(\$sql_report, \$query, \$startDate, \$endDate);
+        \$whereState = ServiceReport::getWhereClause( \$sql_report, \$query, \$startDate, \$endDate );
         \$orderDes   = ServiceReport::getOrderBy(\$sql_report);
 
         \$reportSql  = "select * from (";

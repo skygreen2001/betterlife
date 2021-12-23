@@ -35,7 +35,7 @@ class EnumRegionType extends Enum
      */
     public static function region_typeShow($region_type)
     {
-        switch($region_type){
+        switch ($region_type) {
             case self::COUNTRY:
                 return "国家";
             case self::PROVINCE:
@@ -54,7 +54,7 @@ class EnumRegionType extends Enum
      */
     public static function region_typeByShow($region_typeShow)
     {
-        switch($region_typeShow){
+        switch ($region_typeShow) {
             case "国家":
                 return self::COUNTRY;
             case "省":
@@ -72,7 +72,7 @@ class EnumRegionType extends Enum
      */
     public static function region_typeEnumKey($region_type)
     {
-        switch($region_type){
+        switch ($region_type) {
             case '0':
                 return "COUNTRY";
             case '1':

@@ -35,7 +35,7 @@ class EnumBlogStatus extends Enum
      */
     public static function statusShow($status)
     {
-        switch($status){
+        switch ($status) {
             case self::PEND:
                 return "待审核";
             case self::RUN:
@@ -54,7 +54,7 @@ class EnumBlogStatus extends Enum
      */
     public static function statusByShow($statusShow)
     {
-        switch($statusShow){
+        switch ($statusShow) {
             case "待审核":
                 return self::PEND;
             case "进行中":
@@ -72,7 +72,7 @@ class EnumBlogStatus extends Enum
      */
     public static function statusEnumKey($status)
     {
-        switch($status){
+        switch ($status) {
             case '0':
                 return "PEND";
             case '1':

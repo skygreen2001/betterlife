@@ -105,7 +105,7 @@ class AutoCodeValidate extends AutoCode
                 }
             }
         }
-        if( !empty($showValidInfo) ) {
+        if ( !empty($showValidInfo) ) {
             $showValidInfo .= "<br/>\r\n";
             self::$showPreviewReport .= "<div style='width: 1000px; margin-left: 80px;'>";
             self::$showPreviewReport .= "<a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showValidInfo').style.display=(document.getElementById('showValidInfo').style.display=='none')?'':'none')\">显示校验错误报告</a>";

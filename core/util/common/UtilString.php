@@ -61,26 +61,26 @@ class UtilString extends Util
             $realnum = 0;
             for ($i = 0; $i < strlen($title); $i++)
             {
-                $ctype = 0;
-                $cstep = 0;
+                // $ctype = 0;
+                // $cstep = 0;
 
                 $cur = substr($title, $i, 1);
-                if ($cur == "&")
+                if ( $cur == "&" )
                 {
-                    if(substr($title, $i, 4) == "&lt;") {
+                    if ( substr($title, $i, 4) == "&lt;" ) {
                         $i += 3;
                         $realnum++;
-                    } else if (substr($title, $i, 4) == "&gt;") {
+                    } else if ( substr($title, $i, 4) == "&gt;" ) {
                         $i += 3;
                         $realnum++;
-                    } else if (substr($title,$i,5) == "&amp;") {
+                    } else if ( substr($title,$i,5) == "&amp;" ) {
                         $i += 4;
                         $realnum++;
-                    } else if (substr($title,$i,6) == "&quot;") {
+                    } else if ( substr($title,$i,6) == "&quot;" ) {
                         $i += 5;
                         $realnum++;
-                    } else if (preg_match("/&#(\d+);?/i",substr($title,$i,8),$match)) {
-                        $i += strlen($match[0])-1;
+                    } else if ( preg_match("/&#(\d+);?/i", substr($title, $i, 8), $match)) {
+                        $i += strlen($match[0]) - 1;
                         $realnum++;
                     }
                 } else {
@@ -96,7 +96,7 @@ class UtilString extends Util
                     } else if ( ord($cur) >= 224 ) {
                         $i += 2;
                         $realnum++;
-                    } else if(ord($cur)>=192) {
+                    } else if ( ord($cur) >= 192) {
                         $i += 1;
                         $realnum++;
                     } else {
@@ -293,7 +293,7 @@ class UtilString extends Util
     public static function rand_string($len = 6, $type = '', $addChars = '')
     {
         $str = '';
-        switch($type) {
+        switch ($type) {
             case 0:
                 $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' . $addChars;
                 break;
@@ -383,7 +383,7 @@ class UtilString extends Util
             $strtemp = '';
             for ($i = 0; $i < $length; $i++) {
                 $char = substr($format, $i, 1);
-                switch($char) {
+                switch ($char) {
                     case "*"://字母和数字混合
                         $strtemp .= self::rand_string( 1 );
                         break;

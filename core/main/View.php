@@ -71,7 +71,7 @@ class View {
             "encoding"      => Gc::$encoding
         );
 
-        if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.") ) ) {
+        if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) ) {
             self::$view_global["isDev"] = true;
         }
     }
@@ -275,8 +275,8 @@ class View {
                 }
                 $this->template->template_dir  = Gc::$nav_root_path . $this->template_dir;
                 $this->template->compile_dir   = Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
-                $this->template->config_dir    = $template_tmp_dir . "configs" . DS;
-                $this->template->cache_dir     = $template_tmp_dir . "cache" . DS;
+                $this->template->config_dir    = Gc::$nav_root_path . $template_tmp_dir . "configs" . DS;
+                $this->template->cache_dir     = Gc::$nav_root_path . $template_tmp_dir . "cache" . DS;
                 $this->template->compile_check = true;
                 $this->template->allow_php_templates = true;
                 // 开启自定义安全机制

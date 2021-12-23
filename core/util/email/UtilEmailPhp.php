@@ -276,7 +276,7 @@ class UtilEmailPhp extends Util
             die();
         }
 
-        if(strpos($subject,"&#") !== false) $subjectIsUnicode = true;
+        if ( strpos($subject, "&#") !== false ) $subjectIsUnicode = true;
 
         // If the subject line contains extended characters, we must encode it
         $subject = self::xml2raw($subject);
@@ -528,14 +528,12 @@ class UtilEmailPhp extends Util
     private static function validEmailAddr($emailAddress)
     {
         $emailAddress = trim($emailAddress);
-        $angBrack = strpos($emailAddress, '<');
+        $angBrack     = strpos($emailAddress, '<');
 
-        if($angBrack === 0) {
-            $emailAddress = substr($emailAddress, 1, strpos($emailAddress,'>')-1);
-
-        } else if($angBrack) {
-            $emailAddress = str_replace('@', '', substr($emailAddress, 0, $angBrack))
-                    .substr($emailAddress, $angBrack);
+        if ( $angBrack === 0 ) {
+            $emailAddress = substr($emailAddress, 1, strpos($emailAddress, '>') - 1);
+        } else if ( $angBrack ) {
+            $emailAddress = str_replace('@', '', substr($emailAddress, 0, $angBrack)) . substr($emailAddress, $angBrack);
         }
 
         return $emailAddress;
@@ -547,8 +545,8 @@ class UtilEmailPhp extends Util
     private static function getMimeType($filename)
     {
         global $global_mimetypes;
-        if(!$global_mimetypes) self::loadMimeTypes();
-        $ext = strtolower(substr($filename,strrpos($filename,'.')+1));
+        if ( !$global_mimetypes ) self::loadMimeTypes();
+        $ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
         return $global_mimetypes[$ext];
     }
 
@@ -557,13 +555,13 @@ class UtilEmailPhp extends Util
      */
     private static function loadMimeTypes()
     {
-        $mimetypePathCustom = '/etc/mime.types';
-        $mimetypePathGeneric = Director::baseFolder() . '/sapphire/email/mime.types';
-        $mimeTypes = file_exists($mimetypePathGeneric) ?  file($mimetypePathGeneric) : file($mimetypePathCustom);
+        $mimetypePathCustom  = '/etc/mime.types';
+        $mimetypePathGeneric = Gc::$nav_root_path . '/sapphire/email/mime.types';
+        $mimeTypes           = file_exists($mimetypePathGeneric) ?  file($mimetypePathGeneric) : file($mimetypePathCustom);
         foreach($mimeTypes as $typeSpec) {
-            if(($typeSpec = trim($typeSpec)) && substr($typeSpec,0,1) != "#") {
+            if ( ($typeSpec = trim($typeSpec) ) && substr($typeSpec, 0, 1) != "#" ) {
                 $parts = preg_split("/[ \t\r\n]+/", $typeSpec);
-                if(sizeof($parts) > 1) {
+                if ( sizeof($parts) > 1 ) {
                     $mimeType = array_shift($parts);
                     foreach($parts as $ext) {
                         $ext = strtolower($ext);

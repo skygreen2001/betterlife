@@ -134,7 +134,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         //<editor-fold defaultstate="collapsed" desc="dojo">
         $result     = "function(response) {
                     if ( response == null ) {
-                      console.log('请求失败！检查头信息是否是application/xml或者application/json :(');
+                      console.log('请求失败! 检查头信息是否是application/xml或者application/json:(');
                       return ;
                     }";
         if ( !self::$IsHtmlBody ) {

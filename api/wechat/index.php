@@ -1,5 +1,5 @@
 <?php
-require_once ("../../init.php");
+require_once("../../init.php");
 //微信api接入验证
 function index() {
     //获得几个参数

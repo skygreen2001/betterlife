@@ -30,6 +30,9 @@ if ( !function_exists('get_called_class') ) {
         private static $fl = null;
         public static function get_called_class()
         {
+            /**
+             * @var array
+             */
             $bt = debug_backtrace();
             //使用call_user_func或call_user_func_array函数调用类方法，处理如下
             if ( array_key_exists(3, $bt)
@@ -40,7 +43,7 @@ if ( !function_exists('get_called_class') ) {
                 if ( is_array($bt[3]['args'][0]) ) {
                     $toret = $bt[3]['args'][0][0];
                     return $toret;
-                } else if( is_string($bt[3]['args'][0]) ) {//如果参数是字符串
+                } else if ( is_string($bt[3]['args'][0]) ) {//如果参数是字符串
                 //如果是字符串且字符串中包含::符号，则认为是正确的参数类型，计算并返回类名
                     if ( false !== strpos($bt[3]['args'][0], '::') ) {
                         $toret = explode('::', $bt[3]['args'][0]);
@@ -134,22 +137,22 @@ if ( !function_exists('json_encode') ) {
             case 'object':
                 return '"Object ' . get_class($value) . '"';
             case 'array':
-                if ( isVector($value) ) {
-                    if ( !$value ) {
-                        return $value;
-                    }
-                    foreach ($value as $v) {
-                        $result[] = json_encode($v);
-                    }
-                    return '[' . implode(',', $result) . ']';
-                } else {
-                    $result = '{';
-                    foreach ($value as $k => $v) {
-                        if ( $result != '{' ) $result .= ',';
-                        $result .= json_encode($k) . ':' . json_encode($v);
-                    }
-                    return $result . '}';
+                // if ( isVector($value) ) {
+                //     if ( !$value ) {
+                //         return $value;
+                //     }
+                //     foreach ($value as $v) {
+                //         $result[] = json_encode($v);
+                //     }
+                //     return '[' . implode(',', $result) . ']';
+                // } else {
+                $result = '{';
+                foreach ($value as $k => $v) {
+                    if ( $result != '{' ) $result .= ',';
+                    $result .= json_encode($k) . ':' . json_encode($v);
                 }
+                return $result . '}';
+                // }
             default:
                 return '"' . addslashes($value) . '"';
         }
@@ -175,8 +178,8 @@ if ( !function_exists('json_decode') ) {
  */
 if ( !function_exists('apache_request_headers') ) {
     function apache_request_headers() {
-        foreach($_SERVER as $key => $value) {
-            if (substr($key,0,5) == "HTTP_") {
+        foreach ($_SERVER as $key => $value) {
+            if ( substr($key,0,5) == "HTTP_" ) {
                 $key = str_replace(" ", "-", ucwords(strtolower(str_replace("_", " ", substr($key, 5)))));
                 $out[$key] = $value;
             } else {

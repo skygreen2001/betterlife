@@ -53,7 +53,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
             $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
             $result  .= "<script type='text/javascript'>
                     Element.implement({
-                        appendHTML: function(html,where){
+                        appendHTML: function(html,where) {
                             return this.grab(new Element('text',{'html':html}),where);
                         }
                     });
@@ -91,12 +91,12 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         }
         if ( Gc::$dev_debug_on ) {
             if ( $response_type == EnumResponseType::JSON ) {
-                $result .= "onError:function(text, error){
+                $result .= "onError:function(text, error) {
                             console.log('请求失败！ :(。返回信息'+text+'，失败原因：'+error+'。');
                             }\r\n";
             } else if ( $response_type == EnumResponseType::XML ) {
                 $result .= "
-                      onFailure: function(xhr){
+                      onFailure: function(xhr) {
                         console.log('请求失败！ :(。失败原因：'+xhr.responseText);
                       }\r\n";
             }
@@ -128,7 +128,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         $class_name = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="Mootools">
         $result     = "function(response) {
-                    if (response==true){
+                    if (response==true) {
                       console.log('提交请求执行成功！');
                       return ;
                     }
@@ -154,11 +154,11 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
                       //$(document.body).appendText(dumpt);
                       for(var item in objectJson) {
                          var value = objectJson[item];
-                         if(typeof(value) == 'object') {
+                         if (typeof(value) == 'object') {
                             for(var subitem in value) {
                                 var subvalue = value[subitem];
                                 for(var childitem in subvalue) {
-                                    if (subitem!='#text'){
+                                    if (subitem!='#text') {
                                         var childvalue = subvalue[childitem];
                                         ol.appendHTML('<li>'+subitem+':'+childvalue+'</li>');
                                     }

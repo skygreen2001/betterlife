@@ -1,5 +1,5 @@
 <?php
-require_once ("../../../init.php");
+require_once("../../../init.php");
 
 $tableList=Manager_Db::newInstance()->dbinfo()->tableList();
 foreach ($tableList as $tablename)

@@ -2,22 +2,20 @@
 /**
  * 剪贴板小工具 
  */
-require_once ("../../../init.php");                   
-if (isset($_REQUEST["s"]))
-{    
-    echo file_get_contents(Gc::$upload_path."clipboard.txt");
-} else if (isset($_POST["content"])&&!empty($_POST["content"]))
-{
-    file_put_contents(Gc::$upload_path."clipboard.txt",$_POST["content"]);
-    echo  $_POST["content"];
-    echo "<br/><a href='".Gc::$url_base."clipboard.php"."'>继续</a><br/>";
+require_once("../../../init.php");
+if ( isset($_REQUEST["s"]) ) {
+    echo file_get_contents(Gc::$upload_path . "clipboard.txt");
+} else if ( isset($_POST["content"]) && !empty($_POST["content"]) ) {
+    file_put_contents(Gc::$upload_path . "clipboard.txt", $_POST["content"]);
+    echo $_POST["content"];
+    echo "<br/><a href='" . Gc::$url_base . "clipboard.php" . "'>继续</a><br/>";
 } else {
     echo  '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
-    echo "<head>\r\n";     
+    echo "<head>\r\n";
     echo UtilCss::form_css()."\r\n";
     $url_base = UtilNet::urlbase();
-    echo "</head>";     
+    echo "</head>";
     echo "<body>";   
     echo "<h1 align='center'>剪贴板</h1>";
     echo "<div align='center' height='450'>";
@@ -28,7 +26,6 @@ if (isset($_REQUEST["s"]))
     echo "  <input type=\"submit\" value='生成' /><br/>";
     echo "</form>";
     echo "</div>";
-    echo "</body>";      
-    echo "</html>";  
-}    
-?>
+    echo "</body>";
+    echo "</html>";
+}

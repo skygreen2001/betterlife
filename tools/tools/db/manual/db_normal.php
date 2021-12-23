@@ -1,25 +1,25 @@
 <?php
-require_once ("../../../../init.php");
+require_once("../../../../init.php");
 
-$tableList=Manager_Db::newInstance()->dbinfo()->tableList();
-$fieldInfos=array();
-foreach ($tableList as $tablename){
-   $fieldInfoList=Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
-   foreach($fieldInfoList as $fieldname=>$field){
-       $fieldInfos[$tablename][$fieldname]["Field"]=$field["Field"];
-       $fieldInfos[$tablename][$fieldname]["Type"]=$field["Type"];
-       $fieldInfos[$tablename][$fieldname]["Comment"]=$field["Comment"];
-       $fieldInfos[$tablename][$fieldname]["Key"]="";
-       $fieldInfos[$tablename][$fieldname]["Null"]="";
-       if ($field["Key"]=="PRI"){
-           $fieldInfos[$tablename][$fieldname]["Key"]="√";
+$tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
+$fieldInfos = array();
+foreach ($tableList as $tablename) {
+   $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
+   foreach($fieldInfoList as $fieldname=>$field) {
+       $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
+       $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
+       $fieldInfos[$tablename][$fieldname]["Comment"] = $field["Comment"];
+       $fieldInfos[$tablename][$fieldname]["Key"]     = "";
+       $fieldInfos[$tablename][$fieldname]["Null"]    = "";
+       if ( $field["Key"] == "PRI" ) {
+           $fieldInfos[$tablename][$fieldname]["Key"]  = "√";
        }
-       if ($field["Null"]=="NO"){
-           $fieldInfos[$tablename][$fieldname]["Null"]="√";
+       if ( $field["Null"] == "NO" ) {
+           $fieldInfos[$tablename][$fieldname]["Null"] = "√";
        }
    }
 }
-$tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
+$tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -64,20 +64,20 @@ $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
             <th class="beizhu">备注</th>
         </tr>
     <?php
-        foreach ($tableInfoList as $tablename=>$tableinfo)
+        foreach ($tableInfoList as $tablename => $tableinfo)
         {
-            $table_comment=$tableinfo["Comment"];
-            $tablename_cn=str_replace("关系表","",$table_comment);
-            if (contain($tablename_cn,"\r")||contain($tablename_cn,"\n")){
-                $tablename_cn=preg_split("/[\s,]+/", $tablename_cn);
-                $tablename_cn=$tablename_cn[0];
+            $table_comment = $tableinfo["Comment"];
+            $tablename_cn  = str_replace("关系表", "", $table_comment);
+            if ( contain( $tablename_cn, "\r" ) || contain( $tablename_cn, "\n" ) ) {
+                $tablename_cn = preg_split("/[\s,]+/", $tablename_cn);
+                $tablename_cn = $tablename_cn[0];
             }
-            if (empty($tablename_cn))$tablename_cn = $tablename;
-            $tableInfoList[$tablename]["Comment_Table"]=$tablename_cn;
-            $table_comment=str_replace("\r\n","<br/>",$table_comment);
-            $table_comment=str_replace("\r","<br/>",$table_comment);
-            $table_comment=str_replace("\n","<br/>",$table_comment);
-            if (empty($table_comment))$table_comment = $tablename;
+            if ( empty($tablename_cn) ) $tablename_cn = $tablename;
+            $tableInfoList[$tablename]["Comment_Table"] = $tablename_cn;
+            $table_comment = str_replace("\r\n", "<br/>", $table_comment);
+            $table_comment = str_replace("\r", "<br/>", $table_comment);
+            $table_comment = str_replace("\n", "<br/>", $table_comment);
+            if ( empty($table_comment) ) $table_comment = $tablename;
             echo "    <tr>".
                  "        <td><a href=\"#$tablename\">$tablename</a></td>".
                  "        <td>$tablename_cn</td>".
@@ -88,7 +88,7 @@ $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
     </table><br /><br />
     <h2>数据库手册</h2>
     <?php
-        foreach ($tableInfoList as $tablename=>$tableinfo)
+        foreach ($tableInfoList as $tablename => $tableinfo)
         {
             echo "<br />".
                  "<h4 id='$tablename'>数据表:$tablename&nbsp;&nbsp;&nbsp;&nbsp;用途:{$tableinfo['Comment_Table']}</h4><br />".
@@ -101,13 +101,13 @@ $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
                  "        <th class='head6'>说明</th>".
                  "    </tr>";
 
-            $fieldInfoList=$fieldInfos[$tablename];
-            foreach($fieldInfoList as $fieldname=>$field){
-                $column_comment=$field['Comment'];
-                $column_comment=str_replace("\r\n","<br/>",$column_comment);
-                $column_comment=str_replace("\r","<br/>",$column_comment);
-                $column_comment=str_replace("\n","<br/>",$column_comment);
-                if (empty($column_comment))$column_comment = $fieldname;
+            $fieldInfoList = $fieldInfos[$tablename];
+            foreach($fieldInfoList as $fieldname=>$field) {
+                $column_comment = $field['Comment'];
+                $column_comment = str_replace("\r\n", "<br/>", $column_comment);
+                $column_comment = str_replace("\r", "<br/>", $column_comment);
+                $column_comment = str_replace("\n", "<br/>", $column_comment);
+                if ( empty($column_comment) ) $column_comment = $fieldname;
                 echo "      <tr>".
                      "          <td>$fieldname</td>".
                      "          <td>{$field['Type']}</td>".
@@ -121,9 +121,9 @@ $tableInfoList=Manager_Db::newInstance()->dbinfo()->tableInfoList();
     ?>
     <br /><br />
 
-    <a onclick="window.scrollTo(0,0);"
-       onmouseout="this.style.backgroundPosition='-64px 0';"
-       onmouseover="this.style.backgroundPosition='-96px 0';"
-       style="background: url('resource/returntop.png') no-repeat scroll -64px 0px transparent;display:block;position:fixed;bottom:5px; right:5px;_position:absolute;_top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);overflow:visible;cursor:pointer;float: right; outline: 0px none; text-indent: -9999em; width: 32px; height: 32px;" title="返回顶部">返回顶部</a>
+    <a onclick = "window.scrollTo(0,0);"
+       onmouseout = "this.style.backgroundPosition='-64px 0';"
+       onmouseover = "this.style.backgroundPosition='-96px 0';"
+       style = "background: url('resource/returntop.png') no-repeat scroll -64px 0px transparent;display:block;position:fixed;bottom:5px; right:5px;_position:absolute;overflow:visible;cursor:pointer;float: right; outline: 0px none; text-indent: -9999em; width: 32px; height: 32px;" title="返回顶部">返回顶部</a>
     </body>
 </html>

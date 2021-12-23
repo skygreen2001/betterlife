@@ -65,7 +65,7 @@ class UtilXmlSimple extends Util
             if ( !array_key_exists($sxi->key(), $a) ) {
                 $a[$sxi->key()] = array();
             }
-            if( $sxi->hasChildren() ) {
+            if ( $sxi->hasChildren() ) {
                 $a[$sxi->key()][] = self::sxiToArray( $sxi->current() );
             } else {
                 $sxiCurrent = $sxi->current();
@@ -195,13 +195,13 @@ EMAIL;
         </task>
     </roles>
 ROLES;
-        $s = simplexml_load_string($str);
+        $s    = simplexml_load_string($str);
         $node = $s->xpath("//task[@type='analysis']/state[@name='new']/assigned[@to='cto']");
-        echo $node[0]->action[0]['newstate']."<br/>";
-        echo $node[0]->action[0]->notify[0]."<br/>";
-        echo count($s->xpath("//state"))."<br/>";
-        echo count($s->xpath("//notify"))."<br/>";
-        echo count($s->xpath("task//notify"))."<br/>";
+        echo $node[0]->action[0]['newstate'] . "<br/>";
+        echo $node[0]->action[0]->notify[0] . "<br/>";
+        echo count($s->xpath("//state")) . "<br/>";
+        echo count($s->xpath("//notify")) . "<br/>";
+        echo count($s->xpath("task//notify")) . "<br/>";
     }
 }
 //UtilXmlSimple::sample_email();

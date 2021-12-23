@@ -1,8 +1,8 @@
 <?php
-require_once ("../../../../init.php");
+require_once("../../../../init.php");
 
 /**
- * 辅助压力测试的工具:注入海量数据
+ * 辅助压力测试的工具: 注入海量数据
  */
 class HugeAmountDataPush
 {

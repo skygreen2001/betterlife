@@ -17,7 +17,7 @@ class UtilImage
     public static function getImageInfo($img)
     {
         $imageInfo = getimagesize($img);
-        if( $imageInfo !== false ) {
+        if ( $imageInfo !== false ) {
             $imageType = strtolower(substr(image_type_to_extension($imageInfo[2]), 1));
             $imageSize = filesize($img);
             $info = array(
@@ -92,7 +92,7 @@ class UtilImage
         //获取原图信息
         $info = self::getImageInfo( $src_file );
 
-        if( $info !== false ) {
+        if ( $info !== false ) {
             //设置src_file的信息
             $srcWidth  = $info['width'];
             $srcHeight = $info['height'];
@@ -360,11 +360,11 @@ class UtilImage
         @imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $backColor);
         @imagerectangle($im, 0, 0, $width-1, $height-1, $borderColor);
         @imagestring($im, 5, 5, 3, $string, $color);
-        if(!empty($disturb)) {
+        if ( !empty($disturb) ) {
             // 添加干扰
-            if($disturb==1||$disturb==3) {
-                for($i=0;$i<25;$i++) {
-                    imagesetpixel($im,mt_rand(0,$width),mt_rand(0,$height),$pointColor);
+            if ( $disturb == 1 || $disturb == 3 ) {
+                for($i = 0; $i < 25; $i++) {
+                    imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
                 }
             } elseif ( $disturb == 2 || $disturb == 3 ) {
                 for ($i = 0; $i < 10; $i++) {

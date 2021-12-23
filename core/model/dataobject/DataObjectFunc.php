@@ -152,12 +152,12 @@ class DataObjectFunc
             $condition = " ";
             if ( is_string($sql_ids) ) {
                 $sql_ids = explode(",", $sql_ids);
-            } else if( !is_array($sql_ids) ) {
+            } else if ( !is_array($sql_ids) ) {
                 $sql_ids = array($sql_ids);
             }
             if ( $sql_ids && ( count($sql_ids)>0 ) ) {
                 $condition = " $idColumn=" . $sql_ids[0] . " ";
-                for ( $i = 1; $i < count($sql_ids); $i++) {
+                for ($i = 1; $i < count($sql_ids); $i++) {
                     if ( !empty($sql_ids[$i]) ) {
                         $condition .= " or $idColumn=" . $sql_ids[$i] . " ";
                     }

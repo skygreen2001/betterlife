@@ -1,5 +1,5 @@
 <?php
-require_once ("../../../../init.php");
+require_once("../../../../init.php");
 if ( isset($_REQUEST["type"]) && !empty($_REQUEST["type"]) ) {
     $type = $_REQUEST["type"];
 } else {
@@ -11,18 +11,17 @@ if ( isset($_REQUEST["type"]) && !empty($_REQUEST["type"]) ) {
 }
 if ( isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
 {
-    $save_dir=$_REQUEST["save_dir"];
-    AutoCodeAction::$save_dir =$save_dir;
-    AutoCodeAction::$type     =$type;
-    AutoCodeAction::$showReport="";
-    AutoCodeAction::$showReport.=AutoCodeFoldHelper::foldEffectReady();
-    AutoCodeAction::$showReport.="<br/>";
-    AutoCodeAction::$showReport.=AutoCodeFoldHelper::foldbeforeaction();
+    $save_dir                    = $_REQUEST["save_dir"];
+    AutoCodeAction::$save_dir    = $save_dir;
+    AutoCodeAction::$type        = $type;
+    AutoCodeAction::$showReport  = "";
+    AutoCodeAction::$showReport .= AutoCodeFoldHelper::foldEffectReady();
+    AutoCodeAction::$showReport .= "<br/>";
+    AutoCodeAction::$showReport .= AutoCodeFoldHelper::foldbeforeaction();
     AutoCodeAction::AutoCode();
-    AutoCodeAction::$showReport.="<br/>";
-    AutoCodeAction::$showReport.=AutoCodeFoldHelper::foldafteraction();
+    AutoCodeAction::$showReport .= "<br/>";
+    AutoCodeAction::$showReport .= AutoCodeFoldHelper::foldafteraction();
     echo AutoCodeAction::$showReport;
-}  else {
-    AutoCodeAction::UserInput($type);
+} else {
+    AutoCodeAction::UserInput( $type );
 }
-?>

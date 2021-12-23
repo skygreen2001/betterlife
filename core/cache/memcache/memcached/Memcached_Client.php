@@ -294,7 +294,7 @@ class Memcached_Client
       
       $this->stats['delete']++;
       $cmd = "delete $key $time\r\n";
-      if(!fwrite($sock, $cmd, strlen($cmd)))
+      if (!fwrite($sock, $cmd, strlen($cmd)))
       {
          $this->_dead_sock($sock);
          return false;

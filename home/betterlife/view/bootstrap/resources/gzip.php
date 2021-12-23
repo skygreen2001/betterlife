@@ -2,7 +2,7 @@
 /**
 * @see http://mrthink.net/ue-php-gzip-function/
 */
-require_once(dirname(__FILE__)."/../../../../../init.php");
+require_once(dirname(__FILE__) . "/../../../../../init.php");
 
 UtilAjax::init();
 
@@ -30,7 +30,7 @@ if ( isset($jsFile) ) {
     if ( EnumJsFramework::isEnumValue( $group ) ) {
         $ajax_root = Gc::$nav_root_path . "misc" . DS . "js" . DS . "ajax" . DS;
         $jsFile = str_replace("/", DS, $jsFile);
-        switch ($group){
+        switch ($group) {
             case EnumJsFramework::JS_FW_JQUERY:
             case EnumJsFramework::JS_FW_MOOTOOLS:
                 echo "请使用UtilAjax的load方法，直接加载" . $group . "的js文件；无需使用Gzip压缩！";
@@ -78,7 +78,7 @@ if ( isset($cssFile) ) {
     if ( EnumJsFramework::isEnumValue( $group ) ) {
         $ajax_root = Gc::$nav_root_path . "misc" . DS . "js" . DS . "ajax" . DS;
         $cssFile   = str_replace("/", DS, $cssFile);
-        switch ($group){
+        switch ($group) {
             case EnumJsFramework::JS_FW_EXTJS:
                 if ( $version < 4 ) {
                     $ext_root = $ajax_root . "ext" . DS;

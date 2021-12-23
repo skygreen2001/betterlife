@@ -1,5 +1,5 @@
 <?php
-require_once ("../../../init.php");
+require_once("../../../init.php");
 
 $title    = "一键生成指定SQL查询的报表";
 $url_base = UtilNet::urlbase();
@@ -14,7 +14,7 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
 
 $reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
 $template_build_dev = "";
-if ($reportDev && !empty($reportCname) && !empty($reportSql)){
+if ( $reportDev && !empty($reportCname) && !empty($reportSql) ) {
     $config = array(
         "isProd" => false,
         "reportType" => $reportType,
@@ -41,14 +41,14 @@ TPL_BUILDDEV;
 
 $reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
 $template_build_prod = "";
-if ($reportProd && !empty($reportCname) && !empty($reportSql)){
+if ( $reportProd && !empty($reportCname) && !empty($reportSql) ) {
     $config = array(
-        "isProd" => true,
-        "reportType" => $reportType,
+        "isProd"      => true,
+        "reportType"  => $reportType,
         "reportCname" => $reportCname,
         "reportEname" => $reportEname,
-        "reportDesc" => $reportDesc,
-        "reportSql" => $reportSql,
+        "reportDesc"  => $reportDesc,
+        "reportSql"   => $reportSql,
     );
     AutoCodeCreateReport::AutoCode( $config );
     $template_build_prod = <<<TPL_BUILDPROD
@@ -149,7 +149,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: heredoc(function(){/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
+                report_sql: heredoc(function() {/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
                 report_dev: true
               },
               reportProdForm: {
@@ -157,7 +157,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: heredoc(function(){/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
+                report_sql: heredoc(function() {/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
                 report_prod: true
               },
               ruleValidate: {
@@ -180,7 +180,7 @@ TPL_BUILDPROD;
                 this.$Spin.show();
                 setTimeout(() => {
                     this.$Spin.hide();
-                    $(function(){
+                    $(function() {
                       $("#report-form").css("display", "block");
                     });
                 }, 1000);

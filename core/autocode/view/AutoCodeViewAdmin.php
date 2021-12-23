@@ -205,7 +205,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                   case 'bit':
                     include("template" . DS . "admin.php");
                     $bitColumnDefs .= $js_sub_template_bit;
-                    $editBitColumn .= "        \$(\"input[name='$fieldname']\").bootstrapSwitch();\r\n";
+                    $editBitColumn .= "        \$(\"input[name='$fieldname']\").bootstrapswitch ();\r\n";
                     $editBitColumn .= "        \$('input[name=\"$fieldname\"]').on('switchChange.bootstrapSwitch', function(event, state) {\r\n";
                     $editBitColumn .= "            console.log(state);\r\n";
                     $editBitColumn .= "        });\r\n";

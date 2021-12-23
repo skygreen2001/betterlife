@@ -197,7 +197,7 @@ class simple_html_dom_node {
         }
 
         // render end tag
-        if(isset($this->_[HDOM_INFO_END]) && $this->_[HDOM_INFO_END]!=0)
+        if (isset($this->_[HDOM_INFO_END]) && $this->_[HDOM_INFO_END]!=0)
             $ret .= '</'.$this->tag.'>';
         return $ret;
     }
@@ -246,7 +246,7 @@ class simple_html_dom_node {
             if ($val===true)
                 $ret .= $key;
             else {
-                switch($this->_[HDOM_INFO_QUOTE][$i]) {
+                switch ($this->_[HDOM_INFO_QUOTE][$i]) {
                     case HDOM_QUOTE_DOUBLE: $quote = '"'; break;
                     case HDOM_QUOTE_SINGLE: $quote = '\''; break;
                     default: $quote = '';
@@ -397,11 +397,11 @@ class simple_html_dom_node {
             if ($m[1]==='tbody') continue;
 
             list($tag, $key, $val, $exp, $no_key) = array($m[1], null, null, '=', false);
-            if(!empty($m[2])) {$key='id'; $val=$m[2];}
-            if(!empty($m[3])) {$key='class'; $val=$m[3];}
-            if(!empty($m[4])) {$key=$m[4];}
-            if(!empty($m[5])) {$exp=$m[5];}
-            if(!empty($m[6])) {$val=$m[6];}
+            if (!empty($m[2])) {$key='id'; $val=$m[2];}
+            if (!empty($m[3])) {$key='class'; $val=$m[3];}
+            if (!empty($m[4])) {$key=$m[4];}
+            if (!empty($m[5])) {$exp=$m[5];}
+            if (!empty($m[6])) {$val=$m[6];}
 
             // convert to lowercase
             if ($this->dom->lowercase) {$tag=strtolower($tag); $key=strtolower($key);}
@@ -421,7 +421,7 @@ class simple_html_dom_node {
 
     function __get($name) {
         if (isset($this->attr[$name])) return $this->attr[$name];
-        switch($name) {
+        switch ($name) {
             case 'outertext': return $this->outertext();
             case 'innertext': return $this->innertext();
             case 'plaintext': return $this->text();
@@ -431,7 +431,7 @@ class simple_html_dom_node {
     }
 
     function __set($name, $value) {
-        switch($name) {
+        switch ($name) {
             case 'outertext': return $this->_[HDOM_INFO_OUTER] = $value;
             case 'innertext':
                 if (isset($this->_[HDOM_INFO_TEXT])) return $this->_[HDOM_INFO_TEXT] = $value;
@@ -445,7 +445,7 @@ class simple_html_dom_node {
     }
 
     function __isset($name) {
-        switch($name) {
+        switch ($name) {
             case 'outertext': return true;
             case 'innertext': return true;
             case 'plaintext': return true;
@@ -754,14 +754,14 @@ class simple_html_dom {
         do {
             if ($this->char!==null && $space[0]==='') break;
             $name = $this->copy_until($this->token_equal);
-            if($guard===$this->pos) {
+            if ($guard===$this->pos) {
                 $this->char = (++$this->pos<$this->size) ? $this->doc[$this->pos] : null; // next
                 continue;
             }
             $guard = $this->pos;
 
             // handle endless '<'
-            if($this->pos>=$this->size-1 && $this->char!=='>') {
+            if ($this->pos>=$this->size-1 && $this->char!=='>') {
                 $node->nodetype = HDOM_TYPE_TEXT;
                 $node->_[HDOM_INFO_END] = 0;
                 $node->_[HDOM_INFO_TEXT] = '<'.$tag . $space[0] . $name;
@@ -771,7 +771,7 @@ class simple_html_dom {
             }
 
             // handle mismatch '<'
-            if($this->doc[$this->pos-1]=='<') {
+            if ($this->doc[$this->pos-1]=='<') {
                 $node->nodetype = HDOM_TYPE_TEXT;
                 $node->tag = 'text';
                 $node->attr = array();
@@ -823,7 +823,7 @@ class simple_html_dom {
     // parse attributes
     protected function parse_attr($node, $name, &$space) {
         $space[2] = $this->copy_skip($this->token_blank);
-        switch($this->char) {
+        switch ($this->char) {
             case '"':
                 $node->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_DOUBLE;
                 $this->char = (++$this->pos<$this->size) ? $this->doc[$this->pos] : null; // next
@@ -956,7 +956,7 @@ class simple_html_dom {
     }
 
     function __get($name) {
-        switch($name) {
+        switch ($name) {
             case 'outertext': return $this->root->innertext();
             case 'innertext': return $this->root->innertext();
             case 'plaintext': return $this->root->text();

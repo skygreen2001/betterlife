@@ -1,5 +1,5 @@
 <?php
-require_once ("../../../init.php");
+require_once("../../../init.php");
 if ( isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
 {
     $oldwords = $_REQUEST["oldwords"];

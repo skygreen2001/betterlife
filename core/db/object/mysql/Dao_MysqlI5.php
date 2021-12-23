@@ -129,7 +129,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
                 $parts = explode(" ",trim($sqlstring));
                 $type  = strtolower($parts[0]);
-                if( ( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type ) ) {
+                if ( ( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type ) ) {
                     $this->stmt->free_result();
                     $this->stmt->close();
                     return true;
@@ -139,7 +139,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     $this->stmt->close();
                     return $autoId;
                 }
-                $result = $this->getResultToObjects($object);
+                $result = $this->getResultToObjects( $object );
                 // $sql_s  = preg_replace("/\s/","",$sqlstring);
                 // $sql_s  = strtolower($sql_s);
                 // if ( ( !empty($result) ) && ( !is_array($result) ) ) {

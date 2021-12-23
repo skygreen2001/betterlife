@@ -59,7 +59,7 @@ class EnumPriority extends Enum
      */
     public static function priorityShow($priority)
     {
-        switch($priority){
+        switch ($priority) {
             case self::EMERG:
                 return "严重错误";
             case self::ALERT:
@@ -88,7 +88,7 @@ class EnumPriority extends Enum
      */
     public static function priorityByShow($priorityShow)
     {
-        switch($priorityShow){
+        switch ($priorityShow) {
             case "严重错误":
                 return self::EMERG;
             case "警戒性错误":
@@ -116,7 +116,7 @@ class EnumPriority extends Enum
      */
     public static function priorityEnumKey($priority)
     {
-        switch($priority){
+        switch ($priority) {
             case '0':
                 return "EMERG";
             case '1':

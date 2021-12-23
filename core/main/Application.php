@@ -30,7 +30,7 @@ class Application
      */
     public static function init($environment = null)
     {
-        require_once ("Gc.php");
+        require_once("Gc.php");
 
         if ( !empty($environment) ) {
             foreach ($environment as $key => $value) {
@@ -40,7 +40,7 @@ class Application
             }
         }
 
-        require_once ("init.php");
+        require_once("init.php");
 
         if ( !empty($environment) ) {
             foreach ($environment as $key => $value) {

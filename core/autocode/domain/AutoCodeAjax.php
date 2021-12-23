@@ -27,9 +27,9 @@ class AutoCodeAjax extends AutoCodeView
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
                 if ( $isImage ) {
-                    $editApiImg  .= "    if ( !empty(\${$instancename}->$fieldname) ) {\r\n".
-                                    "      \${$instancename}->$fieldname = Gc::\$upload_url . \"images/\" . \${$instancename}->$fieldname;\r\n".
-                                    "    }\r\n";
+                    $editApiImg  .= "        if ( !empty(\${$instancename}->$fieldname) ) {\r\n".
+                                    "            \${$instancename}->$fieldname = Gc::\$upload_url . \"images/\" . \${$instancename}->$fieldname;\r\n".
+                                    "        }\r\n";
                 }
                 $datatype = self::comment_type($field["Type"]);
                 switch ($datatype) {
@@ -109,10 +109,10 @@ class AutoCodeAjax extends AutoCodeView
                             $i_name = $key;
                             $i_name = lcfirst($i_name);
                             if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                $result .= "    if ( !empty(\${$instance_name}->$fieldname) ) {\r\n".
-                                           "      \${$i_name}_i = $key::get_by_id(\${$instance_name}->$fieldname);\r\n".
-                                           "      if ( \${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;\r\n".
-                                           "    }\r\n";
+                                $result .= "        if ( !empty(\${$instance_name}->$fieldname) ) {\r\n".
+                                           "            \${$i_name}_i = $key::get_by_id( \${$instance_name}->$fieldname );\r\n".
+                                           "            if ( \${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;\r\n".
+                                           "        }\r\n";
                             }
                         }
                     }

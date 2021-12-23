@@ -384,7 +384,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         }
         if ( $this->connection ) $handle = mysql_query($sql, $this->connection);
 
-        if( isset($_REQUEST['showqueries']) ) {
+        if ( isset($_REQUEST['showqueries']) ) {
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }

@@ -153,7 +153,7 @@ class AutoCodeDomain extends AutoCode
                                 "     */\r\n".
                                 "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                 "    {\r\n".
-                                "        switch(\${$fieldname}) {\r\n";
+                                "        switch (\${$fieldname}) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']) ;
                         $enumcomment = $enum_column['comment'];
@@ -173,7 +173,7 @@ class AutoCodeDomain extends AutoCode
                                "     */\r\n".
                                "    public static function {$fieldname}ByShow(\${$fieldname}Show)\r\n".
                                "    {\r\n".
-                               "        switch(\${$fieldname}Show) {\r\n";
+                               "        switch (\${$fieldname}Show) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']);
                         $enumcomment = $enum_column['comment'];
@@ -193,7 +193,7 @@ class AutoCodeDomain extends AutoCode
                                "     */\r\n".
                                "    public static function {$fieldname}EnumKey(\${$fieldname})\r\n".
                                "    {\r\n".
-                               "        switch(\${$fieldname}) {\r\n";
+                               "        switch (\${$fieldname}) {\r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname  = strtoupper($enum_column['name']);
                         $enumvalue = $enum_column['value'];

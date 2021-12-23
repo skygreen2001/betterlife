@@ -1,8 +1,8 @@
 <?php
-require_once ("../../init.php");
+require_once("../../init.php");
 
 /****************************************  初始化: 是否安装必备  ***********************************/
-$isPhpRedis   = @$_GET["isPhpRedis"];
+$isPhpRedis = @$_GET["isPhpRedis"];
 if ( !empty($isPhpRedis) ) {
     if ( class_exists("Redis") ) {
         echo true;
@@ -13,7 +13,7 @@ if ( !empty($isPhpRedis) ) {
 }
 
 /****************************************  菜单操作: 核心逻辑  ***********************************/
-$step   = @$_GET["step"];     // 菜单操作
+$step = @$_GET["step"];     // 菜单操作
 if ( !empty($step) ) {
     $isRemote  = @$_GET["isConfigRemote"];
     $server_id = @$_GET["server_id"];
@@ -96,7 +96,7 @@ if ( !empty($step) ) {
         $dbIndex  = (int) str_replace("db", "", $db);
         $serverCache->select($dbIndex);
         $countAll = $serverCache->size();
-        $data   = $serverCache->keys();
+        $data     = $serverCache->keys();
         sort($data, SORT_STRING);
         $pageSize = @$_GET["pageSize"];
         if ( !$pageSize ) $pageSize = 1000;
@@ -425,7 +425,7 @@ function server_config($server_id) {
     $config_need = $configs["data"];
     $id_key      = array_search($server_id, array_column($config_need, 'id'));
     if ( $id_key >= 0 ) {
-      $result = $config_need[$id_key];
+        $result = $config_need[$id_key];
     }
     return $result;
 }

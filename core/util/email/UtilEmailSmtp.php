@@ -9,12 +9,13 @@
  * 本类里PHP方法: mb_ereg 已过时，需找到替换方法才可正常使用
  * 
  * 调用UtilEmailSmtp()发邮件
+ * 
  * ```
  *     $fromaddress = "xxx@xxx.com";
- *     $toaddress = "xxx@xxx.com";
+ *     $toaddress   = "xxx@xxx.com";
  *     $mailsubject = "测试邮件";
- *     $mailbody = "<a href='http://www.sohu.com'>怎么办我想想</a>";
- *     $Email = new UtilEmailSmtp();
+ *     $mailbody    = "<a href='http://www.sohu.com'>怎么办我想想</a>";
+ *     $Email       = new UtilEmailSmtp();
  *     if ( $Email->sendmail( $fromaddress, $toaddress, $mailsubject, $mailbody ) ) {
  *         $mailinfo = "邮件已发送";
  *     } else {
@@ -30,16 +31,16 @@ class UtilEmailSmtp extends Util
    //private static  $auth=false;
 
     /* Private static Variables */
-    private static $smtp_port = 25;
-    private static $time_out = 30;
+    private static $smtp_port  = 25;
+    private static $time_out   = 30;
     private static $host_name;
     private static $relay_host = "smtp.xxx.com";
-    private static $debug = false;
-    private static $auth = true;
-    private static $user = "xxx@xxx.com";
-    private static $pass = "XXXXXX";
+    private static $debug      = false;
+    private static $auth       = true;
+    private static $user       = "xxx@xxx.com";
+    private static $pass       = "XXXXXX";
     //是否邮件是utf-8字符集，如果不是，就是gbk字符集
-    private static $is_utf8 = false;
+    private static $is_utf8    = false;
     /* Public Variables */
     public $sock;
 
@@ -66,7 +67,7 @@ class UtilEmailSmtp extends Util
         if ( !self::$is_utf8 ) {
             if ( UtilString::is_utf8( $content ) ) $content = UtilString::utf82gbk( $content );
         }
-        $header= "MIME-Version:1.0\r\n";
+        $header = "MIME-Version:1.0\r\n";
         if ( $isHtml_mailtype == "HTML" ) {
             $charset = "gbk";
             if ( self::$is_utf8 ) $charset="utf-8";
@@ -239,7 +240,7 @@ class UtilEmailSmtp extends Util
 
     public function smtp_putcmd($cmd, $arg = "") {
         if (!empty ($arg)) {
-            if(empty($cmd)) $cmd = $arg;
+            if (empty($cmd)) $cmd = $arg;
             else $cmd = $cmd." ".$arg;
         }
 
@@ -276,8 +277,8 @@ class UtilEmailSmtp extends Util
     }
 
     public function smtp_debug($message) {
-        if ($this->debug) {
-            echo $message."<br>";
+        if ( $this->debug ) {
+            echo $message . "<br>";
         }
     }
 
@@ -285,17 +286,17 @@ class UtilEmailSmtp extends Util
 
         $filedata = array();
 
-        $img_file_con=fopen($image_tag,"r");
+        $img_file_con = fopen($image_tag, "r");
         unset($image_data);
-        $image_data = "";
-        while ($tem_buffer=AddSlashes(fread($img_file_con,filesize($image_tag))))
+        $image_data   = "";
+        while ($tem_buffer = AddSlashes(fread($img_file_con, filesize($image_tag))))
             $image_data .= $tem_buffer;
         fclose($img_file_con);
 
-        $filedata['context'] = $image_data;
-        $filedata['filename']= basename($image_tag);
-        $extension=substr($image_tag,strrpos($image_tag,"."),strlen($image_tag)-strrpos($image_tag,"."));
-        switch($extension) {
+        $filedata['context']  = $image_data;
+        $filedata['filename'] = basename($image_tag);
+        $extension            = substr($image_tag, strrpos($image_tag, "."), strlen($image_tag) - strrpos($image_tag, "."));
+        switch ($extension) {
             case ".gif":
                 $filedata['type'] = "image/gif";
                 break;

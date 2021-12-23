@@ -1,5 +1,5 @@
 <?php
-require_once ("../../init.php");
+require_once("../../init.php");
 
 $title    = "一键生成指定SQL查询的报表";
 $url_base = UtilNet::urlbase();

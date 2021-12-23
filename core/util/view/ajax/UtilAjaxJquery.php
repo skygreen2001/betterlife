@@ -126,7 +126,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
             $result .= "success:" . $callback . ",";
         }
         if ( Gc::$dev_debug_on ) {
-            $result .= "error: function(xhr,status,errMsg){
+            $result .= "error: function(xhr,status,errMsg) {
                       console.log(status,':',errMsg);
                   },";
             $result .= "statusCode: {
@@ -162,12 +162,12 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         }
         if ( $response_type == EnumResponseType::XML ) {
             $result .= "
-                        $(data).find('$class_name').each(function(i){
-                            if ($(this).children()){
-                                $(this).children().each(function(i){
+                        $(data).find('$class_name').each(function(i) {
+                            if ($(this).children()) {
+                                $(this).children().each(function(i) {
                                     var name=(this).nodeName;
                                     var text=$(this).text();
-                                    if (text){
+                                    if (text) {
                                         $('ol').append('<li>'+name+':'+text+'</li>');
                                     }
                                 });

@@ -48,7 +48,7 @@ class Initializer
     /**
     * 初始化错误，网站应用的设置路径有误提示信息。
     */
-    const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确！</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置！</td></tr></table>";
+    const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确!</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置！</td></tr></table>";
 
     /**
      * 自动加载指定的类对象
@@ -180,7 +180,7 @@ class Initializer
         if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";$is_not_run_betterlife = true; }
         if ( !class_exists("SimpleXmlIterator") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";$is_not_run_betterlife = true; }
         if ( version_compare(phpversion(), 5.3, '<') ) {
-            if(!function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
+            if ( !function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
         }
         if ( $is_not_run_betterlife ) die();
     }
@@ -191,7 +191,7 @@ class Initializer
     private static function init()
     {
         $root_core           = "core";
-        self::$NAV_CORE_PATH = Gc::$nav_framework_path.$root_core.DS;
+        self::$NAV_CORE_PATH = Gc::$nav_framework_path . $root_core . DS;
         //设置时区为中国时区
         date_default_timezone_set('PRC');
         //初始化PHP版本校验
@@ -236,7 +236,6 @@ class Initializer
             mb_http_output(Gc::$encoding);
             mb_internal_encoding(Gc::$encoding);
         }
-
     }
 
     /**
@@ -260,7 +259,7 @@ class Initializer
      */
     public static function set_include_path()
     {
-        $core_util = "util";
+        $core_util     = "util";
         $include_paths = array(
                 self::$NAV_CORE_PATH,
                 self::$NAV_CORE_PATH . $core_util,

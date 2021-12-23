@@ -520,7 +520,7 @@ UETC;
                     }
                 }
 
-                if( ( count($enumColumns) > 0 ) && (in_array($key, $enumColumns)) ) {
+                if ( ( count($enumColumns) > 0 ) && (in_array($key, $enumColumns)) ) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";
                 } else if ( ( count($bitColumns) > 0 ) && ( in_array($key, $bitColumns) ) ) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>\r\n";

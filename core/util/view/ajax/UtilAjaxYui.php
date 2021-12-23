@@ -89,8 +89,8 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
         $class_name = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="YUI">
         $result = "
-                  function onComplete(id, response, args){
-                    if (response.responseText==true){
+                  function onComplete(id, response, args) {
+                    if (response.responseText==true) {
                       console.log('提交请求执行成功！');
                       return ;
                     }";
@@ -125,11 +125,11 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
                   YUI().use('node', function (Y) {
                       for(var item in objectJson) {
                              var value = objectJson[item];
-                             if(typeof(value) == 'object') {
+                             if (typeof(value) == 'object') {
                                 for(var subitem in value) {
                                     var subvalue = value[subitem];
                                     for(var childitem in subvalue) {
-                                        if (subitem!='#text'){
+                                        if (subitem!='#text') {
                                             var childvalue = subvalue[childitem];
                                             Y.one('#properties').append('<li>'+subitem+':'+childvalue+'</li>');
                                         }

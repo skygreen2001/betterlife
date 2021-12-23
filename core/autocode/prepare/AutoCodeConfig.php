@@ -437,7 +437,7 @@ class AutoCodeConfig extends AutoCode
         if ( file_exists(self::$filename_config_xml) )
         {
             $classes = UtilXmlSimple::fileXmlToObject( self::$filename_config_xml );
-            if( !empty($table_names) ) {
+            if ( !empty($table_names) ) {
                 if ( is_string($table_names) ) $table_names=explode(",", $table_names);
                 $class_names = array();
                 foreach ($table_names as $table_name) {
@@ -455,7 +455,7 @@ class AutoCodeConfig extends AutoCode
                         }
                     }
                 }
-                if( !empty($xpath_arr) && ( count($xpath_arr)>0 ) ) {
+                if ( !empty($xpath_arr) && ( count($xpath_arr)>0 ) ) {
                     $xpath_str   = implode(" or ", $xpath_arr);
                     $dataobjects = $classes->xpath("//class[$xpath_str]");
                 }

@@ -16,11 +16,10 @@ class UtilConfigYaml extends UtilConfig{
     /**
      * 调用方法
      */
-    public static function main(){
+    public static function main() {
         $settings = New UtilConfigYaml();
         $settings->load( __DIR__ . DS . 'setting.yaml' );
         echo 'Yaml: ' . $settings->get('db.host') . '';
     }
 
 }
-?>

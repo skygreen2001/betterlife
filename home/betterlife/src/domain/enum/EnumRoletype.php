@@ -35,7 +35,7 @@ class EnumRoletype extends Enum
      */
     public static function roletypeShow($roletype)
     {
-        switch($roletype){
+        switch ($roletype) {
             case self::SUPERADMIN:
                 return "超级管理员";
             case self::MANAGER:
@@ -54,7 +54,7 @@ class EnumRoletype extends Enum
      */
     public static function roletypeByShow($roletypeShow)
     {
-        switch($roletypeShow){
+        switch ($roletypeShow) {
             case "超级管理员":
                 return self::SUPERADMIN;
             case "管理人员":
@@ -72,7 +72,7 @@ class EnumRoletype extends Enum
      */
     public static function roletypeEnumKey($roletype)
     {
-        switch($roletype){
+        switch ($roletype) {
             case '0':
                 return "SUPERADMIN";
             case '1':

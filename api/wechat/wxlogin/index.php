@@ -1,5 +1,5 @@
 <?php
-require_once ("../../../init.php");
+require_once("../../../init.php");
 include_once "wxBizDataCrypt.php";
 
 $appid         = "微信小程序APPID";

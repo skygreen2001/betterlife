@@ -29,7 +29,7 @@ class EnumUserType extends Enum
      */
     public static function userTypeShow($userType)
     {
-        switch($userType){
+        switch ($userType) {
             case self::LOGIN:
                 return "登录";
             case self::BLOG:
@@ -46,7 +46,7 @@ class EnumUserType extends Enum
      */
     public static function userTypeByShow($userTypeShow)
     {
-        switch($userTypeShow){
+        switch ($userTypeShow) {
             case "登录":
                 return self::LOGIN;
             case "写日志":
@@ -62,7 +62,7 @@ class EnumUserType extends Enum
      */
     public static function userTypeEnumKey($userType)
     {
-        switch($userType){
+        switch ($userType) {
             case '1':
                 return "LOGIN";
             case '2':

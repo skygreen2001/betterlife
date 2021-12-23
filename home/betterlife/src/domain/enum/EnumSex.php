@@ -30,7 +30,7 @@ class EnumSex extends Enum
      */
     public static function sexShow($sex)
     {
-        switch($sex){
+        switch ($sex) {
             case self::FEMALE:
                 return "女";
             case self::MALE:
@@ -47,7 +47,7 @@ class EnumSex extends Enum
      */
     public static function sexByShow($sexShow)
     {
-        switch($sexShow){
+        switch ($sexShow) {
             case "女":
                 return self::FEMALE;
             case "男":
@@ -63,7 +63,7 @@ class EnumSex extends Enum
      */
     public static function sexEnumKey($sex)
     {
-        switch($sex){
+        switch ($sex) {
             case '0':
                 return "FEMALE";
             case '1':

@@ -39,12 +39,12 @@ class UtilXmlObject extends Util
      * @var string $filename :针对文件根目录
      * @global array 初始化全局配置项
      */
-    public function __construct($filename,$global=null) 
+    public function __construct($filename, $global = null) 
     {
-        $this->global=$global;
-        $this->filename=$filename;
-        if(is_file($filename))
-            $this->xml=$this->load($filename);
+        $this->global   = $global;
+        $this->filename = $filename;
+        if ( is_file($filename) )
+            $this->xml = $this->load( $filename );
     }
     
     /**
@@ -52,21 +52,21 @@ class UtilXmlObject extends Util
      */
     public function createXmlObject($object) 
     {
-        $node=strtolower(get_class($object));
-        $head="<?xml version=\"1.0\" encoding=\"".Gc::$encoding."?>";
-        $this->xml=new SimpleXMLElement($this->head."<".$node."s><global/></".$node."s>");
-        if($this->global!=null) {
-            $globalNodes=UtilObject::object_to_array($this->global);
-            foreach($globalNodes as $key=>$value) {
-                $this->xml->global->addChild($key,$value);
+        $node = strtolower(get_class($object));
+        $head = "<?xml version=\"1.0\" encoding=\"" . Gc::$encoding . "?>";
+        $this->xml = new SimpleXMLElement($this->head . "<" . $node . "s><global/></" . $node . "s>");
+        if ( $this->global != null ) {
+            $globalNodes = UtilObject::object_to_array( $this->global );
+            foreach ($globalNodes as $key => $value) {
+                $this->xml->global->addChild( $key, $value );
             }
         }
-        $child=$this->xml->addChild($node);
-        $data=UtilObject::object_to_array($object);
-        foreach($data as $key=>$value) {
-            $child->addChild($key,$value);
+        $child = $this->xml->addChild( $node );
+        $data  = UtilObject::object_to_array( $object );
+        foreach($data as $key => $value) {
+            $child->addChild( $key, $value );
         }
-        $this->xml->asXML($this->filename);
+        $this->xml->asXML( $this->filename );
     }
 
     /**
@@ -74,16 +74,16 @@ class UtilXmlObject extends Util
      */
     public function save($object) 
     {
-        if(is_file($this->filename)) {
-            $data=UtilObject::object_to_array($object);
-            $child=$this->xml->addChild(strtolower(get_class($object)));//取该对象的类名作为节点名，并转化为小写
-            foreach($data as $key=>$value) {
-                $child->addChild($key, $value);
+        if ( is_file($this->filename) ) {
+            $data  = UtilObject::object_to_array( $object );
+            $child = $this->xml->addChild( strtolower(get_class($object)) );//取该对象的类名作为节点名，并转化为小写
+            foreach ($data as $key => $value) {
+                $child->addChild( $key, $value );
             }
         } else {
-            $this->createXmlObject($object);
+            $this->createXmlObject( $object );
         }
-        $this->xml->asXML($this->filename);
+        $this->xml->asXML( $this->filename );
     }
 
     /**
@@ -91,19 +91,19 @@ class UtilXmlObject extends Util
      */
     public function update($object) 
     {
-        $data=UtilObject::object_to_array($object);
-        $node=strtolower(get_class($object));
+        $data = UtilObject::object_to_array( $object );
+        $node = strtolower(get_class($object));
         $xml_child=null;
-        foreach($this->xml->xpath("//".$node) as $child)//取该对象的类名作为节点名，查询所有该节点
+        foreach ($this->xml->xpath("//" . $node) as $child)//取该对象的类名作为节点名，查询所有该节点
         {
-            if($object->getId()==$child->id) {
-                $xml_child=$child;
+            if ( $object->getId() == $child->id ) {
+                $xml_child = $child;
             }
         }
-        foreach($data as $key=>$value) {
-            $xml_child->$key=$value;
+        foreach ($data as $key => $value) {
+            $xml_child->$key = $value;
         }
-        $this->xml->asXML($this->filename);
+        $this->xml->asXML( $this->filename );
     }
 
     /**
@@ -115,27 +115,28 @@ class UtilXmlObject extends Util
 
     /**
      * 根据条件获取一个对象节点
+     * 
      * $where array 查询条件值
+     * 
      * array("id"=>"1","name"=>"sky")
      */
     public function get($where) 
     {
-        $datalist=new DataObjectList();
-        $datalist=$this->getAll();
-        for($i=$datalist->count()-1;$i>=0;$i--) {
-            $isFilter=false;
+        $datalist = new DataObjectList();
+        $datalist = $this->getAll();
+        for ($i = $datalist->count() - 1; $i >= 0; $i--) {
+            $isFilter = false;
             foreach ($where as $akey => $aval) {
-                if (method_exists($datalist[$i], 'set'.ucfirst($akey))) {
-                    if($datalist[$i]->{'get'.ucfirst($akey)}()==$aval) {
+                if ( method_exists($datalist[$i], 'set' . ucfirst($akey)) ) {
+                    if ( $datalist[$i]->{'get' . ucfirst($akey)}() == $aval ) {
                         continue;
-                    }
-                    else {
-                        $isFilter=true;
+                    } else {
+                        $isFilter = true;
                         break;
                     }
                 }
             }
-            if($isFilter) {
+            if ( $isFilter ) {
                 $datalist->remove($i);
             }
         }
@@ -147,20 +148,20 @@ class UtilXmlObject extends Util
      */
     public function getAll() 
     {
-        $datalist=new DataObjectList();
-        $nodeName=$this->xml->getName();
-        $children=$this->xml->xpath("//".substr($nodeName,0,strlen($nodeName)-1));
-        foreach($children as $child) {
-            $class=new ReflectionClass(ucfirst($child->getName()));
-            $data=$class->newInstance();
+        $datalist = new DataObjectList();
+        $nodeName = $this->xml->getName();
+        $children = $this->xml->xpath("//" . substr($nodeName, 0, strlen($nodeName) - 1));
+        foreach ($children as $child) {
+            $class = new ReflectionClass( ucfirst($child->getName()) );
+            $data  = $class->newInstance();
             foreach ($child as $akey => $aval) {
-                if (method_exists($data, 'set'.ucfirst($akey))&&(array)$aval!=null) {
-                    $dataArr=(array)$aval;//将SimpleXMLElement数组转换成普通array,否则$aval[0]取出的是SimpleXMLElement对象
-                    $data->{'set'.ucfirst($akey)}($dataArr[0]);
+                if ( method_exists($data, 'set' . ucfirst($akey) ) && (array) $aval != null ) {
+                    $dataArr = (array) $aval;//将SimpleXMLElement数组转换成普通array,否则$aval[0]取出的是SimpleXMLElement对象
+                    $data->{'set' . ucfirst($akey)}($dataArr[0]);
                 }
 
             }
-            $datalist->add($data);
+            $datalist->add( $data );
         }
         return $datalist;
     }
@@ -175,18 +176,18 @@ class UtilXmlObject extends Util
     /*
      * 新增一个Global节点
     */
-    public function saveGlobal($nodeName,$value) 
+    public function saveGlobal($nodeName, $value) 
     {
-        $this->xml->global->addChild($nodeName,$value);
+        $this->xml->global->addChild( $nodeName, $value );
     }
 
     /*
      * 更新一个Global节点
     */
-    public function updateGlobal($nodeName,$value) 
+    public function updateGlobal($nodeName, $value) 
     {
-        $this->xml->global->$nodeName=$value;
-        $this->xml->asXML($this->filename);
+        $this->xml->global->$nodeName = $value;
+        $this->xml->asXML( $this->filename );
     }
 
     /**
@@ -196,6 +197,4 @@ class UtilXmlObject extends Util
     {
         return simplexml_load_file($filename);
     }
-    
 }
-?>

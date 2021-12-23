@@ -4,17 +4,17 @@ require_once("Text/Text_Diff.php");
 require_once("Text/Diff/Text_Diff_Renderer.php");
 require_once("Text/Diff/Renderer/Text_Diff_Renderer_inline.php");
 
-$old_file=$_GET["old_file"];
-if(file_exists($old_file)){
+$old_file = $_GET["old_file"];
+if ( file_exists($old_file) ) {
     $old_content = file_get_contents($old_file);
 } else {
-    die("原文件不存在！");
+    die("原文件不存在!");
 }
 $new_file = $_GET["new_file"];
 if ( file_exists($new_file) ) {
     $new_content = file_get_contents($new_file);
 } else {
-    die("新文件不存在！");
+    die("新文件不存在!");
 }
 
 if ( is_string($old_content) ) $old_content = explode("\n", $old_content);
@@ -38,4 +38,3 @@ $show = <<<COF
     </div>
 COF;
 echo $show;
-?>

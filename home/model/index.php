@@ -1,5 +1,5 @@
 <?php
-require_once ("../../init.php");
+require_once("../../init.php");
 $module_name = basename(dirname(__FILE__));
 ?>
 <div style="margin:200px 0px 200px 320px;">

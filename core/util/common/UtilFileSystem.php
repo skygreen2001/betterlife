@@ -196,7 +196,7 @@ class UtilFileSystem extends Util
     {
         if ( $files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000 ) {
             if ( $files[$uploadFieldName]["error"] > 0 ) {
-                switch( $files[$uploadFieldName]['error'] ) {
+                switch ( $files[$uploadFieldName]['error'] ) {
                     case 1:
                         $errorInfo = "超出了限制上传的文件大小";//The file is too large (server)
                         break;

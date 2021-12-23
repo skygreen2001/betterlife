@@ -1,19 +1,27 @@
 <?php
 /**
  * 优化控制图片大小
+ * 
  * - nginx config:
+ * 
  *     location /img/ {
  *         rewrite ^/img/(.*)$ /api/common/optimzeImgShow.php?src=$1;
  *     }
+ * 
  * - web html image src rule:
+ * 
  *     https://www.bb.com/img/upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400
+ * 
  * - 页面中定义格式如:
+ * 
  *     <img src="https://www.bb.com/img/upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400" alt="" />
- *    其实质调用路径如:
- *    https://www.bb.com/api/common/optimzeImgShow.php?src=upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400
+ * 
+ *   其实质调用路径如:
+ * 
+ *     https://www.bb.com/api/common/optimzeImgShow.php?src=upload/images/blog/cover_img/20171128100823.jpg&w=600&h=400
  */
-require_once ("../../init.php");
-ob_end_clean();ob_end_clean();
+require_once("../../init.php");
+ob_end_clean(); ob_end_clean();
 $params  = $_GET;
 $img_src = $params['src'];
 $width   = $params['w'];
@@ -24,7 +32,7 @@ $hight   = $params['h'];
 // $width = "600";
 // $hight = "400";
 
-if ($width || $hight) {
+if ( $width || $hight ) {
 
     // 方案一: file_get_contents
     // echo file_get_contents($img_src);

@@ -149,7 +149,7 @@ class AutoCodeDomainJava extends AutoCode
                                 "     */\r\n".
                                 "    public static String {$fieldname}Show(char {$fieldname})\r\n".
                                 "    {\r\n".
-                                "       switch({$fieldname}) { \r\n";
+                                "       switch ({$fieldname}) { \r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']) ;
                         $enumcomment = $enum_column['comment'];
@@ -169,7 +169,7 @@ class AutoCodeDomainJava extends AutoCode
                                "     */\r\n".
                                "    public static char {$fieldname}ByShow(String {$fieldname}Show)\r\n".
                                "    {\r\n".
-                               "       switch({$fieldname}Show) { \r\n";
+                               "       switch ({$fieldname}Show) { \r\n";
                     foreach ($enum_columnDefine as $enum_column) {
                         $enumname    = strtoupper($enum_column['name']);
                         $enumcomment = $enum_column['comment'];

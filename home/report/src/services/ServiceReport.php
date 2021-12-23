@@ -26,8 +26,8 @@ class ServiceReport extends Service
         }
         $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
         $reportSql = substr($reportSql, 7);//截取select后from前的字符串
-        if (contain($reportSql, "from")) {
-            if (!preg_match('/from(\s+)(\S*),/i', $reportSql)) {
+        if ( contain( $reportSql, "from" ) ) {
+            if ( !preg_match('/from(\s+)(\S*),/i', $reportSql) ) {
                 $fromPos   = strpos($reportSql, "from");//获取from的位置
                 $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
             }
@@ -36,7 +36,7 @@ class ServiceReport extends Service
         // [PHP正则表达式来拆分SQL字段列表](http://cn.voidcc.com/question/p-fmqfqqts-ye.html)
         // [PHP SQL Parser](https://code.google.com/archive/p/php-sql-parser/)
 
-        // 测试用例: $reportSql = 'field1,field2,field3,CONCAT(field1,field2) AS concatted,IF(field1 = field2,field3,field4) AS logic';
+        // 测试用例: $reportSql = 'field1,field2,field3,CONCAT(field1,field2) AS concatted,IF (field1 = field2,field3,field4) AS logic';
         $selCols   = preg_split ("/,(?![^()]*+\\))/", $reportSql); //以,分隔字符串
         $arr_output_header = array();
         foreach ( $selCols as $selCol) {
@@ -152,47 +152,47 @@ class ServiceReport extends Service
     public static function getWhereClause($sql_report, $query, $startDate, $endDate, $columns = null)
     {
         $where_clause = "";
-        if ($sql_report) $sql_report = str_replace(";", "", $sql_report);
+        if ( $sql_report ) $sql_report = str_replace(";", "", $sql_report);
         if ( !empty($query) && $query != "undefined" ) {
-          $search_atom  = explode(" ", trim($query));
-          $filterCols   = ServiceReport::getFilterCols( $sql_report );
-          $where_sub    = array();
-          for ($i=0; $i < count($filterCols); $i++) {
-            $clause    = " ( ";
-            $filterCol = $filterCols[$i];
-            $satom_tmp = $search_atom;
-            array_walk($satom_tmp, function(&$value, $key, $filterCol) {
-              $value = " $filterCol LIKE '%" . $value . "%' ";
-            }, $filterCol);
-            $clause .= implode(" and ", $satom_tmp);
-            $clause .= " ) ";
-            $where_sub[$i] = $clause;
-          }
-          if ( $where_sub && count($where_sub) > 0 ) {
-            if ( count($where_sub) > 1 ) $where_clause = " ( ";
-            $where_clause .= implode(" or ", $where_sub);
-            if ( count($where_sub) > 1 ) $where_clause .= " ) ";
-          }
+            $search_atom  = explode(" ", trim($query));
+            $filterCols   = ServiceReport::getFilterCols( $sql_report );
+            $where_sub    = array();
+            for ($i=0; $i < count($filterCols); $i++) {
+                $clause    = " ( ";
+                $filterCol = $filterCols[$i];
+                $satom_tmp = $search_atom;
+                array_walk($satom_tmp, function(&$value, $key, $filterCol) {
+                    $value = " $filterCol LIKE '%" . $value . "%' ";
+                }, $filterCol);
+                $clause .= implode(" and ", $satom_tmp);
+                $clause .= " ) ";
+                $where_sub[$i] = $clause;
+            }
+            if ( $where_sub && count($where_sub) > 0 ) {
+                if ( count($where_sub) > 1 ) $where_clause = " ( ";
+                $where_clause .= implode(" or ", $where_sub);
+                if ( count($where_sub) > 1 ) $where_clause .= " ) ";
+            }
         }
 
         if ( !empty($startDate) && !empty($endDate) ) {
-          $filterTime  = ServiceReport::getFilterTime( $sql_report );
-          if ($filterTime) {
-            if ( !empty($where_clause) ) $where_clause .= ' and ';
-            $where_clause .= " ( $filterTime between '$startDate' and '$endDate' ) ";
-          }
+            $filterTime  = ServiceReport::getFilterTime( $sql_report );
+            if ( $filterTime ) {
+                if ( !empty($where_clause) ) $where_clause .= ' and ';
+                $where_clause .= " ( $filterTime between '$startDate' and '$endDate' ) ";
+            }
         }
 
         if ( $columns && count($columns) > 0 ) {
-          foreach ($columns as $key => $column) {
-            $column_search_value = $column["search"]["value"];
-            if ( $column_search_value != "" ) {
-              if ( !empty($where_clause) ) {
-                $where_clause .= " and ";
-              }
-              $where_clause .= " " . $column["data"] . "='" . $column_search_value . "' ";
+            foreach ($columns as $key => $column) {
+                $column_search_value = $column["search"]["value"];
+                if ( $column_search_value != "" ) {
+                    if ( !empty($where_clause) ) {
+                        $where_clause .= " and ";
+                    }
+                    $where_clause .= " " . $column["data"] . "='" . $column_search_value . "' ";
+                }
             }
-          }
         }
 
         if ( !empty($where_clause) ) $where_clause = " where " . $where_clause;

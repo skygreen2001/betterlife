@@ -1,10 +1,10 @@
 <?php
 
-require_once ("../../../init.php");
+require_once("../../../init.php");
 
 $tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
-foreach ($tableList as $tablename){
+foreach ($tableList as $tablename) {
     $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
     foreach ($fieldInfoList as $fieldname => $field) {
         $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
@@ -35,7 +35,7 @@ function getClassname($tablename)
     return $classname;
 }
 
-foreach ($tableList as $tablename){  
+foreach ($tableList as $tablename) {  
     $classname = getClassname($tablename);
     $fieldname = DataObjectSpec::getRealIDColumnNameStatic( $classname );
     // $classname = lcfirst($classname);

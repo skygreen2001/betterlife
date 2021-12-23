@@ -624,7 +624,7 @@ class AutoCode extends BBObject
             {
                 if ( contain( $fieldname,"_id" ) ) $countC += 1;
             }
-            if( $countC <= 1 ) {
+            if ( $countC <= 1 ) {
                 return false;
             }
 

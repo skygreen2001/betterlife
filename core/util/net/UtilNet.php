@@ -15,8 +15,7 @@ class UtilNet extends Util
     public static function host($url)
     {
         // get host name from URL
-        preg_match('@^(?:http://)?([^/]+)@i',
-            $url, $matches);
+        preg_match('@^(?:http://)?([^/]+)@i', $url, $matches);
         $host = $matches[1];
 
         // get last two segments of host name
@@ -46,7 +45,7 @@ class UtilNet extends Util
      */
     public static function urlbase()
     {
-        $with_file = $_SERVER["SCRIPT_FILENAME"];
+        $with_file    = $_SERVER["SCRIPT_FILENAME"];
         $file_sub_dir = dirname($with_file) . DS;
 
         if ( contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" ) ) {
@@ -72,18 +71,18 @@ class UtilNet extends Util
     */
     public static function base_url($with_file=false)
     {
-        if(isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS'])){
-            $baseurl = 'https://'.$_SERVER['HTTP_HOST'];
-            if($_SERVER['SERVER_PORT']!=443)$baseurl.=':'.$_SERVER['SERVER_PORT'];
+        if ( isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS']) ) {
+            $baseurl = 'https://' . $_SERVER['HTTP_HOST'];
+            if ( $_SERVER['SERVER_PORT'] != 443 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
         } else {
-            $baseurl = 'http://'.$_SERVER['HTTP_HOST'];
-            if($_SERVER['SERVER_PORT']!=80)$baseurl.=':'.$_SERVER['SERVER_PORT'];
+            $baseurl = 'http://' . $_SERVER['HTTP_HOST'];
+            if ( $_SERVER['SERVER_PORT'] != 80 ) $baseurl  .= ':' . $_SERVER['SERVER_PORT'];
         }
-        if($with_file){
-            $baseurl.=$_SERVER['SCRIPT_NAME'];
+        if ( $with_file ) {
+            $baseurl .= $_SERVER['SCRIPT_NAME'];
         } else {
-            $baseDir = dirname($_SERVER['SCRIPT_NAME']);
-            $baseurl.=($baseDir == '\\' ? '' : $baseDir).'/';
+            $baseDir  = dirname($_SERVER['SCRIPT_NAME']);
+            $baseurl .= ($baseDir == '\\' ? '' : $baseDir) . '/';
         }
         return $baseurl;
     }
@@ -95,10 +94,10 @@ class UtilNet extends Util
      * @param string $data 数据
      * @param string $mimeType MIME类型。
      */
-    public static function download($fname='data',$data=null,$mimeType='application/force-download')
+    public static function download($fname = 'data', $data = null, $mimeType = 'application/force-download')
     {
-        if(headers_sent($file,$line)){
-            echo 'Header already sent @ '.$file.':'.$line;
+        if ( headers_sent($file,$line) ) {
+            echo 'Header already sent @ ' . $file . ': ' . $line;
             exit();
         }
 
@@ -106,17 +105,17 @@ class UtilNet extends Util
         header('Pragma: no-cache, no-store');
         header("Expires: Wed, 26 Feb 1997 08:21:57 GMT");
 
-        if(strpos($_SERVER["HTTP_USER_AGENT"],'MSIE')){
+        if ( strpos($_SERVER["HTTP_USER_AGENT"], 'MSIE') ) {
             $fname = urlencode($fname);
-            header('Content-type: '.$mimeType);
+            header('Content-type: ' . $mimeType);
         } else {
-            header('Content-type: '.$mimeType.';charset=utf-8');
+            header('Content-type: ' . $mimeType . ';charset=utf-8');
         }
-        header("Content-Disposition: attachment; filename=\"".$fname.'"');
+        header("Content-Disposition: attachment; filename=\"" . $fname . '"');
         //header( "Content-Description: File Transfer");
 
-        if($data){
-            header('Content-Length: '.strlen($data));
+        if ( $data ) {
+            header('Content-Length: ' . strlen($data));
             echo $data;
             exit();
         }
@@ -128,7 +127,7 @@ class UtilNet extends Util
     function sendfile($file)
     {
         $handle = fopen($file, "r");
-        while($buffer = fread($handle,102400)){
+        while ($buffer = fread($handle, 102400)) {
             echo $buffer;
             flush();
         }
@@ -142,30 +141,31 @@ class UtilNet extends Util
      * @param bool $finish 是否结束
      * @return string html标签字符串
      */
-    public static function buildTag($params,$tag,$finish=true)
+    public static function buildTag($params, $tag, $finish = true)
     {
-        foreach($params as $k=>$v){
-            if(!is_null($v) && !is_array($v)){
-                if($k=='value'){
-                    $v=htmlspecialchars($v);
+        foreach ($params as $k => $v) {
+            if ( !is_null($v) && !is_array($v) ) {
+                if ( $k == 'value' ) {
+                    $v = htmlspecialchars($v);
                 }
-                $ret[]=$k.'="'.$v.'"';
+                $ret[] = $k . '="' . $v . '"';
             }
         }
-        return '<'.$tag.' '.implode(' ',$ret).($finish?' /':'').'>';
+        return '<' . $tag . ' ' . implode(' ', $ret) . ($finish ? ' /' : '') . '>';
     }
 
     /**
      * 将url query字符串转换成数组
      * 
      * Returns the url query as associative array
+     * 
      * @example http://php.net/manual/en/function.parse-url.php
      * @param    string    query
      * @return    array    params
      */
     public static function parse_urlquery($query)
     {
-        $query  = html_entity_decode($query);
+        $query      = html_entity_decode($query);
         $queryParts = explode('&', $query);
 
         $params = array();
@@ -183,27 +183,27 @@ class UtilNet extends Util
     public static function client_ip()
     {
         //php获取ip的算法
-        if ($_SERVER["HTTP_X_FORWARDED_FOR"])
+        if ( $_SERVER["HTTP_X_FORWARDED_FOR"] )
         {
             $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
         }
-        elseif ($_SERVER["HTTP_CLIENT_IP"])
+        elseif ( $_SERVER["HTTP_CLIENT_IP"] )
         {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
         }
-        elseif ($_SERVER["REMOTE_ADDR"])
+        elseif ( $_SERVER["REMOTE_ADDR"] )
         {
             $ip = $_SERVER["REMOTE_ADDR"];
         }
-        elseif (getenv("HTTP_X_FORWARDED_FOR"))
+        elseif ( getenv("HTTP_X_FORWARDED_FOR") )
         {
             $ip = getenv("HTTP_X_FORWARDED_FOR");
         }
-        elseif (getenv("HTTP_CLIENT_IP"))
+        elseif ( getenv("HTTP_CLIENT_IP") )
         {
             $ip = getenv("HTTP_CLIENT_IP");
         }
-        elseif (getenv("REMOTE_ADDR"))
+        elseif ( getenv("REMOTE_ADDR") )
         {
             $ip = getenv("REMOTE_ADDR");
         }
