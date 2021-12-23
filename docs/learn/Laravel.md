@@ -493,9 +493,43 @@
           ```
       - 运行测试用例: php artisan test
 
+## 在本框架中使用Laravel
 
+- 本框架[skygreen2001/betterlife](https://github.com/skygreen2001/betterlife.git)
+- Laravel 框架中底层使用了Symfony框架
+  - 如 dd() 实现使用了Symfony 的 VarDumper::dump 方法
+- Composer类似Java中的Maven专为解决第三方库的依赖安装使用
+  - 本框架通过Composer安装了Laravel库: laravel/framework，相应自动下载了Symfony的底层函数库
+  - 本框架核心独立实现，并未使用任何Laravel框架代码，加载Laravel库，是提供给Laravel使用者使用，兼顾两者的优势
+- 可在根路径test.php文件中取消相关注释查看运行效果 
+- 在本框架中使用Laravel
+  ```
+      // 可使用Laravel的Helper方法
+      // [dd()](https://laravel.com/docs/8.x/helpers#method-dd)
+      // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置: 
+      // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
+      $value1 = "Hello";
+      $value2 = "World";
+      $value3 = "Skygreen";
+      dd($value1, $value2, $value3);
+      $v = [$value1, $value2, $value3];
+      use Symfony\Component\VarDumper\VarDumper;
+      VarDumper::dump($v);
 
-
+      // [可使用Laravel的Collections](https://laravel.com/docs/8.x/collections)
+      // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置: 
+      // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
+      use Illuminate\Support\Collection;
+      use Illuminate\Support\Str;
+      Collection::macro('toUpper', function () {
+          return $this->map(function ($value) {
+              return Str::upper($value);
+          });
+      });
+      $collection = collect(['first', 'second']);
+      $upper = $collection->toUpper();
+      echo $upper;
+  ```
 
 ## 部署
 
