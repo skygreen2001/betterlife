@@ -24,15 +24,15 @@ class EnumOnlineEditorType extends Enum
 class ActionBasic extends BBObject
 {
     /**
-     * 规范要求：所有控制器要求的前缀
+     * 规范要求: 所有控制器要求的前缀
      */
     const ROUTINE_CLASS_PREFIX = "Action_";
     /**
-     * SEO：keywords
+     * SEO: keywords
      */
     public $keywords;
     /**
-     * SEO：description
+     * SEO: description
      */
     public $description;
     /**
@@ -215,9 +215,9 @@ class ActionBasic extends BBObject
      * 
      *     index.php?g=betterlife&m=blog&a=write&pageNo=8&userId=5
      * 
-     *     $action：blog
+     *     $action: blog
      * 
-     *     $method：write
+     *     $method: write
      * 
      *     $querystring: pageNo=8&userId=5
      * 
@@ -238,9 +238,9 @@ class ActionBasic extends BBObject
      * 
      *     index.php?g=betterlife&m=blog&a=write&pageNo=8&userId=5
      * 
-     *     $action：blog
+     *     $action: blog
      * 
-     *     $method：write
+     *     $method: write
      * 
      *     $querystring: pageNo=8&userId=5
      *                   array('pageNo'=>8, 'userId'=>5)

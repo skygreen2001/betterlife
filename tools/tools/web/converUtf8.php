@@ -38,7 +38,7 @@ if ( isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"]) )
     echo "<head>\r\n";
     echo UtilCss::form_css() . "\r\n";
     $url_base = UtilNet::urlbase();
-    //echo "<script type='text/javascript' src='".$url_base."misc/js/util/file.js'></script>";
+    //echo "<script type='text/javascript' src='" . $url_base . "misc/js/util/file.js'></script>";
     echo "</head>";
     echo "<body>";
     echo "<br/><br/><br/><br/><br/><h1 align='center'>$title</h1>";
@@ -63,11 +63,11 @@ if ( isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"]) )
     echo "  <input type=\"submit\" value='检查' /><br/>";
 
     /*        if ( contain( $browser, "Internet Explorer" ) ) {
-        echo "  <p id='indexPage'>说明： <br/>
+        echo "  <p id='indexPage'>说明:  <br/>
                 * 可手动输入文件路径，也可选择浏览指定文件夹。<br/>
                 * 如果您希望选择指定文件夹，特别注意的是,由于安全方面的问题,你还需要如下设置才能使本JS代码正确运行,否则会出现\"没有权限\"的问题。<br/>
-                1.设置可信任站点（例如本地的可以为：http://localhost）<br/>
-                2.其次：可信任站点安全级别自定义设置中：设置下面的选项<br/>
+                1.设置可信任站点（例如本地的可以为: http://localhost）<br/>
+                2.其次: 可信任站点安全级别自定义设置中: 设置下面的选项<br/>
                 \"对没有标记为安全的ActiveX控件进行初始化和脚本运行\"----\"启用\"</p>";
     }*/
     echo "</form>";

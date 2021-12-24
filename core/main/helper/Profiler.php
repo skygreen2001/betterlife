@@ -170,7 +170,7 @@ class Profiler {
                 $lines[ sprintf( "%3d    %3.4f ms (%3.2f %%)  %s\n", $count, $total*1000, $perc, $key) ] = $total;
             }
             arsort($lines);
-            foreach($lines as $line => $total) {
+            foreach ($lines as $line => $total) {
                 echo $line;
             }
 

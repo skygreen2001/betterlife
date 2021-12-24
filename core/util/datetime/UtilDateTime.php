@@ -47,15 +47,15 @@ class EnumDateTimeShow extends Enum
 class UtilDateTime extends Util
 {
     /**
-     * 标准日期时间格式：年-月-日 时:分:秒
+     * 标准日期时间格式: 年-月-日 时:分:秒
      */
     const TIMEFORMAT_YMDHIS = "Y-m-d H:i:s";
     /**
-     * 标准日期时间格式：年-月-日 时:分:秒
+     * 标准日期时间格式: 年-月-日 时:分:秒
      */
     const TIMEFORMAT_YMD    = "Y-m-d";
     /**
-     * 标准日期时间格式：时:分:秒
+     * 标准日期时间格式: 时:分:秒
      */
     const TIMEFORMAT_HIS    = "H:i:s";
     /**
@@ -86,14 +86,14 @@ class UtilDateTime extends Util
      * 输出不同数据格式的日期｜时间｜日期时间
      * 
      * @param int $type 输出数据类型
-     *     - 0: 输出数据类型：Timestamp
-     *     - 1: 输出数据类型：日期时间
-     *     - 2: 输出数据类型：日期时间字符串形式
+     *     - 0: 输出数据类型: Timestamp
+     *     - 1: 输出数据类型: 日期时间
+     *     - 2: 输出数据类型: 日期时间字符串形式
      *
      * @param int $timeformat 显示日期时间类型
-     *     - 0: 格式：年-月-日 小时:分钟:秒
-     *     - 1: 格式：年-月-日
-     *     - 2: 格式：小时:分钟:秒
+     *     - 0: 格式: 年-月-日 小时:分钟:秒
+     *     - 1: 格式: 年-月-日
+     *     - 2: 格式: 小时:分钟:秒
      */
     public static function now($type = EnumDateTimeFormat::DATE, $timeformat = EnumDateTimeShow::DATETIME)
     {
@@ -173,7 +173,7 @@ class UtilDateTime extends Util
     /**
      * 判断日期 所属 干支 生肖 星座
      * 
-     * type 参数：XZ 星座 GZ 干支 SX 生肖
+     * type 参数: XZ 星座 GZ 干支 SX 生肖
      * @static
      * @access public
      * @param string $type  获取信息类型
@@ -219,7 +219,7 @@ class UtilDateTime extends Util
 
     /**
      * 将出生年月日转换成岁数
-     * @param mixed $birthday 出生年月日。格式如："1979-03-10"
+     * @param mixed $birthday 出生年月日。格式如: "1979-03-10"
      */
     public static function birthdayToAge($birthday)
     {
@@ -237,8 +237,8 @@ class UtilDateTime extends Util
 
     /**
      * 日期遍历: 获取开始日期与结束日期之间所有日期
-     * @param mixed $startDate 开始日期。格式如："2018-01-01"
-     * @param mixed $endDate 结束日期。格式如："2019-01-01"
+     * @param mixed $startDate 开始日期。格式如: "2018-01-01"
+     * @param mixed $endDate 结束日期。格式如: "2019-01-01"
      * @return array 开始日期与结束日期之间所有日期
      */
     public static function getDates($startDate, $endDate) {

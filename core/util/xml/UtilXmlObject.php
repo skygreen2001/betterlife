@@ -5,7 +5,7 @@
  * 规则说明如下
  * 
  * 0. 所有元素名为小写
- * 1. 节点根名称为 类名+s：如Role为roles
+ * 1. 节点根名称为 类名+s: 如Role为roles
  * 2. 每一个节点为:类名(如role)
  * 3. 节点下名为类的属性
  * 4. 可有全局配置项，目录名为global(可选
@@ -63,7 +63,7 @@ class UtilXmlObject extends Util
         }
         $child = $this->xml->addChild( $node );
         $data  = UtilObject::object_to_array( $object );
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $child->addChild( $key, $value );
         }
         $this->xml->asXML( $this->filename );

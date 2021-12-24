@@ -1,8 +1,8 @@
 <?php
 /**
  * -----------| Postgres的配置类 |-----------
- * @link http://blogs.techrepublic.com.com/howdoi/?p=110<br/>
- * @link http://neilconway.org/docs/sequences/<br/>
+ * @link http://blogs.techrepublic.com.com/howdoi/?p=110
+ * @link http://neilconway.org/docs/sequences/
  * @category betterlife
  * @package core.config.db
  * @subpackage object

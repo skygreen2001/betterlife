@@ -459,7 +459,7 @@ class ServiceBasic extends Service implements IServiceBasic
                 $zip->extractTo($upload_zip_dir);
                 $zip->close();
             } else {
-                return array('success' => false,'data'    => '上传压缩文件无法解压，查看是否压缩文件不正确！');
+                return array('success' => false,'data'    => '上传压缩文件无法解压，查看是否压缩文件不正确!');
             }
             //与数据对象的图片路径信息列比对，如果是中文名同名，转换成拼音名文件存储并更新数据库信息；
             //如果是英文字母和数字则保持原名称并覆盖同名文件。如果没有找到同名文件，提示信息未找到的文件。
@@ -490,15 +490,15 @@ class ServiceBasic extends Service implements IServiceBasic
                                 $info_failed .= "上传文件失败:" . $uploadPath . $imgFile . "";
                             }
                         } else {
-                            $info_noneed .= "上传文件" . $imgFile . "在记录中不存在！";
+                            $info_noneed .= "上传文件" . $imgFile . "在记录中不存在!";
                         }
                     } else {
-                        $info_noneed .= "上传文件" . $imgFile . "在记录中不存在！";
+                        $info_noneed .= "上传文件" . $imgFile . "在记录中不存在!";
                     }
                 }
             }
             if ( !empty($info_noneed) ) {
-                $info_noneed = "请先批量上传 $classname_comment 数据(Excel文档格式)，并在图片列中指定图片文件名！" . $info_noneed;
+                $info_noneed = "请先批量上传 $classname_comment 数据(Excel文档格式)，并在图片列中指定图片文件名!" . $info_noneed;
             }
             //删除压缩文件目录
             $isRmSucc = UtilFileSystem::deleteDir( $upload_zip_dir );

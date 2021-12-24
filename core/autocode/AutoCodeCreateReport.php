@@ -154,7 +154,7 @@ class AutoCodeCreateReport extends AutoCode
      */
     public static function service$reportEname()
     {
-        if (self::\${$reportEnameLo}Service == null) {
+        if ( self::\${$reportEnameLo}Service == null ) {
             self::\${$reportEnameLo}Service = new Service{$reportEname}();
         }
         return self::\${$reportEnameLo}Service;

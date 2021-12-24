@@ -78,9 +78,9 @@ class Crud_Sql_Insert extends Crud_SQL {
     /**
      * 从插入Insert Sql 语句中获取表名
      * 
-     * 算法说明：
+     * 算法说明: 
      * 
-     *     Insert SQl语句的形式如下：
+     *     Insert SQl语句的形式如下: 
      * 
      *       1. INSERT INTO Store_Information (store_name, Sales, Date) SELECT store_name, Sales, Date FROM Sales_Information WHERE Year(Date) = 1998
      *       2. INSERT INTO Persons VALUES ('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')

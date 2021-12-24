@@ -71,8 +71,8 @@ class Cache_Apc extends Cache_Base{
     }
 
     /**
-     * 在缓存里保存指定$key的数据<br/>
-     * 仅当存储空间中不存在键相同的数据时才保存<br/>
+     * 在缓存里保存指定$key的数据
+     * 仅当存储空间中不存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)

@@ -29,11 +29,11 @@ class Library_Loader
      */
     const SPEC_REQUIRED = "required";
     /**
-     * @var 是否加载：是
+     * @var 是否加载: 是
      */
     const OPEN_YES = "true";
     /**
-     * @var 是否加载：否
+     * @var 是否加载: 否
      */
     const OPEN_NO  = "false";
     /**
@@ -41,13 +41,13 @@ class Library_Loader
      */
     const FILE_SPEC_LOAD_LIBRARY = "load.library.xml";
     /**
-     * 加载库遵循以下规则：<br/>
-     * 1.加载的库文件应该都放在library目录下以加载库的名称为子目录的名称内<br/>
-     * 2.是否加载库由load.library.xml文件相关规范说明决定。<br/>
-     * 3.name:加载库的名称，要求必须是英文和数字。<br/>
-     * 4.init:加载库的方法，一般库有一个头文件，该方法由库提供者定义在本文件内。<br/>
-     * 5.open:是否加载库。true:加载，false:不加载；如果不定义则代表该库由逻辑自定义开关规则。<br/>
-     * 6.required:是否必须加载的，如无定义，则根据open定义加载库。<br/>
+     * 加载库遵循以下规则:
+     * 1.加载的库文件应该都放在library目录下以加载库的名称为子目录的名称内
+     * 2.是否加载库由load.library.xml文件相关规范说明决定。
+     * 3.name:加载库的名称，要求必须是英文和数字。
+     * 4.init:加载库的方法，一般库有一个头文件，该方法由库提供者定义在本文件内。
+     * 5.open:是否加载库。true:加载，false:不加载；如果不定义则代表该库由逻辑自定义开关规则。
+     * 6.required:是否必须加载的，如无定义，则根据open定义加载库。
      */
     public static function load_run()
     {

@@ -265,7 +265,7 @@ class Services_JSON
 
             case 'string':
                 // STRINGS ARE EXPECTED TO BE IN ASCII OR UTF-8 FORMAT
-                $ascii = '';
+                $ascii      = '';
                 $strlen_var = strlen($var);
 
                /*
@@ -297,76 +297,76 @@ class Services_JSON
                         case $ord_var_c == 0x2F:
                         case $ord_var_c == 0x5C:
                             // double quote, slash, slosh
-                            $ascii .= '\\'.$var[$c];
+                            $ascii .= '\\' . $var[$c];
                             break;
 
-                        case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
+                        case ( ( $ord_var_c >= 0x20 ) && ( $ord_var_c <= 0x7F ) ):
                             // characters U-00000000 - U-0000007F (same as ASCII)
                             $ascii .= $var[$c];
                             break;
 
-                        case (($ord_var_c & 0xE0) == 0xC0):
+                        case ( ( $ord_var_c & 0xE0 ) == 0xC0 ):
                             // characters U-00000080 - U-000007FF, mask 110XXXXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c, ord($var[$c + 1]));
-                            $c += 1;
-                            $utf16 = $this->utf82utf16($char);
+                            $char   = pack('C*', $ord_var_c, ord($var[$c + 1]));
+                            $c     += 1;
+                            $utf16  = $this->utf82utf16( $char );
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
 
-                        case (($ord_var_c & 0xF0) == 0xE0):
+                        case ( ( $ord_var_c & 0xF0 ) == 0xE0 ):
                             // characters U-00000800 - U-0000FFFF, mask 1110XXXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c,
+                            $char   = pack('C*', $ord_var_c,
                                          ord($var[$c + 1]),
                                          ord($var[$c + 2]));
-                            $c += 2;
-                            $utf16 = $this->utf82utf16($char);
+                            $c     += 2;
+                            $utf16  = $this->utf82utf16( $char );
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
 
-                        case (($ord_var_c & 0xF8) == 0xF0):
+                        case ( ( $ord_var_c & 0xF8 ) == 0xF0 ):
                             // characters U-00010000 - U-001FFFFF, mask 11110XXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c,
+                            $char   = pack('C*', $ord_var_c,
                                          ord($var[$c + 1]),
                                          ord($var[$c + 2]),
                                          ord($var[$c + 3]));
-                            $c += 3;
-                            $utf16 = $this->utf82utf16($char);
+                            $c     += 3;
+                            $utf16  = $this->utf82utf16( $char );
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
 
-                        case (($ord_var_c & 0xFC) == 0xF8):
+                        case ( ( $ord_var_c & 0xFC ) == 0xF8 ):
                             // characters U-00200000 - U-03FFFFFF, mask 111110XX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c,
+                            $char   = pack('C*', $ord_var_c,
                                          ord($var[$c + 1]),
                                          ord($var[$c + 2]),
                                          ord($var[$c + 3]),
                                          ord($var[$c + 4]));
-                            $c += 4;
-                            $utf16 = $this->utf82utf16($char);
+                            $c     += 4;
+                            $utf16  = $this->utf82utf16( $char );
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
 
-                        case (($ord_var_c & 0xFE) == 0xFC):
+                        case ( ( $ord_var_c & 0xFE ) == 0xFC ):
                             // characters U-04000000 - U-7FFFFFFF, mask 1111110X
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c,
+                            $char   = pack('C*', $ord_var_c,
                                          ord($var[$c + 1]),
                                          ord($var[$c + 2]),
                                          ord($var[$c + 3]),
                                          ord($var[$c + 4]),
                                          ord($var[$c + 5]));
-                            $c += 5;
-                            $utf16 = $this->utf82utf16($char);
+                            $c     += 5;
+                            $utf16  = $this->utf82utf16( $char );
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
                             break;
                     }
                 }
 
-                return '"'.$ascii.'"';
+                return '"' . $ascii . '"';
 
             case 'array':
                /*
@@ -393,7 +393,7 @@ class Services_JSON
                                             array_keys($var),
                                             array_values($var));
 
-                    foreach($properties as $property) {
+                    foreach ($properties as $property) {
                         if ( Services_JSON::isError($property) ) {
                             return $property;
                         }
@@ -405,7 +405,7 @@ class Services_JSON
                 // treat it like a regular array
                 $elements = array_map(array($this, 'encode'), $var);
 
-                foreach($elements as $element) {
+                foreach ($elements as $element) {
                     if ( Services_JSON::isError($element) ) {
                         return $element;
                     }
@@ -420,7 +420,7 @@ class Services_JSON
                                         array_keys($vars),
                                         array_values($vars));
 
-                foreach($properties as $property) {
+                foreach ($properties as $property) {
                     if ( Services_JSON::isError($property) ) {
                         return $property;
                     }

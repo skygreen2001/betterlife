@@ -48,7 +48,7 @@ class Initializer
     /**
     * 初始化错误，网站应用的设置路径有误提示信息。
     */
-    const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确!</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置！</td></tr></table>";
+    const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确!</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置!</td></tr></table>";
 
     /**
      * 自动加载指定的类对象
@@ -270,7 +270,7 @@ class Initializer
         $dirs_root     = UtilFileSystem::getAllDirsInDriectory( self::$NAV_CORE_PATH );
         $include_paths = $dirs_root;
         $module_Dir    = Gc::$nav_root_path;
-        if ( strlen(Gc::$module_root)>0 ) {
+        if ( strlen(Gc::$module_root) > 0 ) {
             $module_Dir .= Gc::$module_root.DS;
         }
         foreach (Gc::$module_names as $moduleName) {
@@ -291,7 +291,7 @@ class Initializer
                 }
             } else {
                 $module = basename($moduleDir);
-                echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>加载应用模块路径不存在:" . $moduleDir . "<br/>请去除Gc.php文件里\$module_names的模块：" . $module . "。<br/>再重新运行！</p>";
+                echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>加载应用模块路径不存在:" . $moduleDir . "<br/>请去除Gc.php文件里\$module_names的模块: " . $module . "。<br/>再重新运行!</p>";
                 die();
             }
         }

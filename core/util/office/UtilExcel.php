@@ -99,7 +99,7 @@ class UtilExcel extends Util
             header("Content-Type: application/octet-stream");
             header("Content-Type: application/download");
             Header("Content-Disposition:attachment;filename=" . $outputFileName);
-            //header('Content-Disposition:inline;filename="'.$outputFileName.'"');
+            //header('Content-Disposition:inline;filename="' . $outputFileName . '"');
             header("Content-Transfer-Encoding: binary");
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -108,7 +108,7 @@ class UtilExcel extends Util
             $objWriter->save('php://output');
         } else {
             //导出到服务器
-            //$outputFileName=UtilString::utf82gbk($outputFileName);
+            //$outputFileName = UtilString::utf82gbk( $outputFileName );
             $objWriter->save($outputFileName);
         }
         $objExcel->disconnectWorksheets();
@@ -165,7 +165,7 @@ class UtilExcel extends Util
 
         if ( empty($importFileName) )
         {
-            LogMe::log( '路径或文件名有错！' );
+            LogMe::log( '路径或文件名有错!' );
             return null;
         }
         if ( $filetype == 'xls' || $filetype == 'xlsx' )
@@ -177,12 +177,12 @@ class UtilExcel extends Util
             }
             $PHPExcel  = $PHPReader->load($importFileName);
             if ( !$PHPExcel ) {
-                LogMe::log( '请确保Excel格式正确！' );
+                LogMe::log( '请确保Excel格式正确!' );
                 return null;
             }
 
             if ($PHPExcel->getSheetCount() <= 0) {
-                LogMe::log( '请确保Excel存在数据！' );
+                LogMe::log( '请确保Excel存在数据!' );
                 LogMe::log( print_pre( $PHPExcel ) );
                 return null;
             }
@@ -312,7 +312,7 @@ class UtilExcel extends Util
             header("Content-Type: application/download");
             header('Content-Type: application/vnd.ms-excel');
             Header("Content-Disposition:attachment;filename=" . $outputFileName);
-            //header('Content-Disposition:inline;filename="'.$outputFileName.'"');
+            //header('Content-Disposition:inline;filename="' . $outputFileName . '"');
             header("Content-Transfer-Encoding: binary");
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

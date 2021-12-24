@@ -14,7 +14,7 @@ class Manager_ReportService extends Manager
      */
     public static function serviceReportone()
     {
-        if (self::$reportoneService == null) {
+        if ( self::$reportoneService == null ) {
             self::$reportoneService = new ServiceReportone();
         }
         return self::$reportoneService;

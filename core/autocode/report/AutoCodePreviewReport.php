@@ -43,7 +43,7 @@ class AutoCodePreviewReport extends AutoCode
     /**
      * 显示报告
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -192,7 +192,7 @@ MODEL;
             $moreContent  = str_replace("[checked]", "", $moreContent);
 
             // 生成标准的增删改查模板Action，继承基本Action
-            if ( self::$action_model_files&&(count(self::$action_model_files)>0) ) {
+            if ( self::$action_model_files && ( count(self::$action_model_files) > 0 ) ) {
                 $title        = "<a href='$layer_autocode/db_action.php?type=1' target='_blank'>通用模版控制器</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
             }
@@ -279,7 +279,7 @@ MODEL;
     /**
      * 生成代码的报告可交互操作
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      * @param string $content 生成代码的报告主要内容

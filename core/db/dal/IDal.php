@@ -49,7 +49,7 @@ interface IDal {
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -77,7 +77,7 @@ interface IDal {
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -122,7 +122,7 @@ interface IDal {
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @return 对象总计数
      */
@@ -140,7 +140,7 @@ interface IDal {
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 默认为 id desc

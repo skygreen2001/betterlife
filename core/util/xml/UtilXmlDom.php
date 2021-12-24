@@ -138,7 +138,7 @@ class UtilXmlDom extends Util
      *        );
      * ```
      * 
-     * 生成xml如下：
+     * 生成xml如下: 
      * 
      * ```
      * <?xml version="1.0" encoding="utf-8"?>
@@ -183,7 +183,7 @@ class UtilXmlDom extends Util
         if ( is_array($arr) ) {
             // get the attributes first.;
             if ( isset($arr['@attributes']) ) {
-                foreach($arr['@attributes'] as $key => $value) {
+                foreach ($arr['@attributes'] as $key => $value) {
                     if ( !self::isValidTagName( $key ) ) {
                         throw new Exception('[Array2XML] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
                     }
@@ -280,7 +280,7 @@ class UtilXmlDom extends Util
     }
     
     /**
-     * 示例：采用Dom方式创建html并显示
+     * 示例: 采用Dom方式创建html并显示
      */
     private static function sample_html_new() 
     {
@@ -299,8 +299,8 @@ class UtilXmlDom extends Util
         echo $doc->saveHTML();
     }
     /**
-     *  示例：采用Dom方式修改html并显示
-     * 前提条件：需要先运行self::sample_html_new()方法；
+     *  示例: 采用Dom方式修改html并显示
+     * 前提条件: 需要先运行self::sample_html_new()方法；
      */
     private static function sample_html_update() 
     {

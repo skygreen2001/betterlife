@@ -46,7 +46,7 @@ function index() {
                 $resultStr  = "";
                 $contentStr = "欢迎来到". Gc::$site_name . "! 请确认您输入的是: " . $keyword;
                 $resultStr  = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                if ( empty($resultStr) ) $resultStr = "您输入的信息不正确，请确认再输入！";
+                if ( empty($resultStr) ) $resultStr = "您输入的信息不正确，请确认再输入!";
                 echo $resultStr;
             } else {
                 echo "请输入...";

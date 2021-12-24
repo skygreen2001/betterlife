@@ -26,12 +26,12 @@ class EnumBlogStatus extends Enum
     const DEL='400';
 
     /**
-     * 显示状态<br/>
-     * 0:待审核-pend<br/>
-     * 1:进行中-run<br/>
-     * 100:已结束-end<br/>
-     * 400:已删除-del<br/>
-     * <br/>
+     * 显示状态 
+     * 0:待审核-pend 
+     * 1:进行中-run 
+     * 100:已结束-end 
+     * 400:已删除-del 
+     *  
      */
     public static function statusShow($status)
     {
@@ -49,7 +49,7 @@ class EnumBlogStatus extends Enum
     }
 
     /**
-     * 根据状态显示文字获取状态<br/>
+     * 根据状态显示文字获取状态 
      * @param mixed $statusShow 状态显示文字
      */
     public static function statusByShow($statusShow)
@@ -68,7 +68,7 @@ class EnumBlogStatus extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义<br/>
+     * 通过枚举值获取枚举键定义 
      */
     public static function statusEnumKey($status)
     {

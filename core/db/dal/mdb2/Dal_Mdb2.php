@@ -22,8 +22,8 @@ class Dal_Mdb2 extends Dal implements IDal
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
@@ -209,7 +209,7 @@ class Dal_Mdb2 extends Dal implements IDal
         if ( !empty($id)) {
             try {
                 $_SQL  = new Crud_Sql_Delete();
-                $where = $this->sql_id($object) . self::EQUAL.$id;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if ( Config_Db::$debug_show_sql ) {
                     LogMe::log( "SQL: " . $this->sQuery);
@@ -295,7 +295,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -346,7 +346,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -399,7 +399,7 @@ class Dal_Mdb2 extends Dal implements IDal
 
             if ( $id != null && $id > 0 ) {
                 $_SQL = new Crud_Sql_Select();
-                $where        = $this->sql_id($object).self::EQUAL.$id;
+                $where        = $this->sql_id( $object ) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $row          = $this->stmt->fetchRow(Config_Mdb2::$fetchmode);
@@ -424,7 +424,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @return 对象总计数
      */
@@ -467,7 +467,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 默认为 id desc

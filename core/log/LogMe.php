@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 枚举类型：日志级别 |-----------
+ * -----------| 枚举类型: 日志级别 |-----------
  * 
  * 日志级别 从上到下，由低到高
  */
@@ -39,7 +39,7 @@ class EnumLogLevel extends Enum
      */
     const DEBUG  = 7;
     /**
-     * SQL：SQL语句 注意只在调试模式开启时有效
+     * SQL: SQL语句 注意只在调试模式开启时有效
      */
     const SQL    = 8;
 }
@@ -77,7 +77,7 @@ class LogMe extends BBObject
     /**
      * 获取日志文件路径。
      * 
-     * 前提条件：采用文件方式记录日志。
+     * 前提条件: 采用文件方式记录日志。
      */
     public static function logPath($destination) {
         if ( empty(Gc::$log_config["logpath"]) ) {

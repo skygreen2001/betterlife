@@ -22,10 +22,10 @@ class EnumUserType extends Enum
     const COMMENT='3';
 
     /**
-     * 显示类型<br/>
-     * 1:登录-LOGIN<br/>
-     * 2:写日志-BLOG<br/>
-     * 3:写评论-COMMENT<br/>
+     * 显示类型 
+     * 1:登录-LOGIN 
+     * 2:写日志-BLOG 
+     * 3:写评论-COMMENT 
      */
     public static function userTypeShow($userType)
     {
@@ -41,7 +41,7 @@ class EnumUserType extends Enum
     }
 
     /**
-     * 根据类型显示文字获取类型<br/>
+     * 根据类型显示文字获取类型 
      * @param mixed $userTypeShow 类型显示文字
      */
     public static function userTypeByShow($userTypeShow)
@@ -58,7 +58,7 @@ class EnumUserType extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义<br/>
+     * 通过枚举值获取枚举键定义 
      */
     public static function userTypeEnumKey($userType)
     {

@@ -352,7 +352,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                         }
                     } else {
                         if ( count($row) == 1 ) {
-                            foreach($row as $key => $val) {
+                            foreach ($row as $key => $val) {
                                 $result[] = $val;
                             }
                         } else {
@@ -499,7 +499,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
             if ( !empty($id) && is_scalar($id) ) {
                 $_SQL  = new Crud_Sql_Select();
-                $where = $this->sql_id($object).self::EQUAL.$id;
+                $where = $this->sql_id( $object ) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();

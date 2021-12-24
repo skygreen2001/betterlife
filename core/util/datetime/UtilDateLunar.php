@@ -44,7 +44,7 @@ class UtilDateLunar
     /**
      * 将阴历转换为阳历
      * @param year 阴历-年
-     * @param month 阴历-月，闰月处理：例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
+     * @param month 阴历-月，闰月处理: 例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
      * @param date 阴历-日
      */
     public static function convertLunarToSolarNormal($year, $month, $date)

@@ -87,7 +87,7 @@ class UtilReflection extends Util
     /**
     * 获取对象所有属性信息
     * @object string 对象实体|对象名称
-    * @return array 对象所有属性信息【分三列：属性名|属性值|属性访问权限】
+    * @return array 对象所有属性信息【分三列: 属性名|属性值|属性访问权限】
     */
     public static function getClassPropertiesInfo($object)
     {        

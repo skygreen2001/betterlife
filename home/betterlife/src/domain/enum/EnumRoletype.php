@@ -26,12 +26,12 @@ class EnumRoletype extends Enum
     const PARTNER='3';
 
     /**
-     * 显示扮演角色<br/>
-     * 系统管理员扮演角色。<br/>
-     * 0:超级管理员-superadmin<br/>
-     * 1:管理人员-manager<br/>
-     * 2:运维人员-normal<br/>
-     * 3:合作伙伴-partner<br/>
+     * 显示扮演角色 
+     * 系统管理员扮演角色。 
+     * 0:超级管理员-superadmin 
+     * 1:管理人员-manager 
+     * 2:运维人员-normal 
+     * 3:合作伙伴-partner 
      */
     public static function roletypeShow($roletype)
     {
@@ -49,7 +49,7 @@ class EnumRoletype extends Enum
     }
 
     /**
-     * 根据扮演角色显示文字获取扮演角色<br/>
+     * 根据扮演角色显示文字获取扮演角色 
      * @param mixed $roletypeShow 扮演角色显示文字
      */
     public static function roletypeByShow($roletypeShow)
@@ -68,7 +68,7 @@ class EnumRoletype extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义<br/>
+     * 通过枚举值获取枚举键定义 
      */
     public static function roletypeEnumKey($roletype)
     {

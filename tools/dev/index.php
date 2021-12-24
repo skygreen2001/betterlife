@@ -360,7 +360,7 @@ class Project_Refactor
                     $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url=\"") + 17);
                     $ctrr    = substr($content, strpos($content, "<?php \$help_url=\"") + 18);
                     $ctrr    = substr($ctrr,strpos($ctrr, "\""));
-                    $content = $ctrl.self::$git_name.$ctrr;
+                    $content = $ctrl.self::$git_name . $ctrr;
                     if ( self::$reuse_type != EnumReusePjType::FULL ) {
                         $content = str_replace("通用模版", "", $content);
                     }
@@ -492,7 +492,7 @@ class Project_Refactor
             $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
-        self::UserInput("<div align='center'><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功！</a><br/><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div>");
+        self::UserInput("<div align='center'><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>生成新Web项目成功!</a><br/><a style='color:green;' href='" . $domain_url . self::$pj_name_en . "/' target='_blank'>新地址</a></div>");
     }
 
 

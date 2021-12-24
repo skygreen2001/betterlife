@@ -420,7 +420,7 @@ class UtilEmailPhp extends Util
     private static function processHeaders($headers, $body = false)
     {
         $res = '';
-        if ( is_array($headers) ) while(list($k, $v) = each($headers))
+        if ( is_array($headers) ) while (list($k, $v) = each($headers))
                 $res .= "$k: $v\n";
         if ( $body ) $res .= "\n$body";
         return $res;
@@ -558,12 +558,12 @@ class UtilEmailPhp extends Util
         $mimetypePathCustom  = '/etc/mime.types';
         $mimetypePathGeneric = Gc::$nav_root_path . '/sapphire/email/mime.types';
         $mimeTypes           = file_exists($mimetypePathGeneric) ?  file($mimetypePathGeneric) : file($mimetypePathCustom);
-        foreach($mimeTypes as $typeSpec) {
+        foreach ($mimeTypes as $typeSpec) {
             if ( ($typeSpec = trim($typeSpec) ) && substr($typeSpec, 0, 1) != "#" ) {
                 $parts = preg_split("/[ \t\r\n]+/", $typeSpec);
                 if ( sizeof($parts) > 1 ) {
                     $mimeType = array_shift($parts);
-                    foreach($parts as $ext) {
+                    foreach ($parts as $ext) {
                         $ext = strtolower($ext);
                         $mimeData[$ext] = $mimeType;
                     }

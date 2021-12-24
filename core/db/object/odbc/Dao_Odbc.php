@@ -234,7 +234,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $columnNames[] = odbc_field_name($this->stmt, $i);
         }
         $result = array();
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $row = array_combine($columnNames, $row);
             if ( !empty($object) ) {
                 if ($this->validParameter( $object )) {
@@ -243,12 +243,12 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 }
             } else {
                 if ( count($row) == 1 ) {
-                    foreach($row as $key => $val) {
+                    foreach ($row as $key => $val) {
                         $result[] = $val;
                     }
                 } else {
                     $c = new stdClass();
-                    foreach($row as $key => $val) {
+                    foreach ($row as $key => $val) {
                         $c->{$key} = $val;
                     }
                     $result[] = $c;

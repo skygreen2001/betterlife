@@ -71,7 +71,7 @@ class Cache_Memcached_Client extends Cache_Base
 //        }
 
         //$version = $this->obj->getVersion();
-        //echo "Server's version: ".$version."<br/>\n";
+        //echo "Server's version: " . $version . "<br/>\n";
     }
 
     /**

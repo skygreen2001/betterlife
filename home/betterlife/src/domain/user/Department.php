@@ -39,14 +39,14 @@ class Department extends DataObject
      */
     public $actualexpenses;
     /**
-     * 预估平均工资<br/>
+     * 预估平均工资
      * 部门人员预估平均工资
      * @var int
      * @access public
      */
     public $estsalary;
     /**
-     * 实际工资<br/>
+     * 实际工资
      * 部门人员实际平均工资
      * @var int
      * @access public

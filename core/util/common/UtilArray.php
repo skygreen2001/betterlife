@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：数组 |-----------
+ * -----------| 工具类: 数组 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -15,7 +15,7 @@ class UtilArray extends Util
      * The main function for converting to an XML document.
      * Pass in a multi dimensional array and this recrusively loops through and builds up an XML document.
      * @example
-     * 示例：
+     * 示例: 
      *     $data = array("id" => "8", "member_id" => "5", "app_name" => "mall", "username" => "pass", "relation" => array("Role" => "roleId", "Function" => "functionId"));
      *     $data = array("a", "b", "c", "d", "e" => array("a", "b", "c"));
      *     echo UtilArray::array_to_xml( $data, 'Member' );
@@ -39,7 +39,7 @@ class UtilArray extends Util
      *                )
      *            )
      *        );
-     * 生成xml如下：
+     * 生成xml如下: 
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
      *     <class>
@@ -65,7 +65,7 @@ class UtilArray extends Util
         if ( is_null( $xml ) ) $xml = new SimpleXMLElement("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
 
         // loop through the data passed in.
-        foreach( $data as $key => $value ) {
+        foreach ( $data as $key => $value ) {
             // no numeric keys in our xml please!
             if ( is_numeric( $key ) ) {
                 $key = $rootNodeName;
@@ -122,7 +122,7 @@ class UtilArray extends Util
      * @param array $filename 文件名
      * @param array $data 符合cml格式的数据
      * @example
-     * 示例：
+     * 示例: 
      *     $data=array("id"=>"8","member_id"=>"5","app_name"=>"mall","username"=>"pass","relation"=>array("Role"=>"roleId","Function"=>"functionId"));
      *     $data=array("a","b","c","d","e"=>array("a","b","c"));
      *     echo UtilArray::array_to_xml($data, 'Member');
@@ -146,7 +146,7 @@ class UtilArray extends Util
      *                )
      *            )
      *        );
-     * 生成xml如下：
+     * 生成xml如下: 
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
      *     <class>
@@ -172,7 +172,7 @@ class UtilArray extends Util
     /**
      * Convert an XML document to a multi dimensional array
      * Pass in an XML document (or SimpleXMLElement object) and this recrusively loops through and builds a representative array
-     * 示例：
+     * 示例: 
      *     $data = array("id" => "8", "member_id" => "5", "app_name" => "mall", "username" => "pass", "relation" => array("Role" => "roleId", "Function" => "functionId"));
      *     $data = array("a", "b", "c", "d", "e" => array("a", "b", "c"));
      *     $xml = UtilArray::array_to_xml( $data, 'Member' );

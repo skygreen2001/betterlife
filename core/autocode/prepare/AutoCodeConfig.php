@@ -47,7 +47,7 @@ class AutoCodeConfig extends AutoCode
     /**
      * 自动生成配置
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -139,7 +139,7 @@ class AutoCodeConfig extends AutoCode
             self::$showPreviewReport .= "<div style='width: 1000px; margin-left: 80px;'>";
             self::$showPreviewReport .= "<a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showCreateConfigXml').style.display=(document.getElementById('showCreateConfigXml').style.display=='none')?'':'none')\">显示生成代码配置文件报告</a>";
             self::$showPreviewReport .= "<div id='showCreateConfigXml' style='display: none;'>";
-            self::$showPreviewReport .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功生成配置文件: <font color='#0000FF'><a target='_blank' href='".self::$url_config_xml."'>".$filename."</a></font><br /><br />";
+            self::$showPreviewReport .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;成功生成配置文件: <font color='#0000FF'><a target='_blank' href='" . self::$url_config_xml . "'>" . $filename . "</a></font><br /><br />";
             self::$showPreviewReport .= "</div>";
             self::$showPreviewReport .= "</div>";
         }
@@ -426,7 +426,7 @@ class AutoCodeConfig extends AutoCode
     /**
      * 代码生成配置xml文件转换成数据结构
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -455,7 +455,7 @@ class AutoCodeConfig extends AutoCode
                         }
                     }
                 }
-                if ( !empty($xpath_arr) && ( count($xpath_arr)>0 ) ) {
+                if ( !empty($xpath_arr) && ( count($xpath_arr) > 0 ) ) {
                     $xpath_str   = implode(" or ", $xpath_arr);
                     $dataobjects = $classes->xpath("//class[$xpath_str]");
                 }

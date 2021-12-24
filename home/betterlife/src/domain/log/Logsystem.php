@@ -21,23 +21,26 @@ class Logsystem extends DataObject
      */
     public $logtime;
     /**
-     * 分类<br/>
+     * 分类 
+     * 
      * 标志或者分类
      * @var string
      * @access public
      */
     public $ident;
     /**
-     * 优先级<br/>
-     * 0:严重错误-EMERG<br/>
-     * 1:警戒性错误-ALERT<br/>
-     * 2:临界值错误-CRIT<br/>
-     * 3:一般错误-ERR<br/>
-     * 4:警告性错误-WARN<br/>
-     * 5:通知-NOTICE<br/>
-     * 6:信息-INFO<br/>
-     * 7:调试-DEBUG<br/>
-     * 8:SQL-SQL
+     * 优先级 
+     * 
+     * - 0: 严重错误-EMERG 
+     * - 1: 警戒性错误-ALERT 
+     * - 2: 临界值错误-CRIT 
+     * - 3: 一般错误-ERR 
+     * - 4: 警告性错误-WARN 
+     * - 5: 通知-NOTICE 
+     * - 6: 信息-INFO 
+     * - 7: 调试-DEBUG 
+     * - 8: SQL-SQL
+     * 
      * @var enum
      * @access public
      */
@@ -62,16 +65,16 @@ class Logsystem extends DataObject
     );
 
     /**
-     * 显示优先级<br/>
-     * 0:严重错误-EMERG<br/>
-     * 1:警戒性错误-ALERT<br/>
-     * 2:临界值错误-CRIT<br/>
-     * 3:一般错误-ERR<br/>
-     * 4:警告性错误-WARN<br/>
-     * 5:通知-NOTICE<br/>
-     * 6:信息-INFO<br/>
-     * 7:调试-DEBUG<br/>
-     * 8:SQL-SQL
+     * 显示优先级 
+     * - 0: 严重错误-EMERG 
+     * - 1: 警戒性错误-ALERT 
+     * - 2: 临界值错误-CRIT 
+     * - 3: 一般错误-ERR 
+     * - 4: 警告性错误-WARN 
+     * - 5: 通知-NOTICE 
+     * - 6: 信息-INFO 
+     * - 7: 调试-DEBUG 
+     * - 8: SQL-SQL
      */
     public function getPriorityShow()
     {
@@ -79,15 +82,15 @@ class Logsystem extends DataObject
     }
 
     /**
-     * 显示优先级<br/>
-     * 0:严重错误-EMERG<br/>
-     * 1:警戒性错误-ALERT<br/>
-     * 2:临界值错误-CRIT<br/>
-     * 3:一般错误-ERR<br/>
-     * 4:警告性错误-WARN<br/>
-     * 5:通知-NOTICE<br/>
-     * 6:信息-INFO<br/>
-     * 7:调试-DEBUG<br/>
+     * 显示优先级 
+     * 0:严重错误-EMERG 
+     * 1:警戒性错误-ALERT 
+     * 2:临界值错误-CRIT 
+     * 3:一般错误-ERR 
+     * 4:警告性错误-WARN 
+     * 5:通知-NOTICE 
+     * 6:信息-INFO 
+     * 7:调试-DEBUG 
      * 8:SQL-SQL
      */
     public static function priorityShow($priority)

@@ -10,7 +10,7 @@ class AutoCodeModel extends AutoCode
     /**
      * 自动生成代码-一键生成前后台所有模板文件
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -22,7 +22,7 @@ class AutoCodeModel extends AutoCode
         if ( Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
         if ( !file_exists($filename) ) {
             AutoCodeConfig::run();
-            die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码！</div>");
+            die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码!</div>");
         }
         self::$showReport        .= AutoCodeFoldHelper::foldEffectReady();
         //生成实体数据对象类
@@ -97,19 +97,19 @@ class AutoCodeModel extends AutoCode
     /**
      * 创建服务管理类
      * @param array|string $table_names
-     * 示例如下：
+     * 示例如下: 
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
     public static function createManageService($table_names = "")
     {
-        $file_manage_service_file=Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
+        $file_manage_service_file = Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
         if ( file_exists($file_manage_service_file) )
         {
-            $tableList = self::tableListByTable_names($table_names);
+            $tableList = self::tableListByTable_names( $table_names );
             $content   = file_get_contents($file_manage_service_file);
-            foreach($tableList as $tablename) {
-                $result          = AutoCodeService::createManageService($tablename);
+            foreach ($tableList as $tablename) {
+                $result          = AutoCodeService::createManageService( $tablename );
                 $section_define  = $result["section_define"];
                 $section_content = $result["section_content"];
 
@@ -153,7 +153,7 @@ class AutoCodeModel extends AutoCode
                 if ( contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
                 {
                     if ( !in_array(Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr) ) {
-                        $overwrite_not_run_arr[] = Gc::$nav_root_path . Gc::$module_root.DS.$app_dir.DS;
+                        $overwrite_not_run_arr[] = Gc::$nav_root_path . Gc::$module_root.DS . $app_dir.DS;
                     }
                 } else {
                     if ( !in_array($overwrite_not_dir, $overwrite_not_run_arr) )

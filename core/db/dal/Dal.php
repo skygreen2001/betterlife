@@ -34,8 +34,8 @@ abstract class Dal {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      */
     public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null ) {
         $this->connect($host, $port, $username, $password, $dbname, $dbtype, $engine);
@@ -48,8 +48,8 @@ abstract class Dal {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     abstract protected function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null);
@@ -61,8 +61,8 @@ abstract class Dal {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     public function getConnection($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null ) {
@@ -92,7 +92,7 @@ abstract class Dal {
     /**
      * 将数据对象里的显示属性进行清除
      * 
-     * 规范：数据对象里的显示属性以v_开始
+     * 规范: 数据对象里的显示属性以v_开始
      * 
      * @param array $saParams 预编译准备SQL参数
      */

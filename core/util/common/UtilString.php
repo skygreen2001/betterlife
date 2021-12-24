@@ -47,7 +47,7 @@ class UtilString extends Util
      * 在strlen计算时，对待一个UTF8的中文字符是3个长度
      * 在mb_strlen计算时，选定内码为UTF8，则会将一个中文字符当作长度1来计算
      * mbstring 不是一个默认扩展。这意味着它默认没有被激活。 你必须在 configure 选项中显式激活该模块。
-     * --enable-mbstring：激活 mbstring 函数。 要使用 mbstring 函数必须启用这个选项。
+     * --enable-mbstring: 激活 mbstring 函数。 要使用 mbstring 函数必须启用这个选项。
      * https://www.php.net/manual/zh/function.mb-strlen.php
      * Windows服务器上使用前需要确保在php.ini中加载了php_mbstring.dll，即确保“extension=php_mbstring.dll”这一行存在并且没有被注释掉
      * @param string $title 中文文字内容

@@ -27,7 +27,7 @@ class Config_Adodb extends Config_Db {
     public static $dialect = 0;
     /**
      * 获取数据库驱动字符串
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @return string 数据库驱动字符串 
      */
     public static function driver($dbtype = null) {
@@ -78,14 +78,14 @@ class Config_Adodb extends Config_Db {
      * 
      * 说明:
      * 
-     *    $dsn可以直接在System DSN里配置；然后在配置里设置：Config_Db::$dbname
+     *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
      * @param string $host
      * @param string $port 
      * @param string $username
      * @param string $password
      * @param string $dbname 
-     * @param enum $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return string ODBC所需的dsn_less字符串
      */
     public static function dsn_less($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
@@ -142,8 +142,8 @@ class Config_Adodb extends Config_Db {
      * @param string $username
      * @param string $password
      * @param string $dbname 
-     * @param enum $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return string ODBC所需的dsn字符串
      */
     public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {

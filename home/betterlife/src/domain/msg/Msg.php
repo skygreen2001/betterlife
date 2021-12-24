@@ -9,21 +9,21 @@ class Msg extends DataObject
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
-     * 标识<br/>
+     * 标识
      * 消息编号
      * @var int
      * @access public
      */
     public $msg_id;
     /**
-     * 发送者<br/>
+     * 发送者
      * 发送者用户编号
      * @var int
      * @access public
      */
     public $senderId;
     /**
-     * 接收者<br/>
+     * 接收者
      * 接收者用户编号
      * @var int
      * @access public
@@ -48,9 +48,9 @@ class Msg extends DataObject
      */
     public $content;
     /**
-     * 消息状态<br/>
-     * 枚举类型。<br/>
-     * 0:未读-unread<br/>
+     * 消息状态
+     * 枚举类型。
+     * 0:未读-unread
      * 1:已读-read
      * @var enum
      * @access public
@@ -59,9 +59,9 @@ class Msg extends DataObject
     //</editor-fold>
 
     /**
-     * 显示消息状态<br/>
-     * 枚举类型。<br/>
-     * 0:未读-unread<br/>
+     * 显示消息状态
+     * 枚举类型。
+     * 0:未读-unread
      * 1:已读-read
      */
     public function getStatusShow()
@@ -70,9 +70,9 @@ class Msg extends DataObject
     }
 
     /**
-     * 显示消息状态<br/>
-     * 枚举类型。<br/>
-     * 0:未读-unread<br/>
+     * 显示消息状态
+     * 枚举类型。
+     * 0:未读-unread
      * 1:已读-read
      */
     public static function statusShow($status)

@@ -51,7 +51,7 @@ abstract class Crud_SQL {
      * 
      * 一般在insert的values和update的set里使用
      * 
-     * 当$type_rep为：
+     * 当$type_rep为: 
      * 
      *   1  : INSERT INTO REGISTRY (name, value) VALUES ($1,$2)
      * 
@@ -63,7 +63,7 @@ abstract class Crud_SQL {
     /**
      * 默认是where的值如何是字符串必须带引号。
      * 
-     * 但是表达关系的时候不能将where所带的值带引号，如：
+     * 但是表达关系的时候不能将where所带的值带引号，如: 
      * 
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
      * 
@@ -76,7 +76,7 @@ abstract class Crud_SQL {
      * 
      * 默认是where的值如何是字符串必须带引号。
      * 
-     * 但是表达关系的时候不能将where所带的值带引号，如：
+     * 但是表达关系的时候不能将where所带的值带引号，如: 
      * 
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
      * 
@@ -101,7 +101,7 @@ abstract class Crud_SQL {
      *    3. $sql->select("id","name")->from("users")->where(array("id"=>"1","name"=>"sky"));
      *    4. $sql->select("id","name")->from("users")->where(new User(id="1",name="green"));//即过滤条件对象
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * @return SQL构造器本身
      */
     public function where()
@@ -206,7 +206,7 @@ abstract class Crud_SQL {
                                 $asWhereClause[$key] = $value;
                             } else {
                                 if ( is_numeric($value) ) {
-                                    $asWhereClause[$key] = $key . "='" . $value . "'";//$key."=".$value;
+                                    $asWhereClause[$key] = $key . "='" . $value . "'";//$key . "=" . $value;
                                 } else {
                                     $quotes = "";
                                     if ( !$this->ignore_quotes ) {
@@ -279,7 +279,7 @@ abstract class Crud_SQL {
      *    3. $sql->select("id","name")->from("users")->whereOr(array("id"=>"1","name"=>"sky"));
      *    4. $sql->select("id","name")->from("users")->whereOr(new User(id="1",name="green"));//即过滤条件对象
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 or name='sky')
+     * 默认:SQL Where条件子语句。如: (id=1 or name='sky')
      * 
      * @return SQL构造器本身
      */
@@ -300,10 +300,11 @@ abstract class Crud_SQL {
      * @param mixex $clause where条件子语句
      * @example 示例如下
      * 示例如下:
-     *     1.$sql->select("id","name")->from("users")->whereLike(array("id"=>"1","name"=>"sky"));
-     *     2.$sql->select("id","name")->from("users")->whereLike(new User(id="1",name="green"));//即过滤条件对象
      * 
-     * 默认:SQL Where条件子语句。如：name like 'sky'
+     *     1. $sql->select("id", "name")->from("users")->whereLike(array("id"=>"1", "name" => "sky"));
+     *     2. $sql->select("id", "name")->from("users")->whereLike(new User(id = "1", name = "green"));//即过滤条件对象
+     * 
+     * 默认:SQL Where条件子语句。如: name like 'sky'
      * 
      */
     public function whereLike() {
@@ -336,7 +337,7 @@ abstract class Crud_SQL {
      *      1. id=1,name='sky'
      *      2. array("id=1","name='sky'")
      *      3. array("id"=>"1","name"=>"sky")
-     * @return array key：列；value：值
+     * @return array key: 列；value: 值
      * @example 示例如下
      * 示例如下:
      * 

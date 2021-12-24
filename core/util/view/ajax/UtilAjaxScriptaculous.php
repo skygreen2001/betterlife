@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：Scriptaculous[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: Scriptaculous[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen

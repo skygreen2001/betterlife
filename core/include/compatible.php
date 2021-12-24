@@ -10,7 +10,7 @@
  * 
  *     主要是因为是应用中发现如果出现了换行，将无法找到静态引用的类
  * 
- *     主要针对以下情况：
+ *     主要针对以下情况: 
  *     ```
  *         User::get( array("name" => $user->getName(),
  *                    "password" => md5($user->getPassword())) );
@@ -52,11 +52,11 @@ if ( !function_exists('get_called_class') ) {
                 }
             }
             //使用正常途径调用类方法，如:A::make()
-            if ( self::$fl == $bt[2]['file'].$bt[2]['line'] ) {
+            if ( self::$fl == $bt[2]['file'] . $bt[2]['line'] ) {
                 self::$i++;
             } else {
                 self::$i  = 0;
-                self::$fl = $bt[2]['file'].$bt[2]['line'];
+                self::$fl = $bt[2]['file'] . $bt[2]['line'];
             }
             $lines = file($bt[2]['file']);
             $match_line_start_pos = $bt[2]['line'] - 1;

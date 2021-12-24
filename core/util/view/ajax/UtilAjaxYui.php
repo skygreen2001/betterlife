@@ -1,8 +1,8 @@
 <?php
 /**
- * -----------| 工具类：YUI[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: YUI[Javascript Ajax 框架] |-----------
  * 
- * Yahoo! User Interface Library (YUI)<br/>
+ * Yahoo! User Interface Library (YUI)
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -91,7 +91,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
         $result = "
                   function onComplete(id, response, args) {
                     if (response.responseText==true) {
-                      console.log('提交请求执行成功！');
+                      console.log('提交请求执行成功!');
                       return ;
                     }";
         if ( !self::$IsHtmlBody ) {
@@ -109,7 +109,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
                           data = Y.JSON.parse(response.responseText);
                         }
                         catch (e) {
-                            console.log('返回的Json数据语法格式错误！');
+                            console.log('返回的Json数据语法格式错误!');
                         }
                     })
                     YUI().use('node', function (Y) {

@@ -100,12 +100,12 @@ class DataObjectRelation extends BBObject
             foreach ($properties as $propertyName => $propertyValue) {
                 /**
                  * 调用一对多
-                 * 定义如下：
+                 * 定义如下: 
                  * class Department extends DataObject {
                  *     static $has_many = array(
                  *         "admins" => "Admin",
                  *     );
-                 * 示例如下：
+                 * 示例如下: 
                  *       $department = Department::get_by_id(1);
                  *       print_r($department->admins);//第1种方式
                  *       print_r($department->getAdmins());//第2种方式
@@ -140,12 +140,12 @@ class DataObjectRelation extends BBObject
 
                 /**
                  * 调用多对多【主控的一方】
-                 * 定义如下：
+                 * 定义如下: 
                  * class User extends DataObject {
                  *     static $many_many = array(
                  *        "roles" => "Role",
                  *     );
-                 * 示例如下：
+                 * 示例如下: 
                  *       $user = User::get_by_id(1);
                  *       print_r($user->roles);//第1种方式
                  *       print_r($user->getRoles());//第2种方式
@@ -174,7 +174,7 @@ class DataObjectRelation extends BBObject
                             $relationObject_tablename = Config_Db::orm( $detail_class );
                             $relationObject_IdName    = DataObjectSpec::getRealIDColumnNameStatic( $detail_class );
                             $relationObject_foreignId = self::getRealForeignIDColumnName( $dataobject, $detail_class );
-                            $query = $_SQL->select("b.*")->from($relation_tablename . " a," . $relationObject_tablename . " b")->ignoreQuotes(true)->where("a." . $self_foreignId . "='" . $dataobject->getId() . "', b." . $relationObject_IdName . "=a.".$relationObject_foreignId)->ignoreQuotes(false)->result();
+                            $query = $_SQL->select("b.*")->from($relation_tablename . " a," . $relationObject_tablename . " b")->ignoreQuotes(true)->where("a." . $self_foreignId . "='" . $dataobject->getId() . "', b." . $relationObject_IdName . "=a." . $relationObject_foreignId)->ignoreQuotes(false)->result();
                             return  DataObject::dao()->sqlExecute( $query, $detail_class );
                         }
                     }
@@ -183,12 +183,12 @@ class DataObjectRelation extends BBObject
 
                 /**
                  * 调用多对多【被控的一方】
-                 * 定义如下：
+                 * 定义如下: 
                  * class Role extends DataObject {
                  *     static $belongs_many_many = array(
                  *        "users"=>"User",
                  *     );
-                 * 示例如下：
+                 * 示例如下: 
                  *       $role = Role::get_by_id(1);
                  *       print_r($role->users);//第1种方式
                  *       print_r($role->getUsers());//第2种方式
@@ -225,12 +225,12 @@ class DataObjectRelation extends BBObject
 
                 /**
                  * 调用一对一
-                 * 定义如下：
+                 * 定义如下: 
                  * class User extends DataObject {
                  *     static $has_one = array(
                  *        "userdetail" => "UserDetail",
                  *     );
-                 * 示例如下：
+                 * 示例如下: 
                  *      $user = User::get_by_id(1);
                  *      $user->userdetail;//第1种方式
                  *      //$user->getUserdetail();//第2种方式
@@ -264,12 +264,12 @@ class DataObjectRelation extends BBObject
 
                 /**
                  * 调用从属一对一
-                 * 定义如下：
+                 * 定义如下: 
                  * class Comment extends DataObject {
                  *  static $belongs_has_one = array(
                  *    "user"=>"User"
                  *  );
-                 * 示例如下：
+                 * 示例如下: 
                  *      $comment = Comment::get_by_id(3);
                  *      $comment->user;//第1种方式
                  *      //$comment->getUser();//第2种方式
@@ -317,7 +317,7 @@ class DataObjectRelation extends BBObject
      *      $user = new User();
      *      $user->setId(2);
      *      $user->saveRelationForManyToMany( "roles", "3", array("commitTime" => date("Y-m-d H:i:s")) );
-     *      说明:roles是在User数据对象中定义的变量：
+     *      说明:roles是在User数据对象中定义的变量: 
      *      static $many_many = array(
      *        "roles" => "Role",
      *      );
@@ -328,7 +328,7 @@ class DataObjectRelation extends BBObject
      *      $role = new Role();
      *      $role->setId(5);
      *      $role->saveRelationForManyToMany( "users", "6", array("commitTime" => date("Y-m-d H:i:s")) );
-     *      说明:users是在Role数据对象中定义的变量：
+     *      说明:users是在Role数据对象中定义的变量: 
      *      static $belongs_many_many = array(
      *        "users"=>"User",
      *      );
@@ -336,7 +336,7 @@ class DataObjectRelation extends BBObject
      * @param string $dataobject 当前对象
      * @param mixed $relation_object 多对多|从属于多对多关系定义对象
      * @param mixed $relation_id_value 关系对象的主键ID值。
-     * @param array $other_column_values  其他列值键值对【冗余字段便于查询的数据列值】，如有一列：记录关系创建时间。
+     * @param array $other_column_values  其他列值键值对【冗余字段便于查询的数据列值】，如有一列: 记录关系创建时间。
      * @return mixed 保存对象后的主键
      */
     public static function saveRelationForManyToMany($dataobject, $relation_object, $relation_id_value, $other_column_values = null) {
@@ -376,7 +376,7 @@ class DataObjectRelation extends BBObject
                 $sQuery = $_SQL->insert($relation_table)->values($array_properties)->result();
                 return DataObject::dao()->sqlExecute( $sQuery );
             } else {
-                LogMe::log( $dataobject->classname() . "在多对多关系中对" . $relation_object . ":" . $relation_id_value . "映射不正确，请确认代码中变量定义是否正确！" );
+                LogMe::log( $dataobject->classname() . "在多对多关系中对" . $relation_object . ":" . $relation_id_value . "映射不正确，请确认代码中变量定义是否正确!" );
             }
         } else {
             LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );

@@ -46,16 +46,16 @@ class EnumPriority extends Enum
     const SQL='8';
 
     /**
-     * 显示优先级<br/>
-     * 0:严重错误-EMERG<br/>
-     * 1:警戒性错误-ALERT<br/>
-     * 2:临界值错误-CRIT<br/>
-     * 3:一般错误-ERR<br/>
-     * 4:警告性错误-WARN<br/>
-     * 5:通知-NOTICE<br/>
-     * 6:信息-INFO<br/>
-     * 7:调试-DEBUG<br/>
-     * 8:SQL-SQL<br/>
+     * 显示优先级 
+     * 0:严重错误-EMERG 
+     * 1:警戒性错误-ALERT 
+     * 2:临界值错误-CRIT 
+     * 3:一般错误-ERR 
+     * 4:警告性错误-WARN 
+     * 5:通知-NOTICE 
+     * 6:信息-INFO 
+     * 7:调试-DEBUG 
+     * 8:SQL-SQL 
      */
     public static function priorityShow($priority)
     {
@@ -83,7 +83,7 @@ class EnumPriority extends Enum
     }
 
     /**
-     * 根据优先级显示文字获取优先级<br/>
+     * 根据优先级显示文字获取优先级 
      * @param mixed $priorityShow 优先级显示文字
      */
     public static function priorityByShow($priorityShow)
@@ -112,7 +112,7 @@ class EnumPriority extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义<br/>
+     * 通过枚举值获取枚举键定义 
      */
     public static function priorityEnumKey($priority)
     {

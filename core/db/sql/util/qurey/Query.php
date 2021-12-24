@@ -104,7 +104,7 @@ abstract class Query implements Iterator {
      */
     public static function raw2xml($val) {
         if ( is_array($val) ) {
-            foreach($val as $k => $v) $val[$k] = self::raw2xml($v);
+            foreach ($val as $k => $v) $val[$k] = self::raw2xml($v);
             return $val;
         } else {
             return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
@@ -129,7 +129,7 @@ abstract class Query implements Iterator {
             }
 
             $result .= "<tr>";
-            foreach($record as $k => $v) {
+            foreach ($record as $k => $v) {
                 $result .= "<td>" . self::raw2xml($v) . "</td> ";
             }
             $result .= "</tr> \n";

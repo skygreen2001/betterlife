@@ -70,7 +70,7 @@ else
     echo '    box-shadow: 0 4px 8px 0 rgba(186, 210, 199, 0.8);';
     echo '}';
     echo '</style>';
-    echo "<script type='text/javascript' src='".$url_base."misc/js/util/file.js'></script>";
+    echo "<script type='text/javascript' src='" . $url_base . "misc/js/util/file.js'></script>";
     echo "</head>";
     echo "<body>";
     echo "<br/><br/><br/><br/><br/><h1 align='center'>$title</h1>";

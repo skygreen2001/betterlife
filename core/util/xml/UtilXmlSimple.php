@@ -125,7 +125,7 @@ class UtilXmlSimple extends Util
     }
     
     /**
-     * 示例：显示Flickr图片内容
+     * 示例: 显示Flickr图片内容
      */
     public static function sample_flickr() 
     {
@@ -138,7 +138,7 @@ class UtilXmlSimple extends Util
     }
 
     /**
-     * 示例：显示Email
+     * 示例: 显示Email
      */
     public static function sample_email() 
     {
@@ -163,14 +163,14 @@ EMAIL;
         print_r($sxml);
 //echo $sxml->email[0]->from;
 //foreach ($sxml->email as $email) {
-//    echo $email->from."：";
+//    echo $email->from.": ";
 //    echo $email['type']."<br/>";
 //    echo $email->body."<br/>";
 //}
     }
 
     /**
-     * 示例：XPath寻径显示ACL
+     * 示例: XPath寻径显示ACL
      */
     public static function sample_xpath_acl() 
     {

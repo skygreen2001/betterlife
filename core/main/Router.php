@@ -84,7 +84,7 @@ class Router
      *
      *   dispatch=betterlife.auth.login
      * 
-     *   等同于：g=betterlife&m=auth&a=login
+     *   等同于: g=betterlife&m=auth&a=login
      */
     const VAR_DISPATCH = 'go';
     /**
@@ -132,19 +132,19 @@ class Router
     /**
      * URL变量与值之间的连接符号
      * 
-     * 示例：a=login
+     * 示例: a=login
      */
     const URL_EQUAL = "=";
     /**
      * URL变量与变量之间的连接符号
      * 
-     * 示例：m=auth&a=login
+     * 示例: m=auth&a=login
      */
     const URL_CONNECTOR = "&";
     /**
      * URL变量与变量之间的连接符号
      * 
-     * 示例：m=auth&a=login
+     * 示例: m=auth&a=login
      */
     const URL_QUESTION = "?";
 
@@ -272,7 +272,7 @@ class Router
                     $_GET[self::VAR_ACTION] = @end($_NavSection);
                     unset($_NavSection[count($_NavSection)-1]);
                     unset($_NavSection[0]);
-                    if ( !empty($_NavSection) && count($_NavSection)>0 ) {
+                    if ( !empty($_NavSection) && count($_NavSection) > 0 ) {
                         $_GET[self::VAR_MODULE] = @$_NavSection[count($_NavSection)];
                         unset($_NavSection[count($_NavSection)]);
                     }
@@ -291,7 +291,7 @@ class Router
                     }
                 }
                 if ( $_depr == ',' ) $_URL = substr($_URL, 0, -1) . '/';
-//                $this->parsed = parse_url($this->CURRENT_RUN_FILE.$_URL);
+//                $this->parsed = parse_url($this->CURRENT_RUN_FILE . $_URL);
                 //重定向成规范的URL格式
                 Dispatcher::redirect( $this->CURRENT_RUN_FILE . $_URL );
             } else {

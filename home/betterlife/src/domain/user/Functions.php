@@ -9,7 +9,7 @@ class Functions extends DataObject
 {
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
-     * 标识<br/>
+     * 标识
      * 权限编号
      * @var int
      * @access public

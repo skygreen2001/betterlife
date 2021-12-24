@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 枚举类型：表示层生成类型定义 |-----------
+ * -----------| 枚举类型: 表示层生成类型定义 |-----------
  * @category betterlife
  * @package core.config
  * @author skygreen
@@ -90,7 +90,7 @@ class AutoCodeAction extends AutoCode
         self::$action_dir_full = self::$save_dir . Gc::$module_root . DS .self::$app_dir . DS . self::$action_dir . DS;
         $view_dir_full         = self::$save_dir . Gc::$module_root . DS .self::$app_dir . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS;
 
-        if ( !UtilString::is_utf8(self::$action_dir_full) ) {
+        if ( !UtilString::is_utf8( self::$action_dir_full ) ) {
             self::$action_dir_full = UtilString::gbk2utf8( self::$action_dir_full );
         }
         self::init();
@@ -639,7 +639,7 @@ class AutoCodeAction extends AutoCode
             }
         }
 
-        if ( $img_fieldname && count($img_fieldname)>0 ) {
+        if ( $img_fieldname && count($img_fieldname) > 0 ) {
             foreach ( $img_fieldname as $fieldname ) {
                 $result .= "            if ( !empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"]) ) {\r\n".
                            "                \$result = \$this->uploadImg( \$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\" );\r\n".
@@ -694,8 +694,8 @@ class AutoCodeAction extends AutoCode
     private static function saveActionDefineToDir($tablename,$definePhpFileContent)
     {
         $classname     = self::getClassname($tablename);
-        $filename      = "Action_".$classname.".php";
-        $relative_path = str_replace(self::$save_dir, "",self::$action_dir_full.$filename);
+        $filename      = "Action_" . $classname . ".php";
+        $relative_path = str_replace(self::$save_dir, "", self::$action_dir_full . $filename);
         switch ( self::$type ) {
             case EnumAutoCodeViewType::FRONT:
                 AutoCodePreviewReport::$action_front_files[$classname] = $relative_path;

@@ -282,7 +282,7 @@ class System
                 }
             }
         } else {
-            foreach($opts[1] as $dir) {
+            foreach ($opts[1] as $dir) {
                 if ((@file_exists($dir) || !is_dir($dir)) && !mkdir($dir, $mode)) {
                     $ret = false;
                 }
@@ -588,7 +588,7 @@ class System
                     // our magic characters ? and * have just been escaped,
                     // so now we change the escaped versions to PCRE operators
                     $name = strtr($name, array('\?' => '.', '\*' => '.*'));
-                    $patterns[] = '('.$name.')';
+                    $patterns[] = '(' . $name . ')';
                     $i++;
                     break;
                 case '-maxdepth':
@@ -597,16 +597,16 @@ class System
             }
         }
         $path = System::_dirToStruct($dir, $depth, 0, true);
-        if ($do_files && $do_dirs) {
+        if ( $do_files && $do_dirs ) {
             $files = array_merge($path['files'], $path['dirs']);
         } elseif ($do_dirs) {
             $files = $path['dirs'];
         } else {
             $files = $path['files'];
         }
-        if (count($patterns)) {
+        if ( count($patterns) ) {
             $dsq = preg_quote(DIRECTORY_SEPARATOR, '#');
-            $pattern = '#(^|'.$dsq.')'.implode('|', $patterns).'($|'.$dsq.')#';
+            $pattern = '#(^|' . $dsq . ')' . implode('|', $patterns) . '($|' . $dsq . ')#';
             $ret = array();
             $files_count = count($files);
             for ($i = 0; $i < $files_count; $i++) {

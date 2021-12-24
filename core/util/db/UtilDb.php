@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：数据库 |-----------
+ * -----------| 工具类: 数据库 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen

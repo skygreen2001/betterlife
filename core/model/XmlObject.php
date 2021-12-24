@@ -192,7 +192,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param string $xmlObject_classname 具体的Xml对象类名
      * @param string $filter 查询条件，在where后的条件
      * 
-     * 示例如下：
+     * 示例如下: 
      * 
      *      0. "id=1,name='sky'"
      *      1. array("id=1","name='sky'")
@@ -222,7 +222,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * Xml数据对象总计数
      * 
      * @param object|string|array $filter
-     *      $filter 格式示例如下：
+     *      $filter 格式示例如下: 
      * 
      *          0. 允许对象如new User(id="1",name="green");
      *          1. "id=1","name='sky'"
@@ -251,7 +251,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param int $endPoint    分页结束记录数
      * @param string|array $filter 过滤条件
      * 
-     * 示例如下：
+     * 示例如下: 
      * 
      *      string[只有一个查询条件]
      * 
@@ -376,7 +376,7 @@ class XmlObject extends BBObject implements ArrayAccess
         $this->id  = str_replace(" ", "", $this->id);
         $this->id  = str_replace(".", "", $this->id);
         $child->addAttribute(self::$name_id_property, $this->id);
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             if ( $value != null && !endWith($key, "Show")) {
                 $value=htmlentities($value, ENT_COMPAT, "UTF-8");
                 $child->addAttribute($key, $value);
@@ -422,7 +422,7 @@ class XmlObject extends BBObject implements ArrayAccess
                 }
             }
         }
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             if ( property_exists($attributes, $key) ) {
                 $attributes->$key = $value;
             } else {

@@ -13,7 +13,7 @@ class UtilObject extends Util
      * 将对象转换成xml
      * @param object 数据对象
      * @param $filterArray 需要过滤不生成的对象的field
-     * 示例：$filterArray=array("id","commitTime");
+     * 示例: $filterArray=array("id","commitTime");
      * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
      * @return xml内容
      */

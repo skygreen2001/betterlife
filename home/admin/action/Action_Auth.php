@@ -61,7 +61,7 @@ class Action_Auth extends ActionAdmin
                 $this->redirect( "index", "index" );
             } else {
                 $this->view->color = "red";
-                $this->view->set( "message", "该用户名已有用户注册！" );
+                $this->view->set( "message", "该用户名已有用户注册!" );
             }
         }
     }

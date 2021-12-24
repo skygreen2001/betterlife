@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：加载Javascript库和发送请求 |-----------
+ * -----------| 工具类: 加载Javascript库和发送请求 |-----------
  * 
  * JavaScript loader, which by default delivers each library with ****gzip**** compression.
  * 
@@ -18,7 +18,7 @@ class UtilJavascript extends Util
      * 
      * 可通过分组标识动态加载Ajax Javascript Framework库
      * 
-     * @param string $jsFile：相对网站的根目录的Javascript文件名相对路径 
+     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
      * @param bool $isGzip 是否使用Gzip进行压缩。
      */
     public static function loadJs($jsFile, $isGzip = false) 
@@ -32,7 +32,7 @@ class UtilJavascript extends Util
      * 可通过分组标识动态加载Ajax Javascript Framework库
      * 
      * @param ViewObject 表示层显示对象
-     * @param string $jsFile：相对网站的根目录的Javascript文件名相对路径 
+     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
      * @param bool $isGzip 是否使用Gzip进行压缩。
      * @param string $jsFlag Ajax Javascript Framework 标识
      * @param string $version javascript框架的版本号
@@ -44,7 +44,7 @@ class UtilJavascript extends Util
 
     /**
      * 动态加载应用指定的Js内容的语句。
-     * @param string $jsContent：Js内容的语句
+     * @param string $jsContent: Js内容的语句
      */   
     public static function loadJsContent($jsContent)
     {
@@ -55,7 +55,7 @@ class UtilJavascript extends Util
      * 预加载[不直接输出]:动态加载应用指定的Js内容的语句。
      * 
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
-     * @param string $jsContent：Js内容的语句
+     * @param string $jsContent: Js内容的语句
      */   
     public static function loadJsContentReady($viewobject, $jsContent)
     {

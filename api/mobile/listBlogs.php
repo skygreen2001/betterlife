@@ -24,7 +24,7 @@ if ( $pageBlogs ) {
     $count = Blog::count();//$pageTrips["count"];//总记录数
     if ($page == $total || $total==0) $data["code"] = 999;
     $blogs = $pageBlogs["data"];
-    foreach($blogs as $key => $blog) {
+    foreach ($blogs as $key => $blog) {
         unset($blog->commitTime, $blog->updateTime);
     }
 

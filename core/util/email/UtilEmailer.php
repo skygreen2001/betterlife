@@ -5,13 +5,13 @@ require_once("phpmailer/class.phpmailer.php");
  * 
  * 示例:
  * 
- *     UtilEmailer::sendEmail("xxx@xxx.com", "xxx", "xxx@xxx.com", "master", "xxx", "联系人：XXX<br/>联系电话：XXXXXXX<br/>内容：XXXXX");
+ *     UtilEmailer::sendEmail("xxx@xxx.com", "xxx", "xxx@xxx.com", "master", "xxx", "联系人: XXX<br/>联系电话: XXXXXXX<br/>内容: XXXXX");
  * 
  * 看见阿里云以下内容提示日期: 2021-03-31
  * 
  *    如果配置邮箱为阿里云企业云邮箱，而发信服务器为ECS服务器，端口需修改成80: https://help.aliyun.com/document_detail/29449.html?spm=a2c4g.11186623.6.639.6a702be2cwLb6v
  * 
- *    注意：ECS 基于安全考虑，目前已禁用 25 端口, 需修改配置: private static $port     = 80;
+ *    注意: ECS 基于安全考虑，目前已禁用 25 端口, 需修改配置: private static $port     = 80;
  * 
  * 企业邮箱的POP3、SMTP、IMAP地址是什么？http://mailhelp.mxhichina.com/smartmail/detail.vm?knoId=5871700
  * 

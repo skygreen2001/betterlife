@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：网络 |-----------
+ * -----------| 工具类: 网络 |-----------
  * @category betterlife
  * @package util.net
  * @author skygreen
@@ -211,7 +211,7 @@ class UtilNet extends Util
         {
             $ip = "Unknown";
         }
-        //echo "你的IP:".$ip ;
+        //echo "你的IP:" . $ip ;
         return $ip;
     }
 

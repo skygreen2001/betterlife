@@ -47,13 +47,13 @@ class AutoCodeDomain extends AutoCode
         self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS.self::$dir_src . DS . self::$domain_dir . DS;
         
         self::init();
-        if (self::$isOutputCss) self::$showReport .= UtilCss::form_css() . "\r\n";
+        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . "\r\n";
         self::$enumClass       = "";
         self::$showReport     .= '<div id="Content_11" style="display:none;">';
         $link_domain_dir_href  ="file:///".str_replace("\\", "/", self::$domain_dir_full);
         self::$showReport     .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_domain_dir_href . "'>" . self::$domain_dir_full . "</a></font><br/><br/>";
 
-        $fieldInfos=self::fieldInfosByTable_names( $table_names );
+        $fieldInfos = self::fieldInfosByTable_names( $table_names );
         foreach ($fieldInfos as $tablename => $fieldInfo) {
            //print_r($fieldInfo);
            //self::$showReport.="<br/>";
@@ -141,15 +141,19 @@ class AutoCodeDomain extends AutoCode
                         $result     .= "    /**\r\n".
                                        "     * $comment:$enumcomment\r\n".
                                        "     */\r\n".
-                                       "    const $enumname='$enumvalue';\r\n";
+                                       "    const $enumname = '$enumvalue';\r\n";
                     }
                     $result  .= "\r\n";
                     $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = trim($comment);
                     $comment  = str_replace("\r", "     * ", $comment);
                     $comment  = str_replace("\n", "     * ", $comment);
                     $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $scomment = str_replace("* ", "* - ", $comment);
+                    $scomment = str_replace("<br/>", "", $scomment);
                     $result  .= "    /**\r\n".
-                                "     * 显示".$comment."<br/>\r\n".
+                                "     * 显示" . $scomment . "\r\n".
+                                "     * @return string \r\n".
                                 "     */\r\n".
                                 "    public static function {$fieldname}Show(\${$fieldname})\r\n".
                                 "    {\r\n".
@@ -168,8 +172,9 @@ class AutoCodeDomain extends AutoCode
                         $comment = $comment[0];
                     }
                     $result .= "    /**\r\n".
-                               "     * 根据{$comment}显示文字获取{$comment}<br/>\r\n".
+                               "     * 根据{$comment}显示文字获取{$comment}\r\n".
                                "     * @param mixed \${$fieldname}Show {$comment}显示文字\r\n".
+                               "     * @return string \r\n".
                                "     */\r\n".
                                "    public static function {$fieldname}ByShow(\${$fieldname}Show)\r\n".
                                "    {\r\n".
@@ -189,7 +194,8 @@ class AutoCodeDomain extends AutoCode
                     }
                     $result .= "    }\r\n\r\n";
                     $result .= "    /**\r\n".
-                               "     * 通过枚举值获取枚举键定义<br/>\r\n".
+                               "     * 通过枚举值获取枚举键定义\r\n".
+                               "     * @return string \r\n".
                                "     */\r\n".
                                "    public static function {$fieldname}EnumKey(\${$fieldname})\r\n".
                                "    {\r\n".
@@ -201,7 +207,7 @@ class AutoCodeDomain extends AutoCode
                                      "                return \"{$enumname}\";\r\n";
                     }
                     $result .= "        }\r\n";
-                    if ( !empty($enum_columnDefine) && (count($enum_columnDefine)>0) ) {
+                    if ( !empty($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) ) {
                         $enumname = strtoupper($enum_columnDefine[0]['name']);
                         $result  .= "        return \"{$enumname}\";\r\n";
                     } else {
@@ -257,16 +263,26 @@ class AutoCodeDomain extends AutoCode
                     if ( self::isNotColumnKeywork( $fieldname ) ) {
                         $datatype = self::comment_type($field["Type"]);
                         $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                        if ( $datatype == "bit" || $datatype == "enum" ) {
+                            $comment  = trim($comment);
+                        }
                         $comment  = str_replace("\r", "     * ", $comment);
                         $comment  = str_replace("\n", "     * ", $comment);
-                        $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                        
+                        if ( $datatype == "bit" || $datatype == "enum" ) {
+                            $comment  = str_replace("     * ", "\r\n     * ", $comment);
+                            $comment  = str_replace("* ", "* - ", $comment);
+                        } else {
+                            $comment  = str_replace("     * ", "\r\n     * \r\n     * ", $comment);
+                        }
+
                         $result  .=
                                     "    /**\r\n".
-                                    "     * ".$comment."\r\n".
+                                    "     * " . $comment . "\r\n".
                                     "     * @var $datatype\r\n".
                                     "     * @access public\r\n".
                                     "     */\r\n".
-                                    "    public \$".$fieldname.";\r\n";
+                                    "    public \$" . $fieldname . ";\r\n";
                     }
                 };
                 $result .= "    //</editor-fold>\r\n";
@@ -282,11 +298,11 @@ class AutoCodeDomain extends AutoCode
                        $comment  = str_replace("     * ", "\r\n     * ", $comment);
                        $result  .=
                                 "    /**\r\n".
-                                "     * ".$comment."\r\n".
+                                "     * " . $comment . "\r\n".
                                 "     * @var $datatype\r\n".
                                 "     * @access private\r\n".
                                 "     */\r\n".
-                                "    private \$".$fieldname.";\r\n";
+                                "    private \$" . $fieldname . ";\r\n";
                     };
                 }
                 $result .= "    //</editor-fold>\r\n\r\n";
@@ -294,14 +310,14 @@ class AutoCodeDomain extends AutoCode
                 foreach ($fieldInfo as $fieldname => $field) {
                     if ( self::isNotColumnKeywork( $fieldname ) ) {
                         $result .=
-                            "    public function set".ucfirst($fieldname)."(\$".$fieldname.")\r\n".
+                            "    public function set" . ucfirst($fieldname) . "(\$" . $fieldname . ")\r\n".
                             "    {\r\n".
-                            "        \$this->".$fieldname."=\$".$fieldname.";\r\n".
+                            "        \$this->" . $fieldname . "=\$" . $fieldname . ";\r\n".
                             "    }\r\n";
                         $result .=
-                            "    public function get".ucfirst($fieldname)."()\r\n".
+                            "    public function get" . ucfirst($fieldname) . "()\r\n".
                             "    {\r\n".
-                            "        return \$this->".$fieldname.";\r\n".
+                            "        return \$this->" . $fieldname . ";\r\n".
                             "    }\r\n";
                     };
                 }
@@ -317,12 +333,12 @@ class AutoCodeDomain extends AutoCode
         $result .= self::domainDataobjectRelationSpec( $fieldInfo, $classname );
         if ( !empty(self::$spec_content) || !empty(self::$relation_spec_content) ) {
             $result .= "    /**\r\n".
-                       "     * 规格说明\r\n".
+                       "     * 规格说明\r\n\r\n".
                        self::$spec_comment.
                        self::$relation_spec_comment.
                        "     * @var mixed\r\n".
                        "     */\r\n".
-                       "    public \$field_spec=array(\r\n".
+                       "    public \$field_spec = array(\r\n".
                        self::$spec_content.
                        self::$relation_spec_content.
                        "    );\r\n";
@@ -425,7 +441,7 @@ class AutoCodeDomain extends AutoCode
                 $many_many        = $relationSpec["many_many"];
                 $many_many_effect = "";
                 foreach ($many_many as $key => $value) {
-                   $many_many_effect .= "        \"".$value."\" => \"$key\",\r\n";
+                   $many_many_effect .= "        \"" . $value . "\" => \"$key\",\r\n";
                 }
                 if ( !empty($many_many_effect) ) $many_many_effect = substr($many_many_effect, 0, strlen($many_many_effect) - 3);
                 $result .= "\r\n".
@@ -485,7 +501,7 @@ class AutoCodeDomain extends AutoCode
         }
         if ( !empty($removeStr) ) {
             $removeStr = substr($removeStr, 0, strlen($removeStr) - 3);
-            self::$spec_comment = "     * 表中不存在的默认列定义:" . implode(",", $removefields) . "\r\n";
+            self::$spec_comment = "     * 表中不存在的默认列定义: " . implode(", ", $removefields) . "\r\n";
             self::$spec_content = "        EnumDataSpec::REMOVE => array(\r\n".
                                   $removeStr . "\r\n".
                                   "        ),\r\n";
@@ -506,9 +522,11 @@ class AutoCodeDomain extends AutoCode
                 $datatype = self::comment_type( $field["Type"] );
                 if ( $datatype == 'enum' ) {
                     $comment = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment = trim($comment);
                     $comment = str_replace("\r", "     * ", $comment);
                     $comment = str_replace("\n", "     * ", $comment);
-                    $comment = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $comment = str_replace("     * ", "\r\n     * ", $comment);
+                    $comment = str_replace("* ", "* - ", $comment);
                     $result .= "\r\n".
                                "    /**\r\n".
                                "     * 显示" . $comment . "\r\n".
@@ -537,9 +555,11 @@ class AutoCodeDomain extends AutoCode
                 $datatype = self::comment_type($field["Type"]);
                 if ( $datatype == 'enum' ) {
                     $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = trim($comment);
                     $comment  = str_replace("\r", "     * ", $comment);
                     $comment  = str_replace("\n", "     * ", $comment);
-                    $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $comment  = str_replace("     * ", "\r\n     * ", $comment);
+                    $comment  = str_replace("* ", "* - ", $comment);
                     $result  .= "\r\n".
                                 "    /**\r\n".
                                 "     * 显示" . $comment . "\r\n".
@@ -569,9 +589,11 @@ class AutoCodeDomain extends AutoCode
                 $datatype = self::comment_type($field["Type"]);
                 if ( $datatype == 'bit' ) {
                     $comment  = str_replace("\r\n", "     * ", $field["Comment"]);
+                    $comment  = trim($comment);
                     $comment  = str_replace("\r", "     * ", $comment);
                     $comment  = str_replace("\n", "     * ", $comment);
-                    $comment  = str_replace("     * ", "<br/>\r\n     * ", $comment);
+                    $comment  = str_replace("     * ", "\r\n     * ", $comment);
+                    $comment  = str_replace("* ", "* - ", $comment);
                     $result.= "\r\n".
                               "    /**\r\n".
                               "     * " . $comment . "\r\n".

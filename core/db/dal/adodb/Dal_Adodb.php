@@ -28,8 +28,8 @@ class Dal_Adodb extends Dal implements IDal
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
@@ -73,7 +73,7 @@ class Dal_Adodb extends Dal implements IDal
                     $conn_vars[] = "dialect=" . Config_Adodb::$dialect;
                 }
                 $conn_str = "";
-                if ( count($conn_vars)>0 ) {
+                if ( count($conn_vars) > 0 ) {
                     $conn_str = "?" . implode("&", $conn_vars);
                 }
                 switch ($dbtype) {
@@ -157,9 +157,10 @@ class Dal_Adodb extends Dal implements IDal
         try {
             $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP ) );
             $this->saParams = UtilObject::object_to_array($object);
-//            $sql = Crud_SQL::SQL_SELECT." * ".Crud_SQL::SQL_FROM.$tablename.Crud_SQL::SQL_WHERE.$this->sql_id($object).self::EQUAL."-1";
-//            $rs = $this->connection->Execute($sql); # Execute the query and get the empty recordset
+//            $sql = Crud_SQL::SQL_SELECT . " * " . Crud_SQL::SQL_FROM . $tablename . Crud_SQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . "-1";
+//            $rs  = $this->connection->Execute($sql); # Execute the query and get the empty recordset
 //            $this->sQuery = $this->connection->GetInsertSQL($rs,  $this->saParams);
+
             //对SQL Server会报异常,故不使用:SQL error: [Microsoft][ODBC SQL Server Driver][SQL Server]列名 '********' 无效。, SQL state S0022 in SQLExecDirect
             $_SQL = new Crud_Sql_Insert();
             if ( is_object($_SQL) ) {
@@ -172,7 +173,7 @@ class Dal_Adodb extends Dal implements IDal
             }
 
             if ( Config_Db::$debug_show_sql ) {
-                LogMe::log("SQL:".$this->sQuery);
+                LogMe::log( "SQL: " . $this->sQuery );
                 if ( !empty($this->saParams) ) {
                     LogMe::log( "SQL PARAM:".var_export($this->saParams, true) );
                 }
@@ -186,7 +187,7 @@ class Dal_Adodb extends Dal implements IDal
                 $sql_maxid  = Crud_SQL::SQL_MAXID;
                 $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
                 $tablename  = Config_Adodb::orm($this->classname);
-                $autoIdSql  = Crud_SQL::SQL_SELECT.$sql_maxid.Crud_SQL::SQL_FROM.$tablename;
+                $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
                 $this->stmt = $this->connection->Execute($autoIdSql);
                 if ( !empty($this->stmt) && ( count($this->stmt->fields) > 0 ) ) {
                     $autoId = @$this->stmt->fields[0];
@@ -270,10 +271,10 @@ class Dal_Adodb extends Dal implements IDal
                         LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
                     }
                 }
-//                $tablename =Config_Adodb::orm($this->classname);
-//                $sql = Crud_SQL::SQL_SELECT." * ".Crud_SQL::SQL_FROM.$tablename.Crud_SQL::SQL_WHERE.$this->sql_id($object).self::EQUAL.$id;
-//                $rs = $this->connection->Execute($sql); # Execute the query and get the empty recordset
-//                $this->sQuery= $this->connection->GetUpdateSQL($rs, $this->saParams);//对SQL Server会报异常,故不使用:SQL error:无法更新标识列
+//                $tablename =Config_Adodb::orm( $this->classname );
+//                $sql = Crud_SQL::SQL_SELECT . " * " . Crud_SQL::SQL_FROM . $tablename.Crud_SQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . $id;
+//                $rs  = $this->connection->Execute($sql); # Execute the query and get the empty recordset
+//                $this->sQuery = $this->connection->GetUpdateSQL($rs, $this->saParams);//对SQL Server会报异常,故不使用:SQL error:无法更新标识列
                 $this->connection->Execute( $this->sQuery );
                 $result = true;
             } catch (Exception $exc) {
@@ -365,7 +366,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 默认为 id desc
@@ -377,7 +378,7 @@ class Dal_Adodb extends Dal implements IDal
      * 
      * @param string $limit 分页数目:同Mysql limit语法
      * 
-     * 示例如下：
+     * 示例如下: 
      * 
      *     - 0,10
      * 
@@ -426,7 +427,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -486,11 +487,11 @@ class Dal_Adodb extends Dal implements IDal
 
             if ( !empty($id) && is_scalar($id) ) {
                 $_SQL  = new Crud_Sql_Select();
-                $where = $this->sql_id($object) . self::EQUAL.$id;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 if ( Config_Db::$debug_show_sql ) {
-                    LogMe::log( "SQL:" . $this->sQuery );
+                    LogMe::log( "SQL: " . $this->sQuery );
                 }
                 $this->stmt = $this->connection->GetAll( $this->sQuery );
                 $result     = $this->getResultToObjects( $object );
@@ -589,7 +590,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @return 对象总计数
      */
@@ -636,7 +637,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @param string $sort 排序条件
      * 默认为 id desc

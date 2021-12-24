@@ -723,7 +723,7 @@ class PEAR
             $suffix = '.so';
         }
 
-        return @dl('php_'.$ext.$suffix) || @dl($ext.$suffix);
+        return @dl('php_' . $ext . $suffix) || @dl($ext . $suffix);
     }
 }
 

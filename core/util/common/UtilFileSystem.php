@@ -103,7 +103,7 @@ class UtilFileSystem extends Util
     /**
      * 移除文件夹
      * 
-     * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用！
+     * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用!
      * @param string $dir 目录
      */
     public static function deleteDir($dir)
@@ -216,7 +216,7 @@ class UtilFileSystem extends Util
                         $errorInfo = "文件写入到临时文件夹出错";//Failed to write to the temporary folder.
                         break;
                 }
-                $errorInfo .= "[错误号：" . $files[$uploadFieldName]["error"] . "],详情查看：http://php.net/manual/zh/features.file-upload.errors.php";
+                $errorInfo .= "[错误号: " . $files[$uploadFieldName]["error"] . "],详情查看: http://php.net/manual/zh/features.file-upload.errors.php";
                 return array('success' => false, 'msg' => $errorInfo);
             } else {
                 //获得临时文件名
@@ -246,7 +246,7 @@ class UtilFileSystem extends Util
                 }
             }
         } else {
-            return array('success' => false, 'msg' => '文件太大！文件大小不能超过' . $file_permit_upload_size . "M!");
+            return array('success' => false, 'msg' => '文件太大!文件大小不能超过' . $file_permit_upload_size . "M!");
         }
     }
 
@@ -364,7 +364,7 @@ class UtilFileSystem extends Util
         if ( is_dir($path) ) {
             $dp = dir($path);
             $dirdata[]  = $path;
-            while($file = $dp->read()) {
+            while ($file = $dp->read()) {
                 if ( $file[0] != "." ) {
                 // if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' ) {
                     $dirdata = self::searchAllDirsInDirectory( $path . DS . $file, $dirdata );

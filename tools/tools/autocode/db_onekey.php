@@ -12,7 +12,7 @@ if ( isset($_REQUEST["model_save_dir"]) && !empty($_REQUEST["model_save_dir"]) )
     foreach ($ow_modules as $module) {
         if ( isset($_REQUEST["overwrite$module"] ) && !empty($_REQUEST["overwrite$module"]) )$overwrite = array_merge($overwrite, $_REQUEST["overwrite$module"]);
     }
-    if ( count($overwrite)>0 ) AutoCodeModel::overwrite( $overwrite, $model_save_dir );
+    if ( count($overwrite) > 0 ) AutoCodeModel::overwrite( $overwrite, $model_save_dir );
     $_REQUEST["save_dir"] = $_REQUEST["model_save_dir"];
     AutoCodePreviewReport::$is_first_run = false;
 }
@@ -25,9 +25,9 @@ if ( isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
 
     if ( !array_key_exists("table_names", $_GET) ) {
         if ( !Manager_Db::newInstance()->dao()->isCanConnect() ) {
-          die("<br><br><div align='center'><font color='red'>无法连接上数据库，请确认Gc.php文件里数据库配置是否正确！</font></div>");
+          die("<br><br><div align='center'><font color='red'>无法连接上数据库，请确认Gc.php文件里数据库配置是否正确!</font></div>");
         }
-        die("<br><br><div align='center'><font color='red'>至少选择一张表,请确认！</font></div>");
+        die("<br><br><div align='center'><font color='red'>至少选择一张表,请确认!</font></div>");
     } else {
         $table_names = $_GET["table_names"];
         AutoCodeConfig::Decode();

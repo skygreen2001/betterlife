@@ -78,12 +78,12 @@ class Dao_Php5 extends Dao implements IDaoNormal
                 }
             } else {
                 if ( count($currentrow) == 1 ) {
-                    foreach($currentrow as $key => $val) {
+                    foreach ($currentrow as $key => $val) {
                         $result[] = $val;
                     }
                 } else {
                     $c = new stdClass();
-                    foreach($currentrow as $key => $val) {
+                    foreach ($currentrow as $key => $val) {
                         $c->{$key} = $val;
                     }
                     $result[] = $c;
@@ -154,7 +154,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 $this->sQuery = $this->escape( $this->sQuery );
                 if ( Config_Db::$debug_show_sql ) {
-                    LogMe::log("SQL:".$this->sQuery);
+                    LogMe::log( "SQL:" . $this->sQuery );
                 }
                 $result = mysql_query($this->sQuery);
                 return $result;

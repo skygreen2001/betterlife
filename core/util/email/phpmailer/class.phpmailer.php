@@ -25,8 +25,8 @@
 /**
  * PHPMailer - PHP email transport class
  * NOTE: Requires PHP version 5 or later
- * 上传中文附件文件名丢失问题通过设置AddAttachment()的第二个参数来解决。<br/>
- * 邮件内容不能为空的问题通过取消空的判断来解决，注销617-619行if (empty($this->Body))<br/>
+ * 上传中文附件文件名丢失问题通过设置AddAttachment()的第二个参数来解决。
+ * 邮件内容不能为空的问题通过取消空的判断来解决，注销617-619行if (empty($this->Body))
  * @package PHPMailer
  * @author Andy Prevost
  * @author Marcus Bointon
@@ -483,36 +483,36 @@ class PHPMailer {
    * @access protected
    */
   protected function AddAnAddress($kind, $address, $name = '') {
-    if ( !preg_match('/^(to|cc|bcc|Reply-To)$/', $kind)) {
-      $this->SetError($this->Lang('Invalid recipient array').': '.$kind);
-      if ($this->exceptions) {
-        throw new phpmailerException('Invalid recipient array: ' . $kind);
-      }
-      if ($this->SMTPDebug) {
-        echo $this->Lang('Invalid recipient array').': '.$kind;
-      }
-      return false;
+    if ( !preg_match('/^(to|cc|bcc|Reply-To)$/', $kind) ) {
+        $this->SetError($this->Lang('Invalid recipient array').': ' . $kind);
+        if ( $this->exceptions ) {
+            throw new phpmailerException('Invalid recipient array: ' . $kind);
+        }
+        if ( $this->SMTPDebug ) {
+            echo $this->Lang('Invalid recipient array') . ': ' . $kind;
+        }
+        return false;
     }
     $address = trim($address);
-    $name = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
-    if ( !self::ValidateAddress($address)) {
-      $this->SetError($this->Lang('invalid_address').': '. $address);
-      if ($this->exceptions) {
-        throw new phpmailerException($this->Lang('invalid_address').': '.$address);
-      }
-      if ($this->SMTPDebug) {
-        echo $this->Lang('invalid_address').': '.$address;
-      }
-      return false;
+    $name    = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
+    if ( !self::ValidateAddress($address) ) {
+        $this->SetError($this->Lang('invalid_address') . ': ' . $address);
+        if ( $this->exceptions ) {
+            throw new phpmailerException($this->Lang('invalid_address') . ': ' . $address);
+        }
+        if ( $this->SMTPDebug ) {
+            echo $this->Lang('invalid_address') . ': ' . $address;
+        }
+        return false;
     }
-    if ($kind != 'Reply-To') {
-      if ( !isset($this->all_recipients[strtolower($address)])) {
+    if ( $kind != 'Reply-To' ) {
+      if ( !isset($this->all_recipients[strtolower($address)]) ) {
         array_push($this->$kind, array($address, $name));
         $this->all_recipients[strtolower($address)] = true;
         return true;
       }
     } else {
-      if ( !array_key_exists(strtolower($address), $this->ReplyTo)) {
+      if ( !array_key_exists(strtolower($address), $this->ReplyTo) ) {
         $this->ReplyTo[strtolower($address)] = array($address, $name);
       return true;
     }
@@ -532,10 +532,10 @@ class PHPMailer {
     if ( !self::ValidateAddress($address)) {
       $this->SetError($this->Lang('invalid_address').': '. $address);
       if ($this->exceptions) {
-        throw new phpmailerException($this->Lang('invalid_address').': '.$address);
+        throw new phpmailerException($this->Lang('invalid_address').': ' . $address);
       }
       if ($this->SMTPDebug) {
-        echo $this->Lang('invalid_address').': '.$address;
+        echo $this->Lang('invalid_address') . ': ' . $address;
       }
       return false;
     }
@@ -734,7 +734,7 @@ class PHPMailer {
    */
   protected function MailSend($header, $body) {
     $toArr = array();
-    foreach($this->to as $t) {
+    foreach ($this->to as $t) {
       $toArr[] = $this->AddrFormat($t);
     }
     $to = implode(', ', $toArr);
@@ -806,7 +806,7 @@ class PHPMailer {
     }
 
     // Attempt to send attach all recipients
-    foreach($this->to as $to) {
+    foreach ($this->to as $to) {
       if ( !$this->smtp->Recipient($to[0])) {
         $bad_rcpt[] = $to[0];
         // implement call back function if it exists
@@ -818,7 +818,7 @@ class PHPMailer {
         $this->doCallback($isSent, $to[0], '', '', $this->Subject, $body);
       }
     }
-    foreach($this->cc as $cc) {
+    foreach ($this->cc as $cc) {
       if ( !$this->smtp->Recipient($cc[0])) {
         $bad_rcpt[] = $cc[0];
         // implement call back function if it exists
@@ -830,7 +830,7 @@ class PHPMailer {
         $this->doCallback($isSent, '', $cc[0], '', $this->Subject, $body);
       }
     }
-    foreach($this->bcc as $bcc) {
+    foreach ($this->bcc as $bcc) {
       if ( !$this->smtp->Recipient($bcc[0])) {
         $bad_rcpt[] = $bcc[0];
         // implement call back function if it exists
@@ -876,7 +876,7 @@ class PHPMailer {
 
     // Retry while there is no connection
     try {
-      while($index < count($hosts) && !$connection) {
+      while ($index < count($hosts) && !$connection) {
         $hostinfo = array();
         if (preg_match('/^(.+):([0-9]+)$/', $hosts[$index], $hostinfo)) {
           $host = $hostinfo[1];
@@ -1188,7 +1188,7 @@ class PHPMailer {
     // To be created automatically by mail()
     if ($this->Mailer != 'mail') {
       if ($this->SingleTo === true) {
-        foreach($this->to as $t) {
+        foreach ($this->to as $t) {
           $this->SingleToArray[] = $this->AddrFormat($t);
         }
       } else {
@@ -1828,7 +1828,7 @@ class PHPMailer {
     $eol = "\r\n";
     $escape = '=';
     $output = '';
-    while( list(, $line) = each($lines) ) {
+    while ( list(, $line) = each($lines) ) {
       $linlen = strlen($line);
       $newline = '';
       for($i = 0; $i < $linlen; $i++) {
@@ -2013,7 +2013,7 @@ class PHPMailer {
    * @return bool
    */
   public function InlineImageExists() {
-    foreach($this->attachment as $attachment) {
+    foreach ($this->attachment as $attachment) {
       if ($attachment[6] == 'inline') {
         return true;
       }
@@ -2022,7 +2022,7 @@ class PHPMailer {
   }
 
   public function AttachmentExists() {
-    foreach($this->attachment as $attachment) {
+    foreach ($this->attachment as $attachment) {
       if ($attachment[6] == 'attachment') {
         return true;
       }
@@ -2043,7 +2043,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearAddresses() {
-    foreach($this->to as $to) {
+    foreach ($this->to as $to) {
       unset($this->all_recipients[strtolower($to[0])]);
     }
     $this->to = array();
@@ -2054,7 +2054,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearCCs() {
-    foreach($this->cc as $cc) {
+    foreach ($this->cc as $cc) {
       unset($this->all_recipients[strtolower($cc[0])]);
     }
     $this->cc = array();
@@ -2065,7 +2065,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearBCCs() {
-    foreach($this->bcc as $bcc) {
+    foreach ($this->bcc as $bcc) {
       unset($this->all_recipients[strtolower($bcc[0])]);
     }
     $this->bcc = array();
@@ -2216,7 +2216,7 @@ class PHPMailer {
   public function MsgHTML($message, $basedir = '') {
     preg_match_all("/(src|background)=[\"'](.*)[\"']/Ui", $message, $images);
     if (isset($images[2])) {
-      foreach($images[2] as $i => $url) {
+      foreach ($images[2] as $i => $url) {
         // do not change urls for absolute images (thanks to corvuscorax)
         if ( !preg_match('#^[A-z]+://#', $url)) {
           $filename = $this->get_basename($url);//basename($url);
@@ -2491,7 +2491,7 @@ class PHPMailer {
     $DKIMtime             = time() ; // Signature Timestamp = seconds since 00:00:00 - Jan 1, 1970 (UTC time zone)
     $subject_header       = "Subject: $subject";
     $headers              = explode($this->LE, $headers_line);
-    foreach($headers as $header) {
+    foreach ($headers as $header) {
       if (strpos($header, 'From:') === 0) {
         $from_header = $header;
       } elseif (strpos($header, 'To:') === 0) {

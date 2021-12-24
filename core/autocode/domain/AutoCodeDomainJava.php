@@ -145,7 +145,7 @@ class AutoCodeDomainJava extends AutoCode
                     $comment  = str_replace("\n", "     * ", $comment);
                     $comment  = str_replace("     * ", "\r\n     * ", $comment);
                     $result  .= "    /** \r\n".
-                                "     * 显示".$comment."\r\n".
+                                "     * 显示" . $comment . "\r\n".
                                 "     */\r\n".
                                 "    public static String {$fieldname}Show(char {$fieldname})\r\n".
                                 "    {\r\n".
@@ -498,7 +498,7 @@ class AutoCodeDomainJava extends AutoCode
                     $comment  = str_replace("     * ", "\r\n     * ", $comment);
                     $result  .= "\r\n".
                                 "    /** \r\n".
-                                "     * 显示".$comment."\r\n".
+                                "     * 显示" . $comment . "\r\n".
                                 "     */\r\n";
                     $enumclassname = self::enumClassName( $fieldname, $tablename );
                     $fieldname_up  = ucfirst($fieldname);

@@ -39,7 +39,7 @@ if ( $print_filename ) {
         $file = $SFI->openFile();
         echo "<pre>";
         echo '<a style="cursor:pointer;" onclick="window.history.back();">返回</a><br/>';
-        foreach( $file as $line ) {
+        foreach ( $file as $line ) {
             echo $line;
         }
     }

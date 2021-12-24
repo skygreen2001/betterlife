@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 自定义标签：分页工具类 |-----------
+ * -----------| 自定义标签: 分页工具类 |-----------
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -227,13 +227,13 @@ class TagPageService {
     private function viewStatistic()
     {
         $stb  = "<br />";
-        $stb .= "当前：第&nbsp;";
+        $stb .= "当前: 第&nbsp;";
         $stb .= $this->getNowpage();
         $stb .= "&nbsp;页";
-        $stb .= "&nbsp;&nbsp;&nbsp;&nbsp;共计：&nbsp;";
+        $stb .= "&nbsp;&nbsp;&nbsp;&nbsp;共计: &nbsp;";
         $stb .= $this->allPageCount;
         $stb .= "&nbsp;页";
-        $stb .= "&nbsp;&nbsp;&nbsp;&nbsp;总记录：";
+        $stb .= "&nbsp;&nbsp;&nbsp;&nbsp;总记录: ";
         $stb .= $this->getCount();
         $stb .= "&nbsp;条";
         return $stb;
@@ -252,7 +252,7 @@ class TagPageService {
         //当某个分页板块内容超过10页以上，那么允许显示跳转到指定页功能
         if ( $this->allPageCount > 11 ) {
             $stb .= "&nbsp;<form id='bb_page' name='bb_page' action='" . $this->getLinkUrl() . "'>";
-            $stb .= "跳转至：";
+            $stb .= "跳转至: ";
             $stb .= "<input type='text' name='pageNo' id='" . self::$linkUrl_pageFlag . "'";
             $stb .= " size='3'";
             $stb .= " lang='3'";

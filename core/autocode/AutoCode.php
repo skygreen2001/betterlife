@@ -75,7 +75,7 @@ class AutoCode extends BBObject
      */
     public static $redundancy_table_fields;
     /**
-     * 获取类和注释的说明<br/>
+     * 获取类和注释的说明
      */
     public static $class_comments;
 
@@ -371,11 +371,11 @@ class AutoCode extends BBObject
 
     /**
      * 表枚举类型列注释转换成可以处理的数组数据
-     * 注释风格如下：
+     * 注释风格如下: 
      *    用户性别
-     *    0：女-female
-     *    1：男-mail
-     *    -1：待确认-unknown
+     *    0: 女-female
+     *    1: 男-mail
+     *    -1: 待确认-unknown
      *    默认男
      * @param mixed $fieldComment 表枚举类型列注释
      */
@@ -493,7 +493,7 @@ class AutoCode extends BBObject
     }
 
     /**
-     * 是否默认的列关键字：id,committime,updateTime
+     * 是否默认的列关键字: id,committime,updateTime
      * @param string $fieldname 列名称
      */
     protected static function isNotColumnKeywork($fieldname)

@@ -230,13 +230,13 @@ function getbrowser()
 
     if (preg_match('/NetCaptor\s([^\s|;]+)/i', $agent, $regs))
     {
-        $browser     = '(Internet Explorer ' .$browser_ver. ') NetCaptor';
+        $browser     = '(Internet Explorer ' . $browser_ver . ') NetCaptor';
         $browser_ver = $regs[1];
     }
 
     if (preg_match('/Maxthon/i', $agent, $regs))
     {
-        $browser     = '(Internet Explorer ' .$browser_ver. ') Maxthon';
+        $browser     = '(Internet Explorer ' . $browser_ver . ') Maxthon';
         $browser_ver = '';
     }
 

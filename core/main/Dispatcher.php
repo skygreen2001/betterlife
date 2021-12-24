@@ -137,7 +137,7 @@ class Dispatcher
     }
 
     /**
-     * 管理视图：输出结果
+     * 管理视图: 输出结果
      * @var View $view 视图
      */
     public static function output($moduleName, $router, $current_action)
@@ -178,7 +178,7 @@ class Dispatcher
         if ( !headers_sent() ) {
             // redirect
             if (0 === $time) {
-                header("Location: ".$url);
+                header("Location: " . $url);
             } else {
                 header("refresh:{$time};url={$url}");
                 echo($msg);

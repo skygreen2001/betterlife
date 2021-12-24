@@ -155,8 +155,8 @@ APACHECONFIG;
                     [mysql]
                         default-character-set = utf8
             +. 运行命令:sudo service mysqld restart
-            +. 查看字符集：
-                    mysql：
+            +. 查看字符集: 
+                    mysql: 
                         show variables like 'character_set%';
 
 

@@ -18,9 +18,9 @@ class EnumSeescope extends Enum
     const ALL='1';
 
     /**
-     * 显示视野<br/>
-     * 0:只能查看自己的信息-self<br/>
-     * 1:查看所有的信息-all<br/>
+     * 显示视野 
+     * 0:只能查看自己的信息-self 
+     * 1:查看所有的信息-all 
      */
     public static function seescopeShow($seescope)
     {
@@ -34,7 +34,7 @@ class EnumSeescope extends Enum
     }
 
     /**
-     * 根据视野显示文字获取视野<br/>
+     * 根据视野显示文字获取视野 
      * @param mixed $seescopeShow 视野显示文字
      */
     public static function seescopeByShow($seescopeShow)
@@ -49,7 +49,7 @@ class EnumSeescope extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义<br/>
+     * 通过枚举值获取枚举键定义 
      */
     public static function seescopeEnumKey($seescope)
     {

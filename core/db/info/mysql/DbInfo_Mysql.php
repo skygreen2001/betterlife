@@ -73,7 +73,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         {
             if ( mysql_query("CREATE DATABASE $dbname", $connection) )
             {
-                LogMe::log( "指定数据库不存在，创建数据库$dbname成功！<br/>" );
+                LogMe::log( "指定数据库不存在，创建数据库$dbname成功!<br/>" );
                 if ( !mysql_select_db($dbname) )
                 {
                    LogMe::log( "无法指定数据库，数据库报告错误信息: " . mysql_error() );
@@ -109,7 +109,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
                     }
                 }
             }
-            LogMe::log( "数据库操作成功，无异常！" );
+            LogMe::log( "数据库操作成功，无异常!" );
         } else {
             LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: '. $script_filename );
         }
@@ -122,7 +122,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
@@ -191,7 +191,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             self::$showtables = $this->query("SHOW TABLES");
         }
         $tables = array();
-        foreach(self::$showtables as $record) {
+        foreach (self::$showtables as $record) {
             $table = reset($record);
             $tables[strtolower($table)] = $table;
         }

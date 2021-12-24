@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：Mootools[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: Mootools[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -66,12 +66,12 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         if ( $response_type == EnumResponseType::JSON ) {
             if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) ) {
                 $data = json_encode($dataArray);
-//                $data="{";
+//                $data = "{";
 //                foreach ($dataArray as $key => $value) {
-//                  $data.=$key.":'".$value."'".",";
+//                    $data .= $key . ":'" . $value . "'" . ",";
 //                }
-//                $data=substr($data, 0, strlen($data)-1);
-//                $data.="}";
+//                $data  = substr($data, 0, strlen($data) - 1);
+//                $data .= "}";
             }
         } else if ( $response_type == EnumResponseType::XML ) {
             if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
@@ -92,12 +92,12 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         if ( Gc::$dev_debug_on ) {
             if ( $response_type == EnumResponseType::JSON ) {
                 $result .= "onError:function(text, error) {
-                            console.log('请求失败！ :(。返回信息'+text+'，失败原因：'+error+'。');
+                            console.log('请求失败! :(。返回信息'+text+'，失败原因: '+error+'。');
                             }\r\n";
             } else if ( $response_type == EnumResponseType::XML ) {
                 $result .= "
                       onFailure: function(xhr) {
-                        console.log('请求失败！ :(。失败原因：'+xhr.responseText);
+                        console.log('请求失败! :(。失败原因: '+xhr.responseText);
                       }\r\n";
             }
         } else {
@@ -129,7 +129,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         //<editor-fold defaultstate="collapsed" desc="Mootools">
         $result     = "function(response) {
                     if (response==true) {
-                      console.log('提交请求执行成功！');
+                      console.log('提交请求执行成功!');
                       return ;
                     }
                     var ol = $(document.body).getElement('ol');

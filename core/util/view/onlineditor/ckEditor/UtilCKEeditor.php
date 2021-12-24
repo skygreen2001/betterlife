@@ -59,7 +59,8 @@ class UtilCKEeditor extends Util
     }
 
     /**
-     * 加载CKEditor JS库<br/>
+     * 加载CKEditor JS库
+     * 
      * 用Ckeditor编辑器替换Html中的Textarea
      * @param string $textarea_id 在线编辑器所在的内容编辑区域TextArea的ID
      * @param bool $isLoadCkFinder 是否加载CkFinder
@@ -106,4 +107,3 @@ class UtilCKEeditor extends Util
         return $jsContent;
     }
 }
-?>

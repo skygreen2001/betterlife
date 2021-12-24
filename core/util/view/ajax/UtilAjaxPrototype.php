@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：Prototype[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: Prototype[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -72,11 +72,11 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         }
         if ( Gc::$dev_debug_on ) {
             $result .= "onException: function(transport,e) {
-                 console.log('请求失败！ :(||||'+e.name+':'+e.message);
+                 console.log('请求失败! :(||||'+e.name+':'+e.message);
             },";
             $result .= "
                   onFailure: function(request) {
-                    console.log('请求失败！ :(');
+                    console.log('请求失败! :(');
                   }\r\n";
         } else {
             $result  = substr($result, 0,  strlen($result) - 1);

@@ -26,10 +26,10 @@ foreach ($tableList as $tablename) {
 $tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList();
 $filterTableColumns = array();
 if ( $isComment ) {
-    echo "1.列名头字母大写<br/>";
-    echo "2.表主键字段统一成ID<br/><br/>";
-    echo "3.去掉表前缀:" . Config_Db::$table_prefix . "<br/>";
-    echo "4.表名头字母大写<br/><br/>";
+    echo "1. 列名头字母大写<br/>";
+    echo "2. 表主键字段统一成ID<br/><br/>";
+    echo "3. 去掉表前缀:" . Config_Db::$table_prefix . "<br/>";
+    echo "4. 表名头字母大写<br/><br/>";
     echo "--在MySQL的配置文件中my.ini [mysqld] 中增加一行<br/>";
     echo "--lower_case_table_names=0<br/>";
     echo "--参数解释: <br/>";
@@ -41,11 +41,11 @@ if ( $isComment ) {
 
 
 if ( $isComment ) {
-    echo str_repeat("*", 40) . "1.列名头字母大写" . str_repeat("*", 40) . "<br/><br/>";
+    echo str_repeat("*", 40) . "1. 列名头字母大写" . str_repeat("*", 40) . "<br/><br/>";
 }
 foreach ($fieldInfos as $tablename => $fieldInfo) {
     if ( $isComment ) {
-        echo "表名:$tablename<br/>";
+        echo "表名: $tablename<br/>";
     }
 
     foreach ($fieldInfo as $fieldname => $field) {
@@ -113,7 +113,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
     $comments = $fieldInfos[$tablename][$old_fieldname]["Comment"];
     $comments = str_replace("\r", "\\r", $comments);
     $comments = str_replace("\n", "\\n", $comments);
-    echo "alter table $tablename change column $old_fieldname ID ".$fieldInfos[$tablename][$old_fieldname]["Type"]." auto_increment COMMENT '".$comments."';<br/>";
+    echo "alter table $tablename change column $old_fieldname ID " . $fieldInfos[$tablename][$old_fieldname]["Type"] . " auto_increment COMMENT '" . $comments . "';<br/>";
     // if ( !Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) ) ) {
     //     echo "alter table $tablename add unique(ID);<br/>";
     // }

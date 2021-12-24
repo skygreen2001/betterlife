@@ -38,7 +38,7 @@ class Crud_Sql_Select extends Crud_SQL
     /**
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 
-     * @example 示例如下：
+     * @example 示例如下: 
      * 
      *    6,10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
      * 

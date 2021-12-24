@@ -117,7 +117,7 @@ class DataObjectFunc
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="数据持久化：数据库的CRUD操作">
+    //<editor-fold defaultstate="collapsed" desc="数据持久化: 数据库的CRUD操作">
     /**
      * 对应数据对象的updateProperties方法
      * @param string $classname 数据对象类名
@@ -155,7 +155,7 @@ class DataObjectFunc
             } else if ( !is_array($sql_ids) ) {
                 $sql_ids = array($sql_ids);
             }
-            if ( $sql_ids && ( count($sql_ids)>0 ) ) {
+            if ( $sql_ids && ( count($sql_ids) > 0 ) ) {
                 $condition = " $idColumn=" . $sql_ids[0] . " ";
                 for ($i = 1; $i < count($sql_ids); $i++) {
                     if ( !empty($sql_ids[$i]) ) {
@@ -599,7 +599,7 @@ class DataObjectFunc
                 if ( is_a($dataobject, "DataObject") ) {
                     $dataobjectArr        = $dataobject->toArray();
                     $dataobjectProperties = UtilReflection::getClassPropertiesInfo( $dataobject );
-                    foreach($dataobjectArr as $key => $value)
+                    foreach ($dataobjectArr as $key => $value)
                     {
                         $access = "";
                         if ( array_key_exists($key, $dataobjectProperties) ) {

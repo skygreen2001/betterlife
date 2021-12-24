@@ -227,8 +227,8 @@ require_once("init.php");
 
 // print_r(UtilDateTime::now( EnumDateTimeFormat::DATE, EnumDateTimeShow::TIME ) );
 
-// LogMe::log( "我在想事情呢！等等我" );
-// LogMe::log( "不急不急,休息一下！" );
+// LogMe::log( "我在想事情呢!等等我" );
+// LogMe::log( "不急不急,休息一下!" );
 
 // // 压缩文件加密
 // $texFName   = Gc::$nav_root_path . "README.md";

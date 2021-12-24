@@ -19,7 +19,7 @@ define('PEAR_LOG_WARNING',  4);     // 警告性错误: 需要发出警告的错
 define('PEAR_LOG_NOTICE',   5);     // 通知: 程序可以运行但是还不够完美的错误/* Normal but significant */
 define('PEAR_LOG_INFO',     6);     // 信息: 程序输出信息/* Informational */
 define('PEAR_LOG_DEBUG',    7);     // 调试: 调试信息/* Debug-level messages */
-define('PEAR_LOG_SQL',    8);     // SQL：SQL语句 注意只在调试模式开启时有效
+define('PEAR_LOG_SQL',    8);     // SQL: SQL语句 注意只在调试模式开启时有效
 
 define('PEAR_LOG_ALL',      0xffffffff);    /* All messages */
 define('PEAR_LOG_NONE',     0x00000000);    /* No message */

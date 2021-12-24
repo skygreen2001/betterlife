@@ -89,7 +89,7 @@ class UtilExcelOld extends Util
             header("Content-Type: application/octet-stream");
             header("Content-Type: application/download");
             Header("Content-Disposition:attachment;filename=" . $outputFileName);
-            //header('Content-Disposition:inline;filename="'.$outputFileName.'"');
+            //header('Content-Disposition:inline;filename="' . $outputFileName . '"');
             header("Content-Transfer-Encoding: binary");
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -135,7 +135,7 @@ class UtilExcelOld extends Util
 
         if ( empty($importFileName) )
         {
-            LogMe::log( '路径或文件名有错！' );
+            LogMe::log( '路径或文件名有错!' );
             return null;
         }
         if ( $filetype == 'xls' || $filetype == 'xlsx' )
@@ -147,7 +147,7 @@ class UtilExcelOld extends Util
                 $PHPReader = new PHPExcel_Reader_Excel5();
                 if ( !$PHPReader->canRead($importFileName) )
                 {
-                    LogMe::log( '请确保Excel格式正确！' );
+                    LogMe::log( '请确保Excel格式正确!' );
                     return null;
                 }
             }

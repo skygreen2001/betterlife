@@ -11,12 +11,12 @@ class En_Us {
     const INFO_DB_CHARACTER   = "Current connected database client charset:";
 
     const ERROR_INFO_CONNECT_FAIL          = "Failed to connect database, the error message is:";
-    const ERROR_INFO_SEARCH_NONE           = "Can't find database！";
-    const ERROR_INFO_INSERT_ID             = "New insert dataobject ID existed！";
+    const ERROR_INFO_SEARCH_NONE           = "Can't find database!";
+    const ERROR_INFO_INSERT_ID             = "New insert dataobject ID existed!";
     const ERROR_INFO_NEED_OBJECT_CLASSNAME = "The param of function must be class name or object!";
-    const ERROR_INFO_EXTENDS_CLASS         = "The Dataobject Class must extends DataObject！";
-    const ERROR_INFO_DB_HANDLE             = "Database handle falied！";
-    const ERROR_INFO_UPDATE_ID             = "Update dataobject's ID is wrong！";
+    const ERROR_INFO_EXTENDS_CLASS         = "The Dataobject Class must extends DataObject!";
+    const ERROR_INFO_DB_HANDLE             = "Database handle falied!";
+    const ERROR_INFO_UPDATE_ID             = "Update dataobject's ID is wrong!";
     const ERROR_INFO_UPDATE_VALUE_NULL     = "Input update value empty is prohibited!";
     const ERROR_INFO_MODEL_EXISTS          = "Can't find Model";
     const ERROR_INFO_OBJECT_UNKNOWN        = "Dataobject undefined,Please check your input content is right";

@@ -12,10 +12,10 @@ class Config_Odbc extends Config_Db {
      * 
      * 说明:
      * 
-     *    $dsn可以直接在System DSN里配置；然后在配置里设置：Config_Db::$dbname
+     *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
      * @param string $host
      * @param string $dbname 
-     * @param enum $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @return string ODBC所需的dsn_less字符串
      */
     public static function dsn_less($host = null, $username = null, $password = null, $dbname = null, $dbtype = null) {

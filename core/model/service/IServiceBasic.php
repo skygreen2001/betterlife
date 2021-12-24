@@ -83,7 +83,7 @@ interface IServiceBasic
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
      * 
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"
+     * 默认:SQL Where条件子语句。如: "(id=1 and name='sky') or (name like 'sky')"
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -111,7 +111,7 @@ interface IServiceBasic
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
      * 
-     * 默认:SQL Where条件子语句。如："(id=1 and name='sky') or (name like 'sky')"
+     * 默认:SQL Where条件子语句。如: "(id=1 and name='sky') or (name like 'sky')"
      * 
      * @param string $sort 排序条件
      * 示例如下:
@@ -140,7 +140,7 @@ interface IServiceBasic
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
      * 
-     * 默认:SQL Where条件子语句。如：(id=1 and name='sky') or (name like 'sky')
+     * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
      * 
      * @return 单个对象实体
      */

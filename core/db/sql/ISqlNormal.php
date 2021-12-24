@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 接口：通过SQL查询的类 |-----------
+ * -----------| 接口: 通过SQL查询的类 |-----------
  * @category betterlife
  * @package core.db.sql
  * @author skygreen

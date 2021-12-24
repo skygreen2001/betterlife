@@ -171,7 +171,7 @@ class UtilCss extends Util
 
     /**
      * 动态加载应用指定的Css内容的语句。
-     * @param string $cssContent：Css内容的语句
+     * @param string $cssContent: Css内容的语句
      */
     public static function loadCssContent($cssContent)
     {
@@ -181,7 +181,7 @@ class UtilCss extends Util
     /**
      * 预加载[不直接输出]:动态加载应用指定的Css内容的语句。
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
-     * @param string $cssContent：Js内容的语句
+     * @param string $cssContent: Js内容的语句
      */
     public static function loadCssContentReady($viewobject, $cssContent)
     {
@@ -195,7 +195,7 @@ class UtilCss extends Util
 
     /**
      * 动态加载应用指定的Js内容的语句。
-     * @param string $cssContent：Css内容的语句
+     * @param string $cssContent: Css内容的语句
      */
     public static function loadCssContentSentence($cssContent)
     {

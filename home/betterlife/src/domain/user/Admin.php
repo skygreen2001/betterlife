@@ -39,19 +39,19 @@ class Admin extends DataObject
      */
     public $password;
     /**
-     * 扮演角色<br/>
-     * 系统管理员扮演角色。<br/>
-     * 0:超级管理员-superadmin<br/>
-     * 1:管理人员-manager<br/>
-     * 2:运维人员-normal<br/>
+     * 扮演角色
+     * 系统管理员扮演角色。
+     * 0:超级管理员-superadmin
+     * 1:管理人员-manager
+     * 2:运维人员-normal
      * 3:合作伙伴-partner
      * @var enum
      * @access public
      */
     public $roletype;
     /**
-     * 视野<br/>
-     * 0:只能查看自己的信息-self<br/>
+     * 视野
+     * 0:只能查看自己的信息-self
      * 1:查看所有的信息-all
      * @var enum
      * @access public
@@ -73,11 +73,11 @@ class Admin extends DataObject
     );
 
     /**
-     * 显示扮演角色<br/>
-     * 系统管理员扮演角色。<br/>
-     * 0:超级管理员-superadmin<br/>
-     * 1:管理人员-manager<br/>
-     * 2:运维人员-normal<br/>
+     * 显示扮演角色
+     * 系统管理员扮演角色。
+     * 0:超级管理员-superadmin
+     * 1:管理人员-manager
+     * 2:运维人员-normal
      * 3:合作伙伴-partner
      */
     public function getRoletypeShow()
@@ -86,8 +86,8 @@ class Admin extends DataObject
     }
 
     /**
-     * 显示视野<br/>
-     * 0:只能查看自己的信息-self<br/>
+     * 显示视野
+     * 0:只能查看自己的信息-self
      * 1:查看所有的信息-all
      */
     public function getSeescopeShow()
@@ -96,11 +96,11 @@ class Admin extends DataObject
     }
 
     /**
-     * 显示扮演角色<br/>
-     * 系统管理员扮演角色。<br/>
-     * 0:超级管理员-superadmin<br/>
-     * 1:管理人员-manager<br/>
-     * 2:运维人员-normal<br/>
+     * 显示扮演角色
+     * 系统管理员扮演角色。
+     * 0:超级管理员-superadmin
+     * 1:管理人员-manager
+     * 2:运维人员-normal
      * 3:合作伙伴-partner
      */
     public static function roletypeShow($roletype)
@@ -109,8 +109,8 @@ class Admin extends DataObject
     }
 
     /**
-     * 显示视野<br/>
-     * 0:只能查看自己的信息-self<br/>
+     * 显示视野
+     * 0:只能查看自己的信息-self
      * 1:查看所有的信息-all
      */
     public static function seescopeShow($seescope)

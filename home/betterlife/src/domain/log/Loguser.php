@@ -21,16 +21,16 @@ class Loguser extends DataObject
      */
     public $user_id;
     /**
-     * 类型<br/>
-     * 1:登录-LOGIN<br/>
-     * 2:写日志-BLOG<br/>
+     * 类型
+     * 1:登录-LOGIN
+     * 2:写日志-BLOG
      * 3:写评论-COMMENT
      * @var enum
      * @access public
      */
     public $userType;
     /**
-     * 日志详情<br/>
+     * 日志详情
      * 一般日志类型决定了内容；这一栏一般没有内容
      * @var string
      * @access public
@@ -56,9 +56,9 @@ class Loguser extends DataObject
     );
 
     /**
-     * 显示类型<br/>
-     * 1:登录-LOGIN<br/>
-     * 2:写日志-BLOG<br/>
+     * 显示类型
+     * 1:登录-LOGIN
+     * 2:写日志-BLOG
      * 3:写评论-COMMENT
      */
     public function getUserTypeShow()
@@ -67,9 +67,9 @@ class Loguser extends DataObject
     }
 
     /**
-     * 显示类型<br/>
-     * 1:登录-LOGIN<br/>
-     * 2:写日志-BLOG<br/>
+     * 显示类型
+     * 1:登录-LOGIN
+     * 2:写日志-BLOG
      * 3:写评论-COMMENT
      */
     public static function userTypeShow($userType)

@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：Jquery[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: Jquery[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -104,12 +104,12 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
         {
             $data = json_encode($dataArray);
-//            $data="{";
+//            $data = "{";
 //            foreach ($dataArray as $key => $value) {
-//              $data.=$key.":'".$value."'".",";
+//              $data .= $key . ":'" . $value . "'" . ",";
 //            }
-//            $data=substr($data, 0, strlen($data)-1);
-//            $data.="}";
+//            $data  = substr($data, 0, strlen($data) - 1);
+//            $data .= "}";
         }
 
         $result .=  "$.ajax({";
@@ -131,11 +131,11 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
                   },";
             $result .= "statusCode: {
                 404: function() {
-                  alert('无法找到该页面！');
+                  alert('无法找到该页面!');
                 }
               }";
         } else {
-            $result  = substr($result, 0,  strlen($result) - 1);
+            $result = substr($result, 0,  strlen($result) - 1);
         }
         $result .= "})";
         //</editor-fold>

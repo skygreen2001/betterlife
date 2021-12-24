@@ -1,84 +1,84 @@
 <?php
 //<editor-fold defaultstate = "collapsed" desc = "枚举类型">
 /**
- * -----------| 枚举类型：数据库方式类别|数据源定义 |-----------
+ * -----------| 枚举类型: 数据库方式类别|数据源定义 |-----------
  * @category betterlife
  * @package core.config
  * @author skygreen
  */
 class EnumDbSource extends Enum{
     /**
-     * 默认：数据库：Mysql
+     * 默认: 数据库: Mysql
      */
     const DB_MYSQL = 0;
     /**
-     * 数据库：PostgresSql;需要 PostgreSQL 8.2 and later
+     * 数据库: PostgresSql;需要 PostgreSQL 8.2 and later
      */
     const DB_PGSQL = 1;
     /**
-     * 数据库：PHP自带的SQLite,数据存储在内存中
+     * 数据库: PHP自带的SQLite,数据存储在内存中
      */
     const DB_SQLITE_MEMORY = 3;
     /**
-     * 数据库：Oracle
+     * 数据库: Oracle
      */
     const DB_ORACLE = 4;
     /**
-     * 数据库：Informix
+     * 数据库: Informix
      */
     const DB_INFOMIX = 5;
     /**
-     * 数据库：IBM Db2
+     * 数据库: IBM Db2
      */
     const DB_DB2 = 6;
     /**
-     * 数据库：Microsoft Excel;ODBC支持[Config_Db数据库ODBC设置$dbname = Excel文件名]
+     * 数据库: Microsoft Excel;ODBC支持[Config_Db数据库ODBC设置$dbname = Excel文件名]
      */
     const DB_MICROSOFT_EXCEL = 7;
     /**
      * Config_Db数据库ODBC设置$dbname = 数据库文件名
      * 
-     * 如：Config_Db::$dbname = D:\betterlife.mdb
+     * 如: Config_Db::$dbname = D:\betterlife.mdb
      * 
-     * 数据库：Microsoft Access:
+     * 数据库: Microsoft Access:
      * 
-     * 说明：Access支持GBK字符集，尚未找到对UTF-8的支持设置；
+     * 说明: Access支持GBK字符集，尚未找到对UTF-8的支持设置；
      * 
      * 因此开发此类应用；需默认采用GBK编码，否则在输出到页面前需要进行转码
      */
     const DB_MICROSOFT_ACCESS = 8;
     /**
-     * 数据库：Microsoft Sql Server
+     * 数据库: Microsoft Sql Server
      * 
      * 需要设置服务器名Config_Db::$host;和数据库名Config_Db::$dbname;
      * 
-     * 说明：Microsoft Sql Server支持GBK字符集，对UTF-8的支持设置比较复杂；
+     * 说明: Microsoft Sql Server支持GBK字符集，对UTF-8的支持设置比较复杂；
      * 
      * 因此开发此类应用；需默认采用GBK编码，否则在输出到页面前需要进行转码
      */
     const DB_SQLSERVER = 9;
     /**
-     * 数据库：Microsoft Sybase
+     * 数据库: Microsoft Sybase
      */
     const DB_SYBASE = 10;
     /**
-     * 数据库：FreeTDS
+     * 数据库: FreeTDS
      */
     const DB_FREETDS = 11;
     /**
-     * 数据库：FireBird
+     * 数据库: FireBird
      */
     const DB_FIREBIRD = 12;
     /**
-     * 数据库：Interbase
+     * 数据库: Interbase
      */
     const DB_INTERBASE = 13;
     /**
-     * 数据库：LDAP
+     * 数据库: LDAP
      * 
      * 可通过Config_Db::$engine = ENGINE_DAL_ADODB配合使用
      * 
-     * 需要配置如下：
+     * 需要配置如下: 
      * 
      *        Config_Db::$host   = 'ldap.baylor.edu';
      * 
@@ -86,17 +86,17 @@ class EnumDbSource extends Enum{
      */
     const DB_LDAP = 14;
     /**
-     * 数据库：Sqlite 2
+     * 数据库: Sqlite 2
      */
     const DB_SQLITE2 = 15;
     /**
-     * 数据库：PHP自带的SQLite3 推荐版本
+     * 数据库: PHP自带的SQLite3 推荐版本
      */
     const DB_SQLITE3 = 16;
 }
 
 /**
- * -----------| 枚举类型：数据源操作方式引擎定义 |-----------
+ * -----------| 枚举类型: 数据源操作方式引擎定义 |-----------
  * @category betterlife
  * @package core.config
  * @author skygreen
@@ -107,7 +107,7 @@ class EnumDbEngine extends Enum {
      */
     const ENGINE_OBJECT_MYSQL_PHP = 0;
     /**
-     * 默认：经典的MYSQLI访问数据库方法函数
+     * 默认: 经典的MYSQLI访问数据库方法函数
      */
     const ENGINE_OBJECT_MYSQL_MYSQLI = 1;
     /**
@@ -165,9 +165,9 @@ class EnumDbEngine extends Enum {
  * 
  * @todo Sql Server 和 Pdo的测试-尚不知道如何找到Php5.3的php_pdo_mssql驱动；暂无需求
  * 
- *        Sql Server 第三方方案：http://www.easysoft.com/developer/languages/php/sql_server_unix_tutorial.html#driver
+ *        Sql Server 第三方方案: http://www.easysoft.com/developer/languages/php/sql_server_unix_tutorial.html#driver
  * 
- * 说明： 目前可使用PHP自带的ODBC方案使用Sql Server；通过配置Config_Db:$db = DB_SQLSERVER和Config_Db:$engine = ENGINE_OBJECT_ODBC即可
+ * 说明:  目前可使用PHP自带的ODBC方案使用Sql Server；通过配置Config_Db:$db = DB_SQLSERVER和Config_Db:$engine = ENGINE_OBJECT_ODBC即可
  * @category betterlife
  * @package core.config
  * @author skygreen
@@ -229,7 +229,7 @@ class Config_Db extends ConfigBB
      */
     public static $character = Config_C::CHARACTER_UTF8_MB4;
     /**
-    * 协助调试：打印SQL语句
+    * 协助调试: 打印SQL语句
     * @var bool
     * @static
     */
@@ -268,7 +268,7 @@ class Config_Db extends ConfigBB
      * 
      * 数据库实体POJO对象需放置在domain目录下
      * 
-     * 表名为三段：数据库表名前缀+“_”+[文件夹目录+“_”]...+(类名)
+     * 表名为三段: 数据库表名前缀+“_”+[文件夹目录+“_”]...+(类名)
      * 
      * @example 示例如下:
      * 

@@ -5,7 +5,7 @@ $tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
 foreach ($tableList as $tablename) {
    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
-   foreach($fieldInfoList as $fieldname=>$field) {
+   foreach ($fieldInfoList as $fieldname=>$field) {
        $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
        $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
        $fieldInfos[$tablename][$fieldname]["Comment"] = $field["Comment"];
@@ -102,7 +102,7 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
                  "    </tr>";
 
             $fieldInfoList = $fieldInfos[$tablename];
-            foreach($fieldInfoList as $fieldname=>$field) {
+            foreach ($fieldInfoList as $fieldname=>$field) {
                 $column_comment = $field['Comment'];
                 $column_comment = str_replace("\r\n", "<br/>", $column_comment);
                 $column_comment = str_replace("\r", "<br/>", $column_comment);

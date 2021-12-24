@@ -27,35 +27,35 @@ class Userdetail extends DataObject
      */
     public $realname;
     /**
-     * 头像<br/>
+     * 头像
      * 头像图片路径
      * @var string
      * @access public
      */
     public $profile;
     /**
-     * 国家<br/>
+     * 国家
      * 参考region表的region_id字段
      * @var int
      * @access public
      */
     public $country;
     /**
-     * 省<br/>
+     * 省
      * 参考region表的region_id字段
      * @var int
      * @access public
      */
     public $province;
     /**
-     * 市<br/>
+     * 市
      * 参考region表的region_id字段
      * @var int
      * @access public
      */
     public $city;
     /**
-     * 区<br/>
+     * 区
      * 参考region表的region_id字段
      * @var int
      * @access public
@@ -74,10 +74,10 @@ class Userdetail extends DataObject
      */
     public $qq;
     /**
-     * 会员性别<br/>
-     * 0：女-female<br/>
-     * 1：男-male<br/>
-     * -1：待确认-unknown<br/>
+     * 会员性别
+     * 0: 女-female
+     * 1: 男-male
+     * -1: 待确认-unknown
      * 默认男
      * @var enum
      * @access public
@@ -99,10 +99,10 @@ class Userdetail extends DataObject
     );
 
     /**
-     * 显示会员性别<br/>
-     * 0：女-female<br/>
-     * 1：男-male<br/>
-     * -1：待确认-unknown<br/>
+     * 显示会员性别
+     * 0: 女-female
+     * 1: 男-male
+     * -1: 待确认-unknown
      * 默认男
      */
     public function getSexShow()
@@ -111,10 +111,10 @@ class Userdetail extends DataObject
     }
 
     /**
-     * 显示会员性别<br/>
-     * 0：女-female<br/>
-     * 1：男-male<br/>
-     * -1：待确认-unknown<br/>
+     * 显示会员性别
+     * 0: 女-female
+     * 1: 男-male
+     * -1: 待确认-unknown
      * 默认男
      */
     public static function sexShow($sex)

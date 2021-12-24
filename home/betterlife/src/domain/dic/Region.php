@@ -27,11 +27,11 @@ class Region extends DataObject
      */
     public $region_name;
     /**
-     * 地区类型<br/>
-     * 0:国家-country<br/>
-     * 1:省-province<br/>
-     * 2:市-city<br/>
-     * 3:区-region<br/>
+     * 地区类型 
+     * 0:国家-country 
+     * 1:省-province 
+     * 2:市-city 
+     * 3:区-region 
      * 
      * @var enum
      * @access public
@@ -68,11 +68,11 @@ class Region extends DataObject
     );
 
     /**
-     * 显示地区类型<br/>
-     * 0:国家-country<br/>
-     * 1:省-province<br/>
-     * 2:市-city<br/>
-     * 3:区-region<br/>
+     * 显示地区类型 
+     * 0:国家-country 
+     * 1:省-province 
+     * 2:市-city 
+     * 3:区-region 
      * 
      */
     public function getRegion_typeShow()
@@ -81,11 +81,11 @@ class Region extends DataObject
     }
 
     /**
-     * 显示地区类型<br/>
-     * 0:国家-country<br/>
-     * 1:省-province<br/>
-     * 2:市-city<br/>
-     * 3:区-region<br/>
+     * 显示地区类型 
+     * 0:国家-country 
+     * 1:省-province 
+     * 2:市-city 
+     * 3:区-region 
      * 
      */
     public static function region_typeShow($region_type)

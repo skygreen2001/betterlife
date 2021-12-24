@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：Dojo[Javascript Ajax 框架] |-----------
+ * -----------| 工具类: Dojo[Javascript Ajax 框架] |-----------
  * @category betterlife
  * @package util.view.ajax
  * @author skygreen
@@ -51,12 +51,12 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
         {
             $data = json_encode($dataArray);
-//            $data="{";
+//            $data    = "{";
 //            foreach ($dataArray as $key => $value) {
-//              $data.=$key.":'".$value."'".",";
+//              $data .= $key . ":'" . $value . "'" . ",";
 //            }
-//            $data=substr($data, 0, strlen($data)-1);
-//            $data.="}";
+//            $data    = substr($data, 0, strlen($data) - 1);
+//            $data   .= "}";
         }
         $result .= "
             //Deferred对象允许用同步调用的写法写异步调用

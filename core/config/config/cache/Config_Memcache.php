@@ -6,25 +6,25 @@
  * 
  * 基本:
  * 
- *    MemCacheD Manager：http://allegiance.chi-town.com/MemCacheDManager.aspx
+ *    MemCacheD Manager: http://allegiance.chi-town.com/MemCacheDManager.aspx
  * 
- *    .NET memcached client library：http://memcacheddotnet.sourceforge.net/    
+ *    .NET memcached client library: http://memcacheddotnet.sourceforge.net/    
  * 
- *    memcached 1.2.6：http://code.jellycan.com/memcached/
+ *    memcached 1.2.6: http://code.jellycan.com/memcached/
  * 
- *    Official       ：http://memcached.org/
+ *    Official       : http://memcached.org/
  * 
- *    memcached for Windows：http://splinedancer.com/memcached-win32/ 
+ *    memcached for Windows: http://splinedancer.com/memcached-win32/ 
  * 
  * 使用:
  * 
- *    Memcache基础教程：http://www.ccvita.com/259.html
+ *    Memcache基础教程: http://www.ccvita.com/259.html
  * 
- *    PHP中的Memcache函数库：http://lizi.blogbus.com/logs/17612967.html
+ *    PHP中的Memcache函数库: http://lizi.blogbus.com/logs/17612967.html
  * 
- *    使用Memcached提高.NET应用程序的性能：http://zhoufoxcn.blog.51cto.com/792419/528212
+ *    使用Memcached提高.NET应用程序的性能: http://zhoufoxcn.blog.51cto.com/792419/528212
  * 
- *    Windows下配置PHP+Memcache：http://www.redtamo.com/memcache/windows_php_memcache.html
+ *    Windows下配置PHP+Memcache: http://www.redtamo.com/memcache/windows_php_memcache.html
  * 
  * 高级:
  * 

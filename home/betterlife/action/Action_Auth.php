@@ -59,7 +59,7 @@ class Action_Auth extends Action
                 $this->redirect( "blog", "display" );
             } else {
                 $this->view->color = "red";
-                $this->view->set( "message", "该用户名已有用户注册！" );
+                $this->view->set( "message", "该用户名已有用户注册!" );
             }
         }
     }

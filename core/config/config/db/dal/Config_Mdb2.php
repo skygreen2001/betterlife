@@ -33,8 +33,8 @@ class Config_Mdb2 extends Config_Db{
      * @param string $username
      * @param string $password
      * @param string $dbname 
-     * @param enum $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @link http://pear.php.net/manual/en/package.database.mdb2.intro-connect.php
      * @return array ODBC所需的dsn
      */

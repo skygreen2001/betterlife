@@ -95,12 +95,12 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                 }
             } else {
                 if ( count($row) == 1 ) {
-                    foreach($row as $key => $val) {
+                    foreach ($row as $key => $val) {
                         $result[] = $val;
                     }
                 } else {
                     $c = new stdClass();
-                    foreach($row as $key => $val) {
+                    foreach ($row as $key => $val) {
                         $c->{$key} = $val;
                     }
                     $result[] = $c;

@@ -29,14 +29,14 @@ function render_tag($buffer) {
 
     //        $repReg='/<'.TagClass::PREFIX.':(\w+[-]?\w+)((\s+\w+=\\\"[^"]*\\\"|\s+\w+=\"[^"]*\"|\s+\w+=\\\\\'[^"]*\\\\\'|\s+\w+=\'[^"]*\')*)\s*>(.*)<\/'.TagClass::PREFIX.':\1>/isU';
             /**
-             * 处理自定义标签，如下形式：
+             * 处理自定义标签，如下形式: 
              * <my:page src="index.php?g=betterlife&m=blog&a=display">this is page 5</my:page>
              * @var mixed
              */
             $repReg = '/<' . TagClass::PREFIX . ':(\w+[-]?\w*)((\s+\w+=\\\"[^"\']*\\\"|\s+\w+=\"[^"\']*\"|\s+\w+=\\\\\'[^"\']*\\\\\'|\s+\w+=\'[^"\']*\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
             $result = preg_replace_callback($repReg, 'parseTag', $buffer);
             /**
-             * 处理自定义标签，如下形式：
+             * 处理自定义标签，如下形式: 
              * <my:page src="index.php?g=betterlife&m=blog&a=display" />
              * @var mixed
              */

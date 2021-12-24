@@ -8,7 +8,7 @@
 class Exception_Mysqli extends Exception_Db
 {
     /**
-     * MysqlI 异常记录：记录Myql的异常信息
+     * MysqlI 异常记录: 记录Myql的异常信息
      * @param string $extra  补充存在多余调试信息
      * @param string $category 异常分类
      */

@@ -110,7 +110,7 @@ class Manager_Db extends Manager {
                             if ( $this->dao_static == null ) $this->dao_static = new Dao_Php5();
                             break;
                         default:
-                        //默认：Config_Mysql::ENGINE_MYSQL_PHP
+                        //默认: Config_Mysql::ENGINE_MYSQL_PHP
                             if ( $this->dao_static == null ) $this->dao_static = new Dao_Php5();
                             break;
                     }
@@ -137,7 +137,7 @@ class Manager_Db extends Manager {
                     if ( $this->dao_static == null ) $this->dao_static = new Dao_Sqlite3();
                     break;
                 default:
-                //默认：Config_Mysql::ENGINE_MYSQL_PHP
+                //默认: Config_Mysql::ENGINE_MYSQL_PHP
                     if ( $this->dao_static == null ) $this->dao_static = new Dao_Php5();
                     break;
             }
@@ -153,8 +153,8 @@ class Manager_Db extends Manager {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @param bool $forced 是否强制重新连接数据库获取新的数据库连接对象实例
      * @return mixed 实时指定的Dal对象
      */
@@ -177,8 +177,8 @@ class Manager_Db extends Manager {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @param bool $forced 是否强制重新连接数据库获取新的数据库连接对象实例
      * @return mixed 实时指定的Dal对象
      */
@@ -201,8 +201,8 @@ class Manager_Db extends Manager {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $dbtype 指定数据库类型。{该字段的值参考：EnumDbSource}
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @param bool $forced 是否强制重新连接数据库获取新的数据库连接对象实例
      * @return mixed 实时指定的Dal对象
      */
@@ -371,7 +371,7 @@ class Manager_Db extends Manager {
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考：EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
      * @param bool $forced 是否强制重新连接数据库获取新的数据库连接对象实例
      * @return mixed 实时指定的Dao对象
      */

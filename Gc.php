@@ -304,7 +304,7 @@ class Gc {
         /**
          * 可在php.ini中设置sendmail_path，无法通过ini_set实时设置，因为它只能在php.ini或者httpd.conf中设置。
          * 
-         * 因为官网文档【http://php.net/manual/en/mail.configuration.php】：sendmail_path '/usr/sbin/sendmail -t -i' PHP_INI_SYSTEM
+         * 因为官网文档【http://php.net/manual/en/mail.configuration.php】: sendmail_path '/usr/sbin/sendmail -t -i' PHP_INI_SYSTEM
          */
         //'sendmail_path'=>'C:\wamp\sendmail\sendmail.exe -t',
         /**
@@ -377,10 +377,10 @@ class Gc {
             $baseurl = '';
             if ( empty($_SERVER['SERVER_NAME']) ) $_SERVER['SERVER_NAME'] = "localhost";
             if ( isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='on') ) {
-                $baseurl = 'https://'.$_SERVER['SERVER_NAME'];
-                if ( self::$is_port && ( $_SERVER['SERVER_PORT'] != 443 ) ) $baseurl .= ':'.$_SERVER['SERVER_PORT'];
+                $baseurl = 'https://' . $_SERVER['SERVER_NAME'];
+                if ( self::$is_port && ( $_SERVER['SERVER_PORT'] != 443 ) ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
             } else {
-                if ( array_key_exists('SERVER_NAME', $_SERVER) ) $baseurl = 'http://'.$_SERVER['SERVER_NAME'];
+                if ( array_key_exists('SERVER_NAME', $_SERVER) ) $baseurl = 'http://' . $_SERVER['SERVER_NAME'];
                 if ( array_key_exists('SERVER_PORT', $_SERVER) ) {
                     if (strpos($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']) !== false) {
                         if ( self::$is_port && $_SERVER['SERVER_PORT'] != 80 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
@@ -389,16 +389,16 @@ class Gc {
             }
             $baseDir = dirname($_SERVER['SCRIPT_NAME']);
             $baseurl .= ($baseDir == '\\' ? '' : $baseDir);
-            if (strpos(strrev($baseurl), "/") !== 0) $baseurl .= '/';
+            if ( strpos(strrev($baseurl), "/") !== 0 ) $baseurl .= '/';
             $file_sub_dir = str_replace(Gc::$nav_root_path, "", getcwd() . DS);
             $file_sub_dir = str_replace(DS, "/", $file_sub_dir);
             Gc::$url_base = str_replace(strtolower($file_sub_dir), "", strtolower($baseurl));
         }
         if ( empty(Gc::$upload_url) ) {
             Gc::$upload_url = Gc::$url_base;
-            $same_part = explode(DS,Gc::$nav_root_path);
+            $same_part = explode(DS, Gc::$nav_root_path);
             if ( $same_part && (count($same_part) > 2) ) {
-                $same_part = $same_part[count($same_part)-2];
+                $same_part = $same_part[count($same_part) - 2];
                 if ( strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false ) {
                     Gc::$upload_url = substr(Gc::$upload_url, 0, (strrpos(Gc::$upload_url, $same_part . "/") + strlen($same_part) + 1)) . "upload/";
                 } else {

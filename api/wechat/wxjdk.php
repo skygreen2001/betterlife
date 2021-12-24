@@ -145,9 +145,9 @@ header('Content-Type:application/json;charset=UTF-8');
 $jssdk = new WxJsSDK( WxJsSDK::APPID, WxJsSDK::APPSECRET, $url );
 // wx.config 所有必需需要的参数
 // $signPackage = $jssdk->GetSignPackage();
-// $tmp=json_encode(array ('appId'=>$signPackage["appId"],'timestamp'=>$signPackage["timestamp"],'nonceStr'=>$signPackage["nonceStr"],'signature'=>$signPackage["signature"],'url'=>$signPackage["url"]));
-// $callback = $_GET['callback'];
-// echo $callback.'('.$tmp.')';
+// $tmp         = json_encode(array('appId' => $signPackage["appId"], 'timestamp' => $signPackage["timestamp"], 'nonceStr' => $signPackage["nonceStr"], 'signature' => $signPackage["signature"], 'url' => $signPackage["url"]));
+// $callback    = $_GET['callback'];
+// echo $callback . '(' . $tmp . ')';
 
 // 只提供ticket，具体的加密获得signature放在js里执行，减轻服务器的压力
 $ticket = $jssdk->getJsApiTicket();

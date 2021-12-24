@@ -29,9 +29,9 @@ UtilCss::report_info();
 
 /**
  * 共分为三列
- * 1：路径
- * 2：文件名称【查看】
- * 3：文件信息【查看】
+ * 1: 路径
+ * 2: 文件名称【查看】
+ * 3: 文件信息【查看】
  */
 echo '<pre>';
 echo '<table class=' . UtilCss::CSS_REPORT_TABLE . '>';

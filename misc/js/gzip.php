@@ -33,7 +33,7 @@ if ( isset($jsFile) ) {
         switch ($group) {
             case EnumJsFramework::JS_FW_JQUERY:
             case EnumJsFramework::JS_FW_MOOTOOLS:
-                echo "请使用UtilAjax的load方法，直接加载" . $group . "的js文件；无需使用Gzip压缩！";
+                echo "请使用UtilAjax的load方法，直接加载" . $group . "的js文件；无需使用Gzip压缩!";
                 die();
                 break;
             case EnumJsFramework::JS_FW_PROTOTYPE:
@@ -85,7 +85,7 @@ if ( isset($cssFile) ) {
                 } else {
                     $ext_root = $ajax_root . "ext4" . DS;
                 }
-                include($ext_root.$cssFile);
+                include($ext_root . $cssFile);
                 break;
         }
     } else {

@@ -88,7 +88,7 @@ class Exception_Customize extends Exception {
             $file       = file($this->file);
             $traceInfo  ='';
             $time = date("y-m-d H:i:m");
-            $this->errorInfo['tracktime'] = '['.$time.'] ';
+            $this->errorInfo['tracktime'] = '[' . $time . '] ';
             $max_comments = 80;//跟踪异常之间用等号注释行间隔开；因此设定等长便于排版
             foreach ($trace as $t) {
                 if ( isset($t['class']) ) {
@@ -143,7 +143,7 @@ class Exception_Customize extends Exception {
     }
 
     /**
-     * MysqlI 报异常：Myql的异常信息
+     * MysqlI 报异常: Myql的异常信息
      */
     public function showMessage() {
         return $this->errorInfo;

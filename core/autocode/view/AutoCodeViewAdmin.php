@@ -212,7 +212,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     break;
                   case 'enum':
                     $enum_columnDefine = self::enumDefines($field["Comment"]);
-                    if ( isset($enum_columnDefine ) && ( count($enum_columnDefine)>0 ) )
+                    if ( isset($enum_columnDefine ) && ( count($enum_columnDefine) > 0 ) )
                     {
                         $status_switch_show = "";
                         $color_status       = "status-fail";

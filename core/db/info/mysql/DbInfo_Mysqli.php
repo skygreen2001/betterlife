@@ -135,7 +135,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考：EnumDbEngine}
+     * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
@@ -204,7 +204,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             self::$showtables = $this->query("SHOW TABLES");
         }
         $tables = array();
-        foreach(self::$showtables as $record) {
+        foreach (self::$showtables as $record) {
             if ( $record ) $table = @reset($record);
             if ( empty($table) ) $table = $record;
             $tables[strtolower($table)] = $table;

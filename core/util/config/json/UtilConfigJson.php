@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：读取Json配置文件类 |-----------
+ * -----------| 工具类: 读取Json配置文件类 |-----------
  * @category betterlife
  * @package util.config
  * @subpackage ini
@@ -22,7 +22,7 @@ class UtilConfigJson extends UtilConfig
     public static function main() {
         $settings = new UtilConfigJson();
         $settings->load( __DIR__ . DS . 'config.json' );
-        echo 'Json: host-' . $settings->get('db.host') . ', debug-'.$settings->get('debug') ;
+        echo 'Json: host-' . $settings->get('db.host') . ', debug-' . $settings->get('debug') ;
     }
 }
 ?>

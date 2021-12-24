@@ -288,9 +288,9 @@ class UtilImage
                     $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
                 }
             } else if ( 'png' == $actualType ) {
-                $imageFun($thumbImg, $thumbname, 6); //默认6,压缩等级：0-9
+                $imageFun($thumbImg, $thumbname, 6); //默认6,压缩等级: 0-9
                 if ($is_echo_output) {
-                    $imageFun($thumbImg, null, 6);//默认6,压缩等级：0-9
+                    $imageFun($thumbImg, null, 6);//默认6,压缩等级: 0-9
                 }
             } else if ( 'gif' == $actualType ) {
                 $imageFun($thumbImg, $thumbname);
@@ -610,7 +610,7 @@ class UtilImage
             die("UPC-A Must be 11 digits.");
         }
         /* Compute the EAN-13 Checksum digit */
-        $ncode = '0'.$code;
+        $ncode = '0' . $code;
         $even = 0;
         $odd = 0;
         for ($x = 0; $x < 12; $x++) {

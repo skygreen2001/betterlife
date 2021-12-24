@@ -1,6 +1,6 @@
 <?php
 /**
- * -----------| 工具类：读取Yaml配置文件类 |-----------
+ * -----------| 工具类: 读取Yaml配置文件类 |-----------
  * @category betterlife
  * @package util.config
  * @subpackage yaml
