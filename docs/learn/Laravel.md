@@ -53,6 +53,7 @@
   - vendor   : 通过 Composer 安装的依赖包都存放在这里，通常该目录会放到 .gitignore 文件里以排除到版本控制系统之外
 
 ## Valet
+
   - Valet 是 Mac 极简主义者的 Laravel 开发环境。
   - 确保 ~/.composer/vendor/bin 目录在系统的「PATH」中。
 
@@ -82,6 +83,7 @@
   - 取消绑定: valet unlink betterlife
 
 ## Telescope
+
   - Telescope 调试工具是本地 Laravel 开发环境的绝佳伴侣。
   - Telescope 可以洞察进入应用程序的请求、异常、日志条目、数据库查询、队列任务、邮件、通知、缓存操作、计划任务、变量输出。
   - 安装Telescope, 仅本地使用: 
@@ -94,6 +96,7 @@
     - 如当前应用: http://betterlife.test/telescope
 
 ## 安装数据库
+
   - 安装Dbngin: https://dbngin.com/
   - 新建数据库 : betterlife
   - 修改根路径下文件.env配置
@@ -181,6 +184,7 @@
 - 自定义权限认证: https://laravel.com/docs/8.x/authentication#authenticating-users
 
 ## 创建应用: 博客
+
   - 创建表: blogs
     ```
         php artisan make:migration create_blogs_table --create=blogs
