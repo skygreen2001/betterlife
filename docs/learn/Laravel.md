@@ -257,6 +257,15 @@
         @endforeach
         </div>
       ```
+
+    - 创建权限认证: Laravel UI
+      ```
+          composer require laravel/ui
+          php artisan ui bootstrap --auth
+          npm install && npm run dev
+          npm run watch
+      ```
+
     - 创建Form
       - 新建路由
         ```
