@@ -23,6 +23,7 @@
 # 模仿优秀
 
   - 表示层View整合Blade Templates
+  - Laravel rate limiter 
   - Symfony Console: 打造命令行工具
   - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
     - Composer脚本: https://docs.phpcomposer.com/articles/scripts.html
