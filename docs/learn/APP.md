@@ -12,7 +12,10 @@
 - [FakerPHP/Faker](https://fakerphp.github.io/): 生成假数据的PHP库
 - [Monolog](https://seldaek.github.io/monolog/): 流行的PHP日志记录库
 - [Dot Access Data](https://github.com/dflydev/dflydev-dot-access-data): 用.访问复杂数据
-- [filp/whoops](https://github.com/filp/whoops): 错误处理框架
+- [Ignition](https://flareapp.io/ignition): Error Page for Laravel
+  - [filp/whoops](https://github.com/filp/whoops): 错误处理框架
+    - [whoops](http://filp.github.io/whoops/)
+    - 本框架(betterlife)中已使用whoops框架，查看core/main/Initializer.php, 属性:EXCEPTION_WAY
 
 
 ### 未安装 
