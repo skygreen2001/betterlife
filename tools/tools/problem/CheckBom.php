@@ -127,7 +127,7 @@ class CheckBOMTask
         if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191 ) {
             if ( self::$isRemoveBom ) {
                 $rest = substr($contents, 3);
-                self::rewrite( $filename, $rest );
+                UtilFileSystem::rewrite( $filename, $rest );
                 return (", <font color=red>BOM found, automatically removed.</font>");
             } else {
                 return (", <font color=red>BOM found.</font>");
@@ -135,19 +135,6 @@ class CheckBOMTask
         } else {
             //if ( self::$isRemoveBom ) return ("BOM Not Found."); else return "";
         }
-    }
-
-    /**
-     * 重写文件
-     * @param string $filename 文件名称
-     * @param string $data 文件内容
-     */
-    private static function rewrite ($filename, $data)
-    {
-        $filenum = fopen($filename, "w");
-        flock($filenum, LOCK_EX);
-        fwrite($filenum, $data);
-        fclose($filenum);
     }
 }
 

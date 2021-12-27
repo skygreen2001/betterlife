@@ -45,7 +45,7 @@ class UtilFileSystem extends Util
      * 文件重命名
      * @param string $source 原文件名
      * @param string $dest 新文件名
-     * @return bool 是否重命名成功。
+     * @return bool 是否重命名成功
      */
     public static function file_rename($source, $dest)
     {
@@ -83,7 +83,7 @@ class UtilFileSystem extends Util
      * 如果该文件不存在，则创建该文件。
      * @param string $filename 文件名
      * @param string $content  内容
-     * @return bool 是否创建成功。
+     * @return bool 是否创建成功
      */
     public static function save_file_content($filename, $content)
     {
@@ -98,6 +98,22 @@ class UtilFileSystem extends Util
             LogMe::log( "创建文件:" . $filename . "失败!" );
         }
         if ( $cFile ) fclose($cFile);
+        return true;
+    }
+
+    /**
+     * 重写文件
+     * @param string $filename 文件名称
+     * @param string $data 文件内容
+     * @return boolean 是否操作成功
+     */
+    public static function rewrite($filename, $data)
+    {
+        $filenum = fopen($filename, "w");
+        flock($filenum, LOCK_EX);
+        fwrite($filenum, $data);
+        fclose($filenum);
+        return true;
     }
 
     /**
@@ -105,6 +121,7 @@ class UtilFileSystem extends Util
      * 
      * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用!
      * @param string $dir 目录
+     * @return boolean 是否操作成功
      */
     public static function deleteDir($dir)
     {
@@ -125,6 +142,7 @@ class UtilFileSystem extends Util
         }
         closedir($handle);
         @rmdir($dir);
+        return true;
     }
 
     /**

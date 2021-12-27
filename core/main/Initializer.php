@@ -7,12 +7,33 @@
  */
 class Initializer
 {
+    /**
+     * 是否CGI
+     * @var boolean
+     * @static
+     */
     public static $IS_CGI = false;
+    /**
+     * 是否WIN
+     * @var boolean
+     * @static
+     */
     public static $IS_WIN = true;
+    /**
+     * 是否CLI
+     * @var boolean
+     * @static
+     */
     public static $IS_CLI = false;
+    /**
+     * 框架核心文件夹所在的路径
+     * @var string
+     * @static
+     */
     public static $NAV_CORE_PATH;
     /**
      * PHP文件名后缀
+     * @var string
      */
     const SUFFIX_FILE_PHP = ".php";
     /**
@@ -23,7 +44,7 @@ class Initializer
      * 一维:模块名称
      * 
      * 二维: 对象类名称
-     * 
+     * @static
      */
     public static $coreFiles;
     /**
@@ -41,15 +62,27 @@ class Initializer
     /**
      * 框架核心类之外可直接加载加载类的路径
      * 
-     *［在core之外的其他根路径下的路径需autoload自动认知的］
+     * [在core之外的其他根路径下的路径需autoload自动认知的]
+     * 
+     * @var array
+     * @static
      */
-    public static $core_include_paths = array(
-    );
+    public static $core_include_paths = array();
     /**
-    * 初始化错误，网站应用的设置路径有误提示信息。
-    */
+     * 初始化错误，网站应用的设置路径有误提示信息。
+     * @var string
+     */
     const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确!</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置!</td></tr></table>";
 
+    /**
+     * 异常处理方式
+     *
+     * 0. 自定义
+     * 1. filp/whoops
+     * 2. 
+     * @var int 
+     */
+    const EXCEPTION_WAY = 1;
     /**
      * 自动加载指定的类对象
      * @param <type> $class_name
@@ -127,6 +160,10 @@ class Initializer
          * 加载第三方库
          */
         self::loadLibrary();
+        /**
+         * 加载异常处理
+         */
+        self::loadException();
         /**
          * 加载自定义标签库
          */
@@ -219,8 +256,8 @@ class Initializer
         } else {
             error_reporting(0);
         }
-        self::$IS_CGI = substr(PHP_SAPI, 0,3) == 'cgi' ? 1 : 0;
-        self::$IS_WIN = strstr(PHP_OS, 'WIN')?1 : 0;
+        self::$IS_CGI = substr(PHP_SAPI, 0, 3) == 'cgi' ? 1 : 0;
+        self::$IS_WIN = strstr(PHP_OS, 'WIN') ? 1 : 0;
         self::$IS_CLI = PHP_SAPI == 'cli' ? 1 : 0;
 
         /**
@@ -338,6 +375,31 @@ class Initializer
     }
     
     /**
+     * 加载异常处理
+     */
+    public static function loadException() {
+        switch ( self::EXCEPTION_WAY ) {
+            case 1:
+                $run     = new Whoops\Run();
+                $handler = new Whoops\Handler\PrettyPageHandler();
+                $handler->setApplicationPaths([__FILE__]);
+                // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
+                $handler->setEditor('vscode');
+                $run->pushHandler($handler);
+                $run->register();
+                break;
+            case 2:
+                break;
+            default:
+                /**
+                 * 设置处理所有未捕获异常的用户定义函数
+                 */
+                set_exception_handler('e_me');
+                break;
+        }
+    }
+
+    /**
      * 加载自定义模块库
      */
     public static function loadLibrary()
@@ -349,9 +411,5 @@ class Initializer
         $classname = "Library_Loader";
         require_once($dir_library . $classname . self::SUFFIX_FILE_PHP);
         Library_Loader::load_run();
-        /**
-         * 设置处理所有未捕获异常的用户定义函数
-         */
-        set_exception_handler('e_me');
     }
 }

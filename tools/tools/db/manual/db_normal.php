@@ -64,59 +64,63 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
             <th class="beizhu">备注</th>
         </tr>
     <?php
-        foreach ($tableInfoList as $tablename => $tableinfo)
-        {
-            $table_comment = $tableinfo["Comment"];
-            $tablename_cn  = str_replace("关系表", "", $table_comment);
-            if ( contain( $tablename_cn, "\r" ) || contain( $tablename_cn, "\n" ) ) {
-                $tablename_cn = preg_split("/[\s,]+/", $tablename_cn);
-                $tablename_cn = $tablename_cn[0];
+        if ( $tableInfoList && count($tableInfoList) ) {
+            foreach ($tableInfoList as $tablename => $tableinfo)
+            {
+                $table_comment = $tableinfo["Comment"];
+                $tablename_cn  = str_replace("关系表", "", $table_comment);
+                if ( contain( $tablename_cn, "\r" ) || contain( $tablename_cn, "\n" ) ) {
+                    $tablename_cn = preg_split("/[\s,]+/", $tablename_cn);
+                    $tablename_cn = $tablename_cn[0];
+                }
+                if ( empty($tablename_cn) ) $tablename_cn = $tablename;
+                $tableInfoList[$tablename]["Comment_Table"] = $tablename_cn;
+                $table_comment = str_replace("\r\n", "<br/>", $table_comment);
+                $table_comment = str_replace("\r", "<br/>", $table_comment);
+                $table_comment = str_replace("\n", "<br/>", $table_comment);
+                if ( empty($table_comment) ) $table_comment = $tablename;
+                echo "    <tr>".
+                    "        <td><a href=\"#$tablename\">$tablename</a></td>".
+                    "        <td>$tablename_cn</td>".
+                    "        <td class=\"beizhu\">$table_comment</td>".
+                    "    </tr>";
             }
-            if ( empty($tablename_cn) ) $tablename_cn = $tablename;
-            $tableInfoList[$tablename]["Comment_Table"] = $tablename_cn;
-            $table_comment = str_replace("\r\n", "<br/>", $table_comment);
-            $table_comment = str_replace("\r", "<br/>", $table_comment);
-            $table_comment = str_replace("\n", "<br/>", $table_comment);
-            if ( empty($table_comment) ) $table_comment = $tablename;
-            echo "    <tr>".
-                 "        <td><a href=\"#$tablename\">$tablename</a></td>".
-                 "        <td>$tablename_cn</td>".
-                 "        <td class=\"beizhu\">$table_comment</td>".
-                 "    </tr>";
         }
     ?>
     </table><br /><br />
     <h2>数据库手册</h2>
     <?php
-        foreach ($tableInfoList as $tablename => $tableinfo)
-        {
-            echo "<br />".
-                 "<h4 id='$tablename'>数据表:$tablename&nbsp;&nbsp;&nbsp;&nbsp;用途:{$tableinfo['Comment_Table']}</h4><br />".
-                 "<table class='sheet'>".
-                 "    <tr class='head'>".
-                 "        <th class='head1'>字段名称</th>".
-                 "        <th class='head2'>数据类型</th>".
-                 "        <th class='head3'>主键</th>".
-                 "        <th class='head4'>必填</th>".
-                 "        <th class='head6'>说明</th>".
-                 "    </tr>";
+        if ( $tableInfoList && count($tableInfoList) ) {
+            foreach ($tableInfoList as $tablename => $tableinfo)
+            {
+                echo "<br />".
+                    "<h4 id='$tablename'>数据表:$tablename&nbsp;&nbsp;&nbsp;&nbsp;用途:{$tableinfo['Comment_Table']}</h4><br />".
+                    "<table class='sheet'>".
+                    "    <tr class='head'>".
+                    "        <th class='head1'>字段名称</th>".
+                    "        <th class='head2'>数据类型</th>".
+                    "        <th class='head3'>主键</th>".
+                    "        <th class='head4'>必填</th>".
+                    "        <th class='head6'>说明</th>".
+                    "    </tr>";
 
-            $fieldInfoList = $fieldInfos[$tablename];
-            foreach ($fieldInfoList as $fieldname=>$field) {
-                $column_comment = $field['Comment'];
-                $column_comment = str_replace("\r\n", "<br/>", $column_comment);
-                $column_comment = str_replace("\r", "<br/>", $column_comment);
-                $column_comment = str_replace("\n", "<br/>", $column_comment);
-                if ( empty($column_comment) ) $column_comment = $fieldname;
-                echo "      <tr>".
-                     "          <td>$fieldname</td>".
-                     "          <td>{$field['Type']}</td>".
-                     "          <td>{$field['Key']}</td>".
-                     "          <td>{$field['Null']}</td>".
-                     "          <td>$column_comment</td>".
-                     "     </tr>";
+                $fieldInfoList = $fieldInfos[$tablename];
+                foreach ($fieldInfoList as $fieldname=>$field) {
+                    $column_comment = $field['Comment'];
+                    $column_comment = str_replace("\r\n", "<br/>", $column_comment);
+                    $column_comment = str_replace("\r", "<br/>", $column_comment);
+                    $column_comment = str_replace("\n", "<br/>", $column_comment);
+                    if ( empty($column_comment) ) $column_comment = $fieldname;
+                    echo "      <tr>".
+                        "          <td>$fieldname</td>".
+                        "          <td>{$field['Type']}</td>".
+                        "          <td>{$field['Key']}</td>".
+                        "          <td>{$field['Null']}</td>".
+                        "          <td>$column_comment</td>".
+                        "     </tr>";
+                }
+                echo "</table>";
             }
-            echo "</table>";
         }
     ?>
     <br /><br />

@@ -39,9 +39,10 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
         if ( mysqli_connect_errno() ) {
             Exception_Mysqli::record();
+            $this->connection = null;
         }
 
-        $this->change_character_set( $character_code = Config_Db::$character );
+        $this->change_character_set( Config_Db::$character );
     }
 
     /**

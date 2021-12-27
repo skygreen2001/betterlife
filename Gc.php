@@ -40,6 +40,7 @@ class Gc {
     public static $dev_php_debug_on = false;
     /**
      * 网站应用的名称
+     * 
      * 展示给网站用户
      * @var string
      * @static

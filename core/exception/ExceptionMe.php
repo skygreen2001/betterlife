@@ -27,12 +27,16 @@ abstract class ExceptionMe extends Exception {
 
     /**
      * 记录异常信息
-     * @param 错误信息 $errorInfo
-     * @param 发生错误信息的自定义类 $object
+     * @param string 错误信息 $errorInfo
+     * @param object 发生错误信息的自定义类 $object
      * @param string $extra  补充存在多余调试信息
-     *
+     * @return void
      */
     public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
+        if ( Initializer::EXCEPTION_WAY != 0 ) {
+            throw new Exception($errorInfo);
+        }
+
         //记录系统日志
         $exception = new Exception_Customize( $errorInfo, $code, $extra );
         if ( is_object($object) ) {
