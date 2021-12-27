@@ -563,5 +563,6 @@
 - [Laravel 8 中文文档](https://learnku.com/docs/laravel)
 - [Laravel News](https://laravel-news.com/)
   - [Building Your First Laravel Application](https://laravel-news.com/your-first-laravel-application)
+- [20 Best Laravel Tutorials](https://kinsta.com/blog/laravel-tutorial/) 
 - [Laravel Valet](https://laravel.com/docs/8.x/valet) 
   - [Valet中文文档](https://learnku.com/docs/laravel/8.5/valet/)

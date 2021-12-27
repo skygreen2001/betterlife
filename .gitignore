@@ -1,8 +1,9 @@
 /home/model/view/default/tmp
-/home/model/view/bootstrap/tmp
 /home/betterlife/view/default/tmp
 /home/betterlife/view/bootstrap/tmp
+/home/betterlife/view/twig/tmp
 /home/admin/view/default/tmp/
+/home/report/view/default/tmp/
 /stressdata
 /model
 /upload

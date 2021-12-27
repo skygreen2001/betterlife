@@ -41,7 +41,7 @@ $url_base = UtilNet::urlbase();
         width: 600px;
         margin: 80px auto 10px auto;
       }
-      #dbCommonCard,#dbCodeCard {
+      #dbCommonCard, #dbCodeCard, #otherCard {
         width: 600px;
         margin: 10px auto 10px auto;
       }
@@ -85,6 +85,17 @@ $url_base = UtilNet::urlbase();
         <li><a href="autocode/layer/view/db_view_default.php" target="_blank">数据库生成默认通用的表示层</a></li>
       </ul>
     </card>
+
+    <card id="otherCard" name='otherCard'>
+      <p slot="title" style="text-align:left;">
+          <i class="ivu-icon ivu-icon-ios-construct"></i> 其它工具
+      </p>
+      <ul>
+        <li><a href="problem/CheckBom.php" target="_blank">检查清除文件头的Bom</a></li>
+        <!-- <li><a href="web/clipboard.php" target="_blank">剪贴板</a></li> -->
+      </ul>
+    </card>
+
     <i-button type="primary" @click="goback">返回首页</i-button><br><br>
     <Modal title="修改数据库表前缀" v-model="inputModel" @on-ok="ok" class-name="vertical-center-modal">
       <div style='line-height:1.5em;'>

@@ -2,6 +2,9 @@
 # 基础
 
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
+    - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
+    - tools/tools/optimize/stresstest/README.md 压力测试
+  - 生成全静态网站(tools/tools/web/makehtml.php) 
   - Symfony 的 DebugBar
   - 自己算法生成站点地图(动态页面)
   - 各种数据库可以备份和导出导入互通
