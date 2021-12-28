@@ -30,7 +30,7 @@ class Action_Comment extends Action
                 $comment->save();
                 $this->view->message = "评论提交成功";
             }
-            $view->view->color = "green";
+            $this->view->color = "green";
         }
         $comment_id = $this->data["comment_id"];
         if ( $comment_id ) {
@@ -48,12 +48,12 @@ class Action_Comment extends Action
      */
     public function delete()
     {
-      $comment_id = $this->data["comment_id"];
-      $comment    = new Comment();
-      $comment->setId( $comment_id );
-      $comment->delete();
-      unset($this->data["comment_id"]);
-      $this->redirect( "comment", "comment", $this->data );
+        $comment_id = $this->data["comment_id"];
+        $comment    = new Comment();
+        $comment->setId( $comment_id );
+        $comment->delete();
+        unset($this->data["comment_id"]);
+        $this->redirect( "comment", "comment", $this->data );
     }
 
 

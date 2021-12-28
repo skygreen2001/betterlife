@@ -23,9 +23,9 @@ class Action_Blog extends Action
         $this->keywords    .= "-博客";
         $this->description .= "-显示博客列表";
         if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
-          $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
+            $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
-          $nowpage = 1;
+            $nowpage = 1;
         }
 
         $count   = Blog::count();
@@ -52,13 +52,13 @@ class Action_Blog extends Action
             $blog->user_id = HttpSession::get('user_id');
             $blog_id = $blog->getId();
             if ( !empty($blog_id) ) {
-              $blog->update();
-              $view  = new View_Blog( $this );
-              $view->blog             = $blog;
-              $this->view->viewObject = $view;
+                $blog->update();
+                $view  = new View_Blog( $this );
+                $view->blog             = $blog;
+                $this->view->viewObject = $view;
             } else {
-              $blog->save();
-              $this->redirect( "blog", "display" );
+                $blog->save();
+                $this->redirect( "blog", "display" );
             }
             $blog_content        = $blog->blog_content;
             $this->view->message = "博客提交成功";
@@ -73,7 +73,7 @@ class Action_Blog extends Action
             $this->view->viewObject = $view;
         }
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->loadJs("js/edit.js");
+        $this->loadJs( "js/edit.js" );
         $this->load_onlineditor( "blog_content" );
     }
     /**
