@@ -351,6 +351,23 @@
               ];
           }
         ```
+  - Controllers
+    - 基于Model生成Controller: php artisan make:controller BlogController --model=Blog --resource
+    - 在文件 routes/web.php 里添加路由: 
+      ```
+        use App\Http\Controllers\BlogController;
+        Route::resource('blog', BlogController::class);
+      ``` 
+    - 修改文件 app/Http/Controllers/BlogController.php :
+      ```
+        public function show(Blog $blog)
+        {
+            // dd($blog);
+            return $blog;
+        }
+      ```
+     - 访问url: http://betterlife.test/blog/5 
+     - [更多关于Resource Controller](https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller)
 
   - 添加测试
     - 测试Form提交
