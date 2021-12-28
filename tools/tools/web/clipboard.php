@@ -1,6 +1,10 @@
 <?php
 /**
- * 剪贴板小工具 
+ * 剪贴板小工具
+ * 
+ * 仅供作者自己使用，目的不公开 
+ * 
+ * http://localhost/betterlife/tools/tools/web/clipboard.php
  */
 require_once("../../../init.php");
 if ( isset($_REQUEST["s"]) ) {

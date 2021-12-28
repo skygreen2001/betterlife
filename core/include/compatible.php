@@ -1,5 +1,12 @@
 <?php
 /**
+ * -----------| Pollfill 函数, 兼容老版本 |-----------
+ * @category betterlife
+ * @package include
+ * @author skygreen2001
+ */
+
+/**
  * 功能参看PHP 5.3手册get_called_class方法
  * 
  * 以下方法是支持低于PHP 5.3版本的相同功能

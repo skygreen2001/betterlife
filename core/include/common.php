@@ -1,5 +1,12 @@
 <?php
 /**
+ * -----------| 常用函数 |-----------
+ * @category betterlife
+ * @package include
+ * @author skygreen2001
+ */
+
+/**
  * 直接执行SQL语句
  * @param mixed $sql SQL查询语句
  * @param string|class|bool $object 需要生成注入的对象实体|类名称
@@ -199,8 +206,9 @@ function unescape($str)
  * 专供Flex调试使用的Debug工具
  * @link http://www.adobe.com/cn/devnet/flex/articles/flex_php_05.html
  * @param mixed $var
+ * @deprecated
  */
-function logMe($var)
+function flex_logme($var)
 {
     $filename = dirname(__FILE__) . '/__log.txt';
     if (!$handle = fopen($filename, 'a')) {

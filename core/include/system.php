@@ -1,5 +1,12 @@
 <?php
 /**
+ * -----------| 框架常用系统函数 |-----------
+ * @category betterlife
+ * @package core.exception.db
+ * @author zhouyuepu
+ */
+
+/**
  * 加载指定模块下的模块文件
  * @var string $moduleName 模块名
  * @var string $module_dir 模块目录

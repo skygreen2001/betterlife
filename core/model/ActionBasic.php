@@ -520,7 +520,7 @@ class ActionBasic extends BBObject
         /**
          * 设定网站语言，最终需由用户设置
          */
-        class_alias(ucfirst(Gc::$language), Config_C::WORLD_LANGUAGE);
+        class_alias("Lang_" . ucfirst(Gc::$language), Config_C::LANGUAGE_WORLD);
     }
 
     /**

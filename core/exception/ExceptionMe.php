@@ -33,7 +33,7 @@ abstract class ExceptionMe extends Exception {
      * @return void
      */
     public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
-        if ( Initializer::EXCEPTION_WAY != 0 ) {
+        if ( Config_Exception::EXCEPTION_WAY != 0 ) {
             throw new Exception($errorInfo);
         }
 
@@ -204,4 +204,3 @@ abstract class ExceptionMe extends Exception {
         }
     }
 }
-?>

@@ -73,16 +73,6 @@ class Initializer
      * @var string
      */
     const ERROR_INFO_INIT_DIRECTORY = "<table><tr><td>网站应用放置的目录路径设置不正确!</td></tr><tr><td>请查看全局变量设置文件Gc.php的\$nav_root_path和\$nav_framework_path配置!</td></tr></table>";
-
-    /**
-     * 异常处理方式
-     *
-     * 0. 自定义
-     * 1. filp/whoops
-     * 2. 
-     * @var int 
-     */
-    const EXCEPTION_WAY = 1;
     /**
      * 自动加载指定的类对象
      * @param <type> $class_name
@@ -378,13 +368,13 @@ class Initializer
      * 加载异常处理
      */
     public static function loadException() {
-        switch ( self::EXCEPTION_WAY ) {
+        switch ( Config_Exception::EXCEPTION_WAY ) {
             case 1:
                 $run     = new Whoops\Run();
                 $handler = new Whoops\Handler\PrettyPageHandler();
-                $handler->setApplicationPaths([__FILE__]);
+                $handler->setApplicationPaths(["/"]);
                 // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
-                $handler->setEditor('vscode');
+                $handler->setEditor(Config_Exception::WHOOPS_EDITOR);
                 $run->pushHandler($handler);
                 $run->register();
                 break;

@@ -5,7 +5,7 @@
  * @package core.lang
  * @author skygreen <skygreen2001@gmail.com>
  */
-class En_Us {
+class Lang_En_Us {
     const INFO_REDIRECT_PART1 = "System will wait till";
     const INFO_REDIRECT_PART2 = "seconds to redirect";
     const INFO_DB_CHARACTER   = "Current connected database client charset:";

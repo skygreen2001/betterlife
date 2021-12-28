@@ -15,7 +15,8 @@ class Loader {
 
     /**
      * @param Object $object
-     * @param <type> 构造对象时传入的参数
+     * @param $param1 构造对象时传入的参数
+     * @param $param2 构造对象时传入的参数
      * @return Object
      */
     public static function load($object, $param1 = null, $param2 = null) {
@@ -28,13 +29,18 @@ class Loader {
             if ( Gc::$dev_debug_on ) {
                 ExceptionMe::backtrace();
             }
-           x( "Not a valid object '{$object}' to load", self );
+            if (Gc::$language == Config_C::LANGUAGE_EN_US) {
+                $error_info = "Not a valid object '{$object}' to load!";
+            } else {
+                $error_info = "不是有效的可以加载的 '{$object}'!";
+            }
+            x( $error_info, new Loader() );
         }
         if ( empty(self::$loaded[$object]) ) {
             if ( empty($param1) ) {
                 self::$loaded[$object] = new $object();
             } else {
-                self::$loaded[$object] = new $object($param1, $param2);
+                self::$loaded[$object] = new $object( $param1, $param2 );
             }
         }
         return self::$loaded[$object];
@@ -48,4 +54,3 @@ class Loader {
         return getcwd();
     }
 }
-?>

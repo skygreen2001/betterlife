@@ -268,6 +268,8 @@ class Gc {
      */
     public static $is_online_optimize = false;
     /**
+     * 页面字符集
+     * 
      * @string 页面字符集
      * 
      * 一般分为:
@@ -281,19 +283,29 @@ class Gc {
      */
     public static $encoding = 'UTF-8';
     /**
+     * Web开发使用语言
+     * 
+     *     - En_Us: 英文
+     *     - Zh_Cn: 中文
+     * 
+     * 默认使用中文
+     * 
      * @var string 文字显示默认语言
      * @static
+     * 
      * 最终可以由用户选择
      */
     public static $language = 'Zh_Cn';
     /**
      * 是否Session自动启动
+     * 
      * @var bool
      * @static
      */
     public static $session_auto_start = true;
     /**
-     * 通常用于用邮件发送重要日志给管理员。
+     * 通常用于用邮件发送重要日志给管理员
+     * 
      * @var array 邮件的配置。
      * @static
      */
@@ -315,7 +327,8 @@ class Gc {
     );
     //</editor-fold>
     /**
-     * 日志的配置。
+     * 日志的配置
+     * 
      * @var array 日志的配置。
      * @static
      */

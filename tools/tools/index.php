@@ -92,7 +92,7 @@ $url_base = UtilNet::urlbase();
       </p>
       <ul>
         <li><a href="problem/CheckBom.php" target="_blank">检查清除文件头的Bom</a></li>
-        <!-- <li><a href="web/clipboard.php" target="_blank">剪贴板</a></li> -->
+        <!-- <li><a href="" target="_blank"></a></li> -->
       </ul>
     </card>
 
