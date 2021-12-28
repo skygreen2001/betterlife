@@ -1,6 +1,7 @@
 
 # 基础
 
+  - betterlife 从入门到实践
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
     - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
     - tools/tools/optimize/stresstest/README.md 压力测试
@@ -26,6 +27,7 @@
 # 模仿优秀
 
   - 表示层View整合Blade Templates
+  - 生成Api document by Doctum(https://github.com/code-lts/doctum)
   - Laravel rate limiter 
   - Symfony Console: 打造命令行工具
   - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
