@@ -370,8 +370,29 @@
         - 可以通过指令查看函数的变量名是什么: php artisan route:list
         - 如路由名改为book: Route::resource('book', 那么方法名的变量也是book: public function show(Blog $book)
         - 复数也是可以的,如路由名是blogs: Route::resource('blogs', 那么方法名的变量还是blog: public function show(Blog $blog)
-
-    - 访问url: http://betterlife.test/blog/5
+    - 添加分页方法
+      - 新建Resource Collection: php artisan make:resource BlogCollection
+      - route/web.php
+        ```
+          use App\Http\Controllers\BlogController;
+          Route::get('/blog/querypage', [BlogController::class, 'querypage']);
+        ```
+      - BlogController.php
+        ```
+          use App\Http\Resources\BlogCollection;
+          ......
+          /**
+           * 分页查询
+           * @param  \Illuminate\Http\Request $request
+           * @return ResourceCollection
+           */
+          public function querypage(Request $request) {
+              $per_page = $request->per_page;
+              return new BlogCollection(Blog::paginate($per_page));
+          }
+          ......
+        ```
+    - 访问url: http://betterlife.test/blog/5 
     - [更多关于Resource Controller](https://laravel.com/docs/8.x/controllers#actions-handled-by-resource-controller)
 
   - 添加测试

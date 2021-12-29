@@ -260,8 +260,7 @@ class DataObjectSpec
      * 
      * 1. 默认的全局列规格: $field_spec_default, 在DataObject内定义。
      * 
-     * 2. 当前数据对象的列数据规格:$field_spec,
-     *    它可以重载或重写全局列规格的属性说明。
+     * 2. 当前数据对象的列数据规格:$field_spec, 它可以重载或重写全局列规格的属性说明。
      * 
      * @param DataObject $dataobject 数据对象实体
      * @return array 当前数据对象的列规格说明
@@ -389,9 +388,8 @@ class DataObjectSpec
      * 
      * 由两部分组成:
      * 
-     * 1. 默认的全局列规格: $field_spec_default,在DataObject内定义。
-     * 2. 当前数据对象的列数据规格:$field_spec，
-     *   它可以重载或重写全局列规格的属性说明。
+     *   1. 默认的全局列规格: $field_spec_default,在DataObject内定义。
+     *   2. 当前数据对象的列数据规格:$field_spec,它可以重载或重写全局列规格的属性说明。
      * @param object $dataobject 当前对象
      * @return array 当前数据对象的列规格说明
      */
@@ -543,4 +541,3 @@ class DataObjectSpec
     //</editor-fold>
 
 }
-?>
