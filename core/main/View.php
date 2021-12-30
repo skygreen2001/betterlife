@@ -82,11 +82,11 @@ class View {
     */
     public function __construct($moduleName, $templatefile = null) {
         $this->moduleName = $moduleName;
-        self::init_view_global();
+        $this->init_view_global();
         if ( isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every) ) {
-            $this->initTemplate(Gc::$template_mode_every[$this->moduleName], $templatefile);
+            $this->initTemplate( Gc::$template_mode_every[$this->moduleName], $templatefile );
         } else {
-            $this->initTemplate(Gc::$template_mode, $templatefile);
+            $this->initTemplate( Gc::$template_mode, $templatefile );
         }
         if ( !empty(self::$view_global) ) {
             foreach (self::$view_global as $key => $value) {
@@ -115,7 +115,7 @@ class View {
 
     /***********************************魔术方法**************************************************/
     /**
-     * 说明: 若每个具体的实现类希望不想实现set,get方法；
+     * 说明: 若每个具体的实现类希望不想实现set, get方法；
      * 
      *      则将该方法复制到每个具体继承他的对象类内。
      * 
@@ -125,18 +125,19 @@ class View {
      * 
      * 类定义变量访问权限设定需要是pulbic
      * 
-     * @param <type> $property
+     * @param string $method
+     * @argu
      */
     public function __call($method, $arguments) {
-        if ( UtilString::contain( $method, "set" ) ) {
+        if ( contain( $method, "set" ) ) {
             $property = substr($method, strlen("set"), strlen($method));
             $property = lcfirst($property);
             if ( property_exists($this, $property) ) {
                 $this->$property = $arguments[0];
             } else {
-                $this->set($property, $arguments[0]);
+                $this->set( $property, $arguments[0] );
             }
-        } else if ( UtilString::contain($method,"get") ) {
+        } else if ( contain( $method, "get" ) ) {
             $property = substr($method, strlen("get"), strlen($method));
             $property = lcfirst($property);
             if ( is_array($this->vars) ) {
@@ -159,7 +160,7 @@ class View {
             }
             $this->$property = $value;
         } else {
-            $this->set($property, $value);
+            $this->set( $property, $value );
         }
     }
 
@@ -381,16 +382,16 @@ class View {
                 break;
             case self::TEMPLATE_MODE_TWIG:
                 if ( !empty($this->viewObject) ) {
-                  $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
-                  foreach ($view_array as $key => $value) {
-                    if ( !array_key_exists($key, self::$view_global) ) {
-                      $this->set($key, $value);
+                    $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
+                    foreach ($view_array as $key => $value) {
+                        if ( !array_key_exists($key, self::$view_global) ) {
+                            $this->set( $key, $value );
+                        }
                     }
-                  }
-                  $name_viewObject = ViewObject::get_Class();
-                  $name_viewObject = lcfirst($name_viewObject);
-                  $this->set($name_viewObject, $this->viewObject);
-                  // print_r($this->viewObject);
+                    $name_viewObject = ViewObject::get_Class();
+                    $name_viewObject = lcfirst($name_viewObject);
+                    $this->set( $name_viewObject, $this->viewObject );
+                    // print_r($this->viewObject);
                 }
                 $tplFilePath = Config_F::VIEW_CORE . DS . $templateFilePath;
                 echo $this->template->render($tplFilePath, $this->vars);

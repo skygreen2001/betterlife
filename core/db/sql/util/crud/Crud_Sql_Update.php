@@ -88,7 +88,7 @@ class Crud_Sql_Update extends Crud_SQL {
             } else {
                 //第一种情况
                 foreach ($values as &$value) {
-                    if ( UtilString::contain($value, "=") ) {
+                    if ( contain( $value, "=" ) ) {
                         $valueA = explode("=", $value);
                         if ( empty($valueA[1]) ) {
                             $value = $valueA[0] . "='" . $valueA[1] . "'";

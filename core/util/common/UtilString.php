@@ -8,23 +8,8 @@
 class UtilString extends Util
 {
     /**
-     * 查看字符串里是否包含指定字符串
-     * @param mixed $subject
-     * @param mixed $needle* 
-     * @return boolean 是否字符串里包含指定字符串。
-     */
-    public static function contain($subject, $needle)
-    {
-        if ( strpos($subject, $needle) !== false ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * 检查是否有影响系统稳定，数据完全的字符。
-     * @param type $str 字符串
+     * @param string $str 字符串
      * @return boolean 是否有影响系统稳定，数据完全的字符。
      */
     public static function has_unsafeword($str)
@@ -409,9 +394,10 @@ class UtilString extends Util
     /**
      * 去除Html标签
      * 
-     * str 需要截去的对象
+     * @param string $str 需要截去的对象
+     * @return void
      */
-    public static function delhtml($str) {   //清除HTML标签
+    public static function delhtml($str) {
         $st = -1; //开始
         $et = -1; //结束
         $stmp = array();

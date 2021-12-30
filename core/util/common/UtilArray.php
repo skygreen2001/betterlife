@@ -199,7 +199,7 @@ class UtilArray extends Util
             $node = self::xml_to_array( $node, $rootNodeName );
 
             // support for 'anon' non-associative arrays
-            if ( UtilString::contain( $key, $rootNodeName . "_" ) ) {
+            if ( contain( $key, $rootNodeName . "_" ) ) {
                $key = count($arr);
             }
             // if ( $key == 'anon' ) $key = count( $arr );

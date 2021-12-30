@@ -700,7 +700,7 @@ class UtilHugeAmount
      */
     public static function column_length($type)
     {
-        if ( UtilString::contain( $type, "(" ) ) {
+        if ( contain( $type, "(" ) ) {
             list($typep, $length) = preg_split('[()]', $type);
         } else {
             $length = 1;
@@ -715,7 +715,7 @@ class UtilHugeAmount
      */
     public static function column_type($type)
     {
-        if ( UtilString::contain( $type, "(" ) ) {
+        if ( contain( $type, "(" ) ) {
             list($typep, $length) = preg_split('[()]', $type);
         } else {
             $typep = $type;

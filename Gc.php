@@ -189,7 +189,7 @@ class Gc {
     /**
      * 每个模块可以定义自己的模板模式
      * 
-     * 如果没有定义，则使用$template_mode默认定义的名称，一般都是1:Smarty
+     * 如果没有定义，则使用$template_mode默认定义的名称，一般都是 1: Smarty
      * @var mixed
      */
     public static $template_mode_every = array(

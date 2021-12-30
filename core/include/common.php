@@ -58,23 +58,34 @@ function e_view()
 
 /**
  * 查看字符串里是否包含指定字符串
- * @param mixed $subject
- * @param mixed $needle
+ * @param string $subject
+ * @param string $needle
+ * @param boolean $is_strict 是否区分大小写，默认不区分
+ * @return boolean 是否字符串里包含指定字符串。
  */
-function contain($subject, $needle)
+function contain($subject, $needle, $is_strict = false)
 {
     if ( empty($subject) ) return false;
-    if ( strpos(strtolower($subject), strtolower($needle)) !== false ) {
-        return true;
+    if ( $is_strict ) {
+        if ( strpos($subject, $needle) !== false ) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        if ( strpos(strtolower($subject), strtolower($needle)) !== false ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
 /**
  * 查看字符串里是否包含数组中任意一个指定字符串
- * @param mixed $subject
- * @param mixed $array
+ * @param string $subject
+ * @param array $array
+ * @return boolean
  */
 function contains($subject, $array)
 {

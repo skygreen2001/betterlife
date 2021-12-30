@@ -91,7 +91,7 @@ class TagPageService {
      */
     private function url_link_pageparam($pageNo)
     {
-        if ( UtilString::contain( $this->linkUrl, "?" ) ) {
+        if ( contain( $this->linkUrl, "?" ) ) {
             $result = "<a href='$this->linkUrl&" . self::$linkUrl_pageFlag . "=$pageNo'>";
         } else {
             $result = "<a href='$this->linkUrl?" . self::$linkUrl_pageFlag . "=$pageNo'>";
@@ -130,7 +130,7 @@ class TagPageService {
             return "";
         }
 
-        if ( !UtilString::contain( $this->linkUrl, "?" ) ) {
+        if ( !contain( $this->linkUrl, "?" ) ) {
             $this->linkUrl .= "?";
         }
 

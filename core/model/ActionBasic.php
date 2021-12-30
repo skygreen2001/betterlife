@@ -85,6 +85,28 @@ class ActionBasic extends BBObject
         $this->model      = Loader::load( Loader::CLASS_MODEL );
         $this->model->setAction( $this );
     }
+    
+    /**
+     * 自动变量设置
+     * @access public
+     * @param $name 属性名称
+     * @param $value  属性值
+     */
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    /**
+     * 自动变量获取
+     * @access public
+     * @param $name 属性名称
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return isset($this->$name) ? $this->$name : null;
+    }
 
     /**
      * 设置显示器
@@ -528,7 +550,7 @@ class ActionBasic extends BBObject
      */
     public function afterAction()
     {
-        $this->view->set("keywords", $this->keywords);
-        $this->view->set("description", $this->description);
+        $this->view->set( "keywords", $this->keywords );
+        $this->view->set( "description", $this->description );
     }
 }
