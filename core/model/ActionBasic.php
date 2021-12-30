@@ -148,6 +148,8 @@ class ActionBasic extends BBObject
      * 加载通用的Css
      * 
      * 默认:当前模板目录下:resources/css/index.css
+     * @param string $defaultCssFile 引用的css文件
+     * @return void
      */
     public function loadCss($defaultCssFile = "resources/css/index.css")
     {
@@ -173,6 +175,7 @@ class ActionBasic extends BBObject
      * 默认:当前模板目录下:js/index.js
      * 
      * @param string $defaultJsFile 默认需加载JS文件
+     * @return void
      */
     public function loadJs($defaultJsFile = "js/index.js")
     {
@@ -195,6 +198,7 @@ class ActionBasic extends BBObject
     /**
      * 查看用户请求数据里是否存在某参数
      * @param $param 参数
+     * @return boolean
      */
     public function isDataHave($param)
     {
@@ -350,6 +354,7 @@ class ActionBasic extends BBObject
     /**
      * 加载在线编辑器
      * @param array|string $textarea_ids Input为Textarea的名称name[一个页面可以有多个Textarea]
+     * @return void
      */
     public function load_onlineditor($textarea_ids = "content")
     {
@@ -402,11 +407,16 @@ class ActionBasic extends BBObject
      * @param array $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
      * @param array $defaultId 上传文件所在的目录标识，一般为类实例名称; 如果包含有 . 则为指定文件名, 文件名后缀名会自动修改为上传文件的后缀名.
      * @param array $isReturnAll 是否返回所有值，当多个图片文件上传，有的是空的，是否也返回空；保证传入和返回的数组数量相等
-     * @return array 是否创建成功。
+     * @return array 图片存储路径等信息
+     * 
+     *   - 返回数组key定义
+     *     - success    : 是否操作成功
+     *     - file_name[]: 数组, 多个文件存储根路径upload/images的相对路径 
+     * 
      * @Example
-     *     - $this->$this->uploadImgs($_FILES, "icon_url", "icon_url", "blog");
+     *     - $this->uploadImgs($_FILES, "icon_url", "icon_url", "blog");
      *       [说明] 生成的图片会是 images/blog/icon_url/201806011225.png  类似的路径
-     *     - $this->$this->uploadImgs($_FILES, "icon_url", "subdir", "test.png");
+     *     - $this->->uploadImgs($_FILES, "icon_url", "subdir", "test.png");
      *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
      *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
      */
@@ -492,12 +502,21 @@ class ActionBasic extends BBObject
      * @param string $defaultId 上传文件所在的目录标识，一般为类实例名称; 如果包含有 . 则为指定文件名, 文件名后缀名会自动修改为上传文件的后缀名.
      * @param int    $file_permit_upload_size 允许上传的文件尺寸大小: 默认10M
      * @param boolean $is_permit_same_filename 是否允许用同一个名字
-     * @return array 是否创建成功。
+     * @return array 图片存储路径等信息
+     * 
+     *   - 返回数组key定义
+     *     - success  : 是否操作成功
+     *     - file_name: 文件存储根路径upload/images的相对路径 
+     * 
      * @Example
-     *     - $this->$this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
+     *     - $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
+     * 
      *       [说明] 生成的图片会是 images/blog/icon_url/201806011225.png  类似的路径
-     *     - $this->$this->uploadImg($_FILES, "icon_url", "subdir", "test.png");
+     * 
+     *     - $this->uploadImg($_FILES, "icon_url", "subdir", "test.png");
+     * 
      *       [说明] 生成的图片会是 images/subdir/test.png  类似的路径
+     * 
      *             如果上传文件为jpg后缀名，则会是 images/subdir/test.jpg  类似的路径
      */
     public function uploadImg($files, $uploadFlag, $upload_dir, $defaultId = "default", $file_permit_upload_size = 10, $is_permit_same_filename = false)

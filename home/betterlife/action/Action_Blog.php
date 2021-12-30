@@ -48,7 +48,7 @@ class Action_Blog extends Action
         $this->view->color = "green";
         $blog_content      = "";
         if ( !empty($_POST) ) {
-            $blog    = $this->model->Blog;
+            $blog          = $this->model->Blog;
             $blog->user_id = HttpSession::get('user_id');
             $blog_id = $blog->getId();
             if ( !empty($blog_id) ) {
