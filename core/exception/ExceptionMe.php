@@ -33,8 +33,10 @@ abstract class ExceptionMe extends Exception {
      * @return void
      */
     public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
-        if ( Config_Exception::EXCEPTION_WAY != 0 ) {
-            throw new Exception($errorInfo);
+        if ( Gc::$dev_debug_on ) {
+            if ( Config_Exception::EXCEPTION_WAY != 0 ) {
+                throw new Exception($errorInfo);
+            }
         }
 
         //记录系统日志

@@ -368,24 +368,26 @@ class Initializer
      * 加载异常处理
      */
     public static function loadException() {
-        switch ( Config_Exception::EXCEPTION_WAY ) {
-            case 1:
-                $run     = new Whoops\Run();
-                $handler = new Whoops\Handler\PrettyPageHandler();
-                $handler->setApplicationPaths(["/"]);
-                // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
-                $handler->setEditor(Config_Exception::WHOOPS_EDITOR);
-                $run->pushHandler($handler);
-                $run->register();
-                break;
-            case 2:
-                break;
-            default:
-                /**
-                 * 设置处理所有未捕获异常的用户定义函数
-                 */
-                set_exception_handler('e_me');
-                break;
+        if ( Gc::$dev_debug_on ) {
+            switch ( Config_Exception::EXCEPTION_WAY ) {
+                case 1:
+                    $run     = new Whoops\Run();
+                    $handler = new Whoops\Handler\PrettyPageHandler();
+                    $handler->setApplicationPaths(["/"]);
+                    // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
+                    $handler->setEditor(Config_Exception::WHOOPS_EDITOR);
+                    $run->pushHandler($handler);
+                    $run->register();
+                    break;
+                case 2:
+                    break;
+                default:
+                    /**
+                     * 设置处理所有未捕获异常的用户定义函数
+                     */
+                    set_exception_handler('e_me');
+                    break;
+            }
         }
     }
 
