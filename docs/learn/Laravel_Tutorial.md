@@ -2,7 +2,9 @@
 
 - [20 Best Laravel Tutorials](https://kinsta.com/blog/laravel-tutorial/) 
 
-## 完善的生态系统
+## 为什么学习Laravel
+
+### 完善的生态系统
 
 官方提供的软件包(Package)
 
@@ -13,7 +15,7 @@
 - 更多尽在[首页](https://laravel.com/): The Laravel Ecosystem
 - 可以自主[开发软件包](https://laravel.com/docs/8.x/packages)
 
-## 活跃的社区资源
+### 活跃的社区资源
 
 - [Laravel.io](https://laravel.io/)
 - [Laracasts Discuss](https://laracasts.com/discuss)
@@ -22,7 +24,7 @@
 - [Reddit](https://www.reddit.com/r/laravel/)
 - 官方主办的[Laracon](https://laracon.net/),每年在三个大洲举办 (America, Europe, Australia).
 
-## 就业机会
+### 就业机会
 
 - [Larajobs](https://larajobs.com/)
   - 官方提供的求助专场 
@@ -38,9 +40,54 @@
   - [Turing](turing.com)
     - [开发者求职](https://developers.turing.com/)
 
+## 如何学习Laravel
+
+### 基本技能
+
+- PHP; 尤其是面向对象的PHP
+  - [官方手册](https://www.php.net/)
+  - [W3Schools](https://www.w3schools.com/php/)
+  - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
+  - [TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)
+  - [PHP Apprentice](https://phpapprentice.com/)
+  - [PHP Tutorials](https://www.geeksforgeeks.org/php-tutorials/)
+- Composer
+
+### Laravel版本
+
+- 学习Laravel教程一定要注意它使用的Laravel版本
+- 学习者需要熟悉以下Laravel版本规则
+  - 从Version 6开始, Laravel和官方发布Package遵循[semantic versioning](https://laravel.com/docs/8.x/releases#versioning-scheme)(major.minor.patch),如8.*是主发布版本
+  - 在Version 6之前，框架使用 paradigm.major.minor, 如5.8.*也是主发布版本
+  - 每6个月会有一个主发布版本(一般在2月和8月)
+  - 每两年会有一个长期支持(LTS)的发布版本
+  - 一般的发布, 会提供6个月的bug修复和1年的安全发布
+  - 长期支持(LTS)的发布版本, 会提供2年的bug修复和3年的安全发布
+  - 因此, Laravel历来的发布版本号就是5.5.* (LTS), 5.6.*, 5.7.*, 5.8.*, 6.* (LTS), 7.*, 8.*
+  - [接下来将是: 9.* (LTS), 10.*](https://laravel.com/docs/8.x/releases#support-policy)
+- 每年会有两个主版本发布，第三方的教程很难跟上, 经常会发现教程和官方提供的版本相差1-3个版本号，这不是大问题，除非框架经历了完全改写, 上次发生在2013年发布的Laravel 4
+- 浏览新版本发布的[release notes](https://laravel.com/docs/8.x/releases),它会说明新版本修改的特征和需要注意的事项
+
+### 最好的6个Laravel教程网站
+
+- [Laravel官网文档](https://laravel.com/docs/)
+  - [Github: laravel/docs](https://github.com/laravel/docs)
+  - 适合初学者、中级、高级
+- [Laravel News](https://laravel-news.com/)
+  - 适合初学者、中级、高级
+- [Tuts Make](https://www.tutsmake.com/category/laravel-tutorial/)
+  - 适合中级、高级
+- [LaraShout](https://www.larashout.com/)
+  - 适合初学者、中级、高级
+- [Learn2torials](https://learn2torials.com/category/laravel)
+  - 适合初学者、中级
+- [Eloquent by Example](https://eloquentbyexample.com/)
+  - 适合中级
+
 ## 2021年最好的PHP框架排行榜
 
 * [2021年最流行的PHP框架](https://kinsta.com/blog/php-frameworks/)
+* [Wikipedia PHP框架清单](https://en.wikipedia.org/wiki/Category:PHP_frameworks)
 
 - Laravel
 - Symfony

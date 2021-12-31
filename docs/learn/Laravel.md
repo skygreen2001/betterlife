@@ -95,6 +95,26 @@
   - 浏览器访问Telescope: /telescope 
     - 如当前应用: http://betterlife.test/telescope
 
+## 安装Laravel Package
+
+  - [Packalyst](https://packalyst.com/) 
+    - 拥有15000多个Laravel Package安装包可使用
+  - [安装laravel-debugbar](https://packalyst.com/packages/package/barryvdh/laravel-debugbar)
+  - 修改根路径下composer.json文件
+    ```
+      {
+          "name": "laravel/laravel",
+          ......
+          "require": {
+              ......
+              "barryvdh/laravel-debugbar": "v3.6.5"
+          }
+          ......
+      }
+    ```
+  - 删除根路径下的composer.lock文件，在根路径下运行: composer install
+  - 浏览器网页下方会显示调试条，可修改根路径下.env文件的属性: APP_DEBUG 显示隐藏它
+
 ## 安装数据库
 
   - 安装Dbngin: https://dbngin.com/
@@ -610,3 +630,4 @@
 - [20 Best Laravel Tutorials](https://kinsta.com/blog/laravel-tutorial/) 
 - [Laravel Valet](https://laravel.com/docs/8.x/valet) 
   - [Valet中文文档](https://learnku.com/docs/laravel/8.5/valet/)
+- [Packalyst](https://packalyst.com/) 

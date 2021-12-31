@@ -175,5 +175,6 @@
 ## 参考资料
 
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
+- [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
 - [学习与收集](docs/learn/README.md)
 - [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
