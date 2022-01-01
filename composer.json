@@ -33,7 +33,7 @@
   "require": {
     "php"                : ">=5.2.0",
     "smarty/smarty"      : "^3.1",
-    "phpoffice/phpspreadsheet": "^1.2",
+    "phpoffice/phpspreadsheet": ">=1.16.0",
     "mustangostang/spyc" : "^0.6.2",
     "fusonic/linq"       : "^2.0",
     "adodb/adodb-php"    : ">=5.19",

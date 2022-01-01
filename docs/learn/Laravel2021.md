@@ -37,7 +37,7 @@
 - 远程办公
   - [RemoteOK](https://remoteok.io/remote-laravel-jobs)
   - [We Work Remotely](https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term=laravel)
-  - [Turing](turing.com)
+  - [Turing](https://turing.com)
     - [开发者求职](https://developers.turing.com/)
 
 ## 如何学习Laravel
@@ -73,19 +73,14 @@
 - [Laravel官网文档](https://laravel.com/docs/)
   - [Github: laravel/docs](https://github.com/laravel/docs)
   - 适合初学者、中级、高级
-
 - [Laravel News](https://laravel-news.com/)
   - 适合初学者、中级、高级
-
 - [Tuts Make](https://www.tutsmake.com/category/laravel-tutorial/)
   - 适合中级、高级
-
 - [LaraShout](https://www.larashout.com/)
   - 适合初学者、中级、高级
-
 - [Learn2torials](https://learn2torials.com/category/laravel)
   - 适合初学者、中级
-
 - [Eloquent by Example](https://eloquentbyexample.com/)
   - 适合中级
 
