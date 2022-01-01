@@ -1,6 +1,6 @@
 # 2021年最好的Laravel教程
 
-- [20 Best Laravel Tutorials](https://kinsta.com/blog/laravel-tutorial/) 
+- [20 Best Laravel Tutorials in 2021](https://kinsta.com/blog/laravel-tutorial/) 
 
 ## 为什么学习Laravel
 
@@ -68,37 +68,63 @@
 - 每年会有两个主版本发布，第三方的教程很难跟上, 经常会发现教程和官方提供的版本相差1-3个版本号，这不是大问题，除非框架经历了完全改写, 上次发生在2013年发布的Laravel 4
 - 浏览新版本发布的[release notes](https://laravel.com/docs/8.x/releases),它会说明新版本修改的特征和需要注意的事项
 
-### 最好的6个Laravel教程网站
+### 6个最好的Laravel教程网站
 
 - [Laravel官网文档](https://laravel.com/docs/)
   - [Github: laravel/docs](https://github.com/laravel/docs)
   - 适合初学者、中级、高级
+
 - [Laravel News](https://laravel-news.com/)
   - 适合初学者、中级、高级
+
 - [Tuts Make](https://www.tutsmake.com/category/laravel-tutorial/)
   - 适合中级、高级
+
 - [LaraShout](https://www.larashout.com/)
   - 适合初学者、中级、高级
+
 - [Learn2torials](https://learn2torials.com/category/laravel)
   - 适合初学者、中级
+
 - [Eloquent by Example](https://eloquentbyexample.com/)
   - 适合中级
 
+### 6个最好的Laravel视频教程网站、Screencasts 和 Podcasts
+
+由于这些视频大部分都来自Youtube，如果不能播放视频，可能需要使用翻墙工具；
+
+这些视频都是用英语作为母语，所以还可以看着画面练练英语听力
+
+- [BitFumes](https://bitfumes.com/courses/laravel)
+  - 适合初学者、中级、高级
+- [Laravel Business](https://www.youtube.com/channel/UCTuplgOBi6tJIlesIboymGA/featured)
+  - [Laravel Daily](https://laraveldaily.teachable.com/)
+- [Laraning](https://www.laraning.com/)
+  - 适合初学者、中级
+  - 使用vimeo视频网站
+- [FreeCodeCamp](https://www.youtube.com/watch?v=ImtZ5yENzgE) 
+  - 使用vimeo视频网站
+- [Let’s Build with Laravel: A Linktree Clone](https://www.youtube.com/watch?v=30qk04BG9G4)
+  - 适合初学者、中级
+- [The Laravel Podcast](https://laravelpodcast.com/)
+  - 适合初学者、中级
+
+
 ## 2021年最好的PHP框架排行榜
 
-* [2021年最流行的PHP框架](https://kinsta.com/blog/php-frameworks/)
 * [Wikipedia PHP框架清单](https://en.wikipedia.org/wiki/Category:PHP_frameworks)
+* [2021年最流行的PHP框架](https://kinsta.com/blog/php-frameworks/)
 
-- Laravel
-- Symfony
-- CodeIgniter
-- Zend Framework / Laminas Project
-- Yii (Framework)
-- CakePHP
-- Slim
-- Phalcon
-- FuelPHP
-- Fat-Free Framework
+- [Laravel](https://laravel.com)
+- [Symfony](https://symfony.com/)
+- [CodeIgniter](https://codeigniter.com/)
+- [Zend Framework / Laminas Project](https://getlaminas.org/)
+- [Yii (Framework)](https://www.yiiframework.com/)
+- [CakePHP](https://cakephp.org/)
+- [Slim](http://www.slimframework.com/)
+- [Phalcon](https://phalcon.io)
+- [FuelPHP](https://fuelphp.com/)
+- [Fat-Free Framework](https://fatfreeframework.com/)
 
 ## 2022年推荐需读的最新Laravel书籍
 

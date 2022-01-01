@@ -2,7 +2,6 @@
 # 基础
 
   - betterlife 从入门到实践
-  - 数据对象规格，除了按规则寻找表名，优先通过自定义数据对象可自定义表名。
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
     - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
     - tools/tools/optimize/stresstest/README.md 压力测试

@@ -281,7 +281,14 @@ class Config_Db extends ConfigBB
      *     文件夹目录: domain/business/work
      * 
      *     表名: apts_business_work_task
-     * @var array
+     * 
+     * 无需进行$orm配置；通过规则生成表与类的映射；即规则优于配置
+     * 
+     * 如果在 $orm 配置里定义了类和表名的关系, 则从 $orm 配置中根据类名获取表名
+     * 
+     * 这是全局定义，也就是说如果不是通过sqlExecute直接使用SQL, 框架所有的数据库表的增删改查都会从这里根据类名获取表名
+     * 
+     * @var array key: 类名, value: 表名
      * @static
      */
     public static $orm = array(
@@ -293,6 +300,8 @@ class Config_Db extends ConfigBB
      * 相当于ORM
      * 
      * 无需进行$orm配置；通过规则生成表与类的映射；即规则优于配置
+     * 
+     * 如果在 $orm 配置里定义了类和表名的关系, 则从 $orm 配置中根据类名获取表名
      * @param classname 类名称
      * @return 根据对象定义返回表名
      * @final
@@ -313,6 +322,8 @@ class Config_Db extends ConfigBB
      * 相当于ORM
      * 
      * 无需进行$orm配置；通过规则生成表与类的映射；即规则优于配置
+     * 
+     * 如果在 $orm 配置里定义了类和表名的关系, 则从 $orm 配置中根据表名获取类名
      * @param $tablename 表名称
      * @return 根据表名称返回对象名称定义
      * @final

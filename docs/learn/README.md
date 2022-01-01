@@ -1,12 +1,13 @@
 # 学习与收集
 
 - [第三方库](APP.md)
-- [CodeIgniter](https://codeigniter.com/user_guide/)
-  - CodeIgniter is an Application Development Framework - a toolkit - build web sites using PHP.
-- [Symfony: 从入门到实践](SYMFONY.md)
-  - High Performance PHP Framework for Web Development
 - [Laravel: 从入门到实践](Laravel.md) 
   - The PHP Framework For Web Artisans
+  - [2021年最好的Laravel教程](Laravel2021.md)
+- [Symfony: 从入门到实践](SYMFONY.md)
+  - High Performance PHP Framework for Web Development 
+- [CodeIgniter](https://codeigniter.com/user_guide/)
+  - CodeIgniter is an Application Development Framework - a toolkit - build web sites using PHP.
 - [PHP的标准化组织](https://www.php-fig.org)
   - [PHP-FIG](https://github.com/php-fig/fig-standards)
 - [Grav](https://getgrav.org/) 
