@@ -373,6 +373,8 @@ class Initializer
                 case 1:
                     $run     = new Whoops\Run();
                     $handler = new Whoops\Handler\PrettyPageHandler();
+                    // 设置异常网页的head title
+                    $handler->setPageTitle(Gc::$site_name);
                     $handler->setApplicationPaths(["/"]);
                     // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
                     $handler->setEditor(Config_Exception::WHOOPS_EDITOR);

@@ -9,13 +9,17 @@
 以下库已随着compser Laravel库的安装，已经安装好，开箱即用。
 
 - [Carbon](https://carbon.nesbot.com/docs/): 日期及时间处理包
+- [CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles): 转换css文件内容如html文件，发送邮件内容很有用
 - [FakerPHP/Faker](https://fakerphp.github.io/): 生成假数据的PHP库
 - [Monolog](https://seldaek.github.io/monolog/): 流行的PHP日志记录库
 - [Dot Access Data](https://github.com/dflydev/dflydev-dot-access-data): 用.访问复杂数据
+- [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv): 从.env文件加载环境变量
 - [filp/whoops](https://github.com/filp/whoops): 错误处理框架
   - [whoops](http://filp.github.io/whoops/)
   - 本框架(betterlife)中已使用whoops框架，查看core/main/Initializer.php, 属性:EXCEPTION_WAY
   - [Ignition](https://flareapp.io/ignition): Error Page for Laravel
+  - [ErrorHandler Component](https://github.com/symfony/symfony/tree/6.1/src/Symfony/Component/ErrorHandler): symfony错误处理组件
+- [ezyang/htmlpurifier](https://github.com/ezyang/htmlpurifier): 标准、兼容的 HTML 过滤器，支持自定义标签、属性、过滤规则。
 
 ### 未安装 
 
