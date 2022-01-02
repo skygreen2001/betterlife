@@ -2,8 +2,8 @@
 /**
  * -----------| 框架常用系统函数 |-----------
  * @category betterlife
- * @package core.exception.db
- * @author zhouyuepu
+ * @package include
+ * @author skygreen2001
  */
 
 /**
@@ -193,7 +193,10 @@ function system_dir_info($dir_name, $info_dir_name = "" )
 }
 
 /**
- * 取得阅读器名称和版本
+ * 取得浏览器名称和版本
+ * 
+ * [hisorange/browser-detect](https://github.com/hisorange/browser-detect): 另一个方案可参考
+ * 
  * @access public
  * @return string
  */
@@ -277,6 +280,8 @@ function getbrowser()
 /**
  * 取得客户端使用的操作系统体系
  *
+ * [hisorange/browser-detect](https://github.com/hisorange/browser-detect): 另一个方案可参考
+ * 
  * @access private
  * @return void
  */

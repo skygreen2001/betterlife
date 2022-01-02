@@ -27,5 +27,5 @@ function x($errorInfo, $object = null, $code = 0, $extra = null) {
  * @return void
  */
 function logme($message, $level = EnumLogLevel::INFO, $category = '') {
-    LogMe::log($message, $level, $category);
+    LogMe::log( $message, $level, $category );
 }
