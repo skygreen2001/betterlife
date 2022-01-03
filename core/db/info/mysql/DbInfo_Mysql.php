@@ -64,7 +64,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         {
             LogMe::log(
                 '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysql_error()
-                    . '.<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
+                    . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
             return FALSE;
         }
 
@@ -88,7 +88,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         if ( !$isSetcharset ) {
             $error = mysql_error();
             LogMe::log( '执行字符集操作命令发生错误脚本: ' . $v
-                                   . '.<br/> MySQL报告错误信息:' . $error."<br/>" );
+                                   . '<br/> MySQL报告错误信息:' . $error."<br/>" );
         }
         if ( file_exists($script_filename) ) {
             $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
@@ -104,14 +104,14 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
                     if ( !$result ) {
                         $error = mysql_error();
                         LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v
-                                       . '.<br/> MySQL报告错误信息:' . $error );
+                                       . '<br/> MySQL报告错误信息:' . $error );
                         return FALSE;
                     }
                 }
             }
             LogMe::log( "数据库操作成功，无异常!" );
         } else {
-            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: '. $script_filename );
+            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename );
         }
     }
 

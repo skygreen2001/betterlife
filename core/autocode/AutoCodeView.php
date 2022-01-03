@@ -73,7 +73,7 @@ class AutoCodeView extends AutoCode
     {
         self::pathset( );
         self::init( );
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . "\r\n";
+        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_41" );
@@ -175,9 +175,9 @@ class AutoCodeView extends AutoCode
      */
     public static function tableToViewTplDefine($contents)
     {
-        $result = "{extends file=\"\$templateDir/layout/normal/layout.tpl\"}\r\n".
-                  "{block name=body}\r\n".
-                  "$contents\r\n".
+        $result = "{extends file=\"\$templateDir/layout/normal/layout.tpl\"}" . HH .
+                  "{block name=body}" . HH .
+                  "$contents" . HH .
                   "{/block}";
         return $result;
     }
@@ -202,18 +202,18 @@ class AutoCodeView extends AutoCode
             $instancename  = self::getInstancename($tablename );
             $link          = "    <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.view\">查看</my:a>|<my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.edit\">修改</my:a>";
             $back_index    = "    <my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a></div>";
-            $tpl_content   = self::tableToViewTplDefine("    <div><h1>" . $table_comment . "列表</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
+            $tpl_content   = self::tableToViewTplDefine("    <div><h1>" . $table_comment . "列表</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}" );
             $filename      = "lists".Config_F::SUFFIX_FILE_TPL;
             $tplName       = self::saveTplDefineToDir( $tablename, $tpl_content, $filename );
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
             $link        = "     <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.lists\">返回列表</my:a>";
-            $tpl_content = self::tableToViewTplDefine( "    <div><h1>查看" . $table_comment . "</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
+            $tpl_content = self::tableToViewTplDefine( "    <div><h1>查看" . $table_comment . "</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}" );
             $filename    = "view".Config_F::SUFFIX_FILE_TPL;
             $tplName     = self::saveTplDefineToDir( $tablename, $tpl_content, $filename );
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
-            $tpl_content = self::tableToViewTplDefine( "    <div><h1>编辑" . $table_comment . "</h1></div><br/>\r\n{$link}<br/>\r\n{$back_index}" );
+            $tpl_content = self::tableToViewTplDefine( "    <div><h1>编辑" . $table_comment . "</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}" );
             $filename    = "edit".Config_F::SUFFIX_FILE_TPL;
             $tplName     = self::saveTplDefineToDir( $tablename, $tpl_content,$filename );
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";

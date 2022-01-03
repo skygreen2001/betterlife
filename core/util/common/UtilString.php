@@ -182,9 +182,9 @@ class UtilString extends Util
      */
     public static function online_optimize($result)
     {
-        $result=preg_replace("/(\/\/[\s\S]*?([\r]|[\n]))/", "",$result); //去掉js行注释如://
-        $result=preg_replace("/(\/\*[\s\S]*?\*\/|[\r]|[\n]|[\r\n])/", "",$result);//去掉css注释如:/*   */
-        $result=str_replace(array("\r\n","    ","    ","\r", "\n", "\t"),"",$result);
+        $result = preg_replace("/(\/\/[\s\S]*?([\r]|[\n]))/", "",$result); //去掉js行注释如://
+        $result = preg_replace("/(\/\*[\s\S]*?\*\/|[\r]|[\n]|[\r\n])/", "", $result);//去掉css注释如:/*   */
+        $result = str_replace(array(HH, "    ", "    ", "\r", "\n", "\t"), "", $result);
         /** 移除无需的空格 */
         $result = str_replace('{ ', '{', $result);
         $result = str_replace(' }', '}', $result);

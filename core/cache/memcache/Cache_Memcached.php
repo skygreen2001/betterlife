@@ -172,19 +172,19 @@ class Cache_Memcached extends Cache_Base
         $curBytes = $info['bytes'];
         $totalBytes = $info['limit_maxbytes'];
 
-        $return[] = array('name'=>'子系统运行时间','value'=>timeLength($info['uptime']));
-        $return[] = array('name'=>'缓存服务器','value'=>MEMCACHED_HOST.':'.MEMCACHED_PORT." (ver:{$info['version']})");
-        $return[] = array('name'=>'数据读取','value'=>$info['cmd_get'].'次 '.formatBytes($info['bytes_written']));
-        $return[] = array('name'=>'数据写入','value'=>$info['cmd_set'].'次 '.formatBytes($info['bytes_read']));
-        $return[] = array('name'=>'缓存命中','value'=>$info['get_hits'].'次');
-        $return[] = array('name'=>'缓存未命中','value'=>$info['get_misses'].'次');
-        $return[] = array('name'=>'已缓存数据条数','value'=>$info['curr_items'].'条');
-        $return[] = array('name'=>'进程数','value'=>$info['threads']);
-        $return[] = array('value'=>$info['pid'],'name'=>'服务器进程ID');
-        $return[] = array('value'=>$info['rusage_user'],'name'=>'该进程累计的用户时间(秒:微妙)');
-        $return[] = array('value'=>$info['rusage_system'],'name'=>'该进程累计的系统时间(秒:微妙)');
-        $return[] = array('value'=>$info['curr_items'],'name'=>'服务器当前存储的内容数量');
-        $return[] = array('value'=>$info['total_items'],'name'=>'服务器启动以来存储过的内容总数');
+        $return[] = array('name' => '子系统运行时间', 'value' => timeLength($info['uptime']));
+        $return[] = array('name' => '缓存服务器', 'value' => MEMCACHED_HOST . ':' . MEMCACHED_PORT . " (ver:{$info['version']})");
+        $return[] = array('name' => '数据读取', 'value' => $info['cmd_get'] . '次 ' . formatBytes($info['bytes_written']));
+        $return[] = array('name' => '数据写入', 'value' => $info['cmd_set'] . '次 ' . formatBytes($info['bytes_read']));
+        $return[] = array('name' => '缓存命中', 'value' => $info['get_hits'] . '次');
+        $return[] = array('name' => '缓存未命中', 'value' => $info['get_misses'] . '次');
+        $return[] = array('name' => '已缓存数据条数', 'value' => $info['curr_items'] . '条');
+        $return[] = array('name' => '进程数', 'value' => $info['threads']);
+        $return[] = array('value' => $info['pid'], 'name' => '服务器进程ID');
+        $return[] = array('value' => $info['rusage_user'], 'name' => '该进程累计的用户时间(秒:微妙)');
+        $return[] = array('value' => $info['rusage_system'], 'name' => '该进程累计的系统时间(秒:微妙)');
+        $return[] = array('value' => $info['curr_items'], 'name' => '服务器当前存储的内容数量');
+        $return[] = array('value' => $info['total_items'], 'name' => '服务器启动以来存储过的内容总数');
 
 //    $return[] = array('value'=>$info['curr_connections'],'name'=>'连接数量');
 //    $return[] = array('value'=>$info['total_connections'],'name'=>'服务器运行以来接受的连接总数 ');

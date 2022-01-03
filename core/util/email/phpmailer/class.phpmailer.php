@@ -638,7 +638,7 @@ class PHPMailer {
       // digitally sign with DKIM if enabled
       if ($this->DKIM_domain && $this->DKIM_private) {
         $header_dkim = $this->DKIM_Add($this->MIMEHeader, $this->EncodeHeader($this->SecureHeader($this->Subject)), $this->MIMEBody);
-        $this->MIMEHeader = str_replace("\r\n", "\n", $header_dkim) . $this->MIMEHeader;
+        $this->MIMEHeader = str_replace(HH, "\n", $header_dkim) . $this->MIMEHeader;
       }
 
       $this->SentMIMEMessage = sprintf("%s%s\r\n\r\n%s",$this->MIMEHeader,$mailHeader,$this->MIMEBody);
@@ -1825,7 +1825,7 @@ class PHPMailer {
   public function EncodeQPphp( $input = '', $line_max = 76, $space_conv = false) {
     $hex = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
     $lines = preg_split('/(?:\r\n|\r|\n)/', $input);
-    $eol = "\r\n";
+    $eol = HH;
     $escape = '=';
     $output = '';
     while ( list(, $line) = each($lines) ) {
@@ -1849,7 +1849,7 @@ class PHPMailer {
           $c = $escape.$hex[$h2].$hex[$h1];
         }
         if ( (strlen($newline) + strlen($c)) >= $line_max ) { // CRLF is not counted
-          $output .= $newline.$escape.$eol; //  soft line break; " =\r\n" is okay
+          $output .= $newline.$escape.$eol; //  soft line break; " =" . HH is okay
           $newline = '';
           // check if newline first character will be point or not
           if ( $dec == 46 ) {
@@ -2193,7 +2193,7 @@ class PHPMailer {
    * @return string
    */
   public function FixEOL($str) {
-    $str = str_replace("\r\n", "\n", $str);
+    $str = str_replace(HH, "\n", $str);
     $str = str_replace("\r", "\n", $str);
     $str = str_replace("\n", $this->LE, $str);
     return $str;
@@ -2447,14 +2447,14 @@ class PHPMailer {
    */
   public function DKIM_HeaderC($s) {
     $s = preg_replace("/\r\n\s+/", " ", $s);
-    $lines = explode("\r\n", $s);
+    $lines = explode(HH, $s);
     foreach ($lines as $key => $line) {
       list($heading, $value) = explode(":", $line, 2);
       $heading = strtolower($heading);
       $value = preg_replace("/\s+/", " ", $value) ; // Compress useless spaces
       $lines[$key] = $heading.":".trim($value) ; // Don't forget to remove WSP around the value
     }
-    $s = implode("\r\n", $lines);
+    $s = implode(HH, $lines);
     return $s;
   }
 
@@ -2465,12 +2465,12 @@ class PHPMailer {
    * @param string $body Message Body
    */
   public function DKIM_BodyC($body) {
-    if ($body == '') return "\r\n";
+    if ($body == '') return HH;
     // stabilize line endings
-    $body = str_replace("\r\n", "\n", $body);
-    $body = str_replace("\n", "\r\n", $body);
+    $body = str_replace(HH, "\n", $body);
+    $body = str_replace("\n", HH, $body);
     // END stabilize line endings
-    while (substr($body, strlen($body) - 4, 4) == "\r\n\r\n") {
+    while (substr($body, strlen($body) - 4, 4) == "" . HH . HH) {
       $body = substr($body, 0, strlen($body) - 2);
     }
     return $body;
@@ -2505,18 +2505,18 @@ class PHPMailer {
     $DKIMlen  = strlen($body) ; // Length of body
     $DKIMb64  = base64_encode(pack("H*", sha1($body))) ; // Base64 of packed binary SHA-1 hash of body
     $ident    = ($this->DKIM_identity == '')? '' : " i=" . $this->DKIM_identity . ";";
-    $dkimhdrs = "DKIM-Signature: v=1; a=" . $DKIMsignatureType . "; q=" . $DKIMquery . "; l=" . $DKIMlen . "; s=" . $this->DKIM_selector . ";\r\n".
-                "\tt=" . $DKIMtime . "; c=" . $DKIMcanonicalization . ";\r\n".
-                "\th=From:To:Subject;\r\n".
-                "\td=" . $this->DKIM_domain . ";" . $ident . "\r\n".
-                "\tz=$from\r\n".
-                "\t|$to\r\n".
-                "\t|$subject;\r\n".
-                "\tbh=" . $DKIMb64 . ";\r\n".
+    $dkimhdrs = "DKIM-Signature: v=1; a=" . $DKIMsignatureType . "; q=" . $DKIMquery . "; l=" . $DKIMlen . "; s=" . $this->DKIM_selector . ";" . HH .
+                "\tt=" . $DKIMtime . "; c=" . $DKIMcanonicalization . ";" . HH .
+                "\th=From:To:Subject;" . HH .
+                "\td=" . $this->DKIM_domain . ";" . $ident . HH .
+                "\tz=$from" . HH .
+                "\t|$to" . HH .
+                "\t|$subject;" . HH .
+                "\tbh=" . $DKIMb64 . ";" . HH .
                 "\tb=";
-    $toSign   = $this->DKIM_HeaderC($from_header . "\r\n" . $to_header . "\r\n" . $subject_header . "\r\n" . $dkimhdrs);
+    $toSign   = $this->DKIM_HeaderC($from_header . HH . $to_header . HH . $subject_header . HH . $dkimhdrs);
     $signed   = $this->DKIM_Sign($toSign);
-    return "X-PHPMAILER-DKIM: phpmailer.worxware.com\r\n".$dkimhdrs.$signed."\r\n";
+    return "X-PHPMAILER-DKIM: phpmailer.worxware.com" . HH .$dkimhdrs.$signed . HH;
   }
 
   protected function doCallback($isSent, $to, $cc, $bcc, $subject, $body) {

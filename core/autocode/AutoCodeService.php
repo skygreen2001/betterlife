@@ -48,7 +48,7 @@ class AutoCodeService extends AutoCode
 
         self::init();
 
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . "\r\n";
+        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
 
         switch (self::$type) {
            case 1:
@@ -90,15 +90,15 @@ class AutoCodeService extends AutoCode
         $result = self::createManageService( $table_names );
         $section_define  = $result["section_define"];
         $section_content = $result["section_content"];
-        $e_result = "<?php\r\n" .
-                    "/**\r\n" .
-                    " * -----------| 服务类:所有Service的管理类 |-----------\r\n" .
-                    " * @category $category\r\n" .
-                    " * @package $package\r\n" .
-                    " * @author $author\r\n" .
-                    " */\r\n" .
-                    "class Manager_Service extends Manager\r\n" .
-                    "{\r\n" . $section_define . "\r\n" . $section_content . "}\r\n";
+        $e_result = "<?php" . HH .
+                    "/**" . HH .
+                    " * -----------| 服务类:所有Service的管理类 |-----------" . HH .
+                    " * @category $category" . HH .
+                    " * @package $package" . HH .
+                    " * @author $author" . HH .
+                    " */" . HH .
+                    "class Manager_Service extends Manager" . HH .
+                    "{" . HH . $section_define . HH . $section_content . "}" . HH;
         self::saveDefineToDir( self::$service_dir_full, "Manager_Service.php", $e_result );
         $link_service_manage_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full) . "Manager_Service.php";
         self::$showReport .=  "新生成的Manager_Service文件路径:<br />" . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
@@ -124,17 +124,17 @@ class AutoCodeService extends AutoCode
             $classname     = self::getClassname( $tablename );
             $classname     = lcfirst($classname);
             $service_classname = self::getServiceClassname( $tablename );
-            $section_define   .= "    private static \$" . $classname . "Service;\r\n";
-            $section_content  .= "    /**\r\n" .
-                                 "     * 提供服务: " . $table_comment . "\r\n" .
-                                 "     */\r\n";
-            $section_content  .= "    public static function " . $classname . "Service()\r\n" .
-                                 "    {\r\n" .
-                                 "        if ( self::\$" . $classname . "Service == null ) {\r\n" .
-                                 "            self::\$" . $classname . "Service = new $service_classname();\r\n" .
-                                 "        }\r\n" .
-                                 "        return self::\$" . $classname . "Service;\r\n" .
-                                 "    }\r\n\r\n";
+            $section_define   .= "    private static \$" . $classname . "Service;" . HH;
+            $section_content  .= "    /**" . HH .
+                                 "     * 提供服务: " . $table_comment . HH .
+                                 "     */" . HH;
+            $section_content  .= "    public static function " . $classname . "Service()" . HH .
+                                 "    {" . HH .
+                                 "        if ( self::\$" . $classname . "Service == null ) {" . HH .
+                                 "            self::\$" . $classname . "Service = new $service_classname();" . HH .
+                                 "        }" . HH .
+                                 "        return self::\$" . $classname . "Service;" . HH .
+                                 "    }" . HH . HH;
         }
         $result["section_define"]  = $section_define;
         $result["section_content"] = $section_content;
@@ -166,7 +166,7 @@ class AutoCodeService extends AutoCode
         } else {
             $fieldInfo = self::$fieldInfos;
         }
-        $result            = "<?php\r\n";
+        $result            = "<?php" . HH;
         $classname         = self::getClassname( $tablename );
         $instance_name     = self::getInstancename( $tablename );
         $service_classname = self::getServiceClassname( $tablename );
@@ -181,386 +181,386 @@ class AutoCodeService extends AutoCode
         $category = Gc::$appName;
         $author   = self::$author;
         $package  = self::$package;
-        $result  .= "/**\r\n" .
-                    " * -----------| $table_comment |-----------\r\n" .
-                    " * @category $category\r\n" .
-                    " * @package $package\r\n";
-        $result .= " * @author $author\r\n" .
-                   " */\r\n";
+        $result  .= "/**" . HH .
+                    " * -----------| $table_comment |-----------" . HH .
+                    " * @category $category" . HH .
+                    " * @package $package" . HH;
+        $result .= " * @author $author" . HH .
+                   " */" . HH;
         switch (self::$type) {
             case 2:
-                $result .= "class $service_classname extends Service implements IServiceBasic \r\n{\r\n";
+                $result .= "class $service_classname extends Service implements IServiceBasic " . HH . "{" . HH;
                 //save
-                $result .= "    /**\r\n" .
-                           "     * 保存数据对象: {$object_desc}\r\n" .
-                           "     * \r\n" .
-                           "     * @param array|DataObject \$$instance_name\r\n" .
-                           "     * @return int 保存对象记录的ID标识号\r\n" .
-                           "     */\r\n";
-                $result .= "    public function save(\$$instance_name)\r\n" .
-                           "    {\r\n" .
-                           "        if ( is_array(\$$instance_name) ) {\r\n" .
-                           "            \$$instance_name = new $classname(\$$instance_name);\r\n" .
-                           "        }\r\n" .
-                           "        if ( \$$instance_name instanceof $classname ) {\r\n" .
-                           "            return \$" . $instance_name . "->save();\r\n" .
-                           "        } else {\r\n" .
-                           "            return false;\r\n" .
-                           "        }\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 保存数据对象: {$object_desc}" . HH .
+                           "     * " . HH .
+                           "     * @param array|DataObject \$$instance_name" . HH .
+                           "     * @return int 保存对象记录的ID标识号" . HH .
+                           "     */" . HH;
+                $result .= "    public function save(\$$instance_name)" . HH .
+                           "    {" . HH .
+                           "        if ( is_array(\$$instance_name) ) {" . HH .
+                           "            \$$instance_name = new $classname(\$$instance_name);" . HH .
+                           "        }" . HH .
+                           "        if ( \$$instance_name instanceof $classname ) {" . HH .
+                           "            return \$" . $instance_name . "->save();" . HH .
+                           "        } else {" . HH .
+                           "            return false;" . HH .
+                           "        }" . HH .
+                           "    }" . HH . HH;
                 //update
-                $result .= "    /**\r\n" .
-                           "     * 更新数据对象: {$object_desc}\r\n" .
-                           "     * \r\n" .
-                           "     * @param array|DataObject \$$instance_name\r\n" .
-                           "     * @return boolen 是否更新成功；true为操作正常\r\n" .
-                           "     */\r\n";
-                $result .= "    public function update(\$$instance_name)\r\n" .
-                           "    {\r\n" .
-                           "        if ( is_array(\$$instance_name) ) {\r\n" .
-                           "            \$$instance_name = new $classname( \$$instance_name );\r\n" .
-                           "        }\r\n" .
-                           "        if ( \$$instance_name instanceof $classname ) {\r\n" .
-                           "            return \$" . $instance_name . "->update();\r\n" .
-                           "        } else {\r\n" .
-                           "            return false;\r\n" .
-                           "        }\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 更新数据对象: {$object_desc}" . HH .
+                           "     * " . HH .
+                           "     * @param array|DataObject \$$instance_name" . HH .
+                           "     * @return boolen 是否更新成功；true为操作正常" . HH .
+                           "     */" . HH;
+                $result .= "    public function update(\$$instance_name)" . HH .
+                           "    {" . HH .
+                           "        if ( is_array(\$$instance_name) ) {" . HH .
+                           "            \$$instance_name = new $classname( \$$instance_name );" . HH .
+                           "        }" . HH .
+                           "        if ( \$$instance_name instanceof $classname ) {" . HH .
+                           "            return \$" . $instance_name . "->update();" . HH .
+                           "        } else {" . HH .
+                           "            return false;" . HH .
+                           "        }" . HH .
+                           "    }" . HH . HH;
                 //deleteByID
-                $result .= "    /**\r\n" .
-                           "     * 由标识删除指定ID数据对象: {$object_desc}\r\n" .
-                           "     * \r\n" .
-                           "     * @param int \$id 数据对象: {$object_desc}标识\r\n" .
-                           "     * @return boolen 是否删除成功；true为操作正常\r\n" .
-                           "     */\r\n";
-                $result .= "    public function deleteByID(\$id)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::deleteByID( \$id );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 由标识删除指定ID数据对象: {$object_desc}" . HH .
+                           "     * " . HH .
+                           "     * @param int \$id 数据对象: {$object_desc}标识" . HH .
+                           "     * @return boolen 是否删除成功；true为操作正常" . HH .
+                           "     */" . HH;
+                $result .= "    public function deleteByID(\$id)" . HH .
+                           "    {" . HH .
+                           "        return $classname::deleteByID( \$id );" . HH .
+                           "    }" . HH . HH;
                 //deleteByIds
-                $result .= "    /**\r\n" .
-                           "     * 根据主键删除数据对象: {$object_desc}的多条数据记录\r\n" .
-                           "     * \r\n" .
-                           "     * @param array|string \$ids 数据对象编号\r\n" .
-                           "     * 形式如下:\r\n" .
-                           "     * \r\n" .
-                           "     *     1. array:array(1, 2, 3, 4, 5)\r\n" .
-                           "     *     2. 字符串:1, 2, 3, 4 \r\n" .
-                           "     * @return boolen 是否删除成功；true为操作正常\r\n" .
-                           "     */\r\n";
-                $result .= "    public function deleteByIds(\$ids)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::deleteByIds( \$ids );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 根据主键删除数据对象: {$object_desc}的多条数据记录" . HH .
+                           "     * " . HH .
+                           "     * @param array|string \$ids 数据对象编号" . HH .
+                           "     * 形式如下:" . HH .
+                           "     * " . HH .
+                           "     *     1. array:array(1, 2, 3, 4, 5)" . HH .
+                           "     *     2. 字符串:1, 2, 3, 4 " . HH .
+                           "     * @return boolen 是否删除成功；true为操作正常" . HH .
+                           "     */" . HH;
+                $result .= "    public function deleteByIds(\$ids)" . HH .
+                           "    {" . HH .
+                           "        return $classname::deleteByIds( \$ids );" . HH .
+                           "    }" . HH . HH;
                 //increment
-                $result .= "    /**\r\n" .
-                           "     * 对数据对象: {$object_desc}的属性进行递增\r\n" .
-                           "     * \r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\"\r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$property_name 属性名称 \r\n" .
-                           "     * @param int \$incre_value 递增数 \r\n" .
-                           "     * @return boolen 是否操作成功；true为操作正常\r\n" .
-                           "     */\r\n";
-                $result .= "    public function increment(\$filter = null, \$property_name, \$incre_value)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::increment( \$filter, \$property_name, \$incre_value );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 对数据对象: {$object_desc}的属性进行递增" . HH .
+                           "     * " . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\"" . HH .
+                           "     * " . HH .
+                           "     * @param string \$property_name 属性名称 " . HH .
+                           "     * @param int \$incre_value 递增数 " . HH .
+                           "     * @return boolen 是否操作成功；true为操作正常" . HH .
+                           "     */" . HH;
+                $result .= "    public function increment(\$filter = null, \$property_name, \$incre_value)" . HH .
+                           "    {" . HH .
+                           "        return $classname::increment( \$filter, \$property_name, \$incre_value );" . HH .
+                           "    }" . HH . HH;
                 //decrement
-                $result .= "    /**\r\n" .
-                           "     * 对数据对象: {$object_desc}的属性进行递减\r\n" .
-                           "     * \r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\"\r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$property_name 属性名称 \r\n" .
-                           "     * @param int \$decre_value 递减数 \r\n" .
-                           "     * @return boolen 是否操作成功；true为操作正常\r\n" .
-                           "     */\r\n";
-                $result .= "    public function decrement(\$filter = null, \$property_name, \$decre_value)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::decrement( \$filter, \$property_name, \$decre_value );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 对数据对象: {$object_desc}的属性进行递减" . HH .
+                           "     * " . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\"" . HH .
+                           "     * " . HH .
+                           "     * @param string \$property_name 属性名称 " . HH .
+                           "     * @param int \$decre_value 递减数 " . HH .
+                           "     * @return boolen 是否操作成功；true为操作正常" . HH .
+                           "     */" . HH;
+                $result .= "    public function decrement(\$filter = null, \$property_name, \$decre_value)" . HH .
+                           "    {" . HH .
+                           "        return $classname::decrement( \$filter, \$property_name, \$decre_value );" . HH .
+                           "    }" . HH . HH;
                 //select
-                $result .= "    /**\r\n" .
-                           "     * 查询数据对象: {$object_desc}需显示属性的列表\r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$columns 指定的显示属性，同SQL语句中的Select部分。 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     id, name, commitTime\r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" \r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$sort 排序条件\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     1. id asc;\r\n" .
-                           "     *     2. name desc;\r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$limit 分页数目:同Mysql limit语法\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *       0, 10\r\n" .
-                           "     * \r\n" .
-                           "     * @return array 数据对象: {$object_desc}列表数组\r\n" .
-                           "     */\r\n";
-                $result .= "    public function select(\$columns, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::select( \$columns, \$filter, \$sort, \$limit );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 查询数据对象: {$object_desc}需显示属性的列表" . HH .
+                           "     * " . HH .
+                           "     * @param string \$columns 指定的显示属性，同SQL语句中的Select部分。 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     id, name, commitTime" . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" " . HH .
+                           "     * " . HH .
+                           "     * @param string \$sort 排序条件" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     1. id asc;" . HH .
+                           "     *     2. name desc;" . HH .
+                           "     * " . HH .
+                           "     * @param string \$limit 分页数目:同Mysql limit语法" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *       0, 10" . HH .
+                           "     * " . HH .
+                           "     * @return array 数据对象: {$object_desc}列表数组" . HH .
+                           "     */" . HH;
+                $result .= "    public function select(\$columns, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
+                           "    {" . HH .
+                           "        return $classname::select( \$columns, \$filter, \$sort, \$limit );" . HH .
+                           "    }" . HH . HH;
                 //get
-                $result .= "    /**\r\n" .
-                           "     * 查询数据对象: {$object_desc}的列表\r\n" .
-                           "     * \r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" \r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$sort 排序条件\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     1. id asc;\r\n" .
-                           "     *     2. name desc;\r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$limit 分页数目:同Mysql limit语法\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *      0, 10\r\n" .
-                           "     * \r\n" .
-                           "     * @return array 数据对象:{object_desc}列表数组\r\n" .
-                           "     */\r\n";
-                $result .= "    public function get(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::get( \$filter, \$sort, \$limit );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 查询数据对象: {$object_desc}的列表" . HH .
+                           "     * " . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" " . HH .
+                           "     * " . HH .
+                           "     * @param string \$sort 排序条件" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     1. id asc;" . HH .
+                           "     *     2. name desc;" . HH .
+                           "     * " . HH .
+                           "     * @param string \$limit 分页数目:同Mysql limit语法" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *      0, 10" . HH .
+                           "     * " . HH .
+                           "     * @return array 数据对象:{object_desc}列表数组" . HH .
+                           "     */" . HH;
+                $result .= "    public function get(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
+                           "    {" . HH .
+                           "        return $classname::get( \$filter, \$sort, \$limit );" . HH .
+                           "    }" . HH . HH;
                 //get_one
-                $result .= "    /**\r\n" .
-                           "     * 查询得到单个数据对象: {$object_desc}实体\r\n" .
-                           "     * \r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\",\"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" \r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$sort 排序条件\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     1. id asc;\r\n" .
-                           "     *     2. name desc;\r\n" .
-                           "     * \r\n" .
-                           "     * @return object 单个数据对象: {$object_desc}实体\r\n" .
-                           "     */\r\n";
-                $result .= "    public function get_one(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::get_one( \$filter, \$sort );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 查询得到单个数据对象: {$object_desc}实体" . HH .
+                           "     * " . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\",\"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" " . HH .
+                           "     * " . HH .
+                           "     * @param string \$sort 排序条件" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     1. id asc;" . HH .
+                           "     *     2. name desc;" . HH .
+                           "     * " . HH .
+                           "     * @return object 单个数据对象: {$object_desc}实体" . HH .
+                           "     */" . HH;
+                $result .= "    public function get_one(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
+                           "    {" . HH .
+                           "        return $classname::get_one( \$filter, \$sort );" . HH .
+                           "    }" . HH . HH;
                 //get_by_id
-                $result .= "    /**\r\n" .
-                           "     * 根据表ID主键获取指定的对象[ID对应的表列] \r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$id  \r\n" .
-                           "     * @return object 单个数据对象: {$object_desc}实体\r\n" .
-                           "     */\r\n";
-                $result .= "    public function get_by_id(\$id)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::get_by_id( \$id );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 根据表ID主键获取指定的对象[ID对应的表列] " . HH .
+                           "     * " . HH .
+                           "     * @param string \$id  " . HH .
+                           "     * @return object 单个数据对象: {$object_desc}实体" . HH .
+                           "     */" . HH;
+                $result .= "    public function get_by_id(\$id)" . HH .
+                           "    {" . HH .
+                           "        return $classname::get_by_id( \$id );" . HH .
+                           "    }" . HH . HH;
                 //count
-                $result .= "    /**\r\n" .
-                           "     * 数据对象: {$object_desc}总计数\r\n" .
-                           "     * \r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" \r\n" .
-                           "     * \r\n" .
-                           "     * @return int 数据对象: {$object_desc}总计数\r\n" .
-                           "     */\r\n";
-                $result .= "    public function count(\$filter = null)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::count( \$filter );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 数据对象: {$object_desc}总计数" . HH .
+                           "     * " . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" " . HH .
+                           "     * " . HH .
+                           "     * @return int 数据对象: {$object_desc}总计数" . HH .
+                           "     */" . HH;
+                $result .= "    public function count(\$filter = null)" . HH .
+                           "    {" . HH .
+                           "        return $classname::count( \$filter );" . HH .
+                           "    }" . HH . HH;
                 //queryPage
-                $result .= "    /**\r\n" .
-                           "     * 数据对象: {$object_desc}分页查询\r\n" .
-                           "     * \r\n" .
-                           "     * @param int \$startPoint  分页开始记录数\r\n" .
-                           "     * @param int \$endPoint    分页结束记录数\r\n" .
-                           "     * @param object|string|array \$filter 查询条件，在where后的条件 \r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     0. \"id = 1, name = 'sky'\"\r\n" .
-                           "     *     1. array(\"id = 1\", \"name = 'sky'\") \r\n" .
-                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")\r\n" .
-                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");\r\n" .
-                           "     * \r\n" .
-                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" \r\n" .
-                           "     * \r\n" .
-                           "     * @param string \$sort 排序条件\r\n" .
-                           "     * 默认为 id desc\r\n" .
-                           "     * 示例如下: \r\n" .
-                           "     * \r\n" .
-                           "     *     1. id asc;\r\n" .
-                           "     *     2. name desc;\r\n" .
-                           "     * \r\n" .
-                           "     * @return mixed 数据对象: {$object_desc}分页查询列表\r\n" .
-                           "     */\r\n\r\n";
-                $result .= "    public function queryPage(\$startPoint, \$endPoint, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)\r\n" .
-                           "    {\r\n" .
-                           "        return $classname::queryPage( \$startPoint, \$endPoint, \$filter, \$sort );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 数据对象: {$object_desc}分页查询" . HH .
+                           "     * " . HH .
+                           "     * @param int \$startPoint  分页开始记录数" . HH .
+                           "     * @param int \$endPoint    分页结束记录数" . HH .
+                           "     * @param object|string|array \$filter 查询条件，在where后的条件 " . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     0. \"id = 1, name = 'sky'\"" . HH .
+                           "     *     1. array(\"id = 1\", \"name = 'sky'\") " . HH .
+                           "     *     2. array(\"id\" => \"1\", \"name\" => \"sky\")" . HH .
+                           "     *     3. 允许对象如new User(id = \"1\", name = \"green\");" . HH .
+                           "     * " . HH .
+                           "     * 默认:SQL Where条件子语句。如: \"( id = 1 and name = 'sky' ) or ( name like '%sky%' )\" " . HH .
+                           "     * " . HH .
+                           "     * @param string \$sort 排序条件" . HH .
+                           "     * 默认为 id desc" . HH .
+                           "     * 示例如下: " . HH .
+                           "     * " . HH .
+                           "     *     1. id asc;" . HH .
+                           "     *     2. name desc;" . HH .
+                           "     * " . HH .
+                           "     * @return mixed 数据对象: {$object_desc}分页查询列表" . HH .
+                           "     */" . HH . HH;
+                $result .= "    public function queryPage(\$startPoint, \$endPoint, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
+                           "    {" . HH .
+                           "        return $classname::queryPage( \$startPoint, \$endPoint, \$filter, \$sort );" . HH .
+                           "    }" . HH . HH;
                 //sqlExecute
-                $result .= "    /**\r\n" .
-                           "     * 直接执行SQL语句\r\n" .
-                           "     * \r\n" .
-                           "     * @return array\r\n" .
-                           "     * 返回\r\n" .
-                           "     *     1. 执行查询语句返回对象数组\r\n" .
-                           "     *     2. 执行更新和删除SQL语句返回执行成功与否的true|null\r\n" .
-                           "     */\r\n" .
-                           "    public function sqlExecute()\r\n" .
-                           "    {\r\n" .
-                           "        return self::dao()->sqlExecute( \"select * from \" . $classname::tablename(), $classname::cnames() );\r\n" .
-                           "    }\r\n\r\n";
+                $result .= "    /**" . HH .
+                           "     * 直接执行SQL语句" . HH .
+                           "     * " . HH .
+                           "     * @return array" . HH .
+                           "     * 返回" . HH .
+                           "     *     1. 执行查询语句返回对象数组" . HH .
+                           "     *     2. 执行更新和删除SQL语句返回执行成功与否的true|null" . HH .
+                           "     */" . HH .
+                           "    public function sqlExecute()" . HH .
+                           "    {" . HH .
+                           "        return self::dao()->sqlExecute( \"select * from \" . $classname::tablename(), $classname::cnames() );" . HH .
+                           "    }" . HH . HH;
                 //import
-                $result .= "    /**\r\n" .
-                           "     * 批量上传{$object_desc}\r\n" .
-                           "     * \r\n" .
-                           "     * @param mixed \$upload_file <input name=\"upload_file\" type=\"file\">\r\n" .
-                           "     * @return void\r\n" .
-                           "     */\r\n" .
-                           "    public function import(\$files)\r\n" .
-                           "    {\r\n" .
-                           "        \$diffpart = date(\"YmdHis\");\r\n" .
-                           "        if ( !empty(\$files[\"upload_file\"]) ) {\r\n" .
-                           "            \$tmptail    = explode('.', \$files[\"upload_file\"][\"name\"]);\r\n" .
-                           "            \$tmptail    = end(\$tmptail);\r\n" .
-                           "            \$uploadPath = GC::\$attachment_path . \"{$instance_name}\" . DS . \"import\" . DS . \"{$instance_name}\$diffpart . \$tmptail\";\r\n" .
-                           "            \$result     = UtilFileSystem::uploadFile( \$files, \$uploadPath );\r\n" .
-                           "            if ( \$result && (\$result['success'] == true) ) {\r\n" .
-                           "                if ( array_key_exists('file_name', \$result) ) {\r\n" .
-                           "                    \$arr_import_header = self::fieldsMean( {$classname}::tablename() );\r\n" .
-                           "                    \$data = UtilExcel::exceltoArray( \$uploadPath, \$arr_import_header );\r\n" .
-                           "                    \$result = false;\r\n" .
-                           "                    if ( \$data ) {\r\n" .
-                           "                        foreach (\$data as \${$instance_name}) {\r\n" .
+                $result .= "    /**" . HH .
+                           "     * 批量上传{$object_desc}" . HH .
+                           "     * " . HH .
+                           "     * @param mixed \$upload_file <input name=\"upload_file\" type=\"file\">" . HH .
+                           "     * @return void" . HH .
+                           "     */" . HH .
+                           "    public function import(\$files)" . HH .
+                           "    {" . HH .
+                           "        \$diffpart = date(\"YmdHis\");" . HH .
+                           "        if ( !empty(\$files[\"upload_file\"]) ) {" . HH .
+                           "            \$tmptail    = explode('.', \$files[\"upload_file\"][\"name\"]);" . HH .
+                           "            \$tmptail    = end(\$tmptail);" . HH .
+                           "            \$uploadPath = GC::\$attachment_path . \"{$instance_name}\" . DS . \"import\" . DS . \"{$instance_name}\$diffpart . \$tmptail\";" . HH .
+                           "            \$result     = UtilFileSystem::uploadFile( \$files, \$uploadPath );" . HH .
+                           "            if ( \$result && (\$result['success'] == true) ) {" . HH .
+                           "                if ( array_key_exists('file_name', \$result) ) {" . HH .
+                           "                    \$arr_import_header = self::fieldsMean( {$classname}::tablename() );" . HH .
+                           "                    \$data = UtilExcel::exceltoArray( \$uploadPath, \$arr_import_header );" . HH .
+                           "                    \$result = false;" . HH .
+                           "                    if ( \$data ) {" . HH .
+                           "                        foreach (\$data as \${$instance_name}) {" . HH .
                            self::relationFieldImport( $instance_name, $classname, $fieldInfo, "    " ).
-                           "                            \${$instance_name} = new {$classname}(\${$instance_name});\r\n" .
+                           "                            \${$instance_name} = new {$classname}(\${$instance_name});" . HH .
                            self::enumComment2KeyInExtService( $instance_name, $fieldInfo, $tablename, "                    ").
                            self::dataTimeConvert( $instance_name, $fieldInfo, true, "    " ).
                            self::bitVal( $instance_name, $fieldInfo, "    " ).
-                           "                            \${$instance_name}_id = \${$instance_name}->getId();\r\n" .
-                           "                            if ( !empty(\${$instance_name}_id) ) {\r\n" .
-                           "                                \$had{$classname} = {$classname}::existByID( \${$instance_name}->getId() );\r\n" .
-                           "                                if ( \$had{$classname} ) {\r\n" .
-                           "                                    \$result = \${$instance_name}->update();\r\n" .
-                           "                                } else {\r\n" .
-                           "                                    \$result = \${$instance_name}->save();\r\n" .
-                           "                                }\r\n" .
-                           "                            } else {\r\n" .
-                           "                                \$result = \${$instance_name}->save();\r\n" .
-                           "                            }\r\n" .
-                           "                        }\r\n" .
-                           "                    }\r\n" .
-                           "                } else {\r\n" .
-                           "                    \$result = false;\r\n" .
-                           "                }\r\n" .
-                           "            } else {\r\n" .
-                           "                return \$result;\r\n" .
-                           "            }\r\n" .
-                           "        }\r\n" .
-                           "        return array(\r\n" .
-                           "            'success' => true,\r\n" .
-                           "            'data'    => \$result\r\n" .
-                           "        );\r\n" .
-                           "    }\r\n\r\n";
+                           "                            \${$instance_name}_id = \${$instance_name}->getId();" . HH .
+                           "                            if ( !empty(\${$instance_name}_id) ) {" . HH .
+                           "                                \$had{$classname} = {$classname}::existByID( \${$instance_name}->getId() );" . HH .
+                           "                                if ( \$had{$classname} ) {" . HH .
+                           "                                    \$result = \${$instance_name}->update();" . HH .
+                           "                                } else {" . HH .
+                           "                                    \$result = \${$instance_name}->save();" . HH .
+                           "                                }" . HH .
+                           "                            } else {" . HH .
+                           "                                \$result = \${$instance_name}->save();" . HH .
+                           "                            }" . HH .
+                           "                        }" . HH .
+                           "                    }" . HH .
+                           "                } else {" . HH .
+                           "                    \$result = false;" . HH .
+                           "                }" . HH .
+                           "            } else {" . HH .
+                           "                return \$result;" . HH .
+                           "            }" . HH .
+                           "        }" . HH .
+                           "        return array(" . HH .
+                           "            'success' => true," . HH .
+                           "            'data'    => \$result" . HH .
+                           "        );" . HH .
+                           "    }" . HH . HH;
                  //export
                  $enumConvert   = self::enumKey2CommentInService( $instance_name, $classname, $fieldInfo );
                  $datetimeShow  = self::datetimeShow( $instance_name, $fieldInfo );
                  $bitShow       = self::bitShow( $instance_name, $fieldInfo );
                  $specialResult = $enumConvert["normal"] .
-                                  "        \$arr_output_header = self::fieldsMean( {$classname}::tablename() ); \r\n";
+                                  "        \$arr_output_header = self::fieldsMean( {$classname}::tablename() ); " . HH;
                  $relationFieldOutput = self::relationFieldOutput( $instance_name, $classname, $fieldInfo );
                  if ( ( !empty($relationFieldOutput) ) || ( !empty($enumConvert["normal"]) ) || ( !empty($datetimeShow) ) ) {
-                     $specialResult .= "        if ( \$data && count(\$data) > 0 ) {\r\n" .
-                                       "            foreach (\$data as \$$instance_name) {\r\n" .
+                     $specialResult .= "        if ( \$data && count(\$data) > 0 ) {" . HH .
+                                       "            foreach (\$data as \$$instance_name) {" . HH .
                                        $enumConvert["output"] .
                                        $relationFieldOutput .
                                        $datetimeShow .
                                        $bitShow .
-                                       "            }\r\n" .
-                                       "        }\r\n";
+                                       "            }" . HH .
+                                       "        }" . HH;
                  }
-                 $result .= "    /**\r\n" .
-                            "     * 导出{$object_desc}\r\n" .
-                            "     * \r\n" .
-                            "     * @param mixed \$filter\r\n" .
-                            "     * @return void \r\n" .
-                            "     */\r\n" .
-                            "    public function export{$classname}(\$filter = null)\r\n" .
-                            "    {\r\n" .
-                            "        if ( \$filter ) {\r\n" .
-                            "            if ( is_array(\$filter) || is_object(\$filter) ) {\r\n" .    
-                            "                \$filter = \$this->filtertoCondition( \$filter );\r\n" .
-                            "            }\r\n" .
-                            "        }\r\n" .
-                            "        \$data = $classname::get( \$filter );\r\n" .
+                 $result .= "    /**" . HH .
+                            "     * 导出{$object_desc}" . HH .
+                            "     * " . HH .
+                            "     * @param mixed \$filter" . HH .
+                            "     * @return void " . HH .
+                            "     */" . HH .
+                            "    public function export{$classname}(\$filter = null)" . HH .
+                            "    {" . HH .
+                            "        if ( \$filter ) {" . HH .
+                            "            if ( is_array(\$filter) || is_object(\$filter) ) {" . HH .    
+                            "                \$filter = \$this->filtertoCondition( \$filter );" . HH .
+                            "            }" . HH .
+                            "        }" . HH .
+                            "        \$data = $classname::get( \$filter );" . HH .
                             $specialResult .
-                            "        unset(\$arr_output_header['updateTime'], \$arr_output_header['commitTime']);\r\n" .
-                            "        \$diffpart       = date(\"YmdHis\");\r\n" .
-                            "        \$outputFileName = Gc::\$attachment_path . \"export\" . DS . \"{$instance_name}\" . DS . \"\$diffpart.xls\"; \r\n" .
-                            "        UtilExcel::arraytoExcel( \$arr_output_header, \$data, \$outputFileName ); \r\n" .
-                            "        \$downloadPath   = Gc::\$attachment_url . \"export/{$instance_name}/\$diffpart.xls\"; \r\n" .
-                            "        return array(\r\n" .
-                            "            'success' => true,\r\n" .
-                            "            'data'    => \$downloadPath\r\n" .
-                            "        ); \r\n" .
-                            "    }\r\n\r\n";
+                            "        unset(\$arr_output_header['updateTime'], \$arr_output_header['commitTime']);" . HH .
+                            "        \$diffpart       = date(\"YmdHis\");" . HH .
+                            "        \$outputFileName = Gc::\$attachment_path . \"export\" . DS . \"{$instance_name}\" . DS . \"\$diffpart.xls\"; " . HH .
+                            "        UtilExcel::arraytoExcel( \$arr_output_header, \$data, \$outputFileName ); " . HH .
+                            "        \$downloadPath   = Gc::\$attachment_url . \"export/{$instance_name}/\$diffpart.xls\"; " . HH .
+                            "        return array(" . HH .
+                            "            'success' => true," . HH .
+                            "            'data'    => \$downloadPath" . HH .
+                            "        ); " . HH .
+                            "    }" . HH . HH;
                 break;
             default:
-                $result .= "class $service_classname extends ServiceBasic\r\n{\r\n";
-                $result .= "\r\n";
+                $result .= "class $service_classname extends ServiceBasic" . HH . "{" . HH;
+                $result .= HH;
                 break;
         }
-        $result .= "}\r\n\r\n";
+        $result .= "}" . HH . HH;
         return $result;
     }
 
@@ -580,14 +580,14 @@ class AutoCodeService extends AutoCode
                 $relation_instance_name = $relation_classname;
                 $relation_instance_name = lcfirst($relation_instance_name);
                 $realId  = DataObjectSpec::getRealIDColumnName( $relation_classname );
-                $result .= "        if ( \${$instance_name}[\"{$realId}\"] ) {\r\n" .
-                           "            \${$relation_instance_name} = $relation_classname::get_by_id( \${$instance_name}[\"{$realId}\"] );\r\n" .
-                           "            if ( \${$relation_instance_name} ) {\r\n";
+                $result .= "        if ( \${$instance_name}[\"{$realId}\"] ) {" . HH .
+                           "            \${$relation_instance_name} = $relation_classname::get_by_id( \${$instance_name}[\"{$realId}\"] );" . HH .
+                           "            if ( \${$relation_instance_name} ) {" . HH;
                 foreach ($redundancy_table_field as $relation_fieldname => $come) {
-                    $result .= "                \${$instance_name}[\"$relation_fieldname\"] = \${$relation_instance_name}->{$come};\r\n";
+                    $result .= "                \${$instance_name}[\"$relation_fieldname\"] = \${$relation_instance_name}->{$come};" . HH;
                 }
-                $result .= "            }\r\n" .
-                           "        }\r\n";
+                $result .= "            }" . HH .
+                           "        }" . HH;
             }
         }
         return $result;
@@ -623,13 +623,13 @@ class AutoCodeService extends AutoCode
                             $i_name = $key;
                             $i_name = lcfirst($i_name);
                             if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                $result .= "                \${$i_name}_instance = null;\r\n";
-                                $result .= "                if ( \${$instance_name}->$fieldname ) {\r\n";
-                                $result .= "                    \${$i_name}_instance = $key::get_by_id( \${$instance_name}->$fieldname );\r\n";
-                                $result .= "                    \${$instance_name}['$fieldname'] = \${$i_name}_instance->$show_fieldname;\r\n";
-                                $result .= "                }\r\n";
+                                $result .= "                \${$i_name}_instance = null;" . HH;
+                                $result .= "                if ( \${$instance_name}->$fieldname ) {" . HH;
+                                $result .= "                    \${$i_name}_instance = $key::get_by_id( \${$instance_name}->$fieldname );" . HH;
+                                $result .= "                    \${$instance_name}['$fieldname'] = \${$i_name}_instance->$show_fieldname;" . HH;
+                                $result .= "                }" . HH;
                             } else {
-                                $result .= "                unset(\$arr_output_header[\"$fieldname\"]);\r\n";
+                                $result .= "                unset(\$arr_output_header[\"$fieldname\"]);" . HH;
                             }
                             $fieldInfos = self::$fieldInfos[self::getTablename( $key )];
                             if ( !$isTreeLevelHad ) {
@@ -637,13 +637,13 @@ class AutoCodeService extends AutoCode
                                     // $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= "                if ( \${$i_name}_instance ) {\r\n" .
-                                               "                    \$level = \${$i_name}_instance->level;\r\n" .
-                                               "                    \${$instance_name}[\"{$i_name}ShowAll\"] = $key::{$i_name}ShowAll( \${$instance_name}->parent_id, \$level );\r\n" .
-                                               "                    \$" . $instance_name . "['$fieldname'] = \${$i_name}_instance->$value;\r\n" .
-                                               "                    \$pos = UtilArray::keyPosition( \$arr_output_header, \"$fieldname\" );\r\n" .
-                                               "                    UtilArray::insert( \$arr_output_header, \$pos + 1, array('{$i_name}ShowAll' => \"{$field_comment}[全]\") );\r\n" .
-                                               "                }\r\n";
+                                    $result .= "                if ( \${$i_name}_instance ) {" . HH .
+                                               "                    \$level = \${$i_name}_instance->level;" . HH .
+                                               "                    \${$instance_name}[\"{$i_name}ShowAll\"] = $key::{$i_name}ShowAll( \${$instance_name}->parent_id, \$level );" . HH .
+                                               "                    \$" . $instance_name . "['$fieldname'] = \${$i_name}_instance->$value;" . HH .
+                                               "                    \$pos = UtilArray::keyPosition( \$arr_output_header, \"$fieldname\" );" . HH .
+                                               "                    UtilArray::insert( \$arr_output_header, \$pos + 1, array('{$i_name}ShowAll' => \"{$field_comment}[全]\") );" . HH .
+                                               "                }" . HH;
                                     $isTreeLevelHad = true;
                                 }
                             }
@@ -682,45 +682,45 @@ class AutoCodeService extends AutoCode
                                     $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {\r\n" .
-                                               $blankPre . "                            \${$i_name}_all = \${$instance_name}[\"{$field_comment}[全]\"];\r\n" .
-                                               $blankPre . "                            if ( \${$i_name}_all ) {\r\n" .
-                                               $blankPre . "                                \${$i_name}_all_arr = explode(\"->\", \${$i_name}_all);\r\n" .
-                                               $blankPre . "                                if ( \${$i_name}_all_arr ) {\r\n" .
-                                               $blankPre . "                                    \$level = count(\${$i_name}_all_arr);\r\n" .
-                                               $blankPre . "                                    switch (\$level) {\r\n" .
-                                               $blankPre . "                                        case 1:\r\n" .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );\r\n" .
-                                               $blankPre . "                                            if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};\r\n" .
-                                               $blankPre . "                                            break;\r\n" .
-                                               $blankPre . "                                        case 2:\r\n" .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );\r\n" .
-                                               $blankPre . "                                            if ( \${$i_name}_p ) {\r\n" .
-                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2,\"parent_id\" => \${$i_name}_p->{$fieldname}) );\r\n" .
-                                               $blankPre . "                                                if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};\r\n" .
-                                               $blankPre . "                                            }\r\n" .
-                                               $blankPre . "                                            break;\r\n" .
-                                               $blankPre . "                                        case 3:\r\n" .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );\r\n" .
-                                               $blankPre . "                                            if ( \${$i_name}_p ) {\r\n" .
-                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2, \"parent_id\" => \${$i_name}_p->{$fieldname}) );\r\n" .
-                                               $blankPre . "                                                if ( \${$i_name}_p ) {\r\n" .
-                                               $blankPre . "                                                    \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[2], \"level\" => 3, \"parent_id\" => \${$i_name}_p->{$fieldname}) );\r\n" .
-                                               $blankPre . "                                                    if ( \${$i_name}_p ) \${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};\r\n" .
-                                               $blankPre . "                                                }\r\n" .
-                                               $blankPre . "                                            }\r\n" .
-                                               $blankPre . "                                            break;\r\n" .
-                                               $blankPre . "                                       }\r\n" .
-                                               $blankPre . "                                  }\r\n" .
-                                               $blankPre . "                            }\r\n" .
-                                               $blankPre . "                        }\r\n";
+                                    $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {" . HH .
+                                               $blankPre . "                            \${$i_name}_all = \${$instance_name}[\"{$field_comment}[全]\"];" . HH .
+                                               $blankPre . "                            if ( \${$i_name}_all ) {" . HH .
+                                               $blankPre . "                                \${$i_name}_all_arr = explode(\"->\", \${$i_name}_all);" . HH .
+                                               $blankPre . "                                if ( \${$i_name}_all_arr ) {" . HH .
+                                               $blankPre . "                                    \$level = count(\${$i_name}_all_arr);" . HH .
+                                               $blankPre . "                                    switch (\$level) {" . HH .
+                                               $blankPre . "                                        case 1:" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                            break;" . HH .
+                                               $blankPre . "                                        case 2:" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2,\"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                            }" . HH .
+                                               $blankPre . "                                            break;" . HH .
+                                               $blankPre . "                                        case 3:" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                                    \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[2], \"level\" => 3, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                    if ( \${$i_name}_p ) \${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                                }" . HH .
+                                               $blankPre . "                                            }" . HH .
+                                               $blankPre . "                                            break;" . HH .
+                                               $blankPre . "                                       }" . HH .
+                                               $blankPre . "                                  }" . HH .
+                                               $blankPre . "                            }" . HH .
+                                               $blankPre . "                        }" . HH;
                                     $isTreeLevelHad = true;
                                 }
                             } else {
-                                $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {\r\n";
-                                $result .= $blankPre . "                            \${$i_name}_r = $key::get_one( \"{$show_fieldname} = '\" . \${$instance_name}[\"$fieldname\"] . \"'\" );\r\n";
-                                $result .= $blankPre . "                            if ( \${$i_name}_r ) \${$instance_name}[\"$fieldname\"] = \${$i_name}_r->$fieldname;\r\n";
-                                $result .= $blankPre . "                        }\r\n";
+                                $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {" . HH;
+                                $result .= $blankPre . "                            \${$i_name}_r = $key::get_one( \"{$show_fieldname} = '\" . \${$instance_name}[\"$fieldname\"] . \"'\" );" . HH;
+                                $result .= $blankPre . "                            if ( \${$i_name}_r ) \${$instance_name}[\"$fieldname\"] = \${$i_name}_r->$fieldname;" . HH;
+                                $result .= $blankPre . "                        }" . HH;
                             }
                         }
                     }
@@ -745,9 +745,9 @@ class AutoCodeService extends AutoCode
             if ( $datatype == 'enum' ) {
                 $enumclassname     = self::enumClassName($fieldname,$tablename);
                 $enum_columnDefine = self::enumDefines($field["Comment"]);
-                $result .= $blankPre . "        if ( !{$enumclassname}::isEnumValue( \$" . $instance_name . "->" . $fieldname . " ) ) {\r\n" .
-                           $blankPre . "            \$" . $instance_name . "->" . $fieldname . " = " . $enumclassname . "::" . $fieldname . "ByShow( \$" . $instance_name . "->" . $fieldname . " );\r\n" .
-                           $blankPre . "        }\r\n";
+                $result .= $blankPre . "        if ( !{$enumclassname}::isEnumValue( \$" . $instance_name . "->" . $fieldname . " ) ) {" . HH .
+                           $blankPre . "            \$" . $instance_name . "->" . $fieldname . " = " . $enumclassname . "::" . $fieldname . "ByShow( \$" . $instance_name . "->" . $fieldname . " );" . HH .
+                           $blankPre . "        }" . HH;
             }
         }
         return $result;
@@ -767,17 +767,17 @@ class AutoCodeService extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             if ( $datatype == 'enum' ) {
                 $enumColumns[]     = "'" . $fieldname . "'";
-                $result["output"] .= "                if ( \${$instance_name}->{$fieldname}Show ) {\r\n" .
-                                     "                    \${$instance_name}['{$fieldname}'] = \${$instance_name}->{$fieldname}Show;\r\n" .
-                                     "                }\r\n";
+                $result["output"] .= "                if ( \${$instance_name}->{$fieldname}Show ) {" . HH .
+                                     "                    \${$instance_name}['{$fieldname}'] = \${$instance_name}->{$fieldname}Show;" . HH .
+                                     "                }" . HH;
             }
         }
         if ( count($enumColumns) > 0) {
             $enumColumns       = implode(",", $enumColumns);
-            $result["normal"] .= $blankPre . "        if ( ( !empty(\$data) ) && ( count(\$data) > 0 ) )\r\n" .
-                                 $blankPre . "        {\r\n" .
-                                 $blankPre . "            $classname::propertyShow( \$data, array($enumColumns) );\r\n" .
-                                 $blankPre . "        }\r\n";
+            $result["normal"] .= $blankPre . "        if ( ( !empty(\$data) ) && ( count(\$data) > 0 ) )" . HH .
+                                 $blankPre . "        {" . HH .
+                                 $blankPre . "            $classname::propertyShow( \$data, array($enumColumns) );" . HH .
+                                 $blankPre . "        }" . HH;
         }
         return $result;
     }
@@ -798,9 +798,9 @@ class AutoCodeService extends AutoCode
                 if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
                 {
                     if ( $isImport ) {
-                        $result .= "                            if ( isset(\${$instance_name}->$fieldname) ) \${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp( UtilExcel::exceltimtetophp( \${$instance_name}->$fieldname ) );\r\n";
+                        $result .= "                            if ( isset(\${$instance_name}->$fieldname) ) \${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp( UtilExcel::exceltimtetophp( \${$instance_name}->$fieldname ) );" . HH;
                     } else {
-                        $result .= "            if ( isset(\${$instance_name}[\"$fieldname\"]) ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp( \${$instance_name}[\"$fieldname\"] );\r\n";
+                        $result .= "            if ( isset(\${$instance_name}[\"$fieldname\"]) ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp( \${$instance_name}[\"$fieldname\"] );" . HH;
                     }
                 }
             }
@@ -821,7 +821,7 @@ class AutoCodeService extends AutoCode
             if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::column_type($field["Type"]);
                 if ( $datatype == 'bit' )
-                    $result .= $blankPre . "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = 1; else \$$instance_name->$fieldname = 0;\r\n";
+                    $result .= $blankPre . "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = 1; else \$$instance_name->$fieldname = 0;" . HH;
             }
         }
         return $result;
@@ -840,7 +840,7 @@ class AutoCodeService extends AutoCode
             if ( self::isNotColumnKeywork( $fieldname ) ) {
                 $datatype = self::column_type( $field["Type"] );
                 if ( $datatype == 'bit' )
-                    $result .= $blankPre . "                if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";\r\n";
+                    $result .= $blankPre . "                if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";" . HH;
             }
         }
         return $result;
@@ -861,7 +861,7 @@ class AutoCodeService extends AutoCode
                 $field_comment = $field["Comment"];
                 if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
                 {
-                    $result .= $blankPre . "                if ( \${$instance_name}->{$fieldname} ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::timestampToDateTime( \${$instance_name}->{$fieldname} );\r\n";
+                    $result .= $blankPre . "                if ( \${$instance_name}->{$fieldname} ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::timestampToDateTime( \${$instance_name}->{$fieldname} );" . HH;
                 }
             }
         }

@@ -149,7 +149,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: heredoc(function() {/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
+                report_sql: heredoc(function() {/*<?php echo HH . $reportSql . HH ?>*/}),
                 report_dev: true
               },
               reportProdForm: {
@@ -157,7 +157,7 @@ TPL_BUILDPROD;
                 report_cname: '<?php echo $reportCname ?>',
                 report_ename: '<?php echo $reportEname ?>',
                 report_desc: '<?php echo $reportDesc ?>',
-                report_sql: heredoc(function() {/*<?php echo "\r\n" . $reportSql . "\r\n" ?>*/}),
+                report_sql: heredoc(function() {/*<?php echo HH . $reportSql . HH ?>*/}),
                 report_prod: true
               },
               ruleValidate: {

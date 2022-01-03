@@ -67,29 +67,29 @@ class UtilEmailSmtp extends Util
         if ( !self::$is_utf8 ) {
             if ( UtilString::is_utf8( $content ) ) $content = UtilString::utf82gbk( $content );
         }
-        $header = "MIME-Version:1.0\r\n";
+        $header = "MIME-Version:1.0" . HH;
         if ( $isHtml_mailtype == "HTML" ) {
             $charset = "gbk";
             if ( self::$is_utf8 ) $charset="utf-8";
-            $header .= "Content-Type:text/html charset=\"$charset\"\r\n";// charset=\"utf-8\"
+            $header .= "Content-Type:text/html charset=\"$charset\"" . HH;// charset=\"utf-8\"
         }
-        $header .= "To: " . $toaddress . "\r\n";
+        $header .= "To: " . $toaddress . HH;
         if ( $cc != "" ) {
-            $header .= "Cc: " . $cc . "\r\n";
+            $header .= "Cc: " . $cc . HH;
         }
-        $header .= "Disposition-Notification-To: " . $fromaddress . "\r\n";
-        $header .= "From: $fromaddress<" . $fromaddress . ">\r\n";
+        $header .= "Disposition-Notification-To: " . $fromaddress . HH;
+        $header .= "From: $fromaddress<" . $fromaddress . ">" . HH;
         if ( !self::$is_utf8 ) {
             if ( UtilString::is_utf8( $subject ) ) $subject_send = UtilString::utf82gbk( $subject );
         }
         $header_echo  = $header;
-        $header      .= "Subject: " . $subject_send . "\r\n";
-        $header_echo .= "Subject: " . $subject . "\r\n";
+        $header      .= "Subject: " . $subject_send . HH;
+        $header_echo .= "Subject: " . $subject . HH;
         $later        = $additional_headers;
-        $later       .= "Date: ".date("r")."\r\n";
-        $later       .= "X-Mailer:By Redhat (PHP/".phpversion().")\r\n";
+        $later       .= "Date: ".date("r") . HH;
+        $later       .= "X-Mailer:By Redhat (PHP/".phpversion().")" . HH;
         list($msec, $sec) = explode(" ", microtime());
-        $later       .= "Message-ID: <" . date("YmdHis", $sec) . "." . ( $msec * 1000000 ) . "." . $mail_from . ">\r\n";
+        $later       .= "Message-ID: <" . date("YmdHis", $sec) . "." . ( $msec * 1000000 ) . "." . $mail_from . ">" . HH;
         $header      .= $later;
         $header_echo .= $later;
         $TO           = explode(",", $this->strip_comment( $toaddress ));
@@ -212,25 +212,25 @@ class UtilEmailSmtp extends Util
     }
 
     public function smtp_message($header, $body) {
-        fputs($this->sock, $header . "\r\n" . $body);
-        $this->smtp_debug("> " . str_replace("\r\n", "\n" . "> ", $header . "\n> " . $body . "\n> "));
+        fputs($this->sock, $header . HH . $body);
+        $this->smtp_debug("> " . str_replace(HH, "\n" . "> ", $header . "\n> " . $body . "\n> "));
 
         return TRUE;
     }
 
     public function smtp_eom() {
-        fputs($this->sock, "\r\n.\r\n");
+        fputs($this->sock, HH . "." . HH);
         $this->smtp_debug(". [EOM]\n");
 
         return $this->smtp_ok();
     }
 
     public function smtp_ok() {
-        $response = str_replace("\r\n", "", fgets($this->sock, 512));
+        $response = str_replace(HH, "", fgets($this->sock, 512));
         $this->smtp_debug($response . "\n");
 
         if ( !mb_ereg("^[23]", $response) ) {
-            fputs($this->sock, "QUIT\r\n");
+            fputs($this->sock, "QUIT" . HH);
             fgets($this->sock, 512);
             $this->log_write("Error: Remote host returned \"" . $response);
             return FALSE;
@@ -244,7 +244,7 @@ class UtilEmailSmtp extends Util
             else $cmd = $cmd . " " . $arg;
         }
 
-        fputs($this->sock, $cmd . "\r\n");
+        fputs($this->sock, $cmd . HH);
         $this->smtp_debug("> " . $cmd . "\n");
 
         return $this->smtp_ok();

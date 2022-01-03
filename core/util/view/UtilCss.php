@@ -144,13 +144,13 @@ class UtilCss extends Util
                         if ( $start_str == $end_str ) $css_gzip = str_replace($end_str . "/", "", $css_gzip);
                     }
                 }
-                $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $css_gzip . $cssFile . "\" />\r\n";
+                $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $css_gzip . $cssFile . "\" />" . HH;
             } else {
                 if ( in_array($cssFile, self::$CssLoaded) ) {
                     return ;
                 }
                 if ( startWith( $cssFile, "http" ) ) {
-                    $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssFile . "\" />\r\n";
+                    $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssFile . "\" />" . HH;
                 } else {
                     if ( contain( strtolower(php_uname()), "darwin" ) ) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
@@ -161,7 +161,7 @@ class UtilCss extends Util
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
                         if ( $start_str == $end_str ) $cssFile = str_replace($end_str . "/", "", $cssFile);
                     }
-                    $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $cssFile . "\" />\r\n";
+                    $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $cssFile . "\" />" . HH;
                 }
             }
             self::$CssLoaded[] = $cssFile;
@@ -199,9 +199,9 @@ class UtilCss extends Util
      */
     public static function loadCssContentSentence($cssContent)
     {
-        $result  = "     <style type=\"text/css\">\r\n";
-        $result .= "        " . $cssContent . "\r\n";
-        $result .= "     </style>\r\n";
+        $result  = "     <style type=\"text/css\">" . HH;
+        $result .= "        " . $cssContent . HH;
+        $result .= "     </style>" . HH;
         return $result;
     }
 

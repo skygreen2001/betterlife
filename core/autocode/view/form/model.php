@@ -5,7 +5,7 @@ $form_css = UtilCss::form_css();
 $show_table_lists = "";
 if ( !empty($inputArr) ) {
     foreach ($inputArr as $key => $value) {
-        $show_table_lists .= "        <option value=\"$key\">$value</option>\r\n";
+        $show_table_lists .= "        <option value=\"$key\">$value</option>" . HH;
     }
 
 $show_table_lists_model = <<<SHOWTABLELIST

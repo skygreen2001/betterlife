@@ -52,7 +52,7 @@ class UtilAjaxProtaculous extends UtilAjax implements IUtilAjax
         // $class_name = str_replace("RO", "", $local_service_flag);
         $result = "";
         if ( !self::$IsHtmlBody ) {
-            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
+            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }
 

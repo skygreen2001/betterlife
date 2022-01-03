@@ -93,19 +93,19 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
             if ( $response_type == EnumResponseType::JSON ) {
                 $result .= "onError:function(text, error) {
                             console.log('请求失败! :(。返回信息'+text+'，失败原因: '+error+'。');
-                            }\r\n";
+                            }" . HH;
             } else if ( $response_type == EnumResponseType::XML ) {
                 $result .= "
                       onFailure: function(xhr) {
                         console.log('请求失败! :(。失败原因: '+xhr.responseText);
-                      }\r\n";
+                      }" . HH;
             }
         } else {
             $result = substr($result, 0, strlen($result) - 1);
         }
-        $result .= "});\r\n";
-        $result .= "myRequest.setHeader('response_type', '$response_type');\r\n";
-        $result .= "myRequest.setHeader('request_method', '$method');\r\n";
+        $result .= "});" . HH;
+        $result .= "myRequest.setHeader('response_type', '$response_type');" . HH;
+        $result .= "myRequest.setHeader('request_method', '$method');" . HH;
         if ( $response_type == EnumResponseType::JSON ) {
             $result .= "myRequest.get($data);";
         } else if ( $response_type == EnumResponseType::XML ) {
@@ -171,7 +171,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         $result .= "}";
         //</editor-fold>
         if ( !self::$IsHtmlBody ) {
-            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
+            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }
         return $result;

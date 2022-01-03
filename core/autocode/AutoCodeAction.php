@@ -94,7 +94,7 @@ class AutoCodeAction extends AutoCode
             self::$action_dir_full = UtilString::gbk2utf8( self::$action_dir_full );
         }
         self::init();
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css()."\r\n";
+        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
         self::$echo_result = "";
 
         switch (self::$type) {
@@ -158,7 +158,7 @@ class AutoCodeAction extends AutoCode
      */
     private static function tableToActionDefine( $tablename, $fieldInfo )
     {
-        $result        = "<?php\r\n";
+        $result        = "<?php" . HH;
         $table_comment = self::tableCommentKey( $tablename );
         $classname     = self::getClassname( $tablename );
         $instancename  = self::getInstancename( $tablename );
@@ -183,14 +183,14 @@ class AutoCodeAction extends AutoCode
                 break;
         }
 
-        $result .= "/**\r\n".
-                   " * -----------| 控制器:$table_comment |-----------\r\n".
-                   " * @category $category\r\n".
-                   " * @package $package\r\n".
-                   " * @author $author\r\n".
-                   " */\r\n".
-                   "class Action_$classname extends $action_parent\r\n".
-                   "{\r\n";
+        $result .= "/**" . HH .
+                   " * -----------| 控制器:$table_comment |-----------" . HH .
+                   " * @category $category" . HH .
+                   " * @package $package" . HH .
+                   " * @author $author" . HH .
+                   " */" . HH .
+                   "class Action_$classname extends $action_parent" . HH .
+                   "{" . HH;
 
         switch (self::$type) {
             case EnumAutoCodeViewType::MODEL:
@@ -204,7 +204,7 @@ class AutoCodeAction extends AutoCode
                 break;
         }
 
-        $result .= "}\r\n\r\n";
+        $result .= "}" . HH . HH;
         return $result;
     }
 
@@ -239,116 +239,116 @@ class AutoCodeAction extends AutoCode
 
             $isImage       = self::columnIsImage($fieldname, $field_comment);
             if ( $isImage ) {
-                $viewImgContent .= "        if ( !empty(\$$instancename->$fieldname) ) {\r\n".
-                                   "            \$$instancename->$fieldname = Gc::\$upload_url . \"images/\" . \$$instancename->$fieldname;\r\n".
-                                   "        }\r\n";
-                $editImgContent .= "            if ( !empty(\$_FILES) && !empty(\$_FILES[\"$fieldname\"][\"name\"]) ) {\r\n".
-                                   "                \$result = \$this->uploadImg(\$_FILES, \"$fieldname\", \"$fieldname\", \"$instancename\");\r\n".
-                                   "                if ( \$result && ( \$result['success'] == true ) ) {\r\n".
-                                   "                    if ( array_key_exists('file_name', \$result) ) \$$instancename->$fieldname = \$result['file_name'];\r\n".
-                                   "                } else {\r\n".
-                                   "                    \$isRedirect = false;\r\n".
-                                   "                    \$this->view->set( \"message\", \$result[\"msg\"] );\r\n".
-                                   "                }\r\n".
-                                   "            }\r\n";
+                $viewImgContent .= "        if ( !empty(\$$instancename->$fieldname) ) {" . HH .
+                                   "            \$$instancename->$fieldname = Gc::\$upload_url . \"images/\" . \$$instancename->$fieldname;" . HH .
+                                   "        }" . HH;
+                $editImgContent .= "            if ( !empty(\$_FILES) && !empty(\$_FILES[\"$fieldname\"][\"name\"]) ) {" . HH .
+                                   "                \$result = \$this->uploadImg(\$_FILES, \"$fieldname\", \"$fieldname\", \"$instancename\");" . HH .
+                                   "                if ( \$result && ( \$result['success'] == true ) ) {" . HH .
+                                   "                    if ( array_key_exists('file_name', \$result) ) \$$instancename->$fieldname = \$result['file_name'];" . HH .
+                                   "                } else {" . HH .
+                                   "                    \$isRedirect = false;" . HH .
+                                   "                    \$this->view->set( \"message\", \$result[\"msg\"] );" . HH .
+                                   "                }" . HH .
+                                   "            }" . HH;
             }
 
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "            if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;\r\n";
+                $editBitContent .= "            if ( \${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
                 break;
             }
         }
         $editBitContent = $editBitContent.
-                          "            if ( !empty(\$id) ) {\r\n".
-                          "                \${$instancename}->update();\r\n".
-                          "            } else {\r\n".
-                          "                \$id = \${$instancename}->save();\r\n".
-                          "            }\r\n";
+                          "            if ( !empty(\$id) ) {" . HH .
+                          "                \${$instancename}->update();" . HH .
+                          "            } else {" . HH .
+                          "                \$id = \${$instancename}->save();" . HH .
+                          "            }" . HH;
 
         if ( count($text_area_fieldname) == 1 ) {
-            $editTextareaContent .= "        \$this->load_onlineditor( {$text_area_fieldname[0]} );\r\n";
+            $editTextareaContent .= "        \$this->load_onlineditor( {$text_area_fieldname[0]} );" . HH;
         } else if ( count($text_area_fieldname) > 1 ) {
             $fieldnames           = implode(", ", $text_area_fieldname);
-            $editTextareaContent .= "        \$this->load_onlineditor( array({$fieldnames}) );\r\n";
+            $editTextareaContent .= "        \$this->load_onlineditor( array({$fieldnames}) );" . HH;
         }
-        $result = "    /**\r\n".
-                  "     * {$table_comment}列表\r\n".
-                  "     */\r\n".
-                  "    public function lists()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 查看{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function view()\r\n".
-                  "    {\r\n".
-                  "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );\r\n".
+        $result = "    /**" . HH .
+                  "     * {$table_comment}列表" . HH .
+                  "     */" . HH .
+                  "    public function lists()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 查看{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function view()" . HH .
+                  "    {" . HH .
+                  "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
                   $viewImgContent.
-                  "        \$this->view->set( \"$instancename\", \$$instancename );\r\n".
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 编辑{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function edit()\r\n".
-                  "    {\r\n".
-                  "        if ( !empty(\$_POST) ) {\r\n".
-                  "            \$$instancename = \$this->model->$classname;\r\n".
-                  "            \$id = \${$instancename}->getId();\r\n".
-                  "            \$isRedirect = true;\r\n".
+                  "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 编辑{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function edit()" . HH .
+                  "    {" . HH .
+                  "        if ( !empty(\$_POST) ) {" . HH .
+                  "            \$$instancename = \$this->model->$classname;" . HH .
+                  "            \$id = \${$instancename}->getId();" . HH .
+                  "            \$isRedirect = true;" . HH .
                   $editImgContent.
                   $editBitContent.
                   $rela_m2m_content.
-                  "            if ( \$isRedirect ) {\r\n".
-                  "                \$this->redirect( \"$instancename\", \"view\", \"id=\$id\" );\r\n".
-                  "                exit;\r\n".
-                  "            }\r\n".
-                  "        }\r\n".
-                  "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );\r\n".
-                  "        \$this->view->set( \"$instancename\", \$$instancename );\r\n".
+                  "            if ( \$isRedirect ) {" . HH .
+                  "                \$this->redirect( \"$instancename\", \"view\", \"id=\$id\" );" . HH .
+                  "                exit;" . HH .
+                  "            }" . HH .
+                  "        }" . HH .
+                  "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
+                  "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
                   $relation_content.
                   $editTextareaContent.
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 删除{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function delete()\r\n".
-                  "    {\r\n".
-                  "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                  "        \$isDelete = $classname::deleteByID( \${$instancename}Id );\r\n".
-                  "        return array(\"info\" => 200, \"data\" => \${$instancename}Id);\r\n".
-                  "    }\r\n";
-        $import = "\r\n".
-                  "    /**\r\n".
-                  "     * 批量上传{$table_comment}\r\n".
-                  "     * @param mixed \$upload_file <input name=\"upload_file\" type=\"file\">\r\n".
-                  "     */\r\n".
-                  "    public function import()\r\n".
-                  "    {\r\n".
-                  "        if ( !empty(\$_FILES) ) {\r\n".
-                  "            return Manager_Service::{$instancename}Service()->import( \$_FILES );\r\n".
-                  "        }\r\n".
-                  "        return array(\"error\" => 500,\"info\" => \"No Data\");\r\n".
-                  "    }\r\n";
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 删除{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function delete()" . HH .
+                  "    {" . HH .
+                  "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                  "        \$isDelete = $classname::deleteByID( \${$instancename}Id );" . HH .
+                  "        return array(\"info\" => 200, \"data\" => \${$instancename}Id);" . HH .
+                  "    }" . HH;
+        $import = HH .
+                  "    /**" . HH .
+                  "     * 批量上传{$table_comment}" . HH .
+                  "     * @param mixed \$upload_file <input name=\"upload_file\" type=\"file\">" . HH .
+                  "     */" . HH .
+                  "    public function import()" . HH .
+                  "    {" . HH .
+                  "        if ( !empty(\$_FILES) ) {" . HH .
+                  "            return Manager_Service::{$instancename}Service()->import( \$_FILES );" . HH .
+                  "        }" . HH .
+                  "        return array(\"error\" => 500,\"info\" => \"No Data\");" . HH .
+                  "    }" . HH;
 
         $classNameField   = self::getShowFieldName( $classname );
-        $export = "\r\n".
-                  "    /**\r\n".
-                  "     * 导出{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function export()\r\n".
-                  "    {\r\n".
-                  "        \$filter_name = \"$classNameField\";\r\n" .
-                  "        \$filter      = null;\r\n" .
-                  "        if ( !empty(\$filter_name) && !empty(\$this->data[\"query\"]) ) {\r\n" .
-                  "            \$filter = array(\$filter_name => \$this->data[\"query\"]);\r\n" .
-                  "        }\r\n" .
-                  "        return Manager_Service::{$instancename}Service()->export{$classname}( \$filter );\r\n" .
-                  "    }\r\n";
+        $export = HH .
+                  "    /**" . HH .
+                  "     * 导出{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function export()" . HH .
+                  "    {" . HH .
+                  "        \$filter_name = \"$classNameField\";" . HH .
+                  "        \$filter      = null;" . HH .
+                  "        if ( !empty(\$filter_name) && !empty(\$this->data[\"query\"]) ) {" . HH .
+                  "            \$filter = array(\$filter_name => \$this->data[\"query\"]);" . HH .
+                  "        }" . HH .
+                  "        return Manager_Service::{$instancename}Service()->export{$classname}( \$filter );" . HH .
+                  "    }" . HH;
         $result .= $import . $export;
         return $result;
     }
@@ -362,34 +362,34 @@ class AutoCodeAction extends AutoCode
      */
     private static function frontActionContent( $table_comment )
     {
-        $result = "    /**\r\n".
-                  "     * {$table_comment}列表\r\n".
-                  "     */\r\n".
-                  "    public function lists()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 查看{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function view()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 编辑{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function edit()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n".
-                  "    /**\r\n".
-                  "     * 删除{$table_comment}\r\n".
-                  "     */\r\n".
-                  "    public function delete()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n";
+        $result = "    /**" . HH .
+                  "     * {$table_comment}列表" . HH .
+                  "     */" . HH .
+                  "    public function lists()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 查看{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function view()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 编辑{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function edit()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH .
+                  "    /**" . HH .
+                  "     * 删除{$table_comment}" . HH .
+                  "     */" . HH .
+                  "    public function delete()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH;
         return $result;
     }
 
@@ -404,41 +404,41 @@ class AutoCodeAction extends AutoCode
     {
         $result        = "";
         $appname_alias = strtolower(Gc::$appName_alias);
-        $result .= "    /**\r\n".
-                   "     * {$table_comment}列表\r\n".
-                   "     */\r\n".
-                   "    public function lists()\r\n".
-                   "    {\r\n".
-                   "        if ( \$this->isDataHave( TagPageService::\$linkUrl_pageFlag ) ) {\r\n".
-                   "            \$nowpage = \$this->data[TagPageService::\$linkUrl_pageFlag];\r\n".
-                   "        } else {\r\n".
-                   "            \$nowpage = 1;\r\n".
-                   "        }\r\n".
-                   "        \$count = {$classname}::count();\r\n".
-                   "        \$this->view->count{$classname}s = \$count;\r\n".
-                   "        \${$instancename}s = null;\r\n".
-                   "        if ( \$count > 0 ) {\r\n".
-                   "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);\r\n".
-                   "            \${$instancename}s = {$classname}::queryPage( \${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint() );\r\n".
-                   "        }\r\n".
-                   "        \$this->view->set( \"{$instancename}s\", \${$instancename}s );\r\n".
-                   "    }\r\n";
+        $result .= "    /**" . HH .
+                   "     * {$table_comment}列表" . HH .
+                   "     */" . HH .
+                   "    public function lists()" . HH .
+                   "    {" . HH .
+                   "        if ( \$this->isDataHave( TagPageService::\$linkUrl_pageFlag ) ) {" . HH .
+                   "            \$nowpage = \$this->data[TagPageService::\$linkUrl_pageFlag];" . HH .
+                   "        } else {" . HH .
+                   "            \$nowpage = 1;" . HH .
+                   "        }" . HH .
+                   "        \$count = {$classname}::count();" . HH .
+                   "        \$this->view->count{$classname}s = \$count;" . HH .
+                   "        \${$instancename}s = null;" . HH .
+                   "        if ( \$count > 0 ) {" . HH .
+                   "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);" . HH .
+                   "            \${$instancename}s = {$classname}::queryPage( \${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint() );" . HH .
+                   "        }" . HH .
+                   "        \$this->view->set( \"{$instancename}s\", \${$instancename}s );" . HH .
+                   "    }" . HH;
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
         // $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
-        // if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = "\r\n" . $relationFieldTreeRecursive;
+        // if ( $relationFieldTreeRecursive ) $relationFieldTreeRecursive = HH . $relationFieldTreeRecursive;
         // $result .= $relationFieldTreeRecursive;
 
-        $result .= "    /**\r\n".
-                   "     * 查看{$table_comment}\r\n".
-                   "     */\r\n".
-                   "    public function view()\r\n".
-                   "    {\r\n".
-                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );\r\n".
+        $result .= "    /**" . HH .
+                   "     * 查看{$table_comment}" . HH .
+                   "     */" . HH .
+                   "    public function view()" . HH .
+                   "    {" . HH .
+                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );" . HH .
                   //  $relationField.
-                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );\r\n".
-                   "    }\r\n";
+                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
+                   "    }" . HH;
 
 
         $editBitContent = "";
@@ -456,37 +456,37 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
               case 'bit':
-                $editBitContent .= "            if ( \${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;\r\n";
+                $editBitContent .= "            if ( \${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
                 break;
             }
         }
         $editContent = $editBitContent.
-                       "            if ( !empty(\$id) ) {\r\n".
-                       "                \${$instancename}->update();\r\n".
-                       "            } else {\r\n".
-                       "                \$id = \${$instancename}->save();\r\n".
-                       "            }\r\n";
+                       "            if ( !empty(\$id) ) {" . HH .
+                       "                \${$instancename}->update();" . HH .
+                       "            } else {" . HH .
+                       "                \$id = \${$instancename}->save();" . HH .
+                       "            }" . HH;
 
-        $result .= "    /**\r\n".
-                   "     * 编辑{$table_comment}\r\n".
-                   "     */\r\n".
-                   "    public function edit()\r\n".
-                   "    {\r\n".
-                   "        if ( !empty(\$_POST) ) {\r\n".
-                   "            \${$instancename} = \$this->model->{$classname};\r\n".
-                   "            \$id         = \${$instancename}->getId();\r\n".
-                   "            \$isRedirect = true;\r\n".
+        $result .= "    /**" . HH .
+                   "     * 编辑{$table_comment}" . HH .
+                   "     */" . HH .
+                   "    public function edit()" . HH .
+                   "    {" . HH .
+                   "        if ( !empty(\$_POST) ) {" . HH .
+                   "            \${$instancename} = \$this->model->{$classname};" . HH .
+                   "            \$id         = \${$instancename}->getId();" . HH .
+                   "            \$isRedirect = true;" . HH .
                    self::uploadImgInEdit( $instancename, $fieldInfo ).
                    $editContent.
                    $rela_m2m_content.
-                   "            if ( \$isRedirect ) {\r\n".
-                   "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );\r\n".
-                   "                exit;\r\n".
-                   "            }\r\n".
-                   "        }\r\n".
-                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );\r\n".
-                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );\r\n".
+                   "            if ( \$isRedirect ) {" . HH .
+                   "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );" . HH .
+                   "                exit;" . HH .
+                   "            }" . HH .
+                   "        }" . HH .
+                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );" . HH .
+                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
                    $relation_content;
         $text_area_fieldname = array();
         foreach ($fieldInfo as $fieldname => $field)
@@ -497,23 +497,23 @@ class AutoCodeAction extends AutoCode
             }
         }
         if ( count($text_area_fieldname) == 1 ) {
-            $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
-                       "        \$this->load_onlineditor( {$text_area_fieldname[0]} );\r\n";
+            $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。" . HH .
+                       "        \$this->load_onlineditor( {$text_area_fieldname[0]} );" . HH;
         } else if ( count($text_area_fieldname) > 1 ) {
             $fieldnames = implode(",", $text_area_fieldname);
-            $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。\r\n".
-                          "        \$this->load_onlineditor( array({$fieldnames}) );\r\n";
+            $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。" . HH .
+                          "        \$this->load_onlineditor( array({$fieldnames}) );" . HH;
         }
-        $result .= "    }\r\n".
-                   "    /**\r\n".
-                   "     * 删除{$table_comment}\r\n".
-                   "     */\r\n".
-                   "    public function delete()\r\n".
-                   "    {\r\n".
-                   "        \${$instancename}Id = \$this->data[\"id\"];\r\n".
-                   "        \$isDelete = {$classname}::deleteByID( \${$instancename}Id );\r\n".
-                   "        \$this->redirect( \"{$instancename}\", \"lists\", \$this->data );\r\n".
-                   "    }\r\n";
+        $result .= "    }" . HH .
+                   "    /**" . HH .
+                   "     * 删除{$table_comment}" . HH .
+                   "     */" . HH .
+                   "    public function delete()" . HH .
+                   "    {" . HH .
+                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
+                   "        \$isDelete = {$classname}::deleteByID( \${$instancename}Id );" . HH .
+                   "        \$this->redirect( \"{$instancename}\", \"lists\", \$this->data );" . HH .
+                   "    }" . HH;
         return $result;
     }
 
@@ -530,8 +530,8 @@ class AutoCodeAction extends AutoCode
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
                     $realId            = DataObjectSpec::getRealIDColumnName($key);
-                    $relation_content .= "        \${$value}s = {$key}::get( \"\", \"$realId asc\" );\r\n".
-                                         "        \$this->view->set( \"{$value}s\", \${$value}s );\r\n";
+                    $relation_content .= "        \${$value}s = {$key}::get( \"\", \"$realId asc\" );" . HH .
+                                         "        \$this->view->set( \"{$value}s\", \${$value}s );" . HH;
                 }
             }
 
@@ -546,8 +546,8 @@ class AutoCodeAction extends AutoCode
                     $instancename      = self::getInstancename( $tablename );
                     $talname_rela      = self::getTablename( $key );
                     $instancename_rela = self::getInstancename( $talname_rela );
-                    $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];\r\n".
-                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );\r\n";
+                    $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];" . HH .
+                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );" . HH;
                 }
             }
         }
@@ -583,23 +583,23 @@ class AutoCodeAction extends AutoCode
     //                                 $classNameField = self::getShowFieldName( $key );
     //                                 $field_comment  = $field["Comment"];
     //                                 $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-    //                                 $result .= "    /**\r\n".
-    //                                            "     * 显示{$field_comment}[全]\r\n".
-    //                                            "     * 注:采用了递归写法\r\n".
-    //                                            "     * @param 对象 \$parent_id 父地区标识\r\n".
-    //                                            "     * @param mixed \$level 目录层级\r\n".
-    //                                            "     */\r\n".
-    //                                            "    private function {$i_name}ShowAll(\$parent_id, \$level)\r\n".
-    //                                            "    {\r\n".
-    //                                            "        \${$i_name}_p = $key::get_by_id( \$parent_id );\r\n".
-    //                                            "        if ( \$level == 1 ) {\r\n".
-    //                                            "            \${$i_name}ShowAll = \${$i_name}_p->$classNameField;\r\n".
-    //                                            "        } else {\r\n".
-    //                                            "            \$parent_id = \${$i_name}_p->parent_id;\r\n".
-    //                                            "            \${$i_name}ShowAll = \$this->{$i_name}ShowAll( \$parent_id, \$level - 1 ) . \" -> \" . \${$i_name}_p -> $classNameField;\r\n".
-    //                                            "        }\r\n".
-    //                                            "        return \${$i_name}ShowAll;\r\n".
-    //                                            "    }\r\n\r\n";
+    //                                 $result .= "    /**" . HH .
+    //                                            "     * 显示{$field_comment}[全]" . HH .
+    //                                            "     * 注:采用了递归写法" . HH .
+    //                                            "     * @param 对象 \$parent_id 父地区标识" . HH .
+    //                                            "     * @param mixed \$level 目录层级" . HH .
+    //                                            "     */" . HH .
+    //                                            "    private function {$i_name}ShowAll(\$parent_id, \$level)" . HH .
+    //                                            "    {" . HH .
+    //                                            "        \${$i_name}_p = $key::get_by_id( \$parent_id );" . HH .
+    //                                            "        if ( \$level == 1 ) {" . HH .
+    //                                            "            \${$i_name}ShowAll = \${$i_name}_p->$classNameField;" . HH .
+    //                                            "        } else {" . HH .
+    //                                            "            \$parent_id = \${$i_name}_p->parent_id;" . HH .
+    //                                            "            \${$i_name}ShowAll = \$this->{$i_name}ShowAll( \$parent_id, \$level - 1 ) . \" -> \" . \${$i_name}_p -> $classNameField;" . HH .
+    //                                            "        }" . HH .
+    //                                            "        return \${$i_name}ShowAll;" . HH .
+    //                                            "    }" . HH . HH;
     //                                 $isTreeLevelHad = true;
     //                             }
     //                         }
@@ -641,15 +641,15 @@ class AutoCodeAction extends AutoCode
 
         if ( $img_fieldname && count($img_fieldname) > 0 ) {
             foreach ( $img_fieldname as $fieldname ) {
-                $result .= "            if ( !empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"]) ) {\r\n".
-                           "                \$result = \$this->uploadImg( \$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\" );\r\n".
-                           "                if ( \$result && ( \$result['success'] == true ) ) {\r\n".
-                           "                    if ( array_key_exists('file_name', \$result) ) \${$instancename}->$fieldname = \$result['file_name'];\r\n".
-                           "                } else {\r\n".
-                           "                    \$isRedirect = false;\r\n".
-                           "                    \$this->view->set( \"message\", \$result[\"msg\"] );\r\n".
-                           "                }\r\n".
-                           "            }\r\n";
+                $result .= "            if ( !empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"]) ) {" . HH .
+                           "                \$result = \$this->uploadImg( \$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\" );" . HH .
+                           "                if ( \$result && ( \$result['success'] == true ) ) {" . HH .
+                           "                    if ( array_key_exists('file_name', \$result) ) \${$instancename}->$fieldname = \$result['file_name'];" . HH .
+                           "                } else {" . HH .
+                           "                    \$isRedirect = false;" . HH .
+                           "                    \$this->view->set( \"message\", \$result[\"msg\"] );" . HH .
+                           "                }" . HH .
+                           "            }" . HH;
             }
         }
         return $result;
@@ -666,23 +666,23 @@ class AutoCodeAction extends AutoCode
         $action_parent = "Action";
         if ( self::$type == 1 ) $package       = self::$package_model;
         if ( self::$type == 1 ) $action_parent = "ActionModel";
-        $result = "<?php\r\n".
-                  "/**\r\n".
-                  " * -----------| 控制器:首页导航 |-----------\r\n".
-                  " * @category $category\r\n".
-                  " * @package $package\r\n".
-                  " * @author $author\r\n".
-                  " */\r\n".
-                  "class Action_Index extends $action_parent\r\n".
-                  "{\r\n".
-                  "    /**\r\n".
-                  "     * 首页:网站所有页面列表\r\n".
-                  "     */\r\n".
-                  "    public function index()\r\n".
-                  "    {\r\n".
-                  "        \r\n".
-                  "    }\r\n".
-                  "}\r\n\r\n";
+        $result = "<?php" . HH .
+                  "/**" . HH .
+                  " * -----------| 控制器:首页导航 |-----------" . HH .
+                  " * @category $category" . HH .
+                  " * @package $package" . HH .
+                  " * @author $author" . HH .
+                  " */" . HH .
+                  "class Action_Index extends $action_parent" . HH .
+                  "{" . HH .
+                  "    /**" . HH .
+                  "     * 首页:网站所有页面列表" . HH .
+                  "     */" . HH .
+                  "    public function index()" . HH .
+                  "    {" . HH .
+                  "        " . HH .
+                  "    }" . HH .
+                  "}" . HH . HH;
         self::saveDefineToDir( self::$action_dir_full, "Action_Index.php", $result );
     }
 

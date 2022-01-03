@@ -93,7 +93,7 @@ class UtilObject extends Util
             foreach ($array as $akey => $aval) {
                 if ( is_string($akey) ) {//&&property_exists($data, $akey)
                     if ( method_exists($data, 'set' . ucfirst($akey)) ) {
-//            $data->{'set'.ucfirst($akey)}($aval);
+//            $data->{'set' . ucfirst($akey)}($aval);
                         if ( $isAll ) {
                             $data->{$akey} = $aval;
                         } else {

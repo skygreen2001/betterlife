@@ -491,7 +491,7 @@ class simple_html_dom {
     protected $cursor;
     protected $parent;
     protected $noise = array();
-    protected $token_blank = " \t\r\n";
+    protected $token_blank = " \t" . HH;
     protected $token_equal = ' =/>';
     protected $token_slash = " />\r\n\t";
     protected $token_attr = ' >';
@@ -930,7 +930,7 @@ class simple_html_dom {
         $count = preg_match_all($pattern, $this->doc, $matches, PREG_SET_ORDER|PREG_OFFSET_CAPTURE);
 
         for ($i=$count-1; $i>-1; --$i) {
-            $key = '___noise___'.sprintf('% 3d', count($this->noise)+100);
+            $key = '___noise___' . sprintf('% 3d', count($this->noise)+100);
             $idx = ($remove_tag) ? 0 : 1;
             $this->noise[$key] = $matches[$i][$idx][0];
             $this->doc = substr_replace($this->doc, $key, $matches[$i][$idx][1], strlen($matches[$i][$idx][0]));

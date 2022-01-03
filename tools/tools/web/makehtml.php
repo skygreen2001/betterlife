@@ -88,7 +88,7 @@ function runphp($go, $pararm = null)
                 $result = preg_replace("~>\s+\n~", ">", $result);
                 $result = preg_replace("~>\s+\r~", ">", $result);
                 $result = preg_replace("~>\s+<~", "><", $result);
-                $result = str_replace("\r\n", "", $result);
+                $result = str_replace(HH, "", $result);
                /************************end  :整个Html页面去除注释，换行，空格********************/
             }
         }

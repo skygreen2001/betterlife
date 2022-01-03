@@ -33,7 +33,7 @@
         });
     </script>
 
-<?php  echo UtilCss::form_css() . "\r\n"; ?>
+<?php  echo UtilCss::form_css() . HH; ?>
 </head>
 <body>
     <div align="center">

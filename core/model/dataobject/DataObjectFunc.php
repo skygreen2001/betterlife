@@ -594,7 +594,7 @@ class DataObjectFunc
             if ( is_object($dataobject) ) {
                 $classname  = $dataobject->classname();
                 $result     = "<pre>";
-                $result    .= $classname . " DataObject\r\n{\r\n";
+                $result    .= $classname . " DataObject" . HH . "{" . HH;
                 $dataobject = clone $dataobject;
                 if ( is_a($dataobject, "DataObject") ) {
                     $dataobjectArr        = $dataobject->toArray();
@@ -608,7 +608,7 @@ class DataObjectFunc
                                 $access = ":" . $propertyInfo["access"];
                             }
                         }
-                        $result .= "      [" . $key . $access . "]" . " => " . $value . "\r\n";
+                        $result .= "      [" . $key . $access . "]" . " => " . $value . HH;
                     }
                 }
                 $result .= "}";

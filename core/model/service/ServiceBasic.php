@@ -97,7 +97,7 @@ class ServiceBasic extends Service implements IServiceBasic
     /**
      * 由标识删除指定ID数据对象
      * @param int $id 数据对象标识
-     * @return boolen 是否删除成功；true为操作正常\r\n".
+     * @return boolen 是否删除成功；true为操作正常" . HH .
      */
     public function deleteByID($id)
     {

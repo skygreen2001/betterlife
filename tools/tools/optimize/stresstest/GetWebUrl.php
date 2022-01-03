@@ -46,7 +46,7 @@ class GetWebUrl
                             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
                             if ( !endwith( $urlbase, $domainSubDir ) ) $urlbase .= $domainSubDir;
                         }
-                        $result .= $urlbase . "index.php?go=" . $moduleName . "." . $action_name . "." . "" . $method . "\r\n";
+                        $result .= $urlbase . "index.php?go=" . $moduleName . "." . $action_name . "." . "" . $method . HH;
 
                         $count  += 1;
                     }
@@ -57,7 +57,7 @@ class GetWebUrl
             echo "生成保存路径:" . self::$save_urls_path . "<br/>";
             echo "共计有:" . $count . "个访问url地址<br/><br/>";
             echo "列表如下:<br/>";
-            $table_change = array("\r\n" => "<br/>");
+            $table_change = array(HH => "<br/>");
             $show_result  = strtr($result, $table_change);
         }
         echo $show_result . "<br/>";

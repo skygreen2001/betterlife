@@ -84,7 +84,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         {
             LogMe::log(
                 '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysqli_error($connection)
-                    . '.<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
+                    . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
             return false;
         }
 
@@ -112,7 +112,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
                     }
 
                     if ( mysqli_connect_errno() ) {
-                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v . '.<br/> MySQL报告错误信息:' . $error );
+                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v . '<br/> MySQL报告错误信息:' . $error );
                         Exception_Mysqli::record();
                         return false;
                     }

@@ -89,24 +89,24 @@ class AutoCodeValidate extends AutoCode
         foreach ($print_error_info as $key => $value) {
             if ( count($table_error[$key]) > 0 ) {
                 $isValid        = false;
-                $showValidInfo .= "&nbsp;&nbsp;<font color='#FF0000'>&nbsp;&nbsp;/" . str_repeat("*", 35) . $value . str_repeat("*", 35) . "/</font></a><br/>\r\n";
+                $showValidInfo .= "&nbsp;&nbsp;<font color='#FF0000'>&nbsp;&nbsp;/" . str_repeat("*", 35) . $value . str_repeat("*", 35) . "/</font></a><br/>" . HH;
                 foreach ($table_error[$key] as $first=>$second) {
                     if ( is_numeric($first) ) {
-                        $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $second . "<br/>\r\n";
+                        $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $second . "<br/>" . HH;
                     } else {
                         if ( is_array($second) ) {
                             foreach ($second as $field_name) {
-                                $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $first . "->" . $field_name . "<br/>\r\n";
+                                $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $first . "->" . $field_name . "<br/>" . HH;
                             }
                         } else {
-                            $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $first . "->" . $second . "<br/>\r\n";
+                            $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $first . "->" . $second . "<br/>" . HH;
                         }
                     }
                 }
             }
         }
         if ( !empty($showValidInfo) ) {
-            $showValidInfo .= "<br/>\r\n";
+            $showValidInfo .= "<br/>" . HH;
             self::$showPreviewReport .= "<div style='width: 1000px; margin-left: 80px;'>";
             self::$showPreviewReport .= "<a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showValidInfo').style.display=(document.getElementById('showValidInfo').style.display=='none')?'':'none')\">显示校验错误报告</a>";
             self::$showPreviewReport .= "<div id='showValidInfo' style='display: none;'>";

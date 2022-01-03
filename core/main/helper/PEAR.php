@@ -1029,7 +1029,7 @@ class PEAR_Error
             } else {
                 $callback = $this->callback;
             }
-            return sprintf('[%s: message="%s" code=%d mode=callback '.
+            return sprintf('[%s: message="%s" code=%d mode=callback ' .
                            'callback=%s prefix="%s" info="%s"]',
                            strtolower(get_class($this)), $this->message, $this->code,
                            $callback, $this->error_message_prefix,
@@ -1047,7 +1047,7 @@ class PEAR_Error
         if ($this->mode & PEAR_ERROR_RETURN) {
             $modes[] = 'return';
         }
-        return sprintf('[%s: message="%s" code=%d mode=%s level=%s '.
+        return sprintf('[%s: message="%s" code=%d mode=%s level=%s ' .
                        'prefix="%s" info="%s"]',
                        strtolower(get_class($this)), $this->message, $this->code,
                        implode("|", $modes), $levels[$this->level],

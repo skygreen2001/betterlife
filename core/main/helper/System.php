@@ -511,9 +511,9 @@ class System
         if (OS_WINDOWS) {
             $exe_suffixes = getenv('PATHEXT')
                                 ? explode(PATH_SEPARATOR, getenv('PATHEXT'))
-                                : array('.exe','.bat','.cmd','.com');
+                                : array('.exe', '.bat', '.cmd', '.com');
             // allow passing a command.exe param
-            if (strpos($program, '.') !== false) {
+            if ( strpos($program, '.' ) !== false) {
                 array_unshift($exe_suffixes, '');
             }
             // is_executable() is not available on windows for PHP4

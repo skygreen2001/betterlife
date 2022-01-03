@@ -292,7 +292,7 @@ class Project_Refactor
             //修改Gc.php配置文件
             $gc_file = self::$save_dir."Gc.php";
             $content = file_get_contents($gc_file);
-            $content = preg_replace('/\''.Config_Db::$table_prefix.'\'/', "'".self::$table_prefix."'", $content);
+            $content = preg_replace('/\'' . Config_Db::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
             $content = str_replace("'admin',", "", $content);
             $content = str_replace("'model',", "", $content);
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
@@ -348,7 +348,7 @@ class Project_Refactor
             //修改Config_Db.php配置文件
             $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_Db.php";
             $content      = file_get_contents($conf_db_file);
-            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "'.self::$db_name.'"', $content);
+            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
             $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . Config_Db::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
             file_put_contents($conf_db_file, $content);
 
@@ -589,44 +589,44 @@ class Project_Refactor
         );
 
         $url_base = UtilNet::urlbase();
-        echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\r\n
-                <html lang='zh-CN' xml:lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml'>\r\n";
-        echo "<head>\r\n";
-        echo "<link rel=\"icon\" href=\"{$url_base}favicon.ico\" mce_href=\"favicon.ico\" type=\"image/x-icon\">\r\n";
-        echo UtilCss::form_css() . "\r\n";
+        echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>" . HH . "
+                <html lang='zh-CN' xml:lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml'>" . HH;
+        echo "<head>" . HH;
+        echo "<link rel=\"icon\" href=\"{$url_base}favicon.ico\" mce_href=\"favicon.ico\" type=\"image/x-icon\">" . HH;
+        echo UtilCss::form_css() . HH;
         echo "";
         echo "</head>";
         echo "<body class='prj-onekey'>";
-        echo "<h1 align='center'>$title</h1>\r\n";
-        echo "<div align='center' height='450' style='margin-left: -10%;'>\r\n";
+        echo "<h1 align='center'>$title</h1>" . HH;
+        echo "<div align='center' height='450' style='margin-left: -10%;'>" . HH;
         
         echo $errorInfo;
 
-        echo "<form>\r\n";
-        echo "    <div style='line-height:1.5em;'>\r\n";
-        echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>\r\n";
-        echo "        <label>Web项目名称【英文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【英文】' name='pj_name_en' value='$pj_name_en' id='pj_name_en' oninput=\"document.getElementById('dbname').value=this.value;document.getElementById('save_dir').value=this.value;\" /><br/>\r\n";
-        echo "        <label title='最好两个字母,头字母大写'>&nbsp;&nbsp;&nbsp;&nbsp;Web项目别名:</label><input title='最好两个字母,头字母大写' style='width:400px;text-align:left;padding-left:10px;' type='text' name='pj_name_alias' value='$pj_name_alias' id='pj_name_alias' /><br/>\r\n";
-        echo "        <div><label>&nbsp;&nbsp;输出Web项目路径:</label><label style='text-align:left;'>$domain_root</label><input style='width: 150px;display: inline-block;text-align:left;padding-left:10px;margin-left: 20px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /></div>\r\n";
-        echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>\r\n";
-        echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>\r\n";
-        echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>\r\n";
+        echo "<form>" . HH;
+        echo "    <div style='line-height:1.5em;'>" . HH;
+        echo "        <label>Web项目名称【中文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【中文】' name='pj_name_cn' value='$pj_name_cn' id='pj_name_cn' /><br/>" . HH;
+        echo "        <label>Web项目名称【英文】:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' placeholder='Web项目名称【英文】' name='pj_name_en' value='$pj_name_en' id='pj_name_en' oninput=\"document.getElementById('dbname').value=this.value;document.getElementById('save_dir').value=this.value;\" /><br/>" . HH;
+        echo "        <label title='最好两个字母,头字母大写'>&nbsp;&nbsp;&nbsp;&nbsp;Web项目别名:</label><input title='最好两个字母,头字母大写' style='width:400px;text-align:left;padding-left:10px;' type='text' name='pj_name_alias' value='$pj_name_alias' id='pj_name_alias' /><br/>" . HH;
+        echo "        <div><label>&nbsp;&nbsp;输出Web项目路径:</label><label style='text-align:left;'>$domain_root</label><input style='width: 150px;display: inline-block;text-align:left;padding-left:10px;margin-left: 20px;' type='text' name='save_dir' value='$default_dir' id='save_dir' /></div>" . HH;
+        echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库名称:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='dbname' value='$dbname' id='dbname' /><br/>" . HH;
+        echo "        <label>&nbsp;&nbsp;&nbsp;数据库表名前缀:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='table_prefix' value='$table_prefix' id='table_prefix' /><br/>" . HH;
+        echo "        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帮助地址:</label><input style='width:400px;text-align:left;padding-left:10px;' type='text' name='git_name' value='$git_name' id='git_name' /><br/>" . HH;
         $selectd_str = "";
         if ( !empty($inputArr) ) {
-            echo "<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重用类型:</label><select name='reuse_type'>\r\n";
+            echo "<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重用类型:</label><select name='reuse_type'>" . HH;
             foreach ($inputArr as $key=>$value) {
                 if ( isset($reuse_type) ) {
                     if ( $key == $reuse_type ) $selectd_str = " selected"; else $selectd_str = "";
                 }
-                echo "        <option value='$key'$selectd_str>$value</option>\r\n";
+                echo "        <option value='$key'$selectd_str>$value</option>" . HH;
             }
-            echo "        </select>\r\n";
+            echo "        </select>" . HH;
         }
-        echo "    </div>\r\n";
-        echo "    <input class='btnSubmit' type='submit' value='生成' /><br/><br><br><br><br><br><br>\r\n";
-        echo "</form>\r\n";
-        echo "</div>\r\n";
-        echo "</body>\r\n";
+        echo "    </div>" . HH;
+        echo "    <input class='btnSubmit' type='submit' value='生成' /><br/><br><br><br><br><br><br>" . HH;
+        echo "</form>" . HH;
+        echo "</div>" . HH;
+        echo "</body>" . HH;
         echo "</html>";
         die();
     }

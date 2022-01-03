@@ -3,7 +3,7 @@
 require_once("../init.php");
 $os     = strtolower(php_uname());
 $phpver = strtolower(phpversion());
-echo UtilCss::form_css() . "\r\n";
+echo UtilCss::form_css() . HH;
 echo "
 <html>
 <head>

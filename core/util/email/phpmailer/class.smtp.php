@@ -54,7 +54,7 @@ class SMTP {
    *  SMTP reply line ending
    *  @var string
    */
-  public $CRLF = "\r\n";
+  public $CRLF = HH;
 
   /**
    *  Sets whether debugging is turned on
@@ -367,7 +367,7 @@ class SMTP {
      */
 
     // normalize the line breaks so we know the explode works
-    $msg_data = str_replace("\r\n","\n",$msg_data);
+    $msg_data = str_replace(HH,"\n",$msg_data);
     $msg_data = str_replace("\r","\n",$msg_data);
     $lines = explode("\n",$msg_data);
 

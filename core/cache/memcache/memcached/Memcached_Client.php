@@ -293,7 +293,7 @@ class Memcached_Client
       $key = is_array($key) ? $key[1] : $key;
       
       $this->stats['delete']++;
-      $cmd = "delete $key $time\r\n";
+      $cmd = "delete $key $time" . HH;
       if (!fwrite($sock, $cmd, strlen($cmd)))
       {
          $this->_dead_sock($sock);
@@ -376,7 +376,7 @@ class Memcached_Client
          
       $this->stats['get']++;
       
-      $cmd = "get $key\r\n";
+      $cmd = "get $key" . HH;
       if (!fwrite($sock, $cmd, strlen($cmd)))
       {
          $this->_dead_sock($sock);
@@ -388,7 +388,7 @@ class Memcached_Client
       
       if ($this->_debug)
          foreach ($val as $k => $v)
-            printf("MemCache: sock %s got %s => %s\r\n", $sock, $k, $v);
+            printf("MemCache: sock %s got %s => %s" . HH, $sock, $k, $v);
       
       return $val[$key];
    }
@@ -432,7 +432,7 @@ class Memcached_Client
          {
             $cmd .= " ". $key;
          }
-         $cmd .= "\r\n";
+         $cmd .= HH;
          
          if (fwrite($sock, $cmd, strlen($cmd)))
          {
@@ -452,7 +452,7 @@ class Memcached_Client
       
       if ($this->_debug)
          foreach ($val as $k => $v)
-            printf("MemCache: got %s => %s\r\n", $k, $v);
+            printf("MemCache: got %s => %s" . HH, $k, $v);
             
       return $val;
    }
@@ -770,7 +770,7 @@ class Memcached_Client
          
       $key = is_array($key) ? $key[1] : $key;
       $this->stats[$cmd]++;
-      if (!fwrite($sock, "$cmd $key $amt\r\n"))
+      if (!fwrite($sock, "$cmd $key $amt" . HH))
          return $this->_dead_sock($sock);
          
       stream_set_timeout($sock, 1, 0);
@@ -796,7 +796,7 @@ class Memcached_Client
       while (1)
       {
          $decl = fgets($sock);
-         if ($decl == "END\r\n")
+         if ($decl == "END" . HH)
          {
             return true;
          } elseif (preg_match('/^VALUE (\S+) (\d+) (\d+)\r\n$/', $decl, $match))
@@ -896,7 +896,7 @@ class Memcached_Client
             $flags |= MEMCACHE_COMPRESSED;
          }
       }
-      if (!fwrite($sock, "$cmd $key $flags $exp $len\r\n$val\r\n"))
+      if (!fwrite($sock, "$cmd $key $flags $exp $len\r\n$val" . HH))
          return $this->_dead_sock($sock);
          
       $line = trim(fgets($sock));

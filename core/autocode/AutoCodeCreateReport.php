@@ -63,9 +63,9 @@ class AutoCodeCreateReport extends AutoCode
 
             $configCols = "";
             foreach ($selCols as $selCol) {
-                $configCols .= "        \"" . $selCol . "\",\r\n";
+                $configCols .= "        \"" . $selCol . "\"," . HH;
             }
-            if ( $configCols ) $configCols = substr($configCols, 0, strlen($configCols) - 3);
+            if ( $configCols ) $configCols = substr($configCols, 0, strlen($configCols) - strlen(HH) - 1);
             include( "template" . DS . "report.php" );
 
             $fileContent = $fileContent . $sql_config_template;
@@ -75,15 +75,15 @@ class AutoCodeCreateReport extends AutoCode
             // 自定义生成的报表文件内容
             $tplColumns = "";
             foreach ($selCols as $selCol) {
-                $tplColumns .= "                                    <th>" . $selCol . "</th>\r\n";
+                $tplColumns .= "                                    <th>" . $selCol . "</th>" . HH;
             }
             if ( $tplColumns ) $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
 
             $jsColumns = "";
             foreach ($selCols as $selCol) {
-                $jsColumns .= "                { data: \"" . $selCol . "\" },\r\n";
+                $jsColumns .= "                { data: \"" . $selCol . "\" }," . HH;
             }
-            if ( $jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - 3);
+            if ( $jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - strlen(HH) - 1);
 
 
             $reptTimeCol = ServiceReport::getFilterTime( $reportSql );

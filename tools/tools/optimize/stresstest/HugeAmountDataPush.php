@@ -26,7 +26,7 @@ class HugeAmountDataPush
      * 测试数量级
      * @var int
      */
-    public static $init_data_num = 100;
+    public static $init_data_num = 100; 
     /**
      * 计数:中间关系表
      * @var int
@@ -99,7 +99,7 @@ class HugeAmountDataPush
                 echo "SQL脚本文件地址: " . self::$script_sql_path . "<br/><br/>";
             }
             if ( self::$isShowSql ) {
-                $table_change = array("\r\n"=>"<br/>");
+                $table_change = array(HH => "<br/>");
                 $show_result  = strtr(self::$cache_result, $table_change);
                 echo $show_result . "<br/><br/>";
             }
@@ -143,7 +143,7 @@ class HugeAmountDataPush
             if ( $count >= self::$num ) {
                 $count = 0;
             } else {
-                self::$cache_result .= "delete from $tablename;\r\n";
+                self::$cache_result .= "delete from $tablename;" . HH;
                 self::$cache_result .= self::relationTableData( $tablename, $classname, $fields );
                 $count               = self::$num;
             }
@@ -160,14 +160,14 @@ class HugeAmountDataPush
                 $fieldnames = implode(",", $fields);
                 /*循环出需要执行的SQL语句*/
                 while ($count < self::$num) {
-                    self::$cache_result .= "insert into $tablename($fieldnames) select $fieldnames from $tablename;\r\n";
+                    self::$cache_result .= "insert into $tablename($fieldnames) select $fieldnames from $tablename;" . HH;
                     $count               = $count * 2;
                 }
 
                 if ( $count > self::$num) {
                     $classname = UtilHugeAmount::getClassname( $tablename );
                     $key_id    = UtilHugeAmount::keyIDColumn( $classname );
-                    self::$cache_result .= "delete from $tablename where $key_id>=(select a.id from (select $key_id as id from $tablename limit " . self::$num . ",1) as a);\r\n";
+                    self::$cache_result .= "delete from $tablename where $key_id>=(select a.id from (select $key_id as id from $tablename limit " . self::$num . ",1) as a);" . HH;
                     $count     = self::$num;
                 }
             }
@@ -212,7 +212,7 @@ class HugeAmountDataPush
                 $echo_showresult .= "所测试的数据表: $tablename<br/>实际生成数据数目: $count<br/>";
             }
             if ( self::$isShowSql ) {
-                $table_change     = array("\r\n" => "<br>");
+                $table_change     = array(HH => "<br>");
                 $show_result      = strtr(self::$cache_result, $table_change);
                 $echo_showresult .= $show_result . "<br/>";
             }
@@ -257,7 +257,7 @@ class HugeAmountDataPush
     {
         $i            = 0;
         $fieldnames   = implode(",", $fields);
-        $result       = "insert into $tablename ($fieldnames) values\r\n";
+        $result       = "insert into $tablename ($fieldnames) values" . HH;
         $field_arr    = self::$fieldInfos[$tablename];
         $counter      = array();
         $first_field  = "";
@@ -386,9 +386,9 @@ class HugeAmountDataPush
             }
             $keys    = implode(",", array_keys($values));
             $values  = implode(",", array_values($values));
-            $result .= "($values),\r\n";
+            $result .= "($values)," . HH;
         }
-        $result = substr($result, 0, strlen($result) - 3) . ";";
+        $result = substr($result, 0, strlen($result) - strlen(HH) - 1) . ";";
         return $result;
     }
 
@@ -503,9 +503,9 @@ class HugeAmountDataPush
             }
             if ( empty($keys) ) $keys = implode(",", array_keys($values));
             $values  = implode(",", array_values($values));
-            $result .= "($values),\r\n";
+            $result .= "($values)," . HH;
         }
-        $result = "insert into $tablename ($keys) values \r\n" . substr($result, 0, strlen($result) - 3) . ";\r\n";
+        $result = "insert into $tablename ($keys) values " . HH . substr($result, 0, strlen($result) - strlen(HH) - 1) . ";" . HH;
         return $result;
     }
 

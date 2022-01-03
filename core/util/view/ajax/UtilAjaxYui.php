@@ -143,7 +143,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
         $result .= "}";
         //</editor-fold>
         if ( !self::$IsHtmlBody ) {
-            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
+            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }
         return $result;

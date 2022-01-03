@@ -189,7 +189,7 @@ class LogMe extends BBObject
                 $now = "[ " . strftime(Gc::$log_config["timeFormat"]) . " ]";
                 //UtilReflection::getClassProperty(EnumLogLevel, $level);
                 $level = UtilReflection::getClassConstNameByValue( "EnumLogLevel", $level );
-                self::$log[] = "{$now} {$level}: {$message}\r\n";
+                self::$log[] = "{$now} {$level}: {$message}" . HH;
             }
         }
     }

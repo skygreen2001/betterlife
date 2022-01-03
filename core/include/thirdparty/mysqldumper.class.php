@@ -100,7 +100,7 @@ class Mysqldumper {
     function multiDump($filename, $fileid, $sizelimit, $backdir, $ignoreList = null) {
         // Set line feed
         $ret = true;
-        $lf  = "\r\n";
+        $lf  = HH;
         $lencount = 0;
         $bakfile  = $backdir . "/multibak_" . $filename . "_" . ( $fileid + 1 ) . ".sql";
         if ( $ignoreList ) {

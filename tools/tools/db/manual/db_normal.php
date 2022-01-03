@@ -75,7 +75,7 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
                 }
                 if ( empty($tablename_cn) ) $tablename_cn = $tablename;
                 $tableInfoList[$tablename]["Comment_Table"] = $tablename_cn;
-                $table_comment = str_replace("\r\n", "<br/>", $table_comment);
+                $table_comment = str_replace(HH, "<br/>", $table_comment);
                 $table_comment = str_replace("\r", "<br/>", $table_comment);
                 $table_comment = str_replace("\n", "<br/>", $table_comment);
                 if ( empty($table_comment) ) $table_comment = $tablename;
@@ -107,7 +107,7 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
                 $fieldInfoList = $fieldInfos[$tablename];
                 foreach ($fieldInfoList as $fieldname=>$field) {
                     $column_comment = $field['Comment'];
-                    $column_comment = str_replace("\r\n", "<br/>", $column_comment);
+                    $column_comment = str_replace(HH, "<br/>", $column_comment);
                     $column_comment = str_replace("\r", "<br/>", $column_comment);
                     $column_comment = str_replace("\n", "<br/>", $column_comment);
                     if ( empty($column_comment) ) $column_comment = $fieldname;

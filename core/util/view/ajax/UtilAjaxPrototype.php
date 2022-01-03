@@ -77,7 +77,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
             $result .= "
                   onFailure: function(request) {
                     console.log('请求失败! :(');
-                  }\r\n";
+                  }" . HH;
         } else {
             $result  = substr($result, 0,  strlen($result) - 1);
         }
@@ -138,7 +138,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         $result .= "}";
         //</editor-fold>
         if ( !self::$IsHtmlBody ) {
-            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>\r\n";
+            echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }
         return $result;

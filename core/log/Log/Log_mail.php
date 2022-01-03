@@ -180,7 +180,7 @@ class Log_mail extends Log
     {
         if (!$this->_opened) {
             if (!empty($this->_preamble)) {
-                $this->_message = $this->_preamble . "\r\n\r\n";
+                $this->_message = $this->_preamble . "" . HH . HH;
             }
             $this->_opened = true;
             $_shouldSend = false;
@@ -200,7 +200,7 @@ class Log_mail extends Log
         if ($this->_opened) {
             if ($this->_shouldSend && !empty($this->_message)) {
                 if ($this->_mailBackend === '') {  // use mail()
-                    $headers = "From: $this->_from\r\n";
+                    $headers = "From: $this->_from" . HH;
                     $headers .= 'User-Agent: PEAR Log Package';
                     if (mail($this->_recipients, $this->_subject,
                              $this->_message, $headers) == false) {
@@ -283,7 +283,7 @@ class Log_mail extends Log
         /* Append the string containing the complete log line. */
         $this->_message .= $this->_format($this->_lineFormat,
                                           strftime($this->_timeFormat),
-                                          $priority, $message) . "\r\n";
+                                          $priority, $message) . HH;
         $this->_shouldSend = true;
 
         /* Notify observers about this log message. */

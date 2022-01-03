@@ -89,9 +89,9 @@ function ping_url($url, $data = null)
         } else {
             $fullUrl = "{$url['path']}";
         }
-        $out  = "GET $fullUrl HTTP/1.1\r\n";
-        $out .= "Host: {$url['host']}\r\n";
-        $out .= "Connection: Close\r\n\r\n";
+        $out  = "GET $fullUrl HTTP/1.1" . HH;
+        $out .= "Host: {$url['host']}" . HH;
+        $out .= "Connection: Close" . HH . HH;
         fwrite($fp, $out);
         $content = "";
         while (!feof($fp)) {

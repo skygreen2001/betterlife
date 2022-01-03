@@ -2,7 +2,7 @@
 require_once("../../../init.php");
 //header("Content-Type:text/html; charset=UTF-8");
 $contents = file_get_contents("../../../welcome.php");
-//$contents = str_replace("\r\n", "<br/>", $contents);
+//$contents = str_replace(HH, "<br/>", $contents);
 if ( startWith( $contents, "<?php" ) ) {
     if ( isset($_GET["recover"]) ) {
         $contents = substr($contents, stripos($contents, "?>") + 2);

@@ -73,7 +73,7 @@ class POP3 {
    * POP3 Carriage Return + Line Feed
    * @var string
    */
-  public $CRLF = "\r\n";
+  public $CRLF = HH;
 
   /**
    * Displaying Debug warnings? (0 = now, 1+ = yes)

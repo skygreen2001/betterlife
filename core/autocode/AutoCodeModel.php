@@ -120,7 +120,7 @@ class AutoCodeModel extends AutoCode
                     $content = trim($content);
                     $ctrl    = substr($content, 0, strrpos($content, "}"));
                     $ctrr    = substr($content, strrpos($content, "}"));
-                    $content = trim($ctrl) . "\r\n\r\n" . rtrim($section_content) . "\r\n" . $ctrr;
+                    $content = trim($ctrl) . "" . HH . HH . rtrim($section_content) . HH . $ctrr;
                 }
             }
             $ffile_manage_service_file_model = self::$save_dir . AutoCodePreviewReport::$manage_service_file;

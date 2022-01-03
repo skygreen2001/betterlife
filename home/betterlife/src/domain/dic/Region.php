@@ -47,17 +47,21 @@ class Region extends DataObject
 
     /**
      * 从属一对一关系
+     * 
+     * @var array
      */
     static $belong_has_one = array(
         "region_p" => "Region"
     );
     /**
      * 规格说明
+     * 
      * 表中不存在的默认列定义:commitTime,updateTime
+     * 
      * 外键特殊定义声明: FOREIGN_ID
      * @var mixed
      */
-    public $field_spec=array(
+    public $field_spec = array(
         EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'

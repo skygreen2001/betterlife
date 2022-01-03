@@ -134,7 +134,7 @@ if ( !function_exists('json_encode') ) {
             case 'boolean':
                 return $value ? 'true' : 'false';
             case 'string':
-                return '"'.str_replace(
+                return '"' . str_replace(
                     array("\n", "\b", "\t", "\f", "\r"),
                     array('\n', '\b', '\t', '\f', '\r'),
                     addslashes($value)

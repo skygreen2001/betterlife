@@ -25,9 +25,9 @@ function render_tag($buffer) {
     $result = $buffer;
     if ( !empty($buffer) ) {
         if ( stristr($buffer, "<" . TagClass::PREFIX . ":") ) {
-    //        $repReg='/<'.TagClass::PREFIX.':(\w+[-]?\w+)((\s+\w+=\\\"\w+\\\"|\s+\w+=\"\w+\"|\s+\w+=\\\\\'\w+\\\\\'|\s+\w+=\'\w+\')*)\s*>(.*)<\/'.TagClass::PREFIX.':\1>/isU';
+    //        $repReg='/<' . TagClass::PREFIX . ':(\w+[-]?\w+)((\s+\w+=\\\"\w+\\\"|\s+\w+=\"\w+\"|\s+\w+=\\\\\'\w+\\\\\'|\s+\w+=\'\w+\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
 
-    //        $repReg='/<'.TagClass::PREFIX.':(\w+[-]?\w+)((\s+\w+=\\\"[^"]*\\\"|\s+\w+=\"[^"]*\"|\s+\w+=\\\\\'[^"]*\\\\\'|\s+\w+=\'[^"]*\')*)\s*>(.*)<\/'.TagClass::PREFIX.':\1>/isU';
+    //        $repReg='/<' . TagClass::PREFIX . ':(\w+[-]?\w+)((\s+\w+=\\\"[^"]*\\\"|\s+\w+=\"[^"]*\"|\s+\w+=\\\\\'[^"]*\\\\\'|\s+\w+=\'[^"]*\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
             /**
              * 处理自定义标签，如下形式: 
              * <my:page src="index.php?g=betterlife&m=blog&a=display">this is page 5</my:page>
@@ -51,19 +51,19 @@ function render_tag($buffer) {
 //            $result = preg_replace("~>\s+\n~",">",$result);
 //            $result = preg_replace("~>\s+\r~",">",$result);
 //            $result = preg_replace("~>\s+<~","><",$result);
-//            $result=str_replace("\r\n","",$result);
+//            $result=str_replace(HH,"",$result);
            /************************end  :整个Html页面去除注释，换行，空格********************/
            /************************start:Html页面body部分去除注释，换行，空格********************/
             $r_arr    = explode("<body", $result);
-            $r_arr[1] = str_replace("\r\n", "", $r_arr[1]);
+            $r_arr[1] = str_replace(HH, "", $r_arr[1]);
             $r_arr[1] = preg_replace("/<\!--(.*?)-->/", "", $r_arr[1]);//去掉html里的注释
             $r_arr[1] = preg_replace("~>\s+\n~", ">", $r_arr[1]);
             $r_arr[1] = preg_replace("~>\s+\r~", ">", $r_arr[1]);
             $r_arr[1] = preg_replace("~>\s+<~", "><", $r_arr[1]);
             $result   = implode("<body", $r_arr);
             if ( contain( $result, "</html>" ) ) {
-                $result = str_replace("</html>", "", $result);
-                $result.= "\r\n</html>";
+                $result  = str_replace("</html>", "", $result);
+                $result .= HH ."</html>";
             }
            /************************end  :Html页面body部分去除注释，换行，空格********************/
         }

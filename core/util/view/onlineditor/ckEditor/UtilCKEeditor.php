@@ -98,12 +98,12 @@ class UtilCKEeditor extends Util
         $config['removeDialogTabs']       = 'image:Link;image:advanced';
         $jsContent = "var editor_$textarea_id = CKEDITOR.replace('" . $textarea_id . "', " . $CKEditor->jsEncode($config) . ");";
         $suffix_cr = "_$textarea_id";
-        $jsContent = "\r\n".
-                   "        function ckeditor_replace$suffix_cr()\r\n".
-                   "        {\r\n".
-                   "             " . $jsContent . "\r\n".
+        $jsContent = HH .
+                   "        function ckeditor_replace$suffix_cr()" . HH .
+                   "        {" . HH .
+                   "             " . $jsContent . HH .
                    "".
-                   "        }\r\n";
+                   "        }" . HH;
         return $jsContent;
     }
 }

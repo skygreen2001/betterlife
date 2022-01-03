@@ -43,8 +43,8 @@ else
 {
     echo  '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
-    echo "<head>\r\n";
-    echo UtilCss::form_css()."\r\n";
+    echo "<head>" . HH;
+    echo UtilCss::form_css() . HH;
     $url_base = UtilNet::urlbase();
     $title    = "替换关键词";
     echo '<style>';
