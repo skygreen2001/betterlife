@@ -370,7 +370,7 @@ class Initializer
     public static function loadException() {
         if ( Gc::$dev_debug_on ) {
             switch ( Config_Exception::EXCEPTION_WAY ) {
-                case 1:
+                case Config_Exception::EW_WHOOPS:
                     $run     = new Whoops\Run();
                     $handler = new Whoops\Handler\PrettyPageHandler();
                     // 设置异常网页的head title
@@ -381,7 +381,9 @@ class Initializer
                     $run->pushHandler($handler);
                     $run->register();
                     break;
-                case 2:
+                case Config_Exception::EW_SYMFONY:
+                    // Symfony ErrorHandler Component
+                    Symfony\Component\ErrorHandler\Debug::enable();
                     break;
                 default:
                     /**

@@ -17,7 +17,6 @@
 - [filp/whoops](https://github.com/filp/whoops): 错误处理框架
   - [whoops](http://filp.github.io/whoops/)
   - 本框架(betterlife)中已使用whoops框架，查看core/main/Initializer.php, 属性:EXCEPTION_WAY
-  - [Ignition](https://flareapp.io/ignition): Error Page for Laravel
   - [ErrorHandler Component](https://github.com/symfony/symfony/tree/6.1/src/Symfony/Component/ErrorHandler): symfony错误处理组件
 - [ezyang/htmlpurifier](https://github.com/ezyang/htmlpurifier): 标准、兼容的 HTML 过滤器，支持自定义标签、属性、过滤规则。
 
@@ -25,6 +24,7 @@
 
 - [PsySH](https://psysh.org/): PHP交互式控制台
   - [PsySH——PHP交互式控制台](http://vergil.cn/archives/psysh)
+- [Ignition](https://flareapp.io/ignition): Error Page for Laravel
 
 ## Symfony库
 

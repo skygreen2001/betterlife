@@ -229,6 +229,7 @@ class ActionBasic extends BBObject
         } else {
             header("Location:http://" . $url);
         }
+        $this->isRedirected = true;
     }
 
     /**
