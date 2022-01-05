@@ -34,6 +34,10 @@
 
     ```
     > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife.git
+    或
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com.cnpmjs.org/skygreen2001/betterlife
+    或
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://gitee.com/skygreen2015/betterlife
     ```
 
 * **Composer安装**
@@ -93,7 +97,7 @@
 
 ## Docker安装
 
-如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑因为操作系统，无法完整搭建应用运行环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis，Mac Monterey版本后不再默认安装PHP), 可使用Docker安装
+如果开发者熟悉Docker或者希望尝试通过Docker搭建开发环境(无需考虑因为操作系统，无法完整搭建应用运行环境，如在Mac操作系统下，因为权限问题无法安装php的zip或者redis，Mac Monterey版本后不再默认安装PHP), 可使用Docker安装
 
 * **安装Docker**
 

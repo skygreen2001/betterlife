@@ -1,4 +1,3 @@
-**/.dockerignore
 **/.env
 **/.git
 **/.history
@@ -12,10 +11,12 @@
 **/node_modules
 **/npm-debug.log
 README.md
+/home/report/view/default/tmp
 /home/model/view/default/tmp
 /home/model/view/bootstrap/tmp
 /home/betterlife/view/default/tmp
 /home/betterlife/view/bootstrap/tmp
+/home/betterlife/view/twig/tmp
 /home/admin/view/default/tmp/
 /stressdata
 /model
@@ -24,10 +25,9 @@ README.md
 /install/vendor
 /install/bower_components
 /install/node_modules
-/install/composer.lock
 /install/package-lock.json
 .DS_Store
 /misc/js/onlineditor/ueditor
-home/betterlife/view/twig/tmp
-home/report/view/default/tmp/templates_c
 docker-compose.yml
+.dockerignore
+composer.lock

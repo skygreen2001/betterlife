@@ -11,7 +11,6 @@
 /install/vendor
 /install/bower_components
 /install/node_modules
-/install/composer.lock
 /install/package-lock.json
 .DS_Store
 /misc/js/onlineditor/ueditor

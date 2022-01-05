@@ -21,6 +21,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: 
       MYSQL_DB: betterlife
+    restart: on-failure
 
   nginx:
     container_name: bb_nginx

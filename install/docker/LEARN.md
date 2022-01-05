@@ -57,9 +57,8 @@
 #### 创建镜像
 
   - 制作[ skygreen2001/betterlife ]镜像提交到Docker Hub
-    - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
+    - 只需要制作一个镜像，betterlife框架和lemp服务器使用一个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
-    - 复制文件 install/docker/prod/.dockerignore 到根目录下。
     - 创建betterlife镜像提交到Docker Hub
 
       ```
@@ -106,7 +105,6 @@
   - 制作[ skygreen2001/bb_apache ]镜像提交到Docker Hub
     - 只需要制作一个镜像，betterlife框架和apache服务器使用一个镜像。
     - 本功能用于制作演示betterlife框架的 Docker镜像，提交到Docker Hub，公开对外的Dockerfile文件及环境搭建。
-    - 复制文件 install/docker/.dockerignore 到根目录下。
     - 在容器内运行还需修改Gc.php文件相应配置
       - 数据库配置: $database_config
         - $database_config -> host = "mysql"
