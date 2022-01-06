@@ -5,6 +5,7 @@
  */
 require_once ("../../../init.php");
 
+// l: 限制数量
 $limit = $_GET["l"]??0;
 
 $tableInfos = Manager_Db::newInstance()->dbinfo()->tableInfoList();
