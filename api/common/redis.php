@@ -1,6 +1,10 @@
 <?php
 require_once("../../init.php");
 
+header('Access-Control-Allow-Origin: *');
+header("Referrer-Policy: no-referrer");
+header('Content-Type:application/json;charset=UTF-8');
+
 /****************************************  初始化: 是否安装必备  ***********************************/
 $isPhpRedis = @$_GET["isPhpRedis"];
 if ( !empty($isPhpRedis) ) {
@@ -87,6 +91,12 @@ if ( !empty($step) ) {
       // 查询指定服务器所有的DB
       case 1:
         $dbs = $serverCache->dbInfos();
+        if ( is_array($dbs) && count($dbs) == 0 ) {
+            $dbIndex = 0;
+            $serverCache->select($dbIndex);
+            $serverCache->save("createTime", UtilDateTime::now());
+            $dbs = $serverCache->dbInfos();
+        }
         if ( $dbs && is_array($dbs) && count($dbs) > 0 ) {
             $result = array_keys($dbs);
         }
