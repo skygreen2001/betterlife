@@ -2,8 +2,7 @@
 ARG PHP_VERSION=8.0.7
 
 FROM composer as composer
-COPY install/composer.json /app/
-# COPY install/composer.json install/composer.lock /app/
+COPY composer.json /app/
 RUN set -x ; cd /app && \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && \
     composer install \
@@ -24,7 +23,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     apk update && apk add git
 
 WORKDIR /app
-# COPY install/bower.json install/gulpfile.js install/package.json ./install/
 COPY misc/js/onlineditor/ueditor_bak/ ./misc/js/onlineditor/ueditor_bak/
 
 # RUN git clone https://github.com/fex-team/ueditor.git -b dev-1.4.3.3 \
@@ -98,7 +96,7 @@ RUN docker-php-ext-install mysqli zip && \
     pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis
 
 COPY . ${BB_PATH}
-COPY --from=composer /app/vendor/ ${BB_PATH}install/vendor/
+COPY --from=composer /app/install/vendor/ ${BB_PATH}install/vendor/
 COPY --from=ueditor /app/misc/js/onlineditor/ueditor ${BB_PATH}misc/js/onlineditor/ueditor
 
 RUN set -x ; cd /usr/local/etc/php && cp php.ini-production php.ini && \

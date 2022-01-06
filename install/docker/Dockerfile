@@ -2,7 +2,6 @@ ARG PHP_VERSION=7.4
 
 FROM composer as composer
 COPY composer.json /app/
-# COPY install/composer.json install/composer.lock /app/
 RUN set -x ; cd /app && \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ && \
     composer install \
@@ -23,7 +22,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     apk update && apk add git
 
 WORKDIR /app
-# COPY install/bower.json install/gulpfile.js install/package.json ./install/
 COPY misc/js/onlineditor/ueditor_bak/ ./misc/js/onlineditor/ueditor_bak/
 
 # RUN git clone https://github.com/fex-team/ueditor.git -b dev-1.4.3.3 \
@@ -39,7 +37,6 @@ RUN git clone https://github.com.cnpmjs.org/fex-team/ueditor.git -b dev-1.4.3.3 
     cd ../misc/js/onlineditor && mkdir ueditor && \
     cp -rf ../../../ueditor/dist/utf8-php/* ueditor/ && \
     cp -rf ueditor_bak/* ueditor/
-
 
 FROM php:${PHP_VERSION}-fpm as betterlife
 # FROM php:${PHP_VERSION}-fpm-alpine as betterlife
