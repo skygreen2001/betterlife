@@ -73,7 +73,7 @@ services:
   # redis:
   #   image: redis:4.0.1
   #   container_name: bb_redis
-  #   command: redis-server --requirepass yourpassword
+  #   command: redis-server --requirepass betterlife
   #   ports:
   #       - 6379:6379
   #   environment:
