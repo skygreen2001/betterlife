@@ -1,8 +1,10 @@
 <?php
 // error_reporting(0);
 require_once("../../../init.php");
-
-$query        = @$_GET["term"];
+$query        = "";
+if ( array_key_exists("term", $_GET) ) {
+  $query = @$_GET["term"];
+}
 $where_clause = "";
 if ( !empty($query) ) {
     $where_clause = "(";
