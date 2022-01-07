@@ -20,7 +20,6 @@ require_once("../init.php");
 // $sql  = "select * from bb_core_blog;";
 // $blog = sqlExecute($sql);
 // print_pre($blog, true);
-
 // // 修改数据库源后，之后调用框架数据库函数都使用新的数据源
 // Gc::$database_config = array(
 //     'host' => '127.0.0.1',
@@ -29,9 +28,12 @@ require_once("../init.php");
 //     'username' => 'root',
 //     'password' => ''
 // );
-
 // Config_Db::initGc();
 // Manager_Db::newInstance()->resetDao();
 // $new_sql = "select * from bb_user_user;";
 // $user    = sqlExecute($new_sql);
 // print_pre($user, true);
+
+// // 显示超过限制数量的表, 默认值是0，显示所有的表
+// $_GET["l"] = $_GET["l"]??0;
+// require_once("tools/db/db_countrows.php");

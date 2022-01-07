@@ -69,7 +69,7 @@ $url_base = UtilNet::urlbase();
         <li><a @click="at=2;inputModel=true">替换所有表里的关键词</a></li>
         <li><a @click="at=3;ok()">删除所有的表数据</a></li>
         <li><a @click="at=4;ok()">删除所有的表</a></li>
-        <li><a @click="at=7;ok()">显示超过限制数量的表</a></li>
+        <!-- <li><a @click="at=7;ok()">显示超过限制数量的表</a></li> -->
         <li><a @click="at=5;ok()">移植数据库表从Mysql到Sqlserver</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="at=6;ok()">[包括注释]</a></li>
       </ul>
     </card>
