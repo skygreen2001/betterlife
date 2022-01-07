@@ -372,6 +372,16 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 保存当前对象
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *       $user   = new User();
+     * 
+     *       $user->setUsername( "betterlife" );
+     * 
+     *       $user->setPassword( "123456" );
+     * 
+     *       $user_id = $user->save();
      * @return int 保存对象记录的ID标识号
      */
     public function save()
@@ -437,13 +447,15 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 同步删除取消了已有多对多关系、保存新增多对多关系
      * 
+     * 能够比对数据库数据，以$other_ids为准，如果相同的行就不删除，如果不存在的删除，新的就增加
      * @example 示例如下:
-     * 
-     *     Blogcategory::saveDeleteRelateions( "blog_id", 1, "category_id", array(1, 2, 3, 4, 5, 6) );
+     *
+     *     Userrole::saveDeleteRelateions( "user_id", 1, "role_id", array(1, 2) );
      * @param string $id_name 主标识名称
      * @param int $id 主标识
      * @param string $rel_name 关系标识名称
      * @param array $other_ids 关系标识组
+     * @return void
      */
     public static function saveDeleteRelateions($id_name, $id, $rel_name, $other_ids) {
         return DataObjectRelation::saveDeleteRelateions( get_called_class(), $id_name, $id, $rel_name, $other_ids );
@@ -451,6 +463,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 由标识删除指定ID数据对象
+     * @example 示例如下
+     * 
+     *       $isDelete = User::deleteByID( 4 );
      * @param mixed $id 数据对象编号
      * @return boolen 是否修改成功
      */
@@ -461,11 +476,14 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据主键删除多条记录
+     * @example 示例如下
+     * 
+     *       $isDelete = User::deleteByIds( "5, 6, 7" );
      * @param array|string $ids 数据对象编号
      * 
      * 形式如下:
-     *     1. array:array(1, 2, 3, 4, 5)
-     *     2. 字符串:1, 2, 3, 4
+     *     1. array: array(1, 2, 3, 4, 5)
+     *     2. 字符串: 1, 2, 3, 4
      * @return boolen 是否修改成功
      */
     public static function deleteByIds($ids)
@@ -475,6 +493,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据条件删除多条记录
+     * @example 示例如下
+     * 
+     *       $isDelete = User::deleteBy( "username = 'betterlife7'" );
      * @param mixed $filter 查询条件, 在where后的条件
      * @example 示例如下: 
      * 示例如下: 
@@ -494,6 +515,11 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 删除当前对象
+     * @example 示例如下
+     * 
+     *       $user     = User::get_by_id( 3 );
+     * 
+     *       $isDelete = $user->delete();
      * @return boolen 是否删除成功；true为操作正常
      */
     public function delete()
@@ -503,6 +529,14 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 保存或更新当前对象
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *       $user             = User::get_by_id( 3 );
+     * 
+     *       $user["username"] = "shanghai";
+     * 
+     *       $user_id          = $user->saveOrUpdate();
      * @return boolen 是否保存或更新成功；true为操作正常
      */
     public function saveOrUpdate()
@@ -512,17 +546,28 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 更新当前对象
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *       $user             = User::get_by_id( 3 );
+     * 
+     *       $user["username"] = "shanghai";
+     * 
+     *       $user->update();
      * @return boolen 是否更新成功；true为操作正常
      */
     public function update()
     {
-        $result=self::dao()->update( $this );
+        $result = self::dao()->update( $this );
         unset($this["real_fieldspec"]);
         return $result;
     }
 
     /**
      * 更新对象指定的属性
+     * @example 示例如下
+     * 
+     *        $isUpdate = User::updateProperties( "1, 2", "loginTimes = 100" );
      * @param array|string $sql_ids 需更新数据的ID编号或者ID编号的Sql语句
      * 示例如下: 
      * 
@@ -543,6 +588,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据条件更新数据对象指定的属性
+     * @example 示例如下
+     * 
+     *        $isUpdate = User::updateBy( "username = 'admin'", "loginTimes = 500" );
      * @param mixed $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -567,6 +615,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 对属性进行递增
+     * @example 示例如下
+     * 
+     *        $isPlus = User::increment( "user_id > 1", "loginTimes", 5 );
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -587,6 +638,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 对属性进行递减
+     * @example 示例如下
+     * 
+     *        $isMinus = User::decrement( "user_id > 1", "loginTimes", 3 );
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -607,6 +661,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 由标识判断指定ID数据对象是否存在
+     * @example 示例如下
+     * 
+     *        $isExist = User::existByID( 1 );
      * @param mixed $id 数据对象编号
      * @return bool 是否存在
      */
@@ -617,6 +674,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 判断符合条件的数据对象是否存在
+     * @example 示例如下
+     * 
+     *        $isExist = User::existBy( "username = 'china'" );
      * @param mixed $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -635,6 +695,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询当前对象需显示属性的列表
+     * @example 示例如下
+     * 
+     *        $blog_names = Blog::select( "blog_name" );
      * @param string $columns指定的显示属性, 同SQL语句中的Select部分。
      * 示例如下: 
      * 
@@ -672,6 +735,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询当前对象单个需显示的属性
+     * @example 示例如下
+     * 
+     *        $blog_name = Blog::select_one( "blog_name" );
      * @param string 指定的显示属性, 同SQL语句中的Select部分。
      * 示例如下: 
      * 
@@ -704,6 +770,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询数据对象列表
+     * @example 示例如下
+     * 
+     *        $blogs = Blog::get();
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -736,6 +805,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 查询得到单个对象实体
+     * @example 示例如下
+     * 
+     *        $blog = Blog::get_one();
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下: 
      * 
@@ -759,6 +831,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
+     * @example 示例如下
+     * 
+     *        $blog = Blog::get_by_id( 1 );
      * @param string $id 数据对象编号
      * @return 数据对象
      */
@@ -768,7 +843,53 @@ abstract class DataObject extends BBObject implements ArrayAccess
     }
 
     /**
+     * 数据对象标识最大值
+     * @example 示例如下
+     * 
+     *        $max = User::max( "loginTimes" );
+     * @param string $column_name 列名, 默认为数据对象标识
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * @return int 数据对象标识最大值
+     */
+    public static function max($column_name = null, $filter = null)
+    {
+        return DataObjectFunc::max( get_called_class(), $column_name, $filter );
+    }
+
+    /**
+     * 数据对象指定列名最小值, 如未指定列名, 为标识最小值
+     * @example 示例如下
+     * 
+     *        $min = User::min( "loginTimes" );
+     * @param string $column_name 列名, 默认为数据对象标识
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * @return int 数据对象列名最小值, 如未指定列名, 为标识最小值
+     */
+    public static function min($column_name = null, $filter = null)
+    {
+        return DataObjectFunc::min( get_called_class(), $column_name, $filter );
+    }
+
+    /**
+     * 数据对象指定列名总数
+     * @example 示例如下
+     * 
+     *        $sum = User::sum( "loginTimes" );
+     * @param string $column_name 列名
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * @return int 数据对象列名总数
+     */
+    public static function sum($column_name = null, $filter = null)
+    {
+        return DataObjectFunc::sum( get_called_class(), $column_name, $filter );
+    }
+
+    /**
      * 对象总计数
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *        $countBlogs = Blog::count("blog_id>3");
      * @param object|string|array $filter
      *        $filter 格式示例如下: 
      *            0. "id = 1, name = 'sky'"
@@ -781,69 +902,20 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function count($filter = null)
     {
-        return self::dao()->count( get_called_class(), $filter );
-    }
-
-    /**
-     * 对象总计数[多表关联查询]
-     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
-     * 
-     *        示例如下: 
-     *            0. "table1, table2"
-     *            1. array("table1", "table2")
-     *            2. "class1, class2"
-     *            3. array("class1", "class2")
-     * 
-     * @param object|string|array $filter
-     * 
-     *        $filter 格式示例如下: 
-     *            0. 允许对象如new User(id = "1", name = "green");
-     *            1. "id = 1", "name = 'sky'"
-     *            2. array("id = 1", "name = 'sky'")
-     *            3. array("id" => "1", "name" => "sky")
-     * 
-     * @return int 对象总计数
-     */
-    public static function countMultitable($from, $filter = null)
-    {
-        return self::dao()->countMultitable( get_called_class(), $from, $filter );
-    }
-
-    /**
-     * 数据对象标识最大值
-     * @param string $column_name 列名, 默认为数据对象标识
-     * @param object|string|array $filter 查询条件, 在where后的条件
-     * @return int 数据对象标识最大值
-     */
-    public static function max($column_name = null, $filter = null)
-    {
-        return DataObjectFunc::max( get_called_class(), $column_name, $filter );
-    }
-
-    /**
-     * 数据对象指定列名最小值, 如未指定列名, 为标识最小值
-     * @param string $column_name 列名, 默认为数据对象标识
-     * @param object|string|array $filter 查询条件, 在where后的条件
-     * @return int 数据对象列名最小值, 如未指定列名, 为标识最小值
-     */
-    public static function min($column_name = null, $filter = null)
-    {
-        return DataObjectFunc::min( get_called_class(), $column_name, $filter );
-    }
-
-    /**
-     * 数据对象指定列名总数
-     * @param string $column_name 列名
-     * @param object|string|array $filter 查询条件, 在where后的条件
-     * @return int 数据对象列名总数
-     */
-    public static function sum($column_name = null, $filter = null)
-    {
-        return DataObjectFunc::sum( get_called_class(), $column_name, $filter );
+        return DataObjectFunc::count( get_called_class(), $filter );
     }
 
     /**
      * 对象分页
+     * @example 示例如下
+     * 
+     *        $blogs = Blog::queryPage( 0, 10,
+     *            array(
+     *                "(blog_content like '%关键字%' or blog_content like '%公开课%')",
+     *                "blog_id<4",
+     *                "user_id"=>1
+     *            )
+     *        );
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件, 在where后的条件
@@ -866,13 +938,16 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        if ( is_string($filter) ) $filter = trim($filter);
-        if ( ( $startPoint > $endPoint ) || ( $endPoint == 0 ) ) return null;
-        return self::dao()->queryPage( get_called_class(), $startPoint, $endPoint, $filter, $sort );
+        return DataObjectFunc::queryPage( get_called_class(), $startPoint, $endPoint, $filter, $sort );
     }
 
     /**
      * 对象分页根据当前页数和每页显示记录数
+     * 
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *        $blogs = Blog::queryPageByPageNo( 1, null, 3 );
      * @param int $pageNo  当前页数
      * @param int $pageSize 每页显示记录数
      * @param object|string|array $filter 查询条件, 在where后的条件
@@ -900,35 +975,43 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function queryPageByPageNo($pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        if ( is_string($filter) ) $filter = trim($filter);
-        $count = self::dao()->count( get_called_class(), $filter );
-        $data  = array();
-        $pageCount = 0;
-        if ( $count > 0 ) {
-            // 总页数
-            $pageCount = floor(($count + $pageSize - 1) / $pageSize);
-            if ( $pageNo <= $pageCount ) {
-                $startPoint = ($pageNo - 1) * $pageSize + 1;
-                if ( $startPoint > $count ) {
-                    $startPoint = 0;
-                }
-                $endPoint = $pageNo * $pageSize;
-                if ( $endPoint > $count ) {
-                    $endPoint = $count;
-                }
-                $data = self::dao()->queryPage( get_called_class(), $startPoint, $endPoint, $filter, $sort );
-            }
-        }
-        return array(
-            "count"     => $count,
-            "pageCount" => $pageCount,
-            "data"      => $data
-        );
+        return DataObjectFunc::queryPageByPageNo( get_called_class(), $pageNo, $filter, $pageSize, $sort );
+    }
+
+    /**
+     * 对象总计数[多表关联查询]
+     * @example 示例如下
+     * 
+     *        $comments = Comment::countMultitable( "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 
+     *        示例如下: 
+     *            0. "table1, table2"
+     *            1. array("table1", "table2")
+     *            2. "class1, class2"
+     *            3. array("class1", "class2")
+     * 
+     * @param object|string|array $filter
+     * 
+     *        $filter 格式示例如下: 
+     *            0. 允许对象如new User(id = "1", name = "green");
+     *            1. "id = 1", "name = 'sky'"
+     *            2. array("id = 1", "name = 'sky'")
+     *            3. array("id" => "1", "name" => "sky")
+     * 
+     * @return int 对象总计数
+     */
+    public static function countMultitable($from, $filter = null)
+    {
+        return DataObjectFunc::countMultitable( get_called_class(), $from, $filter );
     }
 
     /**
      * 对象分页[多表关联查询]
      * 
+     * @example 示例如下
+     * 
+     *        $comments = Comment::queryPageMultitable( 1, 6, "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
@@ -955,26 +1038,66 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 
      *        1. id asc;
      *        2. name desc;
-     * 
      * @return mixed 对象分页
      */
     public static function queryPageMultitable($startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        if ( is_string($filter) ) $filter = trim($filter);
-        if ( ( $startPoint > $endPoint ) || ( $endPoint == 0 ) ) return null;
-        return self::dao()->queryPageMultitable( get_called_class(), $startPoint, $endPoint, $from, $filter, $sort );
+        return DataObjectFunc::queryPageMultitable( get_called_class(), $startPoint, $endPoint, $from, $filter, $sort );
+    }
+
+    /**
+     * 查询数据对象列表[多表关联查询]
+     * 
+     * @example 示例如下
+     * 
+     *        $comments = Comment::getMultitable( "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 示例如下: 
+     * 
+     *        0. "table1, table2"
+     *        1. array("table1", "table2")
+     *        2. "class1, class2"
+     *        3. array("class1", "class2")
+     * 
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: 
+     * 
+     *        0. "id = 1, name = 'sky'"
+     *        1. array("id = 1", "name = 'sky'")
+     *        2. array("id" => "1", "name" => "sky")
+     *        3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 
+     * @param string $sort 排序条件
+     * 默认为 id desc
+     * 示例如下: 
+     * 
+     *        1. id asc;
+     *        2. name desc;
+     * @return mixed 对象分页
+     */
+    public static function getMultitable($from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
+        return DataObjectFunc::getMultitable( get_called_class(), $from, $filter, $sort );
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="数据类型转换">
     /**
      * 将数据对象转换成xml
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *         $blog = Blog::get_by_id( 1 );
+     * 
+     *         print_r( $blog->toXml() );
      * @param $filterArray 需要过滤不生成的对象的field
      * 
      * 示例: $filterArray = array("id", "commitTime");
      * 
      * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
-     * @return xml内容
+     * @return string xml内容
      */
     public function toXml($isAll = true, $filterArray = null)
     {
@@ -983,8 +1106,14 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 将数据对象转换成Json类型格式
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *         $blog = Blog::get_by_id( 1 );
+     * 
+     *         print_r( $blog->toJson() );
      * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
-     * @return Json格式的数据格式的字符串。
+     * @return string Json格式的数据格式的字符串。
      */
     public function toJson($isAll = false)
     {
@@ -993,8 +1122,14 @@ abstract class DataObject extends BBObject implements ArrayAccess
 
     /**
      * 将数据对象转换成Array
+     * @example 示例如下
+     * 示例如下:
+     * 
+     *         $blog = Blog::get_by_id( 1 );
+     * 
+     *         print_r( $blog->toArray() );
      * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
-     * @return 数组
+     * @return array 数组
      */
     public function toArray($isAll = true)
     {
@@ -1003,4 +1138,3 @@ abstract class DataObject extends BBObject implements ArrayAccess
     //</editor-fold>
 
 }
-?>

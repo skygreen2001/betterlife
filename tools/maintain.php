@@ -1,7 +1,7 @@
 <?php
 require_once("../init.php");
 
-// 统计代码行数
+// // 统计代码行数
 // $file_path =  Gc::$nav_root_path;
 // $f_files   = UtilFileSystem::getAllFilesInDirectory( $file_path, "php" );
 // // $f_files   = UtilFileSystem::getAllFilesInDirectory($file_path, array("js", "php", "tpl", "css", "json"));
@@ -37,3 +37,8 @@ require_once("../init.php");
 // // 显示超过限制数量的表, 默认值是0，显示所有的表
 // $_GET["l"] = $_GET["l"]??0;
 // require_once("tools/db/db_countrows.php");
+
+// 导出数据到Excel
+$response = Manager_Service::blogService()->exportBlog();
+echo $response["data"];
+echo "<script>window.open('" . $response["data"] . "');</script>";

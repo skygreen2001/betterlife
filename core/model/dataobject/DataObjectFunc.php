@@ -548,6 +548,212 @@ class DataObjectFunc
             return -1;
         }
     }
+
+    /**
+     * 对象总计数
+     * @param string $classname 数据对象类名
+     * @param object|string|array $filter
+     *        $filter 格式示例如下: 
+     *            0. "id = 1, name = 'sky'"
+     *            1. array("id = 1", "name = 'sky'")
+     *            2. array("id" => "1", "name" => "sky")
+     *            3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * @return int 对象总计数
+     */
+    public static function count($classname, $filter = null)
+    {
+        return DataObject::dao()->count( $classname, $filter );
+    }
+
+    /**
+     * 对象分页
+     * @param string $classname 数据对象类名
+     * @param int $startPoint  分页开始记录数
+     * @param int $endPoint    分页结束记录数
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: 
+     * 
+     *        0. "id = 1, name = 'sky'"
+     *        1. array("id = 1", "name = 'sky'")
+     *        2. array("id" => "1", "name" => "sky")
+     *        3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * @param string $sort 排序条件
+     * 默认为 id desc
+     * 
+     * 示例如下: 
+     * 
+     *        1. id asc;
+     *        2. name desc;
+     * @return mixed 对象分页
+     */
+    public static function queryPage($classname, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
+        if ( is_string($filter) ) $filter = trim($filter);
+        if ( ( $startPoint > $endPoint ) || ( $endPoint == 0 ) ) return null;
+        return DataObject::dao()->queryPage( $classname, $startPoint, $endPoint, $filter, $sort );
+    }
+
+    /**
+     * 对象分页根据当前页数和每页显示记录数
+     * @param string $classname 数据对象类名
+     * @param int $pageNo  当前页数
+     * @param int $pageSize 每页显示记录数
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: 
+     * 
+     *        0. "id = 1, name = 'sky'"
+     *        1. array("id = 1", "name = 'sky'")
+     *        2. array("id" => "1", "name" => "sky")
+     *        3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 
+     * @param string $sort 排序条件
+     * 默认为 id desc
+     * 示例如下: 
+     * 
+     *        1. id asc;
+     *        2. name desc;
+     * 
+     * @return array
+     *  返回:
+     *        - count    : 符合条件的记录总计数
+     *        - pageCount: 符合条件的总页数
+     *        - data     : 对象分页
+     */
+    public static function queryPageByPageNo($classname, $pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
+        if ( is_string($filter) ) $filter = trim($filter);
+        $count = self::count( $classname, $filter );
+        $data  = array();
+        $pageCount = 0;
+        if ( $count > 0 ) {
+            // 总页数
+            $pageCount = floor(($count + $pageSize - 1) / $pageSize);
+            if ( $pageNo <= $pageCount ) {
+                $startPoint = ($pageNo - 1) * $pageSize + 1;
+                if ( $startPoint > $count ) {
+                    $startPoint = 0;
+                }
+                $endPoint = $pageNo * $pageSize;
+                if ( $endPoint > $count ) {
+                    $endPoint = $count;
+                }
+                $data = DataObject::dao()->queryPage( $classname, $startPoint, $endPoint, $filter, $sort );
+            }
+        }
+        return array(
+            "count"     => $count,
+            "pageCount" => $pageCount,
+            "data"      => $data
+        );
+    }
+
+    /**
+     * 对象总计数[多表关联查询]
+     * @param string $classname 数据对象类名
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 
+     *        示例如下: 
+     *            0. "table1, table2"
+     *            1. array("table1", "table2")
+     *            2. "class1, class2"
+     *            3. array("class1", "class2")
+     * 
+     * @param object|string|array $filter
+     * 
+     *        $filter 格式示例如下: 
+     *            0. 允许对象如new User(id = "1", name = "green");
+     *            1. "id = 1", "name = 'sky'"
+     *            2. array("id = 1", "name = 'sky'")
+     *            3. array("id" => "1", "name" => "sky")
+     * 
+     * @return int 对象总计数
+     */
+    public static function countMultitable($classname, $from, $filter = null)
+    {
+        return DataObject::dao()->countMultitable( $classname, $from, $filter );
+    }
+
+    /**
+     * 对象分页[多表关联查询]
+     * @param string $classname 数据对象类名
+     * @param int $startPoint  分页开始记录数
+     * @param int $endPoint    分页结束记录数
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 示例如下: 
+     * 
+     *        0. "table1, table2"
+     *        1. array("table1", "table2")
+     *        2. "class1, class2"
+     *        3. array("class1", "class2")
+     * 
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: 
+     * 
+     *        0. "id = 1, name = 'sky'"
+     *        1. array("id = 1", "name = 'sky'")
+     *        2. array("id" => "1", "name" => "sky")
+     *        3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 
+     * @param string $sort 排序条件
+     * 默认为 id desc
+     * 示例如下: 
+     * 
+     *        1. id asc;
+     *        2. name desc;
+     * @return mixed 对象分页
+     */
+    public static function queryPageMultitable($classname, $startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
+        if ( is_string($filter) ) $filter = trim($filter);
+        if ( ( $startPoint > $endPoint ) || ( $endPoint == 0 ) ) return null;
+        return DataObject::dao()->queryPageMultitable( $classname, $startPoint, $endPoint, $from, $filter, $sort );
+    }
+
+    /**
+     * 查询数据对象列表[多表关联查询]
+     * @param string $classname 数据对象类名
+     * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
+     * 示例如下: 
+     * 
+     *        0. "table1, table2"
+     *        1. array("table1", "table2")
+     *        2. "class1, class2"
+     *        3. array("class1", "class2")
+     * 
+     * @param object|string|array $filter 查询条件, 在where后的条件
+     * 示例如下: 
+     * 
+     *        0. "id = 1, name = 'sky'"
+     *        1. array("id = 1", "name = 'sky'")
+     *        2. array("id" => "1", "name" => "sky")
+     *        3. 允许对象如new User(id = "1", name = "green");
+     * 
+     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 
+     * @param string $sort 排序条件
+     * 默认为 id desc
+     * 示例如下: 
+     * 
+     *        1. id asc;
+     *        2. name desc;
+     * @return mixed 对象分页
+     */
+    public static function getMultitable($classname, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
+        if ( is_string($filter) ) $filter = trim($filter);
+        $startPoint = 0;
+        $endPoint   = self::countMultitable( $classname, $from, $filter );
+        if ( $endPoint == 0 ) return null;
+        return DataObject::dao()->queryPageMultitable( $classname, $startPoint, $endPoint, $from, $filter, $sort );
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="其他">
@@ -556,7 +762,7 @@ class DataObjectFunc
      * @param mixed $data 数据对象数组|数据对象。如:array(user,user)
      * @param mixed $property_name  属性名【可以一次指定多个属性名】
      */
-    public static function propertyShow($data,$class_name,$property_name)
+    public static function propertyShow($data, $class_name, $property_name)
     {
         if ( !empty($class_name) ) {
             $class_property_names = array();//$class_name
@@ -639,4 +845,3 @@ class DataObjectFunc
     }
     //</editor-fold>
 }
-?>

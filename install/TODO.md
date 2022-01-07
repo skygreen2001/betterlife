@@ -5,9 +5,11 @@
   - betterlife 从入门到实践
   - DB: find objects by List ids
   - 后台的export excel加筛选条件
+  - Tag 超链接  onclick ' " 不能解析的问题
   - Blade Template
   - Trait 重构 DataObject 和 DataObjectFunc, php 5.2 -> php 5.4
   - 框架核心需加上命名空间, php 5.2 -> php 5.4
+  - 级联删除图片，多对多表中的数据
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
     - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
     - tools/tools/optimize/stresstest/README.md 压力测试  
@@ -22,7 +24,6 @@
   - tools 里的editarea ：codemirror  http://codemirror.net/
   - github + composer: 框架核心 core 作为一个composer library: betterlife.framework
   - php7 and namespace（遵循规范psr）
-  - Tag 超链接  onclick ' " 不能解析的问题
   - [ok]后台的import和export excel
   - [ok]TWIG PHPTEMPLATE
   - [ok]换行符替换成HH = PHP_EOL
@@ -37,6 +38,8 @@
   - 生成Api document by phpDocumentor(https://docs.phpdoc.org)
   - Laravel rate limiter 
   - Symfony Console: 打造命令行工具
+    - 代码生成
+      - 生成 Api Resource
   - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
     - Composer脚本: https://docs.phpcomposer.com/articles/scripts.html
   - CodeIgnitor 4的开发模式显示debug 条

@@ -138,6 +138,9 @@ require_once("init.php");
 // // 查看指定标识的博客
 // $blog = Blog::get_by_id( 1 );
 // print_r($blog);
+// print_r( $blog->toXml() );
+// print_r( $blog->toJson() );
+// print_r( $blog->toArray() );
 
 // // 查看博客的数量
 // $countBlogs = Blog::count();
@@ -146,6 +149,7 @@ require_once("init.php");
 // // 查看从第1到5条博客记录
 // $blogs = Blog::queryPage( 1, 5 );
 // print_pre($blogs, true);
+
 // $blogs = Blog::queryPage( 0, 10,
 //     array(
 //         "(blog_content like '%关键字%' or blog_content like '%公开课%')",
@@ -180,6 +184,11 @@ require_once("init.php");
 // $role->saveRelationForManyToMany( "users", "1" );
 // print_r($role);
 
+// // 同步删除取消了已有多对多关系、保存新增多对多关系
+// $id      = 1;
+// $role_id = 3;
+// Userrole::saveDeleteRelateions( "user_id", $id, "role_id", $userRole );
+
 // // 获取用户访问次数最高的次数
 // $max = User::max( "loginTimes" );
 // echo($max);
@@ -196,8 +205,13 @@ require_once("init.php");
 // $count = Comment::countMultitable( "Blog a,Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
 // echo($count);
 
-// // 获取博客名称含有Web的评论
+// // 对象分页[多表关联查询]: 获取博客名称含有Web的评论
 // $comments = Comment::queryPageMultitable( 1, 6, "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
+// print_r($comments);
+
+
+// // 获取博客名称含有Web的评论
+// $comments = Comment::getMultitable( "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
 // print_r($comments);
 
 // // 默认redis缓存
@@ -237,7 +251,9 @@ require_once("init.php");
 // $outputFile = Gc::$upload_path . "zip" . DS . "666.zip";
 // UtilZipfile::zip( $texFName, $outputFile, $img_dir, "images", "1234" );
 
+// // 导出数据到Excel
 // $response = Manager_Service::blogService()->exportBlog();
+// echo $response["data"];
 // echo "<script>window.open('" . $response["data"] . "');</script>";
 
 // // FakerPHP/Faker: https://fakerphp.github.io/

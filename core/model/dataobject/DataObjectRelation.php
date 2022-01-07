@@ -386,14 +386,13 @@ class DataObjectRelation extends BBObject
     /**
      * 同步删除取消了已有多对多关系、保存新增多对多关系
      * 
-     * 示例:
-     * 
-     *     Blogcategory::saveDeleteRelateions( "blog_id", 1, "category_id", array(1, 2, 3, 4, 5, 6) );
+     * 能够比对数据库数据，以$other_ids为准，如果相同的行就不删除，如果不存在的删除，新的就增加
      * @param string $classname 数据对象类名
      * @param string $id_name 主标识名称
      * @param int $id 主标识
      * @param string $rel_name 关系标识名称
      * @param array $other_ids 关系标识组
+     * @return void
      */
     public static function saveDeleteRelateions($classname, $id_name, $id, $rel_name, $other_ids) {
         $relations_db = $classname::select($rel_name, $id_name . " = " . $id);
@@ -429,4 +428,3 @@ class DataObjectRelation extends BBObject
         }
     }
 }
-?>
