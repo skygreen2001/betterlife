@@ -335,9 +335,9 @@ class UtilFileSystem extends Util
      * @param string $dir 指定目录
      * @param string|array $agreesuffix 是否要求文件后缀名为指定
      * 
-     *     1. 当$agreesuffix='*'为查找所有后缀名的文件
-     *     2. 当$agreesuffix='php'为查找所有php后缀名的文件
-     *     3. 当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
+     *     1. 当$agreesuffix = '*'为查找所有后缀名的文件
+     *     2. 当$agreesuffix = 'php'为查找所有php后缀名的文件
+     *     3. 当$agreesuffix = array('php','xml')为查找所有php和xml后缀名的文件
      * @return array
      */
     public static function getAllFilesInDirectory($dir, $agreesuffix = array("php"))

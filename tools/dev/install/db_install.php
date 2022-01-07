@@ -8,6 +8,7 @@ require_once("../../../init.php");
 
 //exec('mysqldump -uroot -p betterlife>bb20161113.bak', $result);
 //echo $result;
+
 $dest_db_config=array
 (
     "host"     => Config_Db::$host,
@@ -18,5 +19,4 @@ $dest_db_config=array
     "script_filename"=>Gc::$nav_root_path . "install" . DS . "data" . DS . "mysql" . DS . "db_betterlife.sql",
 );
 
-DbInfo_Mysql::run_script($dest_db_config);
-?>
+DbInfo_Mysqli::run_script($dest_db_config);
