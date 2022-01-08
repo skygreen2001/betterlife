@@ -290,11 +290,11 @@ class ServiceBasic extends Service implements IServiceBasic
      *      2. name desc;
      * @return 单个对象实体
      */
-    public function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func_array($dataobject_class . "::get_one", array($filter, $sort));
+            return call_user_func_array($dataobject_class . "::getOne", array($filter, $sort));
         } else {
             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
@@ -306,11 +306,11 @@ class ServiceBasic extends Service implements IServiceBasic
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($id)
+    public function getById($id)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func($dataobject_class . "::get_by_id", $id);
+            return call_user_func($dataobject_class . "::getById", $id);
         } else {
             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
@@ -468,8 +468,8 @@ class ServiceBasic extends Service implements IServiceBasic
             foreach ($allImageFiles as $imgFile) {
                 $extension     = UtilFileSystem::fileExtension($imgFile);
                 $query_imgFile = UtilString::gbk2utf8(basename($imgFile, "." . $extension));
-                $img_object    = call_user_func("$class_name::get_one", "$img_column_name like '%$query_imgFile%'");
-                //$class_name::get_one("$img_column_name like '%$query_imgFile%'");
+                $img_object    = call_user_func("$class_name::getOne", "$img_column_name like '%$query_imgFile%'");
+                //$class_name::getOne("$img_column_name like '%$query_imgFile%'");
                 $imgFile       = basename($imgFile);
                 if ($img_object) {
                     if (UtilString::is_chinese($query_imgFile)) {
@@ -483,8 +483,8 @@ class ServiceBasic extends Service implements IServiceBasic
                 } else {
                     if (UtilString::is_chinese($query_imgFile)) {
                         $image_name = UtilPinyin::translate($query_imgFile);
-                        $img_object = call_user_func("$class_name::get_one", "$img_column_name like '%$image_name%'");
-                        //Product::get_one("$img_column_name like '%$image_name%'");
+                        $img_object = call_user_func("$class_name::getOne", "$img_column_name like '%$image_name%'");
+                        //Product::getOne("$img_column_name like '%$image_name%'");
                         if ($img_object) {
                             if (!copy($upload_zip_dir . $imgFile, $upload_dir . $image_name . "." . $extension)) {
                                 $info_failed .= "上传文件失败:" . $uploadPath . $imgFile . "";

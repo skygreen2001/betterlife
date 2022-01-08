@@ -20,7 +20,7 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
     AutoCodeView::$showReport .= AutoCodeFoldHelper::foldEffectReady();
     AutoCodeView::$showReport .= "<br/>";
     AutoCodeView::$showReport .= AutoCodeFoldHelper::foldbeforeaction();
-    AutoCodeView::AutoCode();
+    AutoCodeView::autoCode();
     AutoCodeView::$showReport .= "<br/>";
     AutoCodeView::$showReport .= AutoCodeFoldHelper::foldafteraction();
     echo AutoCodeView::$showReport;

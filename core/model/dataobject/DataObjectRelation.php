@@ -30,14 +30,14 @@ class DataObjectRelation extends BBObject
             }
 
             $m_m_class = ucfirst(strtolower($classname_has . $classname_belong));
-            $tablename = Config_Db::orm($m_m_class);
+            $tablename = ConfigDb::orm($m_m_class);
 
-            // $tablename = Config_Db::orm( $classname_has );
-            // $tncount   = explode(Config_Db::TABLENAME_CONCAT, $tablename);
+            // $tablename = ConfigDb::orm( $classname_has );
+            // $tncount   = explode(ConfigDb::TABLENAME_CONCAT, $tablename);
             // if (count($tncount) > 2) {
-            //     $tablename = substr($tablename, 0, strrpos($tablename, Config_Db::TABLENAME_CONCAT));
+            //     $tablename = substr($tablename, 0, strrpos($tablename, ConfigDb::TABLENAME_CONCAT));
             // }
-            // $tablename .= Config_Db::TABLENAME_RELATION . Config_Db::TABLENAME_CONCAT;
+            // $tablename .= ConfigDb::TABLENAME_RELATION . ConfigDb::TABLENAME_CONCAT;
             // $tablename .= strtolower($classname_has . $classname_belong);
             return $tablename;
         } else {
@@ -108,7 +108,7 @@ class DataObjectRelation extends BBObject
                  *         "admins" => "Admin",
                  *     );
                  * 示例如下:
-                 *       $department = Department::get_by_id(1);
+                 *       $department = Department::getById(1);
                  *       print_r($department->admins);//第1种方式
                  *       print_r($department->getAdmins());//第2种方式
                  *       print_r($department->admins());//第3种方式
@@ -148,7 +148,7 @@ class DataObjectRelation extends BBObject
                  *        "roles" => "Role",
                  *     );
                  * 示例如下:
-                 *       $user = User::get_by_id(1);
+                 *       $user = User::getById(1);
                  *       print_r($user->roles);//第1种方式
                  *       print_r($user->getRoles());//第2种方式
                  *       print_r($user->roles());//第3种方式
@@ -173,7 +173,7 @@ class DataObjectRelation extends BBObject
                             $_SQL         = new Crud_Sql_Select();
                             $relation_tablename = self::getRealManyManyTable($dataobject, $dataobject->classname(), $detail_class);
                             $self_foreignId     = self::getRealForeignIDColumnName($dataobject, $dataobject->classname());
-                            $relationObject_tablename = Config_Db::orm($detail_class);
+                            $relationObject_tablename = ConfigDb::orm($detail_class);
                             $relationObject_IdName    = DataObjectSpec::getRealIDColumnNameStatic($detail_class);
                             $relationObject_foreignId = self::getRealForeignIDColumnName($dataobject, $detail_class);
                             $query = $_SQL->select("b.*")->from($relation_tablename . " a," . $relationObject_tablename . " b")->ignoreQuotes(true)->where("a." . $self_foreignId . "='" . $dataobject->getId() . "', b." . $relationObject_IdName . "=a." . $relationObject_foreignId)->ignoreQuotes(false)->result();
@@ -191,7 +191,7 @@ class DataObjectRelation extends BBObject
                  *        "users"=>"User",
                  *     );
                  * 示例如下:
-                 *       $role = Role::get_by_id(1);
+                 *       $role = Role::getById(1);
                  *       print_r($role->users);//第1种方式
                  *       print_r($role->getUsers());//第2种方式
                  *       print_r($role->users());//第3种方式
@@ -215,7 +215,7 @@ class DataObjectRelation extends BBObject
                             $_SQL      = new Crud_Sql_Select();
                             $self_foreignId     = self::getRealForeignIDColumnName($dataobject, $dataobject->classname());
                             $relation_tablename = self::getRealManyManyTable($dataobject, $mainClass, $dataobject->classname());
-                            $relationObject_tablename = Config_Db::orm($mainClass);
+                            $relationObject_tablename = ConfigDb::orm($mainClass);
                             $relationObject_IdName    = DataObjectSpec::getRealIDColumnNameStatic($mainClass);
                             $relationObject_foreignId = self::getRealForeignIDColumnName($dataobject, $mainClass);
                             $query = $_SQL->select("b.*")->ignoreQuotes(true)->from($relation_tablename . " a, " . $relationObject_tablename . " b")->where("a." . $self_foreignId . "='" . $dataobject->getId() . "', b." . $relationObject_IdName . "=a." . $relationObject_foreignId)->ignoreQuotes(false)->result();
@@ -233,7 +233,7 @@ class DataObjectRelation extends BBObject
                  *        "userdetail" => "UserDetail",
                  *     );
                  * 示例如下:
-                 *      $user = User::get_by_id(1);
+                 *      $user = User::getById(1);
                  *      $user->userdetail;//第1种方式
                  *      //$user->getUserdetail();//第2种方式
                  *      //$user->userdetail();//第3种方式
@@ -258,7 +258,7 @@ class DataObjectRelation extends BBObject
                         $classname    = lcfirst($classname);
                         $foreignId    = self::getRealForeignIDColumnName($dataobject, $classname);
                         if ($dataobject->getId()) {
-                            return DataObject::dao()->get_one($detail_class, $foreignId . "=" . $dataobject->getId());
+                            return DataObject::dao()->getOne($detail_class, $foreignId . "=" . $dataobject->getId());
                         }
                     }
                 }
@@ -272,7 +272,7 @@ class DataObjectRelation extends BBObject
                  *    "user"=>"User"
                  *  );
                  * 示例如下:
-                 *      $comment = Comment::get_by_id(3);
+                 *      $comment = Comment::getById(3);
                  *      $comment->user;//第1种方式
                  *      //$comment->getUser();//第2种方式
                  *      //$comment->user();//第3种方式
@@ -297,7 +297,7 @@ class DataObjectRelation extends BBObject
                         $relationvalue = $dataobject->$foreignId;
                         $relationObject_IdName = DataObjectSpec::getRealIDColumnNameStatic($detail_class);
                         if (isset($relationvalue)) {
-                            return DataObject::dao()->get_one($detail_class, $relationObject_IdName . "=" . $relationvalue);
+                            return DataObject::dao()->getOne($detail_class, $relationObject_IdName . "=" . $relationvalue);
                         }
                     }
                 }

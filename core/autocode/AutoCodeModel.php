@@ -15,7 +15,7 @@ class AutoCodeModel extends AutoCode
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         $dest_directory = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";
@@ -31,7 +31,7 @@ class AutoCodeModel extends AutoCode
         //生成实体数据对象类
         AutoCodeDomain::$type     = 2;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforedomain();
-        AutoCodeDomain::AutoCode($table_names);
+        AutoCodeDomain::autoCode($table_names);
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
@@ -45,29 +45,29 @@ class AutoCodeModel extends AutoCode
         //生成提供服务类[前端Service类]
         self::$showReport         .= AutoCodeFoldHelper::foldbeforeservice();
         AutoCodeService::$type     = 2;
-        AutoCodeService::AutoCode($table_names);
+        AutoCodeService::autoCode($table_names);
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
         //生成Action类[前端、后台和通用模版]
         AutoCodeAction::$type     = 0;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
         AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
         //生成表示层[前端、后台和通用模版]
         AutoCodeView::$save_dir  = self::$save_dir;
         self::$showReport       .= AutoCodeFoldHelper::foldbeforeviewdefault();
         AutoCodeView::$type      = EnumAutoCodeViewType::FRONT;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         AutoCodeView::$type      = EnumAutoCodeViewType::MODEL;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         AutoCodeView::$type      = EnumAutoCodeViewType::ADMIN;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         self::$showReport       .= AutoCodeFoldHelper::foldafterviewdefault();
 
         //将新添加的内容放置在文件最后作为可覆盖的内容

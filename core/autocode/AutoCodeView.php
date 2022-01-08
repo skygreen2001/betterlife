@@ -71,7 +71,7 @@ class AutoCodeView extends AutoCode
      *
      * @param array|string $table_names
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         self::pathset();
         self::init();

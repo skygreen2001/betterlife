@@ -42,7 +42,7 @@ class EnumReusePjType extends Enum
  *
  *        1. 复制整个项目到新的路径
  *        2. 修改Gc.php相关配置
- *        3. 修改Config_Db.php[数据库名称|数据库表名前缀]
+ *        3. 修改ConfigDb.php[数据库名称|数据库表名前缀]
  *        4. 修改帮助地址
  *        5. 修改应用文件夹名称
  *        6. 重命名后台Action_Betterlife为新应用类
@@ -293,7 +293,7 @@ class Project_Refactor
             //修改Gc.php配置文件
             $gc_file = self::$save_dir."Gc.php";
             $content = file_get_contents($gc_file);
-            $content = preg_replace('/\'' . Config_Db::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
+            $content = preg_replace('/\'' . ConfigDb::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
             $content = str_replace("'admin',", "", $content);
             $content = str_replace("'model',", "", $content);
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
@@ -301,11 +301,11 @@ class Project_Refactor
             $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             file_put_contents($gc_file, $content);
 
-            //修改Config_Db.php配置文件
-            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_Db.php";
+            //修改ConfigDb.php配置文件
+            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "ConfigDb.php";
             $content      = file_get_contents($conf_db_file);
-            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
-            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . Config_Db::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
+            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . ConfigDb::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
+            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . ConfigDb::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
@@ -340,17 +340,17 @@ class Project_Refactor
             //修改Gc.php配置文件
             $gc_file = self::$save_dir . "Gc.php";
             $content = file_get_contents($gc_file);
-            $content = preg_replace('/\'' . Config_Db::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
+            $content = preg_replace('/\'' . ConfigDb::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
             $content = str_replace(Gc::$site_name, self::$pj_name_cn, $content);
             $content = str_replace(Gc::$appName, self::$pj_name_en, $content);
             $content = str_replace(Gc::$appName_alias, self::$pj_name_alias, $content);
             file_put_contents($gc_file, $content);
 
-            //修改Config_Db.php配置文件
-            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_Db.php";
+            //修改ConfigDb.php配置文件
+            $conf_db_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "ConfigDb.php";
             $content      = file_get_contents($conf_db_file);
-            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . Config_Db::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
-            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . Config_Db::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
+            $content      = preg_replace('/dbname(\s)*=(\s)*"(\s)*' . ConfigDb::$dbname . '(\s)*"/', 'dbname = "' . self::$db_name . '"', $content);
+            $content      = preg_replace('/table_prefix(\s)*=(\s)*"' . ConfigDb::$table_prefix . '(\s)*"/', 'table_prefix = "' . self::$table_prefix . '"', $content);
             file_put_contents($conf_db_file, $content);
 
             //修改Welcome.php文件
@@ -465,7 +465,7 @@ class Project_Refactor
         $db_bak_file = $db_bak_dir . "db_" . Gc::$appName . ".sql";
         if (file_exists($db_bak_file)) {
             $content = file_get_contents($db_bak_file);
-            $content = str_replace(Config_Db::$table_prefix, self::$table_prefix , $content);
+            $content = str_replace(ConfigDb::$table_prefix, self::$table_prefix , $content);
             @unlink($db_bak_file);
             $db_bak_file = $db_bak_dir . "db_" . self::$pj_name_en . ".sql";
             file_put_contents($db_bak_file, $content);
@@ -567,8 +567,8 @@ class Project_Refactor
             $domain_root   = str_replace($pj_name_en . DS, "", $default_dir);
             $domain_root   = str_replace(Gc::$appName_alias . DS, "", $domain_root);
             $default_dir   = $pj_name_en;
-            $dbname        = Config_Db::$dbname;
-            $table_prefix  = Config_Db::$table_prefix;
+            $dbname        = ConfigDb::$dbname;
+            $table_prefix  = ConfigDb::$table_prefix;
             $git_name      = "https://skygreen2001.github.io/betterlife.gitbook/";
         } else {
             $reuse_type    = self::$reuse_type;

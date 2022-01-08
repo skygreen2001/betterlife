@@ -33,7 +33,7 @@ class Action_Usernotice extends ActionModel
     public function view()
     {
         $usernoticeId = $this->data["id"];
-        $usernotice   = Usernotice::get_by_id( $usernoticeId );
+        $usernotice   = Usernotice::getById( $usernoticeId );
         $this->view->set( "usernotice", $usernotice );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Usernotice extends ActionModel
             }
         }
         $usernoticeId = $this->data["id"];
-        $usernotice   = Usernotice::get_by_id( $usernoticeId );
+        $usernotice   = Usernotice::getById( $usernoticeId );
         $this->view->set( "usernotice", $usernotice );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

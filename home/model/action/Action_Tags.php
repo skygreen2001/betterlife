@@ -33,7 +33,7 @@ class Action_Tags extends ActionModel
     public function view()
     {
         $tagsId = $this->data["id"];
-        $tags   = Tags::get_by_id( $tagsId );
+        $tags   = Tags::getById( $tagsId );
         $this->view->set( "tags", $tags );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Tags extends ActionModel
             }
         }
         $tagsId = $this->data["id"];
-        $tags   = Tags::get_by_id( $tagsId );
+        $tags   = Tags::getById( $tagsId );
         $this->view->set( "tags", $tags );
     }
     /**

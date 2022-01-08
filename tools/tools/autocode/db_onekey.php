@@ -32,7 +32,7 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
         $table_names = $_GET["table_names"];
         AutoCodeConfig::Decode();
         AutoCodeModel::$showReport = "";
-        AutoCodeModel::AutoCode($table_names);
+        AutoCodeModel::autoCode($table_names);
     }
 
     if (Config_AutoCode::SHOW_PREVIEW_REPORT) {

@@ -33,7 +33,7 @@ class Action_Region extends ActionModel
     public function view()
     {
         $regionId = $this->data["id"];
-        $region   = Region::get_by_id( $regionId );
+        $region   = Region::getById( $regionId );
         $this->view->set( "region", $region );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Region extends ActionModel
             }
         }
         $regionId = $this->data["id"];
-        $region   = Region::get_by_id( $regionId );
+        $region   = Region::getById( $regionId );
         $this->view->set( "region", $region );
         $region_ps = Region::get( "", "region_id asc" );
         $this->view->set( "region_ps", $region_ps );

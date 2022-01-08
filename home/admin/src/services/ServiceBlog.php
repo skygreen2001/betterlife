@@ -200,9 +200,9 @@ class ServiceBlog extends Service implements IServiceBasic
      *
      * @return object 单个数据对象: 博客实体
      */
-    public function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return Blog::get_one( $filter, $sort );
+        return Blog::getOne( $filter, $sort );
     }
 
     /**
@@ -211,9 +211,9 @@ class ServiceBlog extends Service implements IServiceBasic
      * @param string $id  
      * @return object 单个数据对象: 博客实体
      */
-    public function get_by_id($id)
+    public function getById($id)
     {
-        return Blog::get_by_id( $id );
+        return Blog::getById( $id );
     }
 
     /**
@@ -301,11 +301,11 @@ class ServiceBlog extends Service implements IServiceBasic
                     if ($data) {
                         foreach ($data as $blog) {
                             if (!is_numeric($blog["user_id"])) {
-                                $user_r = User::get_one( "username = '" . $blog["user_id"] . "'" );
+                                $user_r = User::getOne( "username = '" . $blog["user_id"] . "'" );
                                 if ($user_r ) $blog["user_id"] = $user_r->user_id;
                             }
                             if (!is_numeric($blog["category_id"])) {
-                                $category_r = Category::get_one( "name = '" . $blog["category_id"] . "'" );
+                                $category_r = Category::getOne( "name = '" . $blog["category_id"] . "'" );
                                 if ($category_r ) $blog["category_id"] = $category_r->category_id;
                             }
                             $blog = new Blog($blog);
@@ -365,12 +365,12 @@ class ServiceBlog extends Service implements IServiceBasic
                 }
                 $user_instance = null;
                 if ($blog->user_id) {
-                    $user_instance = User::get_by_id( $blog->user_id );
+                    $user_instance = User::getById( $blog->user_id );
                     $blog['user_id'] = $user_instance->username;
                 }
                 $category_instance = null;
                 if ($blog->category_id) {
-                    $category_instance = Category::get_by_id( $blog->category_id );
+                    $category_instance = Category::getById( $blog->category_id );
                     $blog['category_id'] = $category_instance->name;
                 }
                 if ($blog->isPublic == 1 ) $blog->isPublic = "是"; else $blog->isPublic = "否";

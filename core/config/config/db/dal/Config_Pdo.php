@@ -8,7 +8,7 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Pdo extends Config_Db
+class Config_Pdo extends ConfigDb
 {
     /**
      * @var enum 获取数据的模式

@@ -42,7 +42,7 @@ class AutoCodeDomainJava extends AutoCode
     /**
      * 自动生成代码-实体类
      */
-    public static function AutoCode()
+    public static function autoCode()
     {
         self::$app_dir = Gc::$appName;
         self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$dir_src . DS . self::$domain_dir . DS;
@@ -566,8 +566,8 @@ class AutoCodeDomainJava extends AutoCode
      */
     private static function getPackage($tablename)
     {
-        $pacre   = str_replace(Config_Db::$table_prefix, "", $tablename);
-        $pacre   = str_replace(Config_Db::TABLENAME_RELATION, Config_Db::TABLENAME_DIR_RELATION, $pacre);
+        $pacre   = str_replace(ConfigDb::$table_prefix, "", $tablename);
+        $pacre   = str_replace(ConfigDb::TABLENAME_RELATION, ConfigDb::TABLENAME_DIR_RELATION, $pacre);
         $package = str_replace("_", ".", $pacre);
         $packageSplit = explode(".", $package);
         unset($packageSplit[count($packageSplit) - 1]);

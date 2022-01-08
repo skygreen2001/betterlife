@@ -18,9 +18,6 @@
  * @category betterlie
  * @package util.email
  */
-
-require_once("phpmailer/class.phpmailer.php");
-
 class UtilEmailer
 {
     /**
@@ -50,6 +47,7 @@ class UtilEmailer
      */
     public static function sendEmail($fromaddress, $fromname, $toaddress, $toname, $subject, $content)
     {
+        require_once("phpmailer/class.phpmailer.php");
         $mail           = new PHPMailer(); //建立邮件发送类
         $mail->Host     = self::$host; //您的企业邮局域名
         $mail->Port     = self::$port; //端口

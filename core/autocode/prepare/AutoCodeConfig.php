@@ -162,7 +162,7 @@ class AutoCodeConfig extends AutoCode
         if (!self::isMany2ManyByClassname($classname)) {
             $showfieldname = self::getShowFieldNameByClassname($classname, true);
             if (!empty($showfieldname)) {
-                if (( !contain($tablename, Config_Db::TABLENAME_RELATION)) && (!in_array($showfieldname, $exists_condition) )) {
+                if (( !contain($tablename, ConfigDb::TABLENAME_RELATION)) && (!in_array($showfieldname, $exists_condition) )) {
                     $conditions[]       = array("@value" => $showfieldname);
                     $exists_condition[] = $showfieldname;
                 }
@@ -369,7 +369,7 @@ class AutoCodeConfig extends AutoCode
             }
         }
 
-        if (contain($tablename, Config_Db::TABLENAME_RELATION)) {
+        if (contain($tablename, ConfigDb::TABLENAME_RELATION)) {
             if (self::isMany2ManyByClassname($classname)) {
                 $fieldInfo_m2m = self::$fieldInfos[self::getTablename($classname)];
                 unset($fieldInfo_m2m['updateTime'], $fieldInfo_m2m['commitTime']);

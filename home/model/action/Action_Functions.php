@@ -33,7 +33,7 @@ class Action_Functions extends ActionModel
     public function view()
     {
         $functionsId = $this->data["id"];
-        $functions   = Functions::get_by_id( $functionsId );
+        $functions   = Functions::getById( $functionsId );
         $this->view->set( "functions", $functions );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Functions extends ActionModel
             }
         }
         $functionsId = $this->data["id"];
-        $functions   = Functions::get_by_id( $functionsId );
+        $functions   = Functions::getById( $functionsId );
         $this->view->set( "functions", $functions );
     }
     /**

@@ -25,8 +25,8 @@ echo "<br/>";
  */
 function getClassname($tablename)
 {
-    if (in_array($tablename, Config_Db::$orm)) {
-        $classname = array_search($tablename, Config_Db::$orm);
+    if (in_array($tablename, ConfigDb::$orm)) {
+        $classname = array_search($tablename, ConfigDb::$orm);
     } else {
         $classnameSplit = explode("_", $tablename);
         $classnameSplit = array_reverse($classnameSplit);

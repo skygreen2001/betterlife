@@ -7,7 +7,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Sqlite extends Config_Db
+class Config_Sqlite extends ConfigDb
 {
     /**
      * Sqlite 2 抓取数据的模式

@@ -21,7 +21,7 @@ class Action_Blog extends ActionAdmin
     public function view()
     {
         $blogId = $this->data["id"];
-        $blog   = Blog::get_by_id( $blogId );
+        $blog   = Blog::getById( $blogId );
         if (!empty($blog->icon_url)) {
             $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
@@ -59,7 +59,7 @@ class Action_Blog extends ActionAdmin
             }
         }
         $blogId = $this->data["id"];
-        $blog   = Blog::get_by_id( $blogId );
+        $blog   = Blog::getById( $blogId );
         $this->view->set( "blog", $blog );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

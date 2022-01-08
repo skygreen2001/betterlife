@@ -35,11 +35,11 @@ $data      = $pageBlogs["data"];
 if ($data) {
     foreach ($data as $key => $blog) {
         if (!empty($blog->user_id)) {
-            $user_i = User::get_by_id($blog->user_id);
+            $user_i = User::getById($blog->user_id);
             if ($user_i ) $blog->username = $user_i->username;
         }
         if (!empty($blog->category_id)) {
-            $category_i = Category::get_by_id($blog->category_id);
+            $category_i = Category::getById($blog->category_id);
             if ($category_i ) $blog->category_name = $category_i->name;
         }
 

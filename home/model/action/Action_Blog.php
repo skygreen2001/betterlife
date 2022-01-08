@@ -33,7 +33,7 @@ class Action_Blog extends ActionModel
     public function view()
     {
         $blogId = $this->data["id"];
-        $blog   = Blog::get_by_id( $blogId );
+        $blog   = Blog::getById( $blogId );
         $this->view->set( "blog", $blog );
     }
     /**
@@ -68,7 +68,7 @@ class Action_Blog extends ActionModel
             }
         }
         $blogId = $this->data["id"];
-        $blog   = Blog::get_by_id( $blogId );
+        $blog   = Blog::getById( $blogId );
         $this->view->set( "blog", $blog );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

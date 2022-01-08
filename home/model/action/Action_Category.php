@@ -33,7 +33,7 @@ class Action_Category extends ActionModel
     public function view()
     {
         $categoryId = $this->data["id"];
-        $category   = Category::get_by_id( $categoryId );
+        $category   = Category::getById( $categoryId );
         $this->view->set( "category", $category );
     }
     /**
@@ -65,7 +65,7 @@ class Action_Category extends ActionModel
             }
         }
         $categoryId = $this->data["id"];
-        $category   = Category::get_by_id( $categoryId );
+        $category   = Category::getById( $categoryId );
         $this->view->set( "category", $category );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'intro' );

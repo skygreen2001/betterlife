@@ -18,7 +18,7 @@ class UtilConfigPhp extends UtilConfig
         include($file);
         unset($file);   //销毁指定变量
         $vars = get_defined_vars(); //返回所有已定义变量的列表,数组,变量包括服务器等相关变量,
-        //通过foreach吧$file引入的变量给添加到$_settings这个成员数组中去.
+        //通过foreach吧$file引入的变量给添加到$settings这个成员数组中去.
         foreach ($vars as $key => $val) {
             if ($key == 'this') {
                 continue;

@@ -21,11 +21,11 @@ class CKEditor
     /**
      * The version of %CKEditor.
      */
-    const version   = '3.6.2';
+    const VERSION   = '3.6.2';
     /**
      * A constant string unique for each release of %CKEditor.
      */
-    const timestamp = 'B8DJ5M3';
+    const TIMESTAMP = 'B8DJ5M3';
 
     /**
      * URL to the %CKEditor installation directory (absolute or relative to document root).
@@ -94,7 +94,7 @@ class CKEditor
      *
      *  @param $basePath (string) URL to the %CKEditor installation directory (optional).
      */
-    function __construct($basePath = null)
+    public function __construct($basePath = null)
     {
         if (!empty($basePath)) {
             $this->basePath = $basePath;

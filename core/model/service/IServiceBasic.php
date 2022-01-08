@@ -145,14 +145,14 @@ interface IServiceBasic
      *
      * @return 单个对象实体
      */
-    public function get_one($filter = null);
+    public function getOne($filter = null);
 
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($id);
+    public function getById($id);
 
     /**
      * 对象总计数

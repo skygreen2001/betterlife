@@ -264,7 +264,7 @@ class XmlObject extends BBObject implements ArrayAccess
      *      2. array("id"=>"1","name contain 'sky'")--模糊查找
      * @return mixed 对象分页
      */
-    public static function queryPage($startPoint, $endPoint, $filter = null, $xmlObject_classname)
+    public static function queryPage($startPoint, $endPoint, $filter = null, $xmlObject_classname = null)
     {
         if ($xmlObject_classname == null) {
             $classname = get_called_class();

@@ -42,7 +42,7 @@ class AutoCodeDomain extends AutoCode
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      * @param array|string $table_names
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         self::$app_dir         = Gc::$appName;
         self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$dir_src . DS . self::$domain_dir . DS;
@@ -696,7 +696,7 @@ class AutoCodeDomain extends AutoCode
                                 "     */" . HH .
                                 "    public static function {$instance_name}ShowAll(\$parent_id, \$level)" . HH .
                                 "    {" . HH .
-                                "        \${$instance_name}_p = $classname::get_by_id( \$parent_id );" . HH .
+                                "        \${$instance_name}_p = $classname::getById( \$parent_id );" . HH .
                                 "        if (\$level == 1) {" . HH .
                                 "             \${$instance_name}ShowAll = \${$instance_name}_p->$classNameField;" . HH .
                                 "        } else {" . HH .
@@ -722,8 +722,8 @@ class AutoCodeDomain extends AutoCode
      */
     private static function getPackage($tablename)
     {
-        $pacre   = str_replace(Config_Db::$table_prefix, "", $tablename);
-        $pacre   = str_replace(Config_Db::TABLENAME_RELATION, Config_Db::TABLENAME_DIR_RELATION, $pacre);
+        $pacre   = str_replace(ConfigDb::$table_prefix, "", $tablename);
+        $pacre   = str_replace(ConfigDb::TABLENAME_RELATION, ConfigDb::TABLENAME_DIR_RELATION, $pacre);
         $package = str_replace("_", ".", $pacre);
         $packageSplit = explode(".", $package);
         unset($packageSplit[count($packageSplit) - 1]);

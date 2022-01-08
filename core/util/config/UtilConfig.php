@@ -12,7 +12,6 @@
  */
 class UtilConfig extends Util
 {
-    public $_settings = array();
     private static $config_xml  = 1;
     private static $config_ini  = 2;
     private static $config_yaml = 3;
@@ -20,6 +19,7 @@ class UtilConfig extends Util
     private static $config_json = 5;
     private static $current;
     public static $config = 1;
+    public $settings = array();
 
     public static function Instance()
     {

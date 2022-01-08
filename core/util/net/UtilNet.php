@@ -133,7 +133,7 @@ class UtilNet extends Util
     /**
      * 在网络上发送文件内容
      */
-    function sendfile($file)
+    public function sendfile($file)
     {
         $handle = fopen($file, "r");
         while ($buffer = fread($handle, 102400)) {

@@ -66,7 +66,7 @@ class UtilPinyin
         arsort($_Data);
         reset($_Data);
         if ($_Code != 'gb2312') {
-            $_String = self::_U2_Utf8_Gb($_String);
+            $_String = self::u2Utf8Gb($_String);
         }
         $_Res = '';
         for ($i = 0; $i < strlen($_String); $i++) {
@@ -75,7 +75,7 @@ class UtilPinyin
                 $_Q = ord(substr($_String, ++$i, 1));
                 $_P = $_P * 256 + $_Q - 65536;
             }
-            $_Res .= self::_Pinyin($_P, $_Data);
+            $_Res .= self::pinyin($_P, $_Data);
         }
         if ($isRemainOtherChars) {
             return $_Res;
@@ -84,7 +84,7 @@ class UtilPinyin
         }
     }
 
-    private static function _Pinyin($_Num, $_Data)
+    private static function pinyin($_Num, $_Data)
     {
         if ($_Num > 0 && $_Num < 160) {
             return chr($_Num);
@@ -100,7 +100,7 @@ class UtilPinyin
         }
     }
 
-    private static function _U2_Utf8_Gb($_C)
+    private static function u2Utf8Gb($_C)
     {
         $_String = '';
         if ($_C < 0x80) {

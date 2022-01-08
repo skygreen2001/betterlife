@@ -33,7 +33,7 @@ class Action_Userrole extends ActionModel
     public function view()
     {
         $userroleId = $this->data["id"];
-        $userrole   = Userrole::get_by_id( $userroleId );
+        $userrole   = Userrole::getById( $userroleId );
         $this->view->set( "userrole", $userrole );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Userrole extends ActionModel
             }
         }
         $userroleId = $this->data["id"];
-        $userrole   = Userrole::get_by_id( $userroleId );
+        $userrole   = Userrole::getById( $userroleId );
         $this->view->set( "userrole", $userrole );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

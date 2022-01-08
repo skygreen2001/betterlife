@@ -33,7 +33,7 @@ class Action_Role extends ActionModel
     public function view()
     {
         $roleId = $this->data["id"];
-        $role   = Role::get_by_id( $roleId );
+        $role   = Role::getById( $roleId );
         $this->view->set( "role", $role );
     }
     /**
@@ -58,7 +58,7 @@ class Action_Role extends ActionModel
             }
         }
         $roleId = $this->data["id"];
-        $role   = Role::get_by_id( $roleId );
+        $role   = Role::getById( $roleId );
         $this->view->set( "role", $role );
     }
     /**

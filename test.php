@@ -1,8 +1,7 @@
 <?php
 require_once("init.php");
-
 // // 调用一对一
-// $user       = User::get_by_id( 1 );
+// $user       = User::getById( 1 );
 // $userdetail = $user->userdetail;
 // print_r($user->userdetail);
 
@@ -11,12 +10,12 @@ require_once("init.php");
 // print_r($user->userdetail);
 
 // // 调用从属于一对一
-// $userdetail = Userdetail::get_by_id( 1 );
+// $userdetail = Userdetail::getById( 1 );
 // $user       = $userdetail->user;
 // print_r($user);
 
 // // 调用从属于一对一[高级]
-// $user       = User::get_by_id( 1 );
+// $user       = User::getById( 1 );
 // $userDetail = $user->userdetail;
 // $region["country"]  = $userDetail->country_r;
 // $region["province"] = $userDetail->province_r;
@@ -25,22 +24,22 @@ require_once("init.php");
 // print_r($region);
 
 // // 调用一对多
-// $blog     = Blog::get_by_id( 1 );
+// $blog     = Blog::getById( 1 );
 // $comments = $blog->comments;
 // print_r($comments);
 
 // // 调用多对多【主控的一方】
-// $user  = User::get_by_id( 1 );
+// $user  = User::getById( 1 );
 // $roles = $user->roles;
 // print_r($roles);
 
 // // 调用多对多【被控的一方】
-// $role  = Role::get_by_id( 1 );
+// $role  = Role::getById( 1 );
 // $users = $role->users;
 // print_r($users);
 
 // // 父子关系
-// $region = Region::get_by_id( "2709" );
+// $region = Region::getById( "2709" );
 // print_r($region);
 // print_r($region->region_p);
 
@@ -52,19 +51,19 @@ require_once("init.php");
 // if ($user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
 
 // // 修改用户
-// $user             = User::get_by_id( 3 );
+// $user             = User::getById( 3 );
 // $user["username"] = "shanghai";
 // $user->update();
 // if ($user ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 保存或更新用户信息
-// $user             = User::get_by_id( 3 );
+// $user             = User::getById( 3 );
 // $user["username"] = "shanghai";
 // $user_id          = $user->saveOrUpdate();
 // if ($user_id > 1 ) echo("新增用户标识:" . $user_id); elseif ($user_id == true ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 删除用户信息
-// $user     = User::get_by_id( 3 );
+// $user     = User::getById( 3 );
 // $isDelete = $user->delete();
 // if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
@@ -132,11 +131,11 @@ require_once("init.php");
 // print_r($users);
 
 // // 查看一个博客
-// $blog = Blog::get_one();
+// $blog = Blog::getOne();
 // print_r($blog);
 
 // // 查看指定标识的博客
-// $blog = Blog::get_by_id( 1 );
+// $blog = Blog::getById( 1 );
 // print_r($blog);
 // print_r( $blog->toXml() );
 // print_r( $blog->toJson() );
@@ -164,15 +163,15 @@ require_once("init.php");
 // print_r($blogs);
 
 // // 博客转换成xml字符串
-// $blog = Blog::get_one();
+// $blog = Blog::getOne();
 // echo($blog->toXml());
 
 // // 博客转换成Json字符串
-// $blog = Blog::get_one();
+// $blog = Blog::getOne();
 // echo($blog->toJson());
 
 // // 博客转换成数组
-// $blog = Blog::get_one();
+// $blog = Blog::getOne();
 // print_r($blog->toArray());
 
 // // 存储角色用户多对多关系

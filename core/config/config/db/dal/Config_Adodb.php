@@ -17,7 +17,7 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Adodb extends Config_Db
+class Config_Adodb extends ConfigDb
 {
     /**
      * Ms SqlServer Utf8 驱动
@@ -81,7 +81,7 @@ class Config_Adodb extends Config_Db
      *
      * 说明:
      *
-     *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
+     *    $dsn可以直接在System DSN里配置；然后在配置里设置: ConfigDb::$dbname
      * @param string $host
      * @param string $port
      * @param string $username

@@ -76,7 +76,7 @@ class AutoCodeAction extends AutoCode
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
@@ -290,7 +290,7 @@ class AutoCodeAction extends AutoCode
                   "    public function view()" . HH .
                   "    {" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
+                  "        \${$instancename}   = $classname::getById( \${$instancename}Id );" . HH .
                   $viewImgContent .
                   "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
                   "    }" . HH .
@@ -312,7 +312,7 @@ class AutoCodeAction extends AutoCode
                   "            }" . HH .
                   "        }" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                  "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
+                  "        \${$instancename}   = $classname::getById( \${$instancename}Id );" . HH .
                   "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
                   $relation_content .
                   $editTextareaContent .
@@ -439,7 +439,7 @@ class AutoCodeAction extends AutoCode
                    "    public function view()" . HH .
                    "    {" . HH .
                    "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );" . HH .
+                   "        \${$instancename}   = {$classname}::getById( \${$instancename}Id );" . HH .
                   //  $relationField.
                    "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
                    "    }" . HH;
@@ -488,7 +488,7 @@ class AutoCodeAction extends AutoCode
                    "            }" . HH .
                    "        }" . HH .
                    "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                   "        \${$instancename}   = {$classname}::get_by_id( \${$instancename}Id );" . HH .
+                   "        \${$instancename}   = {$classname}::getById( \${$instancename}Id );" . HH .
                    "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
                    $relation_content;
         $text_area_fieldname = array();
@@ -592,7 +592,7 @@ class AutoCodeAction extends AutoCode
     //                                            "     */" . HH .
     //                                            "    private function {$i_name}ShowAll(\$parent_id, \$level)" . HH .
     //                                            "    {" . HH .
-    //                                            "        \${$i_name}_p = $key::get_by_id( \$parent_id );" . HH .
+    //                                            "        \${$i_name}_p = $key::getById( \$parent_id );" . HH .
     //                                            "        if (\$level == 1) {" . HH .
     //                                            "            \${$i_name}ShowAll = \${$i_name}_p->$classNameField;" . HH .
     //                                            "        } else {" . HH .

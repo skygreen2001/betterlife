@@ -24,7 +24,7 @@ if ($reportDev && !empty($reportCname) && !empty($reportSql)) {
         "reportSql" => $reportSql,
 
     );
-    AutoCodeCreateReport::AutoCode( $config );
+    AutoCodeCreateReport::autoCode( $config );
     $template_build_dev = <<<TPL_BUILDDEV
         <card id="reportProdCard" name='reportProdCard' style="width:600px;margin: -30px auto 50px auto;">
             <h4 style="text-align: center">请去model目录下查看新创建的报表文件，确认无误后点击覆盖生成，生成正式文件</h4><br />
@@ -50,7 +50,7 @@ if ($reportProd && !empty($reportCname) && !empty($reportSql)) {
         "reportDesc"  => $reportDesc,
         "reportSql"   => $reportSql,
     );
-    AutoCodeCreateReport::AutoCode( $config );
+    AutoCodeCreateReport::autoCode( $config );
     $template_build_prod = <<<TPL_BUILDPROD
         <card id="reportInfoCard" name='reportInfoCard' style="width:600px;margin: -30px auto 50px auto;">
             <h4 style='text-align: center'>报表文件已生成至正式目录，请自行查看</h4>

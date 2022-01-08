@@ -33,7 +33,7 @@ class Action_Loguser extends ActionModel
     public function view()
     {
         $loguserId = $this->data["id"];
-        $loguser   = Loguser::get_by_id( $loguserId );
+        $loguser   = Loguser::getById( $loguserId );
         $this->view->set( "loguser", $loguser );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Loguser extends ActionModel
             }
         }
         $loguserId = $this->data["id"];
-        $loguser   = Loguser::get_by_id( $loguserId );
+        $loguser   = Loguser::getById( $loguserId );
         $this->view->set( "loguser", $loguser );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

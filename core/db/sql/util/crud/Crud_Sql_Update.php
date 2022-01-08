@@ -29,7 +29,7 @@ class Crud_Sql_Update extends Crud_SQL
     public function update($tableorclassName)
     {
         if (class_exists($tableorclassName)) {
-            $this->tableName = Config_Db::orm($tableorclassName);
+            $this->tableName = ConfigDb::orm($tableorclassName);
         } else {
             $this->tableName = $tableorclassName;
         }

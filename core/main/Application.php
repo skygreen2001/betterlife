@@ -12,7 +12,7 @@ class Application
      * 其$key定义参考:
      *
      *      1. Gc.php文件内的静态变量名
-     *      2. core/config/config/Config_Db内的静态变量名
+     *      2. core/config/config/ConfigDb.php内的静态变量名
      * @param mixed $environment 应用运行具体环境变量
      * @return Application
      */
@@ -25,7 +25,7 @@ class Application
      * 其$key定义参考:
      *
      *      1. Gc.php文件内的静态变量名
-     *      2. core/config/config/Config_Db内的静态变量名
+     *      2. core/config/config/ConfigDb.php内的静态变量名
      * @param mixed $environment 应用运行具体环境变量
      * @return Application
      */
@@ -45,8 +45,8 @@ class Application
 
         if (!empty($environment)) {
             foreach ($environment as $key => $value) {
-                if (isset(Config_Db::$$key)) {
-                    Config_Db::$$key = $value;
+                if (isset(ConfigDb::$$key)) {
+                    ConfigDb::$$key = $value;
                 }
             }
         }

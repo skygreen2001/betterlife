@@ -43,7 +43,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
      */
     private function executeSQL()
     {
-        if (Config_Db::$debug_show_sql) {
+        if (ConfigDb::$debug_show_sql) {
             LogMe::log("SQL:" . $this->sQuery);
         }
         $this->stmt = sqlite_query($this->sQuery, $this->connection);
@@ -98,7 +98,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
             $this->saParams = UtilObject::object_to_array($object);
             $this->saParams = $this->filterViewProperties($this->saParams);
             $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -136,7 +136,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
                 $_SQL  = new Crud_Sql_Delete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $result = sqlite_exec($this->connection, $this->sQuery, $error);
@@ -174,7 +174,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
                 $this->saParams = $this->filterViewProperties($this->saParams);
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -290,7 +290,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
      *
      * @return object 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -324,7 +324,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
      * @param string $id
      * @return object 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {

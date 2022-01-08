@@ -213,7 +213,7 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
         return null;
     }
 
-    private static $_cache_collation_info = array();
+    private static $cache_collation_info = array();
 
     /**
      * 获取表所有的列信息
@@ -248,10 +248,10 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
             }
             if ($field['Collation'] && $field['Collation'] != 'NULL') {
                 // Cache collation info to cut down on database traffic
-                if (!isset(self::$_cache_collation_info[$field['Collation']])) {
-                    self::$_cache_collation_info[$field['Collation']] = $this->query("SHOW COLLATION LIKE '$field[Collation]'")->record();
+                if (!isset(self::$cache_collation_info[$field['Collation']])) {
+                    self::$cache_collation_info[$field['Collation']] = $this->query("SHOW COLLATION LIKE '$field[Collation]'")->record();
                 }
-                $collInfo   = self::$_cache_collation_info[$field['Collation']];
+                $collInfo   = self::$cache_collation_info[$field['Collation']];
                 $fieldSpec .= " character set $collInfo[Charset] collate $field[Collation]";
             }
 

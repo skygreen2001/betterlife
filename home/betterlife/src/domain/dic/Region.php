@@ -122,7 +122,7 @@ class Region extends DataObject
      */
     public static function regionShowAll($parent_id, $level)
     {
-        $region_p = Region::get_by_id( $parent_id );
+        $region_p = Region::getById( $parent_id );
         if ($level == 1) {
              $regionShowAll = $region_p->region_name;
         } else {

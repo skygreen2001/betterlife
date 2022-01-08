@@ -11,10 +11,10 @@ require_once("../../../init.php");
 
 $dest_db_config=array
 (
-    "host"     => Config_Db::$host,
-    "port"     => Config_Db::$port,
-    "user"     => Config_Db::$username,
-    "password" => Config_Db::$password,
+    "host"     => ConfigDb::$host,
+    "port"     => ConfigDb::$port,
+    "user"     => ConfigDb::$username,
+    "password" => ConfigDb::$password,
     "dbname"   => "bb",
     "script_filename"=>Gc::$nav_root_path . "install" . DS . "data" . DS . "mysql" . DS . "db_betterlife.sql",
 );

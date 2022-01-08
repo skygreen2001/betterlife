@@ -7,14 +7,14 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Odbc extends Config_Db
+class Config_Odbc extends ConfigDb
 {
     /**
      * 返回ODBC所需的dsn_less字符串
      *
      * 说明:
      *
-     *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
+     *    $dsn可以直接在System DSN里配置；然后在配置里设置: ConfigDb::$dbname
      * @param string $host
      * @param string $dbname
      * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
@@ -48,7 +48,7 @@ class Config_Odbc extends Config_Db
         if (isset($dbname)) {
             return $dbname;
         } else {
-            return Config_Db::$dbname;
+            return ConfigDb::$dbname;
         }
     }
 }

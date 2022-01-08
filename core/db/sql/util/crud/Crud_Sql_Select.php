@@ -93,7 +93,7 @@ class Crud_Sql_Select extends Crud_SQL
     public function from($tableorclassNames)
     {
         if (class_exists($tableorclassNames)) {
-            $this->tableName = Config_Db::orm($tableorclassNames);
+            $this->tableName = ConfigDb::orm($tableorclassNames);
         } else {
             if (is_string($tableorclassNames)) {
                 if (contain($tableorclassNames, ",")) {

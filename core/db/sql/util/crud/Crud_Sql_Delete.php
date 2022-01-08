@@ -16,7 +16,7 @@ class Crud_Sql_Delete extends Crud_SQL
     public function deletefrom($tableorclassName)
     {
         if (class_exists($tableorclassName)) {
-            $this->tableName = Config_Db::orm($tableorclassName);
+            $this->tableName = ConfigDb::orm($tableorclassName);
         } else {
             $this->tableName = $tableorclassName;
         }

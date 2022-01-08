@@ -10,7 +10,7 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Mdb2 extends Config_Db
+class Config_Mdb2 extends ConfigDb
 {
     /**
      * @var type 获取数据的模式

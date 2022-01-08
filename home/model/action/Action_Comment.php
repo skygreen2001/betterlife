@@ -33,7 +33,7 @@ class Action_Comment extends ActionModel
     public function view()
     {
         $commentId = $this->data["id"];
-        $comment   = Comment::get_by_id( $commentId );
+        $comment   = Comment::getById( $commentId );
         $this->view->set( "comment", $comment );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Comment extends ActionModel
             }
         }
         $commentId = $this->data["id"];
-        $comment   = Comment::get_by_id( $commentId );
+        $comment   = Comment::getById( $commentId );
         $this->view->set( "comment", $comment );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

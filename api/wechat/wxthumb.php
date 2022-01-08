@@ -6,7 +6,7 @@ require_once("../../init.php");
 $params = $_GET;
 $blogId = $params['blogId'];
 if (!empty($blogId) && ($blogId > 0 )) {
-    $blog = Blog::get_by_id( $blogId );
+    $blog = Blog::getById( $blogId );
     if ($blog) {
         $icon_url  = $blog->icon_url;
         $file_name = basename($icon_url);

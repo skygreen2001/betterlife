@@ -33,7 +33,7 @@ class Action_User extends ActionModel
     public function view()
     {
         $userId = $this->data["id"];
-        $user   = User::get_by_id( $userId );
+        $user   = User::getById( $userId );
         $this->view->set( "user", $user );
     }
     /**
@@ -60,7 +60,7 @@ class Action_User extends ActionModel
             }
         }
         $userId = $this->data["id"];
-        $user   = User::get_by_id( $userId );
+        $user   = User::getById( $userId );
         $this->view->set( "user", $user );
     }
     /**

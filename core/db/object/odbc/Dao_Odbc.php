@@ -29,7 +29,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
     /**
      * 连接数据库
      *
-     * 说明:$dsn可以直接在System DSN里配置；然后在配置里设置:Config_Db::$dbname
+     * 说明:$dsn可以直接在System DSN里配置；然后在配置里设置:ConfigDb::$dbname
      *
      * @param string $host
      * @param string $port
@@ -56,7 +56,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
         if (!isset($this->dbtype)) {
             $dbtype    = Config_Odbc::$db;
         }
-        if (Config_Db::$is_dsn_set) {
+        if (ConfigDb::$is_dsn_set) {
             $this->connection = odbc_connect(Config_Odbc::dsn($dbname), $username, $password);
         } else {
             if (Config_Odbc::$is_persistent) {
@@ -85,7 +85,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $_SQL = new Crud_Sql_Insert();
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             if (
-                Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
                     ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
             ) {
                 $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
@@ -94,7 +94,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             }
             $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
             $_SQL->isPreparedStatement = true;
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -112,7 +112,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
 
             $tablename  = Config_Odbc::orm($this->classname);
             $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $autoIdSql);
             }
             $this->stmt = odbc_exec($this->connection, $autoIdSql);
@@ -144,7 +144,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $_SQL         = new Crud_Sql_Delete();
                 $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 odbc_exec($this->connection, $this->sQuery);
@@ -175,7 +175,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $_SQL->isPreparedStatement = false;
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 if (
-                    Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                    ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
                         ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
                 ) {
                     $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
@@ -186,7 +186,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $this->saParams = $this->filterViewProperties($this->saParams);
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -308,7 +308,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($limit)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -344,7 +344,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
      *
      * @return object 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -361,7 +361,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -384,7 +384,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
      * @param string $id
      * @return object 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -397,7 +397,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->stmt = odbc_exec($this->connection, $this->sQuery);
@@ -423,12 +423,12 @@ class Dao_Odbc extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                 if (UtilString::is_utf8($sqlstring)) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
             }
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $sqlstring);
             }
             $this->stmt = odbc_exec($this->connection, $sqlstring);
@@ -439,12 +439,12 @@ class Dao_Odbc extends Dao implements IDaoNormal
             } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
                 $tablename = Crud_Sql_Insert::tablename($sqlstring);
                 if (isset($tablename)) {
-                    $object     = Config_Db::tom($tablename);
+                    $object     = ConfigDb::tom($tablename);
                     $realIdName = DataObjectSpec::getRealIDColumnName($object);
                     $sql_maxid  = Crud_SQL::SQL_MAXID;
                     $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
                     $autoSql    = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
-                    if (Config_Db::$debug_show_sql) {
+                    if (ConfigDb::$debug_show_sql) {
                         LogMe::log("SQL: " . $autoSql);
                     }
                     $this->stmt = odbc_exec($this->connection, $autoSql);
@@ -497,7 +497,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));

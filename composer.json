@@ -45,6 +45,10 @@
   "require-dev": {
     "pagon/composer-packer": "0.1.x"
   },
+  "scripts": {
+    "check-style": "phpcs -p --standard=install/phpcs.xml core/",
+    "fix-style": "phpcbf -p --standard=install/phpcs.xml core/"
+  },
   "_conflict": {
     "symfony/symfony": "*"
   },
@@ -53,14 +57,14 @@
     "phpoffice/phpspreadsheet": ">=1.16.0",
     "adodb/adodb-php"    : ">=5.20.12",
     "nelexa/zip"         : ">=3.3.3",
+    "maximebf/debugbar"  : ">=1.0.0",
 
     "twig/twig"          : "^2.0",
     "phpoffice/phpword"  : "^0.13.0",
     "phpoffice/phpexcel" : "^1.8",
     "symfony/flex"       : "^1.4",
     "symfony/yaml"       : ">=2.0.4",
-    "doctrine/cache"     : "^1.8",
-    "maximebf/debugbar"  : ">=1.0.0"
+    "doctrine/cache"     : "^1.8"
   },
   "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project.",
   "_install-script" : {

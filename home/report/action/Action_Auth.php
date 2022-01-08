@@ -27,7 +27,7 @@ class Action_Auth extends ActionReport
             $this->redirect( "index","index" );
         } elseif (!empty($_POST)) {
             $user     = $this->model->Admin;
-            $userdata = Admin::get_one( 
+            $userdata = Admin::getOne( 
                             array(
                                 "username" => $user->username,
                                 "password" => $user->getPassword()

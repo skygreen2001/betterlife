@@ -33,7 +33,7 @@ class Action_Userdetail extends ActionModel
     public function view()
     {
         $userdetailId = $this->data["id"];
-        $userdetail   = Userdetail::get_by_id( $userdetailId );
+        $userdetail   = Userdetail::getById( $userdetailId );
         $this->view->set( "userdetail", $userdetail );
     }
     /**
@@ -65,7 +65,7 @@ class Action_Userdetail extends ActionModel
             }
         }
         $userdetailId = $this->data["id"];
-        $userdetail   = Userdetail::get_by_id( $userdetailId );
+        $userdetail   = Userdetail::getById( $userdetailId );
         $this->view->set( "userdetail", $userdetail );
         $users = User::get( "", "user_id asc" );
         $this->view->set( "users", $users );

@@ -43,7 +43,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $this->connection = null;
         }
 
-        $this->change_character_set(Config_Db::$character);
+        $this->change_character_set(ConfigDb::$character);
     }
 
     /**
@@ -56,7 +56,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     private function executeSQL()
     {
         try {
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -120,7 +120,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $sqlstring);
             }
             $this->stmt = $this->connection->prepare($sqlstring);
@@ -216,7 +216,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($from)->where($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -458,7 +458,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *     - 2. name desc;
      * @return object 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -497,7 +497,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      * @param string       $id     数据对象的唯一标识
      * @return object 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -573,7 +573,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $_SQL  = new Crud_Sql_Delete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->stmt = mysqli_prepare($this->connection, $this->sQuery);

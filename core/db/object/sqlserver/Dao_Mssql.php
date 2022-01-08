@@ -24,7 +24,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
     /**
      * 连接数据库
      *
-     * 说明:$dsn可以直接在System DSN里配置；然后在配置里设置:Config_Db::$dbname
+     * 说明:$dsn可以直接在System DSN里配置；然后在配置里设置:ConfigDb::$dbname
      * @param string $host
      * @param string $port
      * @param string $username
@@ -65,7 +65,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
     private function executeSQL()
     {
         if (!empty($this->sQuery)) {
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
             }
             $this->result = mssql_query($this->sQuery);
@@ -137,7 +137,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
             $_SQL = new Crud_Sql_Insert();
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             if (
-                Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
                     ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )
             ) {
                 $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
@@ -208,7 +208,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 $object->setId(null);
                 if (
-                    Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                    ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
                         ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
                 ) {
                     $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
@@ -320,7 +320,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
      *
      * @return object 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -353,7 +353,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
      * @param string $id
      * @return object 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -393,7 +393,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
                 if (UtilString::is_utf8($sqlstring)) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
@@ -407,7 +407,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
             } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
                 $tablename = Crud_Sql_Insert::tablename($sqlstring);
                 if (isset($tablename)) {
-                    $object     = Config_Db::tom($tablename);
+                    $object     = ConfigDb::tom($tablename);
                     $realIdName = DataObjectSpec::getRealIDColumnName(new $object());
                     $sql_maxid  = Crud_SQL::SQL_MAXID;
                     $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);

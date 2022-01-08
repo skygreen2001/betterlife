@@ -109,7 +109,7 @@ class Dal_Adodb extends Dal implements IDal
                         break;
                     case EnumDbSource::DB_FIREBIRD:
                     case EnumDbSource::DB_INTERBASE:
-                        if (Config_Db::$is_persistent) {
+                        if (ConfigDb::$is_persistent) {
                             $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
                         } else {
                             $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
@@ -117,14 +117,14 @@ class Dal_Adodb extends Dal implements IDal
                         break;
                     case EnumDbSource::DB_SQLITE2:
                     case EnumDbSource::DB_SQLITE3:
-                        if (Config_Db::$is_persistent) {
+                        if (ConfigDb::$is_persistent) {
                             $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
                         } else {
                             $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
                         }
                         break;
                     default:
-                        if (Config_Db::$is_persistent) {
+                        if (ConfigDb::$is_persistent) {
                             $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
                         } else {
                             $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
@@ -166,14 +166,14 @@ class Dal_Adodb extends Dal implements IDal
             $_SQL = new Crud_Sql_Insert();
             if (is_object($_SQL)) {
                 $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
-                if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                     if (UtilString::is_utf8($this->sQuery) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
                         $this->sQuery = UtilString::utf82gbk($this->sQuery);
                     }
                 }
             }
 
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -225,7 +225,7 @@ class Dal_Adodb extends Dal implements IDal
                 $_SQL  = new Crud_Sql_Delete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL:" . $this->sQuery);
                 }
                 $this->connection->Execute($this->sQuery);
@@ -261,12 +261,12 @@ class Dal_Adodb extends Dal implements IDal
                 $_SQL->isPreparedStatement = false;
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                     if (UtilString::is_utf8($this->sQuery) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
                         $this->sQuery = UtilString::utf82gbk($this->sQuery);
                     }
                 }
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL:" . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -402,7 +402,7 @@ class Dal_Adodb extends Dal implements IDal
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($limit)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -437,7 +437,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2.name desc;
      * @return 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -455,7 +455,7 @@ class Dal_Adodb extends Dal implements IDal
             }
             $this->sQuery   = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
 
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -478,7 +478,7 @@ class Dal_Adodb extends Dal implements IDal
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -491,7 +491,7 @@ class Dal_Adodb extends Dal implements IDal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->stmt = $this->connection->GetAll($this->sQuery);
@@ -519,12 +519,12 @@ class Dal_Adodb extends Dal implements IDal
     {
         $result = null;
         try {
-            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                 if (UtilString::is_utf8($sqlstring) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
             }
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $sqlstring);
             }
             $parts = explode(" ", trim($sqlstring));
@@ -538,13 +538,13 @@ class Dal_Adodb extends Dal implements IDal
                 if (!$autoId) {
                     $tablename = Crud_Sql_Insert::tablename($sqlstring);
                     if (isset($tablename)) {
-                        $object     = Config_Db::tom($tablename);
+                        $object     = ConfigDb::tom($tablename);
                         $realIdName = DataObjectSpec::getRealIDColumnName($object);
                         $sql_maxid  = Crud_SQL::SQL_MAXID;
                         $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
 
                         $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
-                        if (Config_Db::$debug_show_sql) {
+                        if (ConfigDb::$debug_show_sql) {
                             LogMe::log("SQL:" . $autoIdSql);
                         }
                         $this->stmt = $this->connection->Execute($autoIdSql);
@@ -607,7 +607,7 @@ class Dal_Adodb extends Dal implements IDal
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -668,7 +668,7 @@ class Dal_Adodb extends Dal implements IDal
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));

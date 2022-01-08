@@ -38,7 +38,7 @@ class AutoCodeService extends AutoCode
      *  1. array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         self::$app_dir = Gc::$appName;
         if (!UtilString::is_utf8(self::$service_dir_full)) {
@@ -363,7 +363,7 @@ class AutoCodeService extends AutoCode
                            "    {" . HH .
                            "        return $classname::get( \$filter, \$sort, \$limit );" . HH .
                            "    }" . HH . HH;
-                //get_one
+                //getOne
                 $result .= "    /**" . HH .
                            "     * 查询得到单个数据对象: {$object_desc}实体" . HH .
                            "     * " . HH .
@@ -385,20 +385,20 @@ class AutoCodeService extends AutoCode
                            "     * " . HH .
                            "     * @return object 单个数据对象: {$object_desc}实体" . HH .
                            "     */" . HH;
-                $result .= "    public function get_one(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
+                $result .= "    public function getOne(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
                            "    {" . HH .
-                           "        return $classname::get_one( \$filter, \$sort );" . HH .
+                           "        return $classname::getOne( \$filter, \$sort );" . HH .
                            "    }" . HH . HH;
-                //get_by_id
+                //getById
                 $result .= "    /**" . HH .
                            "     * 根据表ID主键获取指定的对象[ID对应的表列] " . HH .
                            "     * " . HH .
                            "     * @param string \$id  " . HH .
                            "     * @return object 单个数据对象: {$object_desc}实体" . HH .
                            "     */" . HH;
-                $result .= "    public function get_by_id(\$id)" . HH .
+                $result .= "    public function getById(\$id)" . HH .
                            "    {" . HH .
-                           "        return $classname::get_by_id( \$id );" . HH .
+                           "        return $classname::getById( \$id );" . HH .
                            "    }" . HH . HH;
                 //count
                 $result .= "    /**" . HH .
@@ -583,7 +583,7 @@ class AutoCodeService extends AutoCode
                 $relation_instance_name = lcfirst($relation_instance_name);
                 $realId  = DataObjectSpec::getRealIDColumnName($relation_classname);
                 $result .= "        if (\${$instance_name}[\"{$realId}\"]) {" . HH .
-                           "            \${$relation_instance_name} = $relation_classname::get_by_id( \${$instance_name}[\"{$realId}\"] );" . HH .
+                           "            \${$relation_instance_name} = $relation_classname::getById( \${$instance_name}[\"{$realId}\"] );" . HH .
                            "            if (\${$relation_instance_name}) {" . HH;
                 foreach ($redundancy_table_field as $relation_fieldname => $come) {
                     $result .= "                \${$instance_name}[\"$relation_fieldname\"] = \${$relation_instance_name}->{$come};" . HH;
@@ -626,7 +626,7 @@ class AutoCodeService extends AutoCode
                             if (!array_key_exists("$show_fieldname", $fieldInfo)) {
                                 $result .= "                \${$i_name}_instance = null;" . HH;
                                 $result .= "                if (\${$instance_name}->$fieldname) {" . HH;
-                                $result .= "                    \${$i_name}_instance = $key::get_by_id( \${$instance_name}->$fieldname );" . HH;
+                                $result .= "                    \${$i_name}_instance = $key::getById( \${$instance_name}->$fieldname );" . HH;
                                 $result .= "                    \${$instance_name}['$fieldname'] = \${$i_name}_instance->$show_fieldname;" . HH;
                                 $result .= "                }" . HH;
                             } else {
@@ -690,22 +690,22 @@ class AutoCodeService extends AutoCode
                                                $blankPre . "                                    \$level = count(\${$i_name}_all_arr);" . HH .
                                                $blankPre . "                                    switch (\$level) {" . HH .
                                                $blankPre . "                                        case 1:" . HH .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
                                                $blankPre . "                                            if (\${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                            break;" . HH .
                                                $blankPre . "                                        case 2:" . HH .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
                                                $blankPre . "                                            if (\${$i_name}_p) {" . HH .
-                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2,\"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2,\"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
                                                $blankPre . "                                                if (\${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                            }" . HH .
                                                $blankPre . "                                            break;" . HH .
                                                $blankPre . "                                        case 3:" . HH .
-                                               $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
+                                               $blankPre . "                                            \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
                                                $blankPre . "                                            if (\${$i_name}_p) {" . HH .
-                                               $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
                                                $blankPre . "                                                if (\${$i_name}_p) {" . HH .
-                                               $blankPre . "                                                    \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[2], \"level\" => 3, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
+                                               $blankPre . "                                                    \${$i_name}_p = {$key}::getOne( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[2], \"level\" => 3, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
                                                $blankPre . "                                                    if (\${$i_name}_p ) \${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                                }" . HH .
                                                $blankPre . "                                            }" . HH .
@@ -718,7 +718,7 @@ class AutoCodeService extends AutoCode
                                 }
                             } else {
                                 $result .= $blankPre . "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])) {" . HH;
-                                $result .= $blankPre . "                            \${$i_name}_r = $key::get_one( \"{$show_fieldname} = '\" . \${$instance_name}[\"$fieldname\"] . \"'\" );" . HH;
+                                $result .= $blankPre . "                            \${$i_name}_r = $key::getOne( \"{$show_fieldname} = '\" . \${$instance_name}[\"$fieldname\"] . \"'\" );" . HH;
                                 $result .= $blankPre . "                            if (\${$i_name}_r ) \${$instance_name}[\"$fieldname\"] = \${$i_name}_r->$fieldname;" . HH;
                                 $result .= $blankPre . "                        }" . HH;
                             }

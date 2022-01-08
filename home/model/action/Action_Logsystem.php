@@ -33,7 +33,7 @@ class Action_Logsystem extends ActionModel
     public function view()
     {
         $logsystemId = $this->data["id"];
-        $logsystem   = Logsystem::get_by_id( $logsystemId );
+        $logsystem   = Logsystem::getById( $logsystemId );
         $this->view->set( "logsystem", $logsystem );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Logsystem extends ActionModel
             }
         }
         $logsystemId = $this->data["id"];
-        $logsystem   = Logsystem::get_by_id( $logsystemId );
+        $logsystem   = Logsystem::getById( $logsystemId );
         $this->view->set( "logsystem", $logsystem );
     }
     /**

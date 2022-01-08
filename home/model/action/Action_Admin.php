@@ -33,7 +33,7 @@ class Action_Admin extends ActionModel
     public function view()
     {
         $adminId = $this->data["id"];
-        $admin   = Admin::get_by_id( $adminId );
+        $admin   = Admin::getById( $adminId );
         $this->view->set( "admin", $admin );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Admin extends ActionModel
             }
         }
         $adminId = $this->data["id"];
-        $admin   = Admin::get_by_id( $adminId );
+        $admin   = Admin::getById( $adminId );
         $this->view->set( "admin", $admin );
         $departments = Department::get( "", "department_id asc" );
         $this->view->set( "departments", $departments );

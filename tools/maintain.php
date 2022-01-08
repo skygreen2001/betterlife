@@ -28,7 +28,7 @@ require_once("../init.php");
 //     'username' => 'root',
 //     'password' => ''
 // );
-// Config_Db::initGc();
+// ConfigDb::initGc();
 // Manager_Db::newInstance()->resetDao();
 // $new_sql = "select * from bb_user_user;";
 // $user    = sqlExecute($new_sql);

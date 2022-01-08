@@ -82,7 +82,7 @@ class Manager_Db extends Manager
      *        'username' => 'root',
      *        'password' => ''
      *    );
-     *    Config_Db::initGc();
+     *    ConfigDb::initGc();
      *    Manager_Db::newInstance()->resetDao();
      *    $sql = "insert into blog(content) values ('test')"
      *    $id  = sqlExecute($sql);
@@ -101,22 +101,22 @@ class Manager_Db extends Manager
      */
     public function dao()
     {
-        if (Config_Db::$engine == EnumDbEngine::ENGINE_DAL_MDB2) {
+        if (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_MDB2) {
             if ($this->dao_static == null) {
                 $this->dao_static = new Dal_Mdb2();
             }
-        } elseif (Config_Db::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
+        } elseif (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
             if ($this->dao_static == null) {
                 $this->dao_static = new Dal_Pdo();
             }
-        } elseif ((Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
+        } elseif ((ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
             if ($this->dao_static == null) {
                 $this->dao_static = new Dal_Adodb();
             }
         } else {
-            switch (Config_Db::$db) {
+            switch (ConfigDb::$db) {
                 case EnumDbSource::DB_MYSQL:
-                    switch (Config_Db::$engine) {
+                    switch (ConfigDb::$engine) {
                         case EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI:
                             if ($this->dao_static == null) {
                                 $this->dao_static = new Dao_MysqlI5();
@@ -138,7 +138,7 @@ class Manager_Db extends Manager
                 case EnumDbSource::DB_MICROSOFT_ACCESS:
                 case EnumDbSource::DB_MICROSOFT_EXCEL:
                 case EnumDbSource::DB_SQLSERVER:
-                    switch (Config_Db::$engine) {
+                    switch (ConfigDb::$engine) {
                         case EnumDbEngine::ENGINE_OBJECT_ODBC:
                             if ($this->dao_static == null) {
                                 $this->dao_static = new Dao_Odbc();
@@ -192,7 +192,7 @@ class Manager_Db extends Manager
      */
     public function dal_pdo($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null, $forced = false)
     {
-        if (Config_Db::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
+        if (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
             if (($this->dao_dynamic == null) || $forced) {
                 $this->dao_dynamic = new Dal_Pdo($host, $port, $username, $password, $dbname, $dbtype, $engine);
             } elseif (!($this->dao_dynamic instanceof Dal_Pdo)) {
@@ -217,7 +217,7 @@ class Manager_Db extends Manager
      */
     public function dal_mdb2($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null, $forced = false)
     {
-        if ((Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
+        if ((ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
             if (($this->dao_dynamic == null) || $forced) {
                 $this->dao_dynamic = new Dal_Mdb2($host, $port, $username, $password, $dbname, $dbtype, $engine);
             } elseif (!($this->dao_dynamic instanceof Dal_AdoDb)) {
@@ -242,7 +242,7 @@ class Manager_Db extends Manager
      */
     public function dal_adodb($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null, $forced = false)
     {
-        if (( Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB ) || ( Config_Db::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO )) {
+        if (( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB ) || ( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO )) {
             if (($this->dao_dynamic == null) || $forced) {
                 $this->dao_dynamic = new Dal_Adodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
             } elseif (!($this->dao_dynamic instanceof Dal_AdoDb)) {
@@ -267,7 +267,7 @@ class Manager_Db extends Manager
     public function dbinfo($isUseDbInfoDatabase = false, $forced = false, $host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
         if (( $this->dbinfo_static  ==  null  ) || $forced) {
-            switch (Config_Db::$db) {
+            switch (ConfigDb::$db) {
                 case EnumDbSource::DB_MYSQL:
                     DbInfo_Mysql::$isUseDbInfoDatabase = $isUseDbInfoDatabase;
                     if (function_exists('mysql_connect')) {

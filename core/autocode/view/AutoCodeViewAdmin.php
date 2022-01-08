@@ -31,8 +31,8 @@ class AutoCodeViewAdmin extends AutoCodeView
         $group_tables = array();
         if (!empty(self::$tableList)) {
             foreach (self::$tableList as $tablename) {
-                if (!contain($tablename, Config_Db::TABLENAME_RELATION . "_")) {
-                    $group = str_replace(Config_Db::$table_prefix, "", $tablename);
+                if (!contain($tablename, ConfigDb::TABLENAME_RELATION . "_")) {
+                    $group = str_replace(ConfigDb::$table_prefix, "", $tablename);
                     $group = substr($group, 0, strpos($group, "_"));
                     if (!empty($group)) {
                         $group_tables[$group][] = $tablename;

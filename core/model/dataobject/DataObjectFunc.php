@@ -138,7 +138,7 @@ class DataObjectFunc
      */
     public static function updateProperties($classname, $sql_ids, $array_properties)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Update();
         $_SQL->isPreparedStatement = false;
         if ($sql_ids && !contain($sql_ids, "=")) {
@@ -195,7 +195,7 @@ class DataObjectFunc
      */
     public static function updateBy($classname, $filter, $array_properties)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Update();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set($array_properties)->where($filter)->result();
@@ -222,7 +222,7 @@ class DataObjectFunc
      */
     public static function increment($classname, $property_name, $incre_value = 1, $filter = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Update();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set("$property_name=$property_name+$incre_value")->where($filter)->result();
@@ -249,7 +249,7 @@ class DataObjectFunc
      */
     public static function decrement($classname, $property_name, $decre_value = 1, $filter = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Update();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set("$property_name=$property_name-$decre_value")->where($filter)->result();
@@ -292,7 +292,7 @@ class DataObjectFunc
      */
     public static function showColumns($classname, $columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Select();
 
         if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
@@ -313,7 +313,7 @@ class DataObjectFunc
     public static function deleteByID($classname, $id)
     {
         if (is_numeric($id)) {
-            $tablename = Config_Db::orm($classname);
+            $tablename = ConfigDb::orm($classname);
             $_SQL      = new Crud_Sql_Delete();
             $_SQL->isPreparedStatement = false;
             if (is_string($classname)) {
@@ -346,7 +346,7 @@ class DataObjectFunc
     {
         $data = false;
         if (!empty($ids)) {
-            $tablename = Config_Db::orm($classname);
+            $tablename = ConfigDb::orm($classname);
             $_SQL      = new Crud_Sql_Delete();
             $_SQL->isPreparedStatement = false;
             if (is_string($classname)) {
@@ -398,7 +398,7 @@ class DataObjectFunc
     public static function deleteBy($classname, $filter)
     {
         if (!empty($filter)) {
-            $tablename = Config_Db::orm($classname);
+            $tablename = ConfigDb::orm($classname);
             $_SQL      = new Crud_Sql_Delete();
             $_SQL->isPreparedStatement = false;
             $sQuery = $_SQL->deletefrom($tablename)->where($filter)->result();
@@ -416,7 +416,7 @@ class DataObjectFunc
      */
     public static function existByID($classname, $id)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Select();
 
         if (is_string($classname)) {
@@ -459,7 +459,7 @@ class DataObjectFunc
     public static function existBy($classname, $filter)
     {
         if (!empty($filter)) {
-            $tablename = Config_Db::orm($classname);
+            $tablename = ConfigDb::orm($classname);
             $_SQL      = new Crud_Sql_Select();
             $count_string = "count(1)";
             $sQuery       = $_SQL->select($count_string)->from($tablename)->where($filter)->result();
@@ -483,7 +483,7 @@ class DataObjectFunc
      */
     public static function max($classname, $column_name = null, $filter = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Select();
         if (empty($column_name)) {
             if (is_string($classname)) {
@@ -511,7 +511,7 @@ class DataObjectFunc
      */
     public static function min($classname, $column_name = null, $filter = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Select();
         if (empty($column_name)) {
             if (is_string($classname)) {
@@ -539,7 +539,7 @@ class DataObjectFunc
      */
     public static function sum($classname, $column_name, $filter = null)
     {
-        $tablename = Config_Db::orm($classname);
+        $tablename = ConfigDb::orm($classname);
         $_SQL      = new Crud_Sql_Select();
         if (empty($column_name)) {
             if (is_string($classname)) {

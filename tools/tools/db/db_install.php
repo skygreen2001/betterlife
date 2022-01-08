@@ -10,11 +10,11 @@ require_once("../../../init.php");
 //echo $result;
 $dest_db_config=array
 (
-    "host"     => Config_Db::$host,
-    "port"     => Config_Db::$port,
-    "user"     => Config_Db::$username,
-    "password" => Config_Db::$password,  
-    "dbname"   => Config_Db::$dbname,
+    "host"     => ConfigDb::$host,
+    "port"     => ConfigDb::$port,
+    "user"     => ConfigDb::$username,
+    "password" => ConfigDb::$password,  
+    "dbname"   => ConfigDb::$dbname,
     "script_filename"=>Gc::$nav_root_path . "db\\mysql\\db_betterlife.sql"
 );
 //创建Betterlife后台所需的库。

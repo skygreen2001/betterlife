@@ -10,7 +10,7 @@ class Config_AutoCode extends ConfigBB
 {
     /**
      * 每次生成实体类和数据表一致
-     * 一般是数据库表前缀Config_Db::$table_prefix为空的时候设置 DB_TABLE_DOMAIN_EQUAL= true，表名一般带有_的
+     * 一般是数据库表前缀ConfigDb::$table_prefix为空的时候设置 DB_TABLE_DOMAIN_EQUAL= true，表名一般带有_的
      */
     const DB_TABLE_DOMAIN_EQUAL   = false;
     /**

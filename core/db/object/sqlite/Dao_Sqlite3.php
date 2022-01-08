@@ -22,7 +22,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
         if (!isset($dbname)) {
-            $dbname = Config_Db::$dbname;
+            $dbname = ConfigDb::$dbname;
         }
         $this->connection = new SQLite3(Config_Sqlite::$dbname);
         if (!$this->connection) {
@@ -39,7 +39,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -113,7 +113,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
             $this->saParams = UtilObject::object_to_array($object);
             $this->saParams = $this->filterViewProperties($this->saParams);
             $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -149,7 +149,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
                 $_SQL         = new Crud_Sql_Delete();
                 $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->connection->exec($this->sQuery);
@@ -296,7 +296,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      *
      * @return object 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -334,7 +334,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      * @param string $id
      * @return object 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -426,7 +426,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
 
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));

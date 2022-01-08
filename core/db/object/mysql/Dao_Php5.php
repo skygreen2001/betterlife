@@ -42,10 +42,10 @@ class Dao_Php5 extends Dao implements IDaoNormal
             mysql_select_db($dbname, $this->connection);
         }
         if (strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false) {
-            $this->change_character_set($character_code = Config_Db::$character);
+            $this->change_character_set($character_code = ConfigDb::$character);
         }
 
-        $this->change_character_set($character_code = Config_Db::$character);
+        $this->change_character_set($character_code = ConfigDb::$character);
     }
 
     /**
@@ -55,7 +55,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
      */
     private function executeSQL()
     {
-        if (Config_Db::$debug_show_sql) {
+        if (ConfigDb::$debug_show_sql) {
             LogMe::log("SQL:" . $this->sQuery);
         }
         $this->result = mysql_query($this->sQuery, $this->connection);
@@ -121,7 +121,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
             $value = $this->escape($value);
         }
         $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
-        if (Config_Db::$debug_show_sql) {
+        if (ConfigDb::$debug_show_sql) {
             LogMe::log("SQL:" . $this->sQuery);
             if (!empty($this->saParams)) {
                 LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -156,7 +156,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 $this->sQuery = $this->escape($this->sQuery);
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL:" . $this->sQuery);
                 }
                 $result = mysql_query($this->sQuery);
@@ -194,7 +194,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
                     $value = $this->escape($value);
                 }
                 $this->sQuery = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL:" . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -271,7 +271,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($limit)->result();
             $this->sQuery              = $this->escape($this->sQuery);
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -306,7 +306,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
      *     2.name desc;
      * @return 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -340,7 +340,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -431,7 +431,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
             $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM:" . var_export($this->saParams, true));

@@ -24,7 +24,7 @@ class AutoCodeCreateReport extends AutoCode
      *              - $reportDesc : 报表描述
      *              - $reportSql  : 报表SQL
      */
-    public static function AutoCode($config)
+    public static function autoCode($config)
     {
         extract($config);
         include("template" . DS . "report.php");

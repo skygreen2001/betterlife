@@ -33,7 +33,7 @@ class Action_Department extends ActionModel
     public function view()
     {
         $departmentId = $this->data["id"];
-        $department   = Department::get_by_id( $departmentId );
+        $department   = Department::getById( $departmentId );
         $this->view->set( "department", $department );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Department extends ActionModel
             }
         }
         $departmentId = $this->data["id"];
-        $department   = Department::get_by_id( $departmentId );
+        $department   = Department::getById( $departmentId );
         $this->view->set( "department", $department );
     }
     /**

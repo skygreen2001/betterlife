@@ -9,7 +9,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Postgres extends Config_Db
+class Config_Postgres extends ConfigDb
 {
     /**
      * @var type 获取数据的模式

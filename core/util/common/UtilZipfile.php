@@ -61,11 +61,11 @@ class UtilZipfile
             $timearray['hours']   = 0;
             $timearray['minutes'] = 0;
             $timearray['seconds'] = 0;
-        } // end if
+        }
 
         return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) | ($timearray['mday'] << 16) |
                 ($timearray['hours'] << 11) | ($timearray['minutes'] << 5) | ($timearray['seconds'] >> 1);
-    } // end of the 'unix2DosTime()' method
+    }
 
 
     /**
@@ -164,7 +164,7 @@ class UtilZipfile
         // optional extra field, file comment goes here
         // save to central directory
         $this  -> ctrl_dir[] = $cdrec;
-    } // end of the 'addFile()' method
+    }
 
     /**
      * Dumps out file
@@ -187,7 +187,7 @@ class UtilZipfile
             pack('V', strlen($ctrldir)) .            // size of central dir
             pack('V', strlen($data)) .                // offset to start of central dir
             "\x00\x00";                                // .zip file comment length
-    } // end of the 'file()' method
+    }
 
 
     /**

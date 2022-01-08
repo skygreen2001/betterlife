@@ -33,7 +33,7 @@ class Action_Rolefunctions extends ActionModel
     public function view()
     {
         $rolefunctionsId = $this->data["id"];
-        $rolefunctions   = Rolefunctions::get_by_id( $rolefunctionsId );
+        $rolefunctions   = Rolefunctions::getById( $rolefunctionsId );
         $this->view->set( "rolefunctions", $rolefunctions );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Rolefunctions extends ActionModel
             }
         }
         $rolefunctionsId = $this->data["id"];
-        $rolefunctions   = Rolefunctions::get_by_id( $rolefunctionsId );
+        $rolefunctions   = Rolefunctions::getById( $rolefunctionsId );
         $this->view->set( "rolefunctions", $rolefunctions );
         $roles = Role::get( "", "role_id asc" );
         $this->view->set( "roles", $roles );

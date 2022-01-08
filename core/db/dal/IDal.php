@@ -89,7 +89,7 @@ interface IDal
      *
      * @return 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
 
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
@@ -98,7 +98,7 @@ interface IDal
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($object, $id);
+    public function getById($object, $id);
 
     /**
      *  直接执行SQL语句

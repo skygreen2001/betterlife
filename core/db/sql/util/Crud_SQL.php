@@ -216,7 +216,7 @@ abstract class Crud_SQL
                                             $quotes = '\'';
                                         }
                                     }
-                                    if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+                                    if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                                         if (contains($value, array('>', "<", "=", ">=", "<=")) || ( contains(strtolower($value), array("like ", "between ")) )) {
                                             $asWhereClause[$key] = $key . " " . $value . " ";
                                         } else {

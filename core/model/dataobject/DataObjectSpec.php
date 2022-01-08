@@ -1,6 +1,5 @@
 <?php
 
-//<editor-fold defaultstate="collapsed" desc="枚举类型">
 /**
  * -----------| 枚举类型: DataObject默认关键字 |-----------
  *
@@ -159,7 +158,6 @@ class EnumDataSpec extends Enum
      */
     const FOREIGN_ID = "foreign_id";
 }
-//</editor-fold>
 
 /**
  * -----------| 数据对象的列规格说明 |-----------
@@ -233,7 +231,7 @@ class DataObjectSpec
      * 它全局的定义了当前应用的列规格说明；
      * @var array
      */
-    static $field_spec_default = array(
+    public static $field_spec_default = array(
         //EnumColumnNameDefault::ID=>'id',
         //EnumColumnNameDefault::COMMITTIME=>'commitTime',
         EnumDataSpec::REMOVE => array(

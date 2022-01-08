@@ -1,9 +1,8 @@
 <?php
 
-//<editor-fold defaultstate="collapsed" desc="枚举类型">
+// phpcs:disable
 DataObjectSpec::init();
-//</editor-fold>
-
+// phpcs:enable
 /**
  * -----------| 所有数据实体类如POJO的父类 |-----------
  *
@@ -343,7 +342,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function tablename()
     {
-        return Config_Db::orm(get_called_class());
+        return ConfigDb::orm(get_called_class());
     }
 
     /**
@@ -520,7 +519,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 删除当前对象
      * @example 示例如下
      *
-     *       $user     = User::get_by_id( 3 );
+     *       $user     = User::getById( 3 );
      *
      *       $isDelete = $user->delete();
      * @return boolen 是否删除成功；true为操作正常
@@ -535,7 +534,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @example 示例如下
      * 示例如下:
      *
-     *       $user             = User::get_by_id( 3 );
+     *       $user             = User::getById( 3 );
      *
      *       $user["username"] = "shanghai";
      *
@@ -552,7 +551,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @example 示例如下
      * 示例如下:
      *
-     *       $user             = User::get_by_id( 3 );
+     *       $user             = User::getById( 3 );
      *
      *       $user["username"] = "shanghai";
      *
@@ -810,7 +809,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 查询得到单个对象实体
      * @example 示例如下
      *
-     *        $blog = Blog::get_one();
+     *        $blog = Blog::getOne();
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下:
      *
@@ -827,22 +826,22 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return object 单个对象实体
      */
-    public static function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return self::dao()->get_one(get_called_class(), $filter, $sort);
+        return self::dao()->getOne(get_called_class(), $filter, $sort);
     }
 
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
      * @example 示例如下
      *
-     *        $blog = Blog::get_by_id( 1 );
+     *        $blog = Blog::getById( 1 );
      * @param string $id 数据对象编号
      * @return 数据对象
      */
-    public static function get_by_id($id)
+    public static function getById($id)
     {
-        return self::dao()->get_by_id(get_called_class(), $id);
+        return self::dao()->getById(get_called_class(), $id);
     }
 
     /**
@@ -1092,7 +1091,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @example 示例如下
      * 示例如下:
      *
-     *         $blog = Blog::get_by_id( 1 );
+     *         $blog = Blog::getById( 1 );
      *
      *         print_r( $blog->toXml() );
      * @param $filterArray 需要过滤不生成的对象的field
@@ -1112,7 +1111,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @example 示例如下
      * 示例如下:
      *
-     *         $blog = Blog::get_by_id( 1 );
+     *         $blog = Blog::getById( 1 );
      *
      *         print_r( $blog->toJson() );
      * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field
@@ -1128,7 +1127,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @example 示例如下
      * 示例如下:
      *
-     *         $blog = Blog::get_by_id( 1 );
+     *         $blog = Blog::getById( 1 );
      *
      *         print_r( $blog->toArray() );
      * @param $isAll 是否对象所有的field都要生成, 包括没有内容或者内容为空的field

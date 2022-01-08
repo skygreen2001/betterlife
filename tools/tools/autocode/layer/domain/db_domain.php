@@ -26,7 +26,7 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
     AutoCodeDomain::$showReport  = "";
     AutoCodeDomain::$showReport .= AutoCodeFoldHelper::foldEffectReady();
     AutoCodeDomain::$showReport .= AutoCodeFoldHelper::foldbeforedomain();
-    AutoCodeDomain::AutoCode();
+    AutoCodeDomain::autoCode();
     AutoCodeDomain::$showReport .= AutoCodeFoldHelper::foldafterdomain();
     echo AutoCodeDomain::$showReport;
 }  else {

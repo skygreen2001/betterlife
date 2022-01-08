@@ -11,7 +11,7 @@ class AutoCodeOneKey extends AutoCode
     /**
      * 自动生成代码-一键生成前后台所有模板文件
      */
-    public static function AutoCode($table_names = "")
+    public static function autoCode($table_names = "")
     {
         $dest_directory = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";
@@ -27,35 +27,35 @@ class AutoCodeOneKey extends AutoCode
         //生成实体数据对象类
         AutoCodeDomain::$type     = 2;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforedomain();
-        AutoCodeDomain::AutoCode();
+        AutoCodeDomain::autoCode();
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
         //生成提供服务类[后台Service类]
         self::$showReport         .= AutoCodeFoldHelper::foldbeforeservice();
         AutoCodeService::$type     = 2;
-        AutoCodeService::AutoCode();
+        AutoCodeService::autoCode();
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
         //生成Action类[前端、后台和通用模版]
         AutoCodeAction::$type     = 0;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
         AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeAction::AutoCode($table_names);
+        AutoCodeAction::autoCode($table_names);
         self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
         //生成表示层[前端、后台和通用模版]
         self::$showReport      .= AutoCodeFoldHelper::foldbeforeviewdefault();
         AutoCodeView::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         AutoCodeView::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         AutoCodeView::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeView::AutoCode($table_names);
+        AutoCodeView::autoCode($table_names);
         self::$showReport      .= AutoCodeFoldHelper::foldafterviewdefault();
 
         if (Config_AutoCode::SHOW_PREVIEW_REPORT) {

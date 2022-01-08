@@ -93,7 +93,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             return false;
         }
 
-        $connection->query("SET NAMES " . Config_Db::$character);
+        $connection->query("SET NAMES " . ConfigDb::$character);
 
         if (file_exists($script_filename)) {
             $query   = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES | FILE_TEXT);
@@ -233,7 +233,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         return null;
     }
 
-    private static $_cache_collation_info = array();
+    private static $cache_collation_info = array();
 
     /**
      * 获取表所有的列信息
@@ -269,10 +269,10 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             }
             if ($field['Collation'] && $field['Collation'] != 'NULL') {
                 // Cache collation info to cut down on database traffic
-                if (!isset(self::$_cache_collation_info[$field['Collation']])) {
-                    self::$_cache_collation_info[$field['Collation']] = $this->query("SHOW COLLATION LIKE '$field[Collation]'")->record();
+                if (!isset(self::$cache_collation_info[$field['Collation']])) {
+                    self::$cache_collation_info[$field['Collation']] = $this->query("SHOW COLLATION LIKE '$field[Collation]'")->record();
                 }
-                $collInfo   = self::$_cache_collation_info[$field['Collation']];
+                $collInfo   = self::$cache_collation_info[$field['Collation']];
                 $fieldSpec .= " character set $collInfo[Charset] collate $field[Collation]";
             }
 
@@ -409,7 +409,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
     private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
 
-        if (Config_Db::$debug_show_sql) {
+        if (ConfigDb::$debug_show_sql) {
             $starttime = microtime(true);
         }
         if ($this->connection) {
@@ -421,7 +421,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             }
         }
 
-        if (Config_Db::$debug_show_sql) {
+        if (ConfigDb::$debug_show_sql) {
             $endtime = microtime(true);
             LogMe::log("\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n");
         }

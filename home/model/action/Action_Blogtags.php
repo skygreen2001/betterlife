@@ -33,7 +33,7 @@ class Action_Blogtags extends ActionModel
     public function view()
     {
         $blogtagsId = $this->data["id"];
-        $blogtags   = Blogtags::get_by_id( $blogtagsId );
+        $blogtags   = Blogtags::getById( $blogtagsId );
         $this->view->set( "blogtags", $blogtags );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Blogtags extends ActionModel
             }
         }
         $blogtagsId = $this->data["id"];
-        $blogtags   = Blogtags::get_by_id( $blogtagsId );
+        $blogtags   = Blogtags::getById( $blogtagsId );
         $this->view->set( "blogtags", $blogtags );
         $blogs = Blog::get( "", "blog_id asc" );
         $this->view->set( "blogs", $blogs );

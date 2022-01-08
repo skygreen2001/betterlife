@@ -68,7 +68,7 @@ class Action_Blog extends Action
             $blog_id = @$this->data["blog_id"];
             $view    = new View_Blog( $this );
             if (count($_GET) > 0 && $blog_id) {
-                $blog       = Blog::get_by_id( $blog_id );
+                $blog       = Blog::getById( $blog_id );
                 $view->blog = $blog;
             }
             $this->view->viewObject = $view;

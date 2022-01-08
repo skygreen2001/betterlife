@@ -49,7 +49,7 @@ class Dal_Mdb2 extends Dal implements IDal
             }
 
             if ($dbtype == EnumDbSource::DB_MYSQL) {
-                $this->change_character_set($character_code = Config_Db::$character);
+                $this->change_character_set($character_code = ConfigDb::$character);
             }
             if (!$this->connection) {
                 ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL);
@@ -66,7 +66,7 @@ class Dal_Mdb2 extends Dal implements IDal
     private function executeSQL()
     {
         try {
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
             }
             $columnCount = 0;
@@ -125,7 +125,7 @@ class Dal_Mdb2 extends Dal implements IDal
             $parts = explode(" ", trim($sql));
             $type  = strtolower($parts[0]);
 
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $sql);
             }
             if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
@@ -172,7 +172,7 @@ class Dal_Mdb2 extends Dal implements IDal
             $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
             if (!empty($this->saParams)) {
                 $type = array_values($this->getColumnTypes($object, $this->saParams, 2));
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL:" . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
@@ -211,7 +211,7 @@ class Dal_Mdb2 extends Dal implements IDal
                 $_SQL  = new Crud_Sql_Delete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->connection->exec($this->sQuery);
@@ -245,7 +245,7 @@ class Dal_Mdb2 extends Dal implements IDal
                 $this->saParams = $this->filterViewProperties($this->saParams);
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (Config_Db::$debug_show_sql) {
+                if (ConfigDb::$debug_show_sql) {
                     LogMe::log("SQL: " . $this->sQuery);
                     if (!empty($this->saParams)) {
                         LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -356,7 +356,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *
      * @return 单个对象实体
      */
-    public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -389,7 +389,7 @@ class Dal_Mdb2 extends Dal implements IDal
      * @param string $id
      * @return 对象
      */
-    public function get_by_id($object, $id)
+    public function getById($object, $id)
     {
         $result = null;
         try {
@@ -440,7 +440,7 @@ class Dal_Mdb2 extends Dal implements IDal
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
-            if (Config_Db::$debug_show_sql) {
+            if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
                     LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
@@ -496,9 +496,9 @@ class Dal_Mdb2 extends Dal implements IDal
                 $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            if (Config_Db::$db == EnumDbSource::DB_MYSQL) {
+            if (ConfigDb::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
-            } elseif (Config_Db::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
+            } elseif (ConfigDb::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
                 $tablename    = Config_Mdb2::orm($this->classname);
                 $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();

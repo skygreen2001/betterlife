@@ -2,6 +2,7 @@
 
 /**
  * -----------| 枚举类型: 数据库方式类别|数据源定义 |-----------
+ *
  * @category betterlife
  * @package core.config
  * @author skygreen
@@ -33,13 +34,13 @@ class EnumDbSource extends Enum
      */
     const DB_DB2 = 6;
     /**
-     * 数据库: Microsoft Excel;ODBC支持[Config_Db数据库ODBC设置$dbname = Excel文件名]
+     * 数据库: Microsoft Excel;ODBC支持[ConfigDb数据库ODBC设置$dbname = Excel文件名]
      */
     const DB_MICROSOFT_EXCEL = 7;
     /**
-     * Config_Db数据库ODBC设置$dbname = 数据库文件名
+     * ConfigDb数据库ODBC设置$dbname = 数据库文件名
      *
-     * 如: Config_Db::$dbname = D:\betterlife.mdb
+     * 如: ConfigDb::$dbname = D:\betterlife.mdb
      *
      * 数据库: Microsoft Access:
      *
@@ -51,7 +52,7 @@ class EnumDbSource extends Enum
     /**
      * 数据库: Microsoft Sql Server
      *
-     * 需要设置服务器名Config_Db::$host;和数据库名Config_Db::$dbname;
+     * 需要设置服务器名ConfigDb::$host;和数据库名ConfigDb::$dbname;
      *
      * 说明: Microsoft Sql Server支持GBK字符集，对UTF-8的支持设置比较复杂；
      *
@@ -77,13 +78,13 @@ class EnumDbSource extends Enum
     /**
      * 数据库: LDAP
      *
-     * 可通过Config_Db::$engine = ENGINE_DAL_ADODB配合使用
+     * 可通过ConfigDb::$engine = ENGINE_DAL_ADODB配合使用
      *
      * 需要配置如下:
      *
-     *        Config_Db::$host   = 'ldap.baylor.edu';
+     *        ConfigDb::$host   = 'ldap.baylor.edu';
      *
-     *        Config_Db::$dbname = 'ou = People,o = Baylor University,c = US';
+     *        ConfigDb::$dbname = 'ou = People,o = Baylor University,c = US';
      */
     const DB_LDAP = 14;
     /**
@@ -168,12 +169,12 @@ class EnumDbEngine extends Enum
  *
  *        Sql Server 第三方方案: http://www.easysoft.com/developer/languages/php/sql_server_unix_tutorial.html#driver
  *
- * 说明:  目前可使用PHP自带的ODBC方案使用Sql Server；通过配置Config_Db:$db = DB_SQLSERVER和Config_Db:$engine = ENGINE_OBJECT_ODBC即可
+ * 说明:  目前可使用PHP自带的ODBC方案使用Sql Server；通过配置ConfigDb::$db = DB_SQLSERVER和ConfigDb::$engine = ENGINE_OBJECT_ODBC即可
  * @category betterlife
  * @package core.config
  * @author skygreen
  */
-class Config_Db extends ConfigBB
+class ConfigDb extends ConfigBB
 {
     /**
      * @var int 当前应用使用Mysql数据库
@@ -236,16 +237,16 @@ class Config_Db extends ConfigBB
     */
     public static $debug_show_sql = true;
     /**
-     * 目前调试通过  该参数对Config_Db::$engine
+     * 目前调试通过  该参数对ConfigDb::$engine
      *
      *     * ENGINE_DAL_ADODB
      *     * ENGINE_OBJECT_ODBC 有效
      *
      * 是否使用了Dsn的设置
      *
-     * true : 在Windows里进行了系统DSN的设置，只需在Config_Db::$dbname里输入DSN设置的名称即可
+     * true : 在Windows里进行了系统DSN的设置，只需在ConfigDb::$dbname里输入DSN设置的名称即可
      *
-     * false: 未进行设置，则需要在Config_Db::$dbname设置数据库文件所在路径或者数据库名称
+     * false: 未进行设置，则需要在ConfigDb::$dbname设置数据库文件所在路径或者数据库名称
      *
      * 特殊情况: 当数据库为Sql server时； *ENGINE_DAL_ADODB 只支持  $is_dsn_set = false；这是由Adodb自身所决定的
      * @var boolean
@@ -310,7 +311,7 @@ class Config_Db extends ConfigBB
     final public static function orm($classname)
     {
         if (array_key_exists($classname, self::$orm)) {
-            return self::$orm[$classname];//在Config_Db::$orm里手动配置类与表的对应关系
+            return self::$orm[$classname];//在ConfigDb::$orm里手动配置类与表的对应关系
         } else {
             return self::ormByRule($classname);
         }
@@ -333,7 +334,7 @@ class Config_Db extends ConfigBB
     final public static function tom($tablename)
     {
         if (in_array($tablename, self::$orm)) {
-            return array_search($tablename, self::$orm);//在Config_Db::$orm里手动配置类与表的对应关系
+            return array_search($tablename, self::$orm);//在ConfigDb::$orm里手动配置类与表的对应关系
         } else {
             return self::tomByRule($tablename);
         }
@@ -354,7 +355,7 @@ class Config_Db extends ConfigBB
 
     /**
      * 按照类和表的对应关系规则规范自动生成；
-     * 要求是表的命名一定按照Config_Db::$orm的说明进行定义
+     * 要求是表的命名一定按照ConfigDb::$orm的说明进行定义
      * @param string $classname 数据库实体对象POJO类名
      * @return string 遵循命名规则和规范的表名
      */
@@ -378,7 +379,7 @@ class Config_Db extends ConfigBB
      /**
       * 按照类和表的对应关系规则规范自动生成；
       *
-      * 要求是表的命名一定按照Config_Db::$orm的说明进行定义
+      * 要求是表的命名一定按照ConfigDb::$orm的说明进行定义
       * @param string $tablename 遵循命名规则和规范的表名
       * @return string 数据库实体对象POJO类名
       */
@@ -407,36 +408,36 @@ class Config_Db extends ConfigBB
         if (isset(Gc::$database_config)) {
             $db_config = Gc::$database_config;
             if (isset($db_config['db_type'])) {
-                Config_Db::$db     = $db_config['db_type'];
+                ConfigDb::$db     = $db_config['db_type'];
             }
             if (isset($db_config['driver'])) {
-                Config_Db::$engine = $db_config['driver'];
+                ConfigDb::$engine = $db_config['driver'];
             }
 
             if (isset($db_config['host'])) {
-                Config_Db::$host           = $db_config['host'];
+                ConfigDb::$host           = $db_config['host'];
             }
             if (isset($db_config['port'])) {
-                Config_Db::$port           = $db_config['port'];
+                ConfigDb::$port           = $db_config['port'];
             }
             if (isset($db_config['database'])) {
-                Config_Db::$dbname         = $db_config['database'];
+                ConfigDb::$dbname         = $db_config['database'];
             }
             if (isset($db_config['username'])) {
-                Config_Db::$username       = $db_config['username'];
+                ConfigDb::$username       = $db_config['username'];
             }
             if (isset($db_config['password'])) {
-                Config_Db::$password       = $db_config['password'];
+                ConfigDb::$password       = $db_config['password'];
             }
 
             if (isset($db_config['prefix'])) {
-                Config_Db::$table_prefix   = $db_config['prefix'];
+                ConfigDb::$table_prefix   = $db_config['prefix'];
             }
             if (isset($db_config['debug'])) {
-                Config_Db::$debug_show_sql = $db_config['debug'];
+                ConfigDb::$debug_show_sql = $db_config['debug'];
             }
         }
     }
 }
 
-Config_Db::initGc();
+ConfigDb::initGc();

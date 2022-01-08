@@ -28,7 +28,7 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
     AutoCodeDomainJava::$showReport  = "";
     AutoCodeDomainJava::$showReport .= AutoCodeFoldHelper::foldEffectReady();
     AutoCodeDomainJava::$showReport .= AutoCodeFoldHelper::foldbeforedomain();
-    AutoCodeDomainJava::AutoCode();
+    AutoCodeDomainJava::autoCode();
     AutoCodeDomainJava::$showReport .= AutoCodeFoldHelper::foldafterdomain();
     echo AutoCodeDomainJava::$showReport;
 }  else {

@@ -24,7 +24,7 @@ class Crud_Sql_Insert extends Crud_SQL
     public function insert($tableorclassName)
     {
         if (class_exists($tableorclassName)) {
-            $this->tableName = Config_Db::orm($tableorclassName);
+            $this->tableName = ConfigDb::orm($tableorclassName);
         } else {
             $this->tableName = $tableorclassName;
         }

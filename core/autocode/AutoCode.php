@@ -97,7 +97,7 @@ class AutoCode extends BBObject
             $ignoreTables = array();
             foreach (self::$tableList as $tablename) {
                 $classname = self::getClassname($tablename);
-                $prefix    = Config_Db::$table_prefix;
+                $prefix    = ConfigDb::$table_prefix;
                 if (( !empty($prefix) ) && (!contain($tablename, $prefix))) {
                     $ignoreTables[] = $tablename;
                     continue;
@@ -139,8 +139,8 @@ class AutoCode extends BBObject
             $classname = ucfirst($tablename);
             return $classname;
         }
-        if (in_array($tablename, Config_Db::$orm)) {
-            $classname = array_search($tablename, Config_Db::$orm);
+        if (in_array($tablename, ConfigDb::$orm)) {
+            $classname = array_search($tablename, ConfigDb::$orm);
         } else {
             $classnameSplit = explode("_", $tablename);
             $classnameSplit = array_reverse($classnameSplit);
@@ -251,8 +251,8 @@ class AutoCode extends BBObject
      */
     protected static function getInstancename($tablename)
     {
-        if (in_array($tablename, Config_Db::$orm)) {
-            $classname = array_search($tablename, Config_Db::$orm);
+        if (in_array($tablename, ConfigDb::$orm)) {
+            $classname = array_search($tablename, ConfigDb::$orm);
         } else {
             $classnameSplit = explode("_", $tablename);
             $classnameSplit = array_reverse($classnameSplit);
@@ -631,7 +631,7 @@ class AutoCode extends BBObject
     protected static function isMany2ManyByClassname($classname)
     {
         $tablename = self::getTablename($classname);
-        if (contain($tablename, Config_Db::TABLENAME_RELATION . "_")) {
+        if (contain($tablename, ConfigDb::TABLENAME_RELATION . "_")) {
             $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
             $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);

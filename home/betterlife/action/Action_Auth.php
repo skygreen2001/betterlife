@@ -28,7 +28,7 @@ class Action_Auth extends Action
             $this->redirect( "blog", "display" );
         } elseif (!empty($_POST)) {
             $user = $this->model->User;
-            $userdata = User::get_one(
+            $userdata = User::getOne(
               array("username" => $user->username,
                     "password" => md5($user->getPassword())
               )

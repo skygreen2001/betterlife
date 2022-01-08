@@ -15,7 +15,7 @@ class Action_Comment extends Action
     {
         $blog_id = $this->data["blog_id"];
         if ($blog_id) {
-            $this->view->blog = Blog::get_by_id( $blog_id );
+            $this->view->blog = Blog::getById( $blog_id );
         } else {
             $this->redirect( "blog", "display" );
             die();
@@ -35,7 +35,7 @@ class Action_Comment extends Action
         }
         $comment_id = $this->data["comment_id"];
         if ($comment_id) {
-            $comment = Comment::get_by_id( $comment_id );
+            $comment = Comment::getById( $comment_id );
             $this->view->comment_content = $comment->comment;
         }
         $canEdit = $this->view->blog->canEdit();

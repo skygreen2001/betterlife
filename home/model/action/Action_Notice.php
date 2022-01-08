@@ -33,7 +33,7 @@ class Action_Notice extends ActionModel
     public function view()
     {
         $noticeId = $this->data["id"];
-        $notice   = Notice::get_by_id( $noticeId );
+        $notice   = Notice::getById( $noticeId );
         $this->view->set( "notice", $notice );
     }
     /**
@@ -56,7 +56,7 @@ class Action_Notice extends ActionModel
             }
         }
         $noticeId = $this->data["id"];
-        $notice   = Notice::get_by_id( $noticeId );
+        $notice   = Notice::getById( $noticeId );
         $this->view->set( "notice", $notice );
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
         $this->load_onlineditor( 'notice_content' );

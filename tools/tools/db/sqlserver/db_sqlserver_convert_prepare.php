@@ -28,7 +28,7 @@ $filterTableColumns = array();
 if ($isComment) {
     echo "1. 列名头字母大写<br/>";
     echo "2. 表主键字段统一成ID<br/><br/>";
-    echo "3. 去掉表前缀:" . Config_Db::$table_prefix . "<br/>";
+    echo "3. 去掉表前缀:" . ConfigDb::$table_prefix . "<br/>";
     echo "4. 表名头字母大写<br/><br/>";
     echo "--在MySQL的配置文件中my.ini [mysqld] 中增加一行<br/>";
     echo "--lower_case_table_names=0<br/>";
@@ -91,8 +91,8 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
  */
 function getClassname($tablename)
 {
-    if (in_array($tablename, Config_Db::$orm)) {
-        $classname = array_search($tablename, Config_Db::$orm);
+    if (in_array($tablename, ConfigDb::$orm)) {
+        $classname = array_search($tablename, ConfigDb::$orm);
     } else {
         $classnameSplit = explode("_", $tablename);
         $classnameSplit = array_reverse($classnameSplit);
@@ -120,7 +120,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
 }
 
 if ($isComment) {
-    echo "<br/>" . str_repeat("*", 40) . "3.去掉表前缀:" . Config_Db::$table_prefix . str_repeat("*", 40) . "<br/>";
+    echo "<br/>" . str_repeat("*", 40) . "3.去掉表前缀:" . ConfigDb::$table_prefix . str_repeat("*", 40) . "<br/>";
     echo str_repeat("*", 40) . "4.表名头字母大写" . str_repeat("*", 40) . "<br/><br/>";
 }
 foreach ($tableList as $tablename) {
