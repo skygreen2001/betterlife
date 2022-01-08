@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:处理图形图像相关的事宜方法 |-----------
  * @category betterlife
@@ -17,7 +18,7 @@ class UtilImage
     public static function getImageInfo($img)
     {
         $imageInfo = getimagesize($img);
-        if ( $imageInfo !== false ) {
+        if ($imageInfo !== false) {
             $imageType = strtolower(substr(image_type_to_extension($imageInfo[2]), 1));
             $imageSize = filesize($img);
             $info = array(
@@ -35,7 +36,7 @@ class UtilImage
 
     /**
      * 显示服务器图像文件
-     * 
+     *
      * 支持URL方式
      * @static
      * @access public
@@ -49,16 +50,16 @@ class UtilImage
     {
         //获取图像文件信息
         $info = self::getImageInfo( $imgFile );
-        if ( $info !== false ) {
+        if ($info !== false) {
             $createFun = str_replace('/', 'createfrom', $info['mime']);
             $im = $createFun($imgFile);
-            if ( $im ) {
+            if ($im) {
                 $ImageFun = str_replace('/', '', $info['mime']);
-                if ( !empty($text) ) {
+                if (!empty($text)) {
                     $tc = imagecolorallocate($im, 0, 0, 0);
                     imagestring($im, 3, 5, 5, $text, $tc);
                 }
-                if ( $info['type']=='png' || $info['type']=='gif' ) {
+                if ($info['type']=='png' || $info['type']=='gif') {
                     imagealphablending($im, false);//取消默认的混色模式
                     imagesavealpha($im, true);//设定保存完整的 alpha 通道信息
                 }
@@ -80,7 +81,7 @@ class UtilImage
 
     /**
      * 从中心开始往外裁剪
-     * 
+     *
      * @param mixed $src_file  源文件，若不指定，则为相对路径
      * @param mixed $dim_file  目标文件，若不指定，则为相对路径
      * @param mixed $dimWidth  目标尺寸，若不写"%"，则为指定大小
@@ -92,7 +93,7 @@ class UtilImage
         //获取原图信息
         $info = self::getImageInfo( $src_file );
 
-        if ( $info !== false ) {
+        if ($info !== false) {
             //设置src_file的信息
             $srcWidth  = $info['width'];
             $srcHeight = $info['height'];
@@ -101,7 +102,7 @@ class UtilImage
             unset($info);
 
             //计算是按照具体尺寸还是 %修改图片
-            if ( contain( $dimWidth, "%" ) )
+            if (contain( $dimWidth, "%"))
             {
                 $dimWidth = substr($dimWidth, 0, (strlen($dimWidth) - 1));
                 $dimWidth = $srcWidth * $srcWidth / 100;
@@ -109,7 +110,7 @@ class UtilImage
             else
                 $mWidth = $dimWidth;
 
-            if ( contain( $dimHeight, "%" ) )
+            if (contain( $dimHeight, "%"))
             {
                 $dimHeight = substr($dimHeight, 0, (strlen($dimHeight) - 1));
                 $dimHeight = $srcHeight * $dimHeight / 100;
@@ -118,9 +119,9 @@ class UtilImage
                 $dimHeight = $dimHeight;
 
             //判断裁剪的大小是否溢出，若溢出，则按照原始大小作为裁剪大小
-            if ( $dimWidth > $srcWidth )
+            if ($dimWidth > $srcWidth )
                 $dimWidth = $srcWidth;
-            if ( $dimHeight > $srcHeight )
+            if ($dimHeight > $srcHeight )
                 $dimHeight = $srcHeight;
 
             //设定以中心位置散开后，开始裁剪的起始位置
@@ -132,13 +133,13 @@ class UtilImage
             $srcImg = $createFun($src_file);
 
             //创建图片
-            if ( $type != 'gif' && function_exists("imagecreatetruecolor") ) {
+            if ($type != 'gif' && function_exists("imagecreatetruecolor")) {
                 $dim = imagecreatetruecolor($dimWidth, $dimHeight);
             } else {
                 $dim = imagecreate($dimWidth, $dimHeight);
             }
 
-            if ( 'gif' == $type || 'png' == $type ) {
+            if ('gif' == $type || 'png' == $type) {
                 $background_color = imagecolorallocate($dim, 0, 255, 0);  //  指派一个绿色
                 imagecolortransparent($dim, $background_color);  //  设置为透明色，若注释掉该行则输出绿色的图
             }
@@ -168,7 +169,7 @@ class UtilImage
         $transparencyIndex = imagecolortransparent($image_source);
         $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
 
-        if ( $transparencyIndex >= 0 ) {
+        if ($transparencyIndex >= 0) {
             $transparencyColor = imagecolorsforindex($image_source, $transparencyIndex);
         }
 
@@ -195,7 +196,7 @@ class UtilImage
     {
         // 获取原图信息
         $info = self::getImageInfo( $image );
-        if ( $info !== false) {
+        if ($info !== false) {
             $srcWidth   = $info['width'];
             $srcHeight  = $info['height'];
             $actualType = $info['type'];
@@ -204,12 +205,12 @@ class UtilImage
             $interlace = $interlace? 1:0;
             unset($info);
 
-            if ( ( $actualType != $type && $actualType != "jpeg" ) || ( $actualType == "jpeg" && $type != "jpg" && $type != "jpeg" ) ) {
+            if (( $actualType != $type && $actualType != "jpeg" ) || ( $actualType == "jpeg" && $type != "jpg" && $type != "jpeg" )) {
                 LogMe::log( "图片文件:" . $image . ",实际图片类型:" . $actualType );
             }
 
             //计算是按照具体尺寸还是 %修改图片
-            if ( contain( $maxWidth, "%" ) )
+            if (contain( $maxWidth, "%"))
             {
                 $maxWidth = substr($maxWidth, 0, (strlen($maxWidth) - 1));
                 $mWidth   = $srcWidth * $maxWidth / 100;
@@ -217,7 +218,7 @@ class UtilImage
                 $mWidth = $maxWidth;
             }
 
-            if ( contain( $maxHeight, "%" ) )
+            if (contain( $maxHeight, "%"))
             {
                 $maxHeight = substr($maxHeight, 0, (strlen($maxHeight) - 1));
                 $mHeight   = $srcHeight * $maxHeight / 100;
@@ -225,11 +226,11 @@ class UtilImage
                 $mHeight = $maxHeight;
             }
             $scale = min($mWidth / $srcWidth, $mHeight / $srcHeight); // 计算缩放比例
-            if ( $isStrict ) {
+            if ($isStrict) {
                 $width  = $mWidth;
                 $height = $mHeight;
             } else {
-                if ( $scale >= 1 ) {
+                if ($scale >= 1) {
                     // 超过原图大小不再缩略
                     $width  = $srcWidth;
                     $height = $srcHeight;
@@ -245,9 +246,9 @@ class UtilImage
             $srcImg    = $createFun($image);
 
             //创建缩略图
-            if ( $actualType != 'gif' && function_exists('imagecreatetruecolor') ) {
+            if ($actualType != 'gif' && function_exists('imagecreatetruecolor')) {
                 $thumbImg = imagecreatetruecolor($width, $height);
-                if ( $actualType == 'png' ) {
+                if ($actualType == 'png') {
                     self::setTransparency( $thumbImg, $srcImg );
                 }
             } else {
@@ -256,13 +257,13 @@ class UtilImage
             }
 
             // 复制图片
-            if ( function_exists("ImageCopyResampled") ) {
+            if (function_exists("ImageCopyResampled")) {
                 imagecopyresampled($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
             } else {
                 imagecopyresized($thumbImg, $srcImg, 0, 0, 0, 0, $width, $height, $srcWidth,$srcHeight);
             }
 
-            if ( 'gif' == $actualType || 'png' == $actualType ) {
+            if ('gif' == $actualType || 'png' == $actualType) {
                 imagealphablending($thumbImg, true);//取消默认的混色模式
                 imagesavealpha($thumbImg, true);//设定保存完整的 alpha 通道信息
 
@@ -274,7 +275,7 @@ class UtilImage
             }
 
             // 对jpeg图形设置隔行扫描
-            if ( 'jpg' == $actualType || 'jpeg' == $actualType ) {
+            if ('jpg' == $actualType || 'jpeg' == $actualType) {
                 imageinterlace($thumbImg, $interlace);
             }
 
@@ -282,17 +283,17 @@ class UtilImage
             $imageFun  = 'image' . $actualType;
             $image_dir = dirname($thumbname);
             UtilFileSystem::createDir( $image_dir );
-            if ( 'jpg' == $actualType || 'jpeg' == $actualType ) {
+            if ('jpg' == $actualType || 'jpeg' == $actualType) {
                 $imageFun($thumbImg, $thumbname, 100); //默认75% 保真quality: 0-100
                 if ($is_echo_output) {
                     $imageFun($thumbImg, null, 100); //默认75% 保真quality:0-100
                 }
-            } else if ( 'png' == $actualType ) {
+            } elseif ('png' == $actualType) {
                 $imageFun($thumbImg, $thumbname, 6); //默认6,压缩等级: 0-9
                 if ($is_echo_output) {
                     $imageFun($thumbImg, null, 6);//默认6,压缩等级: 0-9
                 }
-            } else if ( 'gif' == $actualType ) {
+            } elseif ('gif' == $actualType) {
                 $imageFun($thumbImg, $thumbname);
                 if ($is_echo_output) {
                     $imageFun($thumbImg);
@@ -330,12 +331,12 @@ class UtilImage
      */
     public static function buildString($string, $rgb = array(), $filename = '', $type = 'png', $disturb = 1, $border = true, $font = 'simhei.ttf,8', $size = array(48, 22))
     {
-        if ( is_string($size) ) {
+        if (is_string($size)) {
             $size = explode(',', $size);
         }
         $width  = $size[0];
         $height = $size[1];
-        if ( is_string($font) ) {
+        if (is_string($font)) {
             $font = explode(',', $font);
         }
         $fontface = $font[0];
@@ -343,12 +344,12 @@ class UtilImage
         $length = strlen($string);
         $width  = ($length * 9 + 10) > $width ? $length * 9 + 10 : $width;
         $height = 22;
-        if ( $type != 'gif' && function_exists('imagecreatetruecolor') ) {
+        if ($type != 'gif' && function_exists('imagecreatetruecolor')) {
             $im = @imagecreatetruecolor($width, $height);
         } else {
             $im = @imagecreate($width, $height);
         }
-        if ( empty($rgb) ) {
+        if (empty($rgb)) {
             $color = imagecolorallocate($im, 102, 104, 104);
         } else {
             $color = imagecolorallocate($im, $rgb[0], $rgb[1], $rgb[2]);
@@ -360,13 +361,13 @@ class UtilImage
         @imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $backColor);
         @imagerectangle($im, 0, 0, $width-1, $height-1, $borderColor);
         @imagestring($im, 5, 5, 3, $string, $color);
-        if ( !empty($disturb) ) {
+        if (!empty($disturb)) {
             // 添加干扰
-            if ( $disturb == 1 || $disturb == 3 ) {
+            if ($disturb == 1 || $disturb == 3) {
                 for($i = 0; $i < 25; $i++) {
                     imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
                 }
-            } elseif ( $disturb == 2 || $disturb == 3 ) {
+            } elseif ($disturb == 2 || $disturb == 3) {
                 for ($i = 0; $i < 10; $i++) {
                     imagearc($im, mt_rand(-10, $width), mt_rand(-10, $height), mt_rand(30, 300), mt_rand(20, 200), 55, 44, $pointColor);
                 }
@@ -392,7 +393,7 @@ class UtilImage
         $randval = UtilString::rand_string( $length, $mode );
         HttpSession::set( $verifyName, md5($randval) );//存入Session
         $width = ($length * 10 + 10) > $width ? $length * 10 + 10 : $width;
-        if ( $type != 'gif' && function_exists('imagecreatetruecolor') ) {
+        if ($type != 'gif' && function_exists('imagecreatetruecolor')) {
             $im = @imagecreatetruecolor($width,$height);
         } else {
             $im = @imagecreate($width, $height);
@@ -433,7 +434,7 @@ class UtilImage
         $randval = UtilString::rand_string($length,$mode);
         $_SESSION[$verifyName]= md5($randval);
         $width = ($length * 10 + 10) > $width ? $length * 10 + 10 : $width;
-        if ( $type!='gif' && function_exists('imagecreatetruecolor')) {
+        if ($type!='gif' && function_exists('imagecreatetruecolor')) {
             $im = @imagecreatetruecolor($width, $height);
         } else {
             $im = @imagecreate($width, $height);
@@ -496,7 +497,7 @@ class UtilImage
             $fontcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $fontcolor);
         }
-        if ( !is_file($fontface) ) {
+        if (!is_file($fontface)) {
             $fontface = dirname(__FILE__) . "/" . $fontface;
         }
         for ($i = 0; $i < $length; $i++) {
@@ -518,7 +519,7 @@ class UtilImage
     public static function showASCIIImg($image, $string = '', $type = '')
     {
         $info  = self::getImageInfo($image);
-        if ( $info !== false ) {
+        if ($info !== false) {
             $type = empty($type) ? $info['type'] : $type;
             unset($info);
             // 载入原图
@@ -606,7 +607,7 @@ class UtilImage
         $ends = '101';
         $center = '01010';
         /* UPC-A Must be 11 digits, we compute the checksum. */
-        if ( strlen($code) != 11 ) {
+        if (strlen($code) != 11) {
             die("UPC-A Must be 11 digits.");
         }
         /* Compute the EAN-13 Checksum digit */
@@ -633,7 +634,7 @@ class UtilImage
         }
         $bars .= $ends;
         /* Generate the Barcode Image */
-        if ( $type!='gif' && function_exists('imagecreatetruecolor')) {
+        if ($type!='gif' && function_exists('imagecreatetruecolor')) {
             $im = imagecreatetruecolor($lw * 95 + 30, $hi + 30);
         } else {
             $im = imagecreate($lw * 95 + 30, $hi + 30);
@@ -643,12 +644,12 @@ class UtilImage
         ImageFilledRectangle($im, 0, 0, $lw * 95 + 30, $hi + 30, $bg);
         $shift = 10;
         for ($x = 0; $x < strlen($bars); $x++) {
-            if ( ($x < 10) || ($x >= 45 && $x < 50) || ($x >= 85) ) {
+            if (($x < 10) || ($x >= 45 && $x < 50) || ($x >= 85)) {
                 $sh = 10;
             } else {
                 $sh = 0;
             }
-            if ( $bars[$x] == '1' ) {
+            if ($bars[$x] == '1') {
                 $color = $fg;
             } else {
                 $color = $bg;
@@ -670,7 +671,7 @@ class UtilImage
     {
         header("Content-type: image/" . $type);
         $ImageFun = 'image' . $type;
-        if ( empty($filename) ) {
+        if (empty($filename)) {
             $ImageFun($im);
         } else {
             $ImageFun($im, $filename);

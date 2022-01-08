@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| BetterLife框架应用开始 |-----------
  * @category betterlife
@@ -9,7 +10,7 @@ class Application
 {
     /**
      * 其$key定义参考:
-     * 
+     *
      *      1. Gc.php文件内的静态变量名
      *      2. core/config/config/Config_Db内的静态变量名
      * @param mixed $environment 应用运行具体环境变量
@@ -22,7 +23,7 @@ class Application
 
     /**
      * 其$key定义参考:
-     * 
+     *
      *      1. Gc.php文件内的静态变量名
      *      2. core/config/config/Config_Db内的静态变量名
      * @param mixed $environment 应用运行具体环境变量
@@ -32,9 +33,9 @@ class Application
     {
         require_once("Gc.php");
 
-        if ( !empty($environment) ) {
+        if (!empty($environment)) {
             foreach ($environment as $key => $value) {
-                if ( isset(Gc::$$key) ) {
+                if (isset(Gc::$$key)) {
                     Gc::$$key = $value;
                 }
             }
@@ -42,9 +43,9 @@ class Application
 
         require_once("init.php");
 
-        if ( !empty($environment) ) {
+        if (!empty($environment)) {
             foreach ($environment as $key => $value) {
-                if ( isset(Config_Db::$$key) ) {
+                if (isset(Config_Db::$$key)) {
                     Config_Db::$$key = $value;
                 }
             }

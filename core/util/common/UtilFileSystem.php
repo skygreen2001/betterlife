@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 功能:处理文件目录相关的事宜方法 |-----------
- * 
+ *
  * @category betterlife
  * @package util.common
  * @author skygreen
@@ -15,26 +16,26 @@ class UtilFileSystem extends Util
      */
     public static function removeBom($data)
     {
-        if ( is_array($data) ) {
+        if (is_array($data)) {
             foreach ($data as $k => $v) {
-                if ( is_file($v) ) {
+                if (is_file($v)) {
                     $v = file_get_contents($v);
                 }
                 $charset[1] = substr($v, 0, 1);
                 $charset[2] = substr($v, 1, 1);
                 $charset[3] = substr($v, 2, 1);
-                if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
+                if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
                     $data[$k] = substr($v, 3);
                 }
             }
         } else{
-            if ( is_file($data) ) {
+            if (is_file($data)) {
                 $data = file_get_contents($data);
             }
             $charset[1] = substr($data, 0, 1);
             $charset[2] = substr($data, 1, 1);
             $charset[3] = substr($data, 2, 1);
-            if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191 ) {
+            if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
                 $data = substr($data, 3);
             }
         }
@@ -49,10 +50,10 @@ class UtilFileSystem extends Util
      */
     public static function file_rename($source, $dest)
     {
-        if ( PHP_OS == 'WINNT' ) {
+        if (PHP_OS == 'WINNT') {
             @copy($source, $dest);
             @unlink($source);
-            if ( file_exists($dest) ) {
+            if (file_exists($dest)) {
                 return true;
             } else {
                 return false;
@@ -70,7 +71,7 @@ class UtilFileSystem extends Util
      */
     public static function createDir($dir, $mod = 0755)
     {
-        if ( UtilString::is_utf8( $dir ) ) {
+        if (UtilString::is_utf8( $dir )) {
             $dir = rawurldecode(self::charsetConvert( $dir ));
         }
         return is_dir($dir) or mkdir($dir, $mod, true);
@@ -79,7 +80,7 @@ class UtilFileSystem extends Util
 
     /**
      * 保存内容到指定文件。
-     * 
+     *
      * 如果该文件不存在，则创建该文件。
      * @param string $filename 文件名
      * @param string $content  内容
@@ -87,17 +88,17 @@ class UtilFileSystem extends Util
      */
     public static function save_file_content($filename, $content)
     {
-        if ( UtilString::is_utf8( $filename ) ) {
+        if (UtilString::is_utf8( $filename )) {
             $filename = rawurldecode(self::charsetConvert( $filename ));
         }
         self::createDir( dirname($filename) );
         $cFile = fopen($filename, 'w');
-        if ( $cFile ) {
+        if ($cFile) {
             file_put_contents($filename, $content);
         } else {
             LogMe::log( "创建文件:" . $filename . "失败!" );
         }
-        if ( $cFile ) fclose($cFile);
+        if ($cFile ) fclose($cFile);
         return true;
     }
 
@@ -118,7 +119,7 @@ class UtilFileSystem extends Util
 
     /**
      * 移除文件夹
-     * 
+     *
      * 参考rmdir，但是包括删除文件夹下所有包含的文件和子文件夹，慎用!
      * @param string $dir 目录
      * @return boolean 是否操作成功
@@ -126,14 +127,14 @@ class UtilFileSystem extends Util
     public static function deleteDir($dir)
     {
         $handle = @opendir($dir);
-        if ( !$handle ) {
+        if (!$handle) {
             return false;
             // die("目录不存在:" . $dir);
         }
         while (false !== ( $file = readdir($handle) )) {
-            if ( $file != "." && $file != ".." ) {
+            if ($file != "." && $file != "..") {
                 $file = $dir . DS . $file;
-                if ( is_dir($file) ) {
+                if (is_dir($file)) {
                     self::deleteDir( $file );
                 } else {
                     @unlink($file);
@@ -147,7 +148,7 @@ class UtilFileSystem extends Util
 
     /**
      * 复制源路径下所有的文件和子目录到目标路径下
-     * 
+     *
      * [文件系统函数: copy](https://www.php.net/manual/zh/function.copy.php)
      * @param string $src 源路径目录
      * @param string $dst 目标路径目录
@@ -160,7 +161,7 @@ class UtilFileSystem extends Util
             foreach ($files as $file)
             if ($file != "." && $file != "..") self::copyDir("$src/$file", "$dst/$file");
         }
-        else if (file_exists($src)) copy($src, $dst);
+        elseif (file_exists($src)) copy($src, $dst);
     }
     /**
      * 上传文件后，将目标文件的权限设置为0644，避免有些服务器丢失读取权限
@@ -171,7 +172,7 @@ class UtilFileSystem extends Util
      */
     public static function move_chmod_uploaded_file($filename, $destination, $mod = 0644)
     {
-        if ( move_uploaded_file($filename, $destination) ) {
+        if (move_uploaded_file($filename, $destination)) {
             chmod($destination, $mod);
             return true;
         } else {
@@ -200,9 +201,9 @@ class UtilFileSystem extends Util
 
     /**
      * 服务器上传文件
-     * 
+     *
      * 需要调整php.ini的配置项:post_max_size|upload_max_filesize
-     * 
+     *
      * @param mixed $files 上传的文件对象
      * @param string $uploadPath 文件路径或者文件名
      * @param string $uploadFieldName 上传文件的input组件的名称
@@ -212,9 +213,9 @@ class UtilFileSystem extends Util
      */
     public static function uploadFile($files, $uploadPath, $uploadFieldName = "upload_file", $is_permit_same_filename = false, $file_permit_upload_size = 2)
     {
-        if ( $files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000 ) {
-            if ( $files[$uploadFieldName]["error"] > 0 ) {
-                switch ( $files[$uploadFieldName]['error'] ) {
+        if ($files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000) {
+            if ($files[$uploadFieldName]["error"] > 0) {
+                switch ( $files[$uploadFieldName]['error']) {
                     case 1:
                         $errorInfo = "超出了限制上传的文件大小";//The file is too large (server)
                         break;
@@ -241,7 +242,7 @@ class UtilFileSystem extends Util
                 $path_r    = explode('.', $files[$uploadFieldName]["name"]);
                 $tmptail   = end($path_r);
                 $temp_name = basename($uploadPath);
-                if ( contain($temp_name, ".") ) {
+                if (contain($temp_name, ".")) {
                     $temp_name = "";
                     self::createDir( dirname($uploadPath) );
                 } else {
@@ -249,15 +250,15 @@ class UtilFileSystem extends Util
                     self::createDir( $uploadPath );
                 }
                 system_dir_info(dirname($uploadPath), GC::$upload_path);
-                if ( !$is_permit_same_filename && file_exists($uploadPath . $temp_name) ) {
+                if (!$is_permit_same_filename && file_exists($uploadPath . $temp_name)) {
                     return array('success' => false, 'msg' => '文件重名!');
                 } else {
                     LogMe::log( "[upload before]:" . $files[$uploadFieldName]["tmp_name"] . HH . "[upload after]:" . $uploadPath . $temp_name);
                     $IsUploadSucc = move_uploaded_file($files[$uploadFieldName]["tmp_name"], $uploadPath . $temp_name);
-                    if ( !$IsUploadSucc ) {
+                    if (!$IsUploadSucc) {
                         return array('success' => false, 'msg' => '文件上传失败，通知系统管理员!');
                     }
-                    if ( empty($temp_name) ) {
+                    if (empty($temp_name)) {
                         $temp_name = basename($uploadPath);
                     }
                     return array('success' => true,'file_showname'=>$files[$uploadFieldName]["name"],'file_name' => $temp_name);
@@ -280,16 +281,16 @@ class UtilFileSystem extends Util
     public static function getSubDirsInDirectory($dir)
     {
         $dirdata = array();
-        if ( strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0 ) {
+        if (strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0) {
             $dir = substr($dir, 0, strlen($dir) - 1);//如果路径不以DIRECTORY_SEPARATOR结尾的话，应补上
         }
-        if ( is_dir($dir) )
+        if (is_dir($dir) )
         {
             $iterator = new DirectoryIterator($dir);
             foreach ($iterator as $fileinfo) {
-                if ( $fileinfo->isDir() ) {
+                if ($fileinfo->isDir()) {
                     $file = $fileinfo->getFilename();
-                    if ( $file[0] != "." ) {
+                    if ($file[0] != ".") {
                         $dirdata[$fileinfo->getFilename()] = $fileinfo->getPathname();
                     }
                 }
@@ -307,16 +308,16 @@ class UtilFileSystem extends Util
     public static function getFilesInDirectory($dir, $agreesuffix = array("php"))
     {
         $result = array();
-        if ( is_dir($dir) ) {
+        if (is_dir($dir)) {
             $dh = opendir($dir);
-            if ( $dh ) {
+            if ($dh) {
                 while (($file = readdir($dh)) !== false) {
-                    if ( $file[0] != "." ) {
+                    if ($file[0] != ".") {
                         foreach ($agreesuffix as $suffix) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
                             $fileSuffix = strcasecmp($fileSuffix, $suffix);
-                            if ( $fileSuffix === 0 ) {
+                            if ($fileSuffix === 0) {
                                 $result[] = $dir . $file;
                             }
                         }
@@ -334,7 +335,7 @@ class UtilFileSystem extends Util
      * @access public
      * @param string $dir 指定目录
      * @param string|array $agreesuffix 是否要求文件后缀名为指定
-     * 
+     *
      *     1. 当$agreesuffix = '*'为查找所有后缀名的文件
      *     2. 当$agreesuffix = 'php'为查找所有php后缀名的文件
      *     3. 当$agreesuffix = array('php','xml')为查找所有php和xml后缀名的文件
@@ -343,7 +344,7 @@ class UtilFileSystem extends Util
     public static function getAllFilesInDirectory($dir, $agreesuffix = array("php"))
     {
         $data = array();
-        if ( strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0 ) {
+        if (strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0) {
             $dir = substr($dir, 0, strlen($dir) - 1);//如果路径不以DIRECTORY_SEPARATOR结尾的话，应补上
         }
         $dir  = self::charsetConvert( $dir );
@@ -364,7 +365,7 @@ class UtilFileSystem extends Util
     public static function getAllDirsInDriectory($dir)
     {
         $dirdata = array();
-        if ( strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0 ) {
+        if (strcmp(substr($dir, strlen($dir) - 1, strlen($dir)), DS) == 0) {
             $dir = substr($dir, 0, strlen($dir) - 1);//如果路径不以DIRECTORY_SEPARATOR结尾的话，应补上
         }
         $dir = self::charsetConvert( $dir );
@@ -379,12 +380,12 @@ class UtilFileSystem extends Util
      */
     private static function searchAllDirsInDirectory($path, $dirdata)
     {
-        if ( is_dir($path) ) {
+        if (is_dir($path)) {
             $dp = dir($path);
             $dirdata[]  = $path;
             while ($file = $dp->read()) {
-                if ( $file[0] != "." ) {
-                // if ( $file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git' ) {
+                if ($file[0] != ".") {
+                // if ($file != '.' && $file != '..' && $file != '.DS_Store' && $file != '.svn' && $file != '.git') {
                     $dirdata = self::searchAllDirsInDirectory( $path . DS . $file, $dirdata );
                 }
             }
@@ -395,10 +396,10 @@ class UtilFileSystem extends Util
 
     /**
      * 递归执行查看指定目录下的所有文件[完美解决中文文件名的问题]
-     * 
+     *
      * @param string $dir 指定目录
      * @param string|array $agreesuffix 是否要求文件后缀名为指定
-     * 
+     *
      *     1. 当$agreesuffix='*'为查找所有后缀名的文件
      *     2. 当$agreesuffix='php'为查找所有php后缀名的文件
      *     3. 当$agreesuffix=array('php','xml')为查找所有php和xml后缀名的文件
@@ -407,28 +408,28 @@ class UtilFileSystem extends Util
     private static function searchAllFilesInDirectory($path, $data, $agreesuffix = array("php"))
     {
         $handle = @opendir($path);
-        if ( $handle ) {
+        if ($handle) {
             while (false !== ($file = @readdir($handle))) {
-                if ( $file[0] == "." ) {
+                if ($file[0] == ".") {
                     continue;
                 }
                 $nextpath = $path . DS . $file;
 
-                if ( is_dir($nextpath) ) {
+                if (is_dir($nextpath)) {
                     $data = self::searchAllFilesInDirectory( $nextpath, $data, $agreesuffix );
                 } else {
-                    if ( $file !== "Thumbs.db" ) {
-                        if ( $agreesuffix == "*" ) {
+                    if ($file !== "Thumbs.db") {
+                        if ($agreesuffix == "*") {
                             $data[dirname($nextpath) . DS . 'a' . basename($nextpath)] = $nextpath;
-                        } else if ( is_string($agreesuffix) ) {
+                        } elseif (is_string($agreesuffix)) {
                             $fileSuffix = explode('.', $file);
                             $fileSuffix = end($fileSuffix);
                             $fileSuffix = strcasecmp($fileSuffix, $agreesuffix);
-                            if ( $fileSuffix === 0 ) {
+                            if ($fileSuffix === 0) {
                                 $isChinese = UtilString::is_chinese( $nextpath );
-                                if ( $isChinese ) {
+                                if ($isChinese) {
                                     $is_utf8 = UtilString::is_utf8( $nextpath );
-                                    if ( !$is_utf8 ) {
+                                    if (!$is_utf8) {
                                         $nextpath_tmp = UtilString::gbk2utf8( $nextpath );
                                     }
                                     $nextpath_basename = basename($nextpath_tmp);
@@ -439,12 +440,12 @@ class UtilFileSystem extends Util
                                 }
                                 $data[$nextpath_tmp . DS . 'a' . $nextpath_basename] = $nextpath;
                             }
-                        } else if ( is_array($agreesuffix) ) {
+                        } elseif (is_array($agreesuffix)) {
                             foreach ($agreesuffix as $suffix) {
                                 $fileSuffix = explode('.', $file);
                                 $fileSuffix = end($fileSuffix);
                                 $fileSuffix = strcasecmp($fileSuffix, $suffix);
-                                if ( $fileSuffix === 0 ) {
+                                if ($fileSuffix === 0) {
                                     $data[dirname($nextpath) . DS . 'a' . basename($nextpath)] = $nextpath;
                                 }
                             }
@@ -481,11 +482,11 @@ class UtilFileSystem extends Util
 
     /**
      * 截取视频指定时间的图片
-     * 
+     *
      * 需要在服务器上安装ffmpeg: http://ffmpeg.org
-     * 
+     *
      * 安装如下:
-     * 
+     *
      *    - 下载ffmpeg: curl -O http://ffmpeg.org/releases/ffmpeg-4.3.2.tar.bz2
      *    - 安装ffmpeg:
      *      ```
@@ -504,9 +505,9 @@ class UtilFileSystem extends Util
      *      source /etc/profile
      *      ffmpeg -version 
      *      ```
-     * 
+     *
      * 示例: ffmpeg -ss 2 -i good.mp4 -y -frames:v 1 -f image2 good.jpg
-     * 
+     *
      * @param string $videoPath 视频文件路径
      * @param string $outputPath 输出图片路径, 如果没有输入图片路径就放在视频同目录下
      * @param int $width 图片宽度
@@ -516,19 +517,19 @@ class UtilFileSystem extends Util
      */
     public static function captureVideoImage($videoPath, $outputPath = null, $startTime = 2, $width = 0, $height = 0) 
     {
-        if ( empty($outputPath) ) {
+        if (empty($outputPath)) {
             $outputPath  = dirname($videoPath);
             $outputPath .= DS . date("YmdHis") . UtilString::rand_string() . '.jpg';
         }
 
-        $isMac = ( contain( strtolower(php_uname()), "darwin" ) ) ? true : false;
+        $isMac = ( contain( strtolower(php_uname()), "darwin")) ? true : false;
         $ffmpeg = "ffmpeg";
-        if ( $isMac ) {
+        if ($isMac) {
             $ffmpeg = "/usr/local/bin/ffmpeg";
         } else {
             $ffmpeg = "/usr/local/ffmpeg/bin/ffmpeg";
         }
-        if ( $width != 0 ) {
+        if ($width != 0) {
             //多一个-s 指定图片的宽高比
             $str = $ffmpeg . " -ss " . $startTime . " -i " . $videoPath . " -y -frames:v 1 -f image2 -s " . $width . "x" . $height . " " . $outputPath;
         } else {
@@ -538,7 +539,7 @@ class UtilFileSystem extends Util
         exec($str, $output, $return_val);
         LogMe::log( print_pre($output) );
         LogMe::log( $return_val );
-        if ( $return_val == 0 ) {
+        if ($return_val == 0) {
             return $outputPath;
         }
         return null;

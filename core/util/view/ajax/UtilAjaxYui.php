@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 工具类: YUI[Javascript Ajax 框架] |-----------
- * 
+ *
  * Yahoo! User Interface Library (YUI)
  * @category betterlife
  * @package util.view.ajax
@@ -18,8 +19,8 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if ( self::$IsGoogleApi ) {
-            if ( $viewObject )
+        if (self::$IsGoogleApi) {
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/yui/$version/build/yui/yui-min.js" );
             } else {
@@ -42,7 +43,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if ( !empty($callback) )
+        if (!empty($callback) )
         {
             $url_base = UtilNet::urlbase();
             $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
@@ -50,7 +51,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="YUI">
 
-        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
+        if (( is_array($dataArray) ) && (count($dataArray) > 0))
         {
             $data = http_build_query($dataArray);
         }
@@ -63,7 +64,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
                             'response_type':'$response_type'
                         }
                     };";
-        if ( isset($callback) ) {
+        if (isset($callback)) {
              $result .= $callback;
              $result .= "
                     Y.on('io:complete',onComplete,Y,true);";
@@ -94,14 +95,14 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
                       console.log('提交请求执行成功!');
                       return ;
                     }";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             $result .= "
                     YUI().use('node', function (Y) {
                         Y.one('#object_name').append('$class_name');
                     })
             ";
         }
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
             $result .= "
                     var data;
                     YUI().use('json-parse', function (Y) {
@@ -119,7 +120,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
                         }
                     })
                     ";
-        } else if ( $response_type == EnumResponseType::XML ) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= "
                   var objectJson = xmltoJson(response.responseXML);
                   YUI().use('node', function (Y) {
@@ -142,7 +143,7 @@ class UtilAjaxYui extends UtilAjax implements IUtilAjax
         };
         $result .= "}";
         //</editor-fold>
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

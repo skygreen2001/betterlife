@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-后台管理的表示层 |-----------
  * @category betterlife
@@ -28,12 +29,12 @@ class AutoCodeViewAdmin extends AutoCodeView
     public static function save_layout()
     {
         $group_tables = array();
-        if ( !empty(self::$tableList) ) {
+        if (!empty(self::$tableList)) {
             foreach (self::$tableList as $tablename) {
-                if ( !contain($tablename, Config_Db::TABLENAME_RELATION . "_") ) {
+                if (!contain($tablename, Config_Db::TABLENAME_RELATION . "_")) {
                     $group = str_replace(Config_Db::$table_prefix, "", $tablename);
                     $group = substr($group, 0, strpos($group, "_"));
-                    if ( !empty( $group ) ) {
+                    if (!empty( $group )) {
                         $group_tables[$group][] = $tablename;
                     }
                 }
@@ -48,18 +49,18 @@ class AutoCodeViewAdmin extends AutoCodeView
         $icon_count = 0;
         foreach ($groups as $group) {
             $tables = $group_tables[$group];
-            if ( $icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS) ) {
+            if ($icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS)) {
                 $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[$icon_count];
             } else {
                 $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
             }
             $icon_class = "fa " . $icon_class;
-            if ( $group == Config_AutoCode::GROUP_ADMIN_MENU_CORE ) {
+            if ($group == Config_AutoCode::GROUP_ADMIN_MENU_CORE) {
                 foreach ($tables as $tablename) {
                     $table_comment  = self::tableCommentKey( $tablename );
                     $instancename   = self::getInstancename($tablename);
 
-                    if ( $icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS) ) {
+                    if ($icon_count < count(self::ADMIN_SIDEBAR_MENU_ICONS)) {
                         $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[$icon_count];
                     } else {
                         $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
@@ -71,7 +72,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $navbar_menus  .= "            <li><a href=\"{\$url_base}index.php?go=admin.$instancename.lists\">$table_comment</a></li>" . HH;
                     $icon_count++;
                 }
-            } else if ( count($tables) == 1 ) {
+            } elseif (count($tables) == 1) {
                 $tablename     = $tables[0];
                 $instancename   = self::getInstancename($tablename);
                 $table_comment  = self::tableCommentKey( $tablename );
@@ -81,7 +82,7 @@ class AutoCodeViewAdmin extends AutoCodeView
             } else {
                 $gts = Config_AutoCode::GROUP_ADMIN_MENU_TEXT;
                 $gvn = $group;
-                if ( array_key_exists($group, $gts) ) $gvn = $gts[$group];
+                if (array_key_exists($group, $gts) ) $gvn = $gts[$group];
                 $sidebar_menus .= "          <li data-role=\"dropdown\">" . HH .
                                   "            <a class=\"has-ul\" href=\"#collapse-$group\" aria-expanded=\"false\" aria-controls=\"collapse-$group\"><i class=\"$icon_class\"></i> <span>$gvn</span><i class=\"glyphicon glyphicon-menu-right menu-right\"></i></a>" . HH .
                                   "            <ul class=\"sub-menu\" id=\"collapse-$group\">" . HH;
@@ -151,11 +152,11 @@ class AutoCodeViewAdmin extends AutoCodeView
         $classNameField   = self::getShowFieldName( $classname );
         $belong_has_ones  = array();
 
-        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        if (array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0))
         {
             //从属一对一关系规范定义(如果存在)
-            if ( array_key_exists("belong_has_one", $relationSpec) )
+            if (array_key_exists("belong_has_one", $relationSpec) )
             {
                 $belong_has_one       = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
@@ -166,7 +167,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 }
             }
             //多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
+            if (array_key_exists("many_many", $relationSpec) )
             {
                 $many_many             = $relationSpec["many_many"];
                 foreach ($many_many as $key => $value) {
@@ -181,11 +182,11 @@ class AutoCodeViewAdmin extends AutoCodeView
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
-                if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
+            if (($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment )) {
+                if (in_array($fieldname, array_keys($belong_has_ones))) {
                     $show_fieldname    = $belong_has_ones[$fieldname]["s"];
                     $instancename_rela = $belong_has_ones[$fieldname]["i"];
-                    if ( $show_fieldname == "name" ) $show_fieldname = strtolower($instancename_rela) . "_" . $show_fieldname;
+                    if ($show_fieldname == "name" ) $show_fieldname = strtolower($instancename_rela) . "_" . $show_fieldname;
                     $column_contents  .= "                { data: \"" . $show_fieldname . "\" }," . HH;
                     $editMulSelColumn .= "        \$.edit.select2('#{$fieldname}', \"\", select_" . $instancename_rela . ");" . HH;
                 } else {
@@ -193,10 +194,10 @@ class AutoCodeViewAdmin extends AutoCodeView
                 }
 
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
-                if ( $isImage ) {
+                if ($isImage) {
                     $editImgColumn .= "        $.edit.fileBrowser(\"#{$fieldname}\", \"#{$fieldname}Txt\", \"#{$fieldname}Div\");" . HH;
                     $altImgVal      = $classNameField;
-                    if ( empty($altImgVal) ) $altImgVal = $realId;
+                    if (empty($altImgVal) ) $altImgVal = $realId;
                     include("template" . DS . "admin.php");
                     $imgColumnDefs .= $js_sub_template_img;
                 }
@@ -212,15 +213,15 @@ class AutoCodeViewAdmin extends AutoCodeView
                     break;
                   case 'enum':
                     $enum_columnDefine = self::enumDefines($field["Comment"]);
-                    if ( isset($enum_columnDefine ) && ( count($enum_columnDefine) > 0 ) )
+                    if (isset($enum_columnDefine ) && (count($enum_columnDefine) > 0))
                     {
                         $status_switch_show = "";
                         $color_status       = "status-fail";
                         $edit_json_enums = "";
                         foreach ($enum_columnDefine as $enum_column) {
                             $enum_val = $enum_column['value'];
-                            if ( $enum_val == '0' ) $color_status = "status-wait";
-                            if ( $enum_val == '1' ) $color_status = "status-pass";
+                            if ($enum_val == '0' ) $color_status = "status-wait";
+                            if ($enum_val == '1' ) $color_status = "status-pass";
                             $enumcomment         = $enum_column['comment'];
                             $status_switch_show .= "                      case '$enum_val':" . HH;
                             $status_switch_show .= "                        return '<span class=\"$color_status\">$enumcomment</span>';" . HH;
@@ -249,7 +250,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $row_no ++;
             }
         }
-        if ( !empty($classNameField) ) {
+        if (!empty($classNameField)) {
             $editValidRules = "                $classNameField: {" . HH .
                               "                    required: true" . HH .
                               "                }";
@@ -281,9 +282,9 @@ class AutoCodeViewAdmin extends AutoCodeView
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+            if (( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment )) {
                 $field_comment = $field["Comment"];
-                if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
+                if (contain( $field_comment, "\r" ) || contain( $field_comment, "\n"))
                 {
                     $field_comment = preg_split("/[\s,]+/", $field_comment);
                     $field_comment = $field_comment[0];
@@ -291,7 +292,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment = str_replace( "标识", "", $field_comment );
                 $field_comment = str_replace( "编号", "", $field_comment );
                 $column_contents .= "                                    <th>$field_comment</th>" . HH;
-                if ( !$isImage ) $isImage = self::columnIsImage( $fieldname, $field_comment );
+                if (!$isImage ) $isImage = self::columnIsImage( $fieldname, $field_comment );
             }
         }
         $admin_modal_img_preview = "";
@@ -331,10 +332,10 @@ class AutoCodeViewAdmin extends AutoCodeView
         $rela_js_content     = "";
 
         if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0))
         {
             //从属一对一关系规范定义(如果存在)
-            if ( array_key_exists("belong_has_one", $relationSpec) )
+            if (array_key_exists("belong_has_one", $relationSpec) )
             {
                 $belong_has_one       = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
@@ -358,7 +359,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 
 
             //多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
+            if (array_key_exists("many_many", $relationSpec) )
             {
                 $many_many             = $relationSpec["many_many"];
                 foreach ($many_many as $key => $value) {
@@ -390,16 +391,16 @@ class AutoCodeViewAdmin extends AutoCodeView
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( contain( $field_comment, "\r" ) || contain( $field_comment, "\n" ) )
+            if (contain( $field_comment, "\r" ) || contain( $field_comment, "\n"))
             {
                 $field_comment = preg_split("/[\s,]+/", $field_comment);
                 $field_comment = $field_comment[0];
             }
             $realId = DataObjectSpec::getRealIDColumnName( $classname );
-            if ( ( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+            if (( $realId != $fieldname ) && self::isNotColumnKeywork( $fieldname, $field_comment )) {
                 $isImage = self::columnIsImage( $fieldname, $field_comment );
                 $edit_contents .= "                      <div class=\"form-group\">" . HH;
-                if ( self::columnIsTextArea( $fieldname, $field["Type"] ) ) {
+                if (self::columnIsTextArea( $fieldname, $field["Type"] )) {
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment . "</label>" . HH .
                                       "                          <div class=\"col-sm-9\">" . HH .
                                       "                              <div class=\"clearfix\">" . HH .
@@ -414,7 +415,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                          "                        'background-color': '#4caf50','color': '#fff','font-family' : \"'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif\", 'font-size' : '16px'" . HH .
                                          "                    });" . HH .
                                          "                });" . HH;
-                } else if ( $isImage ) {
+                } elseif ($isImage) {
                     $hasImgFormFlag = "enctype=\"multipart/form-data\"";
                     $edit_contents .= "                          <label for=\"$fieldname\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>" . HH .
                                       "                          <div class=\"col-sm-9\">" . HH .
@@ -424,7 +425,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                                  <input type=\"file\" id=\"$fieldname\" name=\"$fieldname\" style=\"display:none;\" accept=\"image/*\" />" . HH .
                                       "                              </div>" . HH .
                                       "                          </div>" . HH;
-                } else if ( in_array($fieldname, array_keys($belong_has_ones)) ) {
+                } elseif (in_array($fieldname, array_keys($belong_has_ones))) {
                     $field_comment = str_replace( "标识", "", $field_comment );
                     $field_comment = str_replace( "编号", "", $field_comment );
                     $edit_contents .= "                          <label for=\"" . $fieldname . "\" class=\"col-sm-2 control-label\">" . $field_comment ."</label>" . HH .
@@ -433,7 +434,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                          </div>" . HH;
                 } else {
                     $datatype = self::comment_type($field["Type"]);
-                    if ( in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN) ) {
+                    if (in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN)) {
                         $edit_contents .= "                      </div>" . HH;
                         continue;
                     }
@@ -478,13 +479,13 @@ class AutoCodeViewAdmin extends AutoCodeView
             }
         }
         $edit_contents .= $rela_m2m_content;
-        if ( !empty($rela_js_content) ) {
+        if (!empty($rela_js_content)) {
             $rela_js_content = "    <script type=\"text/javascript\">" . HH .
                                $rela_js_content.
                                "    </script>" . HH;
         }
 
-        if ( !empty($ueEditor_prepare) ) {
+        if (!empty($ueEditor_prepare)) {
             $textareapreparesentence = "";
 //             $textareapreparesentence = <<<EDIT
 //     {if (\$online_editor=="CKEditor")}
@@ -500,7 +501,7 @@ class AutoCodeViewAdmin extends AutoCodeView
     {if (\$online_editor == "UEditor")}
         <script>
           $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
               $ueEditor_prepare
             }
           });
@@ -508,12 +509,12 @@ class AutoCodeViewAdmin extends AutoCodeView
     {/if}
 UETC;
         }
-        if ( !empty($edit_contents) && (strlen($edit_contents) > 2) ) {
+        if (!empty($edit_contents) && (strlen($edit_contents) > 2)) {
             $edit_contents = substr($edit_contents, 0, strlen($edit_contents) - 2);
         }
         include("template" . DS . "admin.php");
         $result = $edit_template;
-        if ( !empty($ueEditor_prepare) ) {
+        if (!empty($ueEditor_prepare)) {
             $result = $textareapreparesentence . HH . $result;
         }
         $result = self::tableToViewTplDefine( $result );
@@ -538,10 +539,10 @@ UETC;
         $classNameField = self::getShowFieldName( $classname );
 
         if (array_key_exists($classname, self::$relation_all))$relationSpec=self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0))
         {
             //多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
+            if (array_key_exists("many_many", $relationSpec) )
             {
                 $many_many             = $relationSpec["many_many"];
                 foreach ($many_many as $key => $value) {
@@ -561,10 +562,10 @@ UETC;
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+            if (($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment )) {
                 $field_comment = $field["Comment"];
                 $isImage       = self::columnIsImage( $fieldname, $field_comment );
-                if ( contain($field_comment,"\r") || contain($field_comment,"\n") )
+                if (contain($field_comment,"\r") || contain($field_comment,"\n") )
                 {
                     $field_comment = preg_split("/[\s,]+/", $field_comment);
                     $field_comment = $field_comment[0];
@@ -581,17 +582,17 @@ UETC;
                       break;
                 }
 
-                if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+                if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0))
                 {
-                    if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                    if (array_key_exists($classname, self::$relation_viewfield)) {
                         $relationSpecs  = self::$relation_viewfield[$classname];
-                        if ( array_key_exists($fieldname, $relationSpecs) ) {
+                        if (array_key_exists($fieldname, $relationSpecs)) {
                             $relationShow = $relationSpecs[$fieldname];
-                            foreach ( $relationShow as $key => $value ) {
+                            foreach ( $relationShow as $key => $value) {
                                 $talname_rela   = self::getTablename( $key );
                                 $insname_rela   = self::getInstancename( $talname_rela );
                                 $classNameField = self::getShowFieldNameByClassname( $key, true );
-                                if ( empty($classNameField) ) $classNameField = $realId;
+                                if (empty($classNameField) ) $classNameField = $realId;
                                 $showColName   = $insname_rela . "." . $classNameField;
                                 $field_comment = str_replace( "标识", "", $field_comment );
                                 $field_comment = str_replace( "编号", "", $field_comment );
@@ -602,10 +603,10 @@ UETC;
 
                 $showColumns .= "                    <dl>" . HH;
                 $showColumns .= "                      <dt><span>$field_comment</span></dt>" . HH;
-                if ( $isImage ) {
+                if ($isImage) {
                     $showColumns .= "                      <dd>" . HH;
                     $showColumns .= "                        {if $$instancename.$showColName}" . HH;
-                    if ( empty($classNameField) ) $classNameField = $realId;
+                    if (empty($classNameField) ) $classNameField = $realId;
                     $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$classNameField}\" /></a></span><br>" . HH;
                     $showColumns .= "                        <span>存储路径:</span><br><span>{\$$instancename.$showColName}</span>" . HH;
                     $showColumns .= "                        {else}" . HH;

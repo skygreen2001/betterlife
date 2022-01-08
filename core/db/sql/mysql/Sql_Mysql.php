@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 使用PHP5自带的MySQL Extension |-----------
  * @category betterlife
@@ -23,13 +24,13 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null) {
         $connecturl = Config_Mysql::connctionurl( $host, $port );
-        if ( !isset($username) ) {
+        if (!isset($username)) {
             $username = Config_Mysql::$username;
         }
-        if ( !isset($password) ) {
+        if (!isset($password)) {
             $password = Config_Mysql::$password;
         }
-        if ( !isset($dbname) ) {
+        if (!isset($dbname)) {
             $dbname = Config_Mysql::$dbname;
         }        
         $this->connection = mysql_connect($connecturl, $username, $password);
@@ -59,11 +60,11 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      * 删除一条数据记录
      * @param int $sql_id 需删除数据的ID编号Sql语句
      * @example 示例如下:
-     * 
+     *
      *     $sql_id:
-     * 
+     *
      *         user_id=1
-     * 
+     *
      * @param string $tablename 表名称
      * @example 示例如下:
      * ```
@@ -82,11 +83,11 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      * 修改一条数据记录
      * @param int $sql_id 需删除数据的ID编号Sql语句
      * @example 示例如下:
-     * 
+     *
      *     $sql_id:
-     * 
+     *
      *         user_id=1
-     * 
+     *
      * @param array $data 数据数组
      * @return boolean:是否修改成功
      * @example 示例:

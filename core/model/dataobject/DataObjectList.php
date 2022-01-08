@@ -1,9 +1,10 @@
 <?php
+
 /**
  * -----------| 对象列表容器 |-----------
- * 
+ *
  * 参考java.util.ArrayList的方法命名定义
- * 
+ *
  * 改造成为对象列表容器。
  * @category betterlife
  * @package core.model
@@ -12,7 +13,7 @@
 class DataObjectList extends ArrayObject implements IteratorAggregate {
 
     public function __construct($array = null) {
-        if ( empty($array) ) {
+        if (empty($array)) {
             $array = array();
         }
         parent::__construct($array);
@@ -20,12 +21,12 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
 
     /**
      * 获取列表所有对象的ID列表
-     * 
+     *
      * 对象按规范必需有ID字段
      * @return array
      */
     public function getIdList() {
-        if ( $this->count() > 0 ) {
+        if ($this->count() > 0) {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
             $list    = array();
@@ -55,7 +56,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
 
     /**
      * 查看列表指定索引的对象
-     * 
+     *
      * 索引从0开始
      * @param int $index
      */
@@ -111,7 +112,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      * @return string xml文档
      */
     public function toXml() {
-        if ( $this->count() > 0 ) {
+        if ($this->count() > 0) {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
             $dataobjectsArr = array();
@@ -132,7 +133,7 @@ class DataObjectList extends ArrayObject implements IteratorAggregate {
      * @return string xml文档
      */
     public function toJson() {
-        if ( $this->count() > 0) {
+        if ($this->count() > 0) {
             $object  = $this[0];
             $id_name = DataObjectSpec::getRealIDColumnName( $object );
             $dataobjectsArr = array();

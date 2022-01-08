@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Microsoft ODBC方案 的配置类 |-----------
  * @category betterlife
@@ -6,12 +7,13 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Odbc extends Config_Db {
+class Config_Odbc extends Config_Db
+{
     /**
      * 返回ODBC所需的dsn_less字符串
-     * 
+     *
      * 说明:
-     * 
+     *
      *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
      * @param string $host
      * @param string $dbname 
@@ -41,11 +43,10 @@ class Config_Odbc extends Config_Db {
      * @return string dsn ODBC所需的dsn字符串
      */
     public static function dsn($dbname = null) {
-        if ( isset($dbname) ) {
+        if (isset($dbname)) {
             return $dbname;
         } else {
             return Config_Db::$dbname;
         }  
     }
 }
-?>

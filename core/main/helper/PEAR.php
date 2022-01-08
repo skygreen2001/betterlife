@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| PEAR, the PHP Extension and Application Repository |-----------
  *
@@ -492,11 +493,11 @@ class PEAR
             isset($this->_expected_errors) &&
             count($this->_expected_errors) > 0 &&
             count($exp = end($this->_expected_errors))
-        ) {
+       ) {
             if ($exp[0] == "*" ||
                 (is_int(reset($exp)) && in_array($code, $exp)) ||
                 (is_string(reset($exp)) && in_array($message, $exp))
-            ) {
+           ) {
                 $mode = PEAR_ERROR_RETURN;
             }
         }
@@ -707,7 +708,7 @@ class PEAR
             function_exists('dl') === false ||
             ini_get('enable_dl') != 1 ||
             ini_get('safe_mode') == 1
-        ) {
+       ) {
             return false;
         }
 
@@ -770,7 +771,7 @@ function _PEAR_call_destructors()
         isset($GLOBALS['_PEAR_shutdown_funcs']) &&
         is_array($GLOBALS['_PEAR_shutdown_funcs']) &&
         !empty($GLOBALS['_PEAR_shutdown_funcs'])
-    ) {
+   ) {
         foreach ($GLOBALS['_PEAR_shutdown_funcs'] as $value) {
             call_user_func_array($value[0], $value[1]);
         }

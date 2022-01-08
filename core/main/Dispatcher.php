@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 负责WEB URL的转发 |-----------
  * @category betterlife
@@ -20,22 +21,22 @@ class Dispatcher
      */
     public static function dispatch($router)
     {
-        if ( Gc::$dev_profile_on ) Profiler::mark( Wl::LOG_INFO_PROFILE_WEBURL );
+        if (Gc::$dev_profile_on ) Profiler::mark( Wl::LOG_INFO_PROFILE_WEBURL );
         $isValidRequet = false;
         $controller    = $router->getController();
-        if ( $controller == Router::URL_DEFAULT_CONTROLLER ) {
+        if ($controller == Router::URL_DEFAULT_CONTROLLER) {
             include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
             return;
         }
         $moduleName = $router->getModule();
-        if ( $moduleName && array_key_exists($moduleName, Initializer::$moduleFiles) ) {
+        if ($moduleName && array_key_exists($moduleName, Initializer::$moduleFiles)) {
             $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
             include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
             return;
         }
         $action_controller = ActionBasic::ROUTINE_CLASS_PREFIX . ucfirst($controller);
-        if ( array_key_exists($action_controller, $moduleFile) ) {
+        if (array_key_exists($action_controller, $moduleFile)) {
             require_once($moduleFile[$action_controller]);
             /**
              * 当前运行的控制器Action Controller
@@ -43,12 +44,12 @@ class Dispatcher
             $current_action = new $action_controller($moduleName);
 
             $view = self::modelBindView( $moduleName, $router, $current_action );
-            if ( $current_action->isRedirected ) {
+            if ($current_action->isRedirected) {
                 $isValidRequet = true;
                 //break;
             } else {
                 $output = self::output( $moduleName, $router, $current_action );
-                if ( self::$isOutputStatic ) {
+                if (self::$isOutputStatic) {
                     $output = render_tag($output);
                     return $output;
                 } else {
@@ -57,7 +58,7 @@ class Dispatcher
                 $isValidRequet = true;
             }
         } else {
-            if ( !is_dir($index_dir . "action") && file_exists($index_dir . "index.php") ) {
+            if (!is_dir($index_dir . "action") && file_exists($index_dir . "index.php")) {
                 header("location:" . Gc::$url_base . Gc::$module_root . "/" . $moduleName . "/index.php");
                 die();
             }
@@ -65,11 +66,11 @@ class Dispatcher
             include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
             return;
         }
-        if ( !$isValidRequet ) {
+        if (!$isValidRequet) {
             LogMe::record(Wl::ERROR_INFO_CONTROLLER_UNKNOWN);
         }
-        if ( Gc::$dev_profile_on ) Profiler::unmark( Wl::LOG_INFO_PROFILE_WEBURL );
-        if ( Gc::$dev_profile_on ) {
+        if (Gc::$dev_profile_on ) Profiler::unmark( Wl::LOG_INFO_PROFILE_WEBURL );
+        if (Gc::$dev_profile_on) {
             Profiler::unmark( Wl::LOG_INFO_PROFILE_RUN );
             Profiler::show( true );
         }
@@ -86,7 +87,7 @@ class Dispatcher
         $action     = $router->getAction();
         $extras     = $router->getExtras();
         $data       = $router->getData();
-        if ( method_exists($current_action, "setData") ) {
+        if (method_exists($current_action, "setData")) {
             $current_action->setData( $data );
         } else {
             die("请检查控制器定义类是否继承了Action!");
@@ -98,8 +99,8 @@ class Dispatcher
         $templateFile = $controller . DS . $action;
         $view         = Loader::load( Loader::CLASS_VIEW, $moduleName, $templateFile );
 
-        if ( self::$isOutputStatic ) {
-            if ( ($view != null ) && ( $view->viewObject != null ) ) {
+        if (self::$isOutputStatic) {
+            if (($view != null ) && ($view->viewObject != null )) {
                 $view->viewObject->css_ready = "";
                 $view->viewObject->js_ready  = "";
             }
@@ -108,22 +109,22 @@ class Dispatcher
         }
         $current_action->setView( $view );
         ob_end_clean();
-        if ( method_exists($current_action, $action) ) {
-            if ( method_exists($current_action, "beforeAction") ) {
+        if (method_exists($current_action, $action)) {
+            if (method_exists($current_action, "beforeAction")) {
                 $current_action->beforeAction();
             }
             $response = $current_action->$action();
-            if ( method_exists($current_action, "afterAction") ) {
+            if (method_exists($current_action, "afterAction")) {
                 $current_action->afterAction();
             }
-            if ( get_class($current_action) == "Action_Ajax" ) die();
+            if (get_class($current_action) == "Action_Ajax" ) die();
             // ajax请求 返回json数据对象
-            if ( $response && is_string($response) && json_decode($response) ) {
+            if ($response && is_string($response) && json_decode($response)) {
                 echo $response;
                 die();
             }
             // ajax请求 返回数组
-            if ( is_array($response) || is_object($response) ) {
+            if (is_array($response) || is_object($response)) {
                 echo json_encode($response);
                 die();
             }
@@ -148,14 +149,14 @@ class Dispatcher
         $action     = $router->getAction();
         $templateFile    = $controller . DS . $action;//模板文件路径名称
         $controller_path = $router->getController_path();
-        if ( !empty($controller_path) ) {
-            if ( endWith( $controller_path, DS ) ) {
+        if (!empty($controller_path)) {
+            if (endWith( $controller_path, DS )) {
                 $templateFile = $controller_path . $templateFile;
             } else {
                 $templateFile = $controller_path . DS . $templateFile;
             }
         }
-        if ( !file_exists(Gc::$nav_root_path . $view->template_dir() . $templateFile . $view->template_suffix_name()) ) {
+        if (!file_exists(Gc::$nav_root_path . $view->template_dir() . $templateFile . $view->template_suffix_name())) {
             throw new Exception(" view/{$controller}" . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $action . $view->template_suffix_name() . "'");
         }
         $view->output($templateFile, $view->templateMode(), $current_action);
@@ -173,9 +174,9 @@ class Dispatcher
     {
         //多行URL地址支持
         $url = str_replace(array("\n", "\r"), '', $url);
-        if ( empty($msg) )
+        if (empty($msg) )
             $msg =  Wl::INFO_REDIRECT_PART1 . $time . Wl::INFO_REDIRECT_PART2 . $url;
-        if ( !headers_sent() ) {
+        if (!headers_sent()) {
             // redirect
             if (0 === $time) {
                 header("Location: " . $url);
@@ -186,7 +187,7 @@ class Dispatcher
             exit();
         } else {
             $str = "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
-            if ( $time != 0 )
+            if ($time != 0 )
                 $str .= $msg;
             exit ($str);
         }

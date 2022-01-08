@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------|所有SQL查询的父类 |-----------
  * @category betterlife

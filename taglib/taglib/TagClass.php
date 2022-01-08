@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Parent Class of all tags
  *
@@ -14,7 +15,7 @@ abstract class TagClass {
     function __construct($tagname, $attributesDesc, $content = null) {
         $this->tagname = $tagname;
         $this->attributesDesc = $attributesDesc;
-        if ( !empty($content) ) {
+        if (!empty($content)) {
           $this->content = $content;
         }
         $this->setHtml();

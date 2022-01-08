@@ -26,7 +26,7 @@ p {
 echo "系统信息:" . $os . "<br/>";
 echo "PHP版本:" . $phpver . "<br/>";
 
-if ( contain( $os, "Windows" ) ) {
+if (contain( $os, "Windows" )) {
     echo "您使用的是Windows系统<br/>";
     echo "[以下以wamp进行说明]<br/>安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
@@ -37,7 +37,7 @@ if ( contain( $os, "Windows" ) ) {
     echo "extension = php_mysqli.dll<br/>" . str_repeat("&nbsp;",30);
     echo "extension = php_gd2.dll<br/>" . str_repeat("&nbsp;",12);
     echo "* . 重启 wamp<br/>";
-} else if ( contain( $os, "darwin" ) ) {
+} elseif (contain( $os, "darwin" )) {
     echo "您使用的是MacOS系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     // echo "需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",12);
@@ -67,7 +67,7 @@ APACHECONFIG;
         echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod -R 0777 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if ( empty(Gc::$log_config["logpath"]) ) {
+    if (empty(Gc::$log_config["logpath"])) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];
@@ -77,13 +77,13 @@ APACHECONFIG;
     echo "sudo mkdir -p " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     echo "sudo chmod -R 0777 " . $destination . "<br/>" . str_repeat("&nbsp;",12);
     echo "* . 重启apache : sudo apachectl restart";
-} else if ( contain( $os, "ubuntu" ) ) {
+} elseif (contain( $os, "ubuntu" )) {
     echo "您使用的是Ubuntu系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
     echo "php_gd|php_curl|php_mbstring|php_mysqli<br/>" . str_repeat("&nbsp;",12);
     echo "* . 服务器下执行:<br/>" . str_repeat("&nbsp;",30);
-    if ( $phpver >= 7 ) {
+    if ($phpver >= 7) {
         $pos1 = strpos($phpver, ".");
         $pos2 = strpos($phpver, ".", $pos1 + strlen("."));
         $pi= substr($phpver, 0, $pos2);
@@ -102,7 +102,7 @@ APACHECONFIG;
         echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if ( empty(Gc::$log_config["logpath"]) ) {
+    if (empty(Gc::$log_config["logpath"])) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];
@@ -114,7 +114,7 @@ APACHECONFIG;
     echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     echo "sudo chmod -R 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",12);
     echo "* . 重启apache : sudo service apache2 restart";
-} else if ( contain( $os, "linux" ) ) {
+} elseif (contain( $os, "linux" )) {
     echo "您使用的是linux系统<br/>";
     echo "安装提示如下:<br/>" . str_repeat("&nbsp;",12);
     echo "* . 需要安装PHP模块如下:<br/>" . str_repeat("&nbsp;",30);
@@ -130,7 +130,7 @@ APACHECONFIG;
         echo "sudo chown -R www-data:www-data " . $destination . "<br/>" . str_repeat("&nbsp;",30);
         echo "sudo chmod 0755 " . $destination . "<br/>" . str_repeat("&nbsp;",30);
     }
-    if ( empty(Gc::$log_config["logpath"]) ) {
+    if (empty(Gc::$log_config["logpath"])) {
         Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
     }
     $destination = Gc::$log_config["logpath"];

@@ -1,11 +1,13 @@
 <?php
+
 /**
  * -----------| 所有枚举类型的父类 |-----------
  * @category betterlife
  * @package core
  * @author skygreen
  */
-class Enum {
+class Enum
+{
     /**
      * 获取所有的枚举值
      */
@@ -21,12 +23,12 @@ class Enum {
      * @return bool 指定的枚举值是否存在
      */
     public static function isEnumValue($value) {
-       if ( !empty($value) ) {
+       if (!empty($value)) {
            $class  = new ReflectionClass( get_called_class() );
            $consts = $class->getConstants();
            //$consts= self::allEnums();
-           if ( isset($consts) ) {
-                if ( in_array($value, $consts) ) {
+           if (isset($consts)) {
+                if (in_array($value, $consts)) {
                    return true;
                 }
            }
@@ -40,10 +42,10 @@ class Enum {
      * @return bool 指定的枚举键是否存在
      */
     public static function isEnumKey($key) {
-        if ( !empty($key) ) {
+        if (!empty($key)) {
             $consts = self::allEnums();
-            if ( isset($consts) ) {
-                if ( array_key_exists($key,$consts) ) {
+            if (isset($consts)) {
+                if (array_key_exists($key,$consts)) {
                     return true;
                 }
             }
@@ -58,20 +60,20 @@ class Enum {
      */
     public static function propertyShow($data, $property_name) {
         $class_name = get_called_class();
-        if ( !empty($class_name) )
+        if (!empty($class_name) )
         {
             $class_property_name = array($class_name);
-            if ( is_string($property_name) )
+            if (is_string($property_name) )
             {
                 $class_property_name[] = $property_name;
-            } else if ( is_array($property_name) ) {
+            } elseif (is_array($property_name)) {
                 $class_property_name = array_merge($class_property_name, $property_name);
             }
-            if ( is_array($data) && ( count($data) > 0) ) {
+            if (is_array($data) && (count($data) > 0)) {
                 foreach ($data as $record) {
                     array_walk($record, array("Enum", 'property_alter'), $class_property_name);
                 }
-            } else if ( is_object($data) ) {
+            } elseif (is_object($data)) {
                 unset($class_property_name[0]);
                 foreach ($class_property_name as $property_name)
                 {
@@ -93,7 +95,7 @@ class Enum {
         unset($class_property_name[0]);
         foreach ($class_property_name as $property_name)
         {
-            if ( is_string($key) && ( $key === $property_name ) ) {
+            if (is_string($key) && ($key === $property_name )) {
                 $static_method_name = $property_name . "Show";
                 $item = call_user_func($enum_name . "::" . $static_method_name, $item);
             }
@@ -104,7 +106,8 @@ class Enum {
 /**
  * 日志记录方式
  */
-class EnumLogType extends Enum{
+class EnumLogType extends Enum
+{
     /**
      * 默认。根据在 php.ini 文件中的 error_log 配置，错误被发送到服务器日志系统或文件。
      */

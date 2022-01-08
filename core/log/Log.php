@@ -1,9 +1,10 @@
 <?php
+
 /**
  * -----------| 采用了Pear Log日志框架 |-----------
- * 
+ *
  * PEAR Log包是一个抽象的日志架构，它具有用于文件、数据库、系统日志、电子邮件、Firebug和控制台的挂钩。
- * 
+ *
  * @package Log
  * @link http://pear.php.net/Log/
  * @author Jon Parise <jon@php.net>
@@ -410,14 +411,14 @@ class Log
         if (is_object($message)) {
             if (method_exists($message, 'getmessage')) {
                 $message = $message->getMessage();
-            } else if (method_exists($message, 'tostring')) {
+            } elseif (method_exists($message, 'tostring')) {
                 $message = $message->toString();
-            } else if (method_exists($message, '__tostring')) {
+            } elseif (method_exists($message, '__tostring')) {
                 $message = (string)$message;
             } else {
                 $message = var_export($message, true);
             }
-        } else if (is_array($message)) {
+        } elseif (is_array($message)) {
             if (isset($message['message'])) {
                 if (is_scalar($message['message'])) {
                     $message = $message['message'];
@@ -427,7 +428,7 @@ class Log
             } else {
                 $message = var_export($message, true);
             }
-        } else if (is_bool($message) || $message === NULL) {
+        } elseif (is_bool($message) || $message === NULL) {
             $message = var_export($message, true);
         }
 

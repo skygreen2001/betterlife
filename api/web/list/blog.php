@@ -10,7 +10,7 @@ $columns      = $_GET["columns"];
 $where_clause = "";
 $orderDes     = "blog_id desc";
 
-if ( !empty($query) ) {
+if (!empty($query)) {
     $where_clause = "(";
     $search_atom  = explode(" ", trim($query));
     array_walk($search_atom, function(&$value, $key) {
@@ -22,8 +22,8 @@ if ( !empty($query) ) {
 
 foreach ($columns as $key => $column) {
     $column_search_value = $column["search"]["value"];
-    if ( $column_search_value != "" ) {
-        if ( !empty($where_clause) ) {
+    if ($column_search_value != "") {
+        if (!empty($where_clause)) {
             $where_clause .= " and ";
         }
         $where_clause .= " " . $column["data"] . "='" . $column_search_value . "' ";
@@ -32,18 +32,18 @@ foreach ($columns as $key => $column) {
 
 $pageBlogs = Blog::queryPageByPageNo( $page, $where_clause, $page_size, $orderDes );
 $data      = $pageBlogs["data"];
-if ( $data ) {
+if ($data) {
     foreach ($data as $key => $blog) {
-        if ( !empty($blog->user_id) ) {
+        if (!empty($blog->user_id)) {
             $user_i = User::get_by_id($blog->user_id);
-            if ( $user_i ) $blog->username = $user_i->username;
+            if ($user_i ) $blog->username = $user_i->username;
         }
-        if ( !empty($blog->category_id) ) {
+        if (!empty($blog->category_id)) {
             $category_i = Category::get_by_id($blog->category_id);
-            if ( $category_i ) $blog->category_name = $category_i->name;
+            if ($category_i ) $blog->category_name = $category_i->name;
         }
 
-        if ( !empty($blog->icon_url) ) {
+        if (!empty($blog->icon_url)) {
             $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
 * @see http://mrthink.net/ue-php-gzip-function/
 */
@@ -6,7 +7,7 @@ require_once(dirname(__FILE__) . "/../../../../../init.php");
 
 UtilAjax::init();
 
-if ( extension_loaded('zlib') ) {//检查服务器是否开启了zlib拓展
+if (extension_loaded('zlib')) {//检查服务器是否开启了zlib拓展
     ob_start('ob_gzhandler');
 }
 header("Cache-Control: must-revalidate");
@@ -23,11 +24,11 @@ $cssFile = @$_GET['css'];
 $group   = @$_GET['g'];
 $version = @$_GET['v'];
 
-if ( isset($jsFile) ) {
-    if ( contain( $jsFile, "?" ) ) $jsFile = substr($jsFile, 0, strpos($jsFile, "?") );
-    if ( !endWith( $jsFile, ".js" ) ) return;
+if (isset($jsFile)) {
+    if (contain( $jsFile, "?")) $jsFile = substr($jsFile, 0, strpos($jsFile, "?") );
+    if (!endWith( $jsFile, ".js")) return;
     header("Content-type: text/javascript; charset: UTF-8");
-    if ( EnumJsFramework::isEnumValue( $group ) ) {
+    if (EnumJsFramework::isEnumValue( $group )) {
         $ajax_root = Gc::$nav_root_path . "misc" . DS . "js" . DS . "ajax" . DS;
         $jsFile    = str_replace("/", DS, $jsFile);
         switch ($group) {
@@ -43,7 +44,7 @@ if ( isset($jsFile) ) {
                 include($ajax_root . $group . DS . $group . ".js");
                 break;
             case EnumJsFramework::JS_FW_EXTJS:
-                if ( $version < 4 ) {
+                if ($version < 4) {
                     $ext_root = $ajax_root . "ext" . DS;
                 } else {
                     $ext_root = $ajax_root . "ext4" . DS;
@@ -54,10 +55,10 @@ if ( isset($jsFile) ) {
         }
     } else {
         $url_base = UtilNet::urlbase();
-        if ( contain( $jsFile, $url_base ) ) {
+        if (contain( $jsFile, $url_base )) {
             $jsFile       = str_replace($url_base, "", $jsFile);
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if ( contain( $file_sub_dir, Gc::$nav_root_path ) ) {
+            if (contain( $file_sub_dir, Gc::$nav_root_path )) {
                 $jsFile = Gc::$nav_root_path . $jsFile;
             } else {
                 $jsFile = $_SERVER["DOCUMENT_ROOT"] . "/" . $jsFile;
@@ -68,16 +69,16 @@ if ( isset($jsFile) ) {
     }
 }
 
-if ( isset($cssFile) ) {
-    if ( contain( $cssFile, "?" ) ) $cssFile = substr($cssFile, 0, strpos($cssFile, "?"));
-    if ( !endWith($cssFile, ".css" ) ) return;
+if (isset($cssFile)) {
+    if (contain( $cssFile, "?")) $cssFile = substr($cssFile, 0, strpos($cssFile, "?"));
+    if (!endWith($cssFile, ".css")) return;
     header("Content-type: text/css; charset: UTF-8");
-    if ( EnumJsFramework::isEnumValue( $group ) ) {
+    if (EnumJsFramework::isEnumValue( $group )) {
         $ajax_root = Gc::$nav_root_path . "misc" . DS . "js" . DS . "ajax" . DS;
         $cssFile   = str_replace("/", DS, $cssFile);
         switch ($group) {
             case EnumJsFramework::JS_FW_EXTJS:
-                if ( $version < 4 ) {
+                if ($version < 4) {
                     $ext_root = $ajax_root . "ext" . DS;
                 } else {
                     $ext_root = $ajax_root . "ext4" . DS;
@@ -87,10 +88,10 @@ if ( isset($cssFile) ) {
         }
     } else {
         $url_base = UtilNet::urlbase();
-        if ( contain( $cssFile, $url_base ) ) {
+        if (contain( $cssFile, $url_base )) {
             $cssFile      = str_replace($url_base, "", $cssFile);
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if ( contain( $file_sub_dir, Gc::$nav_root_path ) ) {
+            if (contain( $file_sub_dir, Gc::$nav_root_path )) {
                 $cssFile = Gc::$nav_root_path . $cssFile;
             } else {
                 $cssFile = $_SERVER["DOCUMENT_ROOT"] . "/" . $cssFile;
@@ -101,8 +102,8 @@ if ( isset($cssFile) ) {
     }
 }
 
-if ( extension_loaded("zlib") ) {
-    if ( Gc::$is_online_optimize ) {
+if (extension_loaded("zlib")) {
+    if (Gc::$is_online_optimize) {
         $result = ob_get_clean();
         $result = UtilString::online_optimize( $result );
         echo $result;

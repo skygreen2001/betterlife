@@ -1,14 +1,14 @@
 <?php
     require_once("../../init.php");
     $urlbase = UtilNet::urlbase();
-    if ( contain( strtolower(php_uname()), "darwin" ) ) {
+    if (contain( strtolower(php_uname()), "darwin" )) {
         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-        if ( contain( $file_sub_dir, "tools" . DS ) )
+        if (contain( $file_sub_dir, "tools" . DS))
             $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
         $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-        if ( !endwith( $urlbase, $domainSubDir ) ) $urlbase .= $domainSubDir;
+        if (!endwith( $urlbase, $domainSubDir)) $urlbase .= $domainSubDir;
     }
-    if ( isset($_POST) && isset($_POST["code"]) ) {
+    if (isset($_POST) && isset($_POST["code"])) {
         $code = $_POST["code"];
         $file = $_GET["f"];
         file_put_contents($file, $code);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户日志 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Loguser extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Loguser extends ActionModel
         $count = Loguser::count();
         $this->view->countLogusers = $count;
         $logusers = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $logusers = Loguser::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Loguser extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $loguser = $this->model->Loguser;
             $id         = $loguser->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $loguser->update();
             } else {
                 $id = $loguser->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "loguser", "view", "id=$id" );
                 exit;
             }

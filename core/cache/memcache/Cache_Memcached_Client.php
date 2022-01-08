@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 使用memcached作为系统缓存 |-----------
  * @see PHP & memcached:http://www.nioxiao.com/php-memcached
@@ -49,7 +50,7 @@ class Cache_Memcached_Client extends Cache_Base
 
     public function Cache_Memcached_Client()
     {
-        if ( !class_exists('Memcached_Client') ) {
+        if (!class_exists('Memcached_Client')) {
             LogMe::log('请检查是否加载Memcached', EnumLogLevel::ERR);
         }
         $servers = array();
@@ -60,13 +61,13 @@ class Cache_Memcached_Client extends Cache_Base
             $servers[] = $cache_server[0] . ":" . $cache_server[1];
         }
         $config['servers'] = $servers;
-        if ( Config_Memcache::$is_compressed ) {
+        if (Config_Memcache::$is_compressed) {
            $config['compress_threshold'] = 10240;
         }
         $config['debug'] = Gc::$dev_debug_on;
         $config['persistant'] = Config_Memcache::$is_persistant;
         $this->obj = new Memcached_Client($config);
-//        if ( !$this->obj->connect($host, $port) ) {
+//        if (!$this->obj->connect($host, $port)) {
 //            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port , EnumLogLevel::ERR );
 //        }
 
@@ -80,9 +81,9 @@ class Cache_Memcached_Client extends Cache_Base
      */
     public function contains($key)
     {
-        if ( isset($this->obj) ) {
+        if (isset($this->obj)) {
             $tmp = $this->get($key);
-           if ( !empty($tmp) ) {
+           if (!empty($tmp)) {
              return true;
            }
         }
@@ -91,7 +92,7 @@ class Cache_Memcached_Client extends Cache_Base
 
     /**
      * 在缓存里保存指定$key的数据
-     * 
+     *
      * 仅当存储空间中不存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
@@ -105,7 +106,7 @@ class Cache_Memcached_Client extends Cache_Base
 
     /**
      * 在缓存里保存指定$key的数据
-     * 
+     *
      * 与save和update不同，无论何时都保存
      * @param string $key
      * @param string|array|object $value
@@ -119,7 +120,7 @@ class Cache_Memcached_Client extends Cache_Base
 
     /**
      * 在缓存里更新指定key的数据
-     * 
+     *
      * 仅当存储空间中存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
@@ -154,7 +155,7 @@ class Cache_Memcached_Client extends Cache_Base
 
     /**
      * 获取指定keys的值们。
-     * 
+     *
      * 允许一次查询多个键值，减少通讯次数。
      * @param array $key
      * @return array

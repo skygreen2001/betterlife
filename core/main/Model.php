@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 用于MVC框架中单例实例化一个对象并对其进行管理 |-----------
  * @category betterlife
@@ -29,11 +30,11 @@ class Model {
     public function __get($model) {
         $isExistModel = false;
         foreach (Initializer::$moduleFiles as $moduleFile) {
-            if ( array_key_exists($model, $moduleFile) ) {
+            if (array_key_exists($model, $moduleFile)) {
                 include_once($moduleFile[$model]);
-                if ( empty($this->loaded[$model]) ) {
+                if (empty($this->loaded[$model])) {
                     $instance_model = new $model();
-                    if ( $instance_model instanceof DataObject ) {
+                    if ($instance_model instanceof DataObject) {
                         $this->loaded[$model] = $instance_model;
                     } else {
                         throw new Exception("{$model}" . Wl::ERROR_INFO_EXTENDS_CLASS);
@@ -45,7 +46,7 @@ class Model {
                 return $modelobj;
             }
         }
-        if ( !$isExistModel ) {
+        if (!$isExistModel) {
            x( Wl::ERROR_INFO_MODEL_EXISTS . " {$model}" );
         }
     }
@@ -68,7 +69,7 @@ class Model {
      * @return array 
      */
     private function getData() {
-        if ( empty($this->action) ) {
+        if (empty($this->action)) {
             $this->data = array_merge($_POST, $_GET);
         } else {
             $this->data = $this->action->getData();

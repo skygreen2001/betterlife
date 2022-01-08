@@ -171,7 +171,7 @@ class Console_Getopt {
                     if ($i + 1 < strlen($arg)) {
                         $opts[] = array($opt,  substr($arg, $i + 1));
                         break;
-                    } else if (list(, $opt_arg) = each($args)) {
+                    } elseif (list(, $opt_arg) = each($args)) {
                         /* Else use the next argument. */;
                         if (Console_Getopt::_isShortOpt($opt_arg) || Console_Getopt::_isLongOpt($opt_arg)) {
                             return PEAR::raiseError("Console_Getopt: option requires an argument -- $opt");
@@ -252,7 +252,7 @@ class Console_Getopt {
                         return PEAR::raiseError("Console_Getopt: option requires an argument --$opt");
                     }
                 }
-            } else if ($opt_arg) {
+            } elseif ($opt_arg) {
                 return PEAR::raiseError("Console_Getopt: option --$opt doesn't allow an argument");
             }
 

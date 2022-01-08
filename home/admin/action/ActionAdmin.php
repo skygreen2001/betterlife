@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 后台管理所有控制器的父类 |-----------
  * @category betterlife
@@ -19,7 +20,7 @@ class ActionAdmin extends ActionBasic
             "admin.auth.login"
         );
 
-        if ( !in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' ) ) {
+        if (!in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' )) {
             $this->redirect("auth","login");
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 //
 // +---------------------------------------------------------------------------+
 // | memcached client, PHP                                                     |
@@ -43,7 +44,7 @@
  * Usage example:
  *
  * require_once 'memcached.php';
- * 
+ *
  * $mc = new memcached(array(
  *              'servers' => array('127.0.0.1:10000', 
  *                                 array('192.0.0.1:10010', 2),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 读取Yaml配置文件类 |-----------
  * @category betterlife
@@ -9,7 +10,7 @@
 class UtilConfigYaml extends UtilConfig{
     
     public function load($file) {
-        if ( file_exists($file) == false ) { return false; }
+        if (file_exists($file) == false) { return false; }
         $this->_settings = Spyc::YAMLLoad($file);
     }
 

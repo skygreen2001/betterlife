@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 通知 |-----------
  * @category betterlife

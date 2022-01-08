@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 仅供使用Smarty模板开发使用生成全网站静态
  */
@@ -20,7 +21,7 @@ Dispatcher::$isOutputStatic = true;
  */
 Gc::$is_online_optimize     = true;
 
-if ( Gc::$dev_profile_on ) {
+if (Gc::$dev_profile_on) {
     Profiler::init();
     Profiler::mark( "生成首页" );
     echo "/" . str_repeat("*", 40) . UtilDateTime::now() . ":生成首页" . str_repeat("*", 40) . "<br/>";
@@ -28,11 +29,11 @@ if ( Gc::$dev_profile_on ) {
 
 createOneStaticHtmlPage( "model.index.index", $html_dir . "index.html" );
 
-if ( Gc::$dev_profile_on ) {
+if (Gc::$dev_profile_on) {
     Profiler::unmark( "生成首页" );
 }
 
-if ( Gc::$dev_profile_on ) {
+if (Gc::$dev_profile_on) {
     Profiler::show();
 }
 echo "全部静态页面生成!";
@@ -54,7 +55,7 @@ function createOneStaticHtmlPage($go, $htmlfilename, $go_param = null)
  */
 function replaceBlogDetailLink($content)
 {
-    if ( !empty($content) ) {
+    if (!empty($content)) {
         $content = preg_replace("/index.php[?]go=model.blog.view&blog_id=(\d+)/i", "html/blog_\\1.html", $content);
     }
     return $content;
@@ -68,10 +69,10 @@ function replaceBlogDetailLink($content)
 function runphp($go, $pararm = null)
 {
     $_GET["go"] = $go;
-    if ( is_string($pararm) ) {
+    if (is_string($pararm)) {
         parse_str($pararm, $pararm);
     }
-    if ( is_array($pararm) ) {
+    if (is_array($pararm)) {
         foreach ($pararm as $key => $value) {
             $_GET[$key] = $value;
         }
@@ -80,9 +81,9 @@ function runphp($go, $pararm = null)
      * @var string
      */
     $result = Dispatcher::dispatch( new Router() );
-    if ( !empty($result) ) {
-        if ( Gc::$is_online_optimize ) {
-            if ( contain( $result, "<body" ) ) {
+    if (!empty($result)) {
+        if (Gc::$is_online_optimize) {
+            if (contain( $result, "<body" )) {
                /************************start:整个Html页面去除注释，换行，空格********************/
                 $result = preg_replace("/<\!--(.*?)-->/", "", $result);//去掉html里的注释
                 $result = preg_replace("~>\s+\n~", ">", $result);
@@ -98,6 +99,7 @@ function runphp($go, $pararm = null)
 ?>
 
 <?php
+
 /**
  * 传统的生成全静态网站页面策略:访问网站得到静态html页面另存为指定策略的静态网页文件
  */

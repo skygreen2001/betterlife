@@ -187,7 +187,7 @@ $url_base = UtilNet::urlbase();
 
               default:
             }
-            if ( url ) {
+            if (url) {
               axios.get(url,{
                       params: params
                    })

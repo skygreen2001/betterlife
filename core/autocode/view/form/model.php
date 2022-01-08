@@ -3,7 +3,7 @@ $title    = "一键生成指定表前后台所有模板";
 $url_base = UtilNet::urlbase();
 $form_css = UtilCss::form_css();
 $show_table_lists = "";
-if ( !empty($inputArr) ) {
+if (!empty($inputArr)) {
     foreach ($inputArr as $key => $value) {
         $show_table_lists .= "        <option value=\"$key\">$value</option>" . HH;
     }

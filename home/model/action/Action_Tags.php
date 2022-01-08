@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:标签 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Tags extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Tags extends ActionModel
         $count = Tags::count();
         $this->view->countTagss = $count;
         $tagss = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $tagss = Tags::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Tags extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $tags = $this->model->Tags;
             $id         = $tags->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $tags->update();
             } else {
                 $id = $tags->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "tags", "view", "id=$id" );
                 exit;
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有显示工具类的父类 |-----------
  * @category betterlife
@@ -10,7 +11,7 @@ class Viewable extends BBObject implements ArrayAccess
     //<editor-fold defaultstate="collapsed" desc="定义数组进入对象方式">
     /**
      * Whether a offset exists
-     * 
+     *
      * @param mixed $key — An offset to check for.
      * @access public
      * @return bool
@@ -24,7 +25,7 @@ class Viewable extends BBObject implements ArrayAccess
 
     /**
      * Offset to retrieve
-     * 
+     *
      * @param mixed $key — The offset to retrieve.
      * @access public
      * @return mixed — Can return all value types.

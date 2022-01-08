@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 使用memcached作为系统缓存 |-----------
- * 
+ *
  * memcached客户端是memcache
  * @link php memcached(windows linux) 的安装及应用:http://hi.baidu.com/jqxw4444/blog/item/67e0f68693461b2867096ef4.html
  * @link About Installing memcache on Windows for PHP :http://pureform.wordpress.com/2008/01/10/installing-memcache-on-windows-for-php/
@@ -9,7 +10,8 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Memcache extends Cache_Base{
+class Cache_Memcache extends Cache_Base
+{
     public static $name = 'Memcache';
     public static $desc = 'Memcache module provides handy procedural and object oriented interface to memcached, highly effective caching daemon, which was especially designed to decrease database load in dynamic web applications.';
     private $obj;
@@ -55,7 +57,7 @@ class Cache_Memcache extends Cache_Base{
 
     public function Cache_Memcache()
     {
-        if ( !class_exists('Memcache') ) {
+        if (!class_exists('Memcache')) {
             LogMe::log('请检查是否启动了Php Extensions:php_memcache',EnumLogLevel::ERR);
         }
         $this->obj = new Memcache;
@@ -64,7 +66,7 @@ class Cache_Memcache extends Cache_Base{
         {
             $this->obj->addServer($cache_server[0], $cache_server[1]);
         }
-//        if ( !$this->obj->connect($host, $port) ) {
+//        if (!$this->obj->connect($host, $port)) {
 //            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port, EnumLogLevel::ERR );
 //        }
     }
@@ -75,9 +77,9 @@ class Cache_Memcache extends Cache_Base{
      */
     public function contains($key)
     {
-        if ( isset($this->obj) ) {
+        if (isset($this->obj)) {
             $tmp = $this->get( $key );
-           if ( !empty($tmp) ) {
+           if (!empty($tmp)) {
              return true;
            }
         }
@@ -86,7 +88,7 @@ class Cache_Memcache extends Cache_Base{
 
     /**
      * 在缓存里保存指定$key的数据
-     * 
+     *
      * 仅当存储空间中不存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
@@ -100,7 +102,7 @@ class Cache_Memcache extends Cache_Base{
 
     /**
      * 在缓存里保存指定$key的数据
-     * 
+     *
      * 与save和update不同，无论何时都保存
      * @param string $key
      * @param string|array|object $value
@@ -114,7 +116,7 @@ class Cache_Memcache extends Cache_Base{
 
     /**
      * 在缓存里更新指定key的数据
-     * 
+     *
      * 仅当存储空间中存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
@@ -149,7 +151,7 @@ class Cache_Memcache extends Cache_Base{
 
     /**
      * 获取指定keys的值们
-     * 
+     *
      * 允许一次查询多个键值，减少通讯次数。
      * @param array $key
      * @return array

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| File/Directory manipulation |-----------
  *
@@ -513,7 +514,7 @@ class System
                                 ? explode(PATH_SEPARATOR, getenv('PATHEXT'))
                                 : array('.exe', '.bat', '.cmd', '.com');
             // allow passing a command.exe param
-            if ( strpos($program, '.' ) !== false) {
+            if (strpos($program, '.' ) !== false) {
                 array_unshift($exe_suffixes, '');
             }
             // is_executable() is not available on windows for PHP4
@@ -597,14 +598,14 @@ class System
             }
         }
         $path = System::_dirToStruct($dir, $depth, 0, true);
-        if ( $do_files && $do_dirs ) {
+        if ($do_files && $do_dirs) {
             $files = array_merge($path['files'], $path['dirs']);
         } elseif ($do_dirs) {
             $files = $path['dirs'];
         } else {
             $files = $path['files'];
         }
-        if ( count($patterns) ) {
+        if (count($patterns)) {
             $dsq = preg_quote(DIRECTORY_SEPARATOR, '#');
             $pattern = '#(^|' . $dsq . ')' . implode('|', $patterns) . '($|' . $dsq . ')#';
             $ret = array();

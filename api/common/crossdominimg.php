@@ -4,15 +4,15 @@ require_once ("../../init.php");
 $params  = $_GET;
 $img_src = $params['src'];
 
-if ( endWith( $img_src, ".mp4") ) {
+if (endWith( $img_src, ".mp4")) {
     header("Content-Type: video/mpeg4;");
-} else if ( endWith( $img_src, ".gif" ) ) {
+} elseif (endWith( $img_src, ".gif" )) {
     header("Content-Type: image/gif;");
-} else if ( endWith( $img_src, ".png" ) ) {
+} elseif (endWith( $img_src, ".png" )) {
     header("Content-Type: image/png;");
-} else if ( endWith( $img_src, ".pdf" ) ) {
+} elseif (endWith( $img_src, ".pdf" )) {
     header("Content-Type: application/pdf;");
-} else if ( endWith( $img_src, ".pptx") ) {
+} elseif (endWith( $img_src, ".pptx")) {
     header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation");
 } else {
     header("Content-Type: image/jpeg;");
@@ -32,13 +32,13 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 $res = curl_exec($ch);
 
 //Check for errors.
-if ( curl_errno($ch) ) {
+if (curl_errno($ch)) {
     // [PHP - curl localhost connection refused](https://pretagteam.com/question/php-curl-localhost-connection-refused)
-    if ( contains( $img_src, array("127.0.0.1", "localhost", "192.168.", '.test') ) ) {
+    if (contains( $img_src, array("127.0.0.1", "localhost", "192.168.", '.test') )) {
         curl_setopt($ch, CURLOPT_PROXY, $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT']); 
         $res = curl_exec($ch);
     }
-    if ( curl_errno($ch) ) {
+    if (curl_errno($ch)) {
         echo curl_error($ch);
         die();
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 统一的数据库操作接口定义 |-----------
- * 
+ *
  * 定义如下:
  *    - 通用SQL的执行
  *    - 单个对象【单张表】的增删改查
@@ -45,50 +46,50 @@ interface IDaoNormal {
 
     /**
      * 根据对象实体查询对象列表
-     * 
+     *
      * @param string $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *     1. id asc;
      *     2. name desc;
-     * 
+     *
      * @param string $limit 分页数目:同Mysql limit语法
      * 示例如下:
-     * 
+     *
      *    0,10
-     * 
+     *
      * @return array 对象列表数组
      */
     public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null);
 
     /**
      * 查询得到单个对象实体
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *     1. id asc;
      *     2. name desc;
      * @return object 单个对象实体
@@ -118,46 +119,46 @@ interface IDaoNormal {
 
     /**
      * 对象总计数
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @return 对象总计数
      */
     public function count($object, $filter = null);
 
     /**
      * 对象分页
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 
+     *
      * 示例如下:
-     * 
+     *
      *      1.id asc;
      *      2.name desc;
-     * 
+     *
      * @return mixed 对象分页
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);

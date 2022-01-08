@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:博客标签 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Blogtags extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Blogtags extends ActionModel
         $count = Blogtags::count();
         $this->view->countBlogtagss = $count;
         $blogtagss = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $blogtagss = Blogtags::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Blogtags extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $blogtags = $this->model->Blogtags;
             $id         = $blogtags->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $blogtags->update();
             } else {
                 $id = $blogtags->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "blogtags", "view", "id=$id" );
                 exit;
             }

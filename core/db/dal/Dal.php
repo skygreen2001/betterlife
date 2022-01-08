@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有DAL(Data Access Layers)的父类 |-----------
  * @category betterlife
@@ -37,7 +38,7 @@ abstract class Dal {
      * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      */
-    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null ) {
+    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
         $this->connect($host, $port, $username, $password, $dbname, $dbtype, $engine);
     }
 
@@ -65,8 +66,8 @@ abstract class Dal {
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return mixed 数据库连接
      */
-    public function getConnection($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null ) {
-        if ( $this->connection == null ) {
+    public function getConnection($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
+        if ($this->connection == null) {
             $this->connect($host, $port, $username, $password, $dbname, $dbtype, $engine);
         }
         return $this->connection;
@@ -78,12 +79,12 @@ abstract class Dal {
      * @return string 基于主键的sql语句,如主键列名为user_id,则返回"user_id"
      */
     protected function sql_id($object) {
-        if ( is_string($object) ) {
-            if ( class_exists($object) ) {
+        if (is_string($object)) {
+            if (class_exists($object)) {
                 $object=new $object();
             }
         }
-        if ( $object instanceof DataObject ) {
+        if ($object instanceof DataObject) {
             return DataObjectSpec::getRealIDColumnName( $object );
         }
        x( Wl::ERROR_INFO_EXTENDS_CLASS);
@@ -91,17 +92,17 @@ abstract class Dal {
 
     /**
      * 将数据对象里的显示属性进行清除
-     * 
+     *
      * 规范: 数据对象里的显示属性以v_开始
-     * 
+     *
      * @param array $saParams 预编译准备SQL参数
      */
     protected function filterViewProperties($saParams)
     {
-        if ( isset($saParams) && is_array($saParams) ) {
+        if (isset($saParams) && is_array($saParams)) {
             $keys=array_keys($saParams);
-            foreach ($keys as $key ) {
-                if ( strpos((substr($key,0,2)),"v_")!==false ) {
+            foreach ($keys as $key) {
+                if (strpos((substr($key,0,2)),"v_")!==false) {
                     unset($saParams[$key]);
                 }
             }
@@ -115,9 +116,9 @@ abstract class Dal {
      * @param boolean
      */
     protected function validParameter($object) {
-        if ( is_string($object) ) {
-            if ( class_exists($object) ) {
-                if ( (new $object()) instanceof DataObject ) {
+        if (is_string($object)) {
+            if (class_exists($object)) {
+                if ((new $object()) instanceof DataObject) {
                     $this->classname = $object;
                     return true;
                 } else {
@@ -136,8 +137,8 @@ abstract class Dal {
      * @param boolean
      */
     protected function validObjectParameter($object) {
-        if ( is_object($object) ) {
-            if ( $object instanceof DataObject ) {
+        if (is_object($object)) {
+            if ($object instanceof DataObject) {
                 $this->classname = $object->classname();
             } else {
                x( Wl::ERROR_INFO_EXTENDS_CLASS,$this);
@@ -161,21 +162,21 @@ abstract class Dal {
 
     /**
      * 获取插入或者更新的数据的类型。
-     * 
+     *
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对
      * @param array $typeOf 
-     * 
+     *
      *     - 0: 通用的协议定义的类型标识，暂未实现。
      *     - 1: PHP定义的数据类型标识，暂未实现。
      *     - 2: Mdb2要求的类型标识。
-     * 
+     *
      * @return array 获取插入或者更新的数据的field和field值类型键值对
      */
     public function getColumnTypes($object, $saParams, $typeOf = 1) {
         $type = array();
-        foreach ($saParams  as $key => $value ) {
-            if ( $typeOf == 2 ) {
+        foreach ($saParams  as $key => $value) {
+            if ($typeOf == 2) {
                 $type[$key] = "text";
             }
         }
@@ -188,10 +189,10 @@ abstract class Dal {
      * @return 值
      */
     protected function getValueIfOneValue($result) {
-        if ( ( $result != null ) && ( count($result) == 1 ) ) {
-            if ( $result[0] instanceof stdClass ) {
+        if (( $result != null ) && (count($result) == 1 )) {
+            if ($result[0] instanceof stdClass) {
                 $tmp = UtilObject::object_to_array( $result[0] );
-                if ( count($tmp) == 1 ) {
+                if (count($tmp) == 1) {
                    $tmp_values = array_values($tmp);
                    $result     = $tmp_values[0];
                 }

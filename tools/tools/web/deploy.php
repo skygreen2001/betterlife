@@ -3,11 +3,11 @@ require_once("../../../init.php");
 //header("Content-Type:text/html; charset=UTF-8");
 $contents = file_get_contents("../../../welcome.php");
 //$contents = str_replace(HH, "<br/>", $contents);
-if ( startWith( $contents, "<?php" ) ) {
-    if ( isset($_GET["recover"]) ) {
+if (startWith( $contents, "<?php" )) {
+    if (isset($_GET["recover"])) {
         $contents = substr($contents, stripos($contents, "?>") + 2);
         $contents = ltrim($contents);
-        if ( $contents ) file_put_contents("../../../welcome.php", $contents);
+        if ($contents ) file_put_contents("../../../welcome.php", $contents);
         echo "还原成功!显示welcome页面!<br/>";
         echo "<a href=\"" . Gc::$url_base . "tools/tools/web/deploy.php\">线上部署</a><br/>";
     } else {
@@ -19,7 +19,7 @@ if ( startWith( $contents, "<?php" ) ) {
 <?php
 require_once("Gc.php");
 require_once("core/include/common.php");
-if ( !contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost") ) ) {
+if (!contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost") )) {
     header("location:" . Gc::\$url_base . "index.php?go=" . Gc::\$appName . ".index.index");
     die();
 }

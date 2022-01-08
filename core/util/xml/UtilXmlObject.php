@@ -1,17 +1,18 @@
 <?php
+
 /**
  * -----------| 基于对象的增删改查XML节点数据项 |-----------
- * 
+ *
  * 规则说明如下
- * 
+ *
  * 0. 所有元素名为小写
  * 1. 节点根名称为 类名+s: 如Role为roles
  * 2. 每一个节点为:类名(如role)
  * 3. 节点下名为类的属性
  * 4. 可有全局配置项，目录名为global(可选
- * 
+ *
  * @example 示例如下:
- * 
+ *
  * ```
  *    <roles>
  *        <global>
@@ -24,7 +25,7 @@
  *        </role>
  *    <roles>
  * ```
- * 
+ *
  * @category betterlife
  * @package util.xml
  * @author skygreen
@@ -43,7 +44,7 @@ class UtilXmlObject extends Util
     {
         $this->global   = $global;
         $this->filename = $filename;
-        if ( is_file($filename) )
+        if (is_file($filename) )
             $this->xml = $this->load( $filename );
     }
     
@@ -55,7 +56,7 @@ class UtilXmlObject extends Util
         $node = strtolower(get_class($object));
         $head = "<?xml version=\"1.0\" encoding=\"" . Gc::$encoding . "?>";
         $this->xml = new SimpleXMLElement($this->head . "<" . $node . "s><global/></" . $node . "s>");
-        if ( $this->global != null ) {
+        if ($this->global != null) {
             $globalNodes = UtilObject::object_to_array( $this->global );
             foreach ($globalNodes as $key => $value) {
                 $this->xml->global->addChild( $key, $value );
@@ -74,7 +75,7 @@ class UtilXmlObject extends Util
      */
     public function save($object) 
     {
-        if ( is_file($this->filename) ) {
+        if (is_file($this->filename)) {
             $data  = UtilObject::object_to_array( $object );
             $child = $this->xml->addChild( strtolower(get_class($object)) );//取该对象的类名作为节点名，并转化为小写
             foreach ($data as $key => $value) {
@@ -96,7 +97,7 @@ class UtilXmlObject extends Util
         $xml_child=null;
         foreach ($this->xml->xpath("//" . $node) as $child)//取该对象的类名作为节点名，查询所有该节点
         {
-            if ( $object->getId() == $child->id ) {
+            if ($object->getId() == $child->id) {
                 $xml_child = $child;
             }
         }
@@ -115,9 +116,9 @@ class UtilXmlObject extends Util
 
     /**
      * 根据条件获取一个对象节点
-     * 
+     *
      * $where array 查询条件值
-     * 
+     *
      * array("id"=>"1","name"=>"sky")
      */
     public function get($where) 
@@ -127,8 +128,8 @@ class UtilXmlObject extends Util
         for ($i = $datalist->count() - 1; $i >= 0; $i--) {
             $isFilter = false;
             foreach ($where as $akey => $aval) {
-                if ( method_exists($datalist[$i], 'set' . ucfirst($akey)) ) {
-                    if ( $datalist[$i]->{'get' . ucfirst($akey)}() == $aval ) {
+                if (method_exists($datalist[$i], 'set' . ucfirst($akey))) {
+                    if ($datalist[$i]->{'get' . ucfirst($akey)}() == $aval) {
                         continue;
                     } else {
                         $isFilter = true;
@@ -136,7 +137,7 @@ class UtilXmlObject extends Util
                     }
                 }
             }
-            if ( $isFilter ) {
+            if ($isFilter) {
                 $datalist->remove($i);
             }
         }
@@ -155,7 +156,7 @@ class UtilXmlObject extends Util
             $class = new ReflectionClass( ucfirst($child->getName()) );
             $data  = $class->newInstance();
             foreach ($child as $akey => $aval) {
-                if ( method_exists($data, 'set' . ucfirst($akey) ) && (array) $aval != null ) {
+                if (method_exists($data, 'set' . ucfirst($akey) ) && (array) $aval != null) {
                     $dataArr = (array) $aval;//将SimpleXMLElement数组转换成普通array,否则$aval[0]取出的是SimpleXMLElement对象
                     $data->{'set' . ucfirst($akey)}($dataArr[0]);
                 }

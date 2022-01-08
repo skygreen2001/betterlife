@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有缓冲策略的必须实现的接口类 |-----------
  * @category betterlife
@@ -9,7 +10,7 @@ interface ICache
 {
     /**
      * 在缓存里保存指定$key的数据
-     * 
+     *
      * 仅当存储空间中不存在键相同的数据时才保存
      * @param string $key
      * @param string|array|object $value
@@ -66,7 +67,7 @@ interface ICache
 
       /**
        * 获取指定keys的值们。
-       * 
+       *
        * 允许一次查询多个键值，减少通讯次数。
        * @param array $key
        * @return array

@@ -1,4 +1,5 @@
 <?php
+
 /**
 * MySQLdumper is a small PHP class that lets you generate a dump of a MySQL database
 * with just 2 lines of code. The dump can be used as a database backup. The dump
@@ -103,21 +104,21 @@ class Mysqldumper {
         $lf  = HH;
         $lencount = 0;
         $bakfile  = $backdir . "/multibak_" . $filename . "_" . ( $fileid + 1 ) . ".sql";
-        if ( $ignoreList ) {
+        if ($ignoreList) {
             $ignoreList = array_flip($ignoreList);
         }
 
         $fw = @fopen($bakfile, "wb");
-        if ( !$fw ) exit("����Ŀ¼{$backdir}����д");
+        if (!$fw ) exit("����Ŀ¼{$backdir}����д");
         $resource = mysql_connect($this->getHost(), $this->getDBuser(), $this->getDBpassword(), true);
         mysql_select_db($this->getDbname(), $resource);
-        if ( !constant("DB_OLDVERSION") )
+        if (!constant("DB_OLDVERSION") )
             mysql_query("SET NAMES '" . MYSQL_CHARSET_NAME . "'", $resource);
 
         $result = mysql_query("SHOW TABLES");
         $tables = $this->result2Array(0, $result);
         foreach ($tables as $tblval) {
-            if ( substr($tblval, 0, strlen(DB_PREFIX)) == DB_PREFIX )
+            if (substr($tblval, 0, strlen(DB_PREFIX)) == DB_PREFIX )
                 $tablearr[] = $tblval;
         }
         // Set header
@@ -138,7 +139,7 @@ class Mysqldumper {
             $table_prefix = constant('DB_PREFIX');
             $subname = substr($tblval, strlen($table_prefix));
             $written_tbname = '{shopexdump_table_prefix}' . $subname;
-            if ( $this->startid == -1 )
+            if ($this->startid == -1 )
             {
                 fwrite($fw,  $lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
                 $lencount += strlen($lf . $lf . "# --------------------------------------------------------" . $lf . $lf);
@@ -148,7 +149,7 @@ class Mysqldumper {
                 $lencount += strlen("#". $lf . "# Table structure for table `$tblval`" . $lf);
                 // Generate DROP TABLE statement when client wants it to.
                 mysql_query("ALTER TABLE `$tblval` comment ''");
-                if ( $this->isDroptables() ) {
+                if ($this->isDroptables()) {
                     fwrite($fw,  "DROP TABLE IF EXISTS `$written_tbname`;" . $lf);
                     $lencount += strlen("DROP TABLE IF EXISTS `$written_tbname`;" . $lf);
                 }
@@ -161,21 +162,21 @@ class Mysqldumper {
                 $lencount += strlen($tmp_value . $lf . $lf);
                 $this->startid = 0;
             }
-            if ( $lencount > $sizelimit * 1000 )
+            if ($lencount > $sizelimit * 1000 )
             {
                 $this->tableid = $j;
                 $this->startid = 0;
                 $ret           = false;
                 break;
             }
-            if ( isset($ignoreList['sdb_' . $subname]) ) {
+            if (isset($ignoreList['sdb_' . $subname])) {
                 $this->startid = -1;
                 continue;
             }
             fwrite($fw,  "#". $lf . "# Dumping data for table `$tblval`" . $lf . "#" . $lf);
             $lencount += strlen("#" . $lf . "# Dumping data for table `$tblval`" . $lf . "#" . $lf);
             $result = mysql_query("SELECT * FROM `$tblval`");
-            if ( !@mysql_data_seek($result, $this->startid) )
+            if (!@mysql_data_seek($result, $this->startid) )
             {
                 $this->startid = -1;
                 continue;
@@ -187,7 +188,7 @@ class Mysqldumper {
                     $arr         = $this->object2Array( $row );
 
                     foreach ($arr as $key => $value) {
-                        if ( !is_null($value) )
+                        if (!is_null($value) )
                         {
                             $value = $this->utftrim( mysql_escape_string($value) );
                             $insertdump .= "'$value',";
@@ -199,7 +200,7 @@ class Mysqldumper {
                     fwrite($fw, $insertline);
                     $lencount += strlen($insertline);
                     $this->startid++;
-                    if ( $lencount > $sizelimit * 1000 )
+                    if ($lencount > $sizelimit * 1000 )
                     {
                         $ret = false;
                         $this->tableid = $j;
@@ -219,10 +220,10 @@ class Mysqldumper {
     // Private function object2Array.
     function object2Array($obj) {
         $array = null;
-        if ( is_object($obj) ) {
+        if (is_object($obj)) {
             $array = array();
             foreach (get_object_vars($obj) as $key => $value) {
-                if ( is_object($value) )
+                if (is_object($value) )
                     $array[$key] = $this->object2Array( $value );
                 else
                     $array[$key] = $value;
@@ -235,7 +236,7 @@ class Mysqldumper {
     function loadObjectList($key = '', $resource) {
         $array = array();
         while ($row = mysql_fetch_object($resource)) {
-            if ( $key )
+            if ($key )
                 $array[$row->$key] = $row;
             else
                 $array[] = $row;
@@ -258,7 +259,7 @@ class Mysqldumper {
     {
         $body = substr($str, 0, strrpos($str, ")") + 1);
         $tail = strtolower(substr($str, strrpos($str, ")") - strlen($str)));
-        if ( strstr($tail, 'memory') || strstr($tail, 'heap') ) {
+        if (strstr($tail, 'memory') || strstr($tail, 'heap')) {
             return $body . " TYPE=HEAP{shopexdump_create_specification};";
         } else {
             return $body . " TYPE=MyISAM{shopexdump_create_specification};";
@@ -279,26 +280,26 @@ class Mysqldumper {
                 $found = true;
                 break;
             }
-            if ( $i == 0 && $ord < 128 ) {
+            if ($i == 0 && $ord < 128) {
                 break;
             }
         }
 
-        if ( $found )
+        if ($found )
         {
-            if ( $ord > 240 )
+            if ($ord > 240 )
             {
-                if ( $i == 3 ) return $str;
+                if ($i == 3 ) return $str;
                 else return substr($str, 0, strlen($str) - $i - 1);
             }
-            elseif ( $ord > 224 )
+            elseif ($ord > 224 )
             {
-                if ( $i >= 2) return $str;
+                if ($i >= 2) return $str;
                 else return substr($str, 0, strlen($str) - $i - 1);
             }
             else
             {
-                if ( $i >= 1 ) return $str;
+                if ($i >= 1 ) return $str;
                 else return substr($str, 0, strlen($str) - $i - 1);
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 表示层对象，需要框架支持Flexy|Smarty |-----------
  * @category betterlife
@@ -37,14 +38,14 @@
      */
     private function init($action=null)
     {
-        if ( ( $action instanceof Action ) && isset($action->view) ) {
+        if (( $action instanceof Action ) && isset($action->view)) {
             $viewObject = $action->view->viewObject;
-            if ( $viewObject instanceof ViewObject ) {
-                if ( $viewObject->css_ready )
+            if ($viewObject instanceof ViewObject) {
+                if ($viewObject->css_ready )
                 {
                     $this->css_ready = $viewObject->css_ready;
                 }
-                if ( $viewObject->js_ready )
+                if ($viewObject->js_ready )
                 {
                      $this->js_ready = $viewObject->js_ready;
                 }

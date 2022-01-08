@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 采用Dom方式处理Xml |-----------
- * 
+ *
  * 可采用其处理Html格式的文档内容
  * @category betterlife
  * @package util.xml
@@ -14,20 +15,20 @@ class UtilXmlDom extends Util
     private static $encoding = 'UTF-8';
     /**
      * 转换数组保存符合规范的XML到指定的文件
-     * 
+     *
      * @param array $filename 文件名
      * @param array $data 符合cml格式的数据
      * @example 示例
      * 示例:
-     * 
+     *
      * ```
      *     $data=array("id"=>"8","member_id"=>"5","app_name"=>"mall","username"=>"pass","relation"=>array("Role"=>"roleId","Function"=>"functionId"));
      *     $data=array("a","b","c","d","e"=>array("a","b","c"));
      *     echo UtilArray::array_to_xml($data, 'Member');
      * ```
-     * 
+     *
      * 完整的示例[包括@attributes,@value,@cdata]:
-     * 
+     *
      * ```
      *         $classes=array(
      *             "class"=>array(
@@ -49,9 +50,9 @@ class UtilXmlDom extends Util
      *            )
      *        );
      * ```
-     * 
+     *
      * 生成xml如下:
-     * 
+     *
      * ```
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
@@ -66,7 +67,7 @@ class UtilXmlDom extends Util
      *     </class>
      * </classes>
      * ```
-     * 
+     *
      * @param string $rootNodeName - 根节点的名称 - 默认:data.
      * @return void
      */
@@ -92,30 +93,30 @@ class UtilXmlDom extends Util
  
     /**
      * 将数组类型转换成xml
-     * 
+     *
      * Convert an Array to XML
-     * 
+     *
      * 原为Array2XML类
-     * 
+     *
      * 参考:Array2XML:http://www.lalit.org/lab/convert-php-array-to-xml-with-attributes/
-     * 
+     *
      * 在数组里添加@attributes,@value,@cdata;可以添加Xml中Node的属性，值和CDATA
-     * 
+     *
      * The main function for converting to an XML document.
-     * 
+     *
      * Pass in a multi dimensional array and this recrusively loops through and builds up an XML document.
-     * 
+     *
      * @example 示例
      * 示例:
-     * 
+     *
      * ``` 
      *     $data=array("id"=>"8","member_id"=>"5","app_name"=>"mall","username"=>"pass","relation"=>array("Role"=>"roleId","Function"=>"functionId"));
      *     $data=array("a","b","c","d","e"=>array("a","b","c"));
      *     echo UtilArray::array_to_xml($data, 'Member');
      * ```
-     * 
+     *
      * 完整的示例[包括@attributes,@value,@cdata]:
-     * 
+     *
      * ```
      *         $classes=array(
      *             "class"=>array(
@@ -137,9 +138,9 @@ class UtilXmlDom extends Util
      *            )
      *        );
      * ```
-     * 
+     *
      * 生成xml如下: 
-     * 
+     *
      * ```
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
@@ -180,11 +181,11 @@ class UtilXmlDom extends Util
         $xml = self::getXMLRoot();
         $node = $xml->createElement($node_name);
  
-        if ( is_array($arr) ) {
+        if (is_array($arr)) {
             // get the attributes first.;
-            if ( isset($arr['@attributes']) ) {
+            if (isset($arr['@attributes'])) {
                 foreach ($arr['@attributes'] as $key => $value) {
-                    if ( !self::isValidTagName( $key ) ) {
+                    if (!self::isValidTagName( $key )) {
                         throw new Exception('[Array2XML] Illegal character in attribute name. attribute: ' . $key . ' in node: ' . $node_name);
                     }
                     $node->setAttribute($key, self::bool2str( $value ));
@@ -194,12 +195,12 @@ class UtilXmlDom extends Util
  
             // check if it has a value stored in @value, if yes store the value and return
             // else check if its directly stored as string
-            if ( isset($arr['@value']) ) {
+            if (isset($arr['@value'])) {
                 $node->appendChild($xml->createTextNode(self::bool2str( $arr['@value'] )));
                 unset($arr['@value']);    //remove the key from the array once done.
                 //return from recursion, as a note with value cannot have child nodes.
                 return $node;
-            } else if ( isset($arr['@cdata']) ) {
+            } elseif (isset($arr['@cdata'])) {
                 $node->appendChild($xml->createCDATASection(self::bool2str( $arr['@cdata'] )));
                 unset($arr['@cdata']);    //remove the key from the array once done.
                 //return from recursion, as a note with cdata cannot have child nodes.
@@ -208,13 +209,13 @@ class UtilXmlDom extends Util
         }
  
         //create subnodes using recursion
-        if ( is_array($arr) ) {
+        if (is_array($arr)) {
             // recurse to get the node for that key
             foreach ($arr as $key => $value) {
-                if ( !self::isValidTagName( $key ) ) {
+                if (!self::isValidTagName( $key )) {
                     throw new Exception('[Array2XML] Illegal character in tag name. tag: ' . $key . ' in node: ' . $node_name);
                 }
-                if ( is_array($value) && is_numeric(key($value)) ) {
+                if (is_array($value) && is_numeric(key($value))) {
                     // MORE THAN ONE NODE OF ITS KIND;
                     // if the new array is numeric index, means it is array of nodes of the same kind
                     // it should follow the parent key name
@@ -231,7 +232,7 @@ class UtilXmlDom extends Util
  
         // after we are done with all the keys in the array (if it is one)
         // we check if it has any text value, if yes, append it.
-        if ( !is_array($arr) ) {
+        if (!is_array($arr)) {
             $node->appendChild($xml->createTextNode(self::bool2str( $arr )));
         }
  
@@ -243,7 +244,7 @@ class UtilXmlDom extends Util
      */
     private static function getXMLRoot()
     {
-        if ( empty(self::$xml) ) {
+        if (empty(self::$xml)) {
             self::init();
         }
         return self::$xml;

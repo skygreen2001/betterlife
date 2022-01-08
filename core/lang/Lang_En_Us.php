@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| english text display |-----------
  * @category betterlife

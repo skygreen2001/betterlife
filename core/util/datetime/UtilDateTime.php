@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 输出日期时间的格式 |-----------
  */
@@ -82,9 +83,9 @@ class UtilDateTime extends Util
 
     /**
      * 获取现在的日期时间显示
-     * 
+     *
      * 输出不同数据格式的日期｜时间｜日期时间
-     * 
+     *
      * @param int $type 输出数据类型
      *     - 0: 输出数据类型: Timestamp
      *     - 1: 输出数据类型: 日期时间
@@ -139,12 +140,12 @@ class UtilDateTime extends Util
      */
     public static function dateToTimestamp($str = '')
     {
-        if ( empty($str) ) {
+        if (empty($str)) {
             $str = self::now();
         }
         @list($date, $time)       = explode(' ', $str);
         list($year, $month, $day) = explode('-', $date);
-        if ( empty($time) ) {
+        if (empty($time)) {
             $timestamp = mktime(0, 0, 0, $month, $day, $year);
         } else {
             list($hour, $minute, $second) = explode(':', $time);
@@ -163,16 +164,16 @@ class UtilDateTime extends Util
      */
     public static function isLeapYear($year = '')
     {
-        if ( empty($year) ) {
+        if (empty($year)) {
             return false;
         }
-        return ( ( ( $year % 4 ) == 0 ) && ( ( $year % 100 ) != 0 ) || ( ( $year % 400 ) == 0 ) );
+        return ( ( ( $year % 4 ) == 0 ) && (( $year % 100 ) != 0 ) || ( ( $year % 400 ) == 0));
     }
 
 
     /**
      * 判断日期 所属 干支 生肖 星座
-     * 
+     *
      * type 参数: XZ 星座 GZ 干支 SX 生肖
      * @static
      * @access public
@@ -190,11 +191,11 @@ class UtilDateTime extends Util
             case 'XZ'://星座
                 $XZDict = array('摩羯', '宝瓶', '双鱼', '白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手');
                 $Zone   = array(1222, 122, 222, 321, 421, 522, 622, 722, 822, 922, 1022, 1122, 1222);
-                if ( ( 100 * $m + $d ) >= $Zone[0] || ( 100 * $m + $d ) < $Zone[1] ) {
+                if (( 100 * $m + $d ) >= $Zone[0] || ( 100 * $m + $d ) < $Zone[1]) {
                     $i = 0;
                 } else {
                     for ($i = 1; $i < 12; $i++) {
-                        if ( ( 100 * $m + $d ) >= $Zone[$i] && ( 100 * $m + $d ) < $Zone[$i + 1]) {
+                        if (( 100 * $m + $d ) >= $Zone[$i] && (100 * $m + $d ) < $Zone[$i + 1]) {
                             break;
                         }
                     }
@@ -227,9 +228,9 @@ class UtilDateTime extends Util
         $year_diff  = date("Y") - $year;
         $month_diff = date("m") - $month;
         $day_diff   = date("d") - $day;
-        if ( $month_diff < 0 ) {
+        if ($month_diff < 0) {
             $year_diff--;
-        } elseif ( ( $month_diff == 0 ) && ( $day_diff < 0 ) ) {
+        } elseif (( $month_diff == 0 ) && ($day_diff < 0 )) {
             $year_diff--;
         }
         return $year_diff;
@@ -253,13 +254,13 @@ class UtilDateTime extends Util
 
     /**
      * 获取指定月份最后一天
-     * 
+     *
      * 示例:
-     * 
+     *
      *    功能: 获取2021年2月的最后1天
-     * 
+     *
      *    调用: UtilDateTime::getMonthLastDay("2021-02")
-     * 
+     *
      *    返回: 2021-02-28
      * @param string $date 指定月份; 格式如同: 2021-02
      * @return 指定月份最后一天

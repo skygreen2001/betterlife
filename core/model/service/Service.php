@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有Service的父类 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Service extends BBObject {
      */
     private static $currentDao;
     protected static function dao() {
-        if ( empty(self::$currentDao) ) {
+        if (empty(self::$currentDao)) {
             self::$currentDao = Manager_Db::newInstance()->dao();
         }
         return self::$currentDao;
@@ -36,27 +37,27 @@ class Service extends BBObject {
      */
     protected function filtertoCondition($filter)
     {
-        if ( is_array($filter) ) {
+        if (is_array($filter)) {
             $condition = $filter;
-        } else if ( is_object($filter) ) {
+        } elseif (is_object($filter)) {
             $condition = UtilObject::object_to_array( $filter );
         }
-        if ( !empty($condition) && ( count($condition) > 0 ) ) {
+        if (!empty($condition) && (count($condition) > 0 )) {
             $conditionArr = array();
             foreach ($condition as $key => $value) {
-                if ( empty($value) && $value !== 0 && $value !== '0' ) continue;
-                if ( !UtilString::is_utf8( $value ) ) {
+                if (empty($value) && $value !== 0 && $value !== '0' ) continue;
+                if (!UtilString::is_utf8( $value )) {
                     $value = UtilString::gbk2utf8( $value );
                 }
-                if ( is_int($value) || is_bool($value) ) {
+                if (is_int($value) || is_bool($value)) {
                     $conditionArr[] = $key . "='" . $value . "'";
-                } else if ( contain($value, "T00:00:00" ) ) {
+                } elseif (contain($value, "T00:00:00" )) {
                     $value = str_replace("T00:00:00", "", $value);
                     $conditionArr[] = $key . "='" . $value . "'";
                 } else {
-                    if ( is_numeric($value) ) {
+                    if (is_numeric($value)) {
                         $judgeKey = strtolower($key);
-                        if ( contains( $judgeKey, array("type", "stat") ) ) {//如果是枚举类型
+                        if (contains( $judgeKey, array("type", "stat") )) {//如果是枚举类型
                             $conditionArr[] = $key . "='" . $value . "'";
                             continue;
                         }
@@ -90,19 +91,19 @@ class Service extends BBObject {
         $servicename = get_called_class();
         $result      = null;
         $services = array();
-        if ( class_exists($servicename) ) {
+        if (class_exists($servicename)) {
            $service    = new ReflectionClass($servicename);
            $methods    = $service->getMethods();
            $methodsArr = array();
            foreach ($methods as $method) {
-               if ( $method->isPublic() ) {
+               if ($method->isPublic()) {
                    $methodname = $method->getName();
                    $params     = $method->getParameters();
                    $paramArr   = array();
                    $count      = 1;
                    foreach ($params as $i => $param) {
                        $paramname = $param->getName();
-                       if ( $param->isDefaultValueAvailable() ) {
+                       if ($param->isDefaultValueAvailable()) {
                           $paramArr[$paramname]  = $param->getDefaultValue();
                        } else {
                            $paramArr[$paramname] = "无默认值";
@@ -115,7 +116,7 @@ class Service extends BBObject {
                unset($services[$servicename]['methods']["__get"]);
            }
         }
-        if ( count($services) > 0 ) {
+        if (count($services) > 0) {
             $result = $services;
         }
         //print_r($result);

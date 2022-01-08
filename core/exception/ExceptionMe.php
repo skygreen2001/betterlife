@@ -1,11 +1,13 @@
 <?php
+
 /**
  * -----------| 框架异常处理的父类 |-----------
  * @category betterlife
  * @package core.exception
  * @author zhouyuepu
  */
-abstract class ExceptionMe extends Exception {
+abstract class ExceptionMe extends Exception
+{
 
     const CLASSNAME = __CLASS__;
 
@@ -33,18 +35,18 @@ abstract class ExceptionMe extends Exception {
      * @return void
      */
     public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
-        if ( Gc::$dev_debug_on ) {
-            if ( Config_Exception::EXCEPTION_WAY != 0 ) {
+        if (Gc::$dev_debug_on) {
+            if (Config_Exception::EXCEPTION_WAY != 0) {
                 throw new Exception($errorInfo);
             }
         }
 
         //记录系统日志
-        $exception = new Exception_Customize( $errorInfo, $code, $extra );
-        if ( is_object($object) ) {
+        $exception = new ExceptionCustomize( $errorInfo, $code, $extra );
+        if (is_object($object)) {
             self::$messages[get_class($object)] = $exception->showMessage();
         } else {
-            if ( empty($object) ) {
+            if (empty($object)) {
                 $object = $exception->getType();
             }
             self::$messages[$object] = $exception->showMessage();
@@ -56,14 +58,14 @@ abstract class ExceptionMe extends Exception {
      * @param <type> $exception
      */
     public static function recordUncatchedException($exception) {
-        $exception = new Exception_Customize($exception);
+        $exception = new ExceptionCustomize($exception);
         self::$messages[$exception->getType()] = $exception->showMessage();
     }
 
 
     /**
      * 显示异常信息
-     * 
+     *
      * 1. 普通【文本样式】
      * 2. 表方式【HTML样式】
      * 3. 树方式【HTML样式】
@@ -113,7 +115,7 @@ abstract class ExceptionMe extends Exception {
      * 以表形式显示异常信息[HTML格式]
      */
     private static function showMessageByTable() {
-        if ( !empty(self::$messages) ) {
+        if (!empty(self::$messages)) {
             UtilCss::report_info();
             $errorInfo  = '<div>';
             $errorInfo .= '<table class="' . UtilCss::CSS_REPORT_TABLE . '" style="width:80%;">';
@@ -159,14 +161,14 @@ abstract class ExceptionMe extends Exception {
                 $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_LINE . '</td>';
                 $errorInfo .= '          <td>&nbsp;' . $value['line'] . "</td>";
                 $errorInfo .= '       </tr>';
-                if ( !empty($value['param']) ) {
+                if (!empty($value['param'])) {
                     $errorInfo .= '       <tr>';
                     $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                     $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_PARAMETER . '</td>';
                     $errorInfo .= '          <td>&nbsp;';
                     if (is_string($value['param'][0])) {
                         $errorInfo .= implode(' | ',$value['param']);
-                    } else if (is_object($value['param'][0])) {
+                    } elseif (is_object($value['param'][0])) {
                         foreach ($value['param'] as $object) {
                             $errorInfo .= $object->classname() . " | ";
                         }

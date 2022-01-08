@@ -14,7 +14,7 @@ AutoCodeCreateReport::$save_dir = Gc::$nav_root_path . "model" . DS;
 
 $reportDev = !empty($_REQUEST['report_dev']) ? $_REQUEST['report_dev'] : "";
 $template_build_dev = "";
-if ( $reportDev && !empty($reportCname) && !empty($reportSql) ) {
+if ($reportDev && !empty($reportCname) && !empty($reportSql)) {
     $config = array(
         "isProd" => false,
         "reportType" => $reportType,
@@ -41,7 +41,7 @@ TPL_BUILDDEV;
 
 $reportProd = !empty($_REQUEST['report_prod']) ? $_REQUEST['report_prod'] : "";
 $template_build_prod = "";
-if ( $reportProd && !empty($reportCname) && !empty($reportSql) ) {
+if ($reportProd && !empty($reportCname) && !empty($reportSql)) {
     $config = array(
         "isProd"      => true,
         "reportType"  => $reportType,
@@ -117,8 +117,8 @@ TPL_BUILDPROD;
           </card>
 
           <?php
-          if ( $template_build_dev ) echo $template_build_dev;
-          if ( $template_build_prod ) echo $template_build_prod;
+          if ($template_build_dev ) echo $template_build_dev;
+          if ($template_build_prod ) echo $template_build_prod;
           ?>
         </div>
         <script src="../../../misc/js/common/bower.min.js"></script>

@@ -1,11 +1,12 @@
 <?php
+
 /**
  * -----------| 工具类: 加载Javascript库和发送请求 |-----------
- * 
+ *
  * JavaScript loader, which by default delivers each library with ****gzip**** compression.
- * 
+ *
  * These days every browser supports gzip compression for faster loading of any object.
- * 
+ *
  * built-in support for ****jQuery, mootoos, prototype and script.aculo.us*****.
  * @category betterlife
  * @package util.view
@@ -15,9 +16,9 @@ class UtilJavascript extends Util
 {
     /**
      * 动态加载应用指定的Js文件。
-     * 
+     *
      * 可通过分组标识动态加载Ajax Javascript Framework库
-     * 
+     *
      * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
      * @param bool $isGzip 是否使用Gzip进行压缩。
      */
@@ -28,9 +29,9 @@ class UtilJavascript extends Util
     
     /**
      * 预加载[不直接输出]:动态加载应用指定的Js文件。
-     * 
+     *
      * 可通过分组标识动态加载Ajax Javascript Framework库
-     * 
+     *
      * @param ViewObject 表示层显示对象
      * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
      * @param bool $isGzip 是否使用Gzip进行压缩。
@@ -53,7 +54,7 @@ class UtilJavascript extends Util
     
     /**
      * 预加载[不直接输出]:动态加载应用指定的Js内容的语句。
-     * 
+     *
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $jsContent: Js内容的语句
      */   

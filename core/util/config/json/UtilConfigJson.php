@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 读取Json配置文件类 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class UtilConfigJson extends UtilConfig
      * 加载Json配置文件
      */
     public function load($file) {
-        if ( file_exists($file) == false ) { return false; }
+        if (file_exists($file) == false) { return false; }
         $this->_settings = json_decode(file_get_contents($file), true);
     }
 

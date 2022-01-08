@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 获取已上传的文件列表
  * User: Jinqn
@@ -35,7 +36,7 @@ $real_path = str_replace(DS, "/", Gc::$nav_root_path);
 $path      = $real_path . $path;//$path = $_SERVER['DOCUMENT_ROOT'] . (substr($path, 0, 1) == "/" ? "":"/") . $path;
 
 $files = getfiles($path, $allowFiles);
-if ( !count($files) ) {
+if (!count($files)) {
     return json_encode(array(
         "state" => "no match file",
         "list"  => array(),
@@ -73,18 +74,18 @@ return $result;
  */
 function getfiles($path, $allowFiles, &$files = array())
 {
-    if ( !is_dir($path) ) return null;
-    if ( substr($path, strlen($path) - 1) != '/' ) $path .= '/';
+    if (!is_dir($path) ) return null;
+    if (substr($path, strlen($path) - 1) != '/' ) $path .= '/';
     $handle    = opendir($path);
     //modify by skygreen
     $real_path = str_replace(DS, "/", Gc::$nav_root_path);
     while (false !== ($file = readdir($handle))) {
-        if ( $file != '.' && $file != '..' ) {
+        if ($file != '.' && $file != '..') {
             $path2 = $path . $file;
-            if ( is_dir($path2) ) {
+            if (is_dir($path2)) {
                 getfiles($path2, $allowFiles, $files);
             } else {
-                if ( preg_match("/\.(" . $allowFiles . ")$/i", $file) ) {
+                if (preg_match("/\.(" . $allowFiles . ")$/i", $file)) {
                     $files[] = array(
                         //modify by skygreen
                         'url'   => Gc::$url_base . substr($path2, strlen($real_path)),

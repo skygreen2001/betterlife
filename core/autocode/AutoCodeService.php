@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-服务类 |-----------
  * @category betterlife
@@ -40,7 +41,7 @@ class AutoCodeService extends AutoCode
     public static function AutoCode($table_names = "")
     {
         self::$app_dir = Gc::$appName;
-        if ( !UtilString::is_utf8( self::$service_dir_full ) ) {
+        if (!UtilString::is_utf8( self::$service_dir_full )) {
             self::$service_dir_full = UtilString::gbk2utf8( self::$service_dir_full );
         }
         // self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
@@ -48,7 +49,7 @@ class AutoCodeService extends AutoCode
 
         self::init();
 
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
+        if (self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
 
         switch (self::$type) {
            case 1:
@@ -68,7 +69,7 @@ class AutoCodeService extends AutoCode
         $tableList = self::tableListByTable_names( $table_names );
         foreach ($tableList as $tablename) {
             $definePhpFileContent = self::tableToServiceDefine( $tablename );
-            if ( isset($definePhpFileContent) && ( !empty($definePhpFileContent) ) ) {
+            if (isset($definePhpFileContent) && (!empty($definePhpFileContent) )) {
                $classname = self::saveServiceDefineToDir( $tablename, $definePhpFileContent );
                self::$showReport .= "生成导出完成:$tablename => $classname!";
             } else {
@@ -130,7 +131,7 @@ class AutoCodeService extends AutoCode
                                  "     */" . HH;
             $section_content  .= "    public static function " . $classname . "Service()" . HH .
                                  "    {" . HH .
-                                 "        if ( self::\$" . $classname . "Service == null ) {" . HH .
+                                 "        if (self::\$" . $classname . "Service == null) {" . HH .
                                  "            self::\$" . $classname . "Service = new $service_classname();" . HH .
                                  "        }" . HH .
                                  "        return self::\$" . $classname . "Service;" . HH .
@@ -161,7 +162,7 @@ class AutoCodeService extends AutoCode
      */
     private static function tableToServiceDefine($tablename)
     {
-        if ( array_key_exists($tablename, self::$fieldInfos) ) {
+        if (array_key_exists($tablename, self::$fieldInfos)) {
             $fieldInfo = self::$fieldInfos[$tablename];
         } else {
             $fieldInfo = self::$fieldInfos;
@@ -172,7 +173,7 @@ class AutoCodeService extends AutoCode
         $service_classname = self::getServiceClassname( $tablename );
         $object_desc       = "";
         $object_desc       = self::tableCommentKey( $tablename );
-        if ( self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList) )
+        if (self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList) )
         {
             $table_comment = "服务类: " . $object_desc;
         } else {
@@ -199,10 +200,10 @@ class AutoCodeService extends AutoCode
                            "     */" . HH;
                 $result .= "    public function save(\$$instance_name)" . HH .
                            "    {" . HH .
-                           "        if ( is_array(\$$instance_name) ) {" . HH .
+                           "        if (is_array(\$$instance_name)) {" . HH .
                            "            \$$instance_name = new $classname(\$$instance_name);" . HH .
                            "        }" . HH .
-                           "        if ( \$$instance_name instanceof $classname ) {" . HH .
+                           "        if (\$$instance_name instanceof $classname) {" . HH .
                            "            return \$" . $instance_name . "->save();" . HH .
                            "        } else {" . HH .
                            "            return false;" . HH .
@@ -217,10 +218,10 @@ class AutoCodeService extends AutoCode
                            "     */" . HH;
                 $result .= "    public function update(\$$instance_name)" . HH .
                            "    {" . HH .
-                           "        if ( is_array(\$$instance_name) ) {" . HH .
+                           "        if (is_array(\$$instance_name)) {" . HH .
                            "            \$$instance_name = new $classname( \$$instance_name );" . HH .
                            "        }" . HH .
-                           "        if ( \$$instance_name instanceof $classname ) {" . HH .
+                           "        if (\$$instance_name instanceof $classname) {" . HH .
                            "            return \$" . $instance_name . "->update();" . HH .
                            "        } else {" . HH .
                            "            return false;" . HH .
@@ -470,17 +471,17 @@ class AutoCodeService extends AutoCode
                            "    public function import(\$files)" . HH .
                            "    {" . HH .
                            "        \$diffpart = date(\"YmdHis\");" . HH .
-                           "        if ( !empty(\$files[\"upload_file\"]) ) {" . HH .
+                           "        if (!empty(\$files[\"upload_file\"])) {" . HH .
                            "            \$tmptail    = explode('.', \$files[\"upload_file\"][\"name\"]);" . HH .
                            "            \$tmptail    = end(\$tmptail);" . HH .
                            "            \$uploadPath = GC::\$attachment_path . \"{$instance_name}\" . DS . \"import\" . DS . \"{$instance_name}\$diffpart . \$tmptail\";" . HH .
                            "            \$result     = UtilFileSystem::uploadFile( \$files, \$uploadPath );" . HH .
-                           "            if ( \$result && (\$result['success'] == true) ) {" . HH .
-                           "                if ( array_key_exists('file_name', \$result) ) {" . HH .
+                           "            if (\$result && (\$result['success'] == true)) {" . HH .
+                           "                if (array_key_exists('file_name', \$result)) {" . HH .
                            "                    \$arr_import_header = self::fieldsMean( {$classname}::tablename() );" . HH .
                            "                    \$data = UtilExcel::exceltoArray( \$uploadPath, \$arr_import_header );" . HH .
                            "                    \$result = false;" . HH .
-                           "                    if ( \$data ) {" . HH .
+                           "                    if (\$data) {" . HH .
                            "                        foreach (\$data as \${$instance_name}) {" . HH .
                            self::relationFieldImport( $instance_name, $classname, $fieldInfo, "    " ).
                            "                            \${$instance_name} = new {$classname}(\${$instance_name});" . HH .
@@ -488,9 +489,9 @@ class AutoCodeService extends AutoCode
                            self::dataTimeConvert( $instance_name, $fieldInfo, true, "    " ).
                            self::bitVal( $instance_name, $fieldInfo, "    " ).
                            "                            \${$instance_name}_id = \${$instance_name}->getId();" . HH .
-                           "                            if ( !empty(\${$instance_name}_id) ) {" . HH .
+                           "                            if (!empty(\${$instance_name}_id)) {" . HH .
                            "                                \$had{$classname} = {$classname}::existByID( \${$instance_name}->getId() );" . HH .
-                           "                                if ( \$had{$classname} ) {" . HH .
+                           "                                if (\$had{$classname}) {" . HH .
                            "                                    \$result = \${$instance_name}->update();" . HH .
                            "                                } else {" . HH .
                            "                                    \$result = \${$instance_name}->save();" . HH .
@@ -519,8 +520,8 @@ class AutoCodeService extends AutoCode
                  $specialResult = $enumConvert["normal"] .
                                   "        \$arr_output_header = self::fieldsMean( {$classname}::tablename() ); " . HH;
                  $relationFieldOutput = self::relationFieldOutput( $instance_name, $classname, $fieldInfo );
-                 if ( ( !empty($relationFieldOutput) ) || ( !empty($enumConvert["normal"]) ) || ( !empty($datetimeShow) ) ) {
-                     $specialResult .= "        if ( \$data && count(\$data) > 0 ) {" . HH .
+                 if (( !empty($relationFieldOutput) ) || ( !empty($enumConvert["normal"]) ) || ( !empty($datetimeShow) )) {
+                     $specialResult .= "        if (\$data && count(\$data) > 0) {" . HH .
                                        "            foreach (\$data as \$$instance_name) {" . HH .
                                        $enumConvert["output"] .
                                        $relationFieldOutput .
@@ -537,8 +538,8 @@ class AutoCodeService extends AutoCode
                             "     */" . HH .
                             "    public function export{$classname}(\$filter = null)" . HH .
                             "    {" . HH .
-                            "        if ( \$filter ) {" . HH .
-                            "            if ( is_array(\$filter) || is_object(\$filter) ) {" . HH .    
+                            "        if (\$filter) {" . HH .
+                            "            if (is_array(\$filter) || is_object(\$filter)) {" . HH .    
                             "                \$filter = \$this->filtertoCondition( \$filter );" . HH .
                             "            }" . HH .
                             "        }" . HH .
@@ -575,14 +576,14 @@ class AutoCodeService extends AutoCode
     {
         $result = "";
         $redundancy_table_fields = self::$redundancy_table_fields[$classname];
-        if ( ( is_array($redundancy_table_fields) ) && ( count($redundancy_table_fields) > 0 ) ) {
+        if (( is_array($redundancy_table_fields) ) && (count($redundancy_table_fields) > 0 )) {
             foreach ($redundancy_table_fields as $relation_classname => $redundancy_table_field) {
                 $relation_instance_name = $relation_classname;
                 $relation_instance_name = lcfirst($relation_instance_name);
                 $realId  = DataObjectSpec::getRealIDColumnName( $relation_classname );
-                $result .= "        if ( \${$instance_name}[\"{$realId}\"] ) {" . HH .
+                $result .= "        if (\${$instance_name}[\"{$realId}\"]) {" . HH .
                            "            \${$relation_instance_name} = $relation_classname::get_by_id( \${$instance_name}[\"{$realId}\"] );" . HH .
-                           "            if ( \${$relation_instance_name} ) {" . HH;
+                           "            if (\${$relation_instance_name}) {" . HH;
                 foreach ($redundancy_table_field as $relation_fieldname => $come) {
                     $result .= "                \${$instance_name}[\"$relation_fieldname\"] = \${$relation_instance_name}->{$come};" . HH;
                 }
@@ -602,29 +603,29 @@ class AutoCodeService extends AutoCode
     private static function relationFieldOutput($instance_name, $classname, $fieldInfo)
     {
         $result = "";
-        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+        if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0))
         {
-            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+            if (array_key_exists($classname, self::$relation_viewfield)) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
                 foreach ($fieldInfo as $fieldname => $field) {
-                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                    if (array_key_exists($fieldname, $relationSpecs)) {
                         $relationShow = $relationSpecs[$fieldname];
                         foreach ($relationShow as $key => $value) {
                             $realId         = DataObjectSpec::getRealIDColumnName( $key );
                             $show_fieldname = $value;
-                            if ( $realId != $fieldname ) {
+                            if ($realId != $fieldname) {
                                 $show_fieldname .= "_" . $fieldname;
-                                if ( contain($show_fieldname, "_id") ) {
+                                if (contain($show_fieldname, "_id")) {
                                     $show_fieldname = str_replace("_id", "", $show_fieldname);
                                 }
                             }
-                            // if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
+                            // if ($show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
                             $i_name = $key;
                             $i_name = lcfirst($i_name);
-                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
+                            if (!array_key_exists("$show_fieldname", $fieldInfo)) {
                                 $result .= "                \${$i_name}_instance = null;" . HH;
-                                $result .= "                if ( \${$instance_name}->$fieldname ) {" . HH;
+                                $result .= "                if (\${$instance_name}->$fieldname) {" . HH;
                                 $result .= "                    \${$i_name}_instance = $key::get_by_id( \${$instance_name}->$fieldname );" . HH;
                                 $result .= "                    \${$instance_name}['$fieldname'] = \${$i_name}_instance->$show_fieldname;" . HH;
                                 $result .= "                }" . HH;
@@ -632,12 +633,12 @@ class AutoCodeService extends AutoCode
                                 $result .= "                unset(\$arr_output_header[\"$fieldname\"]);" . HH;
                             }
                             $fieldInfos = self::$fieldInfos[self::getTablename( $key )];
-                            if ( !$isTreeLevelHad ) {
-                                if ( array_key_exists("parent_id", $fieldInfos) && array_key_exists("level", $fieldInfos) ) {
+                            if (!$isTreeLevelHad) {
+                                if (array_key_exists("parent_id", $fieldInfos) && array_key_exists("level", $fieldInfos)) {
                                     // $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= "                if ( \${$i_name}_instance ) {" . HH .
+                                    $result .= "                if (\${$i_name}_instance) {" . HH .
                                                "                    \$level = \${$i_name}_instance->level;" . HH .
                                                "                    \${$instance_name}[\"{$i_name}ShowAll\"] = $key::{$i_name}ShowAll( \${$instance_name}->parent_id, \$level );" . HH .
                                                "                    \$" . $instance_name . "['$fieldname'] = \${$i_name}_instance->$value;" . HH .
@@ -664,49 +665,49 @@ class AutoCodeService extends AutoCode
     private static function relationFieldImport($instance_name, $classname, $fieldInfo, $blankPre = "")
     {
         $result = "";
-        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+        if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0))
         {
-            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+            if (array_key_exists($classname, self::$relation_viewfield)) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
                 $isTreeLevelHad = false;
                 foreach ($fieldInfo as $fieldname => $field) {
-                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                    if (array_key_exists($fieldname, $relationSpecs)) {
                         $relationShow = $relationSpecs[$fieldname];
                         foreach ($relationShow as $key => $value) {
                             $i_name         = $key;
                             $show_fieldname = self::getShowFieldName( $key );
                             $i_name         = lcfirst($i_name);
                             $fieldInfo_relation = self::$fieldInfos[self::getTablename($key)];
-                            if ( array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation) ) {
-                                if ( !$isTreeLevelHad ) {
+                            if (array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation)) {
+                                if (!$isTreeLevelHad) {
                                     $classNameField = self::getShowFieldName( $key );
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                                    $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {" . HH .
+                                    $result .= $blankPre . "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])) {" . HH .
                                                $blankPre . "                            \${$i_name}_all = \${$instance_name}[\"{$field_comment}[全]\"];" . HH .
-                                               $blankPre . "                            if ( \${$i_name}_all ) {" . HH .
+                                               $blankPre . "                            if (\${$i_name}_all) {" . HH .
                                                $blankPre . "                                \${$i_name}_all_arr = explode(\"->\", \${$i_name}_all);" . HH .
-                                               $blankPre . "                                if ( \${$i_name}_all_arr ) {" . HH .
+                                               $blankPre . "                                if (\${$i_name}_all_arr) {" . HH .
                                                $blankPre . "                                    \$level = count(\${$i_name}_all_arr);" . HH .
                                                $blankPre . "                                    switch (\$level) {" . HH .
                                                $blankPre . "                                        case 1:" . HH .
                                                $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
-                                               $blankPre . "                                            if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                            if (\${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                            break;" . HH .
                                                $blankPre . "                                        case 2:" . HH .
                                                $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
-                                               $blankPre . "                                            if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                            if (\${$i_name}_p) {" . HH .
                                                $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2,\"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
-                                               $blankPre . "                                                if ( \${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                                if (\${$i_name}_p )\${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                            }" . HH .
                                                $blankPre . "                                            break;" . HH .
                                                $blankPre . "                                        case 3:" . HH .
                                                $blankPre . "                                            \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[0], \"level\" => 1) );" . HH .
-                                               $blankPre . "                                            if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                            if (\${$i_name}_p) {" . HH .
                                                $blankPre . "                                                \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[1], \"level\" => 2, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
-                                               $blankPre . "                                                if ( \${$i_name}_p ) {" . HH .
+                                               $blankPre . "                                                if (\${$i_name}_p) {" . HH .
                                                $blankPre . "                                                    \${$i_name}_p = {$key}::get_one( array(\"{$show_fieldname}\" => \${$i_name}_all_arr[2], \"level\" => 3, \"parent_id\" => \${$i_name}_p->{$fieldname}) );" . HH .
-                                               $blankPre . "                                                    if ( \${$i_name}_p ) \${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
+                                               $blankPre . "                                                    if (\${$i_name}_p ) \${$instance_name}[\"{$fieldname}\"] = \${$i_name}_p->{$fieldname};" . HH .
                                                $blankPre . "                                                }" . HH .
                                                $blankPre . "                                            }" . HH .
                                                $blankPre . "                                            break;" . HH .
@@ -717,9 +718,9 @@ class AutoCodeService extends AutoCode
                                     $isTreeLevelHad = true;
                                 }
                             } else {
-                                $result .= $blankPre . "                        if ( !is_numeric(\${$instance_name}[\"$fieldname\"]) ) {" . HH;
+                                $result .= $blankPre . "                        if (!is_numeric(\${$instance_name}[\"$fieldname\"])) {" . HH;
                                 $result .= $blankPre . "                            \${$i_name}_r = $key::get_one( \"{$show_fieldname} = '\" . \${$instance_name}[\"$fieldname\"] . \"'\" );" . HH;
-                                $result .= $blankPre . "                            if ( \${$i_name}_r ) \${$instance_name}[\"$fieldname\"] = \${$i_name}_r->$fieldname;" . HH;
+                                $result .= $blankPre . "                            if (\${$i_name}_r ) \${$instance_name}[\"$fieldname\"] = \${$i_name}_r->$fieldname;" . HH;
                                 $result .= $blankPre . "                        }" . HH;
                             }
                         }
@@ -742,10 +743,10 @@ class AutoCodeService extends AutoCode
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
             $datatype = self::comment_type($field["Type"]);
-            if ( $datatype == 'enum' ) {
+            if ($datatype == 'enum') {
                 $enumclassname     = self::enumClassName($fieldname,$tablename);
                 $enum_columnDefine = self::enumDefines($field["Comment"]);
-                $result .= $blankPre . "        if ( !{$enumclassname}::isEnumValue( \$" . $instance_name . "->" . $fieldname . " ) ) {" . HH .
+                $result .= $blankPre . "        if (!{$enumclassname}::isEnumValue( \$" . $instance_name . "->" . $fieldname . " )) {" . HH .
                            $blankPre . "            \$" . $instance_name . "->" . $fieldname . " = " . $enumclassname . "::" . $fieldname . "ByShow( \$" . $instance_name . "->" . $fieldname . " );" . HH .
                            $blankPre . "        }" . HH;
             }
@@ -765,16 +766,16 @@ class AutoCodeService extends AutoCode
         $enumColumns = array();
         foreach ($fieldInfo as $fieldname => $field) {
             $datatype = self::comment_type($field["Type"]);
-            if ( $datatype == 'enum' ) {
+            if ($datatype == 'enum') {
                 $enumColumns[]     = "'" . $fieldname . "'";
-                $result["output"] .= "                if ( \${$instance_name}->{$fieldname}Show ) {" . HH .
+                $result["output"] .= "                if (\${$instance_name}->{$fieldname}Show) {" . HH .
                                      "                    \${$instance_name}['{$fieldname}'] = \${$instance_name}->{$fieldname}Show;" . HH .
                                      "                }" . HH;
             }
         }
-        if ( count($enumColumns) > 0) {
+        if (count($enumColumns) > 0) {
             $enumColumns       = implode(",", $enumColumns);
-            $result["normal"] .= $blankPre . "        if ( ( !empty(\$data) ) && ( count(\$data) > 0 ) )" . HH .
+            $result["normal"] .= $blankPre . "        if (( !empty(\$data) ) && (count(\$data) > 0))" . HH .
                                  $blankPre . "        {" . HH .
                                  $blankPre . "            $classname::propertyShow( \$data, array($enumColumns) );" . HH .
                                  $blankPre . "        }" . HH;
@@ -792,15 +793,15 @@ class AutoCodeService extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::column_type($field["Type"]);
                 $field_comment = $field["Comment"];
-                if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
+                if (( $datatype == 'int' ) && (contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time"))) )
                 {
-                    if ( $isImport ) {
-                        $result .= "                            if ( isset(\${$instance_name}->$fieldname) ) \${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp( UtilExcel::exceltimtetophp( \${$instance_name}->$fieldname ) );" . HH;
+                    if ($isImport) {
+                        $result .= "                            if (isset(\${$instance_name}->$fieldname) ) \${$instance_name}->$fieldname = UtilDateTime::dateToTimestamp( UtilExcel::exceltimtetophp( \${$instance_name}->$fieldname));" . HH;
                     } else {
-                        $result .= "            if ( isset(\${$instance_name}[\"$fieldname\"]) ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp( \${$instance_name}[\"$fieldname\"] );" . HH;
+                        $result .= "            if (isset(\${$instance_name}[\"$fieldname\"]) ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::dateToTimestamp( \${$instance_name}[\"$fieldname\"] );" . HH;
                     }
                 }
             }
@@ -818,10 +819,10 @@ class AutoCodeService extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::column_type($field["Type"]);
-                if ( $datatype == 'bit' )
-                    $result .= $blankPre . "                        if ( \${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = 1; else \$$instance_name->$fieldname = 0;" . HH;
+                if ($datatype == 'bit' )
+                    $result .= $blankPre . "                        if (\${$instance_name}->$fieldname == \"是\" ) \$$instance_name->$fieldname = 1; else \$$instance_name->$fieldname = 0;" . HH;
             }
         }
         return $result;
@@ -837,10 +838,10 @@ class AutoCodeService extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::column_type( $field["Type"] );
-                if ( $datatype == 'bit' )
-                    $result .= $blankPre . "                if ( \${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";" . HH;
+                if ($datatype == 'bit' )
+                    $result .= $blankPre . "                if (\${$instance_name}->$fieldname == 1 ) \$$instance_name->$fieldname = \"是\"; else \$$instance_name->$fieldname = \"否\";" . HH;
             }
         }
         return $result;
@@ -856,12 +857,12 @@ class AutoCodeService extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::column_type($field["Type"]);
                 $field_comment = $field["Comment"];
-                if ( ( $datatype == 'int' ) && ( contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time") ) ) )
+                if (( $datatype == 'int' ) && (contains( $field_comment, array("日期", "时间") ) || contains( $field_comment, array("date", "time"))) )
                 {
-                    $result .= $blankPre . "                if ( \${$instance_name}->{$fieldname} ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::timestampToDateTime( \${$instance_name}->{$fieldname} );" . HH;
+                    $result .= $blankPre . "                if (\${$instance_name}->{$fieldname} ) \${$instance_name}[\"$fieldname\"] = UtilDateTime::timestampToDateTime( \${$instance_name}->{$fieldname} );" . HH;
                 }
             }
         }

@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: x-requested-with,content-type");
 $params = json_decode(file_get_contents('php://input'), true);
 // 当前页数
 $page   = $params['page'];
-if ( empty($page) ) $page = 1;
+if (empty($page) ) $page = 1;
 
 $data                = array();
 $data["code"]        = 1;
@@ -19,7 +19,7 @@ $total        = 1;
 $page_size    = Config_Mobile::$api_page_size;
 
 $pageBlogs = Blog::queryPageByPageNo( $page, $where_clause, $page_size, $orderDes );
-if ( $pageBlogs ) {
+if ($pageBlogs) {
     $total = $pageBlogs["pageCount"];//总页数
     $count = Blog::count();//$pageTrips["count"];//总记录数
     if ($page == $total || $total==0) $data["code"] = 999;

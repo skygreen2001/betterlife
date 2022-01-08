@@ -1,8 +1,8 @@
 <?php
-if ( file_exists("../../../init.php") ) require_once ("../../../init.php");
+if (file_exists("../../../init.php") ) require_once ("../../../init.php");
 /**
  * 显示超过限制数量的表
- * 
+ *
  * @param int $limit 限制数量
  * @return void
  */
@@ -13,9 +13,9 @@ function db_countrows($limit = 0) {
         $table_name  = $table["Name"];
         $table_intro = "";
         // $table_intro = $table["Comment"];
-        // if ( !empty($table_intro) ) $table_intro = "[ $table_intro ]";
+        // if (!empty($table_intro) ) $table_intro = "[ $table_intro ]";
         $table_rows  = $table["Rows"];
-        if ( $table_rows >= $limit ) {
+        if ($table_rows >= $limit) {
             echo "表名: $table_name $table_intro - 共计行数: $table_rows;<br/>";
         }
     }

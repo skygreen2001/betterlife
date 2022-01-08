@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 定义样式 |-----------
  * @category betterlife
@@ -42,7 +43,7 @@ class UtilCss extends Util
         UtilAjax::init();
         $g_flag_ext        = EnumJsFramework::JS_FW_EXTJS;
         $ext_resource_root = "resources/css/";
-        if ( $viewObject ) {
+        if ($viewObject) {
             self::loadCssReady( $viewObject, $ext_resource_root . "ext-all.css", true, $g_flag_ext, $version );
             self::loadCssReady( $viewObject, $ext_resource_root . "xtheme-gray.css", true, $g_flag_ext, $version );
             self::loadCssReady( $viewObject, $ext_resource_root . "ext-patch.css", true, $g_flag_ext, $version );
@@ -77,8 +78,8 @@ class UtilCss extends Util
      */
     public static function loadCssReady($viewobject, $cssFile, $isGzip = false, $cssFlag = null, $version = "", $charset = "utf-8")
     {
-        if ( $viewobject instanceof ViewObject ) {
-            if ( !isset($viewobject->css_ready) || empty($viewobject->css_ready) ) {
+        if ($viewobject instanceof ViewObject) {
+            if (!isset($viewobject->css_ready) || empty($viewobject->css_ready)) {
                 $viewobject->css_ready = "";
             }
             $viewobject->css_ready .= self::loadCssSentence( $cssFile, $isGzip, $cssFlag, $version, $charset );
@@ -95,39 +96,39 @@ class UtilCss extends Util
     public static function loadCssSentence($cssFile, $isGzip = false, $cssFlag = null, $version = "", $charset = "utf-8")
     {
         $result = "";
-        if ( isset($cssFile) ) {
+        if (isset($cssFile)) {
             $url_base = UtilNet::urlbase();
-            if ( $isGzip ) {
-                if ( isset($cssFlag) ) {
+            if ($isGzip) {
+                if (isset($cssFlag)) {
                     $cssFile .= "&" . self::$CSS_FLAG_GROUP . "=" . $cssFlag;
                 }
-                if ( !empty($version) ) {
+                if (!empty($version)) {
                     $cssFile .= "&" . self::$CSS_FLAG_VERSION . "=" . $version;
                 }
-                if ( in_array($cssFile, self::$CssLoaded) ) {
+                if (in_array($cssFile, self::$CssLoaded)) {
                     return ;
                 }
                 $css_gzip = self::$CSS_GZIP;
-                if ( contain( $cssFile, Gc::$url_base ) ) {
+                if (contain( $cssFile, Gc::$url_base )) {
                     $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                    if ( contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" ) ) {
+                    if (contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" )) {
                         $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
                     }
-                    if ( contain( $file_sub_dir,Gc::$nav_root_path ) ) {
+                    if (contain( $file_sub_dir,Gc::$nav_root_path )) {
                         $isLocalCssFile = str_replace(Gc::$url_base, Gc::$nav_root_path, $cssFile);
                     } else {
                         $isLocalCssFile = str_replace(Gc::$url_base, $file_sub_dir, $cssFile);
                     }
 
-                    if ( is_server_windows() ) {
+                    if (is_server_windows()) {
                         $isLocalCssFile = str_replace("/", "\\", $isLocalCssFile);
                     }
-                    if ( contain( $isLocalCssFile, "resources" . DS . "css" ) ) {
+                    if (contain( $isLocalCssFile, "resources" . DS . "css" )) {
                         $isLocalCssFile = substr($isLocalCssFile, 0, strpos($isLocalCssFile, "resources" . DS . "css") + 9);
                     }
                     $isLocalGzip = $isLocalCssFile . DS . "gzip.php";
-                    if ( file_exists($isLocalGzip) ) {
-                        if ( contain( $file_sub_dir, Gc::$nav_root_path ) ) {
+                    if (file_exists($isLocalGzip)) {
+                        if (contain( $file_sub_dir, Gc::$nav_root_path )) {
                             $css_gzip = str_replace(Gc::$nav_root_path, "", $isLocalGzip) . "?css=";
                         } else {
                             $css_gzip = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $isLocalGzip) . "?css=";
@@ -135,31 +136,31 @@ class UtilCss extends Util
                         $css_gzip = str_replace("\\", "/", $css_gzip);
                     }
                 } else {
-                    if ( contain( strtolower(php_uname()), "darwin" ) ) {
+                    if (contain( strtolower(php_uname()), "darwin" )) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
                         $css_gzip     = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $css_gzip;
                         $start_str    = substr($css_gzip, 0, strpos($css_gzip, "/"));
                         $url_basei    = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str      = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ( $start_str == $end_str ) $css_gzip = str_replace($end_str . "/", "", $css_gzip);
+                        if ($start_str == $end_str ) $css_gzip = str_replace($end_str . "/", "", $css_gzip);
                     }
                 }
                 $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $css_gzip . $cssFile . "\" />" . HH;
             } else {
-                if ( in_array($cssFile, self::$CssLoaded) ) {
+                if (in_array($cssFile, self::$CssLoaded)) {
                     return ;
                 }
-                if ( startWith( $cssFile, "http" ) ) {
+                if (startWith( $cssFile, "http" )) {
                     $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $cssFile . "\" />" . HH;
                 } else {
-                    if ( contain( strtolower(php_uname()), "darwin" ) ) {
+                    if (contain( strtolower(php_uname()), "darwin" )) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
                         $cssFile      = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $cssFile;
 
                         $start_str = substr($cssFile, 0, strpos($cssFile, "/"));
                         $url_basei = substr($url_base, 0,strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ( $start_str == $end_str ) $cssFile = str_replace($end_str . "/", "", $cssFile);
+                        if ($start_str == $end_str ) $cssFile = str_replace($end_str . "/", "", $cssFile);
                     }
                     $result = "     <link rel=\"stylesheet\" type=\"text/css\" href=\"" . $url_base . $cssFile . "\" />" . HH;
                 }
@@ -185,8 +186,8 @@ class UtilCss extends Util
      */
     public static function loadCssContentReady($viewobject, $cssContent)
     {
-        if ( $viewobject instanceof ViewObject ) {
-            if ( !isset($viewobject->css_ready) || empty($viewobject->css_ready) ) {
+        if ($viewobject instanceof ViewObject) {
+            if (!isset($viewobject->css_ready) || empty($viewobject->css_ready)) {
                 $viewobject->css_ready = "";
             }
             $viewobject->css_ready .= self::loadCssContentSentence( $cssContent );

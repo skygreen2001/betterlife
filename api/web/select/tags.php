@@ -2,11 +2,11 @@
 // error_reporting(0);
 require_once("../../../init.php");
 $query        = "";
-if ( array_key_exists("term", $_GET) ) {
+if (array_key_exists("term", $_GET)) {
   $query = @$_GET["term"];
 }
 $where_clause = "";
-if ( !empty($query) ) {
+if (!empty($query)) {
     $where_clause = "(";
     $search_atom = explode(" ", trim($query));
     array_walk($search_atom, function(&$value, $key) {
@@ -17,7 +17,7 @@ if ( !empty($query) ) {
 }
 $pageTags = Tags::get($where_clause);
 $data     = array();
-if ( $pageTags ) {
+if ($pageTags) {
     foreach ($pageTags as $key => $tags) {
         $tagsv         = array();
         $tagsv["id"]   = $tags->tags_id;

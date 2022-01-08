@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 读取xml配置文件类 |-----------
  * @category betterlife
@@ -10,7 +11,7 @@ class UtilConfigXml extends UtilConfig
 {
     public function load ($file)
     {
-        if ( file_exists($file) == false ) { return false; }
+        if (file_exists($file) == false) { return false; }
         /**xmllib.php为PHP XML Library, version 1.2b,
          * 相关连接:http://keithdevens.com/software/phpxml
          * xmllib.php主要特点是把一个数组转换成一个xml或吧xml转换成一个数组

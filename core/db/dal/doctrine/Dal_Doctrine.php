@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| @todo 实现doctrine通用的DAL访问方式 |-----------
- * 
+ *
  * @link http://www.doctrine-project.org/
  * @category betterlife
  * @package core.db.dal
@@ -70,27 +71,27 @@ class Dal_DbFacile extends Dal implements IDal
 
     /**
      * 根据对象实体查询对象列表
-     * 
+     *
      * @param string $object 需要查询的对象实体|类名称
      * @param string $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *     1.id asc;
      *     2.name desc;
-     * 
+     *
      * @param string $limit 分页数目:同Mysql limit语法
      * 示例如下:
-     * 
+     *
      *    0,10
      * @return 对象列表数组
      */
@@ -104,20 +105,20 @@ class Dal_DbFacile extends Dal implements IDal
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *      1.id asc;
      *      2.name desc;
-     * 
+     *
      * @return 单个对象实体
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
@@ -154,14 +155,14 @@ class Dal_DbFacile extends Dal implements IDal
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @return int 对象总计数
      */
     public function count($object, $filter = null)
@@ -177,22 +178,22 @@ class Dal_DbFacile extends Dal implements IDal
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0."id=1,name='sky'"
      *     1.array("id=1","name='sky'")
      *     2.array("id"=>"1","name"=>"sky")
      *     3.允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 
+     *
      * 示例如下:
-     * 
+     *
      *     1.id asc;
      *     2.name desc;
-     * 
+     *
      * @return mixed 对象分页
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)

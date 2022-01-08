@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 比较直观可看的专用于SqlServer的SQL查询构造器 |-----------
  * @category betterlife
@@ -23,7 +24,7 @@ class SqlServer_Crud_Sql_Select extends Crud_Sql_Select {
     public static function getSql(&$_SQL, $tablename, $saParams, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null) {
         $selectclause = "";
         $whereclause  = $saParams;
-        if ( !empty($limit) ) {
+        if (!empty($limit)) {
             $pageOffset   = explode(",", $limit);
             $startPoint   = $pageOffset[0];
             $endPoint     = $pageOffset[1];
@@ -37,7 +38,7 @@ class SqlServer_Crud_Sql_Select extends Crud_Sql_Select {
     }
 
     private static function pageWhereSql(&$_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo) {
-        if ( empty($sort) || $sort == 'null' ) {
+        if (empty($sort) || $sort == 'null') {
             $sortclause = "";
         } else {
             $sortclause = Crud_SQL::SQL_ORDERBY . $sort;
@@ -45,11 +46,11 @@ class SqlServer_Crud_Sql_Select extends Crud_Sql_Select {
         $_SQL->isPreparedStatement = false;
         $whereclause = $_SQL->where($saParams)->getWhereClause();
         $_SQL->initWhereClause();
-        if ( $currentNo > 1 ) {
-            if ( $whereclause ) {
-                $whereclause = $whereclause . Crud_SQL::SQL_AND . " (id not in (select top " . ( $pageSize * ( $currentNo - 1 ) ) . " id from $tablename " . Crud_SQL::SQL_WHERE . $whereclause . $sortclause . "))";
+        if ($currentNo > 1) {
+            if ($whereclause) {
+                $whereclause = $whereclause . Crud_SQL::SQL_AND . " (id not in (select top " . ( $pageSize * ( $currentNo - 1)) . " id from $tablename " . Crud_SQL::SQL_WHERE . $whereclause . $sortclause . "))";
             } else {
-                $whereclause = " (id not in (select top " . ( $pageSize * ( $currentNo - 1 ) ) . " id from $tablename " . $sortclause . "))";
+                $whereclause = " (id not in (select top " . ( $pageSize * ( $currentNo - 1)) . " id from $tablename " . $sortclause . "))";
             }
         }
         return $whereclause;

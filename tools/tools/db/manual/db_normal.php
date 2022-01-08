@@ -11,10 +11,10 @@ foreach ($tableList as $tablename) {
        $fieldInfos[$tablename][$fieldname]["Comment"] = $field["Comment"];
        $fieldInfos[$tablename][$fieldname]["Key"]     = "";
        $fieldInfos[$tablename][$fieldname]["Null"]    = "";
-       if ( $field["Key"] == "PRI" ) {
+       if ($field["Key"] == "PRI") {
            $fieldInfos[$tablename][$fieldname]["Key"]  = "√";
        }
-       if ( $field["Null"] == "NO" ) {
+       if ($field["Null"] == "NO") {
            $fieldInfos[$tablename][$fieldname]["Null"] = "√";
        }
    }
@@ -64,21 +64,21 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
             <th class="beizhu">备注</th>
         </tr>
     <?php
-        if ( $tableInfoList && count($tableInfoList) ) {
+        if ($tableInfoList && count($tableInfoList)) {
             foreach ($tableInfoList as $tablename => $tableinfo)
             {
                 $table_comment = $tableinfo["Comment"];
                 $tablename_cn  = str_replace("关系表", "", $table_comment);
-                if ( contain( $tablename_cn, "\r" ) || contain( $tablename_cn, "\n" ) ) {
+                if (contain( $tablename_cn, "\r" ) || contain( $tablename_cn, "\n" )) {
                     $tablename_cn = preg_split("/[\s,]+/", $tablename_cn);
                     $tablename_cn = $tablename_cn[0];
                 }
-                if ( empty($tablename_cn) ) $tablename_cn = $tablename;
+                if (empty($tablename_cn) ) $tablename_cn = $tablename;
                 $tableInfoList[$tablename]["Comment_Table"] = $tablename_cn;
                 $table_comment = str_replace(HH, "<br/>", $table_comment);
                 $table_comment = str_replace("\r", "<br/>", $table_comment);
                 $table_comment = str_replace("\n", "<br/>", $table_comment);
-                if ( empty($table_comment) ) $table_comment = $tablename;
+                if (empty($table_comment) ) $table_comment = $tablename;
                 echo "    <tr>".
                     "        <td><a href=\"#$tablename\">$tablename</a></td>".
                     "        <td>$tablename_cn</td>".
@@ -90,7 +90,7 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
     </table><br /><br />
     <h2>数据库手册</h2>
     <?php
-        if ( $tableInfoList && count($tableInfoList) ) {
+        if ($tableInfoList && count($tableInfoList)) {
             foreach ($tableInfoList as $tablename => $tableinfo)
             {
                 echo "<br />".
@@ -110,7 +110,7 @@ $tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
                     $column_comment = str_replace(HH, "<br/>", $column_comment);
                     $column_comment = str_replace("\r", "<br/>", $column_comment);
                     $column_comment = str_replace("\n", "<br/>", $column_comment);
-                    if ( empty($column_comment) ) $column_comment = $fieldname;
+                    if (empty($column_comment) ) $column_comment = $fieldname;
                     echo "      <tr>".
                         "          <td>$fieldname</td>".
                         "          <td>{$field['Type']}</td>".

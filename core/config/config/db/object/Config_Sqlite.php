@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Sqlite的配置类 * Postgres的配置类 |-----------
  * @category betterlife
@@ -6,7 +7,8 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Sqlite  extends Config_Db{
+class Config_Sqlite  extends Config_Db
+{
     /**
      * Sqlite 2 抓取数据的模式
      * SQLITE_ASSOC will return only associative indices (named fields)
@@ -23,4 +25,3 @@ class Config_Sqlite  extends Config_Db{
      */
     public static $sqlite3_fetchmode = SQLITE3_ASSOC;
 }
-?>

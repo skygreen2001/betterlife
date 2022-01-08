@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Shanghai');
 require_once("core/main/Application.php");
 /**
  * 具体环境变量设置参考
- * 
+ *
  * 1. 环境变量设置:Gc.php里的变量名及注释说明
  * 2. 数据库设置:core/config/config/Config_Db.php里的变量名及注释说明
  */

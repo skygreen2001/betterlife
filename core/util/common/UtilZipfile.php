@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:将多个文件压缩成zip文件的工具类 |-----------
  * @category betterlife
@@ -80,8 +81,8 @@ class UtilZipfile
     private function addFile($data, $name, $showName, $time = 0)
     {
         //$name=Util_String::utf82gbk($name);
-        if ( $this->is_dir_info_include ) {
-            if ( is_int($showName) ) {
+        if ($this->is_dir_info_include) {
+            if (is_int($showName)) {
                 $name = str_replace(Gc::$nav_root_path, "", $name);
                 $name = str_replace('\\', '/', $name);
             } else {
@@ -89,10 +90,10 @@ class UtilZipfile
             }
         } else {
             $name = basename($name);
-            if ( !is_int($showName) ) $name = $showName;
+            if (!is_int($showName) ) $name = $showName;
         }
 
-        if ( contain(strtolower(client_os()), "windows") ) if ( UtilString::is_utf8( $name ) ) $name = UtilString::utf82gbk( $name );
+        if (contain(strtolower(client_os()), "windows") ) if (UtilString::is_utf8( $name)) $name = UtilString::utf82gbk( $name );
 
         $dtime    = dechex($this->unix2DosTime($time));
         $hexdtime = '\x' . $dtime[6] . $dtime[7]
@@ -200,19 +201,19 @@ class UtilZipfile
      */
     private function addFiles($files)/*Only Pass Array*/
     {
-        if ( is_array($files) ) {
+        if (is_array($files)) {
             foreach ($files as $showName => $file)
             {
-                if ( contain(strtolower(php_uname()),"windows") ) if ( UtilString::is_utf8( $file ) ) $file = UtilString::utf82gbk( $file );
-                if ( is_file($file) ) //directory check
+                if (contain(strtolower(php_uname()),"windows") ) if (UtilString::is_utf8( $file)) $file = UtilString::utf82gbk( $file );
+                if (is_file($file) ) //directory check
                 {
                     $data = implode("",file($file));
                     $this->addFile($data,$file,$showName);
                 }
             }
-        } else if ( is_string($files) ) {
-            if ( contain(strtolower(php_uname()),"windows") ) if ( UtilString::is_utf8( $files ) ) $files = UtilString::utf82gbk( $files );
-            if ( is_file($files) ) {
+        } elseif (is_string($files)) {
+            if (contain(strtolower(php_uname()),"windows") ) if (UtilString::is_utf8( $files)) $files = UtilString::utf82gbk( $files );
+            if (is_file($files)) {
                 $data     = implode("",file($files));
                 $showName = basename($files);
                 $this->addFile( $data, $files, $showName );
@@ -238,14 +239,14 @@ class UtilZipfile
 
     /**
      * 将若干个文件压缩成一个文件下载
-     * 
+     *
      * 注释: 压缩的文件似乎只能在Windows操作系统下可以访问
-     * 
+     *
      * @example: 示例如下
-     * 
+     *
      *    1. UtilZipfile::zip( array(Gc::$attachment_path . "attachment" . DIRECTORY_SEPARATOR . "20111221034439.xlsx", "attachment" . DIRECTORY_SEPARATOR . "20111221034612.xlsx"), Gc::$attachment_path . "goodjob.zip", true);
      *    2. UtilZipFile::zip( array("a/b/c/abc.txt" => Gc::$attachment_path . "test.txt"), Gc::$attachment_path . "test.zip");
-     * 
+     *
      *       就是将原来文件名为abc.txt压缩到test.zip文件，它的新名称就是test.txt。
      * @param mixed $arr_filename 需要压缩的文件名称列表
      * @param mixed $outputfile 压缩后输出的压缩文件
@@ -265,15 +266,15 @@ class UtilZipfile
 
     /**
      * 将指定文件和文件提及的附件如图片或者参考文档压缩成一个文件下载
-     * 
+     *
      * @link https://github.com/Ne-Lexa/php-zip#Documentation-ZipFile-addFile
-     * 
+     *
      * 前提条件:
-     * 
+     *
      *    - PHP 5.5
-     * 
+     *
      *    - 安装PhpZip: composer require nelexa/zip
-     * 
+     *
      * @param string $main_filename 主文件名称
      * @param string $out_zip_filename 输出zip文件名
      * @param string $attachment_source_dir 附件如图片或者参考文档所在目录
@@ -290,7 +291,7 @@ class UtilZipfile
      */
     public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password=null)
     {
-        if ( !empty($out_zip_filename) && !empty($main_filename) ) {
+        if (!empty($out_zip_filename) && !empty($main_filename)) {
             ini_set('memory_limit', '-1'); //取消内存限制
             $zipFile    = new \PhpZip\ZipFile();
             // $zip_method = \PhpZip\ZipFile::METHOD_DEFLATED;
@@ -298,7 +299,7 @@ class UtilZipfile
             $filename   = basename($main_filename);
             $zipFile->addFile($main_filename, $filename, $zip_method);
 
-            if ( !empty($password) ) {
+            if (!empty($password)) {
                 // $encryptionMethod = \PhpZip\ZipFile::ENCRYPTION_METHOD_TRADITIONAL;
                 $encryptionMethod = \PhpZip\Constants\ZipEncryptionMethod::PKWARE;
                 $zipFile->setReadPassword($password);
@@ -306,7 +307,7 @@ class UtilZipfile
             }
             $zip_dir = dirname($out_zip_filename);
             UtilFileSystem::createDir($zip_dir);
-            if ( !empty($attachment_source_dir) ) $zipFile->addDir($attachment_source_dir, $attachment_dest_dir, $zip_method);
+            if (!empty($attachment_source_dir) ) $zipFile->addDir($attachment_source_dir, $attachment_dest_dir, $zip_method);
             $zipFile
                 ->saveAsFile($out_zip_filename)
                 ->close();
@@ -320,7 +321,7 @@ class UtilZipfile
      */
     public static function unzip($zip_filename, $outputDir = null)
     {
-        if ( empty($outputDir) ) {
+        if (empty($outputDir)) {
             $fileName = pathinfo($zip_filename, PATHINFO_FILENAME);
             $outputDir = dirname($zip_filename) . DS . $fileName;
         }

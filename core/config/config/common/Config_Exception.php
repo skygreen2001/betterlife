@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 异常常量 |-----------
  * @category betterlife
@@ -13,7 +14,7 @@ class Config_Exception extends ConfigBB
      * 0. 自定义
      * 1. filp/whoops
      * 2. symfony/error-handler (包含在包laravel/framework里)
-     * 
+     *
      * @var int 
      */
     const EXCEPTION_WAY = 1;
@@ -36,11 +37,11 @@ class Config_Exception extends ConfigBB
 
     /**
      * filp/whoops配置: 异常文件打开编辑器
-     * 
+     *
      * [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
-     * 
+     *
      * 默认: vscode
-     * 
+     *
      *     - vscode
      *     - atom
      *     - sublime

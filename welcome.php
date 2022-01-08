@@ -1,7 +1,7 @@
 <?php
 require_once("Gc.php");
 require_once("core/include/common.php");
-if ( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", '.test') ) ) {
+if (!contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", '.test') )) {
     header("location:" . Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index");
     die();
 }
@@ -227,11 +227,11 @@ if ( !contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.
           "q+" : Math.floor((this.getMonth()+3)/3), //季度
           "S"  : this.getMilliseconds()             //毫秒
         };
-        if ( /(y+)/.test(fmt) ) {
+        if (/(y+)/.test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
         }
         for (var k in o) {
-            if ( new RegExp("("+ k +")").test(fmt) ) {
+            if (new RegExp("("+ k +")").test(fmt)) {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : ( ("00" + o[k]).substr(("" + o[k]).length)) );
             }
         }

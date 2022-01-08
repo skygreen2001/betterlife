@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 负责WEB URL的解析 |-----------
- * 
+ *
  * 从用户请求的URL里获取Controller,Action和Parameter。
  * @category betterlife
  * @package core.main
@@ -38,7 +39,7 @@ class Router
     const URL_PATHINFO_DEFAULT = 2;
     /**
      * PATHINFO 模式,使用数字1、2代表以下三种模式:
-     * 
+     *
      * 1. 普通模式(参数没有顺序,例如/m/module/a/action/id/1);
      * 2. 智能模式(系统默认使用的模式，可自动识别模块和操作/module/action/id/1/ 或者 /module,action,id,1/...);
      */
@@ -79,11 +80,11 @@ class Router
     const VAR_ACTION = 'a';
     /**
      * 默认导航
-     * 
+     *
      * 规则:
      *
      *   dispatch=betterlife.auth.login
-     * 
+     *
      *   等同于: g=betterlife&m=auth&a=login
      */
     const VAR_DISPATCH = 'go';
@@ -97,7 +98,7 @@ class Router
     const VAR_ROUTER = 'r';
     /**
      * PATHINFO 兼容模式获取变量例如 ?s=/module/action/method/id/1
-     * 
+     *
      * 后面的参数取决于URL_PATHINFO_MODEL 和 URL_PATHINFO_DEPR
      */
     const VAR_PATHINFO = 's';
@@ -131,28 +132,28 @@ class Router
     const URL_SLASH = "/";
     /**
      * URL变量与值之间的连接符号
-     * 
+     *
      * 示例: a=login
      */
     const URL_EQUAL = "=";
     /**
      * URL变量与变量之间的连接符号
-     * 
+     *
      * 示例: m=auth&a=login
      */
     const URL_CONNECTOR = "&";
     /**
      * URL变量与变量之间的连接符号
-     * 
+     *
      * 示例: m=auth&a=login
      */
     const URL_QUESTION = "?";
 
     /**
      * 额外的参数
-     * 
+     *
      * 用于
-     * 
+     *
      *    - Debug
      *    - 验证
      *    - 加密
@@ -197,23 +198,23 @@ class Router
     //</editor-fold>
 
     public function __construct() {
-        if ( Gc::$dev_profile_on ) Profiler::mark( '负责WEB URL的解析' );
+        if (Gc::$dev_profile_on ) Profiler::mark( '负责WEB URL的解析' );
         $this->init();
 
         /**
          * Session初始化
          */
-        if ( Gc::$session_auto_start ) {
+        if (Gc::$session_auto_start) {
            HttpSession::init();
         }
         $this->analyzeNavition();
-        if ( Gc::$dev_profile_on ) Profiler::unmark( '负责WEB URL的解析' );
+        if (Gc::$dev_profile_on ) Profiler::unmark( '负责WEB URL的解析' );
     }
 
     public function init() {
-        if ( !Initializer::$IS_CLI ) {
+        if (!Initializer::$IS_CLI) {
             // 当前文件名
-            if ( Initializer::$IS_CGI ) {
+            if (Initializer::$IS_CGI) {
                 //CGI/FASTCGI模式下
                 $_temp = explode('.php', $_SERVER["PHP_SELF"]);
                 $this->CURRENT_RUN_FILE = rtrim(str_replace($_SERVER["HTTP_HOST"], '', $_temp[0] . '.php'), '/');
@@ -228,22 +229,22 @@ class Router
      */
     private function analyzeNavition() {
         $urlMode = Gc::$url_model;
-        if ( $urlMode == self::URL_REWRITE ) {
+        if ($urlMode == self::URL_REWRITE) {
             //当前项目地址
             $url = dirname($this->CURRENT_RUN_FILE);
-            if ( $url == '/' || $url == '\\' ) {
+            if ($url == '/' || $url == '\\') {
                 $url = '';
             }
             $this->CURRENT_RUN_FILE = $url;
-        } elseif ( $urlMode == self::URL_COMPAT ) {
+        } elseif ($urlMode == self::URL_COMPAT) {
             $this->CURRENT_RUN_FILE = $this->CURRENT_RUN_FILE . '?' . self::VAR_PATHINFO . '=';
         }
 
-        if ( $urlMode ) {
+        if ($urlMode) {
             $this->url_mcrypt_decode();
             // 获取PATHINFO信息
             self::getPathInfo();
-            if ( !empty($_GET) && !isset($_GET[self::VAR_ROUTER]) ) {
+            if (!empty($_GET) && !isset($_GET[self::VAR_ROUTER])) {
                 $_GET = array_merge(self::parsePathInfo(), $_GET);
 
                 $_varGroup    = self::VAR_GROUP; // 分组变量
@@ -255,12 +256,12 @@ class Router
 
                 // 组装新的URL地址
                 $_URL = '/';
-                if ( empty($_varDispatch) ) {
-                    if ( empty(Gc::$module_names) ) $_GET[$_varGroup] = '';
+                if (empty($_varDispatch)) {
+                    if (empty(Gc::$module_names) ) $_GET[$_varGroup] = '';
                     // 设置默认模块和操作
-                    if ( empty($_GET[$_varModule]) ) $_GET[$_varModule] = self::DEFAULT_MODULE;
-                    if ( empty($_GET[$_varAction]) ) $_GET[$_varAction] = self::DEFAULT_ACTION;
-                    if ( $_pathModel == self::URL_PATHINFO_DEFAULT ) {
+                    if (empty($_GET[$_varModule]) ) $_GET[$_varModule] = self::DEFAULT_MODULE;
+                    if (empty($_GET[$_varAction]) ) $_GET[$_varAction] = self::DEFAULT_ACTION;
+                    if ($_pathModel == self::URL_PATHINFO_DEFAULT) {
                         // groupName/modelName/actionName/
                         $_URL .= $_GET[$_varGroup] . ($_GET[$_varGroup] ? $_depr : '') . $_GET[$_varModule] . $_depr . $_GET[$_varAction] . $_depr;
                         unset($_GET[$_varGroup], $_GET[$_varModule], $_GET[$_varAction]);
@@ -272,30 +273,30 @@ class Router
                     $_GET[self::VAR_ACTION] = @end($_NavSection);
                     unset($_NavSection[count($_NavSection)-1]);
                     unset($_NavSection[0]);
-                    if ( !empty($_NavSection) && count($_NavSection) > 0 ) {
+                    if (!empty($_NavSection) && count($_NavSection) > 0) {
                         $_GET[self::VAR_MODULE] = @$_NavSection[count($_NavSection)];
                         unset($_NavSection[count($_NavSection)]);
                     }
-                    if ( $_pathModel == self::URL_PATHINFO_DEFAULT ) {
+                    if ($_pathModel == self::URL_PATHINFO_DEFAULT) {
                         $_URL .= $_GET[$_varGroup] . ($_GET[$_varGroup] ? $_depr:'') . $_GET[$_varModule] . $_depr . $_GET[$_varAction] . $_depr;
                         unset($_GET[$_varGroup], $_GET[$_varModule], $_GET[$_varAction], $_GET[$_varDispatch]);
                     }
                 }
                 foreach ($_GET as $_VAR => $_VAL) {
-                    if ( '' != trim($_GET[$_VAR]) ) {
-                        if ( $_pathModel == self::URL_PATHINFO_DEFAULT ) {
+                    if ('' != trim($_GET[$_VAR])) {
+                        if ($_pathModel == self::URL_PATHINFO_DEFAULT) {
                             $_URL .= $_VAR . $_depr . rawurlencode($_VAL) . $_depr;
                         } else {
                             $_URL .= $_VAR . '/' . rawurlencode($_VAL) . '/';
                         }
                     }
                 }
-                if ( $_depr == ',' ) $_URL = substr($_URL, 0, -1) . '/';
+                if ($_depr == ',' ) $_URL = substr($_URL, 0, -1) . '/';
 //                $this->parsed = parse_url($this->CURRENT_RUN_FILE . $_URL);
                 //重定向成规范的URL格式
                 Dispatcher::redirect( $this->CURRENT_RUN_FILE . $_URL );
             } else {
-                if ( self::URL_ROUTER_ON) self::routerCheck();   // 检测路由规则
+                if (self::URL_ROUTER_ON) self::routerCheck();   // 检测路由规则
                 //给_GET赋值 以保证可以按照正常方式取_GET值
                 $_GET = array_merge(self::parsePathInfo(), $_GET);
                 $this->resolveNavDispathParam();
@@ -304,27 +305,27 @@ class Router
             }
         } else {
             // 普通URL模式 检查路由规则
-            if ( isset($_GET[self::VAR_ROUTER]) ) self::routerCheck();
+            if (isset($_GET[self::VAR_ROUTER]) ) self::routerCheck();
             $this->url_mcrypt_decode();
             $this->resolveNavDispathParam();
             $_REQUEST = array_merge($_POST, $_GET);
         }
-        if ( $_REQUEST ) {
+        if ($_REQUEST) {
             $this->setRouteProperties($_REQUEST);
         }
     }
 
     /**
      * 对加密过的链接地址进行解码
-     * 
+     *
      * 加密的url具有以下特征:
      */
     private function url_mcrypt_decode()
     {
-        if ( class_exists("TagHrefClass") && TagHrefClass::$isMcrypt ) {
-            if ( count($_GET) == 1 ) {
+        if (class_exists("TagHrefClass") && TagHrefClass::$isMcrypt) {
+            if (count($_GET) == 1) {
                 $get = each($_GET);
-                if ( ( ( empty($get["1"]) ) || ( $get["1"] == "=" ) ) && ( base64_decode($get["0"], true) ) ) {
+                if (( ( empty($get["1"]) ) || ( $get["1"] == "=")) && (base64_decode($get["0"], true) )) {
                     $path = base64_decode($get["0"]);
                     $_GET = UtilNet::parse_urlquery( $path );
                 }
@@ -334,23 +335,23 @@ class Router
 
     /**
      * 支持通过go=admin.index.index的快捷方式进行导航
-     * 
+     *
      * 参考cs-cart的导航规则进行了改进。
      */
     private function resolveNavDispathParam()
     {
         $data = array_merge($_POST, $_GET);
-        if ( !empty($data[self::VAR_DISPATCH]) ) {
+        if (!empty($data[self::VAR_DISPATCH])) {
             $_NavSection = explode(self::VAR_DISPATCH_DEPR, $data[self::VAR_DISPATCH]);
             $_GET[self::VAR_GROUP]  = @$_NavSection[0];
             $_GET[self::VAR_ACTION] = @end($_NavSection);//@$_NavSection[2];
             unset($_NavSection[count($_NavSection) - 1]);
             unset($_NavSection[0]);
-            if ( !empty($_NavSection) && count($_NavSection) > 0 ) {
+            if (!empty($_NavSection) && count($_NavSection) > 0) {
                 $_GET[self::VAR_MODULE] = @$_NavSection[count($_NavSection)];
                 unset($_NavSection[count($_NavSection)]);
             }
-            if ( !empty($_NavSection) && count($_NavSection) > 0) {
+            if (!empty($_NavSection) && count($_NavSection) > 0) {
                 $this->controller_path = implode(DIRECTORY_SEPARATOR, $_NavSection);//@$_NavSection[1];
             }
         }
@@ -368,12 +369,12 @@ class Router
          */
         $var   = self::VAR_GROUP;
         $group = !empty($route[$var]) ? $route[$var] : Gc::$module_names[0];
-        if ( !empty($route[$var]) ) {
+        if (!empty($route[$var])) {
             $group = $route[$var];
             unset($route[$var]);
             $this->module = strtolower($group);
         } else {
-            if ( count(Gc::$module_names) >= 3 ) {
+            if (count(Gc::$module_names) >= 3) {
                 $group = Gc::$module_names[2];
             }
             $this->module = strtolower($group);
@@ -384,14 +385,14 @@ class Router
         $var        = self::VAR_MODULE;
         $controller = !empty($route[$var]) ? $route[$var] : self::URL_DEFAULT_CONTROLLER;
         //支持路径的控制器
-        if ( contain($controller, self::VAR_DISPATCH_DEPR) ) {
+        if (contain($controller, self::VAR_DISPATCH_DEPR)) {
             $_NavSection = explode(self::VAR_DISPATCH_DEPR, $controller);
             $controller  = $_NavSection[count($_NavSection) - 1];
             unset($_NavSection[count($_NavSection) - 1]);
             $this->controller_path = implode(DIRECTORY_SEPARATOR, $_NavSection);
         }
         $this->controller = $controller;
-        if ( self::URL_CASE_INSENSITIVE ) {
+        if (self::URL_CASE_INSENSITIVE) {
             // URL地址不区分大小写
             $controller = strtolower($controller);
             // 智能识别方式 index.php/user_type/index/ 识别到 UserTypeAction 模块
@@ -459,8 +460,8 @@ class Router
         $routes = array(
             "welcome" => array('Auth','login',"id,name,time","rand=10000"),
         );
-        if ( !empty($routes) ) {
-            if ( isset($_GET[self::VAR_ROUTER]) ) {
+        if (!empty($routes)) {
+            if (isset($_GET[self::VAR_ROUTER])) {
                 // 存在路由变量
                 $routeName = lcfirst($_GET[self::VAR_ROUTER]);
             } else {
@@ -468,11 +469,11 @@ class Router
                 // 获取路由名称
                 $routeName = array_shift($paths);
             }
-            if ( isset($routes[$routeName]) ) {
+            if (isset($routes[$routeName])) {
                 // 读取当前路由名称的路由规则
                 // 路由定义格式 routeName=>array(‘模块名称’,’操作名称’,’参数定义’,’额外参数’)
                 $route = $routes[$routeName];
-                if ( strpos($route[0], self::APP_GROUP_DEPR) ) {
+                if (strpos($route[0], self::APP_GROUP_DEPR)) {
                     $array = explode(self::APP_GROUP_DEPR, $route[0]);
                     $_GET[self::VAR_MODULE] = array_pop($array);
                     $_GET[self::VAR_GROUP]  = implode(self::APP_GROUP_DEPR,$array);
@@ -481,20 +482,20 @@ class Router
                 }
                 $_GET[self::VAR_ACTION] = $route[1];
                 //  获取当前路由参数对应的变量
-                if (!isset($_GET[self::VAR_ROUTER]) ) {
+                if (!isset($_GET[self::VAR_ROUTER])) {
                     $vars = explode(',',$route[2]);
                     for ($i = 0;$i < count($vars);$i++)
                         $_GET[$vars[$i]] = array_shift($paths);
                     // 解析剩余的URL参数
                     $res = preg_replace('@(\w+)\/([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode('/', $paths));
                 }
-                if ( isset($route[3]) ) {
+                if (isset($route[3])) {
                     // 路由里面本身包含固定参数 形式为 a=111&b=222
                     parse_str($route[3], $params);
                     $_GET = array_merge($_GET, $params);
                 }
 
-            } elseif ( isset($routes[$routeName.'@']) ) {
+            } elseif (isset($routes[$routeName.'@'])) {
                 // 存在泛路由
                 // 路由定义格式 routeName@=>array(
                 // array('路由正则1',‘模块名称’,’操作名称’,’参数定义’,’额外参数’),
@@ -505,10 +506,10 @@ class Router
                 foreach ($routeItem as $route) {
                     $rule = $route[0];// 路由正则
                     // 匹配路由定义
-                    if ( preg_match($rule, $regx, $matches) ) {
+                    if (preg_match($rule, $regx, $matches)) {
                         // 检测是否存在分组 2009/06/23
                         $temp = explode(self::APP_GROUP_DEPR, $route[1]);
-                        if ( $temp[1] ) {
+                        if ($temp[1]) {
                             $_GET[self::VAR_GROUP]  = $temp[0];
                             $_GET[self::VAR_MODULE] = $temp[1];
                         } else {
@@ -516,14 +517,14 @@ class Router
                         }
                         $_GET[self::VAR_ACTION] = $route[2];
                         //  获取当前路由参数对应的变量
-                        if ( !isset($_GET[self::VAR_ROUTER]) ) {
+                        if (!isset($_GET[self::VAR_ROUTER])) {
                             $vars = explode(',', $route[3]);
                             for ($i = 0;$i < count($vars); $i++)
                                 $_GET[$vars[$i]] = $matches[$i+1];
                             // 解析剩余的URL参数
                             $res = preg_replace('@(\w+)\/([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', str_replace($matches[0], '', $regx));
                         }
-                        if ( isset($route[4]) ) {
+                        if (isset($route[4])) {
                             // 路由里面本身包含固定参数 形式为 a=111&b=222
                             parse_str($route[4], $params);
                             $_GET = array_merge($_GET, $params);
@@ -533,7 +534,7 @@ class Router
                 }
             }
 
-            if ( isset($_GET[self::VAR_ROUTER]) ) {
+            if (isset($_GET[self::VAR_ROUTER])) {
                 // 清除路由变量
                 unset($_GET[self::VAR_ROUTER]);
             }
@@ -547,18 +548,18 @@ class Router
      */
     private static function parsePathInfo() {
         $pathInfo = array();
-        if ( self::URL_PATHINFO_MODEL == 2) {
+        if (self::URL_PATHINFO_MODEL == 2) {
             $paths = explode(self::URL_PATHINFO_DEPR, trim($_SERVER['PATH_INFO'], '/'));
-            if ( !empty(Gc::$module_names) ) {
+            if (!empty(Gc::$module_names)) {
                 $arr = array_map('strtolower', Gc::$module_names);
                 $pathInfo[self::VAR_GROUP] = in_array(strtolower($paths[0]), $arr) ? array_shift($paths) : '';
             }
             $pathInfo[self::VAR_MODULE] = array_shift($paths);
             $pathInfo[self::VAR_ACTION] = array_shift($paths);
             for ($i = 0, $cnt = count($paths); $i <$cnt; $i++) {
-                if ( isset($paths[$i+1]) ) {
+                if (isset($paths[$i+1])) {
                     $pathInfo[$paths[$i]] = (string)$paths[++$i];
-                } elseif ( $i == 0 ) {
+                } elseif ($i == 0) {
                     $pathInfo[$pathInfo[self::VAR_ACTION]] = (string)$paths[$i];
                 }
             }
@@ -574,29 +575,29 @@ class Router
      * @return void
      */
     public static function getPathInfo() {
-        if ( !empty($_GET[self::VAR_PATHINFO]) ) {
+        if (!empty($_GET[self::VAR_PATHINFO])) {
             // 兼容PATHINFO 参数
             $path = $_GET[self::VAR_PATHINFO];
             unset($_GET[self::VAR_PATHINFO]);
-        } elseif ( !empty($_SERVER['PATH_INFO']) ) {
+        } elseif (!empty($_SERVER['PATH_INFO'])) {
             $pathInfo = $_SERVER['PATH_INFO'];
-            if ( 0 === strpos($pathInfo, $_SERVER['SCRIPT_NAME']) )
+            if (0 === strpos($pathInfo, $_SERVER['SCRIPT_NAME']) )
                 $path = substr($pathInfo, strlen($_SERVER['SCRIPT_NAME']));
             else
                 $path = $pathInfo;
-        } elseif ( !empty($_SERVER['ORIG_PATH_INFO']) ) {
+        } elseif (!empty($_SERVER['ORIG_PATH_INFO'])) {
             $pathInfo = $_SERVER['ORIG_PATH_INFO'];
-            if ( 0 === strpos($pathInfo, $_SERVER['SCRIPT_NAME']) )
+            if (0 === strpos($pathInfo, $_SERVER['SCRIPT_NAME']) )
                 $path = substr($pathInfo, strlen($_SERVER['SCRIPT_NAME']));
             else
                 $path = $pathInfo;
-        } elseif ( !empty($_SERVER['REDIRECT_PATH_INFO']) ) {
+        } elseif (!empty($_SERVER['REDIRECT_PATH_INFO'])) {
             $path = $_SERVER['REDIRECT_PATH_INFO'];
-        } elseif ( !empty($_SERVER["REDIRECT_Url"]) ) {
+        } elseif (!empty($_SERVER["REDIRECT_Url"])) {
             $path = $_SERVER["REDIRECT_Url"];
-            if ( empty($_SERVER['QUERY_STRING']) || $_SERVER['QUERY_STRING'] == $_SERVER["REDIRECT_QUERY_STRING"] ) {
+            if (empty($_SERVER['QUERY_STRING']) || $_SERVER['QUERY_STRING'] == $_SERVER["REDIRECT_QUERY_STRING"]) {
                 $parsedUrl = parse_url($_SERVER["REQUEST_URI"]);
-                if ( !empty($parsedUrl['query']) ) {
+                if (!empty($parsedUrl['query'])) {
                     $_SERVER['QUERY_STRING'] = $parsedUrl['query'];
                     parse_str($parsedUrl['query'], $GET);
                     $_GET = array_merge($_GET, $GET);
@@ -607,7 +608,7 @@ class Router
                 reset($_SERVER);
             }
         }
-        if ( !empty($path) && strlen(self::URL_HTML_SUFFIX) > 0 ) {
+        if (!empty($path) && strlen(self::URL_HTML_SUFFIX) > 0) {
             $suffix = substr(self::URL_HTML_SUFFIX, 1);
             $path   = preg_replace('/\.' . $suffix . '$/', '', $path);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 定义 CKEeditor 在线编辑器 |-----------
  * @category betterlife
@@ -27,7 +28,7 @@ class UtilCKEeditor extends Util
     */
     public static function editorHtml($textarea_id, $content = "")
     {
-        if ( self::$CKEditor == null ) {
+        if (self::$CKEditor == null) {
             $CKEditor = new CKEditor();
         }
         $CKEditor->returnOutput = true;
@@ -52,7 +53,7 @@ class UtilCKEeditor extends Util
      */
     public static function load()
     {
-        if ( self::$CKEditor == null ) {
+        if (self::$CKEditor == null) {
             $CKEditor = new CKEditor();
         }
         return $CKEditor->load();
@@ -60,15 +61,15 @@ class UtilCKEeditor extends Util
 
     /**
      * 加载CKEditor JS库
-     * 
+     *
      * 用Ckeditor编辑器替换Html中的Textarea
      * @param string $textarea_id 在线编辑器所在的内容编辑区域TextArea的ID
      * @param bool $isLoadCkFinder 是否加载CkFinder
      */
     public static function loadReplace($textarea_id, $isLoadCkFinder = true)
     {
-        $result = self::load() . UtilAjax::loadJsContentSentence( self::replace( $textarea_id, $isLoadCkFinder ) );
-        if ( $isLoadCkFinder ) {
+        $result = self::load() . UtilAjax::loadJsContentSentence( self::replace( $textarea_id, $isLoadCkFinder));
+        if ($isLoadCkFinder) {
             $result .= self::ckFinder( $isLoadCkFinder );
         }
         return $result;
@@ -80,7 +81,7 @@ class UtilCKEeditor extends Util
      */
     public static function replace($textarea_id, $isLoadCkFinder = true)
     {
-        if ( self::$CKEditor == null ) {
+        if (self::$CKEditor == null) {
             $CKEditor = new CKEditor();
         }
         $CKEditor->returnOutput = true;

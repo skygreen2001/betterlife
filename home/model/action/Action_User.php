@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_User extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_User extends ActionModel
         $count = User::count();
         $this->view->countUsers = $count;
         $users = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $users = User::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,11 +41,11 @@ class Action_User extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $user = $this->model->User;
             $id         = $user->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $user->update();
             } else {
                 $id = $user->save();
@@ -53,7 +54,7 @@ class Action_User extends ActionModel
             Usernotice::saveDeleteRelateions( "user_id", $id, "notice_id", $userNotice );
             $userRole = $this->data["role_id"];
             Userrole::saveDeleteRelateions( "user_id", $id, "role_id", $userRole );
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "user", "view", "id=$id" );
                 exit;
             }

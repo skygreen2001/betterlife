@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: Dojo[Javascript Ajax 框架] |-----------
  * @category betterlife
@@ -16,9 +17,9 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if ( self::$IsGoogleApi )
+        if (self::$IsGoogleApi )
         {
-            if ( $viewObject )
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js" );
             } else {
@@ -41,14 +42,14 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if ( !empty ($callback) )
+        if (!empty ($callback) )
         {
             // $url_base = UtilNet::urlbase();
             $result = self::loadJsSentence( "misc/js/util/xmltojson.js" );
         }
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="dojo">
-        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
+        if (( is_array($dataArray) ) && (count($dataArray) > 0))
         {
             $data = json_encode($dataArray);
 //            $data    = "{";
@@ -88,7 +89,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                     'response_type':'$response_type'
                 }
             });";
-        if ( isset($callback) ) {
+        if (isset($callback)) {
             $result .= "
                 //当响应结果可用时再调用回调函数
                 deferredResult.then($callback);
@@ -133,15 +134,15 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
         $class_name = str_replace("RO", "", $local_service_flag);
         //<editor-fold defaultstate="collapsed" desc="dojo">
         $result     = "function(response) {
-                    if ( response == null ) {
+                    if (response == null) {
                       console.log('请求失败! 检查头信息是否是application/xml或者application/json:(');
                       return ;
                     }";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             $result .= "
                     dojo.byId('object_name').innerHTML='$class_name';";
         }
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
             $result .= "
                       //var responseJson = dojo.fromJson(response);
                       var responseJson = response;
@@ -150,7 +151,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                          dojo.place('<li>'+item+':'+value+'</li>', 'properties','last');
                       }
                   }";
-        } else if ( $response_type == EnumResponseType::XML ) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= "
                       var objectJson = xmltoJson(response);
                       for (var item in objectJson) {
@@ -171,7 +172,7 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
                   }";
         }
         //</editor-fold>
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

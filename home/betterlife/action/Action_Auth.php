@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户身份验证 |-----------
  * @category betterlife
@@ -23,16 +24,16 @@ class Action_Auth extends Action
     public function login()
     {
         $this->view->set( "message", "" );
-        if ( HttpSession::isHave( 'user_id' ) ) {
+        if (HttpSession::isHave( 'user_id' )) {
             $this->redirect( "blog", "display" );
-        } else if ( !empty($_POST) ) {
+        } elseif (!empty($_POST)) {
             $user = $this->model->User;
             $userdata = User::get_one(
               array("username" => $user->username,
                     "password" => md5($user->getPassword())
               )
             );
-            if ( empty($userdata) ) {
+            if (empty($userdata)) {
                 $this->view->set( "message", "用户名或者密码错误" );
             } else {
                 HttpSession::set( 'user_id', $userdata->user_id );
@@ -47,10 +48,10 @@ class Action_Auth extends Action
     public function register()
     {
         $this->view->set( "message", "" );
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $user = $this->model->User;
             $userdata = User::get( array("username"=>$user->username) );
-            if ( empty($userdata) ) {
+            if (empty($userdata)) {
                 $pass = $user->getPassword();
                 $user->setPassword( md5($user->getPassword()) );
                 $user->loginTimes = 0;

@@ -19,16 +19,16 @@ $countSql   = "select count(*) from (" . $sql_report . ") report_tmp " . $where_
 $totalCount = sqlExecute($countSql);
 $pageData   = array();
 $pageCount  = 0;
-if ( $totalCount > 0 ) {
+if ($totalCount > 0) {
     // 总页数
     $pageCount = ceil($totalCount / $pageSize);
-    if ( $currentPage <= $pageCount ) {
+    if ($currentPage <= $pageCount) {
         $startPoint = ($currentPage - 1) * $pageSize;
-        if ( $startPoint > $totalCount ) {
+        if ($startPoint > $totalCount) {
             $startPoint = 0;
         }
         $endPoint = $currentPage * $pageSize;
-        if ( $endPoint > $totalCount ) {
+        if ($endPoint > $totalCount) {
             $endPoint = $totalCount;
         }
 
@@ -46,7 +46,7 @@ $result = array(
     'recordsTotal'    => $totalCount
 );
 
-if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::$dev_debug_on ) {
+if (contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::$dev_debug_on) {
     //调试使用的信息
     $result["debug"] = array(
         'param' => array(

@@ -87,18 +87,18 @@ class HugeAmountDataPush
      */
     public static function createTablesData($tablenames)
     {
-        if ( is_string($tablenames) ) {
+        if (is_string($tablenames)) {
             $tablenames=array($tablenames);
         }
 
         foreach ($tablenames as $tablename) {
             $count = self::getOneTableData( $tablename );
-            if ( self::$isShowReport ) {
+            if (self::$isShowReport) {
                 echo "所测试的数据表: $tablename<br>";
                 echo "预计生成数据数量级: " . self::$num . "<br>实际生成数据数目: $count<br/>";
                 echo "SQL脚本文件地址: " . self::$script_sql_path . "<br/><br/>";
             }
-            if ( self::$isShowSql ) {
+            if (self::$isShowSql) {
                 $table_change = array(HH => "<br/>");
                 $show_result  = strtr(self::$cache_result, $table_change);
                 echo $show_result . "<br/><br/>";
@@ -117,7 +117,7 @@ class HugeAmountDataPush
     {
         self::$cache_result = "";
         $classname = UtilHugeAmount::getClassname( $tablename );
-        if ( contains( $classname, array("Copy", "Copy1", "Copy2", "Copy3", "Copy4") ) ) {
+        if (contains( $classname, array("Copy", "Copy1", "Copy2", "Copy3", "Copy4") )) {
             return -1;
         }
         $fieldarr = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );//获取数据表字段
@@ -127,7 +127,7 @@ class HugeAmountDataPush
             self::$fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
             self::$fieldInfos[$tablename][$fieldname]["Comment"] = $field["Comment"];
             self::$fieldInfos[$tablename][$fieldname]["Key"]     = $field["Key"];
-            if ( $field["Null"] == 'NO' ) {
+            if ($field["Null"] == 'NO') {
                 self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"] = false;
             } else {
                 self::$fieldInfos[$tablename][$fieldname]["IsPermitNull"] = true;
@@ -139,8 +139,8 @@ class HugeAmountDataPush
         $fields   = self::fieldnames( $tablename );
 
         $isRelationTable = UtilHugeAmount::isRelationTable( $tablename );
-        if ( $isRelationTable ) {
-            if ( $count >= self::$num ) {
+        if ($isRelationTable) {
+            if ($count >= self::$num) {
                 $count = 0;
             } else {
                 self::$cache_result .= "delete from $tablename;" . HH;
@@ -150,11 +150,11 @@ class HugeAmountDataPush
             self::$num_relation_table += 1;
         } else {
             //需要注入初始化数据,默认注入20条
-            if ( $count <= 0 ) {
+            if ($count <= 0) {
                 self::$cache_result .= self::tableInitData( $tablename, $classname, $fields );
                 $count               = self::$init_data_num;
             }
-            if ( $count >= self::$num ) {
+            if ($count >= self::$num) {
                 $count = 0;
             } else {
                 $fieldnames = implode(",", $fields);
@@ -164,7 +164,7 @@ class HugeAmountDataPush
                     $count               = $count * 2;
                 }
 
-                if ( $count > self::$num) {
+                if ($count > self::$num) {
                     $classname = UtilHugeAmount::getClassname( $tablename );
                     $key_id    = UtilHugeAmount::keyIDColumn( $classname );
                     self::$cache_result .= "delete from $tablename where $key_id>=(select a.id from (select $key_id as id from $tablename limit " . self::$num . ",1) as a);" . HH;
@@ -182,7 +182,7 @@ class HugeAmountDataPush
     public static function createDatabaseData()
     {
         $tablelists = Manager_Db::newInstance()->dbinfo()->tableList();//获取数据库表列表
-        if ( self::$isShowReport ) {
+        if (self::$isShowReport) {
             echo "预计生成数据数量级: " . self::$num . "<br/>";
             echo "SQL脚本文件地址: " . self::$script_sql_path . "<br/>";
             self::$num_table = count($tablelists);
@@ -194,30 +194,30 @@ class HugeAmountDataPush
         $echo_showresult = "";
         foreach ($tablelists as $tablename) {
             $tablename_up = strtoupper($tablename);
-            if ( contain( $tablename_up, "_DIC_" ) ) {
+            if (contain( $tablename_up, "_DIC_" )) {
                 $count_dic += 1;
                 continue;
             }
-            if ( contain( $tablename_up, "_LOG_" ) ) {
+            if (contain( $tablename_up, "_LOG_" )) {
                 $count_log += 1;
                 continue;
             }
             $count = self::getOneTableData( $tablename );
-            if ( $count < 0 ) {
+            if ($count < 0) {
                 $count_undo += 1;
                 continue;
             }
 
-            if ( self::$isShowReport ) {
+            if (self::$isShowReport) {
                 $echo_showresult .= "所测试的数据表: $tablename<br/>实际生成数据数目: $count<br/>";
             }
-            if ( self::$isShowSql ) {
+            if (self::$isShowSql) {
                 $table_change     = array(HH => "<br>");
                 $show_result      = strtr(self::$cache_result, $table_change);
                 $echo_showresult .= $show_result . "<br/>";
             }
         }
-        if ( self::$isShowReport ) {
+        if (self::$isShowReport) {
             $num_relation_table = self::$num_relation_table;
             $num_main_table     = self::$num_table - $num_relation_table - $count_undo;
             echo "主要实体表数:" . $num_main_table . ",中间关系表数:" . $num_relation_table . ",数据字典表:$count_dic,日志表:$count_log,无关的表:" . $count_undo . "<br/><br/>";
@@ -238,7 +238,7 @@ class HugeAmountDataPush
         $key_id      = strtoupper(UtilHugeAmount::keyIDColumn( $classname ));
         foreach ($field_names as $fieldname) {
             $fieldname_u = strtoupper($fieldname);
-            if ( $key_id == $fieldname_u ) {
+            if ($key_id == $fieldname_u) {
                 unset($field_arr[$fieldname]);
                 break;
             }
@@ -269,16 +269,16 @@ class HugeAmountDataPush
             foreach ($fields as $fieldname) {
                 $is_relation_key_id = false;
                 $r_fields           = self::$relation_fields[$tablename];
-                if ( in_array($fieldname, $r_fields) ) $is_relation_key_id = true;
+                if (in_array($fieldname, $r_fields) ) $is_relation_key_id = true;
                 $fieldname_flag = str_replace("_id", "", strtolower($fieldname));
-                if ( contain( $tablename, $fieldname_flag ) ) $is_relation_key_id = true;
-                if ( $is_relation_key_id ) {
-                    if ( empty($first_field) ) $first_field = $fieldname;
-                    if ( empty($counter[$fieldname]) ) $counter[$fieldname] = 1;
+                if (contain( $tablename, $fieldname_flag)) $is_relation_key_id = true;
+                if ($is_relation_key_id) {
+                    if (empty($first_field) ) $first_field = $fieldname;
+                    if (empty($counter[$fieldname]) ) $counter[$fieldname] = 1;
                     $values[$fieldname] = $counter[$fieldname];
-                    if ( $first_field == $fieldname ) {
-                        if ( !empty($second_field) ) {
-                            if ( $counter[$second_field] > 100 ) {
+                    if ($first_field == $fieldname) {
+                        if (!empty($second_field)) {
+                            if ($counter[$second_field] > 100) {
                                 $counter[$fieldname]   += 1;
                                 $values[$fieldname]     = $counter[$fieldname];
                                 $counter[$second_field] = 1;
@@ -296,11 +296,11 @@ class HugeAmountDataPush
                         case "bigint":
                         case "decimal":
                             $tmp = strtoupper($fieldname);
-                            if ( $tmp == "COMMITTIME" ) {
+                            if ($tmp == "COMMITTIME") {
                                 $values[$fieldname] = "'" . UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP ) . "'";
                             } else {
                                 $fieldname_f = strtoupper($fieldname);
-                                if ( contain( $fieldname_f, "ID" ) ) {
+                                if (contain( $fieldname_f, "ID" )) {
                                     $values[$fieldname] = rand(1, self::$num - 1);
                                 } else {
                                     $num = UtilString::build_count_rand( 1 );
@@ -326,47 +326,47 @@ class HugeAmountDataPush
                         default:
                             $comment    = $field_arr[$fieldname]["Comment"];
                             $isUsername = UtilHugeAmount::columnIsUsername( $tablename, $fieldname );
-                            if ( $isUsername ) {
+                            if ($isUsername) {
                                 $num  = rand(1,2);
                                 $text = UtilString::rand_string( 1, 5 ) . UtilString::rand_string( $num, 4 );
                             } else {
                                 $isName = UtilHugeAmount::columnIsName( $tablename, $fieldname );
-                                if ( $isName ) {
+                                if ($isName) {
                                     $num  = rand(2,8);
                                     $text = UtilString::rand_string( $num, 4 );
                                 } else {
                                     $isTextArea = UtilHugeAmount::columnIsTextArea( $fieldname, $typep );
-                                    if ( $isTextArea ) {
+                                    if ($isTextArea) {
                                         $text=implode(UtilString::build_format_rand( ".", 50 ));
                                     } else {
                                         $isImage = UtilHugeAmount::columnIsImage( $fieldname, $comment );
-                                        if ( $isImage ) {
+                                        if ($isImage) {
                                             $suffix = array("jpg", "png", "gif");
                                             $order  = rand(0, count($suffix) - 1);
                                             $text   = Gc::$upload_url . "images/" . implode(UtilString::build_format_rand( ".", 8 )) . "." . $suffix[$order];
                                         } else {
                                             $isEmail = UtilHugeAmount::columnIsEmail( $fieldname, $comment );
-                                            if ( $isEmail ) {
+                                            if ($isEmail) {
                                                 $num    = rand(6, 30);
                                                 $domain = array("gmail.com", "hotmail.com", "qq.com", "yahoo.com", "sina.com", "sohu.com", "163.com", "263.net");
                                                 $order  = rand(0, count($domain) - 1);
                                                 $text   = implode(UtilString::build_format_rand( ".", $num )) . "@" . $domain[$order];
                                             } else {
                                                 $isPasswd = UtilHugeAmount::columnIsPassword( $tablename, $fieldname );
-                                                if ( $isPasswd ) {
+                                                if ($isPasswd) {
                                                     $text = implode(UtilString::build_format_rand( "#", 6 ));
                                                 } else {
                                                     $isMobile = UtilHugeAmount::columnIsMobile( $fieldname, $comment );
-                                                    if ( $isMobile ) {
+                                                    if ($isMobile) {
                                                         $text = UtilMobile::randMobile( 1 );
                                                         $text = $text[0];
                                                     } else {
                                                         $isNum = UtilHugeAmount::columnIsNum( $fieldname, $comment );
-                                                        if ( $isNum ) {
+                                                        if ($isNum) {
                                                             $num       = rand(1,5);
                                                             $num_value = UtilString::build_count_rand( 1, $num );
                                                             $text      = $num_value[0];
-                                                            if ( startWith( $text, "0" ) ) {
+                                                            if (startWith( $text, "0" )) {
                                                                 $text = "1" . $text;
                                                             }
                                                         } else {
@@ -414,11 +414,11 @@ class HugeAmountDataPush
                     case "bigint":
                     case "decimal":
                         $tmp = strtoupper($fieldname);
-                        if ( $tmp == "COMMITTIME" ) {
+                        if ($tmp == "COMMITTIME") {
                             $values[$fieldname] = "'" . UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP ) . "'";
                         } else {
                             $fieldname_f = strtoupper($fieldname);
-                            if ( contain( $fieldname_f, "ID" ) ) {
+                            if (contain( $fieldname_f, "ID" )) {
                                 $values[$fieldname] = rand(1, self::$num - 1);
                             } else {
                                 $num = UtilString::build_count_rand(1);
@@ -444,47 +444,47 @@ class HugeAmountDataPush
                     default:
                         $comment    = $field_arr[$fieldname]["Comment"];
                         $isUsername = UtilHugeAmount::columnIsUsername( $tablename, $fieldname );
-                        if ( $isUsername ) {
+                        if ($isUsername) {
                             $num  = rand(1, 2);
                             $text = UtilString::rand_string( 1, 5 ) . UtilString::rand_string( $num, 4 );
                         } else {
                             $isName = UtilHugeAmount::columnIsName( $tablename, $fieldname );
-                            if ( $isName ) {
+                            if ($isName) {
                                 $num  = rand(2,8);
                                 $text = UtilString::rand_string( $num, 4 );
                             } else {
                                 $isTextArea = UtilHugeAmount::columnIsTextArea( $fieldname, $typep );
-                                if ( $isTextArea ) {
+                                if ($isTextArea) {
                                     $text = implode(UtilString::build_format_rand( ".", 50 ));
                                 } else {
                                     $isImage =UtilHugeAmount::columnIsImage( $fieldname, $comment );
-                                    if ( $isImage ) {
+                                    if ($isImage) {
                                         $suffix = array("jpg", "png", "gif");
                                         $order  = rand(0, count($suffix) - 1 );
                                         $text   = Gc::$upload_url . "images/" . implode(UtilString::build_format_rand( ".", 8 )) . "." . $suffix[$order];
                                     } else {
                                         $isEmail = UtilHugeAmount::columnIsEmail( $fieldname, $comment );
-                                        if ( $isEmail ) {
+                                        if ($isEmail) {
                                             $num    = rand(6, 30);
                                             $domain = array("gmail.com", "hotmail.com", "qq.com", "yahoo.com", "sina.com", "sohu.com", "163.com", "263.net");
                                             $order  = rand(0, count($domain) - 1);
                                             $text   = implode(UtilString::build_format_rand( ".", $num )) . "@" . $domain[$order];
                                         } else {
                                             $isPasswd = UtilHugeAmount::columnIsPassword( $tablename, $fieldname );
-                                            if ( $isPasswd ) {
+                                            if ($isPasswd) {
                                                 $text = implode(UtilString::build_format_rand( "#", 6 ));
                                             } else {
                                                 $isMobile = UtilHugeAmount::columnIsMobile( $fieldname, $comment );
-                                                if ( $isMobile ) {
+                                                if ($isMobile) {
                                                     $text = UtilMobile::randMobile( 1 );
                                                     $text = $text[0];
                                                 } else {
                                                     $isNum = UtilHugeAmount::columnIsNum( $fieldname, $comment );
-                                                    if ( $isNum ) {
+                                                    if ($isNum) {
                                                         $num       = rand(1, 5);
                                                         $num_value = UtilString::build_count_rand( 1, $num );
                                                         $text      = $num_value[0];
-                                                        if ( startWith( $text, "0" ) ) {
+                                                        if (startWith( $text, "0" )) {
                                                             $text = "1" . $text;
                                                         }
                                                     } else {
@@ -501,7 +501,7 @@ class HugeAmountDataPush
                         break;
                 }
             }
-            if ( empty($keys) ) $keys = implode(",", array_keys($values));
+            if (empty($keys) ) $keys = implode(",", array_keys($values));
             $values  = implode(",", array_values($values));
             $result .= "($values)," . HH;
         }
@@ -549,7 +549,7 @@ class UtilHugeAmount
     public static function isRelationTable($tablename)
     {
         $tablename = strtoupper($tablename);
-        if ( contain( $tablename, "_RE_" ) ) {
+        if (contain( $tablename, "_RE_" )) {
             return true;
         }
         return false;
@@ -565,7 +565,7 @@ class UtilHugeAmount
     public static function columnIsNum($column_name, $column_comment)
     {
         $column_name=strtoupper($column_name);
-        if ( contains( $column_name, array("COUNT", "WIDTH", "HEIGHT") ) || contains( $column_comment, array("计数", "宽度", "高度") ) ) {
+        if (contains( $column_name, array("COUNT", "WIDTH", "HEIGHT") ) || contains( $column_comment, array("计数", "宽度", "高度") )) {
             return true;
         }
         return false;
@@ -578,7 +578,7 @@ class UtilHugeAmount
     public static function columnIsMobile($column_name, $column_comment)
     {
         $column_name = strtoupper($column_name);
-        if ( contains( $column_name, array("MOBILE", "PHONE") ) || contains( $column_comment, array("手机", "电话") ) ) {
+        if (contains( $column_name, array("MOBILE", "PHONE") ) || contains( $column_comment, array("手机", "电话") )) {
             return true;
         }
         return false;
@@ -591,11 +591,11 @@ class UtilHugeAmount
     public static function columnIsTextArea($column_name, $column_type)
     {
         $column_name = strtoupper($column_name);
-        if ( contain( $column_name, "ID" ) ) {
+        if (contain( $column_name, "ID" )) {
             return false;
         }
-        if ( ( ( self::column_length( $column_type ) >= 500 ) && ( !contain( $column_name, "IMAGES" ) ) && ( !contain( $column_name, "LINK" ) ) && ( !contain( $column_name, "ICO" ) ) )
-             || ( contains( $column_name, array("INTRO", "MEMO", "CONTENT") ) ) || ( self::column_type( $column_type ) == 'text' ) || ( self::column_type( $column_type ) == 'longtext' ) ) {  // && ( !contain( $column_name, "addr" ) )
+        if (( ( self::column_length( $column_type ) >= 500 ) && (!contain( $column_name, "IMAGES")) && (!contain( $column_name, "LINK")) && (!contain( $column_name, "ICO")) )
+             || ( contains( $column_name, array("INTRO", "MEMO", "CONTENT"))) || ( self::column_type( $column_type ) == 'text' ) || ( self::column_type( $column_type ) == 'longtext' )) {  // && (!contain( $column_name, "addr"))
             return true;
         } else {
             return false;
@@ -611,10 +611,10 @@ class UtilHugeAmount
     public static function columnIsImage($column_name, $column_comment)
     {
         $column_name = strtoupper($column_name);
-        if ( contain( $column_name, "ID" ) ) {
+        if (contain( $column_name, "ID" )) {
             return false;
         }
-        if ( contains( $column_name, array("IMAGE", "IMG", "ICO", "LOGO", "PIC") ) ) {
+        if (contains( $column_name, array("IMAGE", "IMG", "ICO", "LOGO", "PIC") )) {
             return true;
         }
         return false;
@@ -629,7 +629,7 @@ class UtilHugeAmount
     public static function columnIsEmail($column_name, $column_comment)
     {
         $column_name = strtoupper($column_name);
-        if ( ( contain( $column_name, "EMAIL" ) || contains( $column_comment, array("邮件", "邮箱") ) ) && ( !contain( $column_name, "IS" ) ) ) {
+        if (( contain( $column_name, "EMAIL" ) || contains( $column_comment, array("邮件", "邮箱"))) && (!contain( $column_name, "IS"))) {
             return true;
         }
         return false;
@@ -645,9 +645,9 @@ class UtilHugeAmount
     {
 
         $table_name = strtoupper($table_name);
-        if ( contains( $table_name, array("MEMBER", "ADMIN", "USER") ) ) {
+        if (contains( $table_name, array("MEMBER", "ADMIN", "USER") )) {
             $column_name = strtoupper($column_name);
-            if ( contain( $column_name, "PASSWORD" ) ) {
+            if (contain( $column_name, "PASSWORD" )) {
                 return true;
             }
         }
@@ -662,14 +662,14 @@ class UtilHugeAmount
      */
     public static function columnIsName($table_name, $column_name)
     {
-        if ( contains( $table_name, array("MEMBER", "ADMIN", "USER") ) ) {
+        if (contains( $table_name, array("MEMBER", "ADMIN", "USER") )) {
             $column_name = strtoupper($column_name);
-            if ( contain( $column_name, "NAME" ) ) {
+            if (contain( $column_name, "NAME" )) {
                 return false;
             }
         }
         $column_name = strtoupper($column_name);
-        if ( contain( $column_name, "NAME" ) ) {
+        if (contain( $column_name, "NAME" )) {
             return true;
         }
         return false;
@@ -684,9 +684,9 @@ class UtilHugeAmount
     public static function columnIsUsername($table_name, $column_name)
     {
         $table_name = strtoupper($table_name);
-        if ( contains( $table_name, array("MEMBER", "ADMIN", "USER") ) ) {
+        if (contains( $table_name, array("MEMBER", "ADMIN", "USER") )) {
             $column_name = strtoupper($column_name);
-            if ( contain( $column_name, "REALNAME" ) ) {
+            if (contain( $column_name, "REALNAME" )) {
                 return true;
             }
         }
@@ -700,7 +700,7 @@ class UtilHugeAmount
      */
     public static function column_length($type)
     {
-        if ( contain( $type, "(" ) ) {
+        if (contain( $type, "(" )) {
             list($typep, $length) = preg_split('[()]', $type);
         } else {
             $length = 1;
@@ -715,7 +715,7 @@ class UtilHugeAmount
      */
     public static function column_type($type)
     {
-        if ( contain( $type, "(" ) ) {
+        if (contain( $type, "(" )) {
             list($typep, $length) = preg_split('[()]', $type);
         } else {
             $typep = $type;
@@ -752,7 +752,7 @@ class UtilHugeAmount
      */
     public static function getClassname($tablename)
     {
-        if ( in_array($tablename, Config_Db::$orm) ) {
+        if (in_array($tablename, Config_Db::$orm)) {
             $classname = array_search($tablename, Config_Db::$orm);
         } else {
             $classnameSplit = explode("_", $tablename);

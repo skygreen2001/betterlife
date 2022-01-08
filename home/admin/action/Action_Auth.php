@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:访问授权 |-----------
  * @category betterlife
@@ -22,9 +23,9 @@ class Action_Auth extends ActionAdmin
     public function login()
     {
         $this->view->set( "message", "" );
-        if ( HttpSession::isHave( 'user_id' ) ) {
+        if (HttpSession::isHave( 'user_id' )) {
             $this->redirect( "index", "index" );
-        } else if ( !empty($_POST) ) {
+        } elseif (!empty($_POST)) {
             $user     = $this->model->Admin;
             $userdata = Admin::get_one( 
                             array(
@@ -33,7 +34,7 @@ class Action_Auth extends ActionAdmin
                             )
                         );
             LogMe::log($userdata);
-            if ( empty($userdata) ) {
+            if (empty($userdata)) {
                 $this->view->set("message","用户名或者密码错误");
             } else {
                 HttpSession::set( 'user_id', $userdata->admin_id );
@@ -49,10 +50,10 @@ class Action_Auth extends ActionAdmin
     public function register()
     {
         $this->view->set( "message", "" );
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $user     = $this->model->Admin;
             $userdata = Admin::get( array("username" => $user->username) );
-            if ( empty($userdata) ) {
+            if (empty($userdata)) {
                 $pass = $user->getPassword();
                 $user->setPassword( md5($user->getPassword()) );
                 $user->loginTimes = 0;

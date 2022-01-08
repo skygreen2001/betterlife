@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:中文转换成拼音工具类 |-----------
  * @link http://www.oschina.net/code/snippet_115552_4975[PHP汉字转拼音函数]
@@ -64,18 +65,18 @@ class UtilPinyin
         $_Data = array_combine($_TDataKey, $_TDataValue);
         arsort($_Data);
         reset($_Data);
-        if ( $_Code != 'gb2312' ) {
+        if ($_Code != 'gb2312') {
             $_String = self::_U2_Utf8_Gb($_String);
         }
         $_Res = '';
         for ($i = 0; $i < strlen($_String); $i++) {
             $_P = ord(substr($_String, $i, 1));
-            if ( $_P > 160 ) {
+            if ($_P > 160) {
                 $_Q = ord(substr($_String, ++$i, 1)); $_P = $_P*256 + $_Q - 65536;
             }
             $_Res .= self::_Pinyin( $_P, $_Data );
         }
-        if ( $isRemainOtherChars ) {
+        if ($isRemainOtherChars) {
             return $_Res;
         } else {
             return preg_replace("/[^a-z0-9]*/", '', $_Res);
@@ -84,12 +85,12 @@ class UtilPinyin
 
     private static function _Pinyin($_Num, $_Data)
     {
-        if ( $_Num > 0 && $_Num < 160 ) { 
+        if ($_Num > 0 && $_Num < 160) { 
             return chr($_Num);
-        } elseif ( $_Num < -20319 || $_Num > -10247 ) {
+        } elseif ($_Num < -20319 || $_Num > -10247) {
             return '';
         } else {
-            foreach ($_Data as $k => $v) { if ( $v <= $_Num ) break; }
+            foreach ($_Data as $k => $v) { if ($v <= $_Num ) break; }
             return $k;
         }
     }
@@ -97,16 +98,16 @@ class UtilPinyin
     private static function _U2_Utf8_Gb($_C)
     {
         $_String = '';
-        if ( $_C < 0x80 ) {
+        if ($_C < 0x80) {
             $_String .= $_C;
-        } elseif ( $_C < 0x800 ) {
+        } elseif ($_C < 0x800) {
             $_String .= chr(0xC0 | $_C>>6);
             $_String .= chr(0x80 | $_C & 0x3F);
-        } elseif ( $_C < 0x10000 ) {
+        } elseif ($_C < 0x10000) {
             $_String .= chr(0xE0 | $_C>>12);
             $_String .= chr(0x80 | $_C>>6 & 0x3F);
             $_String .= chr(0x80 | $_C & 0x3F);
-        } elseif ( $_C < 0x200000 ) {
+        } elseif ($_C < 0x200000) {
             $_String .= chr(0xF0 | $_C>>18);
             $_String .= chr(0x80 | $_C>>12 & 0x3F);
             $_String .= chr(0x80 | $_C>>6 & 0x3F);
@@ -126,7 +127,7 @@ class UtilPinyin
      */
     public static function getPinyinName($cname, $outputType = 2)
     {
-        if ( empty($cname) ) return "";
+        if (empty($cname) ) return "";
         $result = "";
         $cname  = trim($cname);
         $cname  = str_replace(array("[", "]", "【", "】"),  "", $cname);

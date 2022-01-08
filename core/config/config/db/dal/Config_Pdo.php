@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Pdo的配置类 |-----------
  * @link http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html
@@ -7,7 +8,8 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Pdo extends Config_Db {
+class Config_Pdo extends Config_Db
+{
     /**
      * @var enum 获取数据的模式
      * @link http://php.net/manual/en/pdo.constants.php
@@ -27,17 +29,17 @@ class Config_Pdo extends Config_Db {
      * @return string ODBC所需的dsn字符串
      */
     public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
-        if ( !isset($dbname) ) {
+        if (!isset($dbname)) {
             $dbname = self::$dbname;
         }
-        if ( isset($host) ) {
-            if ( strlen($port) > 0 ) {
+        if (isset($host)) {
+            if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
             } else {
                 $connecturl = $host;
             }
         } else {
-            if ( strlen(self::$port) > 0 ) {
+            if (strlen(self::$port) > 0) {
                 $connecturl = self::$host . ":" . self::$port;
             } else {
                 $connecturl = self::$host;

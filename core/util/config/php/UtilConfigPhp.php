@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 读取php配置文件类 |-----------
  * @category betterlife
@@ -24,7 +25,7 @@ class UtilConfigPhp extends UtilConfig{
 
     public function config($file)
     {
-        if ( file_exists($file) == false ) { return false; }
+        if (file_exists($file) == false) { return false; }
         $result = require_once($file);
         // print_r($result);
         return $result;

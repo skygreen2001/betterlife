@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 系统日志 |-----------
  * @category betterlife
@@ -22,7 +23,7 @@ class Logsystem extends DataObject
     public $logtime;
     /**
      * 分类 
-     * 
+     *
      * 标志或者分类
      * @var string
      * @access public
@@ -30,7 +31,7 @@ class Logsystem extends DataObject
     public $ident;
     /**
      * 优先级 
-     * 
+     *
      * - 0: 严重错误-EMERG 
      * - 1: 警戒性错误-ALERT 
      * - 2: 临界值错误-CRIT 
@@ -40,7 +41,7 @@ class Logsystem extends DataObject
      * - 6: 信息-INFO 
      * - 7: 调试-DEBUG 
      * - 8: SQL-SQL
-     * 
+     *
      * @var enum
      * @access public
      */

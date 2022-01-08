@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: Mootools[Javascript Ajax 框架] |-----------
  * @category betterlife
@@ -16,8 +17,8 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if ( self::$IsGoogleApi ) {
-            if ( $viewObject )
+        if (self::$IsGoogleApi) {
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/mootools/$version/mootools-yui-compressed.js" );
             } else {
@@ -26,7 +27,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_MOOTOOLS;
-            if ( $viewObject )
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . ".js" );
             } else {
@@ -47,7 +48,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if ( !empty($callback) )
+        if (!empty($callback) )
         {
             $url_base = UtilNet::urlbase();
             $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
@@ -63,8 +64,8 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="Mootools">
         //@link http://mootools.net/docs/core/Request/Request
-        if ( $response_type == EnumResponseType::JSON ) {
-            if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) ) {
+        if ($response_type == EnumResponseType::JSON) {
+            if (( is_array($dataArray) ) && (count($dataArray) > 0 )) {
                 $data = json_encode($dataArray);
 //                $data = "{";
 //                foreach ($dataArray as $key => $value) {
@@ -73,28 +74,28 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
 //                $data  = substr($data, 0, strlen($data) - 1);
 //                $data .= "}";
             }
-        } else if ( $response_type == EnumResponseType::XML ) {
-            if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
+        } elseif ($response_type == EnumResponseType::XML) {
+            if (( is_array($dataArray) ) && (count($dataArray) > 0))
             {
                 $data = http_build_query( $dataArray );
             }
         }
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
             $result .= "var myRequest = new Request.JSON({";
-        } else if ($response_type==EnumResponseType::XML ) {
+        } elseif ($response_type==EnumResponseType::XML) {
             $result .= "var myRequest = new Request({";
             $result .= "method:'" . $method . "',";
         }
         $result .= "url:'" . $url . "',";
-        if ( isset ($callback) ) {
+        if (isset ($callback)) {
             $result .= "onSuccess: $callback,";
         }
-        if ( Gc::$dev_debug_on ) {
-            if ( $response_type == EnumResponseType::JSON ) {
+        if (Gc::$dev_debug_on) {
+            if ($response_type == EnumResponseType::JSON) {
                 $result .= "onError:function(text, error) {
                             console.log('请求失败! :(。返回信息'+text+'，失败原因: '+error+'。');
                             }" . HH;
-            } else if ( $response_type == EnumResponseType::XML ) {
+            } elseif ($response_type == EnumResponseType::XML) {
                 $result .= "
                       onFailure: function(xhr) {
                         console.log('请求失败! :(。失败原因: '+xhr.responseText);
@@ -106,9 +107,9 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         $result .= "});" . HH;
         $result .= "myRequest.setHeader('response_type', '$response_type');" . HH;
         $result .= "myRequest.setHeader('request_method', '$method');" . HH;
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
             $result .= "myRequest.get($data);";
-        } else if ( $response_type == EnumResponseType::XML ) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= " myRequest.send('$data');";
         }
         //</editor-fold>
@@ -134,18 +135,18 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
                     }
                     var ol = $(document.body).getElement('ol');
                     var h1 = $(document.body).getElement('h1');";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             $result .= "
                     h1.appendText('$class_name');";
         }
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
            $result  .= "
                     for(var item in response) {
                         var value = response[item];
                         ol.appendHTML('<li>'+item+':'+value+'</li>');
                     }
                     ";
-        } else if ( $response_type == EnumResponseType::XML ) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= "
                       var responseXml=createXmlDom(response);
                       var objectJson = xmltoJson(responseXml);
@@ -170,7 +171,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
         };
         $result .= "}";
         //</editor-fold>
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

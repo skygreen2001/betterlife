@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Delete 删除记录SQL语句 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Crud_Sql_Delete extends Crud_SQL {
      * @return Crud_Sql_Delete 
      */
     public function deletefrom($tableorclassName) {
-        if ( class_exists($tableorclassName) ) {
+        if (class_exists($tableorclassName)) {
             $this->tableName = Config_Db::orm( $tableorclassName );
         } else {
             $this->tableName = $tableorclassName;
@@ -26,7 +27,7 @@ class Crud_Sql_Delete extends Crud_SQL {
      */
     public function result() {
         $this->query = self::SQL_DELETE . self::SQL_FROM . $this->tableName;
-        if ( !empty($this->whereClause) )
+        if (!empty($this->whereClause) )
             $this->query .= self::SQL_WHERE . $this->whereClause;
         return $this->query;
     }

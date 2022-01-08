@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-一键生成前后台报表模板 |-----------
  * @category betterlife
@@ -29,23 +30,23 @@ class AutoCodeCreateReport extends AutoCode
         include( "template" . DS . "report.php" );
 
         // 初始化配置
-        if ( !isset($reportEname) || empty($reportEname) ) {
+        if (!isset($reportEname) || empty($reportEname)) {
             //没有定义英文名时，之后写算法取出中文名首字母
             $reportEname = UtilPinyin::getPinyinName( $reportCname );
-            if ( strlen($reportEname) > self::$ename_limit_count ) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
+            if (strlen($reportEname) > self::$ename_limit_count ) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
         } else{
             $reportEname = ucfirst($reportEname);
         }
-        if ( !isset($reportDesc) || empty($reportDesc) ) {
+        if (!isset($reportDesc) || empty($reportDesc)) {
             $reportDesc = $reportCname;
         }
 
-        if ( !empty($reportSql) ) {
+        if (!empty($reportSql)) {
             $reportSql = str_replace(";", "", $reportSql);
             $reportSql = trim($reportSql);
         }
 
-        if ( $isProd ) {
+        if ($isProd) {
             $dest_root_path = Gc::$nav_root_path;
         } else {
             $dest_root_path = self::$save_dir;
@@ -56,7 +57,7 @@ class AutoCodeCreateReport extends AutoCode
         $selCols = ServiceReport::getSqlSelCols($reportSql);
 
         // 默认生成的报表文件内容
-        if ( $reportType == "1" ) {
+        if ($reportType == "1") {
             $report_config_file      = Gc::$nav_root_path . "misc" . DS . "sql" . DS . "report.php";
             $dest_report_config_file = $dest_root_path . "misc" . DS . "sql" . DS . "report.php";
             $fileContent = file_get_contents($report_config_file);
@@ -65,7 +66,7 @@ class AutoCodeCreateReport extends AutoCode
             foreach ($selCols as $selCol) {
                 $configCols .= "        \"" . $selCol . "\"," . HH;
             }
-            if ( $configCols ) $configCols = substr($configCols, 0, strlen($configCols) - strlen(HH) - 1);
+            if ($configCols ) $configCols = substr($configCols, 0, strlen($configCols) - strlen(HH) - 1);
             include( "template" . DS . "report.php" );
 
             $fileContent = $fileContent . $sql_config_template;
@@ -77,13 +78,13 @@ class AutoCodeCreateReport extends AutoCode
             foreach ($selCols as $selCol) {
                 $tplColumns .= "                                    <th>" . $selCol . "</th>" . HH;
             }
-            if ( $tplColumns ) $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
+            if ($tplColumns ) $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
 
             $jsColumns = "";
             foreach ($selCols as $selCol) {
                 $jsColumns .= "                { data: \"" . $selCol . "\" }," . HH;
             }
-            if ( $jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - strlen(HH) - 1);
+            if ($jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - strlen(HH) - 1);
 
 
             $reptTimeCol = ServiceReport::getFilterTime( $reportSql );
@@ -93,7 +94,7 @@ class AutoCodeCreateReport extends AutoCode
             foreach ($filterCols as $filterCol) {
                 $reptFiltCol .= "'$filterCol', ";
             }
-            if ( $reptFiltCol ) $reptFiltCol = substr($reptFiltCol, 0, strlen($reptFiltCol) - 2);
+            if ($reptFiltCol ) $reptFiltCol = substr($reptFiltCol, 0, strlen($reptFiltCol) - 2);
 
             include( "template" . DS . "report.php" );
             /**
@@ -141,7 +142,7 @@ class AutoCodeCreateReport extends AutoCode
         $prod_root_path           = Gc::$nav_root_path . "home" . DS . "report" . DS;
         $prod_manage_service_path = $prod_root_path . "src" . DS . "services" . DS . "Manager_ReportService.php";
         $fileContent = file_get_contents($prod_manage_service_path);
-        if ( !empty($fileContent) ) {
+        if (!empty($fileContent)) {
             $endPos = strrpos($fileContent, "}");
             $startContent = substr_replace($fileContent, "", $endPos);
             $endContent = substr($fileContent, $endPos);
@@ -154,7 +155,7 @@ class AutoCodeCreateReport extends AutoCode
      */
     public static function service$reportEname()
     {
-        if ( self::\${$reportEnameLo}Service == null ) {
+        if (self::\${$reportEnameLo}Service == null) {
             self::\${$reportEnameLo}Service = new Service{$reportEname}();
         }
         return self::\${$reportEnameLo}Service;
@@ -162,7 +163,7 @@ class AutoCodeCreateReport extends AutoCode
 
 SERVICE;
             $hasContains = strpos($startContent, "\${$reportEnameLo}Service");
-            if ( empty($hasContains) ) {
+            if (empty($hasContains)) {
                 $startContent = $startContent . $currentService;
             }
             $fileContent = $startContent . $endContent;
@@ -199,13 +200,13 @@ SERVICE;
             "sidebar_file" => $prod_view_path . "layout" . DS . "normal" . DS . "sidebar.tpl",
         );
 
-        if ( $reportType == "1" ) {
+        if ($reportType == "1") {
             $report_url = "report.reportone.index&rtype=" . $reportEname;
         } else {
             $report_url = "report.report$reportEname.lists";
         }
         $fileContent = file_get_contents($prod_file_path["navbar_file"]);
-        if ( !empty($fileContent) ) {
+        if (!empty($fileContent)) {
             $endPos = strpos($fileContent, "<li id=\"searchbar-li\"");
             $startContent = substr($fileContent, 0, $endPos);
             $endContent = substr($fileContent, $endPos);
@@ -219,7 +220,7 @@ SERVICE;
 
 NAV;
             $hasContains = strpos($startContent, "report$reportEname");
-            if ( empty($hasContains) ) {
+            if (empty($hasContains)) {
                 $startContent = $startContent . "  " . ltrim($currentNav);
             }
             $fileContent = $startContent . "            " . $endContent;
@@ -228,7 +229,7 @@ NAV;
         self::saveDefineToFile($dest_file_path["navbar_file"], $fileContent);
 
         $fileContent = file_get_contents($prod_file_path["sidebar_file"]);
-        if ( !empty($fileContent) ) {
+        if (!empty($fileContent)) {
             $endPos = strrpos($fileContent, "</li>");
             $startContent = substr_replace($fileContent, "", $endPos);
             $endContent = substr($fileContent, $endPos);
@@ -237,7 +238,7 @@ NAV;
 
 SIDE;
             $hasContains = strpos($startContent, "report$reportEname");
-            if ( empty($hasContains) ) {
+            if (empty($hasContains)) {
                 $startContent = $startContent . $currentSide;
             }
             $fileContent = $startContent . "          " . $endContent;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:Ajax请求服务 |-----------
  * @category betterlife

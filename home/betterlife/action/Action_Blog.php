@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:博客 |-----------
  * @category betterlife
@@ -22,7 +23,7 @@ class Action_Blog extends Action
     {
         $this->keywords    .= "-博客";
         $this->description .= "-显示博客列表";
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -31,7 +32,7 @@ class Action_Blog extends Action
         $count   = Blog::count();
         $bb_page = TagPageService::init($nowpage,$count);
         $blogs   = Blog::queryPage($bb_page->getStartPoint(),$bb_page->getEndPoint());
-        if ( !$blogs ) {
+        if (!$blogs) {
             $this->redirect( "blog", "write" );
         } else {
             $view                   = new View_Blog($this);
@@ -47,11 +48,11 @@ class Action_Blog extends Action
     {
         $this->view->color = "green";
         $blog_content      = "";
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $blog          = $this->model->Blog;
             $blog->user_id = HttpSession::get('user_id');
             $blog_id = $blog->getId();
-            if ( !empty($blog_id) ) {
+            if (!empty($blog_id)) {
                 $blog->update();
                 $view  = new View_Blog( $this );
                 $view->blog             = $blog;
@@ -66,7 +67,7 @@ class Action_Blog extends Action
         } else {
             $blog_id = @$this->data["blog_id"];
             $view    = new View_Blog( $this );
-            if ( count($_GET) > 0 && $blog_id ) {
+            if (count($_GET) > 0 && $blog_id) {
                 $blog       = Blog::get_by_id( $blog_id );
                 $view->blog = $blog;
             }

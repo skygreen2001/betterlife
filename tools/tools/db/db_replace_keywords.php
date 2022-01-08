@@ -1,9 +1,9 @@
 <?php
 require_once("../../../init.php");
-if ( isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
+if (isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
 {
     $oldwords = $_REQUEST["oldwords"];
-    if ( isset($_REQUEST["newwords"]) && !empty($_REQUEST["newwords"]) ) {
+    if (isset($_REQUEST["newwords"]) && !empty($_REQUEST["newwords"])) {
         $newwords = $_REQUEST["newwords"];
     } else {
         $newwords = Gc::$appName;
@@ -11,7 +11,7 @@ if ( isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
 
     $filterTableColumns = UtilDb::keywords_table_columns( $oldwords );
 
-    if ( $filterTableColumns ) {
+    if ($filterTableColumns) {
         echo "存在[{$oldwords}]的表列清单如下<br/>";
         foreach ($filterTableColumns as $key => $columns) {
             echo "表名:$key<br/>";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:评论 |-----------
  * @category betterlife
@@ -13,17 +14,17 @@ class Action_Comment extends Action
     public function comment()
     {
         $blog_id = $this->data["blog_id"];
-        if ( $blog_id ) {
+        if ($blog_id) {
             $this->view->blog = Blog::get_by_id( $blog_id );
         } else {
             $this->redirect( "blog", "display" );
             die();
         }
-        if ( count($_POST) > 0 ) {
+        if (count($_POST) > 0) {
             $comment = $this->model->Comment;
             $comment->blog_id = $blog_id;
             $comment->user_id = HttpSession::get( 'user_id' );
-            if ( !empty($comment->comment_id) ) {
+            if (!empty($comment->comment_id)) {
                 $comment->update();
                 $this->view->message = "评论修改成功";
             } else {
@@ -33,12 +34,12 @@ class Action_Comment extends Action
             $this->view->color = "green";
         }
         $comment_id = $this->data["comment_id"];
-        if ( $comment_id ) {
+        if ($comment_id) {
             $comment = Comment::get_by_id( $comment_id );
             $this->view->comment_content = $comment->comment;
         }
         $canEdit = $this->view->blog->canEdit();
-        if ( !$canEdit ) {
+        if (!$canEdit) {
             $this->loadJs("js/edit.js");
             $this->load_onlineditor( "comment" );
         }

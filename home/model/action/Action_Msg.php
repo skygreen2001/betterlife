@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:消息 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Msg extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Msg extends ActionModel
         $count = Msg::count();
         $this->view->countMsgs = $count;
         $msgs = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $msgs = Msg::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Msg extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $msg = $this->model->Msg;
             $id         = $msg->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $msg->update();
             } else {
                 $id = $msg->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "msg", "view", "id=$id" );
                 exit;
             }

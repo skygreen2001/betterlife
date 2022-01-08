@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 获取Mysql数据库信息 |-----------
  * @category betterlife
@@ -38,7 +39,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public static function run_script($db_config)
     {
-        if ( !self::extension_is_available() )
+        if (!self::extension_is_available() )
         {
             LogMe::log('默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions');
             return FALSE;
@@ -52,7 +53,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         $script_filename = $db_config["script_filename"];
 
         // Allow for non-standard MySQL port.
-        if ( isset($db_config["port"]) && !empty($db_config["port"]) )
+        if (isset($db_config["port"]) && !empty($db_config["port"]) )
         {
             $host = $host . ':' . $db_config["port"];
         }
@@ -60,7 +61,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         // Test connecting to the database.
         $connection = @mysql_connect($host, $user, $password, TRUE, 2);
 
-        if ( !$connection )
+        if (!$connection )
         {
             LogMe::log(
                 '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysql_error()
@@ -69,12 +70,12 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         }
 
         // Test selecting the database.
-        if ( !mysql_select_db($dbname) )
+        if (!mysql_select_db($dbname) )
         {
-            if ( mysql_query("CREATE DATABASE $dbname", $connection) )
+            if (mysql_query("CREATE DATABASE $dbname", $connection) )
             {
                 LogMe::log( "指定数据库不存在，创建数据库$dbname成功!<br/>" );
-                if ( !mysql_select_db($dbname) )
+                if (!mysql_select_db($dbname) )
                 {
                    LogMe::log( "无法指定数据库，数据库报告错误信息: " . mysql_error() );
                    return FALSE;
@@ -85,12 +86,12 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             }
         }
         $isSetcharset = mysql_set_charset(Config_C::CHARACTER_UTF8, $connection);
-        if ( !$isSetcharset ) {
+        if (!$isSetcharset) {
             $error = mysql_error();
             LogMe::log( '执行字符集操作命令发生错误脚本: ' . $v
                                    . '<br/> MySQL报告错误信息:' . $error."<br/>" );
         }
-        if ( file_exists($script_filename) ) {
+        if (file_exists($script_filename)) {
             $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
             $query = implode("\n", $query);
             $query = str_replace("&nbsp;", "--&nbsp--", $query);
@@ -99,9 +100,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             foreach ($query_e as $k => $v)
             {
                 $v = str_replace("--&nbsp--", "&nbsp;", $v);
-                if ( !empty($v) && ( $v != "\r") ) {
+                if (!empty($v) && ($v != "\r")) {
                     $result = mysql_query($v);
-                    if ( !$result ) {
+                    if (!$result) {
                         $error = mysql_error();
                         LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v
                                        . '<br/> MySQL报告错误信息:' . $error );
@@ -147,7 +148,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     {
         $sql    = "SHOW VARIABLES LIKE '%character%'";
         $result =  mysql_query($sql,$this->connection);
-        if ( !$result ) {
+        if (!$result) {
             echo "ERROR : " . mysql_error($this->connection) . "<br>";
             return;
         } else {
@@ -167,7 +168,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public function getVersion()
     {
-        if ( !$this->mysqlVersion ) {
+        if (!$this->mysqlVersion) {
             $this->mysqlVersion = (float)substr(trim(preg_replace('/([A-Za-z-])/', '', $this->query("SELECT VERSION()")->value())), 0, 3);
         }
         return $this->mysqlVersion;
@@ -187,7 +188,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public function tableList()
     {
-        if ( !self::$showtables ) {
+        if (!self::$showtables) {
             self::$showtables = $this->query("SHOW TABLES");
         }
         $tables = array();
@@ -205,12 +206,12 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     public function tableInfoList()
     {
         $tableInfos = $this->query("show table status");
-        if ( $tableInfos ) {
+        if ($tableInfos) {
             foreach ($tableInfos as $tableInfo) {
                 $tableInfoList[$tableInfo['Name']] = $tableInfo;
             }
         }
-        if ( isset($tableInfoList) ) return $tableInfoList;
+        if (isset($tableInfoList) ) return $tableInfoList;
         return null;
     }
 
@@ -242,28 +243,28 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
 
         foreach ($fields as $field) {
             $fieldSpec = $field['Type'];
-            if ( !$field['Null'] || $field['Null'] == 'NO' ) {
+            if (!$field['Null'] || $field['Null'] == 'NO') {
                 $fieldSpec .= ' not null';
             }
-            if ( $field['Collation'] && $field['Collation'] != 'NULL' ) {
+            if ($field['Collation'] && $field['Collation'] != 'NULL') {
                 // Cache collation info to cut down on database traffic
-                if ( !isset(self::$_cache_collation_info[$field['Collation']]) ) {
+                if (!isset(self::$_cache_collation_info[$field['Collation']])) {
                     self::$_cache_collation_info[$field['Collation']] = $this->query("SHOW COLLATION LIKE '$field[Collation]'")->record();
                 }
                 $collInfo   = self::$_cache_collation_info[$field['Collation']];
                 $fieldSpec .= " character set $collInfo[Charset] collate $field[Collation]";
             }
 
-            if ( $field['Default'] || $field['Default'] === "0" ) {
-                if ( is_numeric($field['Default']) )
+            if ($field['Default'] || $field['Default'] === "0") {
+                if (is_numeric($field['Default']) )
                     $fieldSpec .= " default " . addslashes($field['Default']);
                 else
                     $fieldSpec .= " default '" . addslashes($field['Default']) . "'";
             }
-            if ( $field['Extra'] ) $fieldSpec .= " $field[Extra]";
+            if ($field['Extra'] ) $fieldSpec .= " $field[Extra]";
             $fieldList[$field['Field']] = $fieldSpec;
         }
-        if ( isset($fieldList) ) return $fieldList;
+        if (isset($fieldList) ) return $fieldList;
         return null;
     }
 
@@ -273,27 +274,27 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * @param bool $isCommentFull 列名称是否获取完整的表列自定义注释，默认获取注释第一列
      * @return 表所有的列名称定义映射数组
      * 示例如下:
-     * 
+     *
      *     array('username'=>'用户名','password'=>'密码')
      */
     public function fieldMapNameList($table, $isCommentFull = false)
     {
         $fieldList = $this->fieldInfoList( $table );
         $result    = array();
-        if ( !empty($fieldList) ) {
+        if (!empty($fieldList)) {
             foreach ($fieldList as $field)
             {
-                if ( $isCommentFull ) {
+                if ($isCommentFull) {
                     $result[$field["Field"]] = $field["Comment"];
                 } else {
-                    if ( contain($field["Comment"], "\n" ) )
+                    if (contain($field["Comment"], "\n"))
                     {
                         $comment = explode("\n", $field["Comment"]);
-                        if ( count($comment) > 0 ) {
+                        if (count($comment) > 0) {
                             $result[$field["Field"]] = $comment[0];
                         }
                     } else {
-                        if ( $field["Comment"] ) {
+                        if ($field["Comment"]) {
                             $result[$field["Field"]] = $field["Comment"];
                         } else {
                             $result[$field["Field"]] = $field["Field"];
@@ -310,7 +311,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public function hasUnique($table, $Column_names)
     {
-        if ( is_array($Column_names) ) {
+        if (is_array($Column_names)) {
              $conditions = array();
              foreach ($Column_names as $Column_name) {
                 $conditions[] = "Column_name='$Column_name'";
@@ -322,13 +323,13 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
         LogMe::log( $sqlUnique );
         $uniqueSql = $this->query( $sqlUnique );
-        if ( $uniqueSql && is_object($uniqueSql) ) return (bool)($uniqueSql->value());
+        if ($uniqueSql && is_object($uniqueSql) ) return (bool)($uniqueSql->value());
         return false;
     }
 
     /**
      * 查看表在数据库里是否存在
-     * 
+     *
      * NOTE: Experimental; introduced for db-abstraction and may changed before 2.4 is released.
      */
     public function hasTable($table)
@@ -379,17 +380,17 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     private function query($sql, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
         $handle = NULL;
-        if ( isset($_REQUEST['showqueries']) ) {
+        if (isset($_REQUEST['showqueries'])) {
             $starttime = microtime(true);
         }
-        if ( $this->connection ) $handle = mysql_query($sql, $this->connection);
+        if ($this->connection ) $handle = mysql_query($sql, $this->connection);
 
-        if ( isset($_REQUEST['showqueries']) ) {
+        if (isset($_REQUEST['showqueries'])) {
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }
-        if ( !$handle && $errorLevel && $this->connection )x( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
-        if ( $handle ) return new Query_Mysql($handle);
+        if (!$handle && $errorLevel && $this->connection )x( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
+        if ($handle ) return new Query_Mysql($handle);
         return null;
     }
 

@@ -5,15 +5,15 @@ require_once("../../init.php");
  */
 $params = $_GET;
 $blogId = $params['blogId'];
-if ( !empty($blogId) && ( $blogId > 0 ) ) {
+if (!empty($blogId) && ($blogId > 0 )) {
     $blog = Blog::get_by_id( $blogId );
-    if ( $blog ) {
+    if ($blog) {
         $icon_url  = $blog->icon_url;
         $file_name = basename($icon_url);
         $suffix_name = explode(".", $file_name);
         $suffix_name = end($suffix_name);
         header("Content-Type:image/" . $suffix_name);
-        if ( $suffix_name == "jpeg" ) $suffix_name = "jpg";
+        if ($suffix_name == "jpeg" ) $suffix_name = "jpg";
         $icon_path       = GC::$upload_url . "images" . DS . $icon_url;
         $thumb_icon_path = GC::$upload_path . "images" . DS . "blog" . DS . "thumb" . DS . $file_name;
         UtilImage::thumb( $icon_path, $thumb_icon_url, $suffix_name, 200, 200 );

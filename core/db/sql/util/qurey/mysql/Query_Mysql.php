@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| A result-set from a MySQL database. |-----------
  * @category betterlife
@@ -36,12 +37,12 @@ class Query_Mysql extends Query {
     public function nextRecord() {
         // Coalesce rather than replace common fields.
         $data = @mysql_fetch_row($this->handle);
-        if ( $data ) {
+        if ($data) {
             foreach ($data as $columnIdx => $value) {
                 $columnName = mysql_field_name($this->handle, $columnIdx);
                 // $value || !$ouput[$columnName] means that the *last* occurring value is shown
                 // !$ouput[$columnName] means that the *first* occurring value is shown
-                if ( isset($value) || !isset($output[$columnName]) ) {
+                if (isset($value) || !isset($output[$columnName])) {
                     $output[$columnName] = $value;
                 }
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: Prototype[Javascript Ajax 框架] |-----------
  * @category betterlife
@@ -9,7 +10,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
 {
     /**
      * 动态加载Prototype:Ajax Javascript Framework库
-     * 
+     *
      * @link http://api.prototypejs.org/Prototype/
      * @link https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js
      * @param string $version javascript框架的版本号
@@ -17,9 +18,9 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if ( self::$IsGoogleApi )
+        if (self::$IsGoogleApi )
         {
-            if ( $viewObject )
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/prototype/$version/prototype.js" );
             } else {
@@ -28,7 +29,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_PROTOTYPE;
-            if ( $viewObject )
+            if ($viewObject )
             {
                 self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . ".js" );
             } else {
@@ -49,7 +50,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if ( !empty($callback) )
+        if (!empty($callback) )
         {
             $url_base = UtilNet::urlbase();
             $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
@@ -57,7 +58,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="ProtoType">
 
-        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
+        if (( is_array($dataArray) ) && (count($dataArray) > 0))
         {
             $data = http_build_query($dataArray);
         }
@@ -67,10 +68,10 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         $result .= "requestHeaders:{
             'response_type':'$response_type'
         },";
-        if ( isset($callback) ) {
+        if (isset($callback)) {
             $result .= "onSuccess:" . $callback . ",";
         }
-        if ( Gc::$dev_debug_on ) {
+        if (Gc::$dev_debug_on) {
             $result .= "onException: function(transport,e) {
                  console.log('请求失败! :(||||'+e.name+':'+e.message);
             },";
@@ -102,11 +103,11 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         $result    .= "
                     var ol = $('properties');
                     var h1 = $('object_name');";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             $result .= "
                     h1.insert('$class_name');";
         }
-        if ( $response_type == EnumResponseType::JSON ) {
+        if ($response_type == EnumResponseType::JSON) {
             $result .= "
                     var responseJson=response.responseJSON;
                     for(var item in responseJson) {
@@ -114,7 +115,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
                         ol.insert({bottom:'<li>'+item+':'+value+'</li>'});
                     }
                     ";
-        } else if ( $response_type == EnumResponseType::XML ) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= "
                   var responseXml=response.responseXML;//当返回header的content-type:application/xml;
                   //var responseXml=createXmlDom(response.responseText);
@@ -137,7 +138,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
         };
         $result .= "}";
         //</editor-fold>
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

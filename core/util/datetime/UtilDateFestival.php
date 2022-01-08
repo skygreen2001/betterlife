@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:处理节假日的方法 |-----------
  * @category betterlife
@@ -34,7 +35,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::newyear( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -66,7 +67,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::chineseNewyear( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -96,7 +97,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::womenday( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
     
@@ -126,7 +127,7 @@ class UtilDateFestival extends Util
         $nowfesstival = self::nationalDay( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -156,7 +157,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::teacherDay( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -186,7 +187,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::laborDay( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -219,7 +220,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::motherDay( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -249,7 +250,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::christmas( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -280,7 +281,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::dragonboat( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -310,7 +311,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::childrenday( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -341,7 +342,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::isLantern( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -372,7 +373,7 @@ class UtilDateFestival extends Util
         $nowfesstival = self::midAutumn( $year );
         $$nowfesstival_date =$nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 
@@ -403,7 +404,7 @@ class UtilDateFestival extends Util
         $nowfesstival       = self::doubleninth( $year );
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ( $$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date ) $flag = true;
         return $flag;
     }
 

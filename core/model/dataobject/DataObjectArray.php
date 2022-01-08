@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 数组对象 |-----------
- * 
+ *
  * 可以以数组的方式访问数据对象
  * @category betterlife
  * @package core.model
@@ -18,27 +19,27 @@ class DataObjectArray extends BBObject implements ArrayAccess
     */
     public function __construct($array = null)
     {
-        if ( !empty($array) && is_array($array) )
+        if (!empty($array) && is_array($array) )
             foreach ($array as $key => $value)
                 $this->$key = $value;
     }
 
     /**
      * 可设定对象未定义的成员变量[但不建议这样做]
-     * 
+     *
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @return mixed 属性值
      */
     public function __get($property)
     {
-        if ( property_exists($this, $property) ) return $this->$property;
+        if (property_exists($this, $property) ) return $this->$property;
         return null;
     }
 
     /**
      * 可设定对象未定义的成员变量[但不建议这样做]
-     * 
+     *
      * 类定义变量访问权限设定需要是pulbic
      * @param mixed $property 属性名
      * @param mixed $value 属性值
@@ -60,7 +61,7 @@ class DataObjectArray extends BBObject implements ArrayAccess
     //<editor-fold defaultstate="collapsed" desc="定义数组进入对象方式">
     /**
      * Whether a offset exists
-     * 
+     *
      * @param mixed $key — An offset to check for.
      * @access public
      * @return bool
@@ -69,13 +70,13 @@ class DataObjectArray extends BBObject implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
-        if ( $this->$key ) return true;
+        if ($this->$key ) return true;
         return method_exists($this, $key);
     }
 
     /**
      * Offset to retrieve
-     * 
+     *
      * @param mixed $key — The offset to retrieve.
      * @access public
      * @return mixed — Can return all value types.

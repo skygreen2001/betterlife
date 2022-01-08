@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: Jquery[Javascript Ajax 框架] |-----------
  * @category betterlife
@@ -27,16 +28,16 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "1.6.1", $viewObject = null)
     {
-        if ( self::$IsGoogleApi ) {
-            if ( self::$IsDebug ) {
-                if ( $viewObject )
+        if (self::$IsGoogleApi) {
+            if (self::$IsDebug) {
+                if ($viewObject )
                 {
                     self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
                 } else {
                     self::loadJs( "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
                 }
             } else {
-                if ( $viewObject )
+                if ($viewObject )
                 {
                     self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js" );
                 } else {
@@ -46,15 +47,15 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_JQUERY;
-            if ( self::$IsDebug ) {
-                if ( $viewObject )
+            if (self::$IsDebug) {
+                if ($viewObject )
                 {
                     self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
                 } else {
                     self::loadJs( $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
                 }
             } else {
-                if ( $viewObject )
+                if ($viewObject )
                 {
                     self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".min.js" );
                 } else {
@@ -71,14 +72,14 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      */
     public static function loadJqueryUI($viewObject = null, $version = "1.8")
     {
-        if ( self::$IsGoogleApi ) {
-            if ( self::$IsDebug ) {
+        if (self::$IsGoogleApi) {
+            if (self::$IsDebug) {
                 UtilJavascript::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.js" );
             } else {
                 UtilJavascript::loadJsReady($viewObject, "http://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.min.js" );
             }
         } else {
-            if ( self::$IsDebug ) {
+            if (self::$IsDebug) {
                 UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.js", true );
             } else {
                 UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.min.js", true );
@@ -101,7 +102,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="JQuery">
         //@link http://api.jquery.com/jQuery.ajax/
-        if ( ( is_array($dataArray) ) && ( count($dataArray) > 0 ) )
+        if (( is_array($dataArray) ) && (count($dataArray) > 0))
         {
             $data = json_encode($dataArray);
 //            $data = "{";
@@ -119,13 +120,13 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         $result .= "beforeSend  : function (XMLHttpRequest) {
             XMLHttpRequest.setRequestHeader('response_type','$response_type');
         },";
-        if ( isset($data) ) {
+        if (isset($data)) {
             $result .= "data:" . $data . ",";
         }
-        if ( isset($callback) ) {
+        if (isset($callback)) {
             $result .= "success:" . $callback . ",";
         }
-        if ( Gc::$dev_debug_on ) {
+        if (Gc::$dev_debug_on) {
             $result .= "error: function(xhr,status,errMsg) {
                       console.log(status,':',errMsg);
                   },";
@@ -156,11 +157,11 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         //<editor-fold defaultstate="collapsed" desc="JQuery">
         $result      = "
                 function(data) {";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             $result .= "
                         $('h1').append('$class_name');";
         }
-        if ( $response_type == EnumResponseType::XML ) {
+        if ($response_type == EnumResponseType::XML) {
             $result .= "
                         $(data).find('$class_name').each(function(i) {
                             if ($(this).children()) {
@@ -173,7 +174,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
                                 });
                             }
                         });";
-        } else if ( $response_type == EnumResponseType::JSON ) {
+        } elseif ($response_type == EnumResponseType::JSON) {
             $result .= "
                         $.each(data,function(key, val) {
                             $('ol').append('<li>'+key+':'+val+'</li>');
@@ -182,7 +183,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         }
         $result .= "}";
         //</editor-fold>
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

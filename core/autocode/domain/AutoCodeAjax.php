@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-Ajax请求数据 |-----------
  * @category betterlife
@@ -23,11 +24,11 @@ class AutoCodeAjax extends AutoCodeView
         foreach ($fieldInfo as $fieldname => $field)
         {
             $field_comment = $field["Comment"];
-            if ( ($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment ) ) {
+            if (($realId != $fieldname) && self::isNotColumnKeywork( $fieldname, $field_comment )) {
                 $field_comment    = $field["Comment"];
                 $isImage          = self::columnIsImage( $fieldname, $field_comment );
-                if ( $isImage ) {
-                    $editApiImg  .= "        if ( !empty(\${$instancename}->$fieldname) ) {" . HH .
+                if ($isImage) {
+                    $editApiImg  .= "        if (!empty(\${$instancename}->$fieldname)) {" . HH .
                                     "            \${$instancename}->$fieldname = Gc::\$upload_url . \"images/\" . \${$instancename}->$fieldname;" . HH .
                                     "        }" . HH;
                 }
@@ -58,11 +59,11 @@ class AutoCodeAjax extends AutoCodeView
     public static function save_select_web_admin($tablename)
     {
         $classname    = self::getClassname($tablename);
-        if ( array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) )
+        if (array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0))
         {
             //多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
+            if (array_key_exists("many_many", $relationSpec) )
             {
                 $many_many             = $relationSpec["many_many"];
                 foreach ($many_many as $key => $value) {
@@ -89,29 +90,29 @@ class AutoCodeAjax extends AutoCodeView
     protected static function relationFieldShow($instance_name, $classname, $fieldInfo)
     {
         $result = "";
-        if ( is_array(self::$relation_viewfield) && ( count(self::$relation_viewfield) > 0 ) )
+        if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0))
         {
-            if ( array_key_exists($classname, self::$relation_viewfield) ) {
+            if (array_key_exists($classname, self::$relation_viewfield)) {
                 $relationSpecs  = self::$relation_viewfield[$classname];
-                foreach ( $fieldInfo as $fieldname => $field ) {
-                    if ( array_key_exists($fieldname, $relationSpecs) ) {
+                foreach ( $fieldInfo as $fieldname => $field) {
+                    if (array_key_exists($fieldname, $relationSpecs)) {
                         $relationShow = $relationSpecs[$fieldname];
-                        foreach ( $relationShow as $key => $value ) {
+                        foreach ( $relationShow as $key => $value) {
                             $realId         = DataObjectSpec::getRealIDColumnName($key);
                             $show_fieldname = $value;
-                            if ( $realId != $fieldname ) {
+                            if ($realId != $fieldname) {
                                 $show_fieldname .= "_" . $fieldname;
-                                if ( contain( $show_fieldname, "_id" ) ) {
+                                if (contain( $show_fieldname, "_id" )) {
                                     $show_fieldname = str_replace("_id", "", $show_fieldname);
                                 }
                             }
-                            if ( $show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
+                            if ($show_fieldname == "name" ) $show_fieldname = strtolower($key) . "_" . $value;
                             $i_name = $key;
                             $i_name = lcfirst($i_name);
-                            if ( !array_key_exists("$show_fieldname", $fieldInfo) ) {
-                                $result .= "        if ( !empty(\${$instance_name}->$fieldname) ) {" . HH .
+                            if (!array_key_exists("$show_fieldname", $fieldInfo)) {
+                                $result .= "        if (!empty(\${$instance_name}->$fieldname)) {" . HH .
                                            "            \${$i_name}_i = $key::get_by_id( \${$instance_name}->$fieldname );" . HH .
-                                           "            if ( \${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;" . HH .
+                                           "            if (\${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;" . HH .
                                            "        }" . HH;
                             }
                         }

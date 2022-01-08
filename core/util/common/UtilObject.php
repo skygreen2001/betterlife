@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:处理对象相关的方法类 |-----------
  * @category betterlife
@@ -24,7 +25,7 @@ class UtilObject extends Util
         $objectArr = self::object_to_array( $object, $isAll );
         foreach ($objectArr as $key => $value) {
             $node = self::createNode( $dom, $key, $value, $filterArray, $isAll );
-            if ( $node != NULL ) {
+            if ($node != NULL) {
                 $root->appendChild($node);
             }
         }
@@ -35,26 +36,26 @@ class UtilObject extends Util
     private static function createNode($dom, $key, $value, $filterArray = null, $isAll = true)
     {
         $node = NULL;
-        if ( is_string($value) || is_numeric($value) || is_bool($value) || $value == NULL ) {
-            if ( $value == NULL ) {
-                if ( $isAll ) {
-                    if ( isset($filterArray) && in_array($key, $filterArray) ) {
+        if (is_string($value) || is_numeric($value) || is_bool($value) || $value == NULL) {
+            if ($value == NULL) {
+                if ($isAll) {
+                    if (isset($filterArray) && in_array($key, $filterArray)) {
                     } else{
                         $node = $dom->createElement($key);
                     }
                 }
             } else {
-                if ( isset($filterArray) && in_array($key, $filterArray) ) {
+                if (isset($filterArray) && in_array($key, $filterArray)) {
                 } else {
                      $node = $dom->createElement($key, (string)$value);
                 }
             }
         } else {
             $node = $dom->createElement($key);
-            if ( $value != NULL ) {
+            if ($value != NULL) {
                 foreach ($value as $key => $value) {
                     $sub = self::createNode( $dom, $key, $value );
-                    if ( $sub != NULL ) {
+                    if ($sub != NULL) {
                         $node->appendChild($sub);
                     }
                 }
@@ -72,16 +73,16 @@ class UtilObject extends Util
      */
     public static function array_to_object($array = array() , $object = null, $isAll = true)
     {
-        if ( !empty($array) ) {
-            if ( is_string($object) ) {
-                if ( class_exists($object) ) {
+        if (!empty($array)) {
+            if (is_string($object)) {
+                if (class_exists($object)) {
                     $class = new ReflectionClass($object);
                     $data  = $class->newInstance();
                 } else {
                     return null;
                 }
-            } else if ( is_object($object) ) {
-                if ( ($object instanceof DataObject) ) {
+            } elseif (is_object($object)) {
+                if (($object instanceof DataObject)) {
                     $data = $object;
                 } else {
                     return null;
@@ -91,22 +92,22 @@ class UtilObject extends Util
             }
 
             foreach ($array as $akey => $aval) {
-                if ( is_string($akey) ) {//&&property_exists($data, $akey)
-                    if ( method_exists($data, 'set' . ucfirst($akey)) ) {
+                if (is_string($akey)) {//&&property_exists($data, $akey)
+                    if (method_exists($data, 'set' . ucfirst($akey))) {
 //            $data->{'set' . ucfirst($akey)}($aval);
-                        if ( $isAll ) {
+                        if ($isAll) {
                             $data->{$akey} = $aval;
                         } else {
-                            if ( !empty($aval) ) {
+                            if (!empty($aval)) {
                                  $data->{$akey} = $aval;
                             }
                         }
                     } else {
-                        if ( isset($data) && array_key_exists($akey, get_class_vars($data->classname())) ) {
-                            if ( $isAll ) {
+                        if (isset($data) && array_key_exists($akey, get_class_vars($data->classname()))) {
+                            if ($isAll) {
                                 $data->$akey = $aval;
                             } else {
-                                if ( !empty($aval) ) {
+                                if (!empty($aval)) {
                                      $data->$akey = $aval;
                                 }
                             }
@@ -114,9 +115,9 @@ class UtilObject extends Util
                     }
                 }
             }
-            if ( $data ) {
+            if ($data) {
                 //去除数据对象规格定义
-                if ( ($data instanceof DataObject) ) {
+                if (($data instanceof DataObject)) {
                     unset($data->field_spec);
                     unset($data->real_fieldspec);
                 }
@@ -136,35 +137,35 @@ class UtilObject extends Util
      */
     public static function object_to_array($obj, $isAll = false, $charset = null)
     {
-        if ( is_object($obj) ) {
+        if (is_object($obj)) {
             $clone = (array) $obj;
             $rtn = array ();
             $rtn['source_keys'] = $clone;
 
-            // while ( list ($key, $value) = each ($clone) ) {
+            // while ( list ($key, $value) = each ($clone)) {
             foreach ($clone as $key => $value) {
                 $aux    = explode ("\0", $key);
                 $newkey = $aux[count($aux)-1];
-                if ( $isAll ) {
+                if ($isAll) {
                     $rtn[$newkey] = $rtn['source_keys'][$key];
                 } else {
-                    if ( isset($rtn['source_keys'][$key]) || is_bool($rtn['source_keys'][$key]) ) {
+                    if (isset($rtn['source_keys'][$key]) || is_bool($rtn['source_keys'][$key])) {
                         $rtn[$newkey] = $rtn['source_keys'][$key];
-                        if ( $rtn[$newkey] === false ) $rtn[$newkey] = 0;
+                        if ($rtn[$newkey] === false ) $rtn[$newkey] = 0;
                     }
                 }
             }
             unset($rtn['source_keys']);
-            if ( !empty($rtn) ) {
+            if (!empty($rtn)) {
                 foreach ($rtn as $element) {
-                    if ( !empty($charset) ) {
-                        if ( is_array($charset) ) {
+                    if (!empty($charset)) {
+                        if (is_array($charset)) {
                              $element = iconv(key($charset), current($charset), $element);
                         }
                     }
                 }
             }
-            if ( $obj instanceof DataObject ) {
+            if ($obj instanceof DataObject) {
                 $rtn = DataObjectSpec::removeNotObjectDataField( $rtn, $obj );
             }
             return $rtn;
@@ -180,16 +181,16 @@ class UtilObject extends Util
      */
     public static function copyProperties($dest, $source)
     {
-        if ( $dest ) {
-            if ( is_array($source) || is_object($source) ) {
+        if ($dest) {
+            if (is_array($source) || is_object($source)) {
                 foreach ($source as $key => $value) {
-                    if ( is_array($dest) ) {
-                        if ( array_key_exists($key,$dest) )
+                    if (is_array($dest)) {
+                        if (array_key_exists($key,$dest) )
                         {
                             $dest[$key] = $value;
                         }
-                    } else if ( is_object($dest) ) {
-                        if ( property_exists($dest,$key) )
+                    } elseif (is_object($dest)) {
+                        if (property_exists($dest,$key) )
                         {
                             $dest->$key = $value;
                         }

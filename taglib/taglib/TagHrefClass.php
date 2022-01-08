@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 自定义标签:超链接
  * @link http://www.w3schools.com/tags/tag_a.asp
@@ -17,11 +18,11 @@ class TagHrefClass extends TagClass
         $attributes = TagClass::getAttributesFormTag( $this->getAttributeDesc() );
 
         $this->html = "<a ";
-        if ( $attributes && ( count($attributes) > 0 ) ) {
-            if ( $attributes["href"] ) {
+        if ($attributes && (count($attributes) > 0 )) {
+            if ($attributes["href"]) {
                 $href = $attributes["href"];
-                if ( self::$isMcrypt ) {
-                    if ( contain( $href, Gc::$url_base . "index.php?" ) ) {
+                if (self::$isMcrypt) {
+                    if (contain( $href, Gc::$url_base . "index.php?" )) {
                         $params    = str_replace(Gc::$url_base . "index.php?", "", $href);
                         $crypttext = base64_encode($params);
                         $href      = Gc::$url_base . "index.php?" . $crypttext;

@@ -1,9 +1,10 @@
 <?php
+
 /**
  * -----------| 所有配置工具类的父类 |-----------
- * 
+ *
  * 读取以下文件类型配置信息,
- * 
+ *
  * 现支持php,ini,xml.yaml
  * @category betterlife
  * @package util.config
@@ -50,7 +51,7 @@ class UtilConfig extends Util
         $var    = explode('.', $var);
         $result = $this->_settings;
         foreach ($var as $key) {
-            if ( !isset($result[$key]) ) { return false; }
+            if (!isset($result[$key])) { return false; }
             $result = $result[$key];
         }
         return $result;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:所有报表可以通过一个控制器处理 |-----------
  * @category betterlife
@@ -17,7 +18,7 @@ class Action_Reportone extends ActionReport
 
     /**
      * 导出报表: 统一的报表
-     * 
+     *
      * 说明   : 统一的报表
      */
     public function export()

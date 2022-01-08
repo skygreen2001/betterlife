@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 手机Mobile的配置 |-----------
  * @category betterlife
@@ -12,4 +13,3 @@ class Config_Mobile extends ConfigBB
      */
     public static $api_page_size = 10;
 }
-?>

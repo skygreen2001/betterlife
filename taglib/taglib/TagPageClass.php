@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 自定义标签:分页
  *
@@ -13,18 +14,18 @@ class TagPageClass extends TagClass
     public function setHtml()
     {
         $page = HttpSession::get( self::$tag_page_sessionname );
-        if ( $page ) {
+        if ($page) {
             $this->html = "";
             $attributes = TagClass::getAttributesFormTag( $this->getAttributeDesc() );
-            if ( array_key_exists("src", $attributes) ) {
+            if (array_key_exists("src", $attributes)) {
                 $this->src = $attributes["src"];
                 $page->setLinkUrl( $this->src );
             }
-            if ( array_key_exists("style", $attributes) ) {
+            if (array_key_exists("style", $attributes)) {
                 $this->style = $attributes["style"];
             }
-            if ( empty($this->style) ) $this->style = 1;
-            switch ( $this->style ) {
+            if (empty($this->style) ) $this->style = 1;
+            switch ( $this->style) {
                 case 2:
                     $this->html = $page->getNavig();
                     break;

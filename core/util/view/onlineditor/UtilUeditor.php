@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 定义 UEditor 在线编辑器 |-----------
  * @category betterlife
@@ -31,9 +32,9 @@ class UtilUeditor extends Util
 
     /**
      * 预加载UEditor的JS函数
-     * 
+     *
      * 如何阻止div标签自动转换为p标签:http://fex-team.github.io/ueditor/#qa-allowDivToP
-     * 
+     *
      * @param string $textarea_id 在线编辑器所在的内容编辑区域TextArea的ID
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用
      * @param string form_id  在线编辑器所在的Form的ID
@@ -45,14 +46,14 @@ class UtilUeditor extends Util
         $info_install_ueditor = "";
         $ue_readme_url = Gc::$url_base . "install" . DS . "README.md";
         $uc_file       = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
-        if ( !file_exists($uc_file) ) {
+        if (!file_exists($uc_file)) {
             $info_install_ueditor = '<div class=\"alert alert-danger\" role=\"alert\">很遗憾不能正常显示在线编辑器! <a target="_blank" href=\"' . $ue_readme_url . '\" class=\"alert-link\">请下载帮助文档后按要求安装好UEditor</a>.</div>';
             UtilJavascript::loadJsContentReady( $viewObject, "
                 $('#$textarea_id').before('$info_install_ueditor');
                 "
             );
         } else {
-            if ( $is_toolbar_full ) {
+            if ($is_toolbar_full) {
                 UtilJavascript::loadJsContentReady( $viewObject, "
                     var ue_{$textarea_id};
                     function pageInit_ue_{$textarea_id}()
@@ -64,7 +65,7 @@ class UtilUeditor extends Util
                     "
                 );
             } else {
-                if ( empty($configString) ) {
+                if (empty($configString)) {
                     $configString = self::toolbar_normal();
                 }
                 UtilJavascript::loadJsContentReady( $viewObject, "

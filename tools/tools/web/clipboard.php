@@ -1,15 +1,16 @@
 <?php
+
 /**
  * 剪贴板小工具
- * 
+ *
  * 仅供作者自己使用，目的不公开 
- * 
+ *
  * http://localhost/betterlife/tools/tools/web/clipboard.php
  */
 require_once("../../../init.php");
-if ( isset($_REQUEST["s"]) ) {
+if (isset($_REQUEST["s"])) {
     echo file_get_contents(Gc::$upload_path . "clipboard.txt");
-} else if ( isset($_POST["content"]) && !empty($_POST["content"]) ) {
+} elseif (isset($_POST["content"]) && !empty($_POST["content"])) {
     file_put_contents(Gc::$upload_path . "clipboard.txt", $_POST["content"]);
     echo $_POST["content"];
     echo "<br/><a href='" . Gc::$url_base . "clipboard.php" . "'>继续</a><br/>";

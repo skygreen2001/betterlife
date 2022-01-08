@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-实体类 |-----------
  * @category betterlife
@@ -21,9 +22,9 @@ class AutoCodeDomain extends AutoCode
     public static $enumClass;
     /**
      * 数据对象生成定义的方式
-     * 
+     *
      *     1. 所有的列定义的对象属性都是private,同时定义setter和getter方法。
-     * 
+     *
      *     2. 所有的列定义的对象属性都是public。
      */
     public static $type;
@@ -34,9 +35,9 @@ class AutoCodeDomain extends AutoCode
     private static $relation_spec_content = "";
     /**
      * 自动生成代码-实体类
-     * 
+     *
      * 示例如下:
-     * 
+     *
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      * @param array|string $table_names
@@ -47,7 +48,7 @@ class AutoCodeDomain extends AutoCode
         self::$domain_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS.self::$dir_src . DS . self::$domain_dir . DS;
         
         self::init();
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
+        if (self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
         self::$enumClass       = "";
         self::$showReport     .= '<div id="Content_11" style="display:none;">';
         $link_domain_dir_href  ="file:///".str_replace("\\", "/", self::$domain_dir_full);
@@ -58,7 +59,7 @@ class AutoCodeDomain extends AutoCode
            //print_r($fieldInfo);
            //self::$showReport.="<br/>";
            $definePhpFileContent = self::tableToDataObjectDefine( $tablename, $fieldInfo );
-           if ( isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent) ) {
+           if (isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent)) {
                $classname         = self::saveDataObjectDefineToDir( $tablename, $definePhpFileContent );
                self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
            } else {
@@ -86,13 +87,13 @@ class AutoCodeDomain extends AutoCode
     public static function UserInput($default_value="", $title="", $inputArr=null, $more_content="")
     {
         $url_base = Gc::$url_base;
-        if ( contain( strtolower(php_uname()), "darwin") ) {
+        if (contain( strtolower(php_uname()), "darwin")) {
             $url_base     = UtilNet::urlbase();
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if ( contain( $file_sub_dir, "tools" . DS ) )
+            if (contain( $file_sub_dir, "tools" . DS))
                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir,"tools".DS));
             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-            if ( !endwith( $url_base, $domainSubDir ) ) $url_base .= $domainSubDir;
+            if (!endwith( $url_base, $domainSubDir)) $url_base .= $domainSubDir;
         }
         $db_domian_java = $url_base . "tools/tools/autocode/layer/domain/db_domain_java.php";
         $inputArr = array(
@@ -114,13 +115,13 @@ class AutoCodeDomain extends AutoCode
         $author    = self::$author;
         foreach ($fieldInfo as $fieldname => $field) {
             $datatype = self::comment_type( $field["Type"] );
-            if ( $datatype == 'enum' ) {
+            if ($datatype == 'enum') {
                 $enumclassname     = self::enumClassName( $fieldname, $tablename );
                 $enum_columnDefine = self::enumDefines( $field["Comment"] );
-                if ( isset($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) )
+                if (isset($enum_columnDefine) && (count($enum_columnDefine) > 0))
                 {
                     $comment = $field["Comment"];
-                    if ( contains( $comment, array("\r", "\n") ) ) {
+                    if (contains( $comment, array("\r", "\n") )) {
                         $comment = preg_split("/[\s,]+/", $comment);
                         $comment = $comment[0];
                     }
@@ -168,7 +169,7 @@ class AutoCodeDomain extends AutoCode
                     $result .= "        return \"未知\";" . HH .
                                "    }" . HH . HH;
                     $comment = explode("<br/>",$comment);
-                    if ( count($comment) > 0 ) {
+                    if (count($comment) > 0) {
                         $comment = $comment[0];
                     }
                     $result .= "    /**" . HH .
@@ -186,7 +187,7 @@ class AutoCodeDomain extends AutoCode
                                        "                return self::{$enumname};" . HH;
                     }
                     $result .= "        }" . HH;
-                    if ( !empty($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) ) {
+                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0 )) {
                         $enumname  = strtoupper($enum_columnDefine[0]['name']);
                         $result   .= "        return self::{$enumname};" . HH;
                     } else {
@@ -207,7 +208,7 @@ class AutoCodeDomain extends AutoCode
                                      "                return \"{$enumname}\";" . HH;
                     }
                     $result .= "        }" . HH;
-                    if ( !empty($enum_columnDefine) && ( count($enum_columnDefine) > 0 ) ) {
+                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0 )) {
                         $enumname = strtoupper($enum_columnDefine[0]['name']);
                         $result  .= "        return \"{$enumname}\";" . HH;
                     } else {
@@ -229,10 +230,10 @@ class AutoCodeDomain extends AutoCode
     private static function tableToDataObjectDefine($tablename, $fieldInfo)
     {
         $result = "<?php" . HH;
-        if ( (self::$tableInfoList != null) && ( count(self::$tableInfoList) > 0) && ( array_key_exists("$tablename", self::$tableInfoList ) ) ) {
+        if ((self::$tableInfoList != null) && (count(self::$tableInfoList) > 0) && (array_key_exists("$tablename", self::$tableInfoList))) {
             $table_comment = self::$tableInfoList[$tablename]["Comment"];
             $table_comment = str_replace("关系表","",$table_comment);
-            if ( contain( $table_comment, "\r" ) || contain( $table_comment, "\n" ) ) {
+            if (contain( $table_comment, "\r" ) || contain( $table_comment, "\n" )) {
                 $table_comment_arr = preg_split("/[\s,]+/", $table_comment);
                 $table_comment     = "";
                 foreach ($table_comment_arr as $tcomment) {
@@ -260,17 +261,17 @@ class AutoCodeDomain extends AutoCode
             case 2:
                 $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">' . HH;
                 foreach ($fieldInfo as $fieldname => $field) {
-                    if ( self::isNotColumnKeywork( $fieldname ) ) {
+                    if (self::isNotColumnKeywork( $fieldname )) {
                         $datatype = self::comment_type($field["Type"]);
                         // $comment  = str_replace(HH, "     * ", $field["Comment"]);
                         $comment  = $field["Comment"];
-                        if ( $datatype == "bit" || $datatype == "enum" ) {
+                        if ($datatype == "bit" || $datatype == "enum") {
                             $comment  = trim($comment);
                         }
                         $comment  = str_replace("\r", "     * ", $comment);
                         $comment  = str_replace("\n", "     * ", $comment);
                         
-                        if ( $datatype == "bit" || $datatype == "enum" ) {
+                        if ($datatype == "bit" || $datatype == "enum") {
                             $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
                             $comment  = str_replace("* ", "* - ", $comment);
                         } else {
@@ -291,7 +292,7 @@ class AutoCodeDomain extends AutoCode
             default:
                 $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">' . HH;
                 foreach ($fieldInfo as $fieldname => $field) {
-                  if ( self::isNotColumnKeywork( $fieldname ) ) {
+                  if (self::isNotColumnKeywork( $fieldname )) {
                        $datatype = self::comment_type( $field["Type"] );
                        $comment  = str_replace(HH, "     * ", $field["Comment"]);
                        $comment  = str_replace("\r", "     * ", $comment);
@@ -309,7 +310,7 @@ class AutoCodeDomain extends AutoCode
                 $result .= "    //</editor-fold>" . HH . HH;
                 $result .= '    //<editor-fold defaultstate="collapsed" desc="setter和getter">' . HH;
                 foreach ($fieldInfo as $fieldname => $field) {
-                    if ( self::isNotColumnKeywork( $fieldname ) ) {
+                    if (self::isNotColumnKeywork( $fieldname )) {
                         $result .=
                             "    public function set" . ucfirst($fieldname) . "(\$" . $fieldname . ")" . HH .
                             "    {" . HH .
@@ -332,7 +333,7 @@ class AutoCodeDomain extends AutoCode
         self::$relation_spec_content = "";
         $result .= self::domainDataobjectSpec( $fieldInfo, $tablename );
         $result .= self::domainDataobjectRelationSpec( $fieldInfo, $classname );
-        if ( !empty(self::$spec_content) || !empty(self::$relation_spec_content) ) {
+        if (!empty(self::$spec_content) || !empty(self::$relation_spec_content)) {
             $result .= "    /**" . HH .
                        "     * 规格说明" . HH . 
                        "     *" . HH .
@@ -357,33 +358,33 @@ class AutoCodeDomain extends AutoCode
 
     /**
      * 生成数据对象之间关系规范定义
-     * 
+     *
      * 所有的数据对象关系:
-     * 
+     *
      * 一对一，一对多，多对多
-     * 
+     *
      * 包括 has_one,  belong_has_one, has_many, many_many, belongs_many_many.
-     * 
+     *
      * 参考说明: EnumTableRelation
-     * 
+     *
      * @param array $fieldInfo 表列信息列表
      * @param string $classname 数据对象类名称
      */
     private static function domainDataobjectRelationSpec($fieldInfo, $classname)
     {
         $result = "";
-        if ( array_key_exists($classname, self::$relation_all) ) {
+        if (array_key_exists($classname, self::$relation_all)) {
             $relationSpec = self::$relation_all[$classname];
         }
-        if ( isset($relationSpec) && is_array($relationSpec) && ( count($relationSpec) > 0 ) ) {
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0 )) {
             //导出一对一关系规范定义(如果存在)
-            if ( array_key_exists("has_one", $relationSpec) ) {
+            if (array_key_exists("has_one", $relationSpec)) {
                 $has_one        = $relationSpec["has_one"];
                 $has_one_effect = "";
                 foreach ($has_one as $key => $value) {
                     $has_one_effect .= "        \"$value\" => \"$key\"," . HH;
                 }
-                if ( !empty($has_one_effect) ) {
+                if (!empty($has_one_effect)) {
                     $has_one_effect = substr($has_one_effect, 0, strlen($has_one_effect) - strlen(HH) - 1);
                 }
                 $result .= HH .
@@ -396,14 +397,14 @@ class AutoCodeDomain extends AutoCode
                            "    );" . HH;
             }
             //导出从属一对一关系规范定义(如果存在)
-            if ( array_key_exists("belong_has_one", $relationSpec) )
+            if (array_key_exists("belong_has_one", $relationSpec) )
             {
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 $belong_has_one_effect = "";
                 foreach ($belong_has_one as $key => $value) {
                    $belong_has_one_effect .= "        \"$value\" => \"$key\"," . HH;
                 }
-                if ( !empty($belong_has_one_effect) ) $belong_has_one_effect = substr($belong_has_one_effect, 0, strlen($belong_has_one_effect) - strlen(HH) - 1 );
+                if (!empty($belong_has_one_effect) ) $belong_has_one_effect = substr($belong_has_one_effect, 0, strlen($belong_has_one_effect) - strlen(HH) - 1 );
                 $result .= HH .
                            "    /**" . HH .
                            "     * 从属一对一关系" . HH .
@@ -415,7 +416,7 @@ class AutoCodeDomain extends AutoCode
                 $classname_lc = $classname;
                 $classname_lc = lcfirst($classname_lc);
                 foreach ($belong_has_one as $key => $value) {
-                    if ( $value == $classname_lc . "_p" ) {
+                    if ($value == $classname_lc . "_p") {
                         self::$relation_spec_comment = "     * 外键特殊定义声明: FOREIGN_ID" . HH;
                         self::$relation_spec_content = "        EnumDataSpec::FOREIGN_ID => array(" . HH .
                                                        "            \"" . $classname_lc . "_p" . "\" => \"parent_id\"" . HH .
@@ -424,14 +425,14 @@ class AutoCodeDomain extends AutoCode
                 }
             }
             //导出一对多关系规范定义(如果存在)
-            if ( array_key_exists("has_many", $relationSpec) )
+            if (array_key_exists("has_many", $relationSpec) )
             {
                 $has_many        = $relationSpec["has_many"];
                 $has_many_effect = "";
                 foreach ($has_many as $key => $value) {
                    $has_many_effect .= "        \"" . $value . "\" => \"$key\"," . HH;
                 }
-                if ( !empty($has_many_effect) ) $has_many_effect = substr($has_many_effect, 0, strlen($has_many_effect) - strlen(HH) - 1 );
+                if (!empty($has_many_effect) ) $has_many_effect = substr($has_many_effect, 0, strlen($has_many_effect) - strlen(HH) - 1 );
                 $result .= HH .
                            "    /**" . HH .
                            "     * 一对多关系" . HH .
@@ -442,14 +443,14 @@ class AutoCodeDomain extends AutoCode
                            "    );" . HH;
             }
             //导出多对多关系规范定义(如果存在)
-            if ( array_key_exists("many_many", $relationSpec) )
+            if (array_key_exists("many_many", $relationSpec) )
             {
                 $many_many        = $relationSpec["many_many"];
                 $many_many_effect = "";
                 foreach ($many_many as $key => $value) {
                    $many_many_effect .= "        \"" . $value . "\" => \"$key\"," . HH;
                 }
-                if ( !empty($many_many_effect) ) $many_many_effect = substr($many_many_effect, 0, strlen($many_many_effect) - strlen(HH) - 1 );
+                if (!empty($many_many_effect) ) $many_many_effect = substr($many_many_effect, 0, strlen($many_many_effect) - strlen(HH) - 1 );
                 $result .= HH .
                            "    /**" . HH .
                            "     * 多对多关系" . HH .
@@ -460,13 +461,13 @@ class AutoCodeDomain extends AutoCode
                            "    );" . HH;
             }
             //导出从属于多对多关系规范定义(如果存在)
-            if ( array_key_exists("belongs_many_many", $relationSpec) ) {
+            if (array_key_exists("belongs_many_many", $relationSpec)) {
                 $belongs_many_many        = $relationSpec["belongs_many_many"];
                 $belongs_many_many_effect = "";
                 foreach ($belongs_many_many as $key => $value) {
                    $belongs_many_many_effect .= "        \"" . $value . "\" => \"$key\"," . HH;
                 }
-                if ( !empty($belongs_many_many_effect) ) {
+                if (!empty($belongs_many_many_effect)) {
                     $belongs_many_many_effect = substr($belongs_many_many_effect, 0, strlen($belongs_many_many_effect) - strlen(HH) - 1);
                 }
                 $result .= HH .
@@ -484,9 +485,9 @@ class AutoCodeDomain extends AutoCode
 
     /**
      * 不符合规范的表定义需要用规格在数据文件里进行说明
-     * 
+     *
      * 移除默认字段: commitTime, updateTime
-     * 
+     *
      * @param array $fieldInfo 表列信息列表
      * @param string $tablename 表名称
      */
@@ -499,7 +500,7 @@ class AutoCodeDomain extends AutoCode
         );
         $removefields = array();
         foreach ($table_keyfield as $keyfield) {
-            if ( !array_key_exists($keyfield, $fieldInfo) ) {
+            if (!array_key_exists($keyfield, $fieldInfo)) {
                 $removefields[] = $keyfield;
             }
         }
@@ -507,7 +508,7 @@ class AutoCodeDomain extends AutoCode
         foreach ($removefields as $removefield) {
             $removeStr .= "            '$removefield'," . HH;
         }
-        if ( !empty($removeStr) ) {
+        if (!empty($removeStr)) {
             $removeStr = substr($removeStr, 0, strlen($removeStr) - strlen(HH) - 1);
             self::$spec_comment = "     * 表中不存在的默认列定义: " . implode(", ", $removefields) . HH;
             self::$spec_content = "        EnumDataSpec::REMOVE => array(" . HH .
@@ -526,9 +527,9 @@ class AutoCodeDomain extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::comment_type( $field["Type"] );
-                if ( $datatype == 'enum' ) {
+                if ($datatype == 'enum') {
                     // $comment = str_replace(HH, "     * ", $field["Comment"]);
                     $comment = $field["Comment"];
                     $comment = trim($comment);
@@ -561,9 +562,9 @@ class AutoCodeDomain extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname => $field) {
-            if ( self::isNotColumnKeywork( $fieldname ) ) {
+            if (self::isNotColumnKeywork( $fieldname )) {
                 $datatype = self::comment_type($field["Type"]);
-                if ( $datatype == 'enum' ) {
+                if ($datatype == 'enum') {
                     // $comment  = str_replace("\r", "     * ", $field["Comment"]);
                     $comment  = $field["Comment"];
                     $comment  = trim($comment);
@@ -597,9 +598,9 @@ class AutoCodeDomain extends AutoCode
     {
         $result = "";
         foreach ($fieldInfo as $fieldname=>$field) {
-            if ( self::isNotColumnKeywork($fieldname) ) {
+            if (self::isNotColumnKeywork($fieldname)) {
                 $datatype = self::comment_type($field["Type"]);
-                if ( $datatype == 'bit' ) {
+                if ($datatype == 'bit') {
                     // $comment  = str_replace("\n", "     * ", $field["Comment"]);
                     $comment  = $field["Comment"];
                     $comment  = trim($comment);
@@ -614,7 +615,7 @@ class AutoCodeDomain extends AutoCode
                               "     */" . HH;
                     $result.= "    public function {$fieldname}Show()" . HH .
                               "    {" . HH .
-                              "        if ( \$this->$fieldname ) {" . HH .
+                              "        if (\$this->$fieldname) {" . HH .
                               "            return \"是\";" . HH .
                               "        }" . HH .
                               "        return \"否\";" . HH .
@@ -633,8 +634,8 @@ class AutoCodeDomain extends AutoCode
     private static function domainTreeLevelDefine($fieldInfo, $classname, $tablename)
     {
         $result = HH;
-        if ( array_key_exists("parent_id", $fieldInfo) ) {
-            if ( array_key_exists("countChild", $fieldInfo) || array_key_exists("childCount", $fieldInfo) ) {
+        if (array_key_exists("parent_id", $fieldInfo)) {
+            if (array_key_exists("countChild", $fieldInfo) || array_key_exists("childCount", $fieldInfo)) {
                 $realId  = DataObjectSpec::getRealIDColumnName( $classname );
                 $result .= "    /**" . HH .
                            "     * 计算所有的子元素数量并存储" . HH .
@@ -648,7 +649,7 @@ class AutoCodeDomain extends AutoCode
                            "        }" . HH .
                            "    }" . HH . HH;
             }
-            if ( array_key_exists("level", $fieldInfo) ) {
+            if (array_key_exists("level", $fieldInfo)) {
                 $result .= "    /**" . HH .
                            "     * 最高的层次，默认为3" . HH .
                            "     * @return int " . HH .
@@ -658,9 +659,9 @@ class AutoCodeDomain extends AutoCode
                            "        return $classname::select( \"max(level)\" );//return 3;" . HH .
                            "    }" . HH . HH;
                 $instance_name = self::getInstancename( $tablename );
-                if ( is_array(self::$relation_viewfield) && ( count( self::$relation_viewfield ) > 0 ) )
+                if (is_array(self::$relation_viewfield) && (count( self::$relation_viewfield ) > 0))
                 {
-                    if ( array_key_exists($classname, self::$relation_viewfield) ) {
+                    if (array_key_exists($classname, self::$relation_viewfield)) {
                         $relationSpecs = self::$relation_viewfield[$classname];
                         $fieldname     = "parent_id";
                         $relationShow  = $relationSpecs[$fieldname];
@@ -670,7 +671,7 @@ class AutoCodeDomain extends AutoCode
                             $field          = $fieldInfo[$fieldname];
                             $field_comment  = $field["Comment"];
                             $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
-                            if ( !$isTreeLevelHad ) {
+                            if (!$isTreeLevelHad) {
                                 $result .= "    /**" . HH .
                                 "     * 显示{$field_comment}[全]" . HH .
                                 "     * @return string" . HH .
@@ -690,7 +691,7 @@ class AutoCodeDomain extends AutoCode
                                 "    public static function {$instance_name}ShowAll(\$parent_id, \$level)" . HH .
                                 "    {" . HH .
                                 "        \${$instance_name}_p = $classname::get_by_id( \$parent_id );" . HH .
-                                "        if ( \$level == 1 ) {" . HH .
+                                "        if (\$level == 1) {" . HH .
                                 "             \${$instance_name}ShowAll = \${$instance_name}_p->$classNameField;" . HH .
                                 "        } else {" . HH .
                                 "             \$parent_id     = \${$instance_name}_p->parent_id;" . HH .

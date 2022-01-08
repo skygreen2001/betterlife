@@ -1,4 +1,5 @@
  <?php
+
 /**
  * -----------| Php 配置文档 |-----------
  * @category betterlife

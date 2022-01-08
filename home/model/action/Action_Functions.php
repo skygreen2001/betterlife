@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:功能信息 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Functions extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Functions extends ActionModel
         $count = Functions::count();
         $this->view->countFunctionss = $count;
         $functionss = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $functionss = Functions::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Functions extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $functions = $this->model->Functions;
             $id         = $functions->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $functions->update();
             } else {
                 $id = $functions->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "functions", "view", "id=$id" );
                 exit;
             }

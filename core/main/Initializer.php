@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 初始化工作 |-----------
  * @category betterlife
@@ -38,32 +39,32 @@ class Initializer
     const SUFFIX_FILE_PHP = ".php";
     /**
      * 框架核心所有的对象类对象文件
-     * 
+     *
      * @var array 二维数组
-     * 
+     *
      * 一维:模块名称
-     * 
+     *
      * 二维: 对象类名称
      * @static
      */
     public static $coreFiles;
     /**
      * 开发者自定义所有类对象文件
-     * 
+     *
      * @var array 二维数组
-     * 
+     *
      * 一维: 模块名称
-     * 
+     *
      * 二维: 对象类名称
-     * 
+     *
      * @static
      */
     public static $moduleFiles;
     /**
      * 框架核心类之外可直接加载加载类的路径
-     * 
+     *
      * [在core之外的其他根路径下的路径需autoload自动认知的]
-     * 
+     *
      * @var array
      * @static
      */
@@ -79,9 +80,9 @@ class Initializer
      */
     public static function autoload($class_name)
     {
-        if ( !empty (self::$coreFiles) ) {
+        if (!empty (self::$coreFiles)) {
             foreach (self::$coreFiles as $coreFile) {
-                if ( array_key_exists($class_name,  $coreFile) ) {
+                if (array_key_exists($class_name,  $coreFile)) {
                     class_exists($class_name) || require($coreFile[$class_name]);
                     return;
                 }
@@ -91,9 +92,9 @@ class Initializer
             return;
         }
 
-        if ( !empty(self::$moduleFiles) ) {
+        if (!empty(self::$moduleFiles)) {
             foreach (self::$moduleFiles as $moduleFile) {
-                if ( array_key_exists($class_name, $moduleFile) ) {
+                if (array_key_exists($class_name, $moduleFile)) {
                     //该语句比require_once快4倍
                     class_exists($class_name) || require($moduleFile[$class_name]);
 //                    require_once($moduleFile[$class_name]);
@@ -102,12 +103,12 @@ class Initializer
             }
         }
         // 加载拥有命名空间路径的类名
-        if ( strpos($class_name, "\\") > 0 ) {
+        if (strpos($class_name, "\\") > 0) {
             $parts = explode('\\', $class_name);
             $path  = implode('/', $parts) . '.php';
             $path  = Gc::$nav_root_path . $path;
             // echo $path;
-            if ( file_exists($path) ) {
+            if (file_exists($path)) {
                 require_once($path);
             }
         }
@@ -119,11 +120,11 @@ class Initializer
      */
     public static function initialize()
     {
-        if ( !file_exists(Gc::$nav_root_path) || !file_exists(Gc::$nav_framework_path) ) {
+        if (!file_exists(Gc::$nav_root_path) || !file_exists(Gc::$nav_framework_path)) {
             die(self::ERROR_INFO_INIT_DIRECTORY);
         }
 
-        if ( Gc::$dev_profile_on ) {
+        if (Gc::$dev_profile_on) {
             require_once 'helper/Profiler.php';
             Profiler::init();
             set_include_path(get_include_path() . PATH_SEPARATOR . Gc::$nav_root_path . "core" . DS . "lang");
@@ -178,7 +179,7 @@ class Initializer
         $root_taglib   = "taglib";
         $file_tag_root = Gc::$nav_root_path . $root_taglib;
 
-        if ( is_dir($file_tag_root) ) {
+        if (is_dir($file_tag_root)) {
             $tmps = UtilFileSystem::getAllFilesInDirectory( $file_tag_root );
             foreach ($tmps as $tmp) {
                 require_once($tmp);
@@ -201,15 +202,15 @@ class Initializer
         }
         //if (ini_get('register_globals') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置register_globals = On<br/></p>";$is_not_run_betterlife=true;}
         //if (ini_get('allow_call_time_pass_reference') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置allow_call_time_pass_reference = On<br/></p>";$is_not_run_betterlife=true;}
-        if ( !function_exists("imagecreate") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd php$pi-gd<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("curl_init") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl php$pi-curl<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists("mb_check_encoding") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring php$pi-mbstring<br/></p>";$is_not_run_betterlife = true; }
-        if ( !function_exists('mysqli_prepare') ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";$is_not_run_betterlife = true; }
-        if ( !class_exists("SimpleXmlIterator") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";$is_not_run_betterlife = true; }
-        if ( version_compare(phpversion(), 5.3, '<') ) {
-            if ( !function_exists("mysqli_stmt_fetch") ) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
+        if (!function_exists("imagecreate")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd php$pi-gd<br/></p>";$is_not_run_betterlife = true; }
+        if (!function_exists("curl_init")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl php$pi-curl<br/></p>";$is_not_run_betterlife = true; }
+        if (!function_exists("mb_check_encoding")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring php$pi-mbstring<br/></p>";$is_not_run_betterlife = true; }
+        if (!function_exists('mysqli_prepare')) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";$is_not_run_betterlife = true; }
+        if (!class_exists("SimpleXmlIterator")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";$is_not_run_betterlife = true; }
+        if (version_compare(phpversion(), 5.3, '<')) {
+            if (!function_exists("mysqli_stmt_fetch")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
         }
-        if ( $is_not_run_betterlife ) die();
+        if ($is_not_run_betterlife ) die();
     }
 
     /**
@@ -222,7 +223,7 @@ class Initializer
         //设置时区为中国时区
         date_default_timezone_set('PRC');
         //初始化PHP版本校验
-        if ( version_compare(phpversion(), 5, '<') ) {
+        if (version_compare(phpversion(), 5, '<')) {
             header("HTTP/1.1 500 Server Error");
             echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>".phpversion()."</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
             die();
@@ -232,10 +233,10 @@ class Initializer
          */
         self::is_can_run();
         //定义异常报错信息
-        if ( Gc::$dev_debug_on ) {
+        if (Gc::$dev_debug_on) {
             ini_set('display_errors', 1);
-            if ( defined('E_DEPRECATED') ) {
-                if ( Gc::$dev_php_debug_on ) {
+            if (defined('E_DEPRECATED')) {
+                if (Gc::$dev_php_debug_on) {
                     error_reporting( E_ALL ^ E_DEPRECATED);
                 } else {
                     error_reporting( E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
@@ -253,13 +254,13 @@ class Initializer
         /**
          * class_alias需要PHP 版本>=5.3低于5.3需要以下方法方可以使用
          */
-        if ( !function_exists('class_alias') ) {
+        if (!function_exists('class_alias')) {
             function class_alias($original, $alias) {
                 eval('class ' . $alias . ' extends ' . $original . ' {}');
             }
         }
 
-        if ( function_exists('mb_http_output') ) {
+        if (function_exists('mb_http_output')) {
             mb_http_output(Gc::$encoding);
             mb_internal_encoding(Gc::$encoding);
         }
@@ -272,10 +273,10 @@ class Initializer
     {
         $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
         $files = UtilFileSystem::getAllFilesInDirectory( $dir_include_function );
-        if ( !class_exists("PEAR") ) {
+        if (!class_exists("PEAR")) {
             require_once("helper/PEAR.php");
         }
-        if ( ini_get('allow_call_time_pass_reference') === 1 ) require_once("helper/PEAR5.php");
+        if (ini_get('allow_call_time_pass_reference') === 1 ) require_once("helper/PEAR5.php");
         foreach ($files as $file) {
             require_once($file);
         }
@@ -297,12 +298,12 @@ class Initializer
         $dirs_root     = UtilFileSystem::getAllDirsInDriectory( self::$NAV_CORE_PATH );
         $include_paths = $dirs_root;
         $module_Dir    = Gc::$nav_root_path;
-        if ( strlen(Gc::$module_root) > 0 ) {
+        if (strlen(Gc::$module_root) > 0) {
             $module_Dir .= Gc::$module_root.DS;
         }
         foreach (Gc::$module_names as $moduleName) {
             $moduleDir = $module_Dir . $moduleName . DS;
-            if ( is_dir($moduleDir) ) {
+            if (is_dir($moduleDir)) {
                 $modulesubdir = array_keys(UtilFileSystem::getSubDirsInDirectory( $moduleDir ));
                 /**
                  * view主要为html,javascript,css文件；因此应该排除在外
@@ -310,7 +311,7 @@ class Initializer
                 $modulesubdir = array_diff($modulesubdir, Gc::$module_exclude_subpackage);
                 foreach ($modulesubdir as $subdir) {
                     $modulePath = $moduleDir;
-                    if ( is_dir($moduleDir . $subdir)) {
+                    if (is_dir($moduleDir . $subdir)) {
                         $modulePath .= $subdir . DS;
                     }
                     $tmps = UtilFileSystem::getAllDirsInDriectory( $modulePath );
@@ -341,7 +342,7 @@ class Initializer
         $files = new AppendIterator();
         foreach ($dirs_root as $dir) {
             $tmp = new ArrayObject(UtilFileSystem::getAllFilesInDirectory( $dir ));
-            if ( isset($tmp) ) $files->append($tmp->getIterator());
+            if (isset($tmp) ) $files->append($tmp->getIterator());
         }
 
         foreach ($files as $file) {
@@ -355,7 +356,7 @@ class Initializer
     public static function recordModuleClasses()
     {
         $module_dir = Gc::$nav_root_path;
-        if ( strlen(Gc::$module_root) > 0 ) {
+        if (strlen(Gc::$module_root) > 0) {
             $module_dir .= Gc::$module_root . DS;
         }
         foreach (Gc::$module_names as $moduleName) {
@@ -368,8 +369,8 @@ class Initializer
      * 加载异常处理
      */
     public static function loadException() {
-        if ( Gc::$dev_debug_on ) {
-            switch ( Config_Exception::EXCEPTION_WAY ) {
+        if (Gc::$dev_debug_on) {
+            switch ( Config_Exception::EXCEPTION_WAY) {
                 case Config_Exception::EW_WHOOPS:
                     $run     = new Whoops\Run();
                     $handler = new Whoops\Handler\PrettyPageHandler();

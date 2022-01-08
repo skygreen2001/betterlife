@@ -191,10 +191,10 @@
     <script type="text/javascript">
     $(function() {
       var isAds = false;
-      <?php if ( $isAds ) { ?> isAds = true; <?php } ?>
+      <?php if ($isAds) { ?> isAds = true; <?php } ?>
       var height = $(".bb-icon").height()+$("#lead-txt").height()+$("#lead-link").height()+2*$(".lead").height();
       $(".bb-lead-core").css({"height":height});
-      if ( isAds ) $(".us").removeClass("pure");
+      if (isAds ) $(".us").removeClass("pure");
       $(window).scroll(function() {
         $('.contact-info').each(function() {
           var imagePos = $(this).offset().top;

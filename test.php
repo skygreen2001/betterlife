@@ -49,32 +49,32 @@ require_once("init.php");
 // $user->setUsername( "betterlife" );
 // $user->setPassword( "123456" );
 // $user_id = $user->save();
-// if ( $user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
+// if ($user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
 
 // // 修改用户
 // $user             = User::get_by_id( 3 );
 // $user["username"] = "shanghai";
 // $user->update();
-// if ( $user ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
+// if ($user ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 保存或更新用户信息
 // $user             = User::get_by_id( 3 );
 // $user["username"] = "shanghai";
 // $user_id          = $user->saveOrUpdate();
-// if ( $user_id > 1 ) echo("新增用户标识:" . $user_id); elseif ( $user_id == true ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
+// if ($user_id > 1 ) echo("新增用户标识:" . $user_id); elseif ($user_id == true ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 删除用户信息
 // $user     = User::get_by_id( 3 );
 // $isDelete = $user->delete();
-// if ( $isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
+// if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 更新用户指定的属性
 // $isUpdate = User::updateProperties( "1, 2", "loginTimes = 100" );
-// if ( $isUpdate ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
+// if ($isUpdate ) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 根据条件更新用户指定的属性
 // $isUpdate = User::updateBy( "username = 'admin'", "loginTimes = 500" );
-// if ( $isUpdate) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
+// if ($isUpdate) echo("修改用户信息成功!"); else echo("修改用户信息失败!");
 
 // // 测试删除功能,预先存入10条数据
 // for ($i = 1; $i < 11; $i++) {
@@ -82,40 +82,40 @@ require_once("init.php");
 //     $user->setUsername( "betterlife" . $i );
 //     $user->setPassword( "123456" );
 //     $user_id = $user->save();
-//     if ( $user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
+//     if ($user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
 //     echo "<br/>";
 // }
 // // 删除指定标识的用户
 // $isDelete = User::deleteByID( 4 );
-// if ( $isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
+// if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 删除多条指定标识的用户
 // $isDelete = User::deleteByIds( "5, 6, 7");
-// if ( $isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
+// if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 删除多条指定标识的用户
 // $isDelete = User::deleteByIds( "5, 6, 7" );
-// if ( $isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
+// if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 删除指定条件的用户
 // $isDelete = User::deleteBy( "username = 'betterlife7'" );
-// if ( $isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
+// if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 用户访问次数+5
 // $isPlus = User::increment( "user_id > 1", "loginTimes", 5 );
-// if ( $isPlus ) echo("用户访问次数+5成功!"); else echo("用户访问次数+5失败!");
+// if ($isPlus ) echo("用户访问次数+5成功!"); else echo("用户访问次数+5失败!");
 
 // // 用户访问次数-3
 // $isMinus = User::decrement( "user_id > 1", "loginTimes", 3 );
-// if ( $isMinus ) echo("用户访问次数-3成功!"); else echo("用户访问次数-3失败!");
+// if ($isMinus ) echo("用户访问次数-3成功!"); else echo("用户访问次数-3失败!");
 
 // // 查看标识为1的用户是否存在
 // $isExist = User::existByID( 1 );
-// if ( $isExist ) echo("指定标识的用户存在!"); else echo("指定标识的用户不存在!");
+// if ($isExist ) echo("指定标识的用户存在!"); else echo("指定标识的用户不存在!");
 
 // // 查看用户名为china的用户是否存在
 // $isExist = User::existBy( "username = 'china'" );
-// if ( $isExist ) echo("用户名为china的用户存在!"); else echo("用户名为china的用户不存在!");
+// if ($isExist ) echo("用户名为china的用户存在!"); else echo("用户名为china的用户不存在!");
 
 // // 查看博客名称列表
 // $blog_names = Blog::select( "blog_name" );
@@ -239,7 +239,7 @@ require_once("init.php");
 // $xml->load( Gc::$nav_root_path . "core\\util\\config\\xml\\" . "setting.xml");
 // echo 'PHP:' . $xml->get('db.host') . '';
 
-// print_r(UtilDateTime::now( EnumDateTimeFormat::DATE, EnumDateTimeShow::TIME ) );
+// print_r(UtilDateTime::now( EnumDateTimeFormat::DATE, EnumDateTimeShow::TIME));
 
 // // 记录日志
 // logme( "我在想事情呢!等等我......" );
@@ -295,6 +295,6 @@ require_once("init.php");
 // $upper = $collection->toUpper();
 // echo $upper;
 
-if ( !array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) ) {
+if (!array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") )) {
     phpinfo();
 }

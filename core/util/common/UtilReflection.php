@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 功能:处理反射的工具类 |-----------
  * @category betterlife
@@ -16,7 +17,7 @@ class UtilReflection extends Util
     public static function getClassStaticPropertyValue($object, $staticPropertyName) 
     {
         $class = object_reflection($object);
-        if ( isset($class) ) {
+        if (isset($class)) {
             $result = $class->getStaticPropertyValue( $staticPropertyName, null );
             return $result;
         } else {
@@ -32,7 +33,7 @@ class UtilReflection extends Util
     public static function getClassStaticProperties($object)
     {     
         $class = object_reflection($object);
-        if ( isset($class) ) {
+        if (isset($class)) {
             return $class->getStaticProperties();                      
         }  
         return null;
@@ -60,7 +61,7 @@ class UtilReflection extends Util
     public static function getClassConsts($object) 
     {
         $class = object_reflection($object);
-        if ( isset ($class) ) {
+        if (isset ($class)) {
             $consts = $class->getConstants();
 //            foreach ($consts as $constant => $value) {
 //                echo "$constant = $value\n";
@@ -100,12 +101,12 @@ class UtilReflection extends Util
             $property         = array();
             $propertyName     = $dataobjectProperty->getName();
             $property['name'] = $propertyName;
-            if ( property_exists($object, $propertyName) ) {
+            if (property_exists($object, $propertyName)) {
                 @$property['value'] = $object[$propertyName];   
                 $property['access'] = "";
-                if ( $dataobjectProperty->isPublic() ) $property['access']    = 'public';
-                if ( $dataobjectProperty->isPrivate() ) $property['access']   = 'private';
-                if ( $dataobjectProperty->isProtected() ) $property['access'] = 'protected';
+                if ($dataobjectProperty->isPublic() ) $property['access']    = 'public';
+                if ($dataobjectProperty->isPrivate() ) $property['access']   = 'private';
+                if ($dataobjectProperty->isProtected() ) $property['access'] = 'protected';
             }
             //$dataobjectProperty->isStatic()
             $test = Reflection::getModifierNames( $object->getModifiers() );

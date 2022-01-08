@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 自定义标签: 分页工具类 |-----------
  * @category betterlife
@@ -33,7 +34,7 @@ class TagPageService {
     private $navigTo;// 导航条
 
     public static function Init($nowpage, $count, $pageSize = null, $linkUrl = null) {
-        if ( empty($pageSize) ) $pageSize = self::$default_pagesize;
+        if (empty($pageSize) ) $pageSize = self::$default_pagesize;
         return new TagPageService($nowpage, $count, $pageSize, $linkUrl);
     }
 
@@ -48,10 +49,10 @@ class TagPageService {
      */
     function __construct($nowpage, $count, $pageSize = 10, $linkUrl = null)
     {
-        if ( empty($linkUrl) ) {
+        if (empty($linkUrl)) {
             $linkUrl = @$_SERVER['HOST'] . @$_SERVER['REQUEST_URI'];
         }
-        if ( empty($nowpage) ) {
+        if (empty($nowpage)) {
             $nowpage = 1;
         }
 
@@ -60,12 +61,12 @@ class TagPageService {
         $this->nowpage  = $nowpage;
         // 总页数
         $this->allPageCount = floor(($this->count + $this->pageSize - 1) / $this->pageSize);
-        if ( $this->nowpage>$this->allPageCount ) {
+        if ($this->nowpage>$this->allPageCount) {
             $this->nowpage = $this->allPageCount;
         }
-        if ( $this->count > 0 ) {
+        if ($this->count > 0) {
             $this->startPoint = ( $this->nowpage - 1 ) * $this->pageSize + 1;
-            if ( $this->startPoint > $this->count ) {
+            if ($this->startPoint > $this->count) {
                 $this->startPoint = 0;
             }
         } else {
@@ -73,7 +74,7 @@ class TagPageService {
         }
 
         $this->endPoint = $this->nowpage * $this->pageSize;
-        if ( $this->endPoint > $this->count ) {
+        if ($this->endPoint > $this->count) {
             $this->endPoint = $this->count;
         }
 
@@ -91,7 +92,7 @@ class TagPageService {
      */
     private function url_link_pageparam($pageNo)
     {
-        if ( contain( $this->linkUrl, "?" ) ) {
+        if (contain( $this->linkUrl, "?" )) {
             $result = "<a href='$this->linkUrl&" . self::$linkUrl_pageFlag . "=$pageNo'>";
         } else {
             $result = "<a href='$this->linkUrl?" . self::$linkUrl_pageFlag . "=$pageNo'>";
@@ -125,21 +126,21 @@ class TagPageService {
      */
     public function createBaseNavi()
     {
-        if ( $this->count < $this->pageSize ) {
+        if ($this->count < $this->pageSize) {
             $this->navig = "";
             return "";
         }
 
-        if ( !contain( $this->linkUrl, "?" ) ) {
+        if (!contain( $this->linkUrl, "?" )) {
             $this->linkUrl .= "?";
         }
 
         $stb = "";
         // 总页数
         $this->allPageCount = floor(($this->count + $this->pageSize - 1) / $this->pageSize);
-        if ( $this->allPageCount > 1 ) {
+        if ($this->allPageCount > 1) {
             // 首页
-            if ( $this->nowpage > 1 ) {
+            if ($this->nowpage > 1) {
                 $stb .= $this->url_link_pageparam(1);
                 $stb .= "首页</a> ";
             } else {
@@ -148,7 +149,7 @@ class TagPageService {
             }
 
             // 上一页
-            if ( $this->nowpage > 1 ) {
+            if ($this->nowpage > 1) {
                 $stb .= $this->url_link_pageparam( $this->nowpage - 1 );
                 // $stb .= "上一页</a> ";
                 $stb .= "<</a> ";
@@ -159,34 +160,34 @@ class TagPageService {
 
             // 显示页码
             $showNo = self::$tag_viewpagecount;
-            if ( $this->allPageCount > $showNo ) {
-                if ( $this->nowpage > floor($showNo / 2) ) {
+            if ($this->allPageCount > $showNo) {
+                if ($this->nowpage > floor($showNo / 2)) {
                     $stb .= "...";
                     $stb .= "&nbsp;";
                 }
             }
-            if ( $this->allPageCount > 1 ) {
+            if ($this->allPageCount > 1) {
                 $startShowNo = $this->nowpage - floor($showNo / 2) + 1;
                 $endShowNo   = $this->nowpage + floor($showNo / 2);
-                if ( $startShowNo < 1 ) {
+                if ($startShowNo < 1) {
                     $endShowNo = $showNo;//$this->nowpage +
                 }
-                if ( $endShowNo > $this->allPageCount ) {
+                if ($endShowNo > $this->allPageCount) {
                     $startShowNo = $this->allPageCount - $showNo + 1;
                 }
-                if ( $endShowNo > $this->allPageCount ) {
+                if ($endShowNo > $this->allPageCount) {
                     $endShowNo = $this->allPageCount;
                 }
-                if ( $startShowNo < 1 ) {
+                if ($startShowNo < 1) {
                     $startShowNo = 1;
                 }
-                if ( $this->allPageCount <= $showNo ) {
+                if ($this->allPageCount <= $showNo) {
                     $startShowNo = 1;
                     $endShowNo   = $this->allPageCount;
                 }
 
                 for ($i = $startShowNo; $i <= $endShowNo; $i++) {
-                    if ( $i == $this->nowpage ) {
+                    if ($i == $this->nowpage) {
                         // 当前页面号码数显示
                         // $stb .= $i . "&nbsp;";
                         $stb .= '<span class="current_page">' . $i ."</span>&nbsp;";
@@ -197,12 +198,12 @@ class TagPageService {
                 }
             }
 
-            if ( $this->allPageCount > $showNo )
-                if ( $this->nowpage < ( $this->allPageCount - floor($showNo / 2) ) )
+            if ($this->allPageCount > $showNo )
+                if ($this->nowpage < ( $this->allPageCount - floor($showNo / 2)))
                     $stb .= "..." . "&nbsp;";
 
             // 下一页
-            if ( $this->nowpage < floor(( $this->count + $this->pageSize - 1 ) / $this->pageSize) ) {
+            if ($this->nowpage < floor(( $this->count + $this->pageSize - 1 ) / $this->pageSize)) {
                 $stb .= $this->url_link_pageparam( $this->nowpage + 1 );
                 // $stb .= "下一页</a>";
                 $stb .= "></a>";
@@ -212,7 +213,7 @@ class TagPageService {
             }
 
             // 末页
-            if ( $this->nowpage < floor(( $this->count + $this->pageSize - 1) / $this->pageSize) ) {
+            if ($this->nowpage < floor(( $this->count + $this->pageSize - 1) / $this->pageSize)) {
                 $stb .= $this->url_link_pageparam( floor(($this->count + $this->pageSize - 1) / $this->pageSize) );
                 $stb .= "末页</a> "; // 共x页
             } else {
@@ -250,7 +251,7 @@ class TagPageService {
         $this->navigTo = $this->createBaseNavi();
         $stb = "";
         //当某个分页板块内容超过10页以上，那么允许显示跳转到指定页功能
-        if ( $this->allPageCount > 11 ) {
+        if ($this->allPageCount > 11) {
             $stb .= "&nbsp;<form id='bb_page' name='bb_page' action='" . $this->getLinkUrl() . "'>";
             $stb .= "跳转至: ";
             $stb .= "<input type='text' name='pageNo' id='" . self::$linkUrl_pageFlag . "'";

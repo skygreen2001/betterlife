@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 返回数据类型 |-----------
  */
@@ -31,7 +32,7 @@ abstract class BBObject
      */
     public function __set($name, $value)
     {
-        if ( property_exists($this, $name) )
+        if (property_exists($this, $name) )
             $this->$name = $value;
     }
 

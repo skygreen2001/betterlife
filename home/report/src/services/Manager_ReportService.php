@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 服务类:所有Service的管理类 |-----------
  * @category report
@@ -14,7 +15,7 @@ class Manager_ReportService extends Manager
      */
     public static function serviceReportone()
     {
-        if ( self::$reportoneService == null ) {
+        if (self::$reportoneService == null) {
             self::$reportoneService = new ServiceReportone();
         }
         return self::$reportoneService;

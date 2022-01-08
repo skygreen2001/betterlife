@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 数据对象间关系处理 |-----------
  * @category betterlife
@@ -17,13 +18,13 @@ class DataObjectRelation extends BBObject
      */
     public static function getRealManyManyTable($dataobject, $classname_has, $classname_belong)
     {
-        if ( $dataobject instanceof DataObject ) {
+        if ($dataobject instanceof DataObject) {
             $field_spec_manymanytable = DataObjectSpec::getRealColumnName( $dataobject, EnumDataSpec::MANY_MANY_TABLE );
-            if ( is_array($field_spec_manymanytable) ) {
-                if ( array_key_exists($classname_has, $field_spec_manymanytable) ) {
+            if (is_array($field_spec_manymanytable)) {
+                if (array_key_exists($classname_has, $field_spec_manymanytable)) {
                    return $field_spec_manymanytable[$classname_has];
                 }
-                if ( array_key_exists($classname_belong, $field_spec_manymanytable) ) {
+                if (array_key_exists($classname_belong, $field_spec_manymanytable)) {
                    return $field_spec_manymanytable[$classname_belong];
                 }
             }
@@ -33,7 +34,7 @@ class DataObjectRelation extends BBObject
 
             // $tablename = Config_Db::orm( $classname_has );
             // $tncount   = explode(Config_Db::TABLENAME_CONCAT, $tablename);
-            // if ( count($tncount) > 2) {
+            // if (count($tncount) > 2) {
             //     $tablename = substr($tablename, 0, strrpos($tablename, Config_Db::TABLENAME_CONCAT));
             // }
             // $tablename .= Config_Db::TABLENAME_RELATION . Config_Db::TABLENAME_CONCAT;
@@ -53,14 +54,14 @@ class DataObjectRelation extends BBObject
      */
     public static function getRealForeignIDColumnName($dataobject, $classname, $instance_name = null)
     {
-        if ( $dataobject instanceof DataObject ) {
+        if ($dataobject instanceof DataObject) {
             $field_spec_foreignid = DataObjectSpec::getRealColumnName( $dataobject, EnumDataSpec::FOREIGN_ID );
-            if ( is_array($field_spec_foreignid) ) {
-                if ( array_key_exists($classname, $field_spec_foreignid) ) {
+            if (is_array($field_spec_foreignid)) {
+                if (array_key_exists($classname, $field_spec_foreignid)) {
                    return $field_spec_foreignid[$classname];
                 }
 
-                if ( array_key_exists($instance_name,$field_spec_foreignid) ) {
+                if (array_key_exists($instance_name,$field_spec_foreignid)) {
                    return $field_spec_foreignid[$instance_name];
                 }
             }
@@ -91,10 +92,10 @@ class DataObjectRelation extends BBObject
      * @param string $property 关系对象类名
      */
     public static function getMutualRelation($dataobject, $property) {
-        if ( $dataobject instanceof DataObject ) {
+        if ($dataobject instanceof DataObject) {
             $properties = UtilReflection::getClassStaticProperties( $dataobject );
             $properties = DataObjectSpec::removeNotObjectDataField( $properties, $dataobject );
-            if ( empty($properties) ) {
+            if (empty($properties)) {
                 return null;
             }
             foreach ($properties as $propertyName => $propertyValue) {
@@ -112,26 +113,26 @@ class DataObjectRelation extends BBObject
                  *       print_r($department->admins());//第3种方式
                  */
                 //<editor-fold defaultstate="collapsed" desc="一对多">
-                if ( $propertyName == EnumTableRelation::HAS_MANY ) {
+                if ($propertyName == EnumTableRelation::HAS_MANY) {
                     $has_many = $propertyValue;
                     $isExist  = false;
 
-                    if ( array_key_exists($property, $has_many) ) {
+                    if (array_key_exists($property, $has_many)) {
                         $isExist = true;
                     } else {
                         $property_lcfirst    = $property;
                         $property_lcfirst = lcfirst($property_lcfirst);
-                        if ( array_key_exists($property_lcfirst, $has_many) ) {
+                        if (array_key_exists($property_lcfirst, $has_many)) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
-                    if ( $isExist ) {
+                    if ($isExist) {
                         $detail_class = $has_many[$property];
                         $classname    = $dataobject->classname();
                         $classname    = lcfirst($classname);
                         $foreignId    = self::getRealForeignIDColumnName($dataobject, $classname);
-                        if ( $dataobject->getId() ) {
+                        if ($dataobject->getId()) {
                             return  DataObject::dao()->get( $detail_class, $foreignId . "=" . $dataobject->getId() );
                         }
                     }
@@ -152,21 +153,21 @@ class DataObjectRelation extends BBObject
                  *       print_r($user->roles());//第3种方式
                  */
                 //<editor-fold defaultstate="collapsed" desc="多对多">
-                if ( $propertyName == EnumTableRelation::MANY_MANY ) {
+                if ($propertyName == EnumTableRelation::MANY_MANY) {
                     $many_many = $propertyValue;
                     $isExist   = false;
-                    if ( array_key_exists($property, $many_many) ) {
+                    if (array_key_exists($property, $many_many)) {
                         $isExist = true;
                     } else {
                         $property_lcfirst = $property;
                         $property_lcfirst = lcfirst($property_lcfirst);
-                        if ( array_key_exists($property_lcfirst, $many_many) ) {
+                        if (array_key_exists($property_lcfirst, $many_many)) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
-                    if ( $isExist ) {
-                        if ( $dataobject->getId() ) {
+                    if ($isExist) {
+                        if ($dataobject->getId()) {
                             $detail_class = $many_many[$property];
                             $_SQL         = new Crud_Sql_Select();
                             $relation_tablename = self::getRealManyManyTable( $dataobject, $dataobject->classname(), $detail_class );
@@ -195,20 +196,20 @@ class DataObjectRelation extends BBObject
                  *       print_r($role->users());//第3种方式
                  */
                 //<editor-fold defaultstate="collapsed" desc="从属于多对多">
-                if ( $propertyName == EnumTableRelation::BELONGS_TO ) {
+                if ($propertyName == EnumTableRelation::BELONGS_TO) {
                     $belong_to = $propertyValue;
-                    if ( array_key_exists($property, $belong_to) ) {
+                    if (array_key_exists($property, $belong_to)) {
                         $isExist = true;
                     } else {
                         $property_lcfirst = $property;
                         $property_lcfirst = lcfirst($property_lcfirst);
-                        if ( array_key_exists($property_lcfirst, $belong_to) ) {
+                        if (array_key_exists($property_lcfirst, $belong_to)) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
-                    if ( $isExist ) {
-                        if ( $dataobject->getId() ) {
+                    if ($isExist) {
+                        if ($dataobject->getId()) {
                             $mainClass = $belong_to[$property];
                             $_SQL      = new Crud_Sql_Select();
                             $self_foreignId     = self::getRealForeignIDColumnName( $dataobject, $dataobject->classname() );
@@ -237,25 +238,25 @@ class DataObjectRelation extends BBObject
                  *      //$user->userdetail();//第3种方式
                  */
                 //<editor-fold defaultstate="collapsed" desc="一对一">
-                if ( $propertyName == EnumTableRelation::HAS_ONE ) {
+                if ($propertyName == EnumTableRelation::HAS_ONE) {
                     $has_one = $propertyValue;
                     $isExist = false;
-                    if ( array_key_exists($property,$has_one) ) {
+                    if (array_key_exists($property,$has_one)) {
                         $isExist = true;
                     } else {
                         $property_lcfirst = $property;
                         $property_lcfirst = lcfirst($property_lcfirst);
-                        if ( array_key_exists($property_lcfirst,$has_one) ) {
+                        if (array_key_exists($property_lcfirst,$has_one)) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
-                    if ( $isExist ) {
+                    if ($isExist) {
                         $detail_class = $has_one[$property];
                         $classname    = $dataobject->classname();
                         $classname    = lcfirst($classname);
                         $foreignId    = self::getRealForeignIDColumnName( $dataobject, $classname );
-                        if ( $dataobject->getId() ) {
+                        if ($dataobject->getId()) {
                             return DataObject::dao()->get_one( $detail_class, $foreignId . "=" . $dataobject->getId() );
                         }
                     }
@@ -276,25 +277,25 @@ class DataObjectRelation extends BBObject
                  *      //$comment->user();//第3种方式
                  */
                 //<editor-fold defaultstate="collapsed" desc="从属于一对一">
-                if ( $propertyName == EnumTableRelation::BELONG_HAS_ONE ) {
+                if ($propertyName == EnumTableRelation::BELONG_HAS_ONE) {
                     $belong_has_one = $propertyValue;
                     $isExist        = false;
-                    if ( array_key_exists($property, $belong_has_one) ) {
+                    if (array_key_exists($property, $belong_has_one)) {
                         $isExist = true;
                     } else {
                         $property_lcfirst = $property;
                         $property_lcfirst = lcfirst($property_lcfirst);
-                        if ( array_key_exists($property_lcfirst, $belong_has_one) ) {
+                        if (array_key_exists($property_lcfirst, $belong_has_one)) {
                             $isExist  = true;
                             $property = $property_lcfirst;
                         }
                     }
-                    if ( $isExist ) {
+                    if ($isExist) {
                         $detail_class  = $belong_has_one[$property];
                         $foreignId     = self::getRealForeignIDColumnName( $dataobject, $detail_class, $property);
                         $relationvalue = $dataobject->$foreignId;
                         $relationObject_IdName= DataObjectSpec::getRealIDColumnNameStatic( $detail_class );
-                        if ( isset($relationvalue) ) {
+                        if (isset($relationvalue)) {
                             return DataObject::dao()->get_one( $detail_class, $relationObject_IdName . "=" . $relationvalue );
                         }
                     }
@@ -309,9 +310,9 @@ class DataObjectRelation extends BBObject
 
     /**
      * 数据对象存在多对多|从属于多对多关系时，因为存在一张中间表。
-     * 
+     *
      * 因此它们的关系需要单独进行存储
-     * 
+     *
      * 示例1【多对多-主控端】:
      *   ```
      *      $user = new User();
@@ -322,7 +323,7 @@ class DataObjectRelation extends BBObject
      *        "roles" => "Role",
      *      );
      *   ```
-     * 
+     *
      * 示例2【多对多-被控端】:
      *   ```
      *      $role = new Role();
@@ -340,28 +341,28 @@ class DataObjectRelation extends BBObject
      * @return mixed 保存对象后的主键
      */
     public static function saveRelationForManyToMany($dataobject, $relation_object, $relation_id_value, $other_column_values = null) {
-        if ( $dataobject instanceof DataObject ) {
+        if ($dataobject instanceof DataObject) {
             $properties = UtilReflection::getClassStaticProperties( $dataobject );
             $properties = DataObjectSpec::removeNotObjectDataField($properties, $dataobject);
-            if ( empty($properties) ) return null;
+            if (empty($properties) ) return null;
             $relation_class = null;
-            if ( array_key_exists(EnumTableRelation::MANY_MANY, $properties) ) {
+            if (array_key_exists(EnumTableRelation::MANY_MANY, $properties)) {
                 $properties_m = $properties[EnumTableRelation::MANY_MANY];
-                if ( array_key_exists($relation_object, $properties_m) ) {
+                if (array_key_exists($relation_object, $properties_m)) {
                     $classname_has    = $dataobject->classname();
                     $classname_belong = $properties_m[$relation_object];
                     $relation_class   = $classname_belong;
                 }
             }
-            if ( array_key_exists(EnumTableRelation::BELONGS_TO, $properties) ) {
+            if (array_key_exists(EnumTableRelation::BELONGS_TO, $properties)) {
                 $properties_bm = $properties[EnumTableRelation::BELONGS_TO];
-                if ( array_key_exists($relation_object, $properties_bm) ) {
+                if (array_key_exists($relation_object, $properties_bm)) {
                     $classname_has    = $properties_bm[$relation_object];
                     $classname_belong = $dataobject->classname();
                     $relation_class   = $classname_has;
                 }
             }
-            if ( isset($classname_has) && isset($classname_belong) ) {
+            if (isset($classname_has) && isset($classname_belong)) {
                 $relation_table = self::getRealManyManyTable( $dataobject, $classname_has, $classname_belong );
                 $_SQL           = new Crud_Sql_Insert();
                 $_SQL->isPreparedStatement = false;
@@ -370,7 +371,7 @@ class DataObjectRelation extends BBObject
                 $relationObject_foreignId = self::getRealForeignIDColumnName( $dataobject, $relation_class );
                 $array_properties[$self_foreignId] = $dataobject->getId();
                 $array_properties[$relationObject_foreignId] = $relation_id_value;
-                if ( $other_column_values ) {
+                if ($other_column_values) {
                     $array_properties = array_merge($array_properties, $other_column_values);
                 }
                 $sQuery = $_SQL->insert($relation_table)->values($array_properties)->result();
@@ -385,7 +386,7 @@ class DataObjectRelation extends BBObject
 
     /**
      * 同步删除取消了已有多对多关系、保存新增多对多关系
-     * 
+     *
      * 能够比对数据库数据，以$other_ids为准，如果相同的行就不删除，如果不存在的删除，新的就增加
      * @param string $classname 数据对象类名
      * @param string $id_name 主标识名称
@@ -396,10 +397,10 @@ class DataObjectRelation extends BBObject
      */
     public static function saveDeleteRelateions($classname, $id_name, $id, $rel_name, $other_ids) {
         $relations_db = $classname::select($rel_name, $id_name . " = " . $id);
-        if ( $relations_db ) {
+        if ($relations_db) {
             //添加数据库里没有的
             foreach ($other_ids as $other_id) {
-                if ( !in_array($other_id, $relations_db) ) {
+                if (!in_array($other_id, $relations_db)) {
                     $relation_db = new $classname(
                         array(
                           $id_name => $id,
@@ -411,7 +412,7 @@ class DataObjectRelation extends BBObject
             }
             //删除用户取消的选择
             foreach ($relations_db as $other_id) {
-                if ( !in_array($other_id, $other_ids) ) {
+                if (!in_array($other_id, $other_ids)) {
                     $classname::deleteBy( $rel_name . " = " . $other_id );
                 }
             }

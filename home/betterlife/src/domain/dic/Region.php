@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 地区 |-----------
  * @category betterlife
@@ -32,7 +33,7 @@ class Region extends DataObject
      * 1:省-province 
      * 2:市-city 
      * 3:区-region 
-     * 
+     *
      * @var enum
      * @access public
      */
@@ -47,7 +48,7 @@ class Region extends DataObject
 
     /**
      * 从属一对一关系
-     * 
+     *
      * @var array
      */
     static $belong_has_one = array(
@@ -55,9 +56,9 @@ class Region extends DataObject
     );
     /**
      * 规格说明
-     * 
+     *
      * 表中不存在的默认列定义:commitTime,updateTime
-     * 
+     *
      * 外键特殊定义声明: FOREIGN_ID
      * @var mixed
      */
@@ -77,7 +78,7 @@ class Region extends DataObject
      * 1:省-province 
      * 2:市-city 
      * 3:区-region 
-     * 
+     *
      */
     public function getRegion_typeShow()
     {
@@ -90,7 +91,7 @@ class Region extends DataObject
      * 1:省-province 
      * 2:市-city 
      * 3:区-region 
-     * 
+     *
      */
     public static function region_typeShow($region_type)
     {
@@ -122,7 +123,7 @@ class Region extends DataObject
     public static function regionShowAll($parent_id, $level)
     {
         $region_p = Region::get_by_id( $parent_id );
-        if ( $level == 1 ) {
+        if ($level == 1) {
              $regionShowAll = $region_p->region_name;
         } else {
              $parent_id     = $region_p->parent_id;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 服务类:所有报表服务的父类 |-----------
  * @category report
@@ -18,16 +19,16 @@ class ServiceReport extends Service
         $reportSql = strtolower($reportSql);//转换成小写
         //解析sql取出查的字段名，以array输出
         $fromPos   = strpos($reportSql, " from");//获取from的位置
-        if ( empty($fromPos) ) {
+        if (empty($fromPos)) {
             $fromPos = stripos($reportSql, "	from");
         }
-        if ( empty($fromPos) ) {
+        if (empty($fromPos)) {
             $fromPos = stripos($reportSql, "from");
         }
         $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
         $reportSql = substr($reportSql, 7);//截取select后from前的字符串
-        if ( contain( $reportSql, "from" ) ) {
-            if ( !preg_match('/from(\s+)(\S*),/i', $reportSql) ) {
+        if (contain( $reportSql, "from" )) {
+            if (!preg_match('/from(\s+)(\S*),/i', $reportSql)) {
                 $fromPos   = strpos($reportSql, "from");//获取from的位置
                 $reportSql = substr($reportSql, 0, $fromPos);//截取from前的字符串
             }
@@ -43,7 +44,7 @@ class ServiceReport extends Service
             $selCol    = trim($selCol);
             $newSelCol = preg_split('/( |as)/', $selCol, 0, PREG_SPLIT_NO_EMPTY);//正则匹配分隔字符串
             //以下用来判断select column列名是否被重命名 ( 根据newSelCol的size来判断 )
-            if ( count($newSelCol) > 1) {
+            if (count($newSelCol) > 1) {
                 // $newSelCol[1] = preg_replace("/('|`|\")/", "", $newSelCol[1]);
                 // $arr_output_header[$newSelCol[1]] = $newSelCol[1];
                 $lst_index = count($newSelCol) - 1;
@@ -53,7 +54,7 @@ class ServiceReport extends Service
                 $newSelColStr   = $newSelCol[0];
                 $newSelColArray = explode(".", $newSelColStr);
                 //以下用来判断当前字段是否是关联表查询a.id格式 ( 根据$newSelColArray的size来判断 )
-                if ( count($newSelColArray) > 1 ) {
+                if (count($newSelColArray) > 1) {
                     $arr_output_header[$newSelColArray[1]] = $newSelColArray[1];
                 } else {
                     $arr_output_header[$newSelColArray[0]] = $newSelColArray[0];
@@ -75,11 +76,11 @@ class ServiceReport extends Service
         $result  = array();
         foreach ($columns as $column)
         {
-            if ( contains( strtolower($column), array("id", "name", "title") ) ) {
+            if (contains( strtolower($column), array("id", "name", "title") )) {
                 $result[] = $column;
             }
 
-            if ( contains( $column, array("名称", "标题", "标识", "编号") ) ) {
+            if (contains( $column, array("名称", "标题", "标识", "编号") )) {
                 $result[] = $column;
             }
         }
@@ -97,12 +98,12 @@ class ServiceReport extends Service
         $result  = "";
         foreach ($columns as $column)
         {
-            if ( contains( $column, array("date", "time") ) ) {
+            if (contains( $column, array("date", "time") )) {
                 $result = $column;
                 break;
             }
 
-            if ( contains( $column, array("时间", "年", "月", "日") ) ) {
+            if (contains( $column, array("时间", "年", "月", "日") )) {
                 $result = $column;
                 break;
             }
@@ -118,22 +119,22 @@ class ServiceReport extends Service
     public static function getOrderBy($reportSql = "")
     {
         $result  = self::getFilterTime($reportSql);
-        if ( empty($result) ) {
+        if (empty($result)) {
             $columns = self::getSqlSelCols($reportSql);
             foreach ($columns as $column)
             {
-                if ( contains( strtolower($column), array("id") ) ) {
+                if (contains( strtolower($column), array("id") )) {
                     $result = $column;
                     break;
                 }
 
-                if ( contains( $column, array("标识", "编号") ) ) {
+                if (contains( $column, array("标识", "编号") )) {
                     $result = $column;
                     break;
                 }
             }
         }
-        if ( !empty($result) ) {
+        if (!empty($result)) {
             return " order by " . $result . " desc ";
         } else {
             return "";
@@ -152,8 +153,8 @@ class ServiceReport extends Service
     public static function getWhereClause($sql_report, $query, $startDate, $endDate, $columns = null)
     {
         $where_clause = "";
-        if ( $sql_report ) $sql_report = str_replace(";", "", $sql_report);
-        if ( !empty($query) && $query != "undefined" ) {
+        if ($sql_report ) $sql_report = str_replace(";", "", $sql_report);
+        if (!empty($query) && $query != "undefined") {
             $search_atom  = explode(" ", trim($query));
             $filterCols   = ServiceReport::getFilterCols( $sql_report );
             $where_sub    = array();
@@ -168,26 +169,26 @@ class ServiceReport extends Service
                 $clause .= " ) ";
                 $where_sub[$i] = $clause;
             }
-            if ( $where_sub && count($where_sub) > 0 ) {
-                if ( count($where_sub) > 1 ) $where_clause = " ( ";
+            if ($where_sub && count($where_sub) > 0) {
+                if (count($where_sub) > 1 ) $where_clause = " ( ";
                 $where_clause .= implode(" or ", $where_sub);
-                if ( count($where_sub) > 1 ) $where_clause .= " ) ";
+                if (count($where_sub) > 1 ) $where_clause .= " ) ";
             }
         }
 
-        if ( !empty($startDate) && !empty($endDate) ) {
+        if (!empty($startDate) && !empty($endDate)) {
             $filterTime  = ServiceReport::getFilterTime( $sql_report );
-            if ( $filterTime ) {
-                if ( !empty($where_clause) ) $where_clause .= ' and ';
+            if ($filterTime) {
+                if (!empty($where_clause) ) $where_clause .= ' and ';
                 $where_clause .= " ( $filterTime between '$startDate' and '$endDate' ) ";
             }
         }
 
-        if ( $columns && count($columns) > 0 ) {
+        if ($columns && count($columns) > 0) {
             foreach ($columns as $key => $column) {
                 $column_search_value = $column["search"]["value"];
-                if ( $column_search_value != "" ) {
-                    if ( !empty($where_clause) ) {
+                if ($column_search_value != "") {
+                    if (!empty($where_clause)) {
                         $where_clause .= " and ";
                     }
                     $where_clause .= " " . $column["data"] . "='" . $column_search_value . "' ";
@@ -195,7 +196,7 @@ class ServiceReport extends Service
             }
         }
 
-        if ( !empty($where_clause) ) $where_clause = " where " . $where_clause;
+        if (!empty($where_clause) ) $where_clause = " where " . $where_clause;
         return $where_clause;
     }
 

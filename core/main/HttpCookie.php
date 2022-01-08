@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Http Cookie 管理类 |-----------
  * @category betterlife
@@ -15,14 +16,14 @@ class HttpCookie
      */
     public static function set($key, $value, $expire = 0)
     {
-        if ( is_array($value) ) {
-            if ( empty($expire) ) {
+        if (is_array($value)) {
+            if (empty($expire)) {
                 setcookie($key, json_encode($value));
             } else {
                 setcookie($key, json_encode($value), time() + $expire);
             }
         } else {
-            if ( empty($expire) ) {
+            if (empty($expire)) {
                 setcookie($key, $value);
             } else {
                 setcookie($key, $value, time() + $expire);
@@ -37,7 +38,7 @@ class HttpCookie
      */
     public static function sets($key_values, $expire = 0)
     {
-        if ( $key_values && is_array($key_values) && ( count($key_values) > 0 ) )
+        if ($key_values && is_array($key_values) && (count($key_values) > 0))
         {
             foreach ($key_values as $key => $value) {
                 self::set($key, $value, $expire);
@@ -53,8 +54,8 @@ class HttpCookie
      */
     public static function get($key, $returnType = 0)
     {
-        if ( isset($_COOKIE[$key]) ) {
-            if ( $returnType ) {
+        if (isset($_COOKIE[$key])) {
+            if ($returnType) {
                 return json_decode($_COOKIE[$key], true);
             } else {
                 return $_COOKIE[$key];
@@ -72,7 +73,7 @@ class HttpCookie
     public static function gets($keys, $returnType = 0)
     {
         $result = array();
-        if ( $keys && is_array($keys) && ( count($keys) > 0 ) )
+        if ($keys && is_array($keys) && (count($keys) > 0))
         {
             foreach ($keys as $key) {
                 $result[$key] = self::get( $key, $returnType );
@@ -89,7 +90,7 @@ class HttpCookie
      */
     public static function remove($keys, $domain = "/")
     {
-        if ( $keys && is_array($keys) && ( count($keys) > 0 ) )
+        if ($keys && is_array($keys) && (count($keys) > 0))
         {
             foreach ( $keys as $key) {
                 setcookie($key, null, -1, $domain);

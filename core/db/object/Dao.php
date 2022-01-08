@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有数据库访问对象的父类 |-----------
  * @category betterlife
@@ -50,7 +51,7 @@ abstract class Dao
      */
     public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null,$dbtype=null)
     {
-        if ( isset($dbtype) ) {
+        if (isset($dbtype)) {
             $this->setdbType( $dbtype );
         }
         $this->connect( $host, $port, $username, $password, $dbname );
@@ -61,7 +62,7 @@ abstract class Dao
      */
     public function isCanConnect()
     {
-        if ( $this->connection && ($this->connection->connect_errno == 0) ) {
+        if ($this->connection && ($this->connection->connect_errno == 0)) {
             return true;
         } else {
             return false;
@@ -99,7 +100,7 @@ abstract class Dao
      */
     public function getConnection($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        if ( $this->connection == null ) {
+        if ($this->connection == null) {
             $this->connect($host, $port, $username, $password, $dbname);
         }
         return $this->connection;
@@ -112,12 +113,12 @@ abstract class Dao
      */
     protected function sql_id($object)
     {
-        if ( is_string($object) ) {
-            if ( class_exists($object) ) {
+        if (is_string($object)) {
+            if (class_exists($object)) {
                 $object = new $object();
             }
         }
-        if ( $object instanceof DataObject ) {
+        if ($object instanceof DataObject) {
             return DataObjectSpec::getRealIDColumnName( $object );
         }
        x( Wl::ERROR_INFO_EXTENDS_CLASS );
@@ -130,9 +131,9 @@ abstract class Dao
      */
     protected function validParameter($object)
     {
-        if ( is_string($object) ) {
-            if ( class_exists($object) ) {
-                if ( (new $object()) instanceof DataObject ) {
+        if (is_string($object)) {
+            if (class_exists($object)) {
+                if ((new $object()) instanceof DataObject) {
                     $this->classname = $object;
                     return true;
                 } else {
@@ -147,17 +148,17 @@ abstract class Dao
 
     /**
      * 将数据对象里的显示属性进行清除
-     * 
+     *
      * 规范: 数据对象里的显示属性以v_开始
      * @param array $saParams 预编译准备SQL参数
      * @return array 数据对象里的显示属性
      */
     protected function filterViewProperties($saParams)
     {
-        if ( isset($saParams) && is_array($saParams) ) {
+        if (isset($saParams) && is_array($saParams)) {
             $keys = array_keys($saParams);
             foreach ($keys as $key) {
-                if ( strpos((substr($key, 0, 2)), "v_") !== false ) {
+                if (strpos((substr($key, 0, 2)), "v_") !== false) {
                     unset($saParams[$key]);
                 }
             }
@@ -172,8 +173,8 @@ abstract class Dao
      */
     protected function validObjectParameter($object)
     {
-        if ( is_object($object) ) {
-            if ( $object instanceof DataObject ) {
+        if (is_object($object)) {
+            if ($object instanceof DataObject) {
                 $this->classname = $object->classname();
             } else {
                x( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
@@ -200,10 +201,10 @@ abstract class Dao
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对
      * @param array $typeOf 
-     * 
+     *
      *     - 0: 通用的协议定义的类型标识，暂未实现。
      *     - 1: PHP定义的数据类型标识，暂未实现。
-     * 
+     *
      * @return array 获取插入或者更新的数据的field和field值类型键值对
      */
     public function getColumnTypes($object, $saParams, $typeOf = 1)
@@ -217,25 +218,25 @@ abstract class Dao
 
     /**
      * 当查询结果集只有一个值的时候，直接返回该值
-     * 
+     *
      * 如果是数据对象，返回数组对象
-     * 
+     *
      * 如果是基础类型如int等一般是统计函数count,sum,max,min，直接返回值
-     * 
+     *
      * @param array $result 结果集
      * @return 值
      */
     protected function getValueIfOneValue($result)
     {
-        if ( ($result != null) && (count($result) == 1) ) {
-            if ( $result[0] instanceof stdClass ) {
+        if (($result != null) && (count($result) == 1)) {
+            if ($result[0] instanceof stdClass) {
                 // $tmp = UtilObject::object_to_array( $result[0] );
-                // if ( count($tmp) == 1 ) {
+                // if (count($tmp) == 1) {
                 //     $tmp_values = array_values($tmp);
                 //     $result     = $tmp_values[0];
                 // }
             } else {
-                if ( !( $result[0] instanceof DataObject ) ) $result = $result[0];
+                if (!( $result[0] instanceof DataObject)) $result = $result[0];
             }
         }
         return $result;

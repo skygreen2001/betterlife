@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 所有Model应用控制器的父类 |-----------
  * @category betterlife

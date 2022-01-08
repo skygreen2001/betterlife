@@ -1,4 +1,5 @@
 <?php
+
 /**
  * $Header$
  *
@@ -9,7 +10,7 @@
 /**
  * The Log_console class is a concrete implementation of the Log::
  * abstract class which writes message to the text console.
- * 
+ *
  * @author  Jon Parise <jon@php.net>
  * @since   Log 1.1
  * @package Log
@@ -57,7 +58,7 @@ class Log_console extends Log
 
     /**
      * Constructs a new Log_console object.
-     * 
+     *
      * @param string $name     Ignored.
      * @param string $ident    The identity string.
      * @param array  $conf     The configuration array.
@@ -160,7 +161,7 @@ class Log_console extends Log
     /**
      * Writes $message to the text console. Also, passes the message
      * along to any Log_observer instances that are observing this Log.
-     * 
+     *
      * @param mixed  $message    String or object containing the message to log.
      * @param string $priority The priority of the message.  Valid
      *                  values are: PEAR_LOG_EMERG, PEAR_LOG_ALERT,

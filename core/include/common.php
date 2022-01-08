@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 常用函数 |-----------
  * @category betterlife
@@ -14,19 +15,19 @@
  */
 function sqlExecute($sqlstring, $object = null)
 {
-    if ( empty($sqlstring) ) {
+    if (empty($sqlstring)) {
         return null;
     }
-    if ( $object ) {
-        if ( is_bool($object) )$object = null;
+    if ($object) {
+        if (is_bool($object) )$object = null;
         return Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
     } else {
         $lists = Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
-        if ( $lists ) {
-            if ( is_array($lists) ) {
-                if ( count($lists) > 0 ) {
+        if ($lists) {
+            if (is_array($lists)) {
+                if (count($lists) > 0) {
                     foreach ($lists as $key => $data) {
-                        if ( is_object($data) ) {
+                        if (is_object($data)) {
                             $lists[$key] = (array) $data;
                         }
                     }
@@ -51,7 +52,7 @@ function e_me($exception)
  */
 function e_view()
 {
-    if ( Gc::$dev_debug_on ) {
+    if (Gc::$dev_debug_on) {
         echo ExceptionMe::showMessage( ExceptionMe::VIEW_TYPE_HTML_TABLE );
     }
 }
@@ -65,15 +66,15 @@ function e_view()
  */
 function contain($subject, $needle, $is_strict = false)
 {
-    if ( empty($subject) ) return false;
-    if ( $is_strict ) {
-        if ( strpos($subject, $needle) !== false ) {
+    if (empty($subject) ) return false;
+    if ($is_strict) {
+        if (strpos($subject, $needle) !== false) {
             return true;
         } else {
             return false;
         }
     } else {
-        if ( strpos(strtolower($subject), strtolower($needle)) !== false ) {
+        if (strpos(strtolower($subject), strtolower($needle)) !== false) {
             return true;
         } else {
             return false;
@@ -90,9 +91,9 @@ function contain($subject, $needle, $is_strict = false)
 function contains($subject, $array)
 {
     $result = false;
-    if ( !empty($array) && is_array($array) ) {
+    if (!empty($array) && is_array($array)) {
         foreach ($array as $element) {
-            if ( contain($subject, $element) ) {
+            if (contain($subject, $element)) {
                 return true;
             }
         }
@@ -109,7 +110,7 @@ function contains($subject, $array)
  */
 function startWith($haystack, $needle, $strict = true)
 {
-    if ( !$strict ) {
+    if (!$strict) {
         $haystack = strtoupper($haystack);
         $needle   = strtoupper($needle);
     }
@@ -125,11 +126,11 @@ function startWith($haystack, $needle, $strict = true)
  */
 function endWith($haystack, $needle, $strict = true)
 {
-    if ( empty($needle) ) {
+    if (empty($needle)) {
         return false;
     }
-    if ( !empty(strrev($needle)) ) {
-        if ( !$strict ) {
+    if (!empty(strrev($needle))) {
+        if (!$strict) {
             $haystack = strtoupper($haystack);
             $needle   = strtoupper($needle);
         }
@@ -163,10 +164,10 @@ function urlparamToJsonString($url_parms)
 function escape($string, $in_encoding = 'UTF-8', $out_encoding = 'UCS-2')
 {
     $return = '';
-    if ( function_exists('mb_get_info') ) {
+    if (function_exists('mb_get_info')) {
         for ($x = 0; $x < mb_strlen($string, $in_encoding); $x++) {
             $str = mb_substr($string, $x, 1, $in_encoding);
-            if ( strlen($str) > 1 ) { // 多字节字符
+            if (strlen($str) > 1) { // 多字节字符
                 $return .= '%u' . strtoupper(bin2hex(mb_convert_encoding($str, $out_encoding, $in_encoding)));
             } else {
                 $return .= '%' . strtoupper(bin2hex($str));
@@ -189,19 +190,19 @@ function unescape($str)
     $len = strlen($str);
     for ($i = 0; $i < $len; $i++)
     {
-        if ( $str[$i] == '%' && $str[$i + 1] == 'u' )
+        if ($str[$i] == '%' && $str[$i + 1] == 'u' )
         {
             $val = hexdec(substr($str, $i + 2, 4));
-            if ( $val < 0x7f )
+            if ($val < 0x7f )
                 $ret .= chr($val);
             else
-                if ( $val < 0x800 )
+                if ($val < 0x800 )
                     $ret .= chr(0xc0|($val>>6)).chr(0x80|($val & 0x3f));
                 else
                     $ret .= chr(0xe0|($val>>12)).chr(0x80|(($val >> 6) & 0x3f)).chr(0x80|($val&0x3f));
             $i += 5;
         } else {
-            if ( $str[$i] == '%' )
+            if ($str[$i] == '%' )
             {
                 $ret .= urldecode(substr($str, $i, 3));
                 $i += 2;
@@ -243,10 +244,10 @@ function flex_logme($var)
  */
 function print_pre($s, $isEcho = false, $title="")
 {
-    if ( !empty($title) && $isEcho ) {
+    if (!empty($title) && $isEcho) {
         echo $title . "<br/>";
     }
-    if ( $isEcho ) {
+    if ($isEcho) {
         print "<pre>"; print_r($s); print "</pre>";
     } else {
         return "<pre>" . var_export($s,true) . "</pre>";
@@ -260,12 +261,12 @@ function print_pre($s, $isEcho = false, $title="")
  */
 function unicode2utf8($str)
 {
-    if ( !$str ) return $str;
+    if (!$str ) return $str;
     $decode = json_decode($str);
-    if ( $decode ) return $decode;
+    if ($decode ) return $decode;
     $str    = '["' . $str . '"]';
     $decode = json_decode($str);
-    if ( count($decode) == 1 ) {
+    if (count($decode) == 1) {
         return $decode[0];
     }
     return $str;
@@ -284,18 +285,18 @@ function unicode2utf8($str)
 function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
 {
     $defaultConfig = array('PreserveLinks' => false, 'ReplaceBoldAsterisk' => true, 'CompressWhitespace' => true, 'ReplaceImagesWithAlt' => true);
-    if ( isset($config) ) {
+    if (isset($config)) {
         $config = array_merge($defaultConfig, $config);
     } else {
         $config = $defaultConfig;
     }
     $data = preg_replace("/<style([^A-Za-z0-9>][^>]*)?>.*?<\\/style[^>]*>/is", "", $data);
     $data = preg_replace("/<script([^A-Za-z0-9>][^>]*)?>.*?<\\/script[^>]*>/is", "", $data);
-    if ( $config['ReplaceBoldAsterisk'] ) {
+    if ($config['ReplaceBoldAsterisk']) {
         $data = preg_replace('%<(strong|b)( [^>]*)?>|</(strong|b)>%i', '*', $data);
     }
     // Expand hyperlinks
-    if ( !$preserveLinks && !$config['PreserveLinks'] ) {
+    if (!$preserveLinks && !$config['PreserveLinks']) {
         $data = preg_replace_callback('/<a[^>]*href\\s*=\\s*"([^"]*)">(.*?)<\\/a>/i', function ($matches) {
             return html2raw($matches[2]) . "[{$matches['1']}]";
         }, $data);
@@ -304,12 +305,12 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
         }, $data);
     }
     // Replace images with their alt tags
-    if ( $config['ReplaceImagesWithAlt'] ) {
+    if ($config['ReplaceImagesWithAlt']) {
         $data = preg_replace('/<img[^>]*alt *= *"([^"]*)"[^>]*>/i', ' \\1 ', $data);
         $data = preg_replace('/<img[^>]*alt *= *([^ ]*)[^>]*>/i', ' \\1 ', $data);
     }
     // Compress whitespace
-    if ( $config['CompressWhitespace'] ) {
+    if ($config['CompressWhitespace']) {
         $data = preg_replace("/\\s+/", " ", $data);
     }
     // Parse newline tags
@@ -326,13 +327,13 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
     // Remove all tags (but optionally keep links)
     // strip_tags seemed to be restricting the length of the output
     // arbitrarily. This essentially does the same thing.
-    if ( !$preserveLinks && !$config['PreserveLinks'] ) {
+    if (!$preserveLinks && !$config['PreserveLinks']) {
         $data = preg_replace('/<\\/?[^>]*>/', '', $data);
     } else {
         $data = strip_tags($data, '<a>');
     }
     // Wrap
-    if ( $wordWrap ) {
+    if ($wordWrap) {
         $data = wordwrap(trim($data), $wordWrap);
     }
     return trim($data);
@@ -340,7 +341,7 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
 
 // /**
 //  * Tests {@link html2raw()}
-//  * 
+//  *
 //  * 仅供测试函数: html2raw
 //  */
 // function testHtml2raw()

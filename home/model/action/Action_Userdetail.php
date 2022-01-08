@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户详细信息 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Userdetail extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Userdetail extends ActionModel
         $count = Userdetail::count();
         $this->view->countUserdetails = $count;
         $userdetails = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $userdetails = Userdetail::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,25 +41,25 @@ class Action_Userdetail extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $userdetail = $this->model->Userdetail;
             $id         = $userdetail->getId();
             $isRedirect = true;
-            if ( !empty($_FILES)&&!empty($_FILES["profile"]["name"]) ) {
+            if (!empty($_FILES)&&!empty($_FILES["profile"]["name"])) {
                 $result = $this->uploadImg( $_FILES, "profile", "profile", "userdetail" );
-                if ( $result && ( $result['success'] == true ) ) {
-                    if ( array_key_exists('file_name', $result) ) $userdetail->profile = $result['file_name'];
+                if ($result && ($result['success'] == true )) {
+                    if (array_key_exists('file_name', $result) ) $userdetail->profile = $result['file_name'];
                 } else {
                     $isRedirect = false;
                     $this->view->set( "message", $result["msg"] );
                 }
             }
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $userdetail->update();
             } else {
                 $id = $userdetail->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "userdetail", "view", "id=$id" );
                 exit;
             }

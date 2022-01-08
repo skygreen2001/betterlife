@@ -1,11 +1,12 @@
 <?php
+
 /**
  * -----------| 日志处理类 |-----------
- * 
+ *
  * 一般来讲，日志都通过log记录，由配置$logType决定它以什么方式打印出来。
- * 
+ *
  * 除非明确指明用log_console,log_file,log_db,log_firebug方式输出。
- * 
+ *
  * @category betterlife
  * @package log
  * @author skygreen <skygreen2001@gmail.com>
@@ -20,9 +21,9 @@ class LogMe extends BBObject
      */
     private static function isNeedLog($level) {
         $logLevels = UtilReflection::getClassConsts("EnumLogLevel");
-        if ( in_array($level, $logLevels) ) {
+        if (in_array($level, $logLevels)) {
             $levelKey = array_search($level, $logLevels);
-            if ( in_array($levelKey,Gc::$log_config["log_record_level"]) ) {
+            if (in_array($levelKey,Gc::$log_config["log_record_level"])) {
                 return true;
             }
         }
@@ -31,27 +32,27 @@ class LogMe extends BBObject
 
     /**
      * 获取日志文件路径。
-     * 
+     *
      * 前提条件: 采用文件方式记录日志。
      */
     public static function logPath($destination) {
-        if ( empty(Gc::$log_config["logpath"]) ) {
+        if (empty(Gc::$log_config["logpath"])) {
             Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
         }
-        if ( !endWith(Gc::$log_config["logpath"], DS) ) {
+        if (!endWith(Gc::$log_config["logpath"], DS)) {
             Gc::$log_config["logpath"] .= DS;
         }
-        if ( empty($destination) ) {
+        if (empty($destination)) {
             $destination = Gc::$log_config["logpath"] . Gc::$appName . date('Y_m_d') . Config_F::SUFFIX_FILE_LOG;
         } else {
             $destination = Gc::$log_config["logpath"] . $destination . date('Y_m_d') . Config_F::SUFFIX_FILE_LOG;
         }
 
         //检测日志文件大小，超过配置大小则备份日志文件重新生成
-        if ( is_file($destination) && ( Gc::$log_config["log_file_size"] <= filesize($destination) ) ) {
+        if (is_file($destination) && (Gc::$log_config["log_file_size"] <= filesize($destination) )) {
             rename($destination, dirname($destination) . DS . basename($destination, Config_F::SUFFIX_FILE_LOG) . '-' . time() . Config_F::SUFFIX_FILE_LOG);
         }
-        if ( isset ($destination) ) {
+        if (isset ($destination)) {
             UtilFileSystem::createDir( dirname($destination) );
         }
         system_dir_info(dirname($destination));
@@ -65,7 +66,7 @@ class LogMe extends BBObject
      * @param string $category 日志内容业务分类
      */
     public static function log($message, $level = EnumLogLevel::INFO, $category = '') {
-        if ( self::isNeedLog( $level ) ) {
+        if (self::isNeedLog( $level )) {
             switch (Gc::$log_config["logType"]) {
                 case EnumLogType::SYSTEM:
                     self::log_console( $message, $level, $category );
@@ -183,8 +184,8 @@ class LogMe extends BBObject
      * @return void
      */
     public static function record($message, $level = EnumLogLevel::ERR, $record = false) {
-        if ( Gc::$dev_debug_on ) {
-            if ( $record || self::isNeedLog( $level ) ) {
+        if (Gc::$dev_debug_on) {
+            if ($record || self::isNeedLog( $level )) {
                 UtilDateTime::ChinaTime();
                 $now = "[ " . strftime(Gc::$log_config["timeFormat"]) . " ]";
                 //UtilReflection::getClassProperty(EnumLogLevel, $level);
@@ -214,8 +215,8 @@ class LogMe extends BBObject
      * 显示当前运行的日志。
      */
     public static function showLogs() {
-        if ( Gc::$dev_debug_on ) {
-            if ( self::$log ) {
+        if (Gc::$dev_debug_on) {
+            if (self::$log) {
                 foreach (self::$log as $log) {
                     echo '<pre>';
                     echo $log;

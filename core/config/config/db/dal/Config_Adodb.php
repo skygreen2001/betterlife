@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------|  Adodb的配置类 |-----------
  * @link http://phplens.com/lens/adodb/docs-adodb.htm#intro
@@ -16,7 +17,8 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Adodb extends Config_Db {
+class Config_Adodb extends Config_Db
+{
     /**
      * Ms SqlServer Utf8 驱动
      */
@@ -56,7 +58,7 @@ class Config_Adodb extends Config_Db {
             case EnumDbSource::DB_MICROSOFT_ACCESS:
                 return "access";
             case EnumDbSource::DB_SQLSERVER:
-                if ( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8 ) ) ) {
+                if (( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8))) {
                     return self::DRIVER_MSSQL_UTF8;
                 } else {
                     return "odbc_mssql";
@@ -75,9 +77,9 @@ class Config_Adodb extends Config_Db {
 
     /**
      * 返回ODBC所需的dsn_less字符串
-     * 
+     *
      * 说明:
-     * 
+     *
      *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
      * @param string $host
      * @param string $port 
@@ -89,26 +91,26 @@ class Config_Adodb extends Config_Db {
      * @return string ODBC所需的dsn_less字符串
      */
     public static function dsn_less($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
-        if ( isset($host) ) {
-            if ( strlen($port) > 0 ) {
+        if (isset($host)) {
+            if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
             } else {
                 $connecturl = $host;
             }
         } else {
-            if ( strlen(self::$port) > 0 ) {
+            if (strlen(self::$port) > 0) {
                 $connecturl = self::$host . ":" . self::$port;
             } else {
                 $connecturl = self::$host;
             }
         }
-        if ( $engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO ) {
+        if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
             $connecturl = self::driver( $dbtype ) . ":host=" . $connecturl;
         }       
         $dsn_less = ""; 
         switch ($dbtype) {
             case EnumDbSource::DB_SQLSERVER:
-                if ( !( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8 ) ) ) {
+                if (!( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8))) {
                     $dsn_less = "Driver={SQL Server Native Client 10.0};Server=" . $connecturl . ";Database=" . $dbname . ";";
                 } else {
                     $dsn_less = $connecturl;  
@@ -147,14 +149,14 @@ class Config_Adodb extends Config_Db {
      * @return string ODBC所需的dsn字符串
      */
     public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
-        if ( isset($host) ) {
-            if ( strlen($port) > 0 ) {
+        if (isset($host)) {
+            if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
             } else {
                 $connecturl = $host;
             }
         } else {
-            if ( strlen(self::$port) > 0 ) {
+            if (strlen(self::$port) > 0) {
                 $connecturl = self::$host . ":" . self::$port;
             } else {
                 $connecturl = self::$host;
@@ -169,13 +171,13 @@ class Config_Adodb extends Config_Db {
             case EnumDbSource::DB_SQLITE3:             
                 $path = urlencode($dbname);
                 $dsn .= $path;
-                if ( $engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO ) {
+                if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
                     $dsn = "pdo_" . $dsn;
                 }
                 break;   
             default:
                 $dsn .= $username . ":" . $password . "@" . $connecturl . "/" . $dbname;
-                if ( $engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO ) {
+                if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
                     $dsn = "pdo_" . $dsn;
                 }
                 break;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 博客 |-----------
  * @category betterlife
@@ -49,7 +50,7 @@ class Blog extends DataObject
      * 0: 不公开 
      * 1: 公开 
      * 默认为1: 公开 
-     * 
+     *
      * @var bit
      * @access public
      */
@@ -66,7 +67,7 @@ class Blog extends DataObject
      * 1:进行中-run 
      * 100:已结束-end 
      * 400:已删除-del 
-     * 
+     *
      * @var enum
      * @access public
      */
@@ -108,7 +109,7 @@ class Blog extends DataObject
      * 1:进行中-run 
      * 100:已结束-end 
      * 400:已删除-del 
-     * 
+     *
      */
     public function getStatusShow()
     {
@@ -121,7 +122,7 @@ class Blog extends DataObject
      * 1:进行中-run 
      * 100:已结束-end 
      * 400:已删除-del 
-     * 
+     *
      */
     public static function statusShow($status)
     {
@@ -134,11 +135,11 @@ class Blog extends DataObject
      * 0: 不公开 
      * 1: 公开 
      * 默认为1: 公开 
-     * 
+     *
      */
     public function isPublicShow()
     {
-        if ( $this->isPublic ) {
+        if ($this->isPublic) {
             return "是";
         }
         return "否";

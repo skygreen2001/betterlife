@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: Scriptaculous[Javascript Ajax 框架] |-----------
  * @category betterlife
@@ -50,7 +51,7 @@ class UtilAjaxScriptaculous extends UtilAjax implements IUtilAjax
     {
         // $class_name = str_replace("RO", "", $local_service_flag);
         $result     = "";
-        if ( !self::$IsHtmlBody ) {
+        if (!self::$IsHtmlBody) {
             echo "<body><h1 id='object_name'></h1><ol id='properties'></ol></body>" . HH;
             self::$IsHtmlBody = true;
         }

@@ -1,13 +1,14 @@
 <?php
+
 /**
  * -----------| View Egine |-----------
- * 
+ *
  * 用于Template Engine
- * 
+ *
  * 方便开发者在controller里通过$this->view->set(varname, value)控制
- * 
+ *
  * 以便在显示层页面里任意访问使用变量varname
- * 
+ *
  * @category betterlife
  * @package core.main
  * @author skygreen
@@ -32,9 +33,9 @@ class View {
     private $vars = array();
     /**
      * 显示页面上使用的变量存储对象
-     * 
+     *
      * 目前需模版是
-     * 
+     *
      *     Smarty:TEMPLATE_MODE_SMARTY
      */
     private $viewObject;
@@ -71,7 +72,7 @@ class View {
             "encoding"      => Gc::$encoding
         );
 
-        if ( contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) ) {
+        if (contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") )) {
             self::$view_global["isDev"] = true;
         }
     }
@@ -83,15 +84,15 @@ class View {
     public function __construct($moduleName, $templatefile = null) {
         $this->moduleName = $moduleName;
         $this->init_view_global();
-        if ( isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every) ) {
+        if (isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every)) {
             $this->initTemplate( Gc::$template_mode_every[$this->moduleName], $templatefile );
         } else {
             $this->initTemplate( Gc::$template_mode, $templatefile );
         }
-        if ( !empty(self::$view_global) ) {
+        if (!empty(self::$view_global)) {
             foreach (self::$view_global as $key => $value) {
                 $this->template_set($key, $value);
-                if ( is_array($this->vars) ) {
+                if (is_array($this->vars)) {
                     $this->vars[$key] = $value;
                 } else {
                     $this->vars->$key = $value;
@@ -105,7 +106,7 @@ class View {
     }
 
     public function get($key) {
-        if ( is_array($this->vars) ) {
+        if (is_array($this->vars)) {
             return $this->vars[$key];
         } else {
             return $this->vars->$key;
@@ -116,46 +117,46 @@ class View {
     /***********************************魔术方法**************************************************/
     /**
      * 说明: 若每个具体的实现类希望不想实现set, get方法；
-     * 
+     *
      *      则将该方法复制到每个具体继承他的对象类内。
-     * 
+     *
      * 可设定对象未定义的成员变量[但不建议这样做]
-     * 
+     *
      * 可无需定义get方法和set方法
-     * 
+     *
      * 类定义变量访问权限设定需要是pulbic
-     * 
+     *
      * @param string $method
      * @argu
      */
     public function __call($method, $arguments) {
-        if ( contain( $method, "set" ) ) {
+        if (contain( $method, "set" )) {
             $property = substr($method, strlen("set"), strlen($method));
             $property = lcfirst($property);
-            if ( property_exists($this, $property) ) {
+            if (property_exists($this, $property)) {
                 $this->$property = $arguments[0];
             } else {
                 $this->set( $property, $arguments[0] );
             }
-        } else if ( contain( $method, "get" ) ) {
+        } elseif (contain( $method, "get" )) {
             $property = substr($method, strlen("get"), strlen($method));
             $property = lcfirst($property);
-            if ( is_array($this->vars) ) {
+            if (is_array($this->vars)) {
                 return $this->vars[$property];
-            } else if ( is_object($this->vars) ) {
+            } elseif (is_object($this->vars)) {
                 return $this->vars->$property;
             }
         }
     }
 
     public function __set($property, $value) {
-        if ( property_exists($this, $property) ) {
-            if ( ( !empty($property) ) && ( $property=='viewObject' ) &&
-                !empty($this->viewObject->js_ready) && array_key_exists('js_ready',$value) ) {
+        if (property_exists($this, $property)) {
+            if (( !empty($property) ) && ($property=='viewObject' ) &&
+                !empty($this->viewObject->js_ready) && array_key_exists('js_ready',$value)) {
                $value->js_ready = $this->viewObject->js_ready . $value->js_ready;
             }
-            if ( ( !empty($property) ) && ( $property=='viewObject' )&&
-                !empty($this->viewObject->css_ready) && array_key_exists('css_ready', $value) ) {
+            if (( !empty($property) ) && ($property=='viewObject' )&&
+                !empty($this->viewObject->css_ready) && array_key_exists('css_ready', $value)) {
                $value->css_ready = $this->viewObject->css_ready . $value->css_ready;
             }
             $this->$property = $value;
@@ -165,10 +166,10 @@ class View {
     }
 
     public function __get($property) {
-        if ( property_exists($this, $property) ) {
+        if (property_exists($this, $property)) {
             return $this->$property;
         } else {
-            if ( is_array($this->vars) ) {
+            if (is_array($this->vars)) {
                 return $this->vars[$property];
             } else {
                 return $this->vars->$property;
@@ -218,12 +219,12 @@ class View {
 
     /**
      * 当在同一种网站里使用多个模板的时候
-     * 
+     *
      * 通过本函数进行指定
      */
     public function setTemplate($template_mode, $moduleName, $templatefile = null) {
         $this->moduleName = $moduleName;
-        if ( empty($template_mode) ) {
+        if (empty($template_mode)) {
             $template_mode = Gc::$template_mode;
         }
         $this->initTemplate( $template_mode, $templatefile = null );
@@ -235,11 +236,11 @@ class View {
     */
     private function getTemplate_View_Dir() {
         $result = "";
-        if ( strlen(Gc::$module_root) > 0 ) {
+        if (strlen(Gc::$module_root) > 0) {
             $result .= Gc::$module_root . DS;
         }
         $result .= $this->moduleName . DS . self::VIEW_DIR_VIEW . DS;
-        if ( isset(Gc::$self_theme_dir_every) && array_key_exists($this->moduleName, Gc::$self_theme_dir_every) ) {
+        if (isset(Gc::$self_theme_dir_every) && array_key_exists($this->moduleName, Gc::$self_theme_dir_every)) {
             $result .= Gc::$self_theme_dir_every[$this->moduleName] . DS;
         } else {
             $result .= Gc::$self_theme_dir . DS;
@@ -252,13 +253,13 @@ class View {
      * @var string $template_mode 模板模式
      */
     private function initTemplate($template_mode, $templatefile = null) {
-        if ( empty($template_mode) ) {
+        if (empty($template_mode)) {
             $template_mode = Gc::$template_mode;
         }
         $this->template_dir = $this->getTemplate_View_Dir( $this->moduleName ) . Config_F::VIEW_CORE . DS;
         $template_tmp_dir   = $this->getTemplate_View_Dir( $this->moduleName ) . "tmp" . DS;
 
-        if ( isset(Gc::$template_file_suffix_every) && array_key_exists($this->moduleName, Gc::$template_file_suffix_every) ) {
+        if (isset(Gc::$template_file_suffix_every) && array_key_exists($this->moduleName, Gc::$template_file_suffix_every)) {
             $this->template_suffix_name = Gc::$template_file_suffix_every[$this->moduleName];
         } else {
             $this->template_suffix_name = Gc::$template_file_suffix;
@@ -267,11 +268,11 @@ class View {
         switch ($template_mode) {
             case self::TEMPLATE_MODE_SMARTY:
                 $this->templateMode = self::TEMPLATE_MODE_SMARTY;
-                if ( !class_exists("Smarty") ) {
+                if (!class_exists("Smarty")) {
                   die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。</p>");
                 }
                 $this->template = new Smarty();
-                if ( Smarty::SMARTY_VERSION >= 3.1 && class_exists("SmartyBC") ) {
+                if (Smarty::SMARTY_VERSION >= 3.1 && class_exists("SmartyBC")) {
                     $this->template = new SmartyBC();
                 }
                 $this->template->template_dir  = Gc::$nav_root_path . $this->template_dir;
@@ -281,7 +282,7 @@ class View {
                 $this->template->compile_check = true;
                 $this->template->allow_php_templates = true;
                 // 开启自定义安全机制
-                if ( class_exists("Smarty_Security") ) {
+                if (class_exists("Smarty_Security")) {
                     $my_security_policy = new Smarty_Security($this->template);
                     $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName);
                     $my_security_policy->allow_php_tag = true;
@@ -330,8 +331,8 @@ class View {
      * 设置模板认知的变量
      */
     public function template_set($key, $value, $template_mode = null) {
-        if ( empty($template_mode) ) {
-            if ( isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every) ) {
+        if (empty($template_mode)) {
+            if (isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every)) {
                 $template_mode = Gc::$template_mode_every[$this->moduleName];
             } else {
                 $template_mode = Gc::$template_mode;
@@ -347,9 +348,9 @@ class View {
                 $this->template->assign($key, $value);
                 break;
         }
-        if ( is_array($this->vars) ) {
+        if (is_array($this->vars)) {
             $this->vars[$key] = $value;
-        } else if ( is_object($this->vars) ) {
+        } elseif (is_object($this->vars)) {
             $this->vars->$key = $value;
         }
     }
@@ -359,16 +360,16 @@ class View {
      * @param string $templatefile 模板文件名
      */
     public function output($templatefile, $template_mode, $controller = null) {
-        if ( empty($template_mode) ) {
+        if (empty($template_mode)) {
             $template_mode = Gc::$template_mode;
         }
         $templateFilePath = $templatefile . $this->template_suffix_name;
         switch ($template_mode) {
             case self::TEMPLATE_MODE_SMARTY:
-                if ( !empty($this->viewObject) ) {
+                if (!empty($this->viewObject)) {
                   $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
                   foreach ($view_array as $key => $value) {
-                    if ( !array_key_exists($key, self::$view_global) ) {
+                    if (!array_key_exists($key, self::$view_global)) {
                       $this->set( $key, $value );
                     }
                   }
@@ -381,10 +382,10 @@ class View {
                 $this->template->display($templateFilePath);
                 break;
             case self::TEMPLATE_MODE_TWIG:
-                if ( !empty($this->viewObject) ) {
+                if (!empty($this->viewObject)) {
                     $view_array = UtilObject::object_to_array( $this->viewObject, $this->vars );
                     foreach ($view_array as $key => $value) {
-                        if ( !array_key_exists($key, self::$view_global) ) {
+                        if (!array_key_exists($key, self::$view_global)) {
                             $this->set( $key, $value );
                         }
                     }

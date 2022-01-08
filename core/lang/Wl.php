@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 通用语言 |-----------
- * 
+ *
  * 开发期默认和中文一致
  * @category betterlife
  * @package core.lang

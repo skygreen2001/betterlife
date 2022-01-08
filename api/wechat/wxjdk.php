@@ -3,15 +3,15 @@ $url = $_GET['url'];
 require_once("../../init.php");
 /**
  * 公众号微信JDK授权接口
- * 
+ *
  * 微信JS-SDK文档: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1
- * 
+ *
  * 附录6-DEMO页面和示例代码: http://demo.open.weixin.qq.com/jssdk 
- * 
+ *
  * 示例代码: http://demo.open.weixin.qq.com/jssdk/sample.zip
- * 
+ *
  * 备注:链接中包含php、java、nodejs以及python的示例代码供第三方参考，第三方切记要对获取的accesstoken以及jsapi_ticket进行缓存以确保不会触发频率限制。
- * 
+ *
  * 本地示例: api/common/wechat/wxjdk/
  */ 
 class WxJsSDK {
@@ -64,16 +64,16 @@ class WxJsSDK {
         $is_valid = true;
         $data     = null;
 
-        if ( file_exists(Gc::$upload_path . "jsapi_ticket.json") ) {
+        if (file_exists(Gc::$upload_path . "jsapi_ticket.json")) {
             $data = json_decode(file_get_contents(Gc::$upload_url . "jsapi_ticket.json"));
-            if ( $data->expire_time < time() ) {
+            if ($data->expire_time < time()) {
                 $is_valid = false;
             }
         } else {
             $is_valid = false;
         }
-        if ( $is_valid ) {
-            if ( $data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "jsapi_ticket.json"));
+        if ($is_valid) {
+            if ($data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "jsapi_ticket.json"));
             $ticket = $data->jsapi_ticket;
         } else {
             $accessToken = $this->getAccessToken();
@@ -82,7 +82,7 @@ class WxJsSDK {
             $url    = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
             $res    = json_decode($this->httpGet( $url ));
             $ticket = $res->ticket;
-            if ( $ticket ) {
+            if ($ticket) {
                 $data->expire_time  = time() + 7000;
                 $data->jsapi_ticket = $ticket;
                 $fp = fopen(Gc::$upload_url . "jsapi_ticket.json", "w");
@@ -98,16 +98,16 @@ class WxJsSDK {
         $is_valid = true;
         $data     = null;
 
-        if ( (file_exists(Gc::$upload_path . "access_token.json")) ) {
+        if ((file_exists(Gc::$upload_path . "access_token.json"))) {
             $data = json_decode(file_get_contents(Gc::$upload_url . "access_token.json"));
-            if ( $data->expire_time < time() ) {
+            if ($data->expire_time < time()) {
                 $is_valid = false;
             }
         } else {
             $is_valid = false;
         }
-        if ( $is_valid ) {
-            if ( $data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "access_token.json"));
+        if ($is_valid) {
+            if ($data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "access_token.json"));
             $access_token = $data->access_token;
         } else {
             // 如果是企业号用以下URL获取access_token
@@ -115,7 +115,7 @@ class WxJsSDK {
             $url          = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
             $res          = json_decode($this->httpGet( $url ));
             $access_token = $res->access_token;
-            if ( $access_token ) {
+            if ($access_token) {
                 $data->expire_time  = time() + 7000;
                 $data->access_token = $access_token;
                 $fp = fopen(Gc::$upload_url."access_token.json", "w");

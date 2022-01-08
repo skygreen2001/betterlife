@@ -291,7 +291,7 @@ class PEAR_Exception extends Exception
                                    'line' => $cause->getLine());
                 } elseif (class_exists('PEAR_Error')
                     && $cause instanceof PEAR_Error
-                ) {
+               ) {
                     $causes[] = array('class' => get_class($cause),
                                       'message' => $cause->getMessage(),
                                       'file' => 'unknown',
@@ -404,13 +404,13 @@ class PEAR_Exception extends Exception
                 foreach ($v['args'] as $arg) {
                     if (is_null($arg)) {
                         $args[] = 'null';
-                    } else if (is_array($arg)) {
+                    } elseif (is_array($arg)) {
                         $args[] = 'Array';
-                    } else if (is_object($arg)) {
+                    } elseif (is_object($arg)) {
                         $args[] = 'Object('.get_class($arg).')';
-                    } else if (is_bool($arg)) {
+                    } elseif (is_bool($arg)) {
                         $args[] = $arg ? 'true' : 'false';
-                    } else if (is_int($arg) || is_double($arg)) {
+                    } elseif (is_int($arg) || is_double($arg)) {
                         $args[] = $arg;
                     } else {
                         $arg = (string)$arg;

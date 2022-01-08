@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 数组 |-----------
  * @category betterlife
@@ -61,28 +62,28 @@ class UtilArray extends Util
     public static function array_to_xml($data, $rootNodeName = 'data', &$xml = null)
     {
         // turn off compatibility mode as simple xml throws a wobbly if you don't.
-        if ( ini_get('zend.ze1_compatibility_mode') == 1 ) ini_set ( 'zend.ze1_compatibility_mode', 0 );
-        if ( is_null( $xml ) ) $xml = new SimpleXMLElement("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+        if (ini_get('zend.ze1_compatibility_mode') == 1 ) ini_set ( 'zend.ze1_compatibility_mode', 0 );
+        if (is_null( $xml)) $xml = new SimpleXMLElement("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
 
         // loop through the data passed in.
-        foreach ( $data as $key => $value ) {
+        foreach ( $data as $key => $value) {
             // no numeric keys in our xml please!
-            if ( is_numeric( $key ) ) {
+            if (is_numeric( $key )) {
                 $key = $rootNodeName;
             }
 
-            if ( $key == '@attributes' ) {
+            if ($key == '@attributes') {
                 foreach ($value as $key_attr => $value_attr) {
                     $xml->addAttribute($key_attr, $value_attr);
                 }
                 continue;
             }
-            if ( $key == "@value" ) {
+            if ($key == "@value") {
                 $xml[0] = $value;
                 continue;
             }
 
-            if ( $key == "@cdata" ) {
+            if ($key == "@cdata") {
                 $node = dom_import_simplexml($xml);
                 $no   = $node->ownerDocument;
                 $node->appendChild($no->createCDATASection($value));
@@ -91,12 +92,12 @@ class UtilArray extends Util
             // delete any char not allowed in XML element names
             $key = preg_replace('/[^a-z0-9\-\_\.\:]/i', '', $key);
 
-            if ( is_object($value) ) {
+            if (is_object($value)) {
                 $value = get_object_vars($value);
             }
 
             // if there is another array found recrusively call this function
-            if ( is_array($value) ) {
+            if (is_array($value)) {
                 $node = self::is_assoc( $value ) || is_numeric($value) ? $xml->addChild($key) : $xml;
                 self::array_to_xml( $value, $key, $node );
             } else {
@@ -183,13 +184,13 @@ class UtilArray extends Util
      */
     public static function xml_to_array($xml, $rootNodeName = 'data')
     {
-        if ( is_string($xml) ) {
+        if (is_string($xml)) {
             $xmlSxe = new SimpleXMLElement($xml);
         } else {
             $xmlSxe = $xml;
         }
         $children = $xmlSxe->children();
-        if ( !$children ) {
+        if (!$children) {
             return (string) $xml;
         }
         $arr = array();
@@ -199,14 +200,14 @@ class UtilArray extends Util
             $node = self::xml_to_array( $node, $rootNodeName );
 
             // support for 'anon' non-associative arrays
-            if ( contain( $key, $rootNodeName . "_" ) ) {
+            if (contain( $key, $rootNodeName . "_" )) {
                $key = count($arr);
             }
-            // if ( $key == 'anon' ) $key = count( $arr );
+            // if ($key == 'anon' ) $key = count( $arr );
 
             // if the node is already set, put it into an array
-            if ( isset($arr[$key]) ) {
-                if ( !is_array($arr[$key]) || $arr[$key][0] == null ) {
+            if (isset($arr[$key])) {
+                if (!is_array($arr[$key]) || $arr[$key][0] == null) {
                     $arr[$key] = array( $arr[$key] );
                 }
                 $arr[$key][] = $node;
@@ -238,7 +239,7 @@ class UtilArray extends Util
          $var = explode('.', $array_multi_key);
          $result = $array_multi;
          foreach ($var as $key) {
-            if ( !isset($result[$key]) ) { return false; }
+            if (!isset($result[$key])) { return false; }
             $result = $result[$key];
          }
          return $result;
@@ -254,7 +255,7 @@ class UtilArray extends Util
     {
         $return = array();
         foreach (explode(',', $keys) as $k) {
-            if ( isset($array[$k]) ) {
+            if (isset($array[$k])) {
                 $return[$k] = $array[$k];
             }
         }
@@ -269,7 +270,7 @@ class UtilArray extends Util
     {
         static $result_array = array();
         foreach ($array as $value) {
-            if ( is_array($value) ) {
+            if (is_array($value)) {
                 UtilArray::array_multi2single( $value );
             } else {
                 $result_array[] = $value;
@@ -289,20 +290,20 @@ class UtilArray extends Util
     public static function array_search($arr, $propertyValue, $pre1sufix = "", $isprefix = true)
     {
         $result = null;
-        if ( isset($propertyValue) && isset($arr) && in_array($propertyValue, $arr) ) {
-            if ( !empty($pre1sufix) ) {
-                if ( $isprefix ) {
+        if (isset($propertyValue) && isset($arr) && in_array($propertyValue, $arr)) {
+            if (!empty($pre1sufix)) {
+                if ($isprefix) {
                     foreach ($arr as $key => $value) {
-                        if ( $propertyValue == $value ) {
-                            if ( startWith($key, $pre1sufix) ) {
+                        if ($propertyValue == $value) {
+                            if (startWith($key, $pre1sufix)) {
                                 return $key;
                             }
                         }
                     }
                 } else {
                     foreach ($arr as $key => $value) {
-                        if ( $propertyValue == $value) {
-                            if ( endWith( $key, $pre1sufix ) ) {
+                        if ($propertyValue == $value) {
+                            if (endWith( $key, $pre1sufix )) {
                                 return $key;
                             }
                         }
@@ -325,10 +326,10 @@ class UtilArray extends Util
         $Return    = '';
         $NullValue = "^^^";
         foreach ($Array as $Key => $Value) {
-            if ( is_object($Value) ) {
+            if (is_object($Value)) {
                 $Value = UtilObject::object_to_array( $Value );
             }
-            if ( is_array($Value) ) {
+            if (is_array($Value)) {
                 $ReturnValue = '^^array^'.self::Array2String($Value);
             } else {
                 $ReturnValue = ( strlen($Value) > 0 ) ? $Value : $NullValue;
@@ -351,9 +352,9 @@ class UtilArray extends Util
         foreach ($TempArray as $TempValue) {
             list($Key,$Value) = explode('|', $TempValue);
             $DecodedKey = base64_decode(urldecode($Key));
-            if ( $Value != $NullValue ) {
+            if ($Value != $NullValue) {
                 $ReturnValue = base64_decode(urldecode($Value));
-                if ( substr($ReturnValue, 0, 8) == '^^array^' ) {
+                if (substr($ReturnValue, 0, 8) == '^^array^') {
                     $ReturnValue = self::String2Array( substr($ReturnValue,8) );
                 }
                 $Return[$DecodedKey] = $ReturnValue;
@@ -372,7 +373,7 @@ class UtilArray extends Util
     public static function ArrayDepth($Array, $DepthCount = -1, $DepthArray = array())
     {
         $DepthCount++;
-        if ( is_array($Array) ) {
+        if (is_array($Array)) {
             foreach ($Array as $Key => $Value) {
                 $DepthArray[] = ArrayDepth($Value, $DepthCount);
             }
@@ -393,7 +394,7 @@ class UtilArray extends Util
      */
     public static function keyPosition($array, $key)
     {
-        if ( array_key_exists($key, $array) ) {
+        if (array_key_exists($key, $array)) {
             return array_search($key, array_keys($array)) + 1;
         } else {
             return -1;
@@ -469,7 +470,7 @@ class UtilArray extends Util
     public static function sort(&$two_dimension_array, $key, $order)
     {
         $isAsc = true;
-        if ( trim(strtolower($order)) == "desc" ) $isAsc = false;
+        if (trim(strtolower($order)) == "desc" ) $isAsc = false;
         usort($two_dimension_array, build_sorter($key, $isAsc));
     }
 
@@ -477,7 +478,7 @@ class UtilArray extends Util
     {
         return function ($a, $b) use ($key, $isAsc) {
             $result = strnatcmp($a[$key], $b[$key]);
-            if ( !$isAsc ) $result = 0 - $result;
+            if (!$isAsc ) $result = 0 - $result;
             return $result;
         };
     }
@@ -499,7 +500,7 @@ class UtilArray extends Util
     public static function like($data, $needle) {
         $result = array();
         foreach ($data as $key => $value)
-          if ( preg_match('/' . $needle . '/', $key) )
+          if (preg_match('/' . $needle . '/', $key) )
             $result[$key] = $value;
         return $result;
     }
@@ -520,9 +521,9 @@ class UtilArray extends Util
      */
     public static function likeValue($data, $needle) {
         $result = array();
-        if ( $data && is_array($data) ) {
+        if ($data && is_array($data)) {
             foreach ($data as $key => $value)
-            if ( preg_match('/' . $needle . '/', $value) )
+            if (preg_match('/' . $needle . '/', $value) )
                 $result[$key] = $value;
         }
         return $result;
@@ -542,10 +543,10 @@ class UtilArray extends Util
      * @return boolean 数组所有元素是否都是空值
      */
      public static function empty($data) {
-        if ( empty($data) ) return true;
-        if ( (is_array($data)) && count($data) > 0 ) {
+        if (empty($data) ) return true;
+        if ((is_array($data)) && count($data) > 0) {
             foreach ($data as $one) {
-                if ( !empty($one) ) {
+                if (!empty($one)) {
                     return false;
                 }
             }

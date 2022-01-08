@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类:自动生成代码-生成单张表或者对应类的前后台所有模板文件 |-----------
  * @category betterlife
@@ -19,8 +20,8 @@ class AutoCodeModel extends AutoCode
         $dest_directory = Gc::$nav_root_path . "tools" . DS."tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";
         AutoCodeValidate::run( $table_names );
-        if ( Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
-        if ( !file_exists($filename) ) {
+        if (Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
+        if (!file_exists($filename)) {
             AutoCodeConfig::run();
             die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码!</div>");
         }
@@ -32,7 +33,7 @@ class AutoCodeModel extends AutoCode
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
-        if ( Config_AutoCode::ONLY_DOMAIN ) {
+        if (Config_AutoCode::ONLY_DOMAIN) {
             self::$showReport .= "</div>";
 
             //将新添加的内容放置在文件最后作为可覆盖的内容
@@ -85,7 +86,7 @@ class AutoCodeModel extends AutoCode
 
         self::init();
         $inputArr = array();
-        if ( self::$tableList ) {
+        if (self::$tableList) {
             foreach (self::$tableList as $tablename) {
                 $inputArr[$tablename] = $tablename;
             }
@@ -104,7 +105,7 @@ class AutoCodeModel extends AutoCode
     public static function createManageService($table_names = "")
     {
         $file_manage_service_file = Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
-        if ( file_exists($file_manage_service_file) )
+        if (file_exists($file_manage_service_file) )
         {
             $tableList = self::tableListByTable_names( $table_names );
             $content   = file_get_contents($file_manage_service_file);
@@ -113,7 +114,7 @@ class AutoCodeModel extends AutoCode
                 $section_define  = $result["section_define"];
                 $section_content = $result["section_content"];
 
-                if ( !contain( $content, $section_define ) ) {
+                if (!contain( $content, $section_define )) {
                     $ctrl    = substr($content, 0, strpos($content, "     * 提供服务:") - 8);
                     $ctrr    = substr($content, strpos($content, "     * 提供服务:") - 8);
                     $content = $ctrl . $section_define . $ctrr;
@@ -145,30 +146,30 @@ class AutoCodeModel extends AutoCode
             file_put_contents($file_overwrite, $content) or
             $overwrite_not_arr[]=$dir_overwrite;
         }
-        if ( count($overwrite_not_arr) > 0 ) {
+        if (count($overwrite_not_arr) > 0) {
             $overwrite_not_dir_str = "";
             $overwrite_not_run_arr = array();
             $app_dir               = "model";
             foreach ($overwrite_not_arr as $overwrite_not_dir) {
-                if ( contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
+                if (contain( $overwrite_not_dir, Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS))
                 {
-                    if ( !in_array(Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr) ) {
+                    if (!in_array(Gc::$nav_root_path . Gc::$module_root . DS . $app_dir . DS, $overwrite_not_run_arr)) {
                         $overwrite_not_run_arr[] = Gc::$nav_root_path . Gc::$module_root.DS . $app_dir.DS;
                     }
                 } else {
-                    if ( !in_array($overwrite_not_dir, $overwrite_not_run_arr) )
+                    if (!in_array($overwrite_not_dir, $overwrite_not_run_arr) )
                         $overwrite_not_run_arr[] = $overwrite_not_dir;
                 }
             }
 
-            $isMac = ( contain( strtolower(php_uname()), "darwin" ) ) ? true : false;
+            $isMac = ( contain( strtolower(php_uname()), "darwin")) ? true : false;
             foreach ($overwrite_not_run_arr as $overwrite_not_dir) {
                 $overwrite_not_dir_str .=
                     "sudo mkdir -p " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
 
                 $overwrite_not_dir_str .=
                     "sudo chmod -R 0777 " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8);
-                // if ( !$isMac ) {
+                // if (!$isMac) {
                 //     $info .=
                 //         "sudo chown -R www-data:www-data " . $overwrite_not_dir . "<br/>" . str_repeat("&nbsp;",8) .
                 //         "sudo chmod -R 0755 " . $overwrite_not_dir . "</p>";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 显示所有的核心源码文件信息
  * @todo 按行数排序
@@ -23,7 +24,7 @@ $files       = array_merge($files, $files_tools);
 UtilCss::report_info();
 
 // $sort="";
-// if ( isset($_POST) && isset($_POST["code"]) ) {
+// if (isset($_POST) && isset($_POST["code"])) {
 
 // }
 

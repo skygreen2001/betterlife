@@ -1,9 +1,10 @@
 <?php
+
 /**
  * -----------| 功能:阴阳历转换 |-----------
- * 
+ *
  * （在Windows服务器上）本工具类只通用到2038年1月
- * 
+ *
  * 因为它使用比较的函数mktime只有效期到2038年1月；主要是因为32bit的Int类型支持位数只能到timestamp这个数值
  * @category betterlife
  * @package util.common
@@ -16,7 +17,7 @@ class UtilDateLunar
     private static $MAX_YEAR = 2100;
     /**
      * 数组单元分四部分组成
-     * 
+     *
      *     - 1: 农历闰月，如果当年没有闰月，就为0；
      *     - 2-3: 农历春节的年-月
      *     - 4: 这个数字二进制的十进制数存储；转换成的二进制后，每个农历月的天数(每个月29,30);如果是30天就是1,29天就是0.
@@ -78,7 +79,7 @@ class UtilDateLunar
     {
         $yearData = self::$lunarInfo[$year - self::$MIN_YEAR];
         
-        if ( ( self::getLeapMonth( $year ) > 0) && ( $month > self::getLeapMonth( $year ) ) ) {
+        if (( self::getLeapMonth( $year ) > 0) && ($month > self::getLeapMonth( $year))) {
             $month += 1;
         }
         $between = self::getDaysBetweenLunar( $year, $month, $date );
@@ -97,7 +98,7 @@ class UtilDateLunar
      */
     public static function isLeapYear($year)
     {
-        return ( ( $year % 4 == 0 && $year % 100 != 0 ) || ( $year % 400 == 0 ) );
+        return ( ( $year % 4 == 0 && $year % 100 != 0 ) || ( $year % 400 == 0));
     }
 
     /**
@@ -209,13 +210,13 @@ class UtilDateLunar
 
     /**
      * 获取闰月
-     * 
+     *
      * 规则描述如下:
-     * 
+     *
      * 农历闰年闰月的推算，3年一闰，5年二闰，19年七闰；
-     * 
+     *
      * 农历基本上19年为一周期对应于公历同一时间。如公历的2001年5月27日、1982年5月27日和1963年5月27日这个日子，都是闰四月初五。
-     * 
+     *
      * @link http://zhidao.baidu.com/question/7800690 闰月的规则说明 
      * @param year 阴历年份
      */
@@ -276,7 +277,7 @@ class UtilDateLunar
         $leapMonth = 0;
         $m         = '';
 
-        if ( $between == 0 ) {
+        if ($between == 0) {
             array_push($lunarArray, $year, '正月', '初一');
             $t = 1;
             $e = 1;
@@ -293,13 +294,13 @@ class UtilDateLunar
                     $t = $i + 2;
                     $e = 1;
                     break;
-                } else if ($between < $yearMonth[$i]) {
+                } elseif ($between < $yearMonth[$i]) {
                     $t = $i + 1;
                     $e = $between - ( empty($yearMonth[$i - 1]) ? 0 : $yearMonth[$i - 1] ) + 1;
                     break;
                 }
             }
-            $m = ( $leapMonth != 0 && $t == $leapMonth + 1 ) ? ( '闰' . self::getCapitalNum( $t - 1, true ) ) : self::getCapitalNum( ( $leapMonth != 0 && $leapMonth + 1 < $t ? ( $t - 1 ) : $t ), true );
+            $m = ( $leapMonth != 0 && $t == $leapMonth + 1 ) ? ( '闰' . self::getCapitalNum( $t - 1, true)) : self::getCapitalNum( ( $leapMonth != 0 && $leapMonth + 1 < $t ? ( $t - 1 ) : $t ), true );
 
             array_push($lunarArray, $year, $m, self::getCapitalNum( $e, false ));
         }
@@ -330,13 +331,13 @@ class UtilDateLunar
         } else {
             if ($num <= 10) {
                 $res = '初' . $dateHash[$num];
-            } else if ($num > 10 && $num < 20) {
+            } elseif ($num > 10 && $num < 20) {
                 $res = '十' . $dateHash[$num - 10];
-            } else if ($num == 20) {
+            } elseif ($num == 20) {
                 $res = "二十";
-            } else if ($num > 20 && $num < 30) {
+            } elseif ($num > 20 && $num < 30) {
                 $res = "廿" . $dateHash[$num - 20];
-            } else if ($num == 30) {
+            } elseif ($num == 30) {
                 $res = "三十";
             }
         }

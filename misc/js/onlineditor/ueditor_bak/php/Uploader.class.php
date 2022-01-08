@@ -53,9 +53,9 @@ class Uploader
         $this->fileField = $fileField;
         $this->config = $config;
         $this->type = $type;
-        if ( $type == "remote" ) {
+        if ($type == "remote") {
             $this->saveRemote();
-        } else if ( $type == "base64" ) {
+        } elseif ($type == "base64") {
             $this->upBase64();
         } else {
             $this->upFile();
@@ -72,17 +72,17 @@ class Uploader
     {
         // 需要调整php.ini的配置项:post_max_size|upload_max_filesize
         $file = $this->file = $_FILES[$this->fileField];
-        if ( !$file ) {
+        if (!$file) {
             $this->stateInfo = $this->getStateInfo( "ERROR_FILE_NOT_FOUND" );
             return;
         }
-        if ( $this->file['error'] ) {
+        if ($this->file['error']) {
             $this->stateInfo = $this->getStateInfo( $file['error'] );
             return;
-        } else if ( !file_exists($file['tmp_name']) ) {
+        } elseif (!file_exists($file['tmp_name'])) {
             $this->stateInfo = $this->getStateInfo( "ERROR_TMP_FILE_NOT_FOUND" );
             return;
-        } else if ( !is_uploaded_file($file['tmp_name']) ) {
+        } elseif (!is_uploaded_file($file['tmp_name'])) {
             $this->stateInfo = $this->getStateInfo( "ERROR_TMPFILE" );
             return;
         }
@@ -96,28 +96,28 @@ class Uploader
         $dirname = dirname($this->filePath);
 
         //检查文件大小是否超出限制
-        if ( !$this->checkSize() ) {
+        if (!$this->checkSize()) {
             $this->stateInfo = $this->getStateInfo( "ERROR_SIZE_EXCEED" );
             return;
         }
 
         //检查是否不允许的文件格式
-        if ( !$this->checkType() ) {
+        if (!$this->checkType()) {
             $this->stateInfo = $this->getStateInfo( "ERROR_TYPE_NOT_ALLOWED" );
             return;
         }
 
         //创建目录失败
-        if ( !file_exists($dirname) && !mkdir($dirname, 0777, true) ) {
+        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_CREATE_DIR" );
             return;
-        } else if (!is_writeable($dirname)) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_DIR_NOT_WRITEABLE" );
             return;
         }
 
         //移动文件
-        if ( !(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath)) ) { //移动失败
+        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
             $this->stateInfo = $this->getStateInfo( "ERROR_FILE_MOVE" );
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
@@ -125,12 +125,12 @@ class Uploader
 
         $url_base = UtilNet::urlbase();
 
-        if ( contain( strtolower(php_uname() ), "darwin") ) {
+        if (contain( strtolower(php_uname() ), "darwin")) {
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if ( contain( $file_sub_dir, "home" . DS ) )
+            if (contain( $file_sub_dir, "home" . DS))
                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "home" . DS));
             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-            if ( !endwith( $url_base, $domainSubDir ) ) $url_base .= $domainSubDir;
+            if (!endwith( $url_base, $domainSubDir)) $url_base .= $domainSubDir;
         }
 
         $this->fullName = $url_base . $this->fullName;
@@ -154,22 +154,22 @@ class Uploader
         $dirname = dirname($this->filePath);
 
         //检查文件大小是否超出限制
-        if ( !$this->checkSize() ) {
+        if (!$this->checkSize()) {
             $this->stateInfo = $this->getStateInfo( "ERROR_SIZE_EXCEED" );
             return;
         }
 
         //创建目录失败
-        if ( !file_exists($dirname) && !mkdir($dirname, 0777, true) ) {
+        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_CREATE_DIR" );
             return;
-        } else if ( !is_writeable($dirname) ) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_DIR_NOT_WRITEABLE" );
             return;
         }
 
         //移动文件
-        if ( !( file_put_contents($this->filePath, $img) && file_exists($this->filePath) ) ) { //移动失败
+        if (!( file_put_contents($this->filePath, $img) && file_exists($this->filePath) )) { //移动失败
             $this->stateInfo = $this->getStateInfo( "ERROR_WRITE_CONTENT" );
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
@@ -187,19 +187,19 @@ class Uploader
         $imgUrl = str_replace("&amp;", "&", $imgUrl);
 
         //http开头验证
-        if ( strpos($imgUrl, "http") !== 0 ) {
+        if (strpos($imgUrl, "http") !== 0) {
             $this->stateInfo = $this->getStateInfo( "ERROR_HTTP_LINK" );
             return;
         }
         //获取请求头并检测死链
         $heads = get_headers($imgUrl);
-        if ( !( stristr($heads[0], "200") && stristr($heads[0], "OK") ) ) {
+        if (!( stristr($heads[0], "200") && stristr($heads[0], "OK") )) {
             $this->stateInfo = $this->getStateInfo( "ERROR_DEAD_LINK" );
             return;
         }
         //格式验证(扩展名验证和Content-Type验证)
         $fileType = strtolower(strrchr($imgUrl, '.'));
-        if ( !in_array($fileType, $this->config['allowFiles']) || stristr($heads['Content-Type'], "image") ) {
+        if (!in_array($fileType, $this->config['allowFiles']) || stristr($heads['Content-Type'], "image")) {
             $this->stateInfo = $this->getStateInfo( "ERROR_HTTP_CONTENTTYPE" );
             return;
         }
@@ -225,22 +225,22 @@ class Uploader
         $dirname = dirname($this->filePath);
 
         //检查文件大小是否超出限制
-        if ( !$this->checkSize() ) {
+        if (!$this->checkSize()) {
             $this->stateInfo = $this->getStateInfo( "ERROR_SIZE_EXCEED" );
             return;
         }
 
         //创建目录失败
-        if ( !file_exists($dirname) && !mkdir($dirname, 0777, true) ) {
+        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_CREATE_DIR" );
             return;
-        } else if (!is_writeable($dirname)) {
+        } elseif (!is_writeable($dirname)) {
             $this->stateInfo = $this->getStateInfo( "ERROR_DIR_NOT_WRITEABLE" );
             return;
         }
 
         //移动文件
-        if ( !(file_put_contents($this->filePath, $img) && file_exists($this->filePath)) ) { //移动失败
+        if (!(file_put_contents($this->filePath, $img) && file_exists($this->filePath))) { //移动失败
             $this->stateInfo = $this->getStateInfo( "ERROR_WRITE_CONTENT" );
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
@@ -293,7 +293,7 @@ class Uploader
 
         //替换随机字符串
         $randNum = rand(1, 10000000000) . rand(1, 10000000000);
-        if ( preg_match("/\{rand\:([\d]*)\}/i", $format, $matches) ) {
+        if (preg_match("/\{rand\:([\d]*)\}/i", $format, $matches)) {
             $format = preg_replace("/\{rand\:[\d]*\}/i", substr($randNum, 0, $matches[1]), $format);
         }
 
@@ -319,7 +319,7 @@ class Uploader
         //modify by skygreen:修改上传文件的物理路径为相对本网站根路径
         $rootPath = Gc::$nav_root_path;//$_SERVER['DOCUMENT_ROOT'];
 
-        if ( substr($fullname, 0, 1) != '/' ) {
+        if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;
         }
 

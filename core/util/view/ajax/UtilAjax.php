@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 使用JS框架
  */
@@ -91,9 +92,9 @@ class UtilAjax extends Util
     public static $ajax_fw_version_default = "3.2.1"; //1.6.1
     /**
      * 推荐的Ajax框架和可使用的版本。
-     * 
+     *
      * 选用Ajax框架和可使用的版本可参考该列表
-     * 
+     *
      * @link http://code.google.com/intl/zh-CN/apis/libraries/devguide.html
      * @var array
      */
@@ -107,7 +108,7 @@ class UtilAjax extends Util
 
     /**
      * 是否采用google library api加载Ajax库。
-     * 
+     *
      * @link http://code.google.com/intl/zh-CN/apis/libraries/devguide.html
      * @var bool
      */
@@ -120,7 +121,7 @@ class UtilAjax extends Util
     public static $JsLoaded    = array();
     /**
      * 回调函数的内容会显示在页面上，当一次调用多个Ajax请求时，因此只需要写一次<html><body>。
-     * 
+     *
      * 该状态记录是否已经显示出过<html><body>
      * @var bool
      */
@@ -166,7 +167,7 @@ class UtilAjax extends Util
      */
     public static function loadAjaxJs($jsFlag, $version = "", $viewobject = null)
     {
-        if ( $viewobject )
+        if ($viewobject )
         {
             self::loadJsReady( $viewobject, "", true, $jsFlag, $version );
         } else {
@@ -176,9 +177,9 @@ class UtilAjax extends Util
 
     /**
      * 动态加载应用指定的Js文件。
-     * 
+     *
      * 可通过分组标识动态加载Ajax Javascript Framework库
-     * 
+     *
      * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径
      * @param bool $isGzip 是否使用Gzip进行压缩。
      * @param string $jsFlag Ajax Javascript Framework 标识
@@ -187,7 +188,7 @@ class UtilAjax extends Util
      */
     public static function loadJs($jsFile, $isGzip = false, $jsFlag = null, $version = "", $viewobject = null)
     {
-        if ( $viewobject )
+        if ($viewobject )
         {
             self::loadJsReady( $viewobject, $jsFile, $isGzip, $jsFlag, $version );
         } else {
@@ -197,9 +198,9 @@ class UtilAjax extends Util
 
     /**
      * 预加载[不直接输出]:动态加载应用指定的Js文件。
-     * 
+     *
      * 可通过分组标识动态加载Ajax Javascript Framework库
-     * 
+     *
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径
      * @param bool $isGzip 是否使用Gzip进行压缩。
@@ -208,8 +209,8 @@ class UtilAjax extends Util
      */
     public static function loadJsReady($viewobject, $jsFile, $isGzip = false, $jsFlag = null, $version = "")
     {
-        if ( $viewobject instanceof ViewObject ) {
-            if ( !isset($viewobject->js_ready) || empty($viewobject->js_ready) ) {
+        if ($viewobject instanceof ViewObject) {
+            if (!isset($viewobject->js_ready) || empty($viewobject->js_ready)) {
                 $viewobject->js_ready = "";
             }
             $viewobject->js_ready .= self::loadJsSentence( $jsFile, $isGzip, $jsFlag, $version );
@@ -218,9 +219,9 @@ class UtilAjax extends Util
 
     /**
      * 动态加载应用指定的Js文件的语句。
-     * 
+     *
      * 可通过分组标识动态加载Ajax Javascript Framework库
-     * 
+     *
      * @param string $jsFile  相对网站的根目录的Javascript文件名相对路径
      * @param bool $isGzip    是否使用Gzip进行压缩。
      * @param string $jsFlag  Ajax Javascript Framework 标识
@@ -229,58 +230,58 @@ class UtilAjax extends Util
     public static function loadJsSentence($jsFile, $isGzip = false, $jsFlag = null, $version = "")
     {
         $result = "";
-        if ( isset($jsFile) ) {
+        if (isset($jsFile)) {
             $url_base = UtilNet::urlbase();
-            if ( $isGzip ) {
-                if ( isset($jsFlag) ) {
+            if ($isGzip) {
+                if (isset($jsFlag)) {
                     $jsFile .= "&" . self::$JS_FLAG_GROUP . "=" . $jsFlag;
                 }
-                if ( !empty($version) ) {
+                if (!empty($version)) {
                     $jsFile .= "&" . self::$JS_FLAG_VERSION . "=" . $version;
                 }
-                if ( in_array($jsFile, self::$JsLoaded) ) {
+                if (in_array($jsFile, self::$JsLoaded)) {
                     return ;
                 }
                 $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                if ( contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" ) ) {
+                if (contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" )) {
                   $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
                 }
-                if ( contain( $file_sub_dir, Gc::$nav_root_path ) ) {
+                if (contain( $file_sub_dir, Gc::$nav_root_path )) {
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . self::$JS_GZIP . "{$jsFile}\"></script>" . HH;
                 } else {
                     $isLocalJsFile = str_replace(Gc::$url_base, $file_sub_dir, $jsFile);
-                    if ( contain( $isLocalJsFile, "home" . DS ) ) {
+                    if (contain( $isLocalJsFile, "home" . DS )) {
                         $isLocalJsFile = substr($isLocalJsFile, 0, strpos($isLocalJsFile, "home" . DS));
                     }
                     $js_gzip = str_replace($_SERVER["DOCUMENT_ROOT"], "", $isLocalJsFile);
                     $js_gzip = str_replace("\\", "/", $js_gzip);
 
-                    if ( contain( strtolower(php_uname()), "darwin" ) ) {
+                    if (contain( strtolower(php_uname()), "darwin" )) {
                         $js_gzip   = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
 
                         $start_str = substr($js_gzip, 0, strpos($js_gzip, "/"));
                         $url_basei = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ( $start_str == $end_str ) $js_gzip = str_replace($end_str . "/", "", $js_gzip);
+                        if ($start_str == $end_str ) $js_gzip = str_replace($end_str . "/", "", $js_gzip);
                     }
 
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . $js_gzip . self::$JS_GZIP . "{$jsFile}\"></script>" . HH;
                 }
             } else {
-                if ( in_array($jsFile, self::$JsLoaded) ) {
+                if (in_array($jsFile, self::$JsLoaded)) {
                     return ;
                 }
-                if ( startWith( $jsFile, "http" ) ) {
+                if (startWith( $jsFile, "http" )) {
                     $result = "    <script type=\"text/javascript\" src=\"" . $jsFile . "\"></script>" . HH;
                 } else {
-                    if ( contain( strtolower(php_uname()), "darwin") ) {
+                    if (contain( strtolower(php_uname()), "darwin")) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
                         $jsFile       = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $jsFile;
 
                         $start_str = substr($jsFile, 0,strpos($jsFile, "/"));
                         $url_basei = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ( $start_str == $end_str ) $jsFile = str_replace($end_str . "/", "", $jsFile);
+                        if ($start_str == $end_str ) $jsFile = str_replace($end_str . "/", "", $jsFile);
                     }
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . $jsFile . "\"></script>" . HH;
                 }
@@ -306,8 +307,8 @@ class UtilAjax extends Util
      */
     public static function loadJsContentReady($viewobject, $jsContent)
     {
-        if ( $viewobject instanceof ViewObject ) {
-            if ( !isset($viewobject->js_ready) || empty($viewobject->js_ready) ) {
+        if ($viewobject instanceof ViewObject) {
+            if (!isset($viewobject->js_ready) || empty($viewobject->js_ready)) {
                 $viewobject->js_ready = "";
             }
             $viewobject->js_ready .= self::loadJsContentSentence( $jsContent );
@@ -320,7 +321,7 @@ class UtilAjax extends Util
      */
     public static function loadJsContentSentence($jsContent)
     {
-        if ( !contain( $jsContent, "<script" ) ) {
+        if (!contain( $jsContent, "<script" )) {
             $result  = "    <script type=\"text/javascript\">" . HH;
             $result .= "        " . $jsContent . HH;
             $result .= "    </script>" . HH;

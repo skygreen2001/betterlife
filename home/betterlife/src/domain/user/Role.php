@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 角色 |-----------
  * @category betterlife

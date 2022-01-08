@@ -27,7 +27,7 @@ class GetWebUrl
         $count  = 0;
         $result = "";
         foreach (Gc::$module_names as $moduleName) {
-            if ( !contain( $moduleName, "admin" ) ) {
+            if (!contain( $moduleName, "admin" )) {
                 $moduleDir    = Gc::$nav_root_path . Gc::$module_root . DS . $moduleName . DS . "action" . DS;
                 $action_names = UtilFileSystem::getFilesInDirectory( $moduleDir );
                 foreach ($action_names as $action_path) {
@@ -39,12 +39,12 @@ class GetWebUrl
                         $action_name = strtolower($action_name);
 
                         $urlbase     = UtilNet::urlbase();
-                        if ( contain( strtolower(php_uname()), "darwin" ) ) {
+                        if (contain( strtolower(php_uname()), "darwin" )) {
                             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                            if ( contain( $file_sub_dir, "tools" . DS ) )
+                            if (contain( $file_sub_dir, "tools" . DS))
                                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
                             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-                            if ( !endwith( $urlbase, $domainSubDir ) ) $urlbase .= $domainSubDir;
+                            if (!endwith( $urlbase, $domainSubDir)) $urlbase .= $domainSubDir;
                         }
                         $result .= $urlbase . "index.php?go=" . $moduleName . "." . $action_name . "." . "" . $method . HH;
 
@@ -53,7 +53,7 @@ class GetWebUrl
                 }
             }
         }
-        if ( self::$isShowReport ) {
+        if (self::$isShowReport) {
             echo "生成保存路径:" . self::$save_urls_path . "<br/>";
             echo "共计有:" . $count . "个访问url地址<br/><br/>";
             echo "列表如下:<br/>";
@@ -79,7 +79,7 @@ class GetWebUrl
             $method_name = $method->name;
             $class_name  = $method->getDeclaringClass()->name;
 
-            if ( $class_name == $object ) {
+            if ($class_name == $object) {
                 $result[] = $method_name;
             }
         }

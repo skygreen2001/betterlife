@@ -25,7 +25,7 @@ require_once("../../../init.php");
 \$where_clause = "";
 \$orderDes     = "$realId desc";
 
-if ( !empty(\$query) ) {
+if (!empty(\$query)) {
     \$where_clause = "(";
     \$search_atom  = explode(" ", trim(\$query));
     array_walk(\$search_atom, function(&\$value, \$key) {
@@ -37,8 +37,8 @@ if ( !empty(\$query) ) {
 
 foreach (\$columns as \$key => \$column) {
     \$column_search_value = \$column["search"]["value"];
-    if ( \$column_search_value != "" ) {
-        if ( !empty(\$where_clause) ) {
+    if (\$column_search_value != "") {
+        if (!empty(\$where_clause)) {
             \$where_clause .= " and ";
         }
         \$where_clause .= " " . \$column["data"] . "='" . \$column_search_value . "' ";
@@ -47,7 +47,7 @@ foreach (\$columns as \$key => \$column) {
 
 \$page{$classname}s = {$classname}::queryPageByPageNo( \$page, \$where_clause, \$page_size, \$orderDes );
 \$data = \$page{$classname}s["data"];
-if ( \$data ) {
+if (\$data) {
     foreach (\$data as \$key => \${$instancename}) {
 $editApiRela
 $editApiImg
@@ -79,11 +79,11 @@ $select_web_template = <<<SELECT_WEB
 require_once("../../../init.php");
 
 \$query        = "";
-if ( array_key_exists("term", \$_GET) ) {
+if (array_key_exists("term", \$_GET)) {
     \$query = @\$_GET["term"];
 }
 \$where_clause = "";
-if ( !empty(\$query) ) {
+if (!empty(\$query)) {
     \$where_clause = "(";
     \$search_atom = explode(" ", trim(\$query));
     array_walk(\$search_atom, function(&\$value, \$key) {
@@ -94,7 +94,7 @@ if ( !empty(\$query) ) {
 }
 \$page{$classname_rela} = {$classname_rela}::get(\$where_clause);
 \$data     = array();
-if ( \$page{$classname_rela} ) {
+if (\$page{$classname_rela}) {
     foreach (\$page{$classname_rela} as \$key => \${$instancename_rela}) {
         \${$instancename_rela}v         = array();
         \${$instancename_rela}v["id"]   = \${$instancename_rela}->{$realId_m2m};

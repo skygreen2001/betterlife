@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| XML class: utility class to be used with PHP's XML handling functions |-----------
- * 
+ *
  * XML和Array的转换
  * @category betterlife
  * @package util.xml

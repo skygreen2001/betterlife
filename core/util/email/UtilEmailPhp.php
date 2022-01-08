@@ -1,31 +1,32 @@
 <?php
+
 /**
  * -----------| 这个功能用在Linux上 需要配合Sendmail使用 |-----------
- * 
+ *
  * 该功能尚未投入实际应用
- * 
+ *
  * 本类里PHP方法: ereg 已过时，需找到替换方法
- * 
+ *
  * 本类只可用于学习，暂不考虑投入实用
- * 
+ *
  * 参考这篇文章:http://www.jacmoe.dk/how-to-send-test-emails-using-php-mail-from-your-local-wamp-installation
- * 
+ *
  * Window下sendmail下载:http://glob.com.au/sendmail/
- * 
+ *
  * 要使邮件函数可用，PHP 需要已安装且正在运行的邮件系统。
- * 
+ *
  * 要使用的程序是由 php.ini 文件中的配置设置定义的。
- * 
+ *
  * 在Windows上要找到一个可以匿名发邮件的邮件服务器，然后修改php.ini相关部分
- * 
+ *
  * 或者安装一个hMailServer,下载地址:http://www.hmailserver.com/；尚待验证
- * 
+ *
  * Mailer objects are responsible for actually sending emails.
- * 
+ *
  * The default Mailer class will use PHP's mail() function.
- * 
+ *
  * @link http://www.silverstripe.com
- * 
+ *
  * class: Mailer | Email
  * @category betterlife
  * @package util.email
@@ -66,9 +67,9 @@ class UtilEmailPhp extends Util
      *
      * @link http://code.iamcal.com/php/rfc822/rfc822.phps
      * @copyright Cal Henderson <cal@iamcal.com>
-     * 
+     *
      *     This code is licensed under a Creative Commons Attribution-ShareAlike 2.5 License
-     * 
+     *
      *     http://creativecommons.org/licenses/by-sa/2.5/
      */
     public static function is_valid_address($email)
@@ -117,9 +118,9 @@ class UtilEmailPhp extends Util
 
     /**
      * Sends an email as a both HTML and plaintext
-     * 
+     *
      * @param mixed $attachedFiles should be an array of file names
-     * 
+     *
      *     - if you pass the entire $_FILES entry, the user-uploaded filename will be preserved
      *       use $plainContent to override default plain-content generation
      *
@@ -127,7 +128,7 @@ class UtilEmailPhp extends Util
      */
     private static function htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
-        if ( $customheaders && is_array($customheaders) == false ) {
+        if ($customheaders && is_array($customheaders) == false) {
             echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
             // dieprintr($customheaders);
             print_r($customheaders);
@@ -140,15 +141,15 @@ class UtilEmailPhp extends Util
 
         // We generate plaintext content by default, but you can pass custom stuff
         $plainEncoding = '';
-        if ( !$plainContent ) {
+        if (!$plainContent) {
             $plainContent = self::xml2raw($htmlContent);
-            if ( isset($bodyIsUnicode) && $bodyIsUnicode ) $plainEncoding = "base64";
+            if (isset($bodyIsUnicode) && $bodyIsUnicode ) $plainEncoding = "base64";
         }
 
 
         // If the subject line contains extended characters, we must encode the
         $subject = self::xml2raw($subject);
-        if ( isset($subjectIsUnicode) && $subjectIsUnicode )
+        if (isset($subjectIsUnicode) && $subjectIsUnicode )
             $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
 
@@ -163,7 +164,7 @@ class UtilEmailPhp extends Util
 
 
         // Add basic wrapper tags if the body tag hasn't been given
-        if ( stripos($htmlContent, '<body') === false ) {
+        if (stripos($htmlContent, '<body') === false) {
             $htmlContent =
                     "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" .
                     "<HTML><HEAD>\n" .
@@ -176,7 +177,7 @@ class UtilEmailPhp extends Util
                     "</HTML>";
         }
 
-        if ( $inlineImages ) {
+        if ($inlineImages) {
             $htmlPart = self::wrapImagesInline( $htmlContent );
         } else {
             $headers["Content-Transfer-Encoding"] = "quoted-printable";
@@ -186,7 +187,7 @@ class UtilEmailPhp extends Util
         list($messageBody, $messageHeaders) = self::encodeMultipart( array($plainPart,$htmlPart), "multipart/alternative" );
 
         // Messages with attachments are handled differently
-        if ( $attachedFiles && is_array($attachedFiles) ) {
+        if ($attachedFiles && is_array($attachedFiles)) {
 
             // The first part is the message itself
             $fullMessage  = self::processHeaders( $messageHeaders, $messageBody );
@@ -194,7 +195,7 @@ class UtilEmailPhp extends Util
 
             // Include any specified attachments as additional parts
             foreach ($attachedFiles as $file) {
-                if ( isset($file['tmp_name']) && isset($file['name']) ) {
+                if (isset($file['tmp_name']) && isset($file['name'])) {
                     $messageParts[] = self::encodeFileForEmail( $file['tmp_name'], $file['name'] );
                 } else {
                     $messageParts[] = self::encodeFileForEmail( $file );
@@ -214,37 +215,37 @@ class UtilEmailPhp extends Util
         $headers["From"] = self::validEmailAddr($from);
 
         // Messages with the X-SilverStripeMessageID header can be tracked
-        if ( isset($customheaders["X-SilverStripeMessageID"]) && defined('BOUNCE_EMAIL') ) {
+        if (isset($customheaders["X-SilverStripeMessageID"]) && defined('BOUNCE_EMAIL')) {
             $bounceAddress = BOUNCE_EMAIL;
         } else {
             $bounceAddress = $from;
         }
 
         // Strip the human name from the bounce address
-        if ( mb_ereg('^([^<>]*)<([^<>]+)> *$', $bounceAddress, $parts) ) $bounceAddress = $parts[2];
+        if (mb_ereg('^([^<>]*)<([^<>]+)> *$', $bounceAddress, $parts) ) $bounceAddress = $parts[2];
 
         // $headers["Sender"]         = $from;
         $headers["X-Mailer"] = X_MAILER;
-        if ( !isset($customheaders["X-Priority"]) ) $headers["X-Priority"] = 3;
+        if (!isset($customheaders["X-Priority"]) ) $headers["X-Priority"] = 3;
 
         $headers = array_merge((array)$headers, (array)$customheaders);
 
         // the carbon copy header has to be 'Cc', not 'CC' or 'cc' -- ensure this.
-        if ( isset($headers['CC']) ) {
+        if (isset($headers['CC'])) {
             $headers['Cc'] = $headers['CC'];
             unset($headers['CC']);
         }
-        if ( isset($headers['cc']) ) {
+        if (isset($headers['cc'])) {
             $headers['Cc'] = $headers['cc'];
             unset($headers['cc']);
         }
 
         // the carbon copy header has to be 'Bcc', not 'BCC' or 'bcc' -- ensure this.
-        if ( isset($headers['BCC']) ) {
+        if (isset($headers['BCC'])) {
             $headers['Bcc'] = $headers['BCC'];
             unset($headers['BCC']);
         }
-        if ( isset($headers['bcc']) ) {
+        if (isset($headers['bcc'])) {
             $headers['Bcc'] = $headers['bcc'];
             unset($headers['bcc']);
         }
@@ -255,7 +256,7 @@ class UtilEmailPhp extends Util
         $to      = self::validEmailAddr( $to );
 
         // Try it without the -f option if it fails
-        if ( !( $result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") ) ) {
+        if (!( $result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") )) {
             $result = mail($to, $subject, $fullBody, $headers);
         }
 
@@ -270,17 +271,17 @@ class UtilEmailPhp extends Util
         $subjectIsUnicode = false;
         $plainEncoding    = false; // Not ensurely where this is supposed to be set, but defined it false for now to remove php notices
 
-        if ( $customheaders && is_array($customheaders) == false ) {
+        if ($customheaders && is_array($customheaders) == false) {
             echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
             print_r($customheaders);
             die();
         }
 
-        if ( strpos($subject, "&#") !== false ) $subjectIsUnicode = true;
+        if (strpos($subject, "&#") !== false ) $subjectIsUnicode = true;
 
         // If the subject line contains extended characters, we must encode it
         $subject = self::xml2raw($subject);
-        if ( $subjectIsUnicode )
+        if ($subjectIsUnicode )
             $subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
         // Make the plain text part
@@ -290,14 +291,14 @@ class UtilEmailPhp extends Util
         $plainContent = ($plainEncoding == "base64") ? chunk_split(base64_encode($plainContent),60) : self::QuotedPrintable_encode( $plainContent );
 
         // Messages with attachments are handled differently
-        if ( is_array($attachedFiles) ) {
+        if (is_array($attachedFiles)) {
             // The first part is the message itself
             $fullMessage  = self::processHeaders($headers, $plainContent);
             $messageParts = array($fullMessage);
 
             // Include any specified attachments as additional parts
             foreach ($attachedFiles as $file) {
-                if ( isset($file['tmp_name']) && isset($file['name']) ) {
+                if (isset($file['tmp_name']) && isset($file['name'])) {
                     $messageParts[] = self::encodeFileForEmail( $file['tmp_name'], $file['name'] );
                 } else {
                     $messageParts[] = self::encodeFileForEmail( $file );
@@ -319,18 +320,18 @@ class UtilEmailPhp extends Util
 
         // $headers["Sender"]         = $from;
         $headers["X-Mailer"] = X_MAILER;
-        if ( !isset($customheaders["X-Priority"]) ) {
+        if (!isset($customheaders["X-Priority"])) {
             $headers["X-Priority"] = 3;
         }
 
         $headers = array_merge((array)$headers, (array)$customheaders);
 
         // the carbon copy header has to be 'Cc', not 'CC' or 'cc' -- ensure this.
-        if ( isset($headers['CC']) ) {
+        if (isset($headers['CC'])) {
             $headers['Cc'] = $headers['CC'];
             unset($headers['CC']);
         }
-        if ( isset($headers['cc']) ) {
+        if (isset($headers['cc'])) {
             $headers['Cc'] = $headers['cc'];
             unset($headers['cc']);
         }
@@ -340,10 +341,10 @@ class UtilEmailPhp extends Util
         $to      = self::validEmailAddr( $to );
 
         // Try it without the -f option if it fails
-        if ( !$result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") )
+        if (!$result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") )
             $result = mail($to, $subject, $fullBody, $headers);
 
-        if ( $result )
+        if ($result )
             return array($to, $subject, $fullBody, $headers);
 
         return false;
@@ -355,12 +356,12 @@ class UtilEmailPhp extends Util
      * @todo Currently &#xxx; entries are stripped; they should be converted
      */
     private static function xml2raw($val) {
-        if ( is_array($val) ) {
+        if (is_array($val)) {
             foreach ($val as $k => $v) $val[$k] = self::xml2raw( $v );
             return $val;
         } else {
             // More complex text needs to use html2raw instead
-            if ( strpos($val, '<' ) !== false ) return html2raw( $val );
+            if (strpos($val, '<' ) !== false ) return html2raw( $val );
             else return html_entity_decode($val, ENT_QUOTES, 'UTF-8');
             html_entity_decode($val, ENT_QUOTES, 'UTF-8');
         }
@@ -374,7 +375,7 @@ class UtilEmailPhp extends Util
         $headers["Content-Type"] = "$contentType; boundary=\"$separator\"";
         $headers["Content-Transfer-Encoding"] = "7bit";
 
-        if ( $contentType == "multipart/alternative" ) {
+        if ($contentType == "multipart/alternative") {
             //$baseMessage = "This is an encoded HTML message.  There are two parts: a plain text and an HTML message, open whatever suits you better.";
             $baseMessage = "\nThis is a multi-part message in MIME format.";
         } else {
@@ -401,7 +402,7 @@ class UtilEmailPhp extends Util
         // Make the HTML part
         $headers["Content-Type"]              = "text/html; charset=\"utf-8\"";
         $headers["Content-Transfer-Encoding"] = "quoted-printable";
-        $multiparts[] = self::processHeaders( $headers, self::QuotedPrintable_encode( $htmlContent ) );
+        $multiparts[] = self::processHeaders( $headers, self::QuotedPrintable_encode( $htmlContent));
 
         // Make all the image parts
         global $_INLINED_IMAGES;
@@ -420,9 +421,9 @@ class UtilEmailPhp extends Util
     private static function processHeaders($headers, $body = false)
     {
         $res = '';
-        if ( is_array($headers) ) while (list($k, $v) = each($headers))
+        if (is_array($headers) ) while (list($k, $v) = each($headers))
                 $res .= "$k: $v\n";
-        if ( $body ) $res .= "\n$body";
+        if ($body ) $res .= "\n$body";
         return $res;
     }
 
@@ -466,31 +467,31 @@ class UtilEmailPhp extends Util
      */
     private static function encodeFileForEmail($file, $destFileName = false, $disposition = NULL, $extraHeaders = "")
     {
-        if ( !$file ) {
+        if (!$file) {
             user_error("encodeFileForEmail: not passed a filename and/or data", E_USER_WARNING);
             return;
         }
 
-        if ( is_string($file) ) {
+        if (is_string($file)) {
             $file = array('filename' => $file);
             $fh   = fopen($file['filename'], "rb");
-            if ( $fh ) {
+            if ($fh) {
                 while (!feof($fh)) $file['contents'] .= fread($fh, 10000);
                 fclose($fh);
             }
         }
 
         // Build headers, including content type
-        if ( !$destFileName ) $base = basename($file['filename']);
+        if (!$destFileName ) $base = basename($file['filename']);
         else $base = $destFileName;
 
         $mimeType = $file['mimetype'] ? $file['mimetype'] : self::getMimeType( $file['filename'] );
-        if ( !$mimeType ) $mimeType = "application/unknown";
+        if (!$mimeType ) $mimeType = "application/unknown";
 
-        if ( empty($disposition) ) $disposition = isset($file['contentLocation']) ? 'inline' : 'attachment';
+        if (empty($disposition) ) $disposition = isset($file['contentLocation']) ? 'inline' : 'attachment';
 
         // Encode for emailing
-        if ( substr($file['mimetype'], 0, 4) != 'text' ) {
+        if (substr($file['mimetype'], 0, 4) != 'text') {
             $encoding = "base64";
             $file['contents'] = chunk_split(base64_encode($file['contents']));
         } else {
@@ -504,7 +505,7 @@ class UtilEmailPhp extends Util
                    "Content-Transfer-Encoding: $encoding\n".
                    "Content-Disposition: $disposition;\n\tfilename=\"$base\"\n" ;
 
-        if ( isset($file['contentLocation']) ) $headers .= 'Content-Location: ' . $file['contentLocation'] . "\n" ;
+        if (isset($file['contentLocation']) ) $headers .= 'Content-Location: ' . $file['contentLocation'] . "\n" ;
 
         $headers .= $extraHeaders . "\n";
 
@@ -530,9 +531,9 @@ class UtilEmailPhp extends Util
         $emailAddress = trim($emailAddress);
         $angBrack     = strpos($emailAddress, '<');
 
-        if ( $angBrack === 0 ) {
+        if ($angBrack === 0) {
             $emailAddress = substr($emailAddress, 1, strpos($emailAddress, '>') - 1);
-        } else if ( $angBrack ) {
+        } elseif ($angBrack) {
             $emailAddress = str_replace('@', '', substr($emailAddress, 0, $angBrack)) . substr($emailAddress, $angBrack);
         }
 
@@ -545,7 +546,7 @@ class UtilEmailPhp extends Util
     private static function getMimeType($filename)
     {
         global $global_mimetypes;
-        if ( !$global_mimetypes ) self::loadMimeTypes();
+        if (!$global_mimetypes ) self::loadMimeTypes();
         $ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
         return $global_mimetypes[$ext];
     }
@@ -559,9 +560,9 @@ class UtilEmailPhp extends Util
         $mimetypePathGeneric = Gc::$nav_root_path . '/sapphire/email/mime.types';
         $mimeTypes           = file_exists($mimetypePathGeneric) ?  file($mimetypePathGeneric) : file($mimetypePathCustom);
         foreach ($mimeTypes as $typeSpec) {
-            if ( ($typeSpec = trim($typeSpec) ) && substr($typeSpec, 0, 1) != "#" ) {
+            if (($typeSpec = trim($typeSpec) ) && substr($typeSpec, 0, 1) != "#") {
                 $parts = preg_split("/[ \t\r\n]+/", $typeSpec);
-                if ( sizeof($parts) > 1 ) {
+                if (sizeof($parts) > 1) {
                     $mimeType = array_shift($parts);
                     foreach ($parts as $ext) {
                         $ext = strtolower($ext);

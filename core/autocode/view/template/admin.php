@@ -53,7 +53,7 @@ require_once("../../../init.php");
 \$where_clause = "";
 \$orderDes     = "$realId desc";
 
-if ( !empty(\$query) ) {
+if (!empty(\$query)) {
   \$where_clause = "(";
   \$search_atom  = explode(" ", trim(\$query));
   array_walk(\$search_atom, function(&\$value, \$key) {
@@ -65,8 +65,8 @@ if ( !empty(\$query) ) {
 
 foreach (\$columns as \$key => \$column) {
   \$column_search_value = \$column["search"]["value"];
-  if ( \$column_search_value != "" ) {
-    if ( !empty(\$where_clause) ) {
+  if (\$column_search_value != "") {
+    if (!empty(\$where_clause)) {
       \$where_clause .= " and ";
     }
     \$where_clause .= " " . \$column["data"] . "='" . \$column_search_value . "' ";
@@ -75,7 +75,7 @@ foreach (\$columns as \$key => \$column) {
 
 \$page{$classname}s = {$classname}::queryPageByPageNo( \$page, \$where_clause, \$page_size, \$orderDes );
 \$data = \$page{$classname}s["data"];
-if ( \$data ) {
+if (\$data) {
   foreach (\$data as \$key => \${$instancename}) {
 $editApiRela
 $editApiImg
@@ -112,7 +112,7 @@ $js_template = <<<JS
             "retrieve"  : true,
             "ajax": {
                 "url" : "api/web/list/{$instancename}.php",
-                "data": function ( d ) {
+                "data": function ( d) {
                     d.query    = \$("#input-search").val();
                     d.pageSize = d.length;
                     d.page     = d.start / d.length + 1;
@@ -190,7 +190,7 @@ $idColumnDefs
         });
     }
 
-    if ( \$(".content-wrapper .edit form").length ) {
+    if (\$(".content-wrapper .edit form").length) {
 $editImgColumn
 $editDateColumn
 $editEnumColumn
@@ -235,7 +235,7 @@ $js_sub_template_img = <<<JS_IMG
                 {"orderable": false, "targets": $row_no,
                  "render"   : function(data, type, row) {
                     var result = "";
-                    if ( data ) {
+                    if (data) {
                         var $realId = row.$realId;
                         result = '<a id="' + "imgUrl" + $realId + '" href="#"><img src="' + data + '" class="img-thumbnail" alt="' + row.$altImgVal + '" /></a>';
 
@@ -257,7 +257,7 @@ JS_IMG;
 $js_sub_template_bit = <<<JS_BIT
                 {"orderable": false, "targets": $row_no,
                  "render"   : function(data,type,row) {
-                    if ( data == 1 ) {
+                    if (data == 1) {
                         return '是';
                     } else {
                         return '否';
@@ -297,7 +297,7 @@ $js_sub_template_id = <<<JS_ID
                     \$("body").off('click', 'a#info-dele' + data);
                     \$("body").on('click', 'a#info-dele' + data, function() {//删除
                         bootbox.confirm("确定要删除该{$table_comment}:" + data + "?",function(result) {
-                            if ( result == true ) {
+                            if (result == true) {
                                 \$.get("index.php?go={$appname}.{$instancename}.delete&id="+data, function(response, status) {
                                     \$( 'a#info-dele' + data ).parent().parent().css("display", "none");
                                 });

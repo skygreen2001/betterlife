@@ -40,7 +40,7 @@ class Gc {
     public static $dev_php_debug_on = false;
     /**
      * 网站应用的名称
-     * 
+     *
      * 展示给网站用户
      * @var string
      * @static
@@ -107,9 +107,9 @@ class Gc {
     //<editor-fold desc='开发者使用设置'>
     /**
      * 网站应用的名称
-     * 
+     *
      * 在网站运行程序中使用，不展示给网站用户；如标识日志文件的默认名称等等。
-     * 
+     *
      * @var string
      * @static
      */
@@ -120,18 +120,18 @@ class Gc {
     public static $appName_alias = 'bb';
     /**
      * 业务应用部署的根目录
-     * 
+     *
      * 说明: 该框架采用模块组建的方式
-     * 
+     *
      * 每一个遵循该框架的网站业务应用都部署在该目录下
-     * 
+     *
      * @var string
      * @static
      */
     public static $module_root   = 'home';
     /**
      * 开发者可在同一个web里部署多个业务应用
-     * 
+     *
      * $moduleName里定义的是每个业务应用所在的根目录路径
      * @var array
      * @static
@@ -144,7 +144,7 @@ class Gc {
     );
     /**
      * URL访问模式,可选参数0、1、2、3,代表以下四种模式:
-     * 
+     *
      * - 0 (普通模式);
      * - 1 (PATHINFO 模式); eg: ?s=/module/action/method/id/1
      * - 2 (REWRITE  模式); 需要打开.htaccess里的注释行: RewriteEngine On;
@@ -169,18 +169,18 @@ class Gc {
     public static $dev_profile_on = false;
     /**
      * 模板模式
-     * 
+     *
      * 本框架自带四种开源模板支持
-     * 
+     *
      * - 1: Smarty
      * - 2: Twig
      * - 3: PHPTemplate
      * - 0: 不支持任何模板
-     * 
+     *
      * 默认在这里指定支持其中一种；
-     * 
+     *
      * 若在开发中需要用到多种模板技术,需在使用时通过View进行指定使用
-     * 
+     *
      * 当模板为1:Smarty时，模板的标签写法参考/home/betterlife/view/default/core/blog/display.tpl
      * @var int
      * @static
@@ -188,7 +188,7 @@ class Gc {
     public static $template_mode = 1; // View::TEMPLATE_MODE_TWIG;
     /**
      * 每个模块可以定义自己的模板模式
-     * 
+     *
      * 如果没有定义，则使用$template_mode默认定义的名称，一般都是 1: Smarty
      * @var mixed
      */
@@ -198,12 +198,12 @@ class Gc {
     );
     /**
      * 开发者自定义当前使用模板目录名
-     * 
+     *
      * @example 示例:
      * 示例如下:
-     * 
+     *
      *     D:\wamp\www\betterlife\home\betterlife\view\default
-     * 
+     *
      *     default即自定义当前使用模板目录名
      * @var string
      * @static
@@ -211,9 +211,9 @@ class Gc {
     public static $self_theme_dir = 'default';
     /**
      * 每个模块可以定义自己显示的模板名
-     * 
+     *
      * 如果没有定义，则使用$self_theme_dir默认定义的名称，一般都是default
-     * 
+     *
      * @var mixed
      */
     public static $self_theme_dir_every = array(
@@ -223,13 +223,13 @@ class Gc {
     );
     /**
      * 模板文件后缀名称
-     * 
+     *
      * 一般为.tpl,.twig,.php,.html,.htm;
-     * 
+     *
      * 一般不支持开源模板的时候，使用.php后缀名；即仍可以使用php语法；但不利于逻辑层和页面设计html代码分离
-     * 
+     *
      * 模板文件一般通用tpl后缀；也有开源模板通常使用html或者htm后缀名；实际上后缀名为任何名称都可以
-     * 
+     *
      * @var string
      * @static
      */
@@ -237,7 +237,7 @@ class Gc {
     // public static $template_file_suffix = '.twig';
     /**
      * 每个模块可以定义自己的模板后缀名
-     * 
+     *
      * 如果没有定义，则使用$template_file_suffix默认定义的名称，一般都是.tpl
      * @var mixed
      */
@@ -247,14 +247,14 @@ class Gc {
     );
     /**
      * 所有无需预加载的 业务应用所在的根目录路径下的子目录
-     * 
+     *
      * @example 示例:
      * 示例如下:
-     * 
+     *
      *      view在module目录下
-     * 
+     *
      *      主要为html,javascript,css文件；不是类对象文件，因此无需预加载
-     * 
+     *
      * @var array
      * @static
      */
@@ -263,20 +263,20 @@ class Gc {
     );
     /**
      * 是否在线性能优化
-     * 
+     *
      * @var mixed
      */
     public static $is_online_optimize = false;
     /**
      * 页面字符集
-     * 
+     *
      * @string 页面字符集
-     * 
+     *
      * 一般分为:
-     * 
+     *
      *    - UTF-8
      *    - GBK
-     * 
+     *
      * 最终可以由用户选择
      * @var string
      * @static
@@ -284,28 +284,28 @@ class Gc {
     public static $encoding = 'UTF-8';
     /**
      * Web开发使用语言
-     * 
+     *
      *     - En_Us: 英文
      *     - Zh_Cn: 中文
-     * 
+     *
      * 默认使用中文
-     * 
+     *
      * @var string 文字显示默认语言
      * @static
-     * 
+     *
      * 最终可以由用户选择
      */
     public static $language = 'Zh_Cn';
     /**
      * 是否Session自动启动
-     * 
+     *
      * @var bool
      * @static
      */
     public static $session_auto_start = true;
     /**
      * 通常用于用邮件发送重要日志给管理员
-     * 
+     *
      * @var array 邮件的配置。
      * @static
      */
@@ -316,7 +316,7 @@ class Gc {
         'sendmail_from' => 'skygreen2001@sina.com',
         /**
          * 可在php.ini中设置sendmail_path，无法通过ini_set实时设置，因为它只能在php.ini或者httpd.conf中设置。
-         * 
+         *
          * 因为官网文档【http://php.net/manual/en/mail.configuration.php】: sendmail_path '/usr/sbin/sendmail -t -i' PHP_INI_SYSTEM
          */
         //'sendmail_path'=>'C:\wamp\sendmail\sendmail.exe -t',
@@ -328,7 +328,7 @@ class Gc {
     //</editor-fold>
     /**
      * 日志的配置
-     * 
+     *
      * @var array 日志的配置。
      * @static
      */
@@ -336,11 +336,11 @@ class Gc {
     public static $log_config = array(
         /**
          * 默认日志记录的方式。
-         * 
+         *
          * 一般来讲，日志都通过log记录，由本配置决定它在哪里打印出来。
-         * 
+         *
          * 可通过邮件发送重要日志，可在数据库或者文件中记录日志。也可以通过Firebug显示日志。
-         * 
+         *
          * EnumLogType::FILE : 3
          */
         'logType'          => EnumLogType::FILE,
@@ -350,9 +350,9 @@ class Gc {
         'log_record_level' => array('EMERG','ALERT','CRIT','ERR','INFO'),
         /**
          * 日志文件路径
-         * 
+         *
          * 可指定日志文件放置的路径
-         * 
+         *
          * 如果为空不设置，则在网站应用根目录下新建一个log目录，放置在它下面
          */
         'logpath'       => '',
@@ -383,50 +383,50 @@ class Gc {
     public static $is_port = true;
     public static function init()
     {
-        if ( empty(Gc::$nav_root_path) ) Gc::$nav_root_path = __DIR__ . DS;
-        if ( empty(Gc::$nav_framework_path) ) Gc::$nav_framework_path = __DIR__ . DS;
-        if ( empty(Gc::$upload_path) ) Gc::$upload_path = Gc::$nav_root_path . 'upload' . DS;
-        if ( empty(Gc::$attachment_path) ) Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
-        if ( empty(Gc::$url_base) ) {
+        if (empty(Gc::$nav_root_path) ) Gc::$nav_root_path = __DIR__ . DS;
+        if (empty(Gc::$nav_framework_path) ) Gc::$nav_framework_path = __DIR__ . DS;
+        if (empty(Gc::$upload_path) ) Gc::$upload_path = Gc::$nav_root_path . 'upload' . DS;
+        if (empty(Gc::$attachment_path) ) Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
+        if (empty(Gc::$url_base)) {
             $baseurl = '';
-            if ( empty($_SERVER['SERVER_NAME']) ) $_SERVER['SERVER_NAME'] = "localhost";
-            if ( isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='on') ) {
+            if (empty($_SERVER['SERVER_NAME']) ) $_SERVER['SERVER_NAME'] = "localhost";
+            if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='on')) {
                 $baseurl = 'https://' . $_SERVER['SERVER_NAME'];
-                if ( self::$is_port && ( $_SERVER['SERVER_PORT'] != 443 ) ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                if (self::$is_port && ($_SERVER['SERVER_PORT'] != 443)) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
             } else {
-                if ( array_key_exists('SERVER_NAME', $_SERVER) ) $baseurl = 'http://' . $_SERVER['SERVER_NAME'];
-                if ( array_key_exists('SERVER_PORT', $_SERVER) ) {
+                if (array_key_exists('SERVER_NAME', $_SERVER) ) $baseurl = 'http://' . $_SERVER['SERVER_NAME'];
+                if (array_key_exists('SERVER_PORT', $_SERVER)) {
                     if (strpos($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']) !== false) {
-                        if ( self::$is_port && $_SERVER['SERVER_PORT'] != 80 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                        if (self::$is_port && $_SERVER['SERVER_PORT'] != 80 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
                     }
                 }
             }
             $baseDir = dirname($_SERVER['SCRIPT_NAME']);
             $baseurl .= ($baseDir == '\\' ? '' : $baseDir);
-            if ( strpos(strrev($baseurl), "/") !== 0 ) $baseurl .= '/';
+            if (strpos(strrev($baseurl), "/") !== 0 ) $baseurl .= '/';
             $file_sub_dir = str_replace(Gc::$nav_root_path, "", getcwd() . DS);
             $file_sub_dir = str_replace(DS, "/", $file_sub_dir);
             Gc::$url_base = str_replace(strtolower($file_sub_dir), "", strtolower($baseurl));
         }
-        if ( empty(Gc::$upload_url) ) {
+        if (empty(Gc::$upload_url)) {
             Gc::$upload_url = Gc::$url_base;
             $same_part = explode(DS, Gc::$nav_root_path);
-            if ( $same_part && (count($same_part) > 2) ) {
+            if ($same_part && (count($same_part) > 2)) {
                 $same_part = $same_part[count($same_part) - 2];
-                if ( strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false ) {
+                if (strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false) {
                     Gc::$upload_url = substr(Gc::$upload_url, 0, (strrpos(Gc::$upload_url, $same_part . "/") + strlen($same_part) + 1)) . "upload/";
                 } else {
                     $parse_url = parse_url(Gc::$upload_url);
-                    if ( array_key_exists("scheme", $parse_url) ) {
-                        if ( $parse_url ) Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
-                        if (  self::$is_port && !empty($parse_url["port"]) ) Gc::$upload_url .= ":" . $parse_url["port"];
+                    if (array_key_exists("scheme", $parse_url)) {
+                        if ($parse_url ) Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
+                        if ( self::$is_port && !empty($parse_url["port"]) ) Gc::$upload_url .= ":" . $parse_url["port"];
                     }
                     Gc::$upload_url .= "/upload/";
                 }
             }
         }
-        if ( empty(Gc::$attachment_url) ) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
-        if ( empty(Gc::$uploadImg_url) ) Gc::$uploadImg_url = Gc::$upload_url . 'images/';
+        if (empty(Gc::$attachment_url) ) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
+        if (empty(Gc::$uploadImg_url) ) Gc::$uploadImg_url = Gc::$upload_url . 'images/';
     }
     //</editor-fold>
 }

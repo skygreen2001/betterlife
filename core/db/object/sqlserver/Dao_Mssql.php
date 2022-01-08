@@ -1,11 +1,12 @@
 <?php
+
 /**
  * -----------| 使用PHP5的Ms sql Extension:php_mssql |-----------
- * 
+ *
  * 主要操作Microsoft的Sql Server 2000数据库
- * 
+ *
  * 定义如下:
- * 
+ *
  *     - 通用SQL的执行
  *     - 单个对象【单张表】的增删改查
  *     - 列表对象的查询
@@ -22,7 +23,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
 
     /**
      * 连接数据库
-     * 
+     *
      * 说明:$dsn可以直接在System DSN里配置；然后在配置里设置:Config_Db::$dbname
      * @param string $host
      * @param string $port
@@ -35,24 +36,24 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $connecturl = Config_Mssql::connctionurl( $host, $port );
 
-        if ( !isset($username) ) {
+        if (!isset($username)) {
             $username = Config_Mssql::$username;
         }
-        if ( !isset($password) ) {
+        if (!isset($password)) {
             $password = Config_Mssql::$password;
         }
-        if ( !isset($dbname) ) {
+        if (!isset($dbname)) {
             $dbname   = Config_Mssql::$dbname;
         }
-        if ( Config_Odbc::$is_persistent) {
+        if (Config_Odbc::$is_persistent) {
             $this->connection = mssql_pconnect($connecturl, $username, $password);
         } else {
             $this->connection = mssql_connect($connecturl, $username, $password);
         }
 
-        if ( !$this->connection) {
+        if (!$this->connection) {
             $errorinfo = "错误原因: " . mssql_get_last_message();
-            Exception_Db::log( Wl::ERROR_INFO_CONNECT_FAIL . $errorinfo );
+            ExceptionDb::log( Wl::ERROR_INFO_CONNECT_FAIL . $errorinfo );
         }
         mssql_select_db($dbname, $this->connection);
     }
@@ -63,14 +64,14 @@ class Dao_Mssql extends Dao implements IDaoNormal{
      */
     private function executeSQL()
     {
-        if ( !empty($this->sQuery) ) {
-            if ( Config_Db::$debug_show_sql ) {
+        if (!empty($this->sQuery)) {
+            if (Config_Db::$debug_show_sql) {
                 LogMe::log( "SQL: " . $this->sQuery );
             }
             $this->result = mssql_query($this->sQuery);
-            if ( !$this->result ) {
+            if (!$this->result) {
                 $errorinfo = "错误原因:" . mssql_get_last_message();
-                Exception_Db::log( Wl::ERROR_INFO_DB_HANDLE . $errorinfo );
+                ExceptionDb::log( Wl::ERROR_INFO_DB_HANDLE . $errorinfo );
             }
         }
     }
@@ -83,18 +84,18 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     private function getResultToObjects($object)
     {
         $result = array();
-        if ( !mssql_num_rows($this->result) ) {
+        if (!mssql_num_rows($this->result)) {
            return null;
         }
 
         while ($row = mssql_fetch_array($this->result, self::$fetchmode)) {
-            if ( !empty($object) ) {
-                if ( $this->validParameter( $object ) ) {
+            if (!empty($object)) {
+                if ($this->validParameter( $object )) {
                     $c        = UtilObject::array_to_object( $row, $this->classname );
                     $result[] = $c;
                 }
             } else {
-                if ( count($row) == 1 ) {
+                if (count($row) == 1) {
                     foreach ($row as $key => $val) {
                         $result[] = $val;
                     }
@@ -110,8 +111,8 @@ class Dao_Mssql extends Dao implements IDaoNormal{
         $result = $this->getValueIfOneValue( $result );
         $sql_s  = preg_replace("/\s/", "", $sqlstring);
         $sql_s  = strtolower($sql_s);
-        if ( !is_array($result) ) {
-            if ( !( contain( $sql_s, "count(" ) || contain( $sql_s, "sum(" ) ) ) {
+        if (!is_array($result)) {
+            if (!( contain( $sql_s, "count(" ) || contain( $sql_s, "sum("))) {
                 $tmp      = $result;
                 $result   = null;
                 $result[] = $tmp;
@@ -129,14 +130,14 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if ( !$this->validObjectParameter( $object ) ) {
+        if (!$this->validObjectParameter( $object )) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP ) );
-            if ( Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
-                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) ) ) {
+            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
+            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
+                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
                 $this->saParams = UtilObject::object_to_array( $object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK) );
             } else {
                 $this->saParams = UtilObject::object_to_array( $object );
@@ -145,13 +146,13 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $this->executeSQL();
             $this->sQuery = Crud_SQL::SQL_SELECT . " @@IDENTITY as id";
             $this->executeSQL();
-            if ( $row = mssql_fetch_array($this->result, $this->fetchmode) ) {
+            if ($row = mssql_fetch_array($this->result, $this->fetchmode)) {
                 $autoId = $row["id"];
             }
         } catch (Exception $exc) {
-            Exception_Db::log( $exc->getMessage() . "" . $exc->getTraceAsString() );
+            ExceptionDb::log( $exc->getMessage() . "" . $exc->getTraceAsString() );
         }
-        if ( !empty($object) && is_object($object) ) {
+        if (!empty($object) && is_object($object)) {
             $object->setId( $autoId );//当保存返回对象时使用
         }
         return $autoId;
@@ -166,11 +167,11 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function delete($object)
     {
         $result = false;
-        if ( !$this->validObjectParameter( $object ) ) {
+        if (!$this->validObjectParameter( $object )) {
             return $result;
         }
         $id = $object->getId();
-        if ( !empty($id) ) {
+        if (!empty($id)) {
             try {
                 $_SQL         = new Crud_Sql_Delete();
                 $where        = $this->sql_id( $object ) . self::EQUAL . $id;
@@ -178,7 +179,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                 $this->executeSQL();
                 $result       = true;
             } catch (Exception $exc) {
-                Exception_Db::log( $exc->getTraceAsString() );
+                ExceptionDb::log( $exc->getTraceAsString() );
             }
         }
         return $result;
@@ -193,19 +194,19 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function update($object)
     {
         $result = false;
-        if ( !$this->validObjectParameter($object) ) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
 
         $id = $object->getId();
-        if ( !empty($id) ) {
+        if (!empty($id)) {
             try {
                 $_SQL = new Crud_Sql_Update();
                 $_SQL->isPreparedStatement = false;
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING ) );
+                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
                 $object->setId( null );
-                if ( Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
-                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8 ) ) ) {
+                if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
+                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
                     $this->saParams = UtilObject::object_to_array( $object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK) );
                 } else {
                     $this->saParams = UtilObject::object_to_array( $object );
@@ -217,7 +218,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                 $this->executeSQL();
                 $result         = true;
             } catch (Exception $exc) {
-                Exception_Db::log( $exc->getTraceAsString() );
+                ExceptionDb::log( $exc->getTraceAsString() );
                 $result = false;
             }
         } else {
@@ -235,7 +236,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function saveOrUpdate($dataobject)
     {
         $id = $dataobject->getId();
-        if ( isset($id) ) {
+        if (isset($id)) {
             $result = $this->update( $dataobject );
         } else {
             $result = $this->save( $dataobject );
@@ -245,40 +246,40 @@ class Dao_Mssql extends Dao implements IDaoNormal{
 
     /**
      * 根据对象实体查询对象列表
-     * 
+     *
      * @param string $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *     1. id asc;
      *     2. name desc;
-     * 
+     *
      * @param string $limit 分页数目:同Mysql limit语法
      * 示例如下:
-     * 
+     *
      *     0,10
-     * 
+     *
      * @return array 对象列表数组
      */
     public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
-            if ( !$this->validParameter( $object ) ) {
+            if (!$this->validParameter( $object )) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
-            if ( $sort == Crud_SQL::SQL_ORDER_DEFAULT_ID ) {
+            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id( $object );
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
@@ -290,56 +291,56 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $result                    = $this->getResultToObjects( $object );
             return $result;
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
     }
 
     /**
      * 查询得到单个对象实体
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *     1. id asc;
      *     2. name desc;
-     * 
+     *
      * @return object 单个对象实体
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
-            if ( !$this->validParameter( $object ) ) {
+            if (!$this->validParameter( $object )) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam( $filter );
             $_SQL->isPreparedStatement = false;
-            if ( $sort == Crud_SQL::SQL_ORDER_DEFAULT_ID ) {
+            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id( $object );
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
             $result       = $this->getResultToObjects( $object );
-            if ( count($result) >= 1 ) {
+            if (count($result) >= 1) {
                 $result = $result[0];
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
 
     }
@@ -354,24 +355,24 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if ( !$this->validParameter( $object ) ) {
+            if (!$this->validParameter( $object )) {
                 return $result;
             }
 
-            if ( !empty($id) && is_scalar($id) ) {
+            if (!empty($id) && is_scalar($id)) {
                 $_SQL  = new Crud_Sql_Select();
                 $where = $this->sql_id( $object ) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $result         = $this->getResultToObjects( $object );
-                if ( count($result) == 1 ) {
+                if (count($result) == 1) {
                     $result = $result[0];
                 }
                 return $result;
             }
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
     }
 
@@ -390,8 +391,8 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if ( Config_Db::$db == EnumDbSource::DB_SQLSERVER && ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) ) ) {
-                if ( UtilString::is_utf8( $sqlstring ) ) {
+            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
+                if (UtilString::is_utf8( $sqlstring )) {
                     $sqlstring = UtilString::utf82gbk( $sqlstring );
                 }
             }
@@ -399,11 +400,11 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $this->executeSQL();
             $parts = explode(" ", trim($sqlstring));
             $type  = strtolower($parts[0]);
-            if ( ( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type ) ) {
+            if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
                 return true;
-            } elseif ( Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type ) {
+            } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
                 $tablename = Crud_Sql_Insert::tablename( $sqlstring );
-                if ( isset($tablename) ) {
+                if (isset($tablename)) {
                     $object     = Config_Db::tom( $tablename );
                     $realIdName = DataObjectSpec::getRealIDColumnName( new $object() );
                     $sql_maxid  = Crud_SQL::SQL_MAXID;
@@ -411,9 +412,9 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                     $this->sQuery = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
                     $this->executeSQL();
                     $row = mssql_fetch_array($this->result, $this->fetchmode);
-                    if ( isset($row) && array_key_exists($realIdName, $row) ) {
+                    if (isset($row) && array_key_exists($realIdName, $row)) {
                         $autoId = $row[$realIdName];
-                        if ( !empty($object) && is_object($object) ) {
+                        if (!empty($object) && is_object($object)) {
                             $object->setId( $autoId );//当保存返回对象时使用
                         }
                     } else {
@@ -427,31 +428,31 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $result = $this->getResultToObjects($object);
             $sql_s  = preg_replace("/\s/", "", $sqlstring);
             $sql_s  = strtolower($sql_s);
-            if ( !empty($result) && !is_array($result) ) {
-                if ( !( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(") ) ) ) {
+            if (!empty($result) && !is_array($result)) {
+                if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                     $tmp      = $result;
                     $result   = null;
                     $result[] = $tmp;
                 }
             }
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
         return $result;
     }
 
     /**
      * 对象总计数
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
      * @return int 对象总计数
      */
@@ -459,7 +460,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if ( !$this->validParameter( $object ) ) {
+            if (!$this->validParameter( $object )) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
@@ -469,55 +470,55 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             $this->executeSQL();
             $row = mssql_fetch_array($this->result, MSSQL_NUM);
-            if ( $row ) {
+            if ($row) {
                 $result = $row[0];
             }
-            if ( empty($result) ) {
+            if (empty($result)) {
                  return 0;
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
     }
 
     /**
      * 对象分页
-     * 
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *     0. "id=1,name='sky'"
      *     1. array("id=1","name='sky'")
      *     2. array("id"=>"1","name"=>"sky")
      *     3. 允许对象如new User(id="1",name="green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 
+     *
      * 示例如下:
-     * 
+     *
      *     1. id asc;
      *     2. name desc;
-     * 
+     *
      * @return mixed 对象分页
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if ( ( $startPoint > $endPoint ) || ( $endPoint == 0 ) ) return null;
-            if ( !$this->validParameter( $object ) ) return null;
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) return null;
+            if (!$this->validParameter( $object)) return null;
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam( $filter );
             $_SQL->isPreparedStatement = false;
-            if ( $sort == Crud_SQL::SQL_ORDER_DEFAULT_ID ) {
+            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id( $object );
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
@@ -527,7 +528,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $result       = $this->sqlExecute( $this->sQuery, $object );
             return $result;
         } catch (Exception $exc) {
-            Exception_Db::record( $exc->getTraceAsString() );
+            ExceptionDb::record( $exc->getTraceAsString() );
         }
 
     }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 运行期对Action的单元测试 |-----------
- * 
+ *
  * 暂时未应用
  * @category betterlife
  * @package core.main

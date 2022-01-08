@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:评论 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Comment extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Comment extends ActionModel
         $count = Comment::count();
         $this->view->countComments = $count;
         $comments = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $comments = Comment::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Comment extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $comment = $this->model->Comment;
             $id         = $comment->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $comment->update();
             } else {
                 $id = $comment->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "comment", "view", "id=$id" );
                 exit;
             }

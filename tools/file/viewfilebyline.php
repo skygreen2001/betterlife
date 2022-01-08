@@ -30,16 +30,16 @@ class CustomLineFO extends SplFileObject {
 
 //$print_filename="../../index.php"; //需要输出的代码文件
 $print_filename = $_GET["f"];
-if ( array_key_exists("l", $_GET) ) $show_line = $_GET["l"];
-if ( $print_filename ) {
-    if ( file_exists($print_filename) ) {
+if (array_key_exists("l", $_GET) ) $show_line = $_GET["l"];
+if ($print_filename) {
+    if (file_exists($print_filename)) {
         $SFI = new SplFileInfo($print_filename);
 
-        if ( isset($show_line) && ( $show_line == "false" ) ) $SFI->setFileClass( "CustomFO" ); else $SFI->setFileClass( "CustomLineFO" );
+        if (isset($show_line) && ($show_line == "false")) $SFI->setFileClass( "CustomFO" ); else $SFI->setFileClass( "CustomLineFO" );
         $file = $SFI->openFile();
         echo "<pre>";
         echo '<a style="cursor:pointer;" onclick="window.history.back();">返回</a><br/>';
-        foreach ( $file as $line ) {
+        foreach ( $file as $line) {
             echo $line;
         }
     }

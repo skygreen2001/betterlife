@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户收到通知 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Usernotice extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Usernotice extends ActionModel
         $count = Usernotice::count();
         $this->view->countUsernotices = $count;
         $usernotices = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $usernotices = Usernotice::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Usernotice extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $usernotice = $this->model->Usernotice;
             $id         = $usernotice->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $usernotice->update();
             } else {
                 $id = $usernotice->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "usernotice", "view", "id=$id" );
                 exit;
             }

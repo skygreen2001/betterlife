@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| Mdb2的配置类 |-----------
  * @link http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
@@ -9,7 +10,8 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Mdb2 extends Config_Db{
+class Config_Mdb2 extends Config_Db
+{
     /**
      * @var type 获取数据的模式
      * @link http://pear.php.net/manual/en/package.database.mdb2.intro-fetch.php
@@ -39,14 +41,14 @@ class Config_Mdb2 extends Config_Db{
      * @return array ODBC所需的dsn
      */
     public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null) {      
-        if ( isset($host) ) {
-            if ( strlen($port) > 0 ) {
+        if (isset($host)) {
+            if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
             } else {
                 $connecturl = $host;
             }
         } else {
-            if ( strlen(self::$port) > 0 ) {
+            if (strlen(self::$port) > 0) {
                 $connecturl = self::$host . ":" . self::$port;
             } else {
                 $connecturl = self::$host;

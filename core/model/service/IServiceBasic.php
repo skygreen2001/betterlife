@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 提供业务方法服务的接口
  * @category betterlife
@@ -44,7 +45,7 @@ interface IServiceBasic
      * 对属性进行递增
      * @param string $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1", "name"=>"sky")
@@ -58,7 +59,7 @@ interface IServiceBasic
      * 对属性进行递减
      * @param string $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1", "name" => "sky")
@@ -72,28 +73,28 @@ interface IServiceBasic
      * 查询当前对象需显示属性的列表
      * @param string 指定的显示属性，同SQL语句中的Select部分。
      * 示例如下:
-     * 
+     *
      *     id, name, commitTime
-     * 
+     *
      * @param mixed $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: "(id=1 and name='sky') or (name like 'sky')"
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *      1. id asc;
      *      2. name desc;
-     * 
+     *
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下:
-     * 
+     *
      *      - 6,10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
      *      - 1,10 (相当于第1-第10条)
      *      - 10 (相当于第1-第10条)
@@ -105,27 +106,27 @@ interface IServiceBasic
      * 查询当前对象列表
      * @param string $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: "(id=1 and name='sky') or (name like 'sky')"
-     * 
+     *
      * @param string $sort 排序条件
      * 示例如下:
-     * 
+     *
      *      1. id asc;
      *      2. name desc;
-     * 
+     *
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
      * 示例如下:
-     * 
+     *
      *    - 6,10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
      *    - 1,10 (相当于第1-第10条)
      *    - 10 (相当于第1-第10条)
-     * 
+     *
      * @return 对象列表数组
      */
     public function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null);
@@ -134,14 +135,14 @@ interface IServiceBasic
      * 查询得到单个对象实体
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1", "name" => "sky")
      *      3. 允许对象如new User(id = "1", name = "green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @return 单个对象实体
      */
     public function get_one($filter = null);
@@ -157,7 +158,7 @@ interface IServiceBasic
      * 对象总计数
      * @param object|string|array $filter
      * $filter 格式示例如下:
-     * 
+     *
      *      0. 允许对象如new User(id = "1", name = "green");
      *      1. "id=1", "name='sky'"
      *      2. array("id=1", "name='sky'")
@@ -172,18 +173,18 @@ interface IServiceBasic
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
-     * 
+     *
      *      0. "id=1, name='sky'"
      *      1. array("id=1", "name='sky'")
      *      2. array("id" => "1","name" => "sky")
      *      3. 允许对象如new User(id = "1",name = "green");
-     * 
+     *
      * 默认:SQL Where条件子语句。如: (id=1 and name='sky') or (name like 'sky')
-     * 
+     *
      * @param string $sort 排序条件
      * 默认为 id desc
      * 示例如下:
-     * 
+     *
      *      1. id asc;
      *      2. name desc;
      * @return mixed 对象分页

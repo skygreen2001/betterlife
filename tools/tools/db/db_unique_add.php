@@ -25,7 +25,7 @@ echo "<br/>";
  */
 function getClassname($tablename)
 {
-    if ( in_array($tablename, Config_Db::$orm) ) {
+    if (in_array($tablename, Config_Db::$orm)) {
         $classname = array_search($tablename, Config_Db::$orm);
     } else {
         $classnameSplit = explode("_", $tablename);
@@ -41,7 +41,7 @@ foreach ($tableList as $tablename) {
     // $classname = lcfirst($classname);
     // $fieldname = $classname . "_id";
 
-    if ( !Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, $fieldname ) ) { 
+    if (!Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, $fieldname )) { 
         echo "alter table $tablename add unique($fieldname);<br/>";
     }
 }

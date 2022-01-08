@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:博客 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Blog extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Blog extends ActionModel
         $count = Blog::count();
         $this->view->countBlogs = $count;
         $blogs = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $blogs = Blog::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,28 +41,28 @@ class Action_Blog extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $blog = $this->model->Blog;
             $id         = $blog->getId();
             $isRedirect = true;
-            if ( !empty($_FILES)&&!empty($_FILES["icon_url"]["name"]) ) {
+            if (!empty($_FILES)&&!empty($_FILES["icon_url"]["name"])) {
                 $result = $this->uploadImg( $_FILES, "icon_url", "icon_url", "blog" );
-                if ( $result && ( $result['success'] == true ) ) {
-                    if ( array_key_exists('file_name', $result) ) $blog->icon_url = $result['file_name'];
+                if ($result && ($result['success'] == true )) {
+                    if (array_key_exists('file_name', $result) ) $blog->icon_url = $result['file_name'];
                 } else {
                     $isRedirect = false;
                     $this->view->set( "message", $result["msg"] );
                 }
             }
-            if ( $blog->isPublic == '1' ) $blog->isPublic = 1; else $blog->isPublic = 0;
-            if ( !empty($id) ) {
+            if ($blog->isPublic == '1' ) $blog->isPublic = 1; else $blog->isPublic = 0;
+            if (!empty($id)) {
                 $blog->update();
             } else {
                 $id = $blog->save();
             }
             $blogTags = $this->data["tags_id"];
             Blogtags::saveDeleteRelateions( "blog_id", $id, "tags_id", $blogTags );
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "blog", "view", "id=$id" );
                 exit;
             }

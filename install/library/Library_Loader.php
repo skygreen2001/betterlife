@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 在这里实现自定义模块库的加载 |-----------
  * @TODO 现无自定义模块库
@@ -54,18 +55,18 @@ class Library_Loader
         $spec_library = UtilXmlSimple::fileXmlToArray( dirname(__FILE__) . DS . self::FILE_SPEC_LOAD_LIBRARY );
         foreach ($spec_library["resourceLibrary"] as $block) {
             $blockAttr = $block[Util::XML_ELEMENT_ATTRIBUTES];
-            if ( array_key_exists(self::SPEC_REQUIRED, $blockAttr) ) {
-                if ( strtolower($blockAttr[self::SPEC_REQUIRED]) == 'true' ) {
+            if (array_key_exists(self::SPEC_REQUIRED, $blockAttr)) {
+                if (strtolower($blockAttr[self::SPEC_REQUIRED]) == 'true') {
                     $method = $blockAttr[self::SPEC_INIT];
-                    if ( method_exists(__CLASS__, $method) ) {
+                    if (method_exists(__CLASS__, $method)) {
                         self::$method();
                     }
                 }
             } else {
-                if ( array_key_exists(self::SPEC_OPEN, $blockAttr) ) {
-                    if ( strtolower($blockAttr[self::SPEC_OPEN])==self::OPEN_YES ) {
+                if (array_key_exists(self::SPEC_OPEN, $blockAttr)) {
+                    if (strtolower($blockAttr[self::SPEC_OPEN])==self::OPEN_YES) {
                         $method = $blockAttr[self::SPEC_INIT];
-                        if ( method_exists(__CLASS__, $method) ) {
+                        if (method_exists(__CLASS__, $method)) {
                             self::$method();
                         }
                     }
@@ -85,7 +86,7 @@ class Library_Loader
 
     /**
      * 加载通信模块
-     * 
+     *
      */
     public static function load_communication()
     {

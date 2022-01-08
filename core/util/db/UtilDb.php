@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 工具类: 数据库 |-----------
  * @category betterlife
@@ -25,13 +26,13 @@ class UtilDb extends Util
         }
         $tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList();
         $filterTableColumns = array();
-        if ( count($fieldInfos) > 0 ) {
+        if (count($fieldInfos) > 0) {
             foreach ($fieldInfos as $tablename => $fieldInfo) 
             {
                 foreach ($fieldInfo as $fieldname => $field)
                 {
                     $data = Manager_Db::newInstance()->dao()->sqlExecute( "select count($fieldname) from $tablename where $fieldname like '%$keyword%'" );
-                    if ( $data ) {
+                    if ($data) {
                         $result[$tablename][] = $fieldname;
                     }
                 }

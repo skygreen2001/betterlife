@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 控制器:用户角色 |-----------
  * @category betterlife
@@ -12,7 +13,7 @@ class Action_Userrole extends ActionModel
      */
     public function lists()
     {
-        if ( $this->isDataHave( TagPageService::$linkUrl_pageFlag ) ) {
+        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -20,7 +21,7 @@ class Action_Userrole extends ActionModel
         $count = Userrole::count();
         $this->view->countUserroles = $count;
         $userroles = null;
-        if ( $count > 0 ) {
+        if ($count > 0) {
             $bb_page = TagPageService::init($nowpage,$count);
             $userroles = Userrole::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
         }
@@ -40,16 +41,16 @@ class Action_Userrole extends ActionModel
      */
     public function edit()
     {
-        if ( !empty($_POST) ) {
+        if (!empty($_POST)) {
             $userrole = $this->model->Userrole;
             $id         = $userrole->getId();
             $isRedirect = true;
-            if ( !empty($id) ) {
+            if (!empty($id)) {
                 $userrole->update();
             } else {
                 $id = $userrole->save();
             }
-            if ( $isRedirect ) {
+            if ($isRedirect) {
                 $this->redirect( "userrole", "view", "id=$id" );
                 exit;
             }

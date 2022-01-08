@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 接口:Javascript Ajax 框架的工具类实现接口 |-----------
  * @category betterlife

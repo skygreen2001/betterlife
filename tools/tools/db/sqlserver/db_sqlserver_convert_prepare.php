@@ -3,12 +3,12 @@ require_once("../../../../init.php");
 
 $mysql_keywords = ",ACCESSIBLE,ADD,ALL,ALTER,ANALYZE,AND,AS,ASC,ASENSITIVE,BEFORE,BETWEEN,BIGINT,BINARY,BLOB,BOTH,BY,CALL,CASCADE,CASE,CHANGE,CHAR,CHARACTER,CHECK,COLLATE,COLUMN,CONDITION,CONSTRAINT,CONTINUE,CONVERT,CREATE,CROSS,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,CURRENT_USER,CURSOR,DATABASE,DATABASES,DAY_HOUR,DAY_MICROSECOND,DAY_MINUTE,DAY_SECOND,DEC,DECIMAL,DECLARE,DEFAULT,DELAYED,DELETE,DESC,DESCRIBE,DETERMINISTIC,DISTINCT,DISTINCTROW,DIV,DOUBLE,DROP,DUAL,EACH,ELSE,ELSEIF,ENCLOSED,ESCAPED,EXISTS,EXIT,EXPLAIN,FALSE,FETCH,FLOAT,FLOAT4,FLOAT8,FOR,FORCE,FOREIGN,FROM,FULLTEXT,GRANT,GROUP,HAVING,HIGH_PRIORITY,HOUR_MICROSECOND,HOUR_MINUTE,HOUR_SECOND,IF,IGNORE,IN,INDEX,INFILE,INNER,INOUT,INSENSITIVE,INSERT,INT,INT1,INT2,INT3,INT4,INT8,INTEGER,INTERVAL,INTO,IS,ITERATE,JOIN,KEY,KEYS,KILL,LEADING,LEAVE,LEFT,LIKE,LIMIT,LINEAR,LINES,LOAD,LOCALTIME,LOCALTIMESTAMP,LOCK,LONG,LONGBLOB,LONGTEXT,LOOP,LOW_PRIORITY,MASTER_SSL_VERIFY_SERVER_CERT,MATCH,MEDIUMBLOB,MEDIUMINT,MEDIUMTEXT,MIDDLEINT,MINUTE_MICROSECOND,MINUTE_SECOND,MOD,MODIFIES,NATURAL,NOT,NO_WRITE_TO_BINLOG,NULL,NUMERIC,ON,OPTIMIZE,OPTION,OPTIONALLY,OR,ORDER,OUT,OUTER,OUTFILE,PRECISION,PRIMARY,PROCEDURE,PURGE,RANGE,READ,READS,READ_WRITE,REAL,REFERENCES,REGEXP,RELEASE,RENAME,REPEAT,REPLACE,REQUIRE,RESTRICT,RETURN,REVOKE,RIGHT,RLIKE,SCHEMA,SCHEMAS,SECOND_MICROSECOND,SELECT,SENSITIVE,SEPARATOR,SET,SHOW,SMALLINT,SPATIAL,SPECIFIC,SQL,SQLEXCEPTION,SQLSTATE,SQLWARNING,SQL_BIG_RESULT,SQL_CALC_FOUND_ROWS,SQL_SMALL_RESULT,SSL,STARTING,STRAIGHT_JOIN,TABLE,TERMINATED,THEN,TINYBLOB,TINYINT,TINYTEXT,TO,TRAILING,TRIGGER,TRUE,UNDO,UNION,UNIQUE,UNLOCK,UNSIGNED,UPDATE,USAGE,USE,USING,UTC_DATE,UTC_TIME,UTC_TIMESTAMP,VALUES,VARBINARY,VARCHAR,VARCHARACTER,VARYING,WHEN,WHERE,WHILE,WITH,WRITE,XOR,YEAR_MONTH,ZEROFILL,";
 
-if ( contain( $_SERVER["HTTP_REFERER"], "db_sqlserver_convert_prepare" ) ) {
+if (contain( $_SERVER["HTTP_REFERER"], "db_sqlserver_convert_prepare" )) {
     echo "<a href='?isComment=1'>开启注释</a>|<a href='?isComment=0'>关闭注释</a><br/>";
 }
 $isComment = false;
-if ( isset($_REQUEST["isComment"]) && !empty($_REQUEST["isComment"]) ) {
-    if ( $_REQUEST["isComment"] == "1" ) $isComment = true;
+if (isset($_REQUEST["isComment"]) && !empty($_REQUEST["isComment"])) {
+    if ($_REQUEST["isComment"] == "1" ) $isComment = true;
 }
 
 $tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
@@ -25,7 +25,7 @@ foreach ($tableList as $tablename) {
 
 $tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList();
 $filterTableColumns = array();
-if ( $isComment ) {
+if ($isComment) {
     echo "1. 列名头字母大写<br/>";
     echo "2. 表主键字段统一成ID<br/><br/>";
     echo "3. 去掉表前缀:" . Config_Db::$table_prefix . "<br/>";
@@ -40,11 +40,11 @@ if ( $isComment ) {
 }
 
 
-if ( $isComment ) {
+if ($isComment) {
     echo str_repeat("*", 40) . "1. 列名头字母大写" . str_repeat("*", 40) . "<br/><br/>";
 }
 foreach ($fieldInfos as $tablename => $fieldInfo) {
-    if ( $isComment ) {
+    if ($isComment) {
         echo "表名: $tablename<br/>";
     }
 
@@ -53,17 +53,17 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
         $newwords = ucfirst($fieldname);
         $auto_increment = "";
         $type = $fieldInfos[$tablename][$fieldname]["Type"];
-        if ( stripos($newwords, "time") !== false ) {
+        if (stripos($newwords, "time") !== false) {
             $fieldWords = strtoupper($newwords);
-            if ( !contain($fieldWords, "TIMES") ) $type = "datetime";
-        } else if ( stripos($newwords, "_") !== false ) {
+            if (!contain($fieldWords, "TIMES") ) $type = "datetime";
+        } elseif (stripos($newwords, "_") !== false) {
             $index = stripos($newwords, "_");
             $fname = substr($newwords, $index + 1);
-            if ( $fname == "id" ) {
+            if ($fname == "id") {
                 $fname = "ID";
 
                 $classname = getClassname($tablename);
-                if ( contain( $newwords, $classname ) ) {
+                if (contain( $newwords, $classname )) {
                     $is_auto_increment = true;
                     $auto_increment    = " auto_increment";
                 }
@@ -72,8 +72,8 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
             }
             $newwords = substr($newwords, 0, $index) . "_" . $fname;
         }
-        if ( contain( $type, "timestamp" ) ) {
-            if ( empty($field["Default"]) ) $default = " default 0 ";
+        if (contain( $type, "timestamp" )) {
+            if (empty($field["Default"]) ) $default = " default 0 ";
         } else $default = " ";
 
         $comments = $fieldInfos[$tablename][$fieldname]["Comment"];
@@ -91,7 +91,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
  */
 function getClassname($tablename)
 {
-    if ( in_array($tablename, Config_Db::$orm) ) {
+    if (in_array($tablename, Config_Db::$orm)) {
         $classname = array_search($tablename, Config_Db::$orm);
     } else {
         $classnameSplit = explode("_", $tablename);
@@ -100,11 +100,11 @@ function getClassname($tablename)
     }
     return $classname;
 }
-if ( $isComment ) {
+if ($isComment) {
     echo "<br/>" . str_repeat("*", 40) . "2.表主键字段统一成ID" . str_repeat("*", 40) . "<br/>";
 }
 foreach ($fieldInfos as $tablename => $fieldInfo) {
-    if ( $isComment ) {
+    if ($isComment) {
         echo "表名:$tablename<br/>";
     }
     $classname = getClassname($tablename);
@@ -114,25 +114,25 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
     $comments = str_replace("\r", "\\r", $comments);
     $comments = str_replace("\n", "\\n", $comments);
     echo "alter table $tablename change column $old_fieldname ID " . $fieldInfos[$tablename][$old_fieldname]["Type"] . " auto_increment COMMENT '" . $comments . "';<br/>";
-    // if ( !Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) ) ) {
+    // if (!Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) )) {
     //     echo "alter table $tablename add unique(ID);<br/>";
     // }
 }
 
-if ( $isComment ) {
+if ($isComment) {
     echo "<br/>" . str_repeat("*", 40) . "3.去掉表前缀:" . Config_Db::$table_prefix . str_repeat("*", 40) . "<br/>";
     echo str_repeat("*", 40) . "4.表名头字母大写" . str_repeat("*", 40) . "<br/><br/>";
 }
 foreach ($tableList as $tablename) {
     $new_table_name  = getClassname($tablename);
     $new_table_names = strtoupper($new_table_name);
-    if ( contain( $mysql_keywords, "," . $new_table_names . "," ) ) {
+    if (contain( $mysql_keywords, "," . $new_table_names . "," )) {
         $new_table_name = $new_table_name . "s";
     }
     echo "ALTER  TABLE $tablename RENAME TO $new_table_name;<br/>";
 }
 
-if ( $isComment ) {
+if ($isComment) {
     echo "<br/>" . str_repeat("*", 40) . "5.初始化commitTime" . str_repeat("*", 40) . "<br/>";
 }
 
@@ -143,10 +143,10 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
         $ufieldname     = strtoupper($fieldname);
 
         $new_table_names = strtoupper($new_table_name);
-        if ( contain($mysql_keywords, "," . $new_table_names . ",") ) {
+        if (contain($mysql_keywords, "," . $new_table_names . ",")) {
             $new_table_name = $new_table_name . "s";
         }
-        if ( $ufieldname == "COMMITTIME" ) {
+        if ($ufieldname == "COMMITTIME") {
             echo "update $new_table_name set $fieldname = now();<br/>";
         }
     }

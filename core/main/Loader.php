@@ -1,7 +1,8 @@
 <?php
+
 /**
  * -----------| 加载网站内的类【在系统里只需动态加载一次的对象】 |-----------
- * 
+ *
  * 采用Singleton模式
  * @category betterlife
  * @package core.main
@@ -25,8 +26,8 @@ class Loader {
                 self::CLASS_MODEL,
                 self::CLASS_VIEW
         );
-        if ( !in_array($object, $valid) ) {
-            if ( Gc::$dev_debug_on ) {
+        if (!in_array($object, $valid)) {
+            if (Gc::$dev_debug_on) {
                 ExceptionMe::backtrace();
             }
             if (Gc::$language == Config_C::LANGUAGE_EN_US) {
@@ -36,8 +37,8 @@ class Loader {
             }
             x( $error_info, new Loader() );
         }
-        if ( empty(self::$loaded[$object]) ) {
-            if ( empty($param1) ) {
+        if (empty(self::$loaded[$object])) {
+            if (empty($param1)) {
                 self::$loaded[$object] = new $object();
             } else {
                 self::$loaded[$object] = new $object( $param1, $param2 );

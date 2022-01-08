@@ -10,13 +10,13 @@ class AutoCodeView extends AutoCode
 {
     /**
      * 表示层生成定义的方式
-     * 
+     *
      * 0.生成前台所需的表示层页面。
-     * 
+     *
      * 1.生成标准的增删改查模板所需的表示层页面。
-     * 
+     *
      * 2.生成后台所需的表示层页面。
-     * 
+     *
      * @var int
      */
     public static $type;
@@ -44,7 +44,7 @@ class AutoCodeView extends AutoCode
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 self::$app_dir = Gc::$appName;
-                if ( empty(self::$appName) ) self::$appName = Gc::$appName;
+                if (empty(self::$appName) ) self::$appName = Gc::$appName;
                 break;
             case EnumAutoCodeViewType::MODEL:
                 self::$app_dir = "model";
@@ -60,20 +60,20 @@ class AutoCodeView extends AutoCode
 
     /**
      * 自动生成代码-前端默认的表示层
-     * 
+     *
      * 示例如下: 
-     * 
+     *
      *    1.array:array('bb_user_admin','bb_core_blog')
-     * 
+     *
      *    2.字符串:'bb_user_admin,bb_core_blog'
-     * 
+     *
      * @param array|string $table_names
      */
     public static function AutoCode($table_names = "")
     {
         self::pathset( );
         self::init( );
-        if ( self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
+        if (self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
         switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_41" );
@@ -193,7 +193,7 @@ class AutoCodeView extends AutoCode
     {
         $fieldInfos = self::fieldInfosByTable_names($table_names );
         foreach ($fieldInfos as $tablename => $fieldInfo) {
-            if ( self::$type == EnumAutoCodeViewType::FRONT ) {
+            if (self::$type == EnumAutoCodeViewType::FRONT) {
                 $classname = self::getClassname( $tablename );
                 if ($classname == "Admin") continue;
             }

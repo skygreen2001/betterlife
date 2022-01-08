@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Refer:http://bbs.blueidea.com/archiver/tid-2965257.html
  */
@@ -23,8 +24,8 @@ ob_start("render_tag");
  */
 function render_tag($buffer) {
     $result = $buffer;
-    if ( !empty($buffer) ) {
-        if ( stristr($buffer, "<" . TagClass::PREFIX . ":") ) {
+    if (!empty($buffer)) {
+        if (stristr($buffer, "<" . TagClass::PREFIX . ":")) {
     //        $repReg='/<' . TagClass::PREFIX . ':(\w+[-]?\w+)((\s+\w+=\\\"\w+\\\"|\s+\w+=\"\w+\"|\s+\w+=\\\\\'\w+\\\\\'|\s+\w+=\'\w+\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
 
     //        $repReg='/<' . TagClass::PREFIX . ':(\w+[-]?\w+)((\s+\w+=\\\"[^"]*\\\"|\s+\w+=\"[^"]*\"|\s+\w+=\\\\\'[^"]*\\\\\'|\s+\w+=\'[^"]*\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
@@ -44,8 +45,8 @@ function render_tag($buffer) {
             $result = preg_replace_callback($repReg, 'parseTag', $result);
         }
     }
-    if ( Gc::$is_online_optimize ) {
-        if ( contain( $result, "<body" ) ) {
+    if (Gc::$is_online_optimize) {
+        if (contain( $result, "<body" )) {
            /************************start:整个Html页面去除注释，换行，空格********************/
 //            $result=preg_replace("/<\!--(.*?)-->/","",$result);//去掉html里的注释
 //            $result = preg_replace("~>\s+\n~",">",$result);
@@ -61,7 +62,7 @@ function render_tag($buffer) {
             $r_arr[1] = preg_replace("~>\s+\r~", ">", $r_arr[1]);
             $r_arr[1] = preg_replace("~>\s+<~", "><", $r_arr[1]);
             $result   = implode("<body", $r_arr);
-            if ( contain( $result, "</html>" ) ) {
+            if (contain( $result, "</html>" )) {
                 $result  = str_replace("</html>", "", $result);
                 $result .= HH ."</html>";
             }
@@ -81,7 +82,7 @@ function render_tag($buffer) {
  */
 function parseTag($matches) {
     $tagname = $matches[1];
-    if ( count($matches) >= 4 ) {
+    if (count($matches) >= 4) {
         switch ($tagname) {
             case 'demo':
                 $content   = isset($matches[4]) ? $matches[4] : "";

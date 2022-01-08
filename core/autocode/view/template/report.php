@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------| 生成报表[模板文件] |-----------
  * @category betterlife
@@ -50,16 +51,16 @@ require_once("../../../init.php");
 \$pageData   = array();
 \$pageCount  = 0;
 \$reportSql  = "";
-if ( \$totalCount > 0 ) {
+if (\$totalCount > 0) {
     // 总页数
     \$pageCount = ceil(\$totalCount / \$pageSize);
-    if ( \$currentPage <= \$pageCount ) {
+    if (\$currentPage <= \$pageCount) {
         \$startPoint = (\$currentPage - 1) * \$pageSize;
-        if ( \$startPoint > \$totalCount ) {
+        if (\$startPoint > \$totalCount) {
             \$startPoint = 0;
         }
         \$endPoint = \$currentPage * \$pageSize;
-        if ( \$endPoint > \$totalCount ) {
+        if (\$endPoint > \$totalCount) {
             \$endPoint = \$totalCount;
         }
 
@@ -77,7 +78,7 @@ if ( \$totalCount > 0 ) {
     'recordsTotal'    => \$totalCount
 );
 
-if ( contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::\$dev_debug_on ) {
+if (contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::\$dev_debug_on) {
     //调试使用的信息
     \$result["debug"] = array(
         'param' => array(
@@ -99,6 +100,7 @@ API;
 
 $action_template = <<<ACTION
 <?php
+
 /**
  * -----------| 控制器:报表 |-----------
  * @category report
@@ -216,7 +218,7 @@ $js_template = <<<JS
             "retrieve"  : true,
             "ajax": {
                 "url" : "api/web/report/report{$reportEname}.php",
-                "data": function ( d ) {
+                "data": function ( d) {
                     d.query    = \$("#input-search").val();
                     d.pageSize = d.length;
                     d.page     = d.start / d.length + 1;
@@ -228,7 +230,7 @@ $js_template = <<<JS
                     // Retrieve dynamic parameters
                     var dt_params = $('#infoTable').data('dt_params');
                     // Add dynamic parameters to the data object sent to the server
-                    if ( dt_params ) { $.extend(d, dt_params); }
+                    if (dt_params) { $.extend(d, dt_params); }
                     return d;
                 },
                 //可以对返回的结果进行改写
@@ -250,7 +252,7 @@ $jsColumns
             "initComplete":function() {
                 \$.dataTable.filterDisplay();
             },
-            "drawCallback": function( settings ) {
+            "drawCallback": function( settings) {
                 \$.dataTable.pageNumDisplay(this);
                 \$.dataTable.filterDisplay();
             }
@@ -287,6 +289,7 @@ JS;
 
 $service_template = <<<SERVICE
 <?php
+
 /**
  * -----------| 服务类:报表服务 |-----------
  * @category admin

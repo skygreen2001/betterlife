@@ -56,10 +56,10 @@ class CheckBOMTask
     public static function run($isRemoveBom = false, $checkDir = "../../../")
     {
         self::$isRemoveBom = $isRemoveBom;
-        if ( isset($_GET['dir']) ) {
+        if (isset($_GET['dir'])) {
             $checkDir = $_GET['dir'];
         }
-        if ( endWith( $checkDir, DS ) ) {
+        if (endWith( $checkDir, DS )) {
             $checkDir = substr($checkDir, 0, strlen($checkDir) - strlen(DS));
         }
         
@@ -85,23 +85,23 @@ class CheckBOMTask
 
     private static function checkdir($basedir)
     {
-        if ( $dh = opendir($basedir) ) {
+        if ($dh = opendir($basedir)) {
             while (( $file = readdir($dh) ) !== false) {
-                if ( !in_array($file, self::$exclude_files_check) ) {
-                // if ( $file != '.' && $file != '..' && $file != '.git' && $file != '.vscode' && $file != '.gitignore' ) {
-                    if ( !is_dir($basedir . DS . $file) ) {
+                if (!in_array($file, self::$exclude_files_check)) {
+                // if ($file != '.' && $file != '..' && $file != '.git' && $file != '.vscode' && $file != '.gitignore') {
+                    if (!is_dir($basedir . DS . $file)) {
                         // echo "dir file name:  " . $basedir . DS . $file . " <br>";
-                        if ( self::$isRemoveBom ) {
+                        if (self::$isRemoveBom) {
                             echo "filename: " . $basedir . DS . $file . self::checkBOM( $basedir . DS . $file ) . " <br>";
                         } else {
                             $cb = self::checkBOM( $basedir . DS . $file );
-                            if ( $cb ) {
+                            if ($cb) {
                                 echo "filename: " . $basedir . DS . $file . " " . $cb . " <br>";
                             }
                         }
                     } else {
                         $dirname = $basedir . DS . $file;
-                        if ( !in_array($dirname, self::$exclude_check ) ) {
+                        if (!in_array($dirname, self::$exclude_check )) {
                             self::checkdir( $dirname );
                         }
                     }
@@ -124,8 +124,8 @@ class CheckBOMTask
         $charset[1] = substr($contents, 0, 1);
         $charset[2] = substr($contents, 1, 1);
         $charset[3] = substr($contents, 2, 1);
-        if ( ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191 ) {
-            if ( self::$isRemoveBom ) {
+        if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
+            if (self::$isRemoveBom) {
                 $rest = substr($contents, 3);
                 UtilFileSystem::rewrite( $filename, $rest );
                 return (", <font color=red>BOM found, automatically removed.</font>");
@@ -133,7 +133,7 @@ class CheckBOMTask
                 return (", <font color=red>BOM found.</font>");
             }
         } else {
-            //if ( self::$isRemoveBom ) return ("BOM Not Found."); else return "";
+            //if (self::$isRemoveBom ) return ("BOM Not Found."); else return "";
         }
     }
 }
