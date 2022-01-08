@@ -5,7 +5,7 @@
  *
  * 一般来讲，日志都通过log记录，由配置$logType决定它以什么方式打印出来。
  *
- * 除非明确指明用log_console,log_file,log_db,log_firebug方式输出。
+ * 除非明确指明用logConsole,logFile,logDb,logFirebug方式输出。
  *
  * @category betterlife
  * @package log
@@ -51,7 +51,7 @@ class LogMe extends BBObject
         }
 
         //检测日志文件大小，超过配置大小则备份日志文件重新生成
-        if (is_file($destination) && (Gc::$log_config["log_file_size"] <= filesize($destination) )) {
+        if (is_file($destination) && (Gc::$log_config["logFile_size"] <= filesize($destination) )) {
             rename($destination, dirname($destination) . DS . basename($destination, Config_F::SUFFIX_FILE_LOG) . '-' . time() . Config_F::SUFFIX_FILE_LOG);
         }
         if (isset($destination)) {
@@ -72,22 +72,22 @@ class LogMe extends BBObject
         if (self::isNeedLog($level)) {
             switch (Gc::$log_config["logType"]) {
                 case EnumLogType::SYSTEM:
-                    self::log_console($message, $level, $category);
+                    self::logConsole($message, $level, $category);
                     break;
                 case EnumLogType::BROWSER:
-                    self::log_browser($message, $level, $category);
+                    self::logBrowser($message, $level, $category);
                     break;
                 case EnumLogType::FILE:
-                    self::log_file($message, $level, $category);
+                    self::logFile($message, $level, $category);
                     break;
                 case EnumLogType::MAIL:
-                    self::log_email($message, $level, $category);
+                    self::logEmail($message, $level, $category);
                     break;
                 case EnumLogType::DB:
-                    self::log_db($message, $level, $category);
+                    self::logDb($message, $level, $category);
                     break;
                 case EnumLogType::FIREBUG:
-                    self::log_firebug($message, $level, $category);
+                    self::logFirebug($message, $level, $category);
                     break;
                 default:
                     self::record($message, $level);
@@ -102,7 +102,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_console($message, $level = EnumLogLevel::INFO, $category = "")
+    public static function logConsole($message, $level = EnumLogLevel::INFO, $category = "")
     {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
@@ -115,7 +115,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_browser($message, $level = EnumLogLevel::INFO, $category = "")
+    public static function logBrowser($message, $level = EnumLogLevel::INFO, $category = "")
     {
         echo $message . "";
     }
@@ -126,7 +126,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_file($message, $level = EnumLogLevel::INFO, $category = "")
+    public static function logFile($message, $level = EnumLogLevel::INFO, $category = "")
     {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
@@ -139,7 +139,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_email($message, $level = EnumLogLevel::EMERG, $category = "")
+    public static function logEmail($message, $level = EnumLogLevel::EMERG, $category = "")
     {
         UtilDateTime::ChinaTime();
         Gc::$log_config["config_mail_log"]["timeFormat"] = Gc::$log_config["timeFormat"];
@@ -152,7 +152,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_db($message, $level = EnumLogLevel::INFO, $category = "")
+    public static function logDb($message, $level = EnumLogLevel::INFO, $category = "")
     {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
@@ -166,7 +166,7 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_firebug($message, $level = EnumLogLevel::INFO, $category = "")
+    public static function logFirebug($message, $level = EnumLogLevel::INFO, $category = "")
     {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);

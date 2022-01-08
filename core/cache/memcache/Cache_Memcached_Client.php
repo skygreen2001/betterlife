@@ -7,7 +7,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Memcached_Client extends Cache_Base
+class Cache_Memcached_Client extends CacheBase
 {
     /**
      * 测试体验MemCache

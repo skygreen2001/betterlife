@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 <div class="block">
     <div><h1>博客标签列表(共计{$countBlogtagss}个)</h1></div>

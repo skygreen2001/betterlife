@@ -60,22 +60,22 @@ class View
      * @param array 显示层需要使用的全局变量
      */
     protected static $view_global = array();
-    private function init_view_global()
+    private function initViewGlobal()
     {
         self::$view_global = array(
-            "isDev"         => Gc::$dev_debug_on,
+            "is_dev"        => Gc::$dev_debug_on,
+            "app_name"      => Gc::$appName,
+            "encoding"      => Gc::$encoding,
             "url_base"      => Gc::$url_base,
             "site_name"     => Gc::$site_name,
-            "appName"       => Gc::$appName,
-            "template_url"  => $this->template_url_dir(),
+            "template_url"  => $this->templateUrlDir(),
             "upload_url"    => Gc::$upload_url,
             "uploadImg_url" => Gc::$upload_url . "images/",
-            "templateDir"   => Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName),
-            "encoding"      => Gc::$encoding
+            "template_dir"  => Gc::$nav_root_path . $this->getTemplateViewDir($this->moduleName)
         );
 
         if (contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test"))) {
-            self::$view_global["isDev"] = true;
+            self::$view_global["is_dev"] = true;
         }
     }
     /**
@@ -86,7 +86,7 @@ class View
     public function __construct($moduleName, $templatefile = null)
     {
         $this->moduleName = $moduleName;
-        $this->init_view_global();
+        $this->initViewGlobal();
         if (isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every)) {
             $this->initTemplate(Gc::$template_mode_every[$this->moduleName], $templatefile);
         } else {
@@ -94,7 +94,7 @@ class View
         }
         if (!empty(self::$view_global)) {
             foreach (self::$view_global as $key => $value) {
-                $this->template_set($key, $value);
+                $this->templateSet($key, $value);
                 if (is_array($this->vars)) {
                     $this->vars[$key] = $value;
                 } else {
@@ -106,7 +106,7 @@ class View
 
     public function set($key, $value, $template_mode = null)
     {
-        $this->template_set($key, $value, $template_mode);
+        $this->templateSet($key, $value, $template_mode);
     }
 
     public function get($key)
@@ -213,7 +213,7 @@ class View
     /**
      * @return string 模板文件所在的目录
      */
-    public function template_dir()
+    public function templateDir()
     {
         return $this->template_dir;
     }
@@ -221,15 +221,15 @@ class View
     /**
      * @return string 模板文件所在的目录
      */
-    public function template_url_dir()
+    public function templateUrlDir()
     {
-        return @Gc::$url_base . str_replace("\\", "/", $this->getTemplate_View_Dir());
+        return @Gc::$url_base . str_replace("\\", "/", $this->getTemplateViewDir());
     }
 
     /**
      * @return string 模板文件的文件后缀名称
      */
-    public function template_suffix_name()
+    public function templateSuffixName()
     {
         return $this->template_suffix_name;
     }
@@ -252,7 +252,7 @@ class View
     * 获取模板文件完整的路径
     *
     */
-    private function getTemplate_View_Dir()
+    private function getTemplateViewDir()
     {
         $result = "";
         if (strlen(Gc::$module_root) > 0) {
@@ -276,8 +276,8 @@ class View
         if (empty($template_mode)) {
             $template_mode = Gc::$template_mode;
         }
-        $this->template_dir = $this->getTemplate_View_Dir($this->moduleName) . Config_F::VIEW_CORE . DS;
-        $template_tmp_dir   = $this->getTemplate_View_Dir($this->moduleName) . "tmp" . DS;
+        $this->template_dir = $this->getTemplateViewDir($this->moduleName) . Config_F::VIEW_CORE . DS;
+        $template_tmp_dir   = $this->getTemplateViewDir($this->moduleName) . "tmp" . DS;
 
         if (isset(Gc::$template_file_suffix_every) && array_key_exists($this->moduleName, Gc::$template_file_suffix_every)) {
             $this->template_suffix_name = Gc::$template_file_suffix_every[$this->moduleName];
@@ -304,7 +304,7 @@ class View
                 // 开启自定义安全机制
                 if (class_exists("Smarty_Security")) {
                     $my_security_policy = new Smarty_Security($this->template);
-                    $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplate_View_Dir($this->moduleName);
+                    $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplateViewDir($this->moduleName);
                     $my_security_policy->allow_php_tag = true;
                     $my_security_policy->php_functions = array();
                     $my_security_policy->php_handling = Smarty::PHP_PASSTHRU;
@@ -350,7 +350,7 @@ class View
     /**
      * 设置模板认知的变量
      */
-    public function template_set($key, $value, $template_mode = null)
+    public function templateSet($key, $value, $template_mode = null)
     {
         if (empty($template_mode)) {
             if (isset(Gc::$template_mode_every) && array_key_exists($this->moduleName, Gc::$template_mode_every)) {
@@ -430,7 +430,7 @@ class View
             default:
                 $viewvars = $this->getVars();
                 extract($viewvars);
-                include_once(Gc::$nav_root_path . $this->template_dir() . $templateFilePath);
+                include_once(Gc::$nav_root_path . $this->templateDir() . $templateFilePath);
                 break;
         }
     }

@@ -137,12 +137,12 @@ ACTION;
 
 
 $tpl_template = <<<TPL
-{extends file="\$templateDir/layout/normal/layout.tpl"}
+{extends file="\$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 
     <div class="page-container">
         <div class="page-content">
-            {include file="\$templateDir/layout/normal/sidebar.tpl"}
+            {include file="\$template_dir/layout/normal/sidebar.tpl"}
             <div class="content-wrapper">
               <div class="main-content">
                 <div class="row">
@@ -200,7 +200,7 @@ $tplColumns
         </div>
     </div>
 
-    {include file="\$templateDir/layout/normal/footer.tpl"}
+    {include file="\$template_dir/layout/normal/footer.tpl"}
     <script src="{\$template_url}js/normal/list.js"></script>
     <script src="{\$template_url}js/normal/edit.js"></script>
     <script src="{\$template_url}js/core/report$reportEname.js"></script>

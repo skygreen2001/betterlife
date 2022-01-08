@@ -1,10 +1,10 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     <!-- page container begin -->
     <div class="page-container">
         <!-- page content begin -->
         <div class="page-content">
-            {include file="$templateDir/layout/normal/sidebar.tpl"}
+            {include file="$template_dir/layout/normal/sidebar.tpl"}
 
             <!-- main content begin -->
             <div class="content-wrapper">
@@ -136,7 +136,7 @@
     </div>
     <!-- /page container end -->
 
-    {include file="$templateDir/layout/normal/footer.tpl"}
+    {include file="$template_dir/layout/normal/footer.tpl"}
     <script type="text/javascript">
         var select_category = {};
         {if $blog && $blog.category}

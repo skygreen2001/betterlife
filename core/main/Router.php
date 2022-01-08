@@ -248,7 +248,7 @@ class Router
         }
 
         if ($urlMode) {
-            $this->url_mcrypt_decode();
+            $this->urlMcryptDecode();
             // 获取PATHINFO信息
             self::getPathInfo();
             if (!empty($_GET) && !isset($_GET[self::VAR_ROUTER])) {
@@ -325,7 +325,7 @@ class Router
             if (isset($_GET[self::VAR_ROUTER])) {
                 self::routerCheck();
             }
-            $this->url_mcrypt_decode();
+            $this->urlMcryptDecode();
             $this->resolveNavDispathParam();
             $_REQUEST = array_merge($_POST, $_GET);
         }
@@ -339,7 +339,7 @@ class Router
      *
      * 加密的url具有以下特征:
      */
-    private function url_mcrypt_decode()
+    private function urlMcryptDecode()
     {
         if (class_exists("TagHrefClass") && TagHrefClass::$isMcrypt) {
             if (count($_GET) == 1) {
@@ -451,7 +451,7 @@ class Router
         return $this->controller;
     }
 
-    public function getController_path()
+    public function getControllerPath()
     {
         return $this->controller_path;
     }

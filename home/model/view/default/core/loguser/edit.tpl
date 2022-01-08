@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />

@@ -153,7 +153,7 @@ class Dispatcher
         $controller = $router->getController();
         $action     = $router->getAction();
         $templateFile    = $controller . DS . $action;//模板文件路径名称
-        $controller_path = $router->getController_path();
+        $controller_path = $router->getControllerPath();
         if (!empty($controller_path)) {
             if (endWith($controller_path, DS)) {
                 $templateFile = $controller_path . $templateFile;
@@ -161,8 +161,8 @@ class Dispatcher
                 $templateFile = $controller_path . DS . $templateFile;
             }
         }
-        if (!file_exists(Gc::$nav_root_path . $view->template_dir() . $templateFile . $view->template_suffix_name())) {
-            throw new Exception(" view/{$controller}" . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $action . $view->template_suffix_name() . "'");
+        if (!file_exists(Gc::$nav_root_path . $view->templateDir() . $templateFile . $view->templateSuffixName())) {
+            throw new Exception(" view/{$controller}" . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $action . $view->templateSuffixName() . "'");
         }
         $view->output($templateFile, $view->templateMode(), $current_action);
         $output = ob_get_clean();

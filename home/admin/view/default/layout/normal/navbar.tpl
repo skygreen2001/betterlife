@@ -22,7 +22,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{$url_base}index.php?go={$appName}.index.index">首页</a></li>
+            <li><a href="{$url_base}index.php?go={$app_name}.index.index">首页</a></li>
             <li><a href="{$url_base}index.php?go=admin.blog.lists">博客</a></li>
             <li><a href="https://y.qq.com/" target="_blank">音乐</a></li>
             <li><a href="http://36kr.com/" target="_blank">研发</a></li>

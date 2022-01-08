@@ -235,18 +235,18 @@ abstract class Query implements Iterator
      * Return the next record in the query result.
      * @return array
      */
-    abstract function nextRecord();
+    abstract protected function nextRecord();
 
     /**
      * Return the total number of items in the query result.
      * @return int
      */
-    abstract function numRecords();
+    abstract protected function numRecords();
 
     /**
      * Go to a specific row number in the query result and return the record.
      * @param int $rowNum Tow number to go to.
      * @return array
      */
-    abstract function seek($rowNum);
+    abstract protected function seek($rowNum);
 }

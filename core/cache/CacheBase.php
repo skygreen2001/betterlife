@@ -6,6 +6,6 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Base
+class CacheBase
 {
 }

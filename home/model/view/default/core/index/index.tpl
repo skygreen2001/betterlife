@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     <div><h1>这是首页列表(共计数据对象19个)</h1></div>
     <table class="viewdoblock" style="width: 500px;">

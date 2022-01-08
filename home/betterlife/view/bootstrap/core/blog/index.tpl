@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 
   <div class="page-container blog">
@@ -19,16 +19,16 @@
                   <div class="menu-navs">
                     <ul class="menu-nav-container" style="position: relative;">
                       <li class="menu-nav active">
-                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$appName}.blog.index"> 热点(火炎焱燚) </a>
+                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$app_name}.blog.index"> 热点(火炎焱燚) </a>
                       </li>
                       <li class="menu-nav">
-                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$appName}.blog.index"> 电影 </a>
+                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$app_name}.blog.index"> 电影 </a>
                       </li>
                       <li class="menu-nav">
-                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$appName}.blog.index"> 音乐(口吅品㗊) </a>
+                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$app_name}.blog.index"> 音乐(口吅品㗊) </a>
                       </li>
                       <li class="menu-nav">
-                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$appName}.blog.index"> 科技 </a>
+                        <a class="menu-nav-link" href="{$url_base}/index.php?go={$app_name}.blog.index"> 科技 </a>
                       </li>
                     </ul>
                   </div>
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  {include file="$templateDir/layout/normal/footer.tpl"}
+  {include file="$template_dir/layout/normal/footer.tpl"}
   <script type="text/javascript">
     var template_url = "{$template_url}";
   </script>

@@ -138,7 +138,7 @@ class Initializer
         /**
          * 加载include_path路径
          */
-        self::set_include_path();
+        self::setIncludePath();
         /**
          * 加载通用函数库
          */
@@ -190,7 +190,7 @@ class Initializer
     /**
      * 判断是否框架运行所需的模块和配置是否按要求设置
      */
-    private static function is_can_run()
+    private static function isCanRun()
     {
         $is_not_run_betterlife = false;
         $phpver = strtolower(phpversion());
@@ -251,7 +251,7 @@ class Initializer
         /**
          * 判断是否框架运行所需的模块和配置是否按要求设置
          */
-        self::is_can_run();
+        self::isCanRun();
         //定义异常报错信息
         if (Gc::$dev_debug_on) {
             ini_set('display_errors', 1);
@@ -309,7 +309,7 @@ class Initializer
     /**
      * 将所有需要加载类和文件的路径放置在set_include_path内
      */
-    public static function set_include_path()
+    public static function setIncludePath()
     {
         $core_util     = "util";
         $include_paths = array(

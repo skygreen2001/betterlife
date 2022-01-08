@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/layout_login.tpl"}
+{extends file="$template_dir/layout/layout_login.tpl"}
 {block name=body}
 <body class="login">
     <!--content begin-->
@@ -62,7 +62,7 @@
       </main>
 
       <!--footer begin-->
-      {include file="$templateDir/layout/normal/footer.tpl"}
+      {include file="$template_dir/layout/normal/footer.tpl"}
       <!--footer end-->
     </div>
     <!--content end-->
@@ -73,7 +73,7 @@
     <script type="text/javascript">
       $(function(){
         $(".bb-icon").click(function(){
-          window.location = "{$url_base}index.php?go={$appName}.index.index";
+          window.location = "{$url_base}index.php?go={$app_name}.index.index";
         });
 
         $(".checker").click(function(){

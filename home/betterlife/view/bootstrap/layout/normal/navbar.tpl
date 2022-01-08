@@ -16,16 +16,16 @@
             <span class="sr-only"></span>
             <i class="fa fa-search"></i>
           </button>
-          <a class="navbar-brand" href="{$url_base}index.php?go={$appName}.index.index">
+          <a class="navbar-brand" href="{$url_base}index.php?go={$app_name}.index.index">
             <img src="{$template_url}resources/images/logo.png" /> <span> {$site_name} </span>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{$url_base}index.php?go={$appName}.index.index">首页</a></li>
-            <li><a href="{$url_base}index.php?go={$appName}.blog.index">博客</a></li>
-            <li><a href="{$url_base}index.php?go={$appName}.featured.index">发现</a></li>
-            <li><a href="{$url_base}index.php?go={$appName}.us.index">我们</a></li>
+            <li><a href="{$url_base}index.php?go={$app_name}.index.index">首页</a></li>
+            <li><a href="{$url_base}index.php?go={$app_name}.blog.index">博客</a></li>
+            <li><a href="{$url_base}index.php?go={$app_name}.featured.index">发现</a></li>
+            <li><a href="{$url_base}index.php?go={$app_name}.us.index">我们</a></li>
             <li class="dropdown">
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 其它

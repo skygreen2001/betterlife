@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    {include file="$templateDir/layout/normal/header.tpl"}
+    {include file="$template_dir/layout/normal/header.tpl"}
     <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/public.css" />
     <link rel="stylesheet" href="{$template_url}resources/css/common.min.css">

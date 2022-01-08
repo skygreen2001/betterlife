@@ -1,8 +1,8 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     <div class="page-container">
         <div class="page-content">
-            {include file="$templateDir/layout/normal/sidebar.tpl"}
+            {include file="$template_dir/layout/normal/sidebar.tpl"}
             <div class="content-wrapper list-wrapper">
               <div class="main-content">
                 <div class="row">
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    {include file="$templateDir/layout/normal/footer.tpl"}
+    {include file="$template_dir/layout/normal/footer.tpl"}
     <div id="image-model">
       <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

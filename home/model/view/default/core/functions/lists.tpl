@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 <div class="block">
     <div><h1>功能信息列表(共计{$countFunctionss}个)</h1></div>

@@ -80,7 +80,7 @@ class BBCache
     {
         switch ($cache_drive) {
             case EnumCacheDriverType::REDIS:
-                $cache = new Cache_Redis();
+                $cache = new CacheRedis();
                 break;
             case EnumCacheDriverType::MEMCACHE:
                 $cache = new Cache_Memcache();
@@ -101,7 +101,7 @@ class BBCache
            //      $cache = new \Doctrine\Common\Cache\SQLite3Cache($db, 'table_name');
            //      break;
             case EnumCacheDriverType::APC:
-                $cache = new Cache_Apc();
+                $cache = new CacheApc();
                 break;
            // case EnumCacheDriverType::WINCACHE:
            //      $cache = new \Doctrine\Common\Cache\WinCacheCache();
@@ -180,7 +180,7 @@ class BBCache
     public function redisServer($host = '', $port = '', $password = '')
     {
         if ($this->redisCache == null) {
-            $this->redisCache = new Cache_Redis($host, $port, $password);
+            $this->redisCache = new CacheRedis($host, $port, $password);
         }
         return $this->redisCache;
     }

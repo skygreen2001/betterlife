@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     <div id="main-content-container" class="container-fluid" style="display:none;">
       <div class="section page" id="page1">
@@ -143,7 +143,7 @@
           </div>
       </div>
 
-      {include file="$templateDir/layout/normal/footer.tpl"}
+      {include file="$template_dir/layout/normal/footer.tpl"}
 
       <div class="footer-rainbow">
         <div class="col-xs-1" style="border:4px solid #d71335;"></div>

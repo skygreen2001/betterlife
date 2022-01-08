@@ -1,6 +1,6 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
-    <form method="POST" action="{$url_base}index.php?go={$appName}.auth.login">
+    <form method="POST" action="{$url_base}index.php?go={$app_name}.auth.login">
     <div class="login-container">
         <h2></h2>
         <div>
@@ -17,7 +17,7 @@
                         </div>
                         <div class="modal-footer">
                             <input type="submit" name="Submit" value="登录" class="btnSubmit" />
-                            <button type="button" class="btn btn-register inputNormal" onclick="javascript:window.location.href='{$url_base}index.php?go={$appName}.auth.register'">注册</button>
+                            <button type="button" class="btn btn-register inputNormal" onclick="javascript:window.location.href='{$url_base}index.php?go={$app_name}.auth.register'">注册</button>
                         </div>
                     </div>
                 </div>

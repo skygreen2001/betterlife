@@ -1,6 +1,5 @@
 <?php
 
-//<editor-fold defaultstate = "collapsed" desc = "枚举类型">
 /**
  * -----------| 枚举类型: 数据库方式类别|数据源定义 |-----------
  * @category betterlife
@@ -161,7 +160,6 @@ class EnumDbEngine extends Enum
      */
     const ENGINE_DAL_MDB2   = 114;
 }
-//</editor-fold>
 
 /**
  * -----------|  所有数据库配置的父类 |-----------

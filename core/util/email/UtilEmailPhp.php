@@ -31,7 +31,6 @@
  * @category betterlife
  * @package util.email
  * @author silverstripe
- * @author skygreen
  */
 class UtilEmailPhp extends Util
 {

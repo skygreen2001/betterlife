@@ -1,6 +1,5 @@
 <?php
 
-require_once("phpmailer/class.phpmailer.php");
 /**
  * -----------| 邮件发送 |-----------
  *
@@ -18,8 +17,9 @@ require_once("phpmailer/class.phpmailer.php");
  *
  * @category betterlie
  * @package util.email
- * @subpackage phpmailer
  */
+require_once("phpmailer/class.phpmailer.php");
+
 class UtilEmailer
 {
     /**

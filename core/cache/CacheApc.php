@@ -56,7 +56,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Apc extends Cache_Base
+class CacheApc extends CacheBase
 {
     public static $name = 'Alternative PHP Cache (APC)';
     public static $desc = 'The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. It was conceived of to provide a free, open, and robust framework for caching and optimizing PHP intermediate code.';
@@ -69,7 +69,7 @@ class Cache_Apc extends Cache_Base
         echo $test;
     }
 
-    public function Cache_Apc()
+    public function CacheApc()
     {
     }
 

@@ -1,9 +1,9 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
 
     <div class="page-container">
         <div class="page-content">
-            {include file="$templateDir/layout/normal/sidebar.tpl"}
+            {include file="$template_dir/layout/normal/sidebar.tpl"}
             <div class="content-wrapper">
                 <div class="main-content">
                     <!-- page header begin -->
@@ -32,6 +32,6 @@
         </div>
     </div>
 
-    {include file="$templateDir/layout/normal/footer.tpl"}
+    {include file="$template_dir/layout/normal/footer.tpl"}
 
 {/block}

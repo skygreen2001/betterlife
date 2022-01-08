@@ -314,7 +314,7 @@ $list_template = <<<LIST_TPL
 
     <div class="page-container">
         <div class="page-content">
-            {include file="\$templateDir/layout/normal/sidebar.tpl"}
+            {include file="\$template_dir/layout/normal/sidebar.tpl"}
             <div class="content-wrapper list-wrapper">
               <div class="main-content">
                 <div class="row">
@@ -365,7 +365,7 @@ $column_contents
         </div>
     </div>
 
-    {include file="\$templateDir/layout/normal/footer.tpl"}
+    {include file="\$template_dir/layout/normal/footer.tpl"}
 $admin_modal_img_preview
     {literal}
     <script id="actionTmpl" type="text/x-jsrender">
@@ -400,7 +400,7 @@ $view_template = <<<VIEW_TPL
     <div class="page-container">
         <!-- page content begin -->
         <div class="page-content">
-            {include file="\$templateDir/layout/normal/sidebar.tpl"}
+            {include file="\$template_dir/layout/normal/sidebar.tpl"}
 
             <!-- main content begin -->
             <div class="content-wrapper">
@@ -465,7 +465,7 @@ $showColumns
     </div>
     <!-- /page container end -->
 
-    {include file="\$templateDir/layout/normal/footer.tpl"}
+    {include file="\$template_dir/layout/normal/footer.tpl"}
 VIEW_TPL;
 
 $edit_template = <<<EDIT_TPL
@@ -474,7 +474,7 @@ $edit_template = <<<EDIT_TPL
     <div class="page-container">
         <!-- page content begin -->
         <div class="page-content">
-            {include file="\$templateDir/layout/normal/sidebar.tpl"}
+            {include file="\$template_dir/layout/normal/sidebar.tpl"}
 
             <!-- main content begin -->
             <div class="content-wrapper">
@@ -531,7 +531,7 @@ $edit_contents
     </div>
     <!-- /page container end -->
 
-    {include file="\$templateDir/layout/normal/footer.tpl"}
+    {include file="\$template_dir/layout/normal/footer.tpl"}
 $enumJsContent
 $rela_js_content
     <script src="{\$template_url}js/normal/edit.js"></script>

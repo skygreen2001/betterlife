@@ -27,7 +27,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Redis extends Cache_Base
+class CacheRedis extends CacheBase
 {
     private $redis;
     public static $SPLIT_ELEMENT = "<(||)>";

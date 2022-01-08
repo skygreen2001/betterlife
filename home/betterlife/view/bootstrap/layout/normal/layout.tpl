@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN" id="index">
   <head>
-    {include file="$templateDir/layout/normal/header.tpl"}
+    {include file="$template_dir/layout/normal/header.tpl"}
     <link rel="icon" href="{$url_base}favicon.ico" mce_href="{$url_base}favicon.ico" type="image/x-icon">
-    {if $isDev}
+    {if $is_dev}
 
     <link rel="stylesheet" href="{$template_url}resources/css/common.css">
     <script src="{$template_url}js/common/base.js"></script>
@@ -28,7 +28,7 @@
   {/php}
 
   <body>
-  {include file="$templateDir/layout/normal/navbar.tpl"}
+  {include file="$template_dir/layout/normal/navbar.tpl"}
   {block name=body}{/block}
   </body>
 </html>

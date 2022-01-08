@@ -1,10 +1,10 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     <!-- page container begin -->
     <div class="page-container">
         <!-- page content begin -->
         <div class="page-content">
-            {include file="$templateDir/layout/normal/sidebar.tpl"}
+            {include file="$template_dir/layout/normal/sidebar.tpl"}
 
             <!-- main content begin -->
             <div class="content-wrapper">
@@ -118,7 +118,7 @@
         <!-- /page content end -->
     </div>
     <!-- /page container end -->
-    {include file="$templateDir/layout/normal/footer.tpl"}
+    {include file="$template_dir/layout/normal/footer.tpl"}
 
     <script>
         var blog_content = "{$blog.blog_content|escape:'javascript'}";

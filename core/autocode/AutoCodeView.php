@@ -179,7 +179,7 @@ class AutoCodeView extends AutoCode
      */
     public static function tableToViewTplDefine($contents)
     {
-        $result = "{extends file=\"\$templateDir/layout/normal/layout.tpl\"}" . HH .
+        $result = "{extends file=\"\$template_dir/layout/normal/layout.tpl\"}" . HH .
                   "{block name=body}" . HH .
                   "$contents" . HH .
                   "{/block}";

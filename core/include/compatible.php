@@ -32,7 +32,7 @@
  * @link http://roygu.com/2010/07/php/php-5-2%E4%B8%ADget_called_class%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%BA%94%E7%94%A8.html
  */
 if (!function_exists('get_called_class')) {
-    class class_tools
+    class ClassTools
     {
         private static $i = 0;
         private static $fl = null;
@@ -96,7 +96,7 @@ if (!function_exists('get_called_class')) {
     }
     function get_called_class()
     {
-        return class_tools::get_called_class();
+        return ClassTools::get_called_class();
     }
 }
 

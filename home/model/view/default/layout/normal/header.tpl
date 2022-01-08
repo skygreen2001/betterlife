@@ -1,3 +1,4 @@
+    
     <meta http-equiv="Content-Type" content="text/html; charset={$encoding}" />
     <meta http-equiv="Lang" content="zh_CN" />
     <meta name="author" content="skygreen" />
@@ -7,3 +8,4 @@
     <meta name="creation-date" content="12/01/2010" />
     <meta name="revisit-after" content="15 days" />
     <title>{$site_name}</title>
+    

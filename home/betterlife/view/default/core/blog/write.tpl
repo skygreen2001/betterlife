@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
     {if ($online_editor=='KindEditor')}
     <script>
@@ -17,8 +17,8 @@
     {/if}
 
     <div class="contentBox" >
-        <b><my:a href="{$url_base}index.php?go={$appName}.auth.logout">退出</my:a></b><br/>
-        <my:a href="{$url_base}index.php?go={$appName}.blog.display&amp;pageNo={$smarty.get.pageNo|default:"1"}">博客列表</my:a>
+        <b><my:a href="{$url_base}index.php?go={$app_name}.auth.logout">退出</my:a></b><br/>
+        <my:a href="{$url_base}index.php?go={$app_name}.blog.display&amp;pageNo={$smarty.get.pageNo|default:"1"}">博客列表</my:a>
         <br/><font color="{$color}">{$message|nl2br|default:''}</font><br/>
         <form name="postForm" method="POST">
             博文名:<br/>

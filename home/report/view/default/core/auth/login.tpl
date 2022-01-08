@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/layout_login.tpl"}
+{extends file="$template_dir/layout/layout_login.tpl"}
 {block name=body}
 <body class="login">
     <!--content begin-->

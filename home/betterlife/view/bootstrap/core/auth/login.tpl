@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/layout_login.tpl"}
+{extends file="$template_dir/layout/layout_login.tpl"}
 {block name=body}
 <body class="login">
     <!--content begin-->
@@ -6,7 +6,7 @@
       <main>
         <div class="content-wrapper">
           <div class="content">
-            <form method="POST" action="{$url_base}index.php?go={$appName}.index.index">
+            <form method="POST" action="{$url_base}index.php?go={$app_name}.index.index">
               <div class="panel panel-body login-form">
                 <div class="bb-icon">BB</div>
 
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col-sm-6 text-right">
-                      <a href="{$url_base}index.php?go={$appName}.index.index">忘记密码? </a>
+                      <a href="{$url_base}index.php?go={$app_name}.index.index">忘记密码? </a>
                     </div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
           </div>
         </div>
       </main>
-      {include file="$templateDir/layout/normal/footer.tpl"}
+      {include file="$template_dir/layout/normal/footer.tpl"}
     </div>
     <!--content end-->
 

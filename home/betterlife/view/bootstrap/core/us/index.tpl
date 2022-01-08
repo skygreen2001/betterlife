@@ -1,4 +1,4 @@
-{extends file="$templateDir/layout/normal/layout.tpl"}
+{extends file="$template_dir/layout/normal/layout.tpl"}
 {block name=body}
   <style type="text/css">
   .us .intro .cover {
@@ -433,7 +433,7 @@
         </section>
         <!-- Contact content -->
 
-      {include file="$templateDir/layout/normal/footer.tpl"}
+      {include file="$template_dir/layout/normal/footer.tpl"}
     </div>
 
   </div>
