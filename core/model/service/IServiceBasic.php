@@ -53,7 +53,7 @@ interface IServiceBasic
      * @param string property_name 属性名称
      * @param int incre_value 递增数
      */
-    public function increment($filter = null, $property_name, $incre_value);
+    public function increment($property_name, $incre_value, $filter = null);
 
     /**
      * 对属性进行递减
@@ -67,7 +67,7 @@ interface IServiceBasic
      * @param string property_name 属性名称
      * @param int decre_value 递减数
      */
-    public function decrement($filter = null, $property_name, $decre_value);
+    public function decrement($property_name, $decre_value, $filter = null);
 
     /**
      * 查询当前对象需显示属性的列表

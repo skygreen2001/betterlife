@@ -469,8 +469,8 @@ class Memcached_Client
    /**
     * Increments $key (optionally) by $amt
     *
-    * @param   string   $key     Key to increment
-    * @param   interger $amt     (optional) amount to increment
+    * @param string $key Key to increment
+    * @param interger $amt (optional) amount to increment
     *
     * @return  interger New key value?
     * @access  public

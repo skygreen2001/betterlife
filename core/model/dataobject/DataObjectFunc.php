@@ -220,7 +220,7 @@ class DataObjectFunc
      *
      * @return bool 是否操作成功
      */
-    public static function increment($classname, $filter = null, $property_name, $incre_value = 1)
+    public static function increment($classname, $property_name, $incre_value = 1, $filter = null)
     {
         $tablename = Config_Db::orm($classname);
         $_SQL      = new Crud_Sql_Update();
@@ -247,7 +247,7 @@ class DataObjectFunc
      *
      * @return bool 是否操作成功
      */
-    public static function decrement($classname, $filter = null, $property_name, $decre_value = 1)
+    public static function decrement($classname, $property_name, $decre_value = 1, $filter = null)
     {
         $tablename = Config_Db::orm($classname);
         $_SQL      = new Crud_Sql_Update();

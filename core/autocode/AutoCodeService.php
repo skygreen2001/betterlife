@@ -272,9 +272,9 @@ class AutoCodeService extends AutoCode
                            "     * @param int \$incre_value 递增数 " . HH .
                            "     * @return boolen 是否操作成功；true为操作正常" . HH .
                            "     */" . HH;
-                $result .= "    public function increment(\$filter = null, \$property_name, \$incre_value)" . HH .
+                $result .= "    public function increment(\$property_name, \$incre_value, \$filter = null)" . HH .
                            "    {" . HH .
-                           "        return $classname::increment( \$filter, \$property_name, \$incre_value );" . HH .
+                           "        return $classname::increment( \$property_name, \$incre_value, \$filter );" . HH .
                            "    }" . HH . HH;
                 //decrement
                 $result .= "    /**" . HH .
@@ -294,9 +294,9 @@ class AutoCodeService extends AutoCode
                            "     * @param int \$decre_value 递减数 " . HH .
                            "     * @return boolen 是否操作成功；true为操作正常" . HH .
                            "     */" . HH;
-                $result .= "    public function decrement(\$filter = null, \$property_name, \$decre_value)" . HH .
+                $result .= "    public function decrement(\$property_name, \$decre_value, \$filter = null)" . HH .
                            "    {" . HH .
-                           "        return $classname::decrement( \$filter, \$property_name, \$decre_value );" . HH .
+                           "        return $classname::decrement( \$property_name, \$decre_value, \$filter );" . HH .
                            "    }" . HH . HH;
                 //select
                 $result .= "    /**" . HH .

@@ -620,7 +620,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 对属性进行递增
      * @example 示例如下
      *
-     *        $isPlus = User::increment( "user_id > 1", "loginTimes", 5 );
+     *        $isPlus = User::increment( "loginTimes", 5, "user_id > 1" );
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下:
      *
@@ -634,16 +634,16 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param int incre_value 递增数
      * @return boolen 是否修改成功
      */
-    public static function increment($filter = null, $property_name, $incre_value = 1)
+    public static function increment($property_name, $incre_value = 1, $filter = null)
     {
-        return DataObjectFunc::increment(get_called_class(), $filter, $property_name, $incre_value);
+        return DataObjectFunc::increment(get_called_class(), $property_name, $incre_value, $filter);
     }
 
     /**
      * 对属性进行递减
      * @example 示例如下
      *
-     *        $isMinus = User::decrement( "user_id > 1", "loginTimes", 3 );
+     *        $isMinus = User::decrement( "loginTimes", 3, "user_id > 1" );
      * @param object|string|array $filter 查询条件, 在where后的条件
      * 示例如下:
      *
@@ -657,9 +657,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param int decre_value 递减数
      * @return boolen 是否修改成功
      */
-    public static function decrement($filter = null, $property_name, $decre_value = 1)
+    public static function decrement($property_name, $decre_value = 1, $filter = null)
     {
-        return DataObjectFunc::decrement(get_called_class(), $filter, $property_name, $decre_value);
+        return DataObjectFunc::decrement(get_called_class(), $property_name, $decre_value, $filter);
     }
 
     /**

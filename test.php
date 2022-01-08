@@ -102,11 +102,11 @@ require_once("init.php");
 // if ($isDelete ) echo("删除用户信息成功!"); else echo("删除用户信息失败!");
 
 // // 用户访问次数+5
-// $isPlus = User::increment( "user_id > 1", "loginTimes", 5 );
+// $isPlus = User::increment( "loginTimes", 5, "user_id > 1" );
 // if ($isPlus ) echo("用户访问次数+5成功!"); else echo("用户访问次数+5失败!");
 
 // // 用户访问次数-3
-// $isMinus = User::decrement( "user_id > 1", "loginTimes", 3 );
+// $isMinus = User::decrement( "loginTimes", 3, "user_id > 1" );
 // if ($isMinus ) echo("用户访问次数-3成功!"); else echo("用户访问次数-3失败!");
 
 // // 查看标识为1的用户是否存在

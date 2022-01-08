@@ -87,9 +87,9 @@ class ServiceBlog extends Service implements IServiceBasic
      * @param int $incre_value 递增数 
      * @return boolen 是否操作成功；true为操作正常
      */
-    public function increment($filter = null, $property_name, $incre_value)
+    public function increment($property_name, $incre_value, $filter = null)
     {
-        return Blog::increment( $filter, $property_name, $incre_value );
+        return Blog::increment( $property_name, $incre_value, $filter );
     }
 
     /**
@@ -109,9 +109,9 @@ class ServiceBlog extends Service implements IServiceBasic
      * @param int $decre_value 递减数 
      * @return boolen 是否操作成功；true为操作正常
      */
-    public function decrement($filter = null, $property_name, $decre_value)
+    public function decrement($property_name, $decre_value, $filter = null)
     {
-        return Blog::decrement( $filter, $property_name, $decre_value );
+        return Blog::decrement( $property_name, $decre_value, $filter );
     }
 
     /**

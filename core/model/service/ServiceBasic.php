@@ -151,11 +151,11 @@ class ServiceBasic extends Service implements IServiceBasic
      * @param int $incre_value 递增数
      * @return boolen 是否操作成功；true为操作正常
      */
-    public function increment($filter = null, $property_name, $incre_value)
+    public function increment($property_name, $incre_value, $filter = null)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func_array($dataobject_class . "::increment", array($filter, $property_name, $incre_value));
+            return call_user_func_array($dataobject_class . "::increment", array($property_name, $incre_value, $filter));
         } else {
             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
@@ -179,11 +179,11 @@ class ServiceBasic extends Service implements IServiceBasic
      * @param int $decre_value 递减数
      * @return boolen 是否操作成功；true为操作正常
      */
-    public function decrement($filter = null, $property_name, $decre_value)
+    public function decrement($property_name, $decre_value, $filter = null)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func_array($dataobject_class . "::decrement", array($filter, $property_name, $decre_value));
+            return call_user_func_array($dataobject_class . "::decrement", array($property_name, $decre_value, $filter));
         } else {
             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
