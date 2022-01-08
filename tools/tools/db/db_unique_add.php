@@ -5,7 +5,7 @@ require_once("../../../init.php");
 $tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
 foreach ($tableList as $tablename) {
-    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
+    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
     foreach ($fieldInfoList as $fieldname => $field) {
         $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
         $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -13,7 +13,7 @@ foreach ($tableList as $tablename) {
     }
 }
 
-$tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList(); 
+$tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList();
 $filterTableColumns = array();
 echo "将所有表的主键设置成Unique<br/>";
 echo "<br/>";
@@ -35,15 +35,13 @@ function getClassname($tablename)
     return $classname;
 }
 
-foreach ($tableList as $tablename) {  
+foreach ($tableList as $tablename) {
     $classname = getClassname($tablename);
-    $fieldname = DataObjectSpec::getRealIDColumnNameStatic( $classname );
+    $fieldname = DataObjectSpec::getRealIDColumnNameStatic($classname);
     // $classname = lcfirst($classname);
     // $fieldname = $classname . "_id";
 
-    if (!Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, $fieldname )) { 
+    if (!Manager_Db::newInstance()->dbinfo()->hasUnique($tablename, $fieldname)) {
         echo "alter table $tablename add unique($fieldname);<br/>";
     }
 }
-
-?>

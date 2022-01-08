@@ -46,8 +46,8 @@
     "pagon/composer-packer": "0.1.x"
   },
   "scripts": {
-    "check-style": "phpcs -p --standard=install/phpcs.xml core/",
-    "fix-style": "phpcbf -p --standard=install/phpcs.xml core/"
+    "check-style": "phpcs -p --standard=install/phpcs.xml core/ tools/",
+    "fix-style": "phpcbf -p --standard=install/phpcs.xml core/ tools/"
   },
   "_conflict": {
     "symfony/symfony": "*"

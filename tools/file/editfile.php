@@ -1,18 +1,21 @@
 <?php
     require_once("../../init.php");
     $urlbase = UtilNet::urlbase();
-    if (contain( strtolower(php_uname()), "darwin" )) {
-        $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-        if (contain( $file_sub_dir, "tools" . DS))
-            $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
-        $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-        if (!endwith( $urlbase, $domainSubDir)) $urlbase .= $domainSubDir;
+if (contain(strtolower(php_uname()), "darwin")) {
+    $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
+    if (contain($file_sub_dir, "tools" . DS)) {
+        $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
     }
-    if (isset($_POST) && isset($_POST["code"])) {
-        $code = $_POST["code"];
-        $file = $_GET["f"];
-        file_put_contents($file, $code);
+    $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
+    if (!endwith($urlbase, $domainSubDir)) {
+        $urlbase .= $domainSubDir;
     }
+}
+if (isset($_POST) && isset($_POST["code"])) {
+    $code = $_POST["code"];
+    $file = $_GET["f"];
+    file_put_contents($file, $code);
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" >

@@ -3,6 +3,7 @@
 /**
  * 仅供使用Smarty模板开发使用生成全网站静态
  */
+
 require_once("../../../init.php");
 
 /**
@@ -10,7 +11,7 @@ require_once("../../../init.php");
  */
 Gc::$dev_profile_on = true;
 $html_dir           = Gc::$nav_root_path . "html" . DS;
-UtilFileSystem::createDir( $html_dir );
+UtilFileSystem::createDir($html_dir);
 Gc::$url_base       = UtilNet::urlbase();
 /**
  * 是否输出返回静态页面信息
@@ -23,14 +24,14 @@ Gc::$is_online_optimize     = true;
 
 if (Gc::$dev_profile_on) {
     Profiler::init();
-    Profiler::mark( "生成首页" );
+    Profiler::mark("生成首页");
     echo "/" . str_repeat("*", 40) . UtilDateTime::now() . ":生成首页" . str_repeat("*", 40) . "<br/>";
 }
 
-createOneStaticHtmlPage( "model.index.index", $html_dir . "index.html" );
+createOneStaticHtmlPage("model.index.index", $html_dir . "index.html");
 
 if (Gc::$dev_profile_on) {
-    Profiler::unmark( "生成首页" );
+    Profiler::unmark("生成首页");
 }
 
 if (Gc::$dev_profile_on) {
@@ -45,8 +46,8 @@ echo "全部静态页面生成!";
  */
 function createOneStaticHtmlPage($go, $htmlfilename, $go_param = null)
 {
-    $htmlcontent = runphp( $go, $go_param );
-    $htmlcontent = replaceBlogDetailLink( $htmlcontent );
+    $htmlcontent = runphp($go, $go_param);
+    $htmlcontent = replaceBlogDetailLink($htmlcontent);
     file_put_contents($htmlfilename, $htmlcontent);
 }
 
@@ -80,10 +81,10 @@ function runphp($go, $pararm = null)
     /**
      * @var string
      */
-    $result = Dispatcher::dispatch( new Router() );
+    $result = Dispatcher::dispatch(new Router());
     if (!empty($result)) {
         if (Gc::$is_online_optimize) {
-            if (contain( $result, "<body" )) {
+            if (contain($result, "<body")) {
                /************************start:整个Html页面去除注释，换行，空格********************/
                 $result = preg_replace("/<\!--(.*?)-->/", "", $result);//去掉html里的注释
                 $result = preg_replace("~>\s+\n~", ">", $result);

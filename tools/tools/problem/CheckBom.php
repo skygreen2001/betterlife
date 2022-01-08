@@ -1,4 +1,5 @@
 <?php
+
 require_once("../../../init.php");
 /**
  * 检查清除文件头的Bom
@@ -59,16 +60,16 @@ class CheckBOMTask
         if (isset($_GET['dir'])) {
             $checkDir = $_GET['dir'];
         }
-        if (endWith( $checkDir, DS )) {
+        if (endWith($checkDir, DS)) {
             $checkDir = substr($checkDir, 0, strlen($checkDir) - strlen(DS));
         }
-        
-        for ($i=0; $i < count(self::$exclude_check) ; $i++) { 
+
+        for ($i = 0; $i < count(self::$exclude_check); $i++) {
             self::$exclude_check[$i] = CheckBOMTask::$checkDir . self::$exclude_check[$i];
         }
         // print_r(self::$exclude_check); die();
 
-        self::checkdir( $checkDir );
+        self::checkdir($checkDir);
         // checkdir($checkDir . "misc/js/");
         // checkdir($checkDir . "core/");
         // checkdir($checkDir . "api/");
@@ -92,17 +93,17 @@ class CheckBOMTask
                     if (!is_dir($basedir . DS . $file)) {
                         // echo "dir file name:  " . $basedir . DS . $file . " <br>";
                         if (self::$isRemoveBom) {
-                            echo "filename: " . $basedir . DS . $file . self::checkBOM( $basedir . DS . $file ) . " <br>";
+                            echo "filename: " . $basedir . DS . $file . self::checkBOM($basedir . DS . $file) . " <br>";
                         } else {
-                            $cb = self::checkBOM( $basedir . DS . $file );
+                            $cb = self::checkBOM($basedir . DS . $file);
                             if ($cb) {
                                 echo "filename: " . $basedir . DS . $file . " " . $cb . " <br>";
                             }
                         }
                     } else {
                         $dirname = $basedir . DS . $file;
-                        if (!in_array($dirname, self::$exclude_check )) {
-                            self::checkdir( $dirname );
+                        if (!in_array($dirname, self::$exclude_check)) {
+                            self::checkdir($dirname);
                         }
                     }
                 } else {
@@ -118,7 +119,7 @@ class CheckBOMTask
      * @param string $filename 要检查的文件
      * @return string
      */
-    private static function checkBOM ($filename)
+    private static function checkBOM($filename)
     {
         $contents   = file_get_contents($filename);
         $charset[1] = substr($contents, 0, 1);
@@ -127,7 +128,7 @@ class CheckBOMTask
         if (ord($charset[1]) == 239 && ord($charset[2]) == 187 && ord($charset[3]) == 191) {
             if (self::$isRemoveBom) {
                 $rest = substr($contents, 3);
-                UtilFileSystem::rewrite( $filename, $rest );
+                UtilFileSystem::rewrite($filename, $rest);
                 return (", <font color=red>BOM found, automatically removed.</font>");
             } else {
                 return (", <font color=red>BOM found.</font>");

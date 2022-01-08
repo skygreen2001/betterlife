@@ -1,11 +1,13 @@
 <?php
+
 require_once("../../../init.php");
 $isUpdate = false;
-if (isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"]) )
-{
+if (isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"])) {
     $detect_dir = $_REQUEST["detect_dir"];
-    $files      = UtilFileSystem::getAllFilesInDirectory( $detect_dir, array("php", "txt", "srt") );
-    if (array_key_exists("checkType", $_GET) && ($_GET["checkType"] == "2")) $isUpdate = true;
+    $files      = UtilFileSystem::getAllFilesInDirectory($detect_dir, array("php", "txt", "srt"));
+    if (array_key_exists("checkType", $_GET) && ($_GET["checkType"] == "2")) {
+        $isUpdate = true;
+    }
     foreach ($files as $file) {
         $contents = file_get_contents($file);
         $encode   = mb_detect_encoding($contents, array("ASCII", "GB2312", "GBK", "BIG5", "UTF-8"));
@@ -17,11 +19,10 @@ if (isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"]) )
                 } else {
                     $contents = iconv($encode, "UTF-8", $contents);
                 }
-                $isGood=file_put_contents($file, $contents);
+                $isGood = file_put_contents($file, $contents);
             }
         }
     }
-
 } else {
     $inputArr = array(
          "1" => "否",
@@ -75,4 +76,3 @@ if (isset($_REQUEST["detect_dir"]) && !empty($_REQUEST["detect_dir"]) )
     echo "</body>";
     echo "</html>";
 }
-?>

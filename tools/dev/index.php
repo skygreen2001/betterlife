@@ -1,4 +1,5 @@
 <?php
+
 require_once("../../init.php");
 set_time_limit(0);
 /**
@@ -116,12 +117,15 @@ class Project_Refactor
     {
         foreach (self::$ignore_dir as $ignore_dir) {
             $toDeleteDir = self::$save_dir . $ignore_dir;
-            if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+            if (is_dir($toDeleteDir)) {
+                UtilFileSystem::deleteDir($toDeleteDir);
+            }
             @mkdir($toDeleteDir);
         }
 
-        if (is_dir(self::$save_dir . Gc::$module_root . DS . "business") )
-            UtilFileSystem::deleteDir( self::$save_dir . Gc::$module_root . DS . "business" );
+        if (is_dir(self::$save_dir . Gc::$module_root . DS . "business")) {
+            UtilFileSystem::deleteDir(self::$save_dir . Gc::$module_root . DS . "business");
+        }
     }
 
     /**
@@ -131,7 +135,9 @@ class Project_Refactor
     {
         foreach (self::$ignore_files as $ignore_file) {
             $toDeleteFile = self::$save_dir . $ignore_file;
-            if (file_exists($toDeleteFile) ) unlink($toDeleteFile);
+            if (file_exists($toDeleteFile)) {
+                unlink($toDeleteFile);
+            }
         }
     }
 
@@ -148,21 +154,33 @@ class Project_Refactor
         //1.清除配置文件:config/db
         $ignore_config_db_dir = self::$save_dir . $root_config . DS . "config" . DS . "db" . DS;
         $toDeleteDir  = $ignore_config_db_dir . "dal" . DS;
-        if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        if (is_dir($toDeleteDir)) {
+            UtilFileSystem::deleteDir($toDeleteDir);
+        }
         $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Mssql.php";
-        if (file_exists($toDeleteFile) ) unlink($toDeleteFile);
+        if (file_exists($toDeleteFile)) {
+            unlink($toDeleteFile);
+        }
         $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Odbc.php";
-        if (file_exists($toDeleteFile) ) unlink($toDeleteFile);
+        if (file_exists($toDeleteFile)) {
+            unlink($toDeleteFile);
+        }
 
         //2.数据库引擎文件:core/db/
         $root_core          = "core";
         $ignore_core_db_dir = self::$save_dir . $root_core . DS . "db" . DS;
         $toDeleteDir        = $ignore_core_db_dir . "dal" . DS;
-        if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        if (is_dir($toDeleteDir)) {
+            UtilFileSystem::deleteDir($toDeleteDir);
+        }
         $toDeleteDir        = $ignore_core_db_dir . "object" . DS . "odbc" . DS;
-        if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        if (is_dir($toDeleteDir)) {
+            UtilFileSystem::deleteDir($toDeleteDir);
+        }
         $toDeleteDir        = $ignore_core_db_dir . "object" . DS . "sqlserver" . DS;
-        if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+        if (is_dir($toDeleteDir)) {
+            UtilFileSystem::deleteDir($toDeleteDir);
+        }
 
         //3.数据库备份:db/
         $ignore_db_dirs = array(
@@ -173,7 +191,9 @@ class Project_Refactor
         );
         foreach ($ignore_db_dirs as $ignore_db_dir) {
             $toDeleteDir = self::$save_dir . "db" . DS . $ignore_db_dir;
-            if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+            if (is_dir($toDeleteDir)) {
+                UtilFileSystem::deleteDir($toDeleteDir);
+            }
         }
     }
 
@@ -195,7 +215,9 @@ class Project_Refactor
         );
         foreach ($ignore_js_dirs as $ignore_js_dir) {
             $toDeleteDir = self::$save_dir . $root_commons . DS . "js" . DS . "ajax" . DS . $ignore_js_dir;
-            if (is_dir($toDeleteDir) ) UtilFileSystem::deleteDir( $toDeleteDir );
+            if (is_dir($toDeleteDir)) {
+                UtilFileSystem::deleteDir($toDeleteDir);
+            }
         }
     }
 
@@ -204,42 +226,41 @@ class Project_Refactor
      */
     public static function Run()
     {
-        if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) ) self::$save_dir = $_REQUEST["save_dir"];
-        if (isset($_REQUEST["pj_name_cn"]) && !empty($_REQUEST["pj_name_cn"]) )
-        {
+        if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"])) {
+            self::$save_dir = $_REQUEST["save_dir"];
+        }
+        if (isset($_REQUEST["pj_name_cn"]) && !empty($_REQUEST["pj_name_cn"])) {
             self::$pj_name_cn = $_REQUEST["pj_name_cn"];
         } else {
             self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称【中文】</font></div>");
         }
-        if (isset($_REQUEST["pj_name_en"]) && !empty($_REQUEST["pj_name_en"]) )
-        {
+        if (isset($_REQUEST["pj_name_en"]) && !empty($_REQUEST["pj_name_en"])) {
             self::$pj_name_en = $_REQUEST["pj_name_en"];
         } else {
             self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称【英文】</font></div>");
         }
-        if (isset($_REQUEST["pj_name_alias"]) && !empty($_REQUEST["pj_name_alias"]) )
-        {
+        if (isset($_REQUEST["pj_name_alias"]) && !empty($_REQUEST["pj_name_alias"])) {
             self::$pj_name_alias = $_REQUEST["pj_name_alias"];
         } else {
             self::UserInput("<div align='center'><font color='red'>不能为空:新Web项目名称别名</font></div>");
         }
-        if (isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"]) )
-        {
+        if (isset($_REQUEST["dbname"]) && !empty($_REQUEST["dbname"])) {
             self::$db_name = $_REQUEST["dbname"];
         } else {
             self::UserInput("<div align='center'><font color='red'>不能为空:数据库名称</font></div>");
         }
 
-        if (isset($_REQUEST["table_prefix"]) && !empty($_REQUEST["table_prefix"]) )
-        {
+        if (isset($_REQUEST["table_prefix"]) && !empty($_REQUEST["table_prefix"])) {
             self::$table_prefix = $_REQUEST["table_prefix"];
         }
 
-        if (isset($_REQUEST["reuse_type"])&&!empty($_REQUEST["reuse_type"]) )
+        if (isset($_REQUEST["reuse_type"]) && !empty($_REQUEST["reuse_type"])) {
             self::$reuse_type   = $_REQUEST["reuse_type"];
+        }
 
-        if (isset($_REQUEST["git_name"])&&!empty($_REQUEST["git_name"]) )
+        if (isset($_REQUEST["git_name"]) && !empty($_REQUEST["git_name"])) {
             self::$git_name     = $_REQUEST["git_name"];
+        }
 
         $default_dir    = Gc::$nav_root_path;
         $domain_root    = str_replace(Gc::$appName . DS, "", $default_dir);
@@ -247,14 +268,12 @@ class Project_Refactor
         $save_dir       = self::$save_dir;
         self::$save_dir = $domain_root . self::$save_dir . DS;
 
-        if (is_dir(self::$save_dir . "core" . DS) )
-        {
+        if (is_dir(self::$save_dir . "core" . DS)) {
             self::$save_dir = $save_dir;
             self::UserInput("<div align='center'><font color='red'>该目录已存在!为防止覆盖您现有的代码,请更名!</font></div>");
         }
 
-        if (self::$reuse_type == EnumReusePjType::MINI )
-        {
+        if (self::$reuse_type == EnumReusePjType::MINI) {
             $include_dirs = array(
                 "install",
                 "core",
@@ -262,15 +281,15 @@ class Project_Refactor
                 "tools"
             );
 
-            UtilFileSystem::createDir( self::$save_dir );
+            UtilFileSystem::createDir(self::$save_dir);
             foreach ($include_dirs as $include_dir) {
-                if (is_dir( Gc::$nav_root_path . $include_dir . DS )) {
+                if (is_dir(Gc::$nav_root_path . $include_dir . DS)) {
                     smartCopy(Gc::$nav_root_path . $include_dir . DS, self::$save_dir . $include_dir . DS);
                 }
             }
 
             $homeAppDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en;
-            UtilFileSystem::createDir( $homeAppDir . DS . "src" . DS . "domain" . DS );
+            UtilFileSystem::createDir($homeAppDir . DS . "src" . DS . "domain" . DS);
 
             //修改Initializer.php初始化文件
             $init_file = self::$save_dir . "core" . DS . "main" . DS . "Initializer.php";
@@ -291,7 +310,7 @@ class Project_Refactor
             }
 
             //修改Gc.php配置文件
-            $gc_file = self::$save_dir."Gc.php";
+            $gc_file = self::$save_dir . "Gc.php";
             $content = file_get_contents($gc_file);
             $content = preg_replace('/\'' . ConfigDb::$table_prefix . '\'/', "'" . self::$table_prefix . "'", $content);
             $content = str_replace("'admin',", "", $content);
@@ -315,7 +334,7 @@ class Project_Refactor
                 $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url = \"") + 17);
                 $ctrr    = substr($content, strpos($content, "<?php \$help_url = \"") + 18);
                 $ctrr    = substr($ctrr, strpos($ctrr, "\""));
-                $content = $ctrl.self::$git_name . $ctrr;
+                $content = $ctrl . self::$git_name . $ctrr;
             }
             $content = str_replace("网站后台", "", $content);
             // $content = str_replace("通用模版", "", $content);
@@ -331,9 +350,9 @@ class Project_Refactor
             file_put_contents($config_autocode_file, $content);
         } else {
             //生成新项目目录
-            UtilFileSystem::createDir( self::$save_dir );
+            UtilFileSystem::createDir(self::$save_dir);
             if (!is_dir(self::$save_dir)) {
-                system_dir_info( self::$save_dir );
+                system_dir_info(self::$save_dir);
             }
             smartCopy(Gc::$nav_root_path, self::$save_dir);
 
@@ -360,8 +379,8 @@ class Project_Refactor
                 if (file_exists($welcome_file)) {
                     $ctrl    = substr($content, 0, strpos($content, "<?php \$help_url=\"") + 17);
                     $ctrr    = substr($content, strpos($content, "<?php \$help_url=\"") + 18);
-                    $ctrr    = substr($ctrr,strpos($ctrr, "\""));
-                    $content = $ctrl.self::$git_name . $ctrr;
+                    $ctrr    = substr($ctrr, strpos($ctrr, "\""));
+                    $content = $ctrl . self::$git_name . $ctrr;
                     if (self::$reuse_type != EnumReusePjType::FULL) {
                         $content = str_replace("通用模版", "", $content);
                     }
@@ -390,19 +409,20 @@ class Project_Refactor
                 );
                 foreach ($to_delet_subdirs as $to_delet_subdir) {
                     $toDeleteDir = $old_name . $to_delet_subdir;
-                    UtilFileSystem::deleteDir( $toDeleteDir );
-                    UtilFileSystem::createDir( $toDeleteDir );
+                    UtilFileSystem::deleteDir($toDeleteDir);
+                    UtilFileSystem::createDir($toDeleteDir);
                 }
 
-                $del_model_action_files = UtilFileSystem::getAllFilesInDirectory( $old_name . DS . "action" . DS, array("php") );
+                $del_model_action_files = UtilFileSystem::getAllFilesInDirectory($old_name . DS . "action" . DS, array("php"));
                 foreach ($del_model_action_files as $del_model_action_file) {
-                  if (!endWith($del_model_action_file, 'Action.php')
-                    && !endWith($del_model_action_file, 'Action_Auth.php')
-                    && !endWith($del_model_action_file, 'Action_Index.php')
-                    && !endWith($del_model_action_file, 'Action_Ajax.php')
-                 ) {
-                    @unlink($del_model_action_file);
-                  }
+                    if (
+                        !endWith($del_model_action_file, 'Action.php')
+                        && !endWith($del_model_action_file, 'Action_Auth.php')
+                        && !endWith($del_model_action_file, 'Action_Index.php')
+                        && !endWith($del_model_action_file, 'Action_Ajax.php')
+                    ) {
+                        @unlink($del_model_action_file);
+                    }
                 }
 
                 rename($old_name, $new_name);
@@ -412,7 +432,7 @@ class Project_Refactor
 
             //修改前台的注释:* @category 应用名称
             $frontActionDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS . "action" . DS;
-            $actionFiles    = UtilFileSystem::getAllFilesInDirectory( $frontActionDir, array("php") );
+            $actionFiles    = UtilFileSystem::getAllFilesInDirectory($frontActionDir, array("php"));
 
             foreach ($actionFiles as $actionFile) {
                 $content = file_get_contents($actionFile);
@@ -421,7 +441,7 @@ class Project_Refactor
             }
 
             $frontSrcDir = self::$save_dir . Gc::$module_root . DS . self::$pj_name_en . DS . "src" . DS;
-            $srcFiles    = UtilFileSystem::getAllFilesInDirectory( $frontSrcDir, array("php") );
+            $srcFiles    = UtilFileSystem::getAllFilesInDirectory($frontSrcDir, array("php"));
 
             foreach ($srcFiles as $srcFile) {
                 $content = file_get_contents($srcFile);
@@ -433,15 +453,17 @@ class Project_Refactor
             switch (self::$reuse_type) {
                 case EnumReusePjType::SIMPLE:
                     $toDeleteDir = self::$save_dir . Gc::$module_root . DS . "model";
-                    $del_model_action_files = UtilFileSystem::getAllFilesInDirectory( $toDeleteDir . DS . "action" . DS, array("php") );
+                    $del_model_action_files = UtilFileSystem::getAllFilesInDirectory($toDeleteDir . DS . "action" . DS, array("php"));
                     foreach ($del_model_action_files as $del_model_action_file) {
-                      if (!endWith($del_model_action_file, 'ActionModel.php') && !endWith($del_model_action_file, 'Action_Index.php')) {
-                        @unlink($del_model_action_file);
-                      }
+                        if (!endWith($del_model_action_file, 'ActionModel.php') && !endWith($del_model_action_file, 'Action_Index.php')) {
+                            @unlink($del_model_action_file);
+                        }
                     }
                     $del_model_view_dir = $toDeleteDir . DS . "view" . DS . "default" . DS . "core";
-                    if (is_dir( $del_model_view_dir)) UtilFileSystem::deleteDir( $del_model_view_dir);
-                    UtilFileSystem::createDir( $del_model_view_dir );
+                    if (is_dir($del_model_view_dir)) {
+                        UtilFileSystem::deleteDir($del_model_view_dir);
+                    }
+                    UtilFileSystem::createDir($del_model_view_dir);
 
                     self::IgnoreAllDbEngineExceptMysql();
                     self::IgnoreCommons();
@@ -449,7 +471,7 @@ class Project_Refactor
                 default:
                     //修改Action控制器类的注释:* @category 应用名称
                     $modelActionDir = self::$save_dir . Gc::$module_root . DS . "model" . DS . "action" . DS;
-                    $actionFiles    = UtilFileSystem::getAllFilesInDirectory( $modelActionDir, array("php") );
+                    $actionFiles    = UtilFileSystem::getAllFilesInDirectory($modelActionDir, array("php"));
 
                     foreach ($actionFiles as $actionFile) {
                         $content = file_get_contents($actionFile);
@@ -461,11 +483,11 @@ class Project_Refactor
         }
 
         //修改数据库脚本表前缀
-        $db_bak_dir  = self::$save_dir . "install" . DS . "db" . DS ."mysql" . DS;
+        $db_bak_dir  = self::$save_dir . "install" . DS . "db" . DS . "mysql" . DS;
         $db_bak_file = $db_bak_dir . "db_" . Gc::$appName . ".sql";
         if (file_exists($db_bak_file)) {
             $content = file_get_contents($db_bak_file);
-            $content = str_replace(ConfigDb::$table_prefix, self::$table_prefix , $content);
+            $content = str_replace(ConfigDb::$table_prefix, self::$table_prefix, $content);
             @unlink($db_bak_file);
             $db_bak_file = $db_bak_dir . "db_" . self::$pj_name_en . ".sql";
             file_put_contents($db_bak_file, $content);
@@ -474,7 +496,7 @@ class Project_Refactor
         }
 
         // 删除原来的代码生成配置文件
-        $del_autocode_config_xml_file = self::$save_dir . "tools" . DS . "tools" . DS . "autocode". DS ."autocode.config.xml";
+        $del_autocode_config_xml_file = self::$save_dir . "tools" . DS . "tools" . DS . "autocode" . DS . "autocode.config.xml";
         @unlink($del_autocode_config_xml_file);
 
         self::$save_dir = $save_dir;
@@ -483,13 +505,16 @@ class Project_Refactor
         $domain_url     = str_replace(Gc::$appName_alias . "/", "", $domain_url);
 
 
-        if (contain( strtolower(php_uname()), "darwin")) {
+        if (contain(strtolower(php_uname()), "darwin")) {
             $domain_url   = UtilNet::urlbase();
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if (contain( $file_sub_dir, "tools" . DS))
+            if (contain($file_sub_dir, "tools" . DS)) {
                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
+            }
             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-            if (!endwith($domain_url,$domainSubDir) ) $domain_url .= $domainSubDir;
+            if (!endwith($domain_url, $domainSubDir)) {
+                $domain_url .= $domainSubDir;
+            }
             $domain_url   = str_replace(Gc::$appName . "/", "", $domain_url);
             $domain_url   = str_replace(Gc::$appName_alias . "/", "", $domain_url);
         }
@@ -507,8 +532,8 @@ class Project_Refactor
 
         //删除 admin 模块里的临时生成文件
         $toDeleteDir = $admin_view_path . "tmp" . DS . "templates_c" . DS;
-        UtilFileSystem::deleteDir( $toDeleteDir );
-        UtilFileSystem::createDir( $toDeleteDir );
+        UtilFileSystem::deleteDir($toDeleteDir);
+        UtilFileSystem::createDir($toDeleteDir);
 
         //删除Action业务逻辑文件
         $action_needs = array(
@@ -518,11 +543,13 @@ class Project_Refactor
         );
 
         $admin_action_path = $admin_root_path . "action" . DS;
-        $ignore_files      = UtilFileSystem::getFilesInDirectory( $admin_action_path );
+        $ignore_files      = UtilFileSystem::getFilesInDirectory($admin_action_path);
 
         foreach ($ignore_files as $ignore_file) {
             $compare_name = basename($ignore_file, Config_F::SUFFIX_FILE_PHP);
-            if (!in_array($compare_name, $action_needs) ) unlink($ignore_file);
+            if (!in_array($compare_name, $action_needs)) {
+                unlink($ignore_file);
+            }
         }
 
         //删除 admin 模块里的业务页面文件
@@ -530,18 +557,22 @@ class Project_Refactor
             "auth",
             "index"
         );
-        $ignore_dirs      = UtilFileSystem::getSubDirsInDirectory( $admin_view_path . "core" . DS );
+        $ignore_dirs      = UtilFileSystem::getSubDirsInDirectory($admin_view_path . "core" . DS);
         $ignore_dirs_keys = array();
-        if ($ignore_dirs) $ignore_dirs_keys = array_keys($ignore_dirs);
+        if ($ignore_dirs) {
+            $ignore_dirs_keys = array_keys($ignore_dirs);
+        }
 
         foreach ($ignore_dirs_keys as $ignore_dir) {
-            if (!in_array($ignore_dir, $require_dirs) ) UtilFileSystem::deleteDir( $ignore_dirs[$ignore_dir] );
+            if (!in_array($ignore_dir, $require_dirs)) {
+                UtilFileSystem::deleteDir($ignore_dirs[$ignore_dir]);
+            }
         }
 
         //删除 admin 模块里的业务js文件
         $toDeleteDir = $admin_view_path . "js" . DS . "core" . DS;
-        UtilFileSystem::deleteDir( $toDeleteDir );
-        UtilFileSystem::createDir( $toDeleteDir );
+        UtilFileSystem::deleteDir($toDeleteDir);
+        UtilFileSystem::createDir($toDeleteDir);
     }
 
     /**
@@ -600,7 +631,7 @@ class Project_Refactor
         echo "<body class='prj-onekey'>";
         echo "<h1 align='center'>$title</h1>" . HH;
         echo "<div align='center' height='450' style='margin-left: -10%;'>" . HH;
-        
+
         echo $errorInfo;
 
         echo "<form>" . HH;
@@ -615,9 +646,13 @@ class Project_Refactor
         $selectd_str = "";
         if (!empty($inputArr)) {
             echo "<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重用类型:</label><select name='reuse_type'>" . HH;
-            foreach ($inputArr as $key=>$value) {
+            foreach ($inputArr as $key => $value) {
                 if (isset($reuse_type)) {
-                    if ($key == $reuse_type ) $selectd_str = " selected"; else $selectd_str = "";
+                    if ($key == $reuse_type) {
+                        $selectd_str = " selected";
+                    } else {
+                        $selectd_str = "";
+                    }
                 }
                 echo "        <option value='$key'$selectd_str>$value</option>" . HH;
             }
@@ -662,7 +697,7 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
     $result = false;
 
     if (is_file($source)) {
-        if ($dest[strlen($dest)-1] == '/') {
+        if ($dest[strlen($dest) - 1] == '/') {
             if (!file_exists($dest)) {
                 cmfcDirectory::makeAll($dest, $options['folderPermission'], true);
             }
@@ -671,19 +706,18 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
             $__dest = $dest;
         }
         $dest_dir = dirname($__dest);
-        UtilFileSystem::createDir( $dest_dir );
+        UtilFileSystem::createDir($dest_dir);
         $result = copy($source, $__dest);
         chmod($__dest, $options['filePermission']);
-
     } elseif (is_dir($source)) {
-        if ($dest[strlen($dest)-1] == '/') {
-            if ($source[strlen($source)-1] == '/') {
+        if ($dest[strlen($dest) - 1] == '/') {
+            if ($source[strlen($source) - 1] == '/') {
                 //Copy only contents
             } else {
                 //Change parent itself and its contents
                 $dest = $dest . basename($source);
                 @mkdir($dest);
-                chmod($dest,$options['filePermission']);
+                chmod($dest, $options['filePermission']);
             }
         } else {
             if ($source[strlen($source) - 1] == '/') {
@@ -698,10 +732,8 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
         }
 
         $dirHandle   = opendir($source);
-        while ($file = readdir($dirHandle))
-        {
-            if ($file != "." && $file != ".." && $file != ".git" && $file != ".svn" && $file != ".DS_Store" )
-            {
+        while ($file = readdir($dirHandle)) {
+            if ($file != "." && $file != ".." && $file != ".git" && $file != ".svn" && $file != ".DS_Store") {
                 if (!is_dir($source . "/" . $file)) {
                     $__dest = $dest . "/" . $file;
                 } else {
@@ -712,7 +744,6 @@ function smartCopy($source, $dest, $options = array('folderPermission' => 0755, 
             }
         }
         closedir($dirHandle);
-
     } else {
         $result = false;
     }

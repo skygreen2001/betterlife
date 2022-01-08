@@ -5,21 +5,24 @@
  * @todo 按行数排序
  * @author zhouyuepu
  */
+
 require_once("../../init.php");
-class ViewFiles {
-    public static function getFiles($dir_name) {
-        return UtilFileSystem::getAllFilesInDirectory( $dir_name );
+class ViewFiles
+{
+    public static function getFiles($dir_name)
+    {
+        return UtilFileSystem::getAllFilesInDirectory($dir_name);
     }
 }
 
 /******************************显示本工程文件列表清单********************************************************/
-$files        = UtilFileSystem::getAllFilesInDirectory( Initializer::$NAV_CORE_PATH );
+$files        = UtilFileSystem::getAllFilesInDirectory(Initializer::$NAV_CORE_PATH);
 // $files_config = UtilFileSystem::getAllFilesInDirectory( Initializer::$NAV_CONFIG_PATH );
 // $files        = array_merge($files_config, $files);
 foreach (Initializer::$moduleFiles as $moduleFile) {
     $files = array_merge($files, $moduleFile);
 }
-$files_tools = UtilFileSystem::getAllFilesInDirectory( Gc::$nav_root_path . "tools" );
+$files_tools = UtilFileSystem::getAllFilesInDirectory(Gc::$nav_root_path . "tools");
 $files       = array_merge($files, $files_tools);
 UtilCss::report_info();
 

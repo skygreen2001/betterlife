@@ -1,20 +1,23 @@
 <?php
+
 require_once("../../../../init.php");
 
 $mysql_keywords = ",ACCESSIBLE,ADD,ALL,ALTER,ANALYZE,AND,AS,ASC,ASENSITIVE,BEFORE,BETWEEN,BIGINT,BINARY,BLOB,BOTH,BY,CALL,CASCADE,CASE,CHANGE,CHAR,CHARACTER,CHECK,COLLATE,COLUMN,CONDITION,CONSTRAINT,CONTINUE,CONVERT,CREATE,CROSS,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,CURRENT_USER,CURSOR,DATABASE,DATABASES,DAY_HOUR,DAY_MICROSECOND,DAY_MINUTE,DAY_SECOND,DEC,DECIMAL,DECLARE,DEFAULT,DELAYED,DELETE,DESC,DESCRIBE,DETERMINISTIC,DISTINCT,DISTINCTROW,DIV,DOUBLE,DROP,DUAL,EACH,ELSE,ELSEIF,ENCLOSED,ESCAPED,EXISTS,EXIT,EXPLAIN,FALSE,FETCH,FLOAT,FLOAT4,FLOAT8,FOR,FORCE,FOREIGN,FROM,FULLTEXT,GRANT,GROUP,HAVING,HIGH_PRIORITY,HOUR_MICROSECOND,HOUR_MINUTE,HOUR_SECOND,IF,IGNORE,IN,INDEX,INFILE,INNER,INOUT,INSENSITIVE,INSERT,INT,INT1,INT2,INT3,INT4,INT8,INTEGER,INTERVAL,INTO,IS,ITERATE,JOIN,KEY,KEYS,KILL,LEADING,LEAVE,LEFT,LIKE,LIMIT,LINEAR,LINES,LOAD,LOCALTIME,LOCALTIMESTAMP,LOCK,LONG,LONGBLOB,LONGTEXT,LOOP,LOW_PRIORITY,MASTER_SSL_VERIFY_SERVER_CERT,MATCH,MEDIUMBLOB,MEDIUMINT,MEDIUMTEXT,MIDDLEINT,MINUTE_MICROSECOND,MINUTE_SECOND,MOD,MODIFIES,NATURAL,NOT,NO_WRITE_TO_BINLOG,NULL,NUMERIC,ON,OPTIMIZE,OPTION,OPTIONALLY,OR,ORDER,OUT,OUTER,OUTFILE,PRECISION,PRIMARY,PROCEDURE,PURGE,RANGE,READ,READS,READ_WRITE,REAL,REFERENCES,REGEXP,RELEASE,RENAME,REPEAT,REPLACE,REQUIRE,RESTRICT,RETURN,REVOKE,RIGHT,RLIKE,SCHEMA,SCHEMAS,SECOND_MICROSECOND,SELECT,SENSITIVE,SEPARATOR,SET,SHOW,SMALLINT,SPATIAL,SPECIFIC,SQL,SQLEXCEPTION,SQLSTATE,SQLWARNING,SQL_BIG_RESULT,SQL_CALC_FOUND_ROWS,SQL_SMALL_RESULT,SSL,STARTING,STRAIGHT_JOIN,TABLE,TERMINATED,THEN,TINYBLOB,TINYINT,TINYTEXT,TO,TRAILING,TRIGGER,TRUE,UNDO,UNION,UNIQUE,UNLOCK,UNSIGNED,UPDATE,USAGE,USE,USING,UTC_DATE,UTC_TIME,UTC_TIMESTAMP,VALUES,VARBINARY,VARCHAR,VARCHARACTER,VARYING,WHEN,WHERE,WHILE,WITH,WRITE,XOR,YEAR_MONTH,ZEROFILL,";
 
-if (contain( $_SERVER["HTTP_REFERER"], "db_sqlserver_convert_prepare" )) {
+if (contain($_SERVER["HTTP_REFERER"], "db_sqlserver_convert_prepare")) {
     echo "<a href='?isComment=1'>开启注释</a>|<a href='?isComment=0'>关闭注释</a><br/>";
 }
 $isComment = false;
 if (isset($_REQUEST["isComment"]) && !empty($_REQUEST["isComment"])) {
-    if ($_REQUEST["isComment"] == "1" ) $isComment = true;
+    if ($_REQUEST["isComment"] == "1") {
+        $isComment = true;
+    }
 }
 
 $tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
 foreach ($tableList as $tablename) {
-    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
+    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
     foreach ($fieldInfoList as $fieldname => $field) {
         $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
         $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -55,7 +58,9 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
         $type = $fieldInfos[$tablename][$fieldname]["Type"];
         if (stripos($newwords, "time") !== false) {
             $fieldWords = strtoupper($newwords);
-            if (!contain($fieldWords, "TIMES") ) $type = "datetime";
+            if (!contain($fieldWords, "TIMES")) {
+                $type = "datetime";
+            }
         } elseif (stripos($newwords, "_") !== false) {
             $index = stripos($newwords, "_");
             $fname = substr($newwords, $index + 1);
@@ -63,7 +68,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
                 $fname = "ID";
 
                 $classname = getClassname($tablename);
-                if (contain( $newwords, $classname )) {
+                if (contain($newwords, $classname)) {
                     $is_auto_increment = true;
                     $auto_increment    = " auto_increment";
                 }
@@ -72,9 +77,13 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
             }
             $newwords = substr($newwords, 0, $index) . "_" . $fname;
         }
-        if (contain( $type, "timestamp" )) {
-            if (empty($field["Default"]) ) $default = " default 0 ";
-        } else $default = " ";
+        if (contain($type, "timestamp")) {
+            if (empty($field["Default"])) {
+                $default = " default 0 ";
+            }
+        } else {
+            $default = " ";
+        }
 
         $comments = $fieldInfos[$tablename][$fieldname]["Comment"];
         $comments = str_replace("\r", "\\r", $comments);
@@ -126,7 +135,7 @@ if ($isComment) {
 foreach ($tableList as $tablename) {
     $new_table_name  = getClassname($tablename);
     $new_table_names = strtoupper($new_table_name);
-    if (contain( $mysql_keywords, "," . $new_table_names . "," )) {
+    if (contain($mysql_keywords, "," . $new_table_names . ",")) {
         $new_table_name = $new_table_name . "s";
     }
     echo "ALTER  TABLE $tablename RENAME TO $new_table_name;<br/>";
@@ -151,4 +160,3 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
         }
     }
 }
-?>

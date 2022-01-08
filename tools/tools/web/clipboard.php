@@ -3,10 +3,11 @@
 /**
  * 剪贴板小工具
  *
- * 仅供作者自己使用，目的不公开 
+ * 仅供作者自己使用，目的不公开
  *
  * http://localhost/betterlife/tools/tools/web/clipboard.php
  */
+
 require_once("../../../init.php");
 if (isset($_REQUEST["s"])) {
     echo file_get_contents(Gc::$upload_path . "clipboard.txt");
@@ -21,11 +22,11 @@ if (isset($_REQUEST["s"])) {
     echo UtilCss::form_css() . HH;
     $url_base = UtilNet::urlbase();
     echo "</head>";
-    echo "<body>";   
+    echo "<body>";
     echo "<h1 align='center'>剪贴板</h1>";
     echo "<div align='center' height='450'>";
-    echo "<form  method ='post'>";  
-    echo "  <div style='line-height:1.5em;'>";   
+    echo "<form  method ='post'>";
+    echo "  <div style='line-height:1.5em;'>";
     echo "      <label style='padding-bottom:345px;'>剪切内容:</label><textarea name=\"content\" style=\"width: 690px; height: 372px;\"></textarea><br/><br/>";
     echo "  </div>";
     echo "  <input type=\"submit\" value='生成' /><br/>";

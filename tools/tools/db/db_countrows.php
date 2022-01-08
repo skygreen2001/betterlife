@@ -1,12 +1,16 @@
 <?php
-if (file_exists("../../../init.php") ) require_once ("../../../init.php");
+
+if (file_exists("../../../init.php")) {
+    require_once("../../../init.php");
+}
 /**
  * 显示超过限制数量的表
  *
  * @param int $limit 限制数量
  * @return void
  */
-function db_countrows($limit = 0) {
+function db_countrows($limit = 0)
+{
     $tableInfos = Manager_Db::newInstance()->dbinfo()->tableInfoList();
     // print_pre($tableInfos, true);
     foreach ($tableInfos as $table) {
@@ -26,5 +30,5 @@ function db_countrows($limit = 0) {
  * 如超过10000条的表: http://127.0.0.1/tools/tools/db/db_countrows.php?l=10000
  */
 // l: 限制数量
-$limit = $_GET["l"]??0;
-db_countrows( $limit );
+$limit = $_GET["l"] ?? 0;
+db_countrows($limit);

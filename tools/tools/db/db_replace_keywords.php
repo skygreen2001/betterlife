@@ -1,7 +1,7 @@
 <?php
+
 require_once("../../../init.php");
-if (isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
-{
+if (isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"])) {
     $oldwords = $_REQUEST["oldwords"];
     if (isset($_REQUEST["newwords"]) && !empty($_REQUEST["newwords"])) {
         $newwords = $_REQUEST["newwords"];
@@ -9,7 +9,7 @@ if (isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
         $newwords = Gc::$appName;
     }
 
-    $filterTableColumns = UtilDb::keywords_table_columns( $oldwords );
+    $filterTableColumns = UtilDb::keywords_table_columns($oldwords);
 
     if ($filterTableColumns) {
         echo "存在[{$oldwords}]的表列清单如下<br/>";
@@ -38,9 +38,7 @@ if (isset($_REQUEST["oldwords"]) && !empty($_REQUEST["oldwords"]) )
     } else {
         echo "在数据库里没有关键字:[{$oldwords}]";
     }
-}
-else
-{
+} else {
     echo  '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
            <html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml">';
     echo "<head>" . HH;
@@ -86,5 +84,3 @@ else
     echo "</body>";
     echo "</html>";
 }
-?>
-

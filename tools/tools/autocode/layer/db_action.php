@@ -1,4 +1,5 @@
 <?php
+
 require_once("../../../../init.php");
 if (isset($_REQUEST["type"]) && !empty($_REQUEST["type"])) {
     $type = $_REQUEST["type"];
@@ -9,8 +10,7 @@ if (isset($_REQUEST["type"]) && !empty($_REQUEST["type"])) {
         $type = 2;
     }
 }
-if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
-{
+if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"])) {
     $save_dir                    = $_REQUEST["save_dir"];
     AutoCodeAction::$save_dir    = $save_dir;
     AutoCodeAction::$type        = $type;
@@ -23,5 +23,5 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"]) )
     AutoCodeAction::$showReport .= AutoCodeFoldHelper::foldafteraction();
     echo AutoCodeAction::$showReport;
 } else {
-    AutoCodeAction::UserInput( $type );
+    AutoCodeAction::UserInput($type);
 }

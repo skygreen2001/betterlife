@@ -1,4 +1,5 @@
 <?php
+
 require_once("../../../../init.php");
 
 /**
@@ -21,15 +22,15 @@ class GetWebUrl
     */
     public static function getAllMaybeUrl()
     {
-        self::$save_urls_path  = Gc::$nav_root_path."stressdata" . DS;
-        UtilFileSystem::createDir( self::$save_urls_path );
+        self::$save_urls_path  = Gc::$nav_root_path . "stressdata" . DS;
+        UtilFileSystem::createDir(self::$save_urls_path);
         self::$save_urls_path .= "urllist.txt";
         $count  = 0;
         $result = "";
         foreach (Gc::$module_names as $moduleName) {
-            if (!contain( $moduleName, "admin" )) {
+            if (!contain($moduleName, "admin")) {
                 $moduleDir    = Gc::$nav_root_path . Gc::$module_root . DS . $moduleName . DS . "action" . DS;
-                $action_names = UtilFileSystem::getFilesInDirectory( $moduleDir );
+                $action_names = UtilFileSystem::getFilesInDirectory($moduleDir);
                 foreach ($action_names as $action_path) {
                     $action_classname_name = basename($action_path, ".php");
                     $methods               = self::getClassMethodsInfo($action_classname_name);
@@ -39,12 +40,15 @@ class GetWebUrl
                         $action_name = strtolower($action_name);
 
                         $urlbase     = UtilNet::urlbase();
-                        if (contain( strtolower(php_uname()), "darwin" )) {
+                        if (contain(strtolower(php_uname()), "darwin")) {
                             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                            if (contain( $file_sub_dir, "tools" . DS))
+                            if (contain($file_sub_dir, "tools" . DS)) {
                                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
+                            }
                             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-                            if (!endwith( $urlbase, $domainSubDir)) $urlbase .= $domainSubDir;
+                            if (!endwith($urlbase, $domainSubDir)) {
+                                $urlbase .= $domainSubDir;
+                            }
                         }
                         $result .= $urlbase . "index.php?go=" . $moduleName . "." . $action_name . "." . "" . $method . HH;
 
@@ -74,8 +78,7 @@ class GetWebUrl
         $class             = object_reflection($object);
         $dataobjectMethods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
         $result            = array();
-        foreach ($dataobjectMethods as $method)
-        {
+        foreach ($dataobjectMethods as $method) {
             $method_name = $method->name;
             $class_name  = $method->getDeclaringClass()->name;
 
