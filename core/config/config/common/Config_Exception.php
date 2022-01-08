@@ -15,24 +15,24 @@ class Config_Exception extends ConfigBB
      * 1. filp/whoops
      * 2. symfony/error-handler (包含在包laravel/framework里)
      *
-     * @var int 
+     * @var int
      */
     const EXCEPTION_WAY = 1;
 
     /**
      * 异常处理方式: 自定义
      * @var int
-     */ 
+     */
     const EW_CUSTOMIZE  = 0;
     /**
      * 异常处理方式: filp/whoops
      * @var int
-     */ 
+     */
     const EW_WHOOPS     = 1;
     /**
      * 异常处理方式: symfony/error-handler (包含在包laravel/framework里)
      * @var int
-     */ 
+     */
     const EW_SYMFONY    = 2;
 
     /**
@@ -54,7 +54,7 @@ class Config_Exception extends ConfigBB
      *     - textmate
      *     - espresso
      *     - xdebug
-     *     
+     *
      * @var string
      */
     const WHOOPS_EDITOR = "vscode";

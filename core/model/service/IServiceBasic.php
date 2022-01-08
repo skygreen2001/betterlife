@@ -191,4 +191,3 @@ interface IServiceBasic
      */
     public function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
 }
-?>

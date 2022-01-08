@@ -6,13 +6,14 @@
  * @package util.view.ajax
  * @author zhouyuepu
  */
-interface IUtilAjax {
+interface IUtilAjax
+{
     /**
      * 动态加载Ajax Javascript Framework库
      * @param string $version Ajax框架的运行版本
      */
     public static function load($version = "");
-    
+
     /**
      * 发送Ajax请求的语句
      * @param string $url 通信的Url地址。
@@ -23,7 +24,7 @@ interface IUtilAjax {
      * @return 发送Ajax请求的语句
      */
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null);
-    
+
     /**
      * 生成Javascript的回调函数
      * @param string $local_service_flag 对象名称

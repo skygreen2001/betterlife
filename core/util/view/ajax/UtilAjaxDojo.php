@@ -17,16 +17,14 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if (self::$IsGoogleApi )
-        {
-            if ($viewObject )
-            {
-                self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js" );
+        if (self::$IsGoogleApi) {
+            if ($viewObject) {
+                self::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js");
             } else {
-                self::loadJs( "https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js" );
+                self::loadJs("https://ajax.googleapis.com/ajax/libs/dojo/$version/dojo/dojo.xd.js");
             }
         } else {
-            self::loadAjaxJs( EnumJsFramework::JS_FW_DOJO, $version, $viewObject );
+            self::loadAjaxJs(EnumJsFramework::JS_FW_DOJO, $version, $viewObject);
         }
     }
 
@@ -42,15 +40,13 @@ class UtilAjaxDojo extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if (!empty ($callback) )
-        {
+        if (!empty($callback)) {
             // $url_base = UtilNet::urlbase();
-            $result = self::loadJsSentence( "misc/js/util/xmltojson.js" );
+            $result = self::loadJsSentence("misc/js/util/xmltojson.js");
         }
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="dojo">
-        if (( is_array($dataArray) ) && (count($dataArray) > 0))
-        {
+        if (( is_array($dataArray) ) && (count($dataArray) > 0)) {
             $data = json_encode($dataArray);
 //            $data    = "{";
 //            foreach ($dataArray as $key => $value) {

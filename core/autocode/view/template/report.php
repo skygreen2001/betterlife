@@ -6,6 +6,7 @@
  * @package core.autocode
  * @author skygreen <skygreen2001@gmail.com>
  */
+
 $reportCname = isset($reportCname) ? $reportCname : "";
 $reportEname = isset($reportEname) ? $reportEname : "";
 $reportDesc  = isset($reportDesc) ? $reportDesc : "";
@@ -329,5 +330,3 @@ class Service$reportEname extends ServiceReport
 }
 ?>
 SERVICE;
-
-?>

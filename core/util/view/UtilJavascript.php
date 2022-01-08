@@ -12,55 +12,55 @@
  * @package util.view
  * @author skygreen
  */
-class UtilJavascript extends Util 
+class UtilJavascript extends Util
 {
     /**
      * 动态加载应用指定的Js文件。
      *
      * 可通过分组标识动态加载Ajax Javascript Framework库
      *
-     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
+     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径
      * @param bool $isGzip 是否使用Gzip进行压缩。
      */
-    public static function loadJs($jsFile, $isGzip = false) 
+    public static function loadJs($jsFile, $isGzip = false)
     {
-        UtilAjax::loadJs( $jsFile, $isGzip );
-    }    
-    
+        UtilAjax::loadJs($jsFile, $isGzip);
+    }
+
     /**
      * 预加载[不直接输出]:动态加载应用指定的Js文件。
      *
      * 可通过分组标识动态加载Ajax Javascript Framework库
      *
      * @param ViewObject 表示层显示对象
-     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径 
+     * @param string $jsFile: 相对网站的根目录的Javascript文件名相对路径
      * @param bool $isGzip 是否使用Gzip进行压缩。
      * @param string $jsFlag Ajax Javascript Framework 标识
      * @param string $version javascript框架的版本号
-     */   
+     */
     public static function loadJsReady($viewobject, $jsFile, $isGzip = false, $jsFlag = null, $version = "")
     {
-        UtilAjax::loadJsReady( $viewobject, $jsFile, $isGzip, $jsFlag, $version );
+        UtilAjax::loadJsReady($viewobject, $jsFile, $isGzip, $jsFlag, $version);
     }
 
     /**
      * 动态加载应用指定的Js内容的语句。
      * @param string $jsContent: Js内容的语句
-     */   
+     */
     public static function loadJsContent($jsContent)
     {
-        UtilAjax::loadJsContent( $jsContent );
+        UtilAjax::loadJsContent($jsContent);
     }
-    
+
     /**
      * 预加载[不直接输出]:动态加载应用指定的Js内容的语句。
      *
      * @param ViewObject $viewobject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $jsContent: Js内容的语句
-     */   
+     */
     public static function loadJsContentReady($viewobject, $jsContent)
     {
-        UtilAjax::loadJsContentReady( $viewobject, $jsContent );
+        UtilAjax::loadJsContentReady($viewobject, $jsContent);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Ajax部分">
@@ -68,10 +68,10 @@ class UtilJavascript extends Util
      * 加载默认的Ajax框架
      */
     public static function loadDefaultAjax()
-    {        
+    {
         return UtilAjax::loadDefaultAjax();
     }
-    
+
     /**
      * 发送Ajax请求的语句
      * @param string $url         通信的Url地址。
@@ -83,11 +83,10 @@ class UtilJavascript extends Util
      */
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
-        $result        = self::loadDefaultAjax(); 
+        $result        = self::loadDefaultAjax();
         $loadJsLibrary = UtilAjax::name() . ucfirst(UtilAjax::$ajax_fw_name_default);
-        $result       .= call_user_func_array("$loadJsLibrary::ajaxRequstStatement", array($url, $dataArray, $method, $response_type, $callback)); 
+        $result       .= call_user_func_array("$loadJsLibrary::ajaxRequstStatement", array($url, $dataArray, $method, $response_type, $callback));
         return $result;
-    }   
+    }
     //</editor-fold>
 }
-?>

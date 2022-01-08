@@ -7,7 +7,8 @@
  * @subpackage info
  * @author skygreen
  */
-interface IDbInfo {
+interface IDbInfo
+{
     /**
      * 检查 操作Db的 Php Extensions驱动 是否已打开.
      * @return TRUE/FALSE 是否已打开.
@@ -81,4 +82,3 @@ interface IDbInfo {
      */
     public function getdbSqlDefinition($tableName);
 }
-?>

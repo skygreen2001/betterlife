@@ -44,7 +44,7 @@ class AutoCodePreviewReport extends AutoCode
     /**
      * 显示报告
      * @param array|string $table_names
-     * 示例如下: 
+     * 示例如下:
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -54,13 +54,16 @@ class AutoCodePreviewReport extends AutoCode
         $origin_file = "";
         $url_base    = Gc::$url_base;
 
-        if (contain( strtolower(php_uname()), "darwin" )) {
+        if (contain(strtolower(php_uname()), "darwin")) {
             $url_base     = UtilNet::urlbase();
             $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-            if (contain( $file_sub_dir, "tools" . DS))
+            if (contain($file_sub_dir, "tools" . DS)) {
                 $file_sub_dir = substr($file_sub_dir, 0, strpos($file_sub_dir, "tools" . DS));
+            }
             $domainSubDir = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
-            if (!endwith($url_base,$domainSubDir) ) $url_base .= $domainSubDir;
+            if (!endwith($url_base, $domainSubDir)) {
+                $url_base .= $domainSubDir;
+            }
         }
         self::$url_base = $url_base;
 
@@ -80,13 +83,13 @@ MODEL;
         $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank'>实体数据对象类</a>";
         $moreContent .= str_replace("[title]", $title, $title_model);
         //[前台]生成实体数据对象
-        $moreContent .= self::groupFileContentsStatus( self::$domain_files, "domain", true );
+        $moreContent .= self::groupFileContentsStatus(self::$domain_files, "domain", true);
 
         //[前台]生成枚举类型
         if (self::$enum_files && (count(self::$enum_files) > 0 )) {
             $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>枚举类型类</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$enum_files, "domain", true );
+            $moreContent .= self::groupFileContentsStatus(self::$enum_files, "domain", true);
         }
 
         $title        = "<a href='$layer_autocode/domain/db_domain.php' target='_blank' style='color:white;'>Ajax请求数据</a>";
@@ -96,28 +99,27 @@ MODEL;
         if (self::$json_admin_files && (count(self::$json_admin_files) > 0 )) {
             $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>枚举后台所需数据Json文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$json_admin_files, "ajax" );
+            $moreContent .= self::groupFileContentsStatus(self::$json_admin_files, "ajax");
         }
 
         if (self::$api_admin_files && (count(self::$api_admin_files) > 0 )) {
             $title        = "<a href='$layer_autocode/db_domain.php' target='_blank'>列表后台所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$api_admin_files, "ajax" );
+            $moreContent .= self::groupFileContentsStatus(self::$api_admin_files, "ajax");
         }
 
         if (self::$api_select_files && (count(self::$api_select_files) > 0 )) {
             $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>编辑所需Api Web文件</a>";
             $moreContent .= str_replace("[title]", $title, $title_model);
-            $moreContent .= self::groupFileContentsStatus( self::$api_select_files, "ajax" );
+            $moreContent .= self::groupFileContentsStatus(self::$api_select_files, "ajax");
         }
 
         if (Config_AutoCode::ONLY_DOMAIN) {
-            $showResult = self::modelShowDetailReport( $table_names, $moreContent );
+            $showResult = self::modelShowDetailReport($table_names, $moreContent);
             return $showResult;
         }
 
-        if (Config_AutoCode::SHOW_REPORT_FRONT)
-        {
+        if (Config_AutoCode::SHOW_REPORT_FRONT) {
             $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[前台]</a>";
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "front", $moreContent);
@@ -127,19 +129,18 @@ MODEL;
             if (self::$action_front_files && (count(self::$action_front_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/db_action.php' target='_blank'>前端控制器</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$action_front_files, "front" );
+                $moreContent .= self::groupFileContentsStatus(self::$action_front_files, "front");
             }
 
             // 生成前台所需的表示层页面
             if (self::$view_front_files && (count(self::$view_front_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/view/db_view_default.php' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$view_front_files, "front" );
+                $moreContent .= self::groupFileContentsStatus(self::$view_front_files, "front");
             }
         }
 
-        if (Config_AutoCode::SHOW_REPORT_ADMIN )
-        {
+        if (Config_AutoCode::SHOW_REPORT_ADMIN) {
             $title        = "<a href='$dir_autocode/db_admin.php' target='_blank' style='color:white;'>[后台]</a>";
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "admin", $moreContent);
@@ -149,40 +150,39 @@ MODEL;
             if (self::$service_files && (count(self::$service_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>标准方法的服务层文件</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$service_files, "admin" );
+                $moreContent .= self::groupFileContentsStatus(self::$service_files, "admin");
 
                 //生成服务管理器
                 $title             = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
                 $moreContent      .= str_replace("[title]", $title, $title_model);
-                $moreContent      .= self::groupFileContentsStatus( array(self::$manage_service_file), "admin" );
+                $moreContent      .= self::groupFileContentsStatus(array(self::$manage_service_file), "admin");
             }
 
             // 生成后台Action，继承基本Action
             if (self::$action_admin_files && (count(self::$action_admin_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/db_action.php?type=2' target='_blank'>后台控制器</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$action_admin_files, "admin" );
+                $moreContent .= self::groupFileContentsStatus(self::$action_admin_files, "admin");
             }
 
             // 生成后台管理表示层页面
             if (self::$admin_layout_menu && (count(self::$admin_layout_menu) > 0 )) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>布局菜单页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$admin_layout_menu, "admin" );
+                $moreContent .= self::groupFileContentsStatus(self::$admin_layout_menu, "admin");
             }
 
             if (self::$view_admin_files && (count(self::$view_admin_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$view_admin_files, "admin" );
+                $moreContent .= self::groupFileContentsStatus(self::$view_admin_files, "admin");
             }
 
             if (self::$js_admin_files && (count(self::$js_admin_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/view/db_view_admin.php?type=1' target='_blank'>表示层Js文件</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$js_admin_files, "admin" );
+                $moreContent .= self::groupFileContentsStatus(self::$js_admin_files, "admin");
             }
-
         }
 
         $model_module = Gc::$nav_root_path . Gc::$module_root . DS . self::$m_model . DS;
@@ -201,30 +201,31 @@ MODEL;
             // 生成控制器Index和模板父类:Action_Index
             $action_model_index = Gc::$module_root . DS . "model" . DS . "action" . DS . "Action_Index.php";
             $arr_action_models  = array( $action_model_index );
-            $moreContent       .= self::groupFileContentsStatus( $arr_action_models, "model" );
-            $moreContent       .= self::groupFileContentsStatus( self::$action_model_files, "model" );
+            $moreContent       .= self::groupFileContentsStatus($arr_action_models, "model");
+            $moreContent       .= self::groupFileContentsStatus(self::$action_model_files, "model");
 
             //生成首页
             $title             = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>模板首页</a>";
             $moreContent      .= str_replace("[title]", $title, $title_model);
             $model_index_file  = Gc::$module_root . DS . self::$m_model . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . Config_F::VIEW_CORE . DS . "index" . DS . "index" . Config_F::SUFFIX_FILE_TPL;
-            $moreContent      .= self::groupFileContentsStatus( array($model_index_file), "model" );
+            $moreContent      .= self::groupFileContentsStatus(array($model_index_file), "model");
 
             // 生成标准的增删改查模板表示层页面
             if (self::$view_model_files && (count(self::$view_model_files) > 0 )) {
                 $title        = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>表示层页面</a>";
                 $moreContent .= str_replace("[title]", $title, $title_model);
-                $moreContent .= self::groupFileContentsStatus( self::$view_model_files, "model" );
+                $moreContent .= self::groupFileContentsStatus(self::$view_model_files, "model");
             }
         }
 
-        $showResult = self::modelShowDetailReport( $table_names, $moreContent );
+        $showResult = self::modelShowDetailReport($table_names, $moreContent);
         return $showResult;
     }
 
-    private static function model() {
+    private static function model()
+    {
         $url_base = self::$url_base;
-        $url_base = substr($url_base, 0, strlen($url_base)-1);
+        $url_base = substr($url_base, 0, strlen($url_base) - 1);
         $model = <<<MODEL
     <tr class="overwrite">
         <td class="confirm">[status]<input type="checkbox" [checked] name="overwrite[module_name][]" value="[relative_file]" /></td>
@@ -239,19 +240,22 @@ MODEL;
     /**
      * 一组同类型文件状态报告编写
      */
-    private static function groupFileContentsStatus($files, $replace_module_name, $only_once = false, $save_dir = "") {
-        if (empty($save_dir) ) $save_dir = self::$save_dir;
+    private static function groupFileContentsStatus($files, $replace_module_name, $only_once = false, $save_dir = "")
+    {
+        if (empty($save_dir)) {
+            $save_dir = self::$save_dir;
+        }
         $result = "";
         $status = array("<font color='#cc5854'>[会覆盖]</font>","<font color='#77cc6d'>[新生成]</font>","[未修改]");
         $model  = self::model();
-        foreach ( $files as $file) {
+        foreach ($files as $file) {
             $file_content = str_replace("[file]", $save_dir . $file, $model);
             $origin_file  = Gc::$nav_root_path . DS . $file;
             $file_content = str_replace("[origin_file]", $origin_file, $file_content);
             $file_content = str_replace("[relative_file]", $file, $file_content);
             if (file_exists($origin_file)) {
-                $file_content_old = file_get_contents( $origin_file );
-                $file_content_new = file_get_contents( $save_dir . $file );
+                $file_content_old = file_get_contents($origin_file);
+                $file_content_new = file_get_contents($save_dir . $file);
                 if ($file_content_old == $file_content_new) {
                     $file_content = str_replace("[status]", $status[2], $file_content);
                 } else {
@@ -280,7 +284,7 @@ MODEL;
     /**
      * 生成代码的报告可交互操作
      * @param array|string $table_names
-     * 示例如下: 
+     * 示例如下:
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      * @param string $content 生成代码的报告主要内容
@@ -289,7 +293,9 @@ MODEL;
     private static function modelShowDetailReport($table_names, $content)
     {
         $save_dir = self::$save_dir;
-        if (is_array($table_names) ) $table_names = implode(",", $table_names);
+        if (is_array($table_names)) {
+            $table_names = implode(",", $table_names);
+        }
         $preview_report_info = UtilCss::preview_report_info();
         $showResult = <<<REPORT
     $preview_report_info

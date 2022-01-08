@@ -7,9 +7,10 @@
  * @subpackage mysql
  * @author skygreen
  */
-class Sql_Mysql extends Sql implements ISqlNormal {
+class Sql_Mysql extends Sql implements ISqlNormal
+{
     /**
-     * @var mixed 数据库连接 
+     * @var mixed 数据库连接
      */
     private $connection;
 
@@ -19,11 +20,12 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      * @param type $port
      * @param type $username
      * @param type $password
-     * @param type $dbname 
+     * @param type $dbname
      * @return mixed 数据库连接
      */
-    public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null) {
-        $connecturl = Config_Mysql::connctionurl( $host, $port );
+    public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
+    {
+        $connecturl = Config_Mysql::connctionurl($host, $port);
         if (!isset($username)) {
             $username = Config_Mysql::$username;
         }
@@ -32,7 +34,7 @@ class Sql_Mysql extends Sql implements ISqlNormal {
         }
         if (!isset($dbname)) {
             $dbname = Config_Mysql::$dbname;
-        }        
+        }
         $this->connection = mysql_connect($connecturl, $username, $password);
         mysql_select_db($dbname, $this->connection);
     }
@@ -49,7 +51,8 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      *     其中 name, pass 是表列名，"skygreen", md5("hello world"))是列值，与列名一一对应。
      * ```
      */
-    public function insertdata($tablename, $data) {
+    public function insertdata($tablename, $data)
+    {
         $fields = join(",", array_keys($data));
         $values = "'" . join(",", array_values($data)) . "'";
         $query  = Crud_SQL::SQL_INSERT . $tablename . " ({$fields})" . Crud_SQL::SQL_INSERT_VALUE . " ({$values})";
@@ -74,7 +77,8 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      * ```
      * @return boolean:是否删除成功
      */
-    public function deleteData($tablename, $sql_id) {
+    public function deleteData($tablename, $sql_id)
+    {
         $query = Crud_SQL::SQL_DELETE . Crud_SQL::SQL_FROM . $tablename . Crud_SQL::SQL_WHERE . $sql_id;
         return mysql_query($query, $this->connection);
     }
@@ -97,12 +101,13 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      *      $result = $db->updateData(1, $data);
      * ```
      */
-    public function updateData($tablename, $sql_id, $data) {
+    public function updateData($tablename, $sql_id, $data)
+    {
         $queryparts = array();
         foreach ($data as $key => $value) {
             $queryparts[] = "{$key} = '{$value}'";
         }
-        $query = Crud_SQL::SQL_UPDATE . $tablename . Crud_SQL::SQL_SET . join(",", $queryparts) . 
+        $query = Crud_SQL::SQL_UPDATE . $tablename . Crud_SQL::SQL_SET . join(",", $queryparts) .
                  Crud_SQL::SQL_WHERE . $sql_id;
         return mysql_query($query, $this->connection);
     }
@@ -111,8 +116,8 @@ class Sql_Mysql extends Sql implements ISqlNormal {
      * 直接执行SQL语句
      * @param string $sqlstring SQL语句
      */
-    public function sqlExectue($sqlstring) {
+    public function sqlExectue($sqlstring)
+    {
         return mysql_query($sqlstring, $this->connection);
     }
 }
-?>

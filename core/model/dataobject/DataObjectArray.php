@@ -19,9 +19,11 @@ class DataObjectArray extends BBObject implements ArrayAccess
     */
     public function __construct($array = null)
     {
-        if (!empty($array) && is_array($array) )
-            foreach ($array as $key => $value)
+        if (!empty($array) && is_array($array)) {
+            foreach ($array as $key => $value) {
                 $this->$key = $value;
+            }
+        }
     }
 
     /**
@@ -33,7 +35,9 @@ class DataObjectArray extends BBObject implements ArrayAccess
      */
     public function __get($property)
     {
-        if (property_exists($this, $property) ) return $this->$property;
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
         return null;
     }
 
@@ -53,8 +57,9 @@ class DataObjectArray extends BBObject implements ArrayAccess
      * 打印当前对象的数据结构
      * @return string 描述当前对象。
      */
-    public function __toString() {
-        return DataObjectFunc::toString( $this );
+    public function __toString()
+    {
+        return DataObjectFunc::toString($this);
     }
     //</editor-fold>
 
@@ -70,7 +75,9 @@ class DataObjectArray extends BBObject implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
-        if ($this->$key ) return true;
+        if ($this->$key) {
+            return true;
+        }
         return method_exists($this, $key);
     }
 
@@ -115,4 +122,3 @@ class DataObjectArray extends BBObject implements ArrayAccess
     }
     //</editor-fold>
 }
-?>

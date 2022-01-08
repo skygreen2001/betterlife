@@ -38,8 +38,7 @@ class HttpCookie
      */
     public static function sets($key_values, $expire = 0)
     {
-        if ($key_values && is_array($key_values) && (count($key_values) > 0))
-        {
+        if ($key_values && is_array($key_values) && (count($key_values) > 0)) {
             foreach ($key_values as $key => $value) {
                 self::set($key, $value, $expire);
             }
@@ -73,10 +72,9 @@ class HttpCookie
     public static function gets($keys, $returnType = 0)
     {
         $result = array();
-        if ($keys && is_array($keys) && (count($keys) > 0))
-        {
+        if ($keys && is_array($keys) && (count($keys) > 0)) {
             foreach ($keys as $key) {
-                $result[$key] = self::get( $key, $returnType );
+                $result[$key] = self::get($key, $returnType);
             }
         }
         return $result;
@@ -90,9 +88,8 @@ class HttpCookie
      */
     public static function remove($keys, $domain = "/")
     {
-        if ($keys && is_array($keys) && (count($keys) > 0))
-        {
-            foreach ( $keys as $key) {
+        if ($keys && is_array($keys) && (count($keys) > 0)) {
+            foreach ($keys as $key) {
                 setcookie($key, null, -1, $domain);
             }
         } else {
@@ -100,4 +97,3 @@ class HttpCookie
         }
     }
 }
-?>

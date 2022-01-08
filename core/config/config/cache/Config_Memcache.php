@@ -9,13 +9,13 @@
  *
  *    MemCacheD Manager: http://allegiance.chi-town.com/MemCacheDManager.aspx
  *
- *    .NET memcached client library: http://memcacheddotnet.sourceforge.net/    
+ *    .NET memcached client library: http://memcacheddotnet.sourceforge.net/
  *
  *    memcached 1.2.6: http://code.jellycan.com/memcached/
  *
  *    Official       : http://memcached.org/
  *
- *    memcached for Windows: http://splinedancer.com/memcached-win32/ 
+ *    memcached for Windows: http://splinedancer.com/memcached-win32/
  *
  * 使用:
  *
@@ -44,31 +44,29 @@
  * @subpackage cache
  * @author skygreen
  */
-class Config_Memcache extends ConfigBB 
-{   
+class Config_Memcache extends ConfigBB
+{
     /**
     * 所有的缓存服务器
     * 这里是在同一台机器上运行3个Memcache。
     * 可以根据需要将其设置成多台机器上得MemCache。
     * @var mixed
     */
-    public static $cache_servers=array(
+    public static $cache_servers = array(
         array('127.0.0.1',11211,40),
         array('127.0.0.1',11212,30),
         array('127.0.0.1',11213,30)
     );
 
     /**
-    * 存储数据是否采用压缩格式(需要使用zlib)。   
+    * 存储数据是否采用压缩格式(需要使用zlib)。
     * @var mixed
     */
-    public static $is_compressed=false;  
-    
+    public static $is_compressed = false;
+
     /**
     * 是否持久化
     * @var mixed
     */
-    public static $is_persistant=false;
-    
+    public static $is_persistant = false;
 }
-

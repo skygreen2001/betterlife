@@ -1,4 +1,5 @@
 <?php
+
 /*
 * Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 * For licensing, see LICENSE.html or http://ckeditor.com/license
@@ -93,7 +94,8 @@ class CKEditor
      *
      *  @param $basePath (string) URL to the %CKEditor installation directory (optional).
      */
-    function __construct($basePath = null) {
+    function __construct($basePath = null)
+    {
         if (!empty($basePath)) {
             $this->basePath = $basePath;
         }
@@ -151,15 +153,16 @@ class CKEditor
             $out .= $this->init();
         }
 
-        $_config = $this->configSettings( $config, $events );
+        $_config = $this->configSettings($config, $events);
 
         $js = $this->returnGlobalEvents();
-        if (!empty($_config) )
+        if (!empty($_config)) {
             $js .= "var editor = CKEDITOR.replace('" . $name . "', " . $this->jsEncode($_config) . ");";
-        else
+        } else {
             $js .= "var editor = CKEDITOR.replace('" . $name . "');";
+        }
 
-        $out .= $this->script( $js );
+        $out .= $this->script($js);
 
         if (!$this->returnOutput) {
             print $out;
@@ -189,15 +192,15 @@ class CKEditor
             $out .= $this->init();
         }
 
-        $_config = $this->configSettings( $config, $events );
+        $_config = $this->configSettings($config, $events);
 
         $js = $this->returnGlobalEvents();
         if (!empty($_config)) {
-            $js .= "CKEDITOR.replace('" . $id . "', " . $this->jsEncode( $_config ) . ");";
+            $js .= "CKEDITOR.replace('" . $id . "', " . $this->jsEncode($_config) . ");";
         } else {
             $js .= "CKEDITOR.replace('" . $id . "');";
         }
-        $out .= $this->script( $js );
+        $out .= $this->script($js);
 
         if (!$this->returnOutput) {
             print $out;
@@ -248,12 +251,11 @@ class CKEditor
                 $js .= "    if (!classRegex.test(textarea.className))\n";
                 $js .= "        return false;\n";
             }
-            $js .= "    CKEDITOR.tools.extend(config, " . $this->jsEncode( $_config ) . ", true);";
+            $js .= "    CKEDITOR.tools.extend(config, " . $this->jsEncode($_config) . ", true);";
             $js .= "} );";
-
         }
 
-        $out .= $this->script( $js );
+        $out .= $this->script($js);
 
         if (!$this->returnOutput) {
             print $out;
@@ -453,7 +455,7 @@ class CKEditor
         $args         = "";
         $ckeditorPath = $this->ckeditorPath();
 
-        if (!empty($this->timestamp) && $this->timestamp != "%"."TIMESTAMP%") {
+        if (!empty($this->timestamp) && $this->timestamp != "%" . "TIMESTAMP%") {
             $args = '?t=' . $this->timestamp;
         }
 
@@ -469,7 +471,7 @@ class CKEditor
             $extraCode .= ($extraCode ? "\n" : "") . "CKEDITOR.timestamp = '" . $this->timestamp . "';";
         }
         if ($extraCode) {
-            $out .= $this->script( $extraCode );
+            $out .= $this->script($extraCode);
         }
 
         $initComplete = $this->initialized = true;
@@ -541,7 +543,7 @@ class CKEditor
             return str_replace(',', '.', $val);
         }
         if (is_array($val) || is_object($val)) {
-            if (is_array($val) && (array_keys($val) === range(0,count($val)-1))) {
+            if (is_array($val) && (array_keys($val) === range(0, count($val) - 1))) {
                 return '[' . implode(',', array_map(array($this, 'jsEncode'), $val)) . ']';
             }
             $temp = array();
@@ -551,10 +553,12 @@ class CKEditor
             return '{' . implode(',', $temp) . '}';
         }
         // String otherwise
-        if (strpos($val, '@@') === 0 )
+        if (strpos($val, '@@') === 0) {
             return substr($val, 2);
-        if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.' )
+        }
+        if (strtoupper(substr($val, 0, 9)) == 'CKEDITOR.') {
             return $val;
+        }
 
         return '"' . str_replace(array("\\", "/", "\n", "\t", "\r", "\x08", "\x0c", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'), $val) . '"';
     }

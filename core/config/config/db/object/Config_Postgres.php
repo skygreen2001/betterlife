@@ -16,5 +16,4 @@ class Config_Postgres extends Config_Db
      * PGSQL_ASSOC, PGSQL_NUM and PGSQL_BOTH
      */
     public static $fetchmode = PGSQL_ASSOC;
-
 }

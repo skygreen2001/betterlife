@@ -117,9 +117,12 @@ class Log_mail extends Log
      * @param int    $level     Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                      $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_recipients = $name;
         $this->_ident = $ident;
@@ -140,9 +143,11 @@ class Log_mail extends Log
         }
 
         if (!empty($conf['lineFormat'])) {
-            $this->_lineFormat = str_replace(array_keys($this->_formatMap),
-                                             array_values($this->_formatMap),
-                                             $conf['lineFormat']);
+            $this->_lineFormat = str_replace(
+                array_keys($this->_formatMap),
+                array_values($this->_formatMap),
+                $conf['lineFormat']
+            );
         }
 
         if (!empty($conf['timeFormat'])) {
@@ -203,8 +208,14 @@ class Log_mail extends Log
                 if ($this->_mailBackend === '') {  // use mail()
                     $headers = "From: $this->_from" . HH;
                     $headers .= 'User-Agent: PEAR Log Package';
-                    if (mail($this->_recipients, $this->_subject,
-                             $this->_message, $headers) == false) {
+                    if (
+                        mail(
+                            $this->_recipients,
+                            $this->_subject,
+                            $this->_message,
+                            $headers
+                        ) == false
+                    ) {
                         return false;
                     }
                 } else {  // use PEAR::Mail
@@ -213,10 +224,15 @@ class Log_mail extends Log
                                      'To' => $this->_recipients,
                                      'User-Agent' => 'PEAR Log Package',
                                      'Subject' => $this->_subject);
-                    $mailer = Mail::factory($this->_mailBackend,
-                                             $this->_mailParams);
-                    $res = $mailer->send($this->_recipients, $headers,
-                                         $this->_message);
+                    $mailer = Mail::factory(
+                        $this->_mailBackend,
+                        $this->_mailParams
+                    );
+                    $res = $mailer->send(
+                        $this->_recipients,
+                        $headers,
+                        $this->_message
+                    );
                     if (PEAR::isError($res)) {
                         return false;
                     }
@@ -282,9 +298,12 @@ class Log_mail extends Log
         $message = $this->_extractMessage($message);
 
         /* Append the string containing the complete log line. */
-        $this->_message .= $this->_format($this->_lineFormat,
-                                          strftime($this->_timeFormat),
-                                          $priority, $message) . HH;
+        $this->_message .= $this->_format(
+            $this->_lineFormat,
+            strftime($this->_timeFormat),
+            $priority,
+            $message
+        ) . HH;
         $this->_shouldSend = true;
 
         /* Notify observers about this log message. */

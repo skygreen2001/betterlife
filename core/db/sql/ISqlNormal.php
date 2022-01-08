@@ -6,7 +6,8 @@
  * @package core.db.sql
  * @author skygreen
  */
-interface ISqlNormal {
+interface ISqlNormal
+{
     /**
      * 新增一条数据记录
      * @param array $data 数据数组
@@ -19,7 +20,7 @@ interface ISqlNormal {
      *     其中 name,pass是表列名，"skygreen",md5("hello world"))是列值，与列名一一对应。
      * ```
      */
-    public function insertdata($tablename,$data);
+    public function insertdata($tablename, $data);
 
     /**
      * 删除一条数据记录
@@ -31,7 +32,7 @@ interface ISqlNormal {
      *      $result =$db ->deleteData(1);
      * ```
      */
-    public function deleteData($tablename,$id);
+    public function deleteData($tablename, $id);
 
     /**
      * 修改一条数据记录
@@ -45,7 +46,7 @@ interface ISqlNormal {
      *      $result = $db->updateData(1, $data);
      * ```
      */
-    public function updateData($tablename,$id, $data);
+    public function updateData($tablename, $id, $data);
 
     /**
      * 直接执行SQL语句
@@ -53,4 +54,3 @@ interface ISqlNormal {
      */
     public function sqlExectue($sqlstring);
 }
-?>

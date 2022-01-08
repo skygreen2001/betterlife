@@ -7,7 +7,8 @@
  * @subpackage mysql
  * @author skygreen
  */
-class Query_Mysql extends Query {
+class Query_Mysql extends Query
+{
     /**
      * The internal MySQL handle that points to the result set.
      * @var resource
@@ -18,23 +19,28 @@ class Query_Mysql extends Query {
      * Hook the result-set given into a Query class, suitable for use by sapphire.
      * @param handle the internal mysql handle that is points to the resultset.
      */
-    public function __construct($handle) {
+    public function __construct($handle)
+    {
         $this->handle = $handle;
     }
 
-    public function __destroy() {
+    public function __destroy()
+    {
         mysql_free_result($this->handle);
     }
 
-    public function seek($row) {
+    public function seek($row)
+    {
         return mysql_data_seek($this->handle, $row);
     }
 
-    public function numRecords() {
+    public function numRecords()
+    {
         return mysql_num_rows($this->handle);
     }
 
-    public function nextRecord() {
+    public function nextRecord()
+    {
         // Coalesce rather than replace common fields.
         $data = @mysql_fetch_row($this->handle);
         if ($data) {
@@ -51,6 +57,4 @@ class Query_Mysql extends Query {
             return false;
         }
     }
-
-
 }

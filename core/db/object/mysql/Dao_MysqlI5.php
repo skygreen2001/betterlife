@@ -25,7 +25,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mysql::connctionurl( $host, $port );
+        $connecturl = Config_Mysql::connctionurl($host, $port);
 
         if (!isset($username)) {
             $username = Config_Mysql::$username;
@@ -43,7 +43,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             $this->connection = null;
         }
 
-        $this->change_character_set( Config_Db::$character );
+        $this->change_character_set(Config_Db::$character);
     }
 
     /**
@@ -57,16 +57,16 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         try {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
             if (!empty($this->saParams) && is_array($this->saParams)) {
-                $this->sQuery = self::preparse_prepared( $this->sQuery, $this->saParams );
+                $this->sQuery = self::preparse_prepared($this->sQuery, $this->saParams);
             }
 
-            $this->stmt = $this->connection->prepare( $this->sQuery );
+            $this->stmt = $this->connection->prepare($this->sQuery);
             Exception_Mysqli::record();
             if (!empty($this->saParams) && is_array($this->saParams)) {
                 /*****************************************************************************
@@ -79,19 +79,19 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                  * ***************************************************************************
                  */
                 $i = 0;
-                if (contain( $this->sQuery, "?" )) {
+                if (contain($this->sQuery, "?")) {
                     if ($this->saParams && count($this->saParams) > 0) {
                         foreach ($this->saParams as $param) {
                             $bind_name     = 'bind' . $i++;
                             $$bind_name    = $param;
                             $bind_params[] = &$$bind_name;
                         }
-                        array_unshift($bind_params, self::getPreparedTypeString( $this->saParams ));
+                        array_unshift($bind_params, self::getPreparedTypeString($this->saParams));
                         array_unshift($bind_params, $this->stmt);
                         if (is_object($bind_params[0])) {
                             call_user_func_array('mysqli_stmt_bind_param', $bind_params);
                         } else {
-                            Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
+                            Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
                         }
                     }
                 }
@@ -102,7 +102,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             Exception_Mysqli::record();
             /*END:执行预编译生成SQL语句******************************************************/
         } catch (Exception $ex) {
-            Exception_Mysqli::record( $ex->getTraceAsString() );
+            Exception_Mysqli::record($ex->getTraceAsString());
         }
     }
 
@@ -121,7 +121,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         $result = null;
         try {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $sqlstring );
+                LogMe::log("SQL: " . $sqlstring);
             }
             $this->stmt = $this->connection->prepare($sqlstring);
             Exception_Mysqli::record();
@@ -129,7 +129,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $this->stmt->execute();
                 Exception_Mysqli::record();
 
-                $parts = explode(" ",trim($sqlstring));
+                $parts = explode(" ", trim($sqlstring));
                 $type  = strtolower($parts[0]);
                 if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
                     $this->stmt->free_result();
@@ -141,7 +141,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                     $this->stmt->close();
                     return $autoId;
                 }
-                $result = $this->getResultToObjects( $object );
+                $result = $this->getResultToObjects($object);
                 // $sql_s  = preg_replace("/\s/","",$sqlstring);
                 // $sql_s  = strtolower($sql_s);
                 // if (( !empty($result) ) && (!is_array($result) )) {
@@ -152,10 +152,10 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 //     }
                 // }
             } else {
-               Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
+                Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
         }
         return $result;
     }
@@ -179,7 +179,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         if (!$this->validParameter($object)) {
             return 0;
         }
-        return $this->countMultitable( $object, $this->classname, $filter );
+        return $this->countMultitable($object, $this->classname, $filter);
     }
 
     /**
@@ -208,31 +208,33 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams = $_SQL->parseValidInputParam( $filter );
+            $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery = $_SQL->select( Crud_Sql_Select::SQL_COUNT )->from( $from )->where( $this->saParams )->result();
+            $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($from)->where($this->saParams)->result();
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
             if (is_object($this->connection)) {
-                $object_arr = $this->connection->query( $this->sQuery );
+                $object_arr = $this->connection->query($this->sQuery);
                 if ($object_arr) {
                     $row    = $object_arr->fetch_row();
                     $result = $row[0];
-                    if (is_string($result) ) $result = floatval($result);
+                    if (is_string($result)) {
+                        $result = floatval($result);
+                    }
                 }
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
             return 0;
         }
     }
@@ -264,10 +266,14 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        if (($startPoint>$endPoint) || ($endPoint == 0) ) return null;
-        if (!$this->validParameter( $object))return null;
+        if (($startPoint > $endPoint) || ($endPoint == 0)) {
+            return null;
+        }
+        if (!$this->validParameter($object)) {
+            return null;
+        }
 
-        return $this->queryPageMultitable( $object, $startPoint, $endPoint, $this->classname, $filter, $sort );
+        return $this->queryPageMultitable($object, $startPoint, $endPoint, $this->classname, $filter, $sort);
     }
 
     /**
@@ -307,22 +313,22 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     public function queryPageMultitable($object, $startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return null;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams = $_SQL->parseValidInputParam( $filter );
+            $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($from)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
-            $result = $this->sqlExecute( $this->sQuery, $object );
+            $result = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
             return null;
         }
     }
@@ -337,7 +343,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         $result = null;
         if (is_object($this->stmt)) {
             $this->stmt->store_result();
-            if ($this->stmt->num_rows>0) {
+            if ($this->stmt->num_rows > 0) {
                 /* get resultset for metadata */
                 $meta = $this->stmt->result_metadata();
                 $row = array();
@@ -349,7 +355,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 while ($this->stmt->fetch()) {
                     if (!empty($object)) {
                         if ($this->validParameter($object)) {
-                            $c        = UtilObject::array_to_object( $row, $this->classname );
+                            $c        = UtilObject::array_to_object($row, $this->classname);
                             $result[] = $c;
                         }
                     } else {
@@ -366,7 +372,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                         }
                     }
                 }
-                $result = $this->getValueIfOneValue( $result );
+                $result = $this->getValueIfOneValue($result);
             }
             $this->stmt->free_result();
             $this->stmt->close();
@@ -406,17 +412,17 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             $_SQL = new Crud_Sql_Select();
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $filter_arr = $_SQL->parseValidInputParam( $filter );
+            $filter_arr = $_SQL->parseValidInputParam($filter);
             $this->saParams = null;
             if (is_array($filter_arr) && count($filter_arr) > 0) {
                 $this->saParams = $filter_arr;
@@ -425,10 +431,10 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             $this->executeSQL();
-            $result = $this->getResultToObjects( $object );
+            $result = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -456,13 +462,13 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $filter_arr = $_SQL->parseValidInputParam( $filter );
+            $filter_arr = $_SQL->parseValidInputParam($filter);
             $this->saParams = null;
             if (is_array($filter_arr) && count($filter_arr) > 0) {
                 $this->saParams = $filter_arr;
@@ -470,18 +476,18 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $_SQL->isPreparedStatement = false;
             }
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit("0,1")->result();
             $this->executeSQL();
-            $result = $this->getResultToObjects( $object );
+            $result = $this->getResultToObjects($object);
             if ($result && count($result) >= 1) {
                 $result = $result[0];
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -495,13 +501,13 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             if (!empty($id) && is_scalar($id)) {
                 $_SQL  = new Crud_Sql_Select();
-                $where = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
@@ -512,7 +518,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 return $result;
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -524,28 +530,28 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
             $_SQL->isPreparedStatement = true;
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
-            $object->setUpdateTime( UtilDateTime::now() );
+            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+            $object->setUpdateTime(UtilDateTime::now());
             $this->saParams = UtilObject::object_to_array($object);
             //$this->saParams=$this->filterViewProperties($this->saParams);
-            $this->sQuery   = $_SQL->insert( $this->classname )->values( $this->saParams )->result();
+            $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
             $this->executeSQL();
             if ($this->stmt) {
                 $autoId = $this->stmt->insert_id;
-                $object->setId( $autoId );
+                $object->setId($autoId);
                 $this->stmt->free_result();
                 $this->stmt->close();
             } else {
-                 Exception_Mysqli::record( Wl::ERROR_INFO_DB_HANDLE );
+                 Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record( $exc->getTraceAsString() );
+            Exception_Mysqli::record($exc->getTraceAsString());
         }
         return $autoId;
     }
@@ -558,7 +564,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     public function delete($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
         $id = $object->getId();
@@ -568,15 +574,15 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL: " . $this->sQuery );
+                    LogMe::log("SQL: " . $this->sQuery);
                 }
                 $this->stmt = mysqli_prepare($this->connection, $this->sQuery);
-                $this->stmt->execute ();
-                $this->stmt->free_result ();
+                $this->stmt->execute();
+                $this->stmt->free_result();
                 $this->stmt->close();
                 $result = true;
             } catch (Exception $exc) {
-                Exception_Mysqli::record( $exc->getTraceAsString() );
+                Exception_Mysqli::record($exc->getTraceAsString());
             }
         }
         return $result;
@@ -590,7 +596,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     public function update($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
 
@@ -598,26 +604,26 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         if (!empty($id)) {
             try {
                 $_SQL = new Crud_Sql_Update();
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
-                $this->saParams = UtilObject::object_to_array( $object );
-                unset($this->saParams[DataObjectSpec::getRealIDColumnName( $object )]);
-                $this->saParams = $this->filterViewProperties( $this->saParams );
-                $where=$this->sql_id( $object ) . self::EQUAL . $id;
+                $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
+                $this->saParams = UtilObject::object_to_array($object);
+                unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
+                $this->saParams = $this->filterViewProperties($this->saParams);
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
                 $this->executeSQL();
                 if ($this->stmt) {
-                    $this->stmt->free_result ();
+                    $this->stmt->free_result();
                     $this->stmt->close();
                     $result = true;
                 } else {
                     $result = false;
                 }
             } catch (Exception $exc) {
-                Exception_Mysqli::record( $exc->getTraceAsString() );
+                Exception_Mysqli::record($exc->getTraceAsString());
                 $result = false;
             }
         } else {
-           x( Wl::ERROR_INFO_UPDATE_ID, $this );
+            x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
         return $result;
     }
@@ -631,9 +637,9 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     {
         $id = $dataobject->getId();
         if (isset($id)) {
-            $result = $this->update( $dataobject );
+            $result = $this->update($dataobject);
         } else {
-            $result = $this->save( $dataobject );
+            $result = $this->save($dataobject);
         }
         return $result;
     }
@@ -715,9 +721,10 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
     public function character_set()
     {
         $charset = Config_C::CHARACTER_UTF8_MB4;
-        if ($this->connection ) $charset = $this->connection->character_set_name();
+        if ($this->connection) {
+            $charset = $this->connection->character_set_name();
+        }
         return $charset;
 //        echo Wl::INFO_DB_CHARACTER." {$charset}";
     }
 }
-?>

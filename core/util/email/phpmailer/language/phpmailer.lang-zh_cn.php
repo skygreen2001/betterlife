@@ -10,6 +10,7 @@
  * @author qiulin
  * @author liqwei <liqwei@liqwei.com>
  */
+
 $PHPMAILER_LANG['authenticate'] = 'SMTP 错误: 登录失败。';
 $PHPMAILER_LANG['connect_host'] = 'SMTP 错误: 无法连接到 SMTP 主机。';
 $PHPMAILER_LANG['data_not_accepted'] = 'SMTP 错误: 数据不被接受。';
@@ -28,4 +29,3 @@ $PHPMAILER_LANG['recipients_failed'] = 'SMTP 错误: 收件人地址错误: ';
 //$PHPMAILER_LANG['smtp_connect_failed']  = 'SMTP Connect() failed.';
 //$PHPMAILER_LANG['smtp_error']           = 'SMTP server error: ';
 //$PHPMAILER_LANG['variable_set']         = 'Cannot set or reset variable: ';
-?>

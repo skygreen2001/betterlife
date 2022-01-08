@@ -49,12 +49,12 @@ abstract class Dao
      * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
      *                      需要在实现里重载 setdbType方法以传入数据库类型参数
      */
-    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null,$dbtype=null)
+    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null)
     {
         if (isset($dbtype)) {
-            $this->setdbType( $dbtype );
+            $this->setdbType($dbtype);
         }
-        $this->connect( $host, $port, $username, $password, $dbname );
+        $this->connect($host, $port, $username, $password, $dbname);
     }
 
     /**
@@ -75,7 +75,6 @@ abstract class Dao
      */
     protected function setdbType($dbtype)
     {
-
     }
 
     /**
@@ -119,9 +118,9 @@ abstract class Dao
             }
         }
         if ($object instanceof DataObject) {
-            return DataObjectSpec::getRealIDColumnName( $object );
+            return DataObjectSpec::getRealIDColumnName($object);
         }
-       x( Wl::ERROR_INFO_EXTENDS_CLASS );
+        x(Wl::ERROR_INFO_EXTENDS_CLASS);
     }
 
     /**
@@ -137,12 +136,12 @@ abstract class Dao
                     $this->classname = $object;
                     return true;
                 } else {
-                   x( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
+                    x(Wl::ERROR_INFO_EXTENDS_CLASS, $this);
                     return false;
                 }
             }
         } else {
-            return $this->validObjectParameter( $object );
+            return $this->validObjectParameter($object);
         }
     }
 
@@ -177,11 +176,11 @@ abstract class Dao
             if ($object instanceof DataObject) {
                 $this->classname = $object->classname();
             } else {
-               x( Wl::ERROR_INFO_EXTENDS_CLASS, $this );
+                x(Wl::ERROR_INFO_EXTENDS_CLASS, $this);
                 return false;
             }
         } else {
-           x( Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME, $this );
+            x(Wl::ERROR_INFO_NEED_OBJECT_CLASSNAME, $this);
             return false;
         }
         return true;
@@ -191,7 +190,8 @@ abstract class Dao
      * 设置Mysql数据库字符集
      * @param string $character_code 字符集
      */
-    public function change_character_set($character_code = "utf8mb4") {
+    public function change_character_set($character_code = "utf8mb4")
+    {
         $sql = "SET NAMES " . $character_code;
         $this->connection->query($sql);
     }
@@ -200,7 +200,7 @@ abstract class Dao
      * 获取插入或者更新的数据的类型。
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @param array $saParams 对象field名称值键值对
-     * @param array $typeOf 
+     * @param array $typeOf
      *
      *     - 0: 通用的协议定义的类型标识，暂未实现。
      *     - 1: PHP定义的数据类型标识，暂未实现。
@@ -236,10 +236,11 @@ abstract class Dao
                 //     $result     = $tmp_values[0];
                 // }
             } else {
-                if (!( $result[0] instanceof DataObject)) $result = $result[0];
+                if (!( $result[0] instanceof DataObject)) {
+                    $result = $result[0];
+                }
             }
         }
         return $result;
     }
 }
-?>

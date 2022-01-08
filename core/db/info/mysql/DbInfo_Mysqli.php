@@ -37,8 +37,8 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      * @return TRUE/FALSE 是否已打开.
      */
     public static function extension_is_available()
-    { 
-        return function_exists('mysqli_prepare'); 
+    {
+        return function_exists('mysqli_prepare');
     }
 
     /**
@@ -47,10 +47,9 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      */
     public static function run_script($db_config)
     {
-        if (!self::extension_is_available() )
-        {
-            LogMe::log( '默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions' );
-            return FALSE;
+        if (!self::extension_is_available()) {
+            LogMe::log('默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions');
+            return false;
         }
 
         // Decode url-encoded information in the db connection string.
@@ -62,13 +61,12 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         $script_filename = $db_config["script_filename"];
 
         // Allow for non-standard MySQL port.
-        if (isset($db_config["port"]) && !empty($db_config["port"]) )
-        {
+        if (isset($db_config["port"]) && !empty($db_config["port"])) {
             $host = $host . ':' . $db_config["port"];
         }
 
         // Test connecting to the database.
-        $connecturl = Config_Mysql::connctionurl( $host, $port );
+        $connecturl = Config_Mysql::connctionurl($host, $port);
 
         if (!isset($username)) {
             $username = Config_Mysql::$username;
@@ -81,11 +79,11 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         }
         // $dbinfo = new DbInfo_Mysqli();
         $connection = new mysqli($connecturl, $username, $password, $dbname);
-        if (!$connection )
-        {
+        if (!$connection) {
             LogMe::log(
                 '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysqli_error($connection)
-                    . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
+                . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>'
+            );
             return false;
         }
 
@@ -98,13 +96,12 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         $connection->query("SET NAMES " . Config_Db::$character);
 
         if (file_exists($script_filename)) {
-            $query   = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
+            $query   = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES | FILE_TEXT);
             $query   = implode("\n", $query);
             $query   = str_replace("&nbsp;", "--&nbsp--", $query);
             $query_e = explode(';', $query);
 
-            foreach ($query_e as $k => $v)
-            {
+            foreach ($query_e as $k => $v) {
                 $v = str_replace("--&nbsp--", "&nbsp;", $v);
                 if (!empty($v) && ($v != "\r")) {
                     $stmt = $connection->prepare($v);
@@ -113,7 +110,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
                     }
 
                     if (mysqli_connect_errno()) {
-                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v . '<br/> MySQL报告错误信息:' . $error );
+                        LogMe::log('数据库服务器执行命令发生错误脚本: ' . $v . '<br/> MySQL报告错误信息:' . $error);
                         Exception_Mysqli::record();
                         return false;
                     }
@@ -123,9 +120,9 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
                 $stmt->free_result();
                 $stmt->close();
             }
-            LogMe::log( "数据库操作成功，无异常!" );
+            LogMe::log("数据库操作成功，无异常!");
         } else {
-            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename );
+            LogMe::log('指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename);
         }
     }
 
@@ -141,7 +138,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli( $host, $port, $username, $password, $dbname )->getConnection();
+        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli($host, $port, $username, $password, $dbname)->getConnection();
     }
 
     /**
@@ -206,8 +203,12 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         }
         $tables = array();
         foreach (self::$showtables as $record) {
-            if ($record ) $table = @reset($record);
-            if (empty($table) ) $table = $record;
+            if ($record) {
+                $table = @reset($record);
+            }
+            if (empty($table)) {
+                $table = $record;
+            }
             $tables[strtolower($table)] = $table;
         }
         return $tables;
@@ -226,7 +227,9 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
                 $tableInfoList[$tableInfo['Name']] = $tableInfo;
             }
         }
-        if (isset($tableInfoList) ) return $tableInfoList;
+        if (isset($tableInfoList)) {
+            return $tableInfoList;
+        }
         return null;
     }
 
@@ -242,10 +245,12 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         $fields = $this->query("SHOW FULL FIELDS IN $table");
 
         foreach ($fields as $field) {
-            $field = UtilObject::object_to_array( $field );
+            $field = UtilObject::object_to_array($field);
             $fieldList[$field['Field']] = $field;
         }
-        if (isset ($fieldList)) return $fieldList;
+        if (isset($fieldList)) {
+            return $fieldList;
+        }
         return null;
     }
 
@@ -272,15 +277,20 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
             }
 
             if ($field['Default'] || $field['Default'] === "0") {
-                if (is_numeric($field['Default']) )
+                if (is_numeric($field['Default'])) {
                     $fieldSpec .= " default " . addslashes($field['Default']);
-                else
+                } else {
                     $fieldSpec .= " default '" . addslashes($field['Default']) . "'";
+                }
             }
-            if ($field['Extra'] ) $fieldSpec .= " $field[Extra]";
+            if ($field['Extra']) {
+                $fieldSpec .= " $field[Extra]";
+            }
             $fieldList[$field['Field']] = $fieldSpec;
         }
-        if (isset($fieldList) ) return $fieldList;
+        if (isset($fieldList)) {
+            return $fieldList;
+        }
         return null;
     }
 
@@ -295,16 +305,14 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      */
     public function fieldMapNameList($table, $isCommentFull = false)
     {
-        $fieldList = $this->fieldInfoList( $table );
+        $fieldList = $this->fieldInfoList($table);
         $result    = array();
         if (!empty($fieldList)) {
-            foreach ($fieldList as $field)
-            {
+            foreach ($fieldList as $field) {
                 if ($isCommentFull) {
                     $result[$field["Field"]] = $field["Comment"];
                 } else {
-                    if (contain($field["Comment"], "\n"))
-                    {
+                    if (contain($field["Comment"], "\n")) {
                         $comment = explode("\n", $field["Comment"]);
                         if (count($comment) > 0) {
                             $result[$field["Field"]] = $comment[0];
@@ -329,17 +337,19 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
     {
         if (is_array($Column_names)) {
              $conditions = array();
-             foreach ($Column_names as $Column_name) {
+            foreach ($Column_names as $Column_name) {
                 $conditions[] = "Column_name='$Column_name'";
-             }
+            }
              $condition = implode(" or ", $conditions);
         } else {
              $condition = "Column_name='$Column_names'";
         }
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
-        LogMe::log( $sqlUnique );
-        $uniqueSql = $this->query( $sqlUnique );
-        if ($uniqueSql && is_object($uniqueSql) ) return (bool)($uniqueSql->value());
+        LogMe::log($sqlUnique);
+        $uniqueSql = $this->query($sqlUnique);
+        if ($uniqueSql && is_object($uniqueSql)) {
+            return (bool)($uniqueSql->value());
+        }
         return false;
     }
 
@@ -398,7 +408,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      */
     private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
-        
+
         if (Config_Db::$debug_show_sql) {
             $starttime = microtime(true);
         }
@@ -413,10 +423,14 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
 
         if (Config_Db::$debug_show_sql) {
             $endtime = microtime(true);
-            LogMe::log( "\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n" );
+            LogMe::log("\n$sqlstring\n开始:{$starttime}-结束:{$endtime}ms\n");
         }
-        if (!$this->stmt && $errorLevel && $this->connection )x( "无法运行查询语句: $sqlstring | " . mysqli_error($this->connection), $this );
-        if ($this->stmt ) return $result;
+        if (!$this->stmt && $errorLevel && $this->connection) {
+            x("无法运行查询语句: $sqlstring | " . mysqli_error($this->connection), $this);
+        }
+        if ($this->stmt) {
+            return $result;
+        }
         return null;
     }
 
@@ -429,7 +443,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         $result = null;
         if (is_object($this->stmt)) {
             $this->stmt->store_result();
-            if ($this->stmt->num_rows>0) {
+            if ($this->stmt->num_rows > 0) {
                 /* get resultset for metadata */
                 $meta = $this->stmt->result_metadata();
                 $row = array();
@@ -458,5 +472,4 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         }
         return $result;
     }
-
 }

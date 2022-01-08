@@ -64,21 +64,23 @@ class UtilDateTime extends Util
      */
     public static function ChinaTime()
     {
-       date_default_timezone_set('Asia/Shanghai');
+        date_default_timezone_set('Asia/Shanghai');
     }
 
     /**
      * 昨天
      */
-    public static function yesterday() {
-      return date("Y-m-d",strtotime("-1 day"));
+    public static function yesterday()
+    {
+        return date("Y-m-d", strtotime("-1 day"));
     }
 
     /**
      * 明天
      */
-    public static function tomorrow() {
-      return date("Y-m-d",strtotime("+1 day"));
+    public static function tomorrow()
+    {
+        return date("Y-m-d", strtotime("+1 day"));
     }
 
     /**
@@ -113,7 +115,7 @@ class UtilDateTime extends Util
 
         switch ($type) {
             case EnumDateTimeFormat::TIMESTAMP:
-                return UtilDateTime::dateToTimestamp( $now );
+                return UtilDateTime::dateToTimestamp($now);
             case EnumDateTimeFormat::DATE:
                 return $now;
             case EnumDateTimeFormat::STRING:
@@ -242,7 +244,8 @@ class UtilDateTime extends Util
      * @param mixed $endDate 结束日期。格式如: "2019-01-01"
      * @return array 开始日期与结束日期之间所有日期
      */
-    public static function getDates($startDate, $endDate) {
+    public static function getDates($startDate, $endDate)
+    {
         $result    = array();
         $startDate = new DateTime($startDate);
         $endDate   = new DateTime($endDate);
@@ -265,7 +268,8 @@ class UtilDateTime extends Util
      * @param string $date 指定月份; 格式如同: 2021-02
      * @return 指定月份最后一天
      */
-    public static function getMonthLastDay($month) {
+    public static function getMonthLastDay($month)
+    {
         return date('Y-m-d', strtotime(date('Y-m-01', strtotime($month)) . ' +1 month -1 day'));
     }
 
@@ -279,10 +283,9 @@ class UtilDateTime extends Util
      * @param int $days 指定天数
      * @return 指定月份最后一天
      */
-    public static function getBeforeDaysDate($date, $days) {
-       return date('Y-m-d', strtotime("-" . $days . " day", strtotime($date)));
+    public static function getBeforeDaysDate($date, $days)
+    {
+        return date('Y-m-d', strtotime("-" . $days . " day", strtotime($date)));
     }
-
 }
 //echo UtilDateTime::magicInfo("1979", "3", "10","XZ")
-?>

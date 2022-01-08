@@ -6,6 +6,6 @@
  * @package core.config
  * @author skygreen
  */
-class ConfigBB 
+class ConfigBB
 {
 }

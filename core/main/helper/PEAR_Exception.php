@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 /**
  * PEAR_Exception
@@ -199,20 +200,20 @@ class PEAR_Exception extends Exception
             }
             settype($func, 'array');
             switch ($func[0]) {
-            case self::OBSERVER_PRINT :
-                $f = (isset($func[1])) ? $func[1] : '%s';
-                printf($f, $this->getMessage());
+                case self::OBSERVER_PRINT:
+                    $f = (isset($func[1])) ? $func[1] : '%s';
+                    printf($f, $this->getMessage());
+                    break;
+                case self::OBSERVER_TRIGGER:
+                    $f = (isset($func[1])) ? $func[1] : E_USER_NOTICE;
+                    trigger_error($this->getMessage(), $f);
+                    break;
+                case self::OBSERVER_DIE:
+                    $f = (isset($func[1])) ? $func[1] : '%s';
+                    die(printf($f, $this->getMessage()));
                 break;
-            case self::OBSERVER_TRIGGER :
-                $f = (isset($func[1])) ? $func[1] : E_USER_NOTICE;
-                trigger_error($this->getMessage(), $f);
-                break;
-            case self::OBSERVER_DIE :
-                $f = (isset($func[1])) ? $func[1] : '%s';
-                die(printf($f, $this->getMessage()));
-                break;
-            default:
-                trigger_error('invalid observer type', E_USER_WARNING);
+                default:
+                    trigger_error('invalid observer type', E_USER_WARNING);
             }
         }
     }
@@ -289,9 +290,10 @@ class PEAR_Exception extends Exception
                                    'message' => $cause->getMessage(),
                                    'file' => $cause->getFile(),
                                    'line' => $cause->getLine());
-                } elseif (class_exists('PEAR_Error')
+                } elseif (
+                    class_exists('PEAR_Error')
                     && $cause instanceof PEAR_Error
-               ) {
+                ) {
                     $causes[] = array('class' => get_class($cause),
                                       'message' => $cause->getMessage(),
                                       'file' => 'unknown',
@@ -324,7 +326,7 @@ class PEAR_Exception extends Exception
             $this->_trace = $this->getTrace();
             if (empty($this->_trace)) {
                 $backtrace = debug_backtrace();
-                $this->_trace = array($backtrace[count($backtrace)-1]);
+                $this->_trace = array($backtrace[count($backtrace) - 1]);
             }
         }
         return $this->_trace;
@@ -407,7 +409,7 @@ class PEAR_Exception extends Exception
                     } elseif (is_array($arg)) {
                         $args[] = 'Array';
                     } elseif (is_object($arg)) {
-                        $args[] = 'Object('.get_class($arg).')';
+                        $args[] = 'Object(' . get_class($arg) . ')';
                     } elseif (is_bool($arg)) {
                         $args[] = $arg ? 'true' : 'false';
                     } elseif (is_int($arg) || is_double($arg)) {
@@ -428,7 +430,7 @@ class PEAR_Exception extends Exception
                    . ':' . (isset($v['line']) ? $v['line'] : 'unknown')
                    . '</td></tr>' . "\n";
         }
-        $html .= '<tr><td style="text-align: center;">' . ($k+1) . '</td>'
+        $html .= '<tr><td style="text-align: center;">' . ($k + 1) . '</td>'
                . '<td>{main}</td>'
                . '<td>&nbsp;</td></tr>' . "\n"
                . '</table>';
@@ -453,4 +455,3 @@ class PEAR_Exception extends Exception
         return $causeMsg . $this->getTraceAsString();
     }
 }
-?>

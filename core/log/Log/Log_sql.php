@@ -118,9 +118,12 @@ class Log_sql extends Log
      * @param int $level           Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                     $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_table = $name;
         $this->_mask = Log::UPTO($level);
@@ -248,7 +251,7 @@ class Log_sql extends Log
         /* Extract the string representation of the message. */
         $message = $this->_extractMessage($message);
 
-        $sql=sprintf($this->_sql,$this->_ident,$priority,$message);
+        $sql = sprintf($this->_sql, $this->_ident, $priority, $message);
         /* Execute the SQL query for this log entry insertion. */
         $this->_db->sqlExecute($sql);
         $this->_announce(array('priority' => $priority, 'message' => $message));

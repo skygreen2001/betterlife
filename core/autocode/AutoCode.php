@@ -85,27 +85,29 @@ class AutoCode extends BBObject
      */
     public static function init()
     {
-        UtilFileSystem::createDir( self::$save_dir );
-        system_dir_info( self::$save_dir );
+        UtilFileSystem::createDir(self::$save_dir);
+        system_dir_info(self::$save_dir);
         if (empty(self::$tableList)) {
             self::$tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
-            if (self::$tableInfoList ) self::$tableList = array_keys(self::$tableInfoList);
+            if (self::$tableInfoList) {
+                self::$tableList = array_keys(self::$tableInfoList);
+            }
         }
         if (empty(self::$fieldInfos) && (!empty(self::$tableList) )) {
             $ignoreTables = array();
             foreach (self::$tableList as $tablename) {
-                $classname = self::getClassname( $tablename );
+                $classname = self::getClassname($tablename);
                 $prefix    = Config_Db::$table_prefix;
-                if (( !empty($prefix) ) && (!contain( $tablename, $prefix))) {
+                if (( !empty($prefix) ) && (!contain($tablename, $prefix))) {
                     $ignoreTables[] = $tablename;
                     continue;
                 }
 
-                if (startWith( strtolower($classname), "copy" )) {
+                if (startWith(strtolower($classname), "copy")) {
                     $ignoreTables[] = $tablename;
                     continue;
                 }
-                $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList( $tablename );
+                $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
                 foreach ($fieldInfoList as $fieldname => $field) {
                     self::$fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
                     self::$fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -177,7 +179,9 @@ class AutoCode extends BBObject
         if (!empty($table_names)) {
             $fieldInfos = array();
 
-            if (is_string($table_names) ) $table_names = explode(",", $table_names);
+            if (is_string($table_names)) {
+                $table_names = explode(",", $table_names);
+            }
             if ($table_names && (count($table_names) > 0 )) {
                 for ($i = 0; $i < count($table_names); $i++) {
                     if (!empty($table_names[$i])) {
@@ -203,7 +207,9 @@ class AutoCode extends BBObject
         $tableInfos = self::$tableInfoList;
         if (!empty($table_names)) {
             $tableInfos = array();
-            if (is_string($table_names) ) $table_names = explode(",", $table_names);
+            if (is_string($table_names)) {
+                $table_names = explode(",", $table_names);
+            }
             if ($table_names && (count($table_names) > 0 )) {
                 for ($i = 0; $i < count($table_names); $i++) {
                     if (!empty($table_names[$i])) {
@@ -228,8 +234,12 @@ class AutoCode extends BBObject
     {
         $tableList = self::$tableList;
         if (!empty($table_names)) {
-            if (is_string($table_names) ) $table_names = explode(",", $table_names);
-            if ($table_names && (count($table_names) > 0)) $tableList = $table_names;
+            if (is_string($table_names)) {
+                $table_names = explode(",", $table_names);
+            }
+            if ($table_names && (count($table_names) > 0)) {
+                $tableList = $table_names;
+            }
         }
         return $tableList;
     }
@@ -257,7 +267,7 @@ class AutoCode extends BBObject
      */
     protected static function column_type($type)
     {
-        if (contain( $type, "(" )) {
+        if (contain($type, "(")) {
             list($typep, $length) = preg_split("/[()]/", $type);
         } else {
             $typep = $type;
@@ -271,7 +281,7 @@ class AutoCode extends BBObject
      */
     protected static function comment_type($type)
     {
-        $typep = self::column_type( $type );
+        $typep = self::column_type($type);
         switch ($typep) {
             case "int":
             case "enum":
@@ -299,7 +309,7 @@ class AutoCode extends BBObject
      */
     protected static function column_length($type)
     {
-        if (contain( $type, "(")) {
+        if (contain($type, "(")) {
             list($typep, $length) = preg_split("/[()]/", $type);
         } else {
             $length = 1;
@@ -315,8 +325,8 @@ class AutoCode extends BBObject
      */
     protected static function saveDefineToDir($dir, $filename, $definePhpFileContent)
     {
-        UtilFileSystem::createDir( $dir );
-        UtilFileSystem::save_file_content( $dir . DS . $filename, $definePhpFileContent );
+        UtilFileSystem::createDir($dir);
+        UtilFileSystem::save_file_content($dir . DS . $filename, $definePhpFileContent);
         return basename($filename, ".php");
     }
 
@@ -328,8 +338,8 @@ class AutoCode extends BBObject
      */
     protected static function saveDefineToFile($filename, $definePhpFileContent)
     {
-        UtilFileSystem::createDir( dirname($filename) );
-        UtilFileSystem::save_file_content( $filename, $definePhpFileContent );
+        UtilFileSystem::createDir(dirname($filename));
+        UtilFileSystem::save_file_content($filename, $definePhpFileContent);
         return basename($filename, ".php");
     }
 
@@ -356,10 +366,10 @@ class AutoCode extends BBObject
     {
         $enumclassname = "Enum";
         if (( strtolower($columnname) == 'type' ) || ( strtolower($columnname) == 'statue' ) || ( strtolower($columnname) == 'status' )) {
-            $enumclassname .= self::getClassname( $tablename ) . ucfirst( $columnname );
+            $enumclassname .= self::getClassname($tablename) . ucfirst($columnname);
         } else {
-            if (contain( $columnname, "_" )) {
-                $c_part = explode("_",$columnname);
+            if (contain($columnname, "_")) {
+                $c_part = explode("_", $columnname);
                 foreach ($c_part as $column) {
                     $enumclassname .= ucfirst($column);
                 }
@@ -372,7 +382,7 @@ class AutoCode extends BBObject
 
     /**
      * 表枚举类型列注释转换成可以处理的数组数据
-     * 注释风格如下: 
+     * 注释风格如下:
      *    用户性别
      *    0: 女-female
      *    1: 男-mail
@@ -385,13 +395,12 @@ class AutoCode extends BBObject
         $comment_arr = preg_split("/[\r\n;]+/", $fieldComment);
         unset($comment_arr[0]);
         $enum_columnDefine = array();
-        if (( !empty($comment_arr) ) && (count($comment_arr) > 0))
-        {
+        if (( !empty($comment_arr) ) && (count($comment_arr) > 0)) {
             foreach ($comment_arr as $comment) {
-                if (!UtilString::is_utf8( $comment )) {
-                    $comment = UtilString::gbk2utf8( $comment );
+                if (!UtilString::is_utf8($comment)) {
+                    $comment = UtilString::gbk2utf8($comment);
                 }
-                if (contain( $comment, "：" )) {
+                if (contain($comment, "：")) {
                     $comment = str_replace("：", ':', $comment);
                 }
                 $part_arr = preg_split("/[.:]+/", $comment);
@@ -399,7 +408,7 @@ class AutoCode extends BBObject
                     $cn_en_arr    = array();
                     $enum_comment = $part_arr[1];
                     if (is_numeric($part_arr[0])) {
-                        if (contain( $enum_comment, "-" )) {
+                        if (contain($enum_comment, "-")) {
                             $cn_en_arr[0] = substr($enum_comment, 0, strrpos($enum_comment, "-"));
                             $cn_en_arr[1] = substr($enum_comment, strrpos($enum_comment, "-") + 1);
                             $enum_columnDefine[] = array(
@@ -429,12 +438,16 @@ class AutoCode extends BBObject
     protected static function columnIsTextArea($column_name, $column_type)
     {
         $column_name = strtoupper($column_name);
-        if (contain( $column_name, "ID" )) {
+        if (contain($column_name, "ID")) {
             return false;
         }
-        if (( (self::column_length( $column_type ) >= 500) && (!contains( $column_name, array("URL", "LINK", "PASSWORD", "EMAIL", "PHONE", "ADDRESS"))) )
-             || ( contains( $column_name, array("INTRO","MEMO","CONTENT"))) || ( self::column_type( $column_type ) == 'text' ) || ( self::column_type( $column_type ) == 'longtext' )) {
-            if (self::columnIsImage( $column_name)) return false;
+        if (
+            ( (self::column_length($column_type) >= 500) && (!contains($column_name, array("URL", "LINK", "PASSWORD", "EMAIL", "PHONE", "ADDRESS"))) )
+             || ( contains($column_name, array("INTRO","MEMO","CONTENT"))) || ( self::column_type($column_type) == 'text' ) || ( self::column_type($column_type) == 'longtext' )
+        ) {
+            if (self::columnIsImage($column_name)) {
+                return false;
+            }
             return true;
         } else {
             return false;
@@ -449,13 +462,13 @@ class AutoCode extends BBObject
     protected static function columnIsImage($column_name, $column_comment = "")
     {
         $column_name = strtoupper($column_name);
-        if (contain( $column_name, "ID" )) {
+        if (contain($column_name, "ID")) {
             return false;
         }
-        if (contains( $column_name, array("THUMBNAIL", "PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC") )) {
+        if (contains($column_name, array("THUMBNAIL", "PROFILE", "IMAGE", "IMG", "ICO", "LOGO", "PIC"))) {
             return true;
         }
-        if (contains( $column_comment, array("图像地址", "图片地址"))) {
+        if (contains($column_comment, array("图像地址", "图片地址"))) {
             return true;
         }
         return false;
@@ -469,7 +482,7 @@ class AutoCode extends BBObject
     protected static function columnIsEmail($column_name, $column_comment)
     {
         $column_name = strtoupper($column_name);
-        if ((contain( $column_name, "EMAIL" ) || contains( $column_comment, array("邮件","邮箱")) ) && (!contain( $column_name, "IS"))) {
+        if ((contain($column_name, "EMAIL") || contains($column_comment, array("邮件","邮箱")) ) && (!contain($column_name, "IS"))) {
             return true;
         }
         return false;
@@ -484,9 +497,9 @@ class AutoCode extends BBObject
     {
 
         $table_name = strtoupper($table_name);
-        if (contains( $table_name, array("MEMBER", "ADMIN", "USER") )) {
+        if (contains($table_name, array("MEMBER", "ADMIN", "USER"))) {
             $column_name = strtoupper($column_name);
-            if (contain( $column_name, "PASSWORD" )) {
+            if (contain($column_name, "PASSWORD")) {
                 return true;
             }
         }
@@ -513,7 +526,7 @@ class AutoCode extends BBObject
      */
     protected static function keyIDColumn($dataobject)
     {
-        return DataObjectSpec::getRealIDColumnNameStatic( $dataobject );
+        return DataObjectSpec::getRealIDColumnNameStatic($dataobject);
     }
 
     /**
@@ -522,19 +535,20 @@ class AutoCode extends BBObject
      */
     protected static function tableCommentKey($tablename)
     {
-        if (self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList) )
-        {
+        if (self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList)) {
             $table_comment = self::$tableInfoList[$tablename]["Comment"];
-            $table_comment = str_replace("关系表","",$table_comment);
-            $table_comment = str_replace("表","",$table_comment);
-            if (contain( $table_comment, "\r" ) || contain( $table_comment, "\n" )) {
+            $table_comment = str_replace("关系表", "", $table_comment);
+            $table_comment = str_replace("表", "", $table_comment);
+            if (contain($table_comment, "\r") || contain($table_comment, "\n")) {
                 $table_comment = preg_split("/[\s,]+/", $table_comment);
                 $table_comment = $table_comment[0];
             }
 
-            if (empty($table_comment) ) $table_comment = self::getInstancename( $tablename );
+            if (empty($table_comment)) {
+                $table_comment = self::getInstancename($tablename);
+            }
         } else {
-            $table_comment = self::getClassname( $tablename );
+            $table_comment = self::getClassname($tablename);
         }
         return $table_comment;
     }
@@ -550,8 +564,7 @@ class AutoCode extends BBObject
         if (empty($field_comment)) {
             return $default;
         }
-        if (contain( $field_comment, "\r" ) || contain( $field_comment, "\n"))
-        {
+        if (contain($field_comment, "\r") || contain($field_comment, "\n")) {
             $field_comment = preg_split("/[\s,]+/", $field_comment);
             $field_comment = $field_comment[0];
         }
@@ -570,15 +583,18 @@ class AutoCode extends BBObject
      */
     protected static function getShowFieldNameByClassname($classname, $isReturnNull = false)
     {
-        $fieldInfo  = self::$fieldInfos[self::getTablename( $classname )];
+        $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
         $fieldNames = array_keys($fieldInfo);
-        foreach ($fieldNames as $fieldname)
-        {
+        foreach ($fieldNames as $fieldname) {
             $fieldname_filter = strtolower($fieldname);
-            if (!contain( $fieldname_filter, "id" )) {
-                if (contains( $fieldname_filter, array("name", "title"))) return $fieldname;
-                $classname_filter = strtolower( $classname );
-                if (contain( $fieldname_filter, $classname_filter)) return $fieldname;
+            if (!contain($fieldname_filter, "id")) {
+                if (contains($fieldname_filter, array("name", "title"))) {
+                    return $fieldname;
+                }
+                $classname_filter = strtolower($classname);
+                if (contain($fieldname_filter, $classname_filter)) {
+                    return $fieldname;
+                }
             }
         }
         if ($isReturnNull) {
@@ -594,13 +610,12 @@ class AutoCode extends BBObject
      */
     protected static function getShowFieldName($classname)
     {
-        $classNameField = self::getShowFieldNameByClassname( $classname, true );
+        $classNameField = self::getShowFieldNameByClassname($classname, true);
         if (empty($classNameField)) {
-            $fieldInfo  = self::$fieldInfos[self::getTablename( $classname )];
+            $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
             $fieldNames = array_keys($fieldInfo);
-            foreach ($fieldNames as $fieldname)
-            {
-                if (!contain( $fieldname, "id" )) {
+            foreach ($fieldNames as $fieldname) {
+                if (!contain($fieldname, "id")) {
                     $classNameField = $fieldname;
                     break;
                 }
@@ -615,15 +630,16 @@ class AutoCode extends BBObject
      */
     protected static function isMany2ManyByClassname($classname)
     {
-        $tablename = self::getTablename( $classname );
-        if (contain( $tablename, Config_Db::TABLENAME_RELATION . "_")) {
+        $tablename = self::getTablename($classname);
+        if (contain($tablename, Config_Db::TABLENAME_RELATION . "_")) {
             $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
-            $realId    = DataObjectSpec::getRealIDColumnName( $classname );
+            $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
             $countC    = 0;
-            foreach (array_keys($fieldInfo) as $fieldname)
-            {
-                if (contain( $fieldname,"_id")) $countC += 1;
+            foreach (array_keys($fieldInfo) as $fieldname) {
+                if (contain($fieldname, "_id")) {
+                    $countC += 1;
+                }
             }
             if ($countC <= 1) {
                 return false;
@@ -640,13 +656,14 @@ class AutoCode extends BBObject
      */
     protected static function isMany2ManyShowHasMany($classname)
     {
-        if (self::isMany2ManyByClassname( $classname))
-        {
-            $fieldInfo = self::$fieldInfos[self::getTablename( $classname )];
+        if (self::isMany2ManyByClassname($classname)) {
+            $fieldInfo = self::$fieldInfos[self::getTablename($classname)];
             unset($fieldInfo[EnumColumnNameDefault::COMMITTIME], $fieldInfo[EnumColumnNameDefault::UPDATETIME]);
-            $realId    = DataObjectSpec::getRealIDColumnName( $classname );
+            $realId    = DataObjectSpec::getRealIDColumnName($classname);
             unset($fieldInfo[$realId]);
-            if (count($fieldInfo) == 2 ) return false;
+            if (count($fieldInfo) == 2) {
+                return false;
+            }
         }
         return true;
     }

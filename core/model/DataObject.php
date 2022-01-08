@@ -15,7 +15,7 @@ DataObjectSpec::init();
  *
  *          总记录数和分页查找等常规方法。
  *
- * 框架定义数据对象的默认列[关键字可通过数据对象列规格$field_spec修改]: 
+ * 框架定义数据对象的默认列[关键字可通过数据对象列规格$field_spec修改]:
  *
  * - id        : 数据对象的唯一标识
  *
@@ -112,11 +112,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
     public function __construct($array = null)
     {
         if (!empty($array)) {
-            $id_name = DataObjectSpec::getRealIDColumnNameStatic( $this );
+            $id_name = DataObjectSpec::getRealIDColumnNameStatic($this);
             if (is_array($array) && array_key_exists($id_name, $array)) {
-                if (empty($array[$id_name]) ) unset($array[$id_name]);
+                if (empty($array[$id_name])) {
+                    unset($array[$id_name]);
+                }
             }
-            UtilObject::array_to_object( $array, $this );
+            UtilObject::array_to_object($array, $this);
         }
     }
 
@@ -133,7 +135,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function __call($method, $arguments)
     {
-        return DataObjectFunc::call( $this, $method, $arguments );
+        return DataObjectFunc::call($this, $method, $arguments);
     }
 
     /**
@@ -145,7 +147,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function __get($property)
     {
-        return DataObjectFunc::get( $this, $property );
+        return DataObjectFunc::get($this, $property);
     }
 
     /**
@@ -157,15 +159,16 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function __set($property, $value)
     {
-        return DataObjectFunc::set( $this, $property, $value );
+        return DataObjectFunc::set($this, $property, $value);
     }
 
     /**
      * 打印当前对象的数据结构
      * @return string 描述当前对象。
      */
-    public function __toString() {
-        return DataObjectFunc::toString( $this );
+    public function __toString()
+    {
+        return DataObjectFunc::toString($this);
     }
     //</editor-fold>
 
@@ -174,7 +177,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function getMutualRelation($property)
     {
-        return DataObjectRelation::getMutualRelation( $this, $property );
+        return DataObjectRelation::getMutualRelation($this, $property);
     }
 
     //<editor-fold defaultstate="collapsed" desc="默认列Setter和Getter">
@@ -189,8 +192,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function setId($id)
     {
-        if (DataObjectSpec::isNeedID( $this )) {
-            $columnName = DataObjectSpec::getRealIDColumnName( $this );
+        if (DataObjectSpec::isNeedID($this)) {
+            $columnName = DataObjectSpec::getRealIDColumnName($this);
             $this->$columnName = $id;
         }
         unset($this->real_fieldspec);
@@ -202,8 +205,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function getId()
     {
-        if (DataObjectSpec::isNeedID( $this )) {
-            $columnName = DataObjectSpec::getRealIDColumnName( $this );
+        if (DataObjectSpec::isNeedID($this)) {
+            $columnName = DataObjectSpec::getRealIDColumnName($this);
             unset($this->real_fieldspec);
             return $this->$columnName;
         } else {
@@ -218,9 +221,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function setCommitTime($commitTime)
     {
-        if (DataObjectSpec::isNeedCommitTime( $this))
-        {
-            $columnName = DataObjectSpec::getRealColumnName( $this, EnumColumnNameDefault::COMMITTIME );
+        if (DataObjectSpec::isNeedCommitTime($this)) {
+            $columnName = DataObjectSpec::getRealColumnName($this, EnumColumnNameDefault::COMMITTIME);
             $this->$columnName = $commitTime;
         }
         unset($this->real_fieldspec);
@@ -232,8 +234,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function getCommitTime()
     {
-        if (DataObjectSpec::isNeedCommitTime( $this )) {
-            $columnName = DataObjectSpec::getRealColumnName( $this, EnumColumnNameDefault::COMMITTIME );
+        if (DataObjectSpec::isNeedCommitTime($this)) {
+            $columnName = DataObjectSpec::getRealColumnName($this, EnumColumnNameDefault::COMMITTIME);
             unset($this->real_fieldspec);
             return $this->$columnName;
         } else {
@@ -249,9 +251,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function setUpdateTime($updateTime)
     {
-        if (DataObjectSpec::isNeedUpdateTime( $this))
-        {
-            $columnName = DataObjectSpec::getRealColumnName( $this, EnumColumnNameDefault::UPDATETIME );
+        if (DataObjectSpec::isNeedUpdateTime($this)) {
+            $columnName = DataObjectSpec::getRealColumnName($this, EnumColumnNameDefault::UPDATETIME);
             $this->$columnName = $updateTime;
         }
         // else{$this->setCommitTime($updateTime);}
@@ -264,13 +265,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function getUpdateTime()
     {
-        if (DataObjectSpec::isNeedUpdateTime( $this )) {
-            $columnName = DataObjectSpec::getRealColumnName( $this, EnumColumnNameDefault::UPDATETIME );
+        if (DataObjectSpec::isNeedUpdateTime($this)) {
+            $columnName = DataObjectSpec::getRealColumnName($this, EnumColumnNameDefault::UPDATETIME);
             unset($this->real_fieldspec);
             return $this->$columnName;
         } else {
             unset($this->real_fieldspec);
-            return $this->getCommitTime( );
+            return $this->getCommitTime();
         }
         //return $this->updateTime;
     }
@@ -340,8 +341,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
     /**
      * 获取当前数据对象的表名
      */
-    public static function tablename() {
-        return Config_Db::orm( get_called_class() );
+    public static function tablename()
+    {
+        return Config_Db::orm(get_called_class());
     }
 
     /**
@@ -351,7 +353,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function propertyShow($data, $property_name)
     {
-        DataObjectFunc::propertyShow( $data, get_called_class(), $property_name );
+        DataObjectFunc::propertyShow($data, get_called_class(), $property_name);
     }
 
     /**
@@ -389,10 +391,10 @@ abstract class DataObject extends BBObject implements ArrayAccess
         $this->onBeforeWrite();
         $id = $this->getId();
         if (empty($id)) {
-            $idColumn = DataObjectSpec::getRealIDColumnName( $this );
+            $idColumn = DataObjectSpec::getRealIDColumnName($this);
             unset($this->{$idColumn});
         }
-        return self::dao()->save( $this );
+        return self::dao()->save($this);
     }
 
     /**
@@ -402,7 +404,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @example 示例如下:
      *
-     * 示例1【多对多-主控端】: 
+     * 示例1【多对多-主控端】:
      *
      *      $user = new User();
      *
@@ -410,7 +412,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *      $user->saveRelationForManyToMany( "roles", "3", array("commitTime" => date("Y-m-d H:i:s")) );
      *
-     *      说明:roles是在User数据对象中定义的变量: 
+     *      说明:roles是在User数据对象中定义的变量:
      *
      *      static $many_many = array(
      *
@@ -418,7 +420,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *      );
      *
-     * 示例2【多对多-被控端】: 
+     * 示例2【多对多-被控端】:
      *
      *      $role = new Role();
      *
@@ -426,7 +428,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *      $role->saveRelationForManyToMany( "users", "6", array("commitTime" => date("Y-m-d H:i:s")) );
      *
-     *      说明:users是在Role数据对象中定义的变量: 
+     *      说明:users是在Role数据对象中定义的变量:
      *
      *      static $belongs_many_many = array(
      *
@@ -441,7 +443,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function saveRelationForManyToMany($relation_object, $relation_id_value, $other_column_values = null)
     {
-        return DataObjectRelation::saveRelationForManyToMany( $this, $relation_object, $relation_id_value, $other_column_values );
+        return DataObjectRelation::saveRelationForManyToMany($this, $relation_object, $relation_id_value, $other_column_values);
     }
 
     /**
@@ -457,8 +459,9 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param array $other_ids 关系标识组
      * @return void
      */
-    public static function saveDeleteRelateions($id_name, $id, $rel_name, $other_ids) {
-        return DataObjectRelation::saveDeleteRelateions( get_called_class(), $id_name, $id, $rel_name, $other_ids );
+    public static function saveDeleteRelateions($id_name, $id, $rel_name, $other_ids)
+    {
+        return DataObjectRelation::saveDeleteRelateions(get_called_class(), $id_name, $id, $rel_name, $other_ids);
     }
 
     /**
@@ -471,7 +474,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function deleteByID($id)
     {
-        return DataObjectFunc::deleteByID( get_called_class(), $id );
+        return DataObjectFunc::deleteByID(get_called_class(), $id);
     }
 
     /**
@@ -488,7 +491,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function deleteByIds($ids)
     {
-        return DataObjectFunc::deleteByIds( get_called_class(), $ids );
+        return DataObjectFunc::deleteByIds(get_called_class(), $ids);
     }
 
     /**
@@ -497,8 +500,8 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *       $isDelete = User::deleteBy( "username = 'betterlife7'" );
      * @param mixed $filter 查询条件, 在where后的条件
-     * @example 示例如下: 
-     * 示例如下: 
+     * @example 示例如下:
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -510,7 +513,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function deleteBy($filter)
     {
-        return DataObjectFunc::deleteBy( get_called_class(), $filter );
+        return DataObjectFunc::deleteBy(get_called_class(), $filter);
     }
 
     /**
@@ -524,7 +527,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function delete()
     {
-        return self::dao()->delete( $this );
+        return self::dao()->delete($this);
     }
 
     /**
@@ -541,7 +544,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function saveOrUpdate()
     {
-        return self::dao()->saveOrUpdate( $this );
+        return self::dao()->saveOrUpdate($this);
     }
 
     /**
@@ -558,7 +561,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function update()
     {
-        $result = self::dao()->update( $this );
+        $result = self::dao()->update($this);
         unset($this["real_fieldspec"]);
         return $result;
     }
@@ -569,13 +572,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $isUpdate = User::updateProperties( "1, 2", "loginTimes = 100" );
      * @param array|string $sql_ids 需更新数据的ID编号或者ID编号的Sql语句
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. 1, 2, 3
      *        2. array(1, 2, 3)
      *
      * @param string $array_properties 指定的属性
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. pass = 1, name = 'sky'
      *        2. array("pass" => "1", "name" => "sky")
@@ -583,7 +586,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function updateProperties($sql_ids, $array_properties)
     {
-        return DataObjectFunc::updateProperties( get_called_class(), $sql_ids, $array_properties );
+        return DataObjectFunc::updateProperties(get_called_class(), $sql_ids, $array_properties);
     }
 
     /**
@@ -592,7 +595,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $isUpdate = User::updateBy( "username = 'admin'", "loginTimes = 500" );
      * @param mixed $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -602,7 +605,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
      *
      * @param string $array_properties 指定的属性
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. pass = 1, name = 'sky'
      *        2. array("pass" => "1", "name" => "sky")
@@ -610,7 +613,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function updateBy($filter, $array_properties)
     {
-        return DataObjectFunc::updateBy( get_called_class(), $filter, $array_properties );
+        return DataObjectFunc::updateBy(get_called_class(), $filter, $array_properties);
     }
 
     /**
@@ -619,7 +622,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $isPlus = User::increment( "user_id > 1", "loginTimes", 5 );
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -633,7 +636,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function increment($filter = null, $property_name, $incre_value = 1)
     {
-        return DataObjectFunc::increment( get_called_class(), $filter, $property_name, $incre_value );
+        return DataObjectFunc::increment(get_called_class(), $filter, $property_name, $incre_value);
     }
 
     /**
@@ -642,7 +645,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $isMinus = User::decrement( "user_id > 1", "loginTimes", 3 );
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -656,7 +659,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function decrement($filter = null, $property_name, $decre_value = 1)
     {
-        return DataObjectFunc::decrement( get_called_class(), $filter, $property_name, $decre_value );
+        return DataObjectFunc::decrement(get_called_class(), $filter, $property_name, $decre_value);
     }
 
     /**
@@ -669,7 +672,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function existByID($id)
     {
-        return DataObjectFunc::existByID( get_called_class(), $id );
+        return DataObjectFunc::existByID(get_called_class(), $id);
     }
 
     /**
@@ -678,7 +681,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $isExist = User::existBy( "username = 'china'" );
      * @param mixed $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -690,7 +693,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function existBy($filter)
     {
-        return DataObjectFunc::existBy( get_called_class(), $filter );
+        return DataObjectFunc::existBy(get_called_class(), $filter);
     }
 
     /**
@@ -699,12 +702,12 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $blog_names = Blog::select( "blog_name" );
      * @param string $columns指定的显示属性, 同SQL语句中的Select部分。
-     * 示例如下: 
+     * 示例如下:
      *
      *        id,name,commitTime
      *
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -714,13 +717,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
      *
      * @param string $limit 分页数量:limit起始数被改写, 默认从1开始, 如果是0, 同Mysql limit语法；
-     * 示例如下: 
+     * 示例如下:
      *
      *    6, 10  从第6条开始取10条(如果是mysql的limit, 意味着从第五条开始, 框架里不是这个意义。)
      *    1, 10 (相当于第1-第10条)
@@ -730,7 +733,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        return DataObjectFunc::showColumns( get_called_class(), $columns, $filter, $sort, $limit );
+        return DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, $limit);
     }
 
     /**
@@ -739,12 +742,12 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $blog_name = Blog::select_one( "blog_name" );
      * @param string 指定的显示属性, 同SQL语句中的Select部分。
-     * 示例如下: 
+     * 示例如下:
      *
      *        id, name, commitTime
      *
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -754,14 +757,14 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *        1. id asc;
      *        2. name desc;
      * @return 查询列数组, 自动从数组中转换出来值字符串,最后只返回一个值
      */
     public static function select_one($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        $result = DataObjectFunc::showColumns( get_called_class(), $columns, $filter, $sort, "0,1" );
+        $result = DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, "0,1");
         if (!empty($result) && (is_array($result) ) && (count($result) > 0 )) {
             $result = $result[0];
         }
@@ -774,7 +777,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $blogs = Blog::get();
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -784,13 +787,13 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
      *
      * @param string $limit 分页数量:limit起始数被改写, 默认从1开始, 如果是0, 同Mysql limit语法；
-     * 示例如下: 
+     * 示例如下:
      *
      *    6, 10  从第6条开始取10条(如果是mysql的limit, 意味着从第五条开始, 框架里不是这个意义。)
      *    1, 10 (相当于第1-第10条)
@@ -800,7 +803,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        return self::dao()->get( get_called_class(), $filter, $sort, $limit );
+        return self::dao()->get(get_called_class(), $filter, $sort, $limit);
     }
 
     /**
@@ -809,7 +812,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $blog = Blog::get_one();
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -826,7 +829,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return self::dao()->get_one( get_called_class(), $filter, $sort );
+        return self::dao()->get_one(get_called_class(), $filter, $sort);
     }
 
     /**
@@ -839,7 +842,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function get_by_id($id)
     {
-        return self::dao()->get_by_id( get_called_class(), $id );
+        return self::dao()->get_by_id(get_called_class(), $id);
     }
 
     /**
@@ -853,7 +856,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function max($column_name = null, $filter = null)
     {
-        return DataObjectFunc::max( get_called_class(), $column_name, $filter );
+        return DataObjectFunc::max(get_called_class(), $column_name, $filter);
     }
 
     /**
@@ -867,7 +870,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function min($column_name = null, $filter = null)
     {
-        return DataObjectFunc::min( get_called_class(), $column_name, $filter );
+        return DataObjectFunc::min(get_called_class(), $column_name, $filter);
     }
 
     /**
@@ -881,7 +884,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function sum($column_name = null, $filter = null)
     {
-        return DataObjectFunc::sum( get_called_class(), $column_name, $filter );
+        return DataObjectFunc::sum(get_called_class(), $column_name, $filter);
     }
 
     /**
@@ -891,7 +894,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $countBlogs = Blog::count("blog_id>3");
      * @param object|string|array $filter
-     *        $filter 格式示例如下: 
+     *        $filter 格式示例如下:
      *            0. "id = 1, name = 'sky'"
      *            1. array("id = 1", "name = 'sky'")
      *            2. array("id" => "1", "name" => "sky")
@@ -902,7 +905,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function count($filter = null)
     {
-        return DataObjectFunc::count( get_called_class(), $filter );
+        return DataObjectFunc::count(get_called_class(), $filter);
     }
 
     /**
@@ -919,7 +922,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -930,7 +933,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param string $sort 排序条件
      * 默认为 id desc
      *
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
@@ -938,7 +941,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return DataObjectFunc::queryPage( get_called_class(), $startPoint, $endPoint, $filter, $sort );
+        return DataObjectFunc::queryPage(get_called_class(), $startPoint, $endPoint, $filter, $sort);
     }
 
     /**
@@ -951,7 +954,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param int $pageNo  当前页数
      * @param int $pageSize 每页显示记录数
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -962,7 +965,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
@@ -975,7 +978,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function queryPageByPageNo($pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return DataObjectFunc::queryPageByPageNo( get_called_class(), $pageNo, $filter, $pageSize, $sort );
+        return DataObjectFunc::queryPageByPageNo(get_called_class(), $pageNo, $filter, $pageSize, $sort);
     }
 
     /**
@@ -985,7 +988,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        $comments = Comment::countMultitable( "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
      * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
      *
-     *        示例如下: 
+     *        示例如下:
      *            0. "table1, table2"
      *            1. array("table1", "table2")
      *            2. "class1, class2"
@@ -993,7 +996,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @param object|string|array $filter
      *
-     *        $filter 格式示例如下: 
+     *        $filter 格式示例如下:
      *            0. 允许对象如new User(id = "1", name = "green");
      *            1. "id = 1", "name = 'sky'"
      *            2. array("id = 1", "name = 'sky'")
@@ -1003,7 +1006,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function countMultitable($from, $filter = null)
     {
-        return DataObjectFunc::countMultitable( get_called_class(), $from, $filter );
+        return DataObjectFunc::countMultitable(get_called_class(), $from, $filter);
     }
 
     /**
@@ -1015,7 +1018,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "table1, table2"
      *        1. array("table1", "table2")
@@ -1023,7 +1026,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        3. array("class1", "class2")
      *
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -1034,7 +1037,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
@@ -1042,7 +1045,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function queryPageMultitable($startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return DataObjectFunc::queryPageMultitable( get_called_class(), $startPoint, $endPoint, $from, $filter, $sort );
+        return DataObjectFunc::queryPageMultitable(get_called_class(), $startPoint, $endPoint, $from, $filter, $sort);
     }
 
     /**
@@ -1052,7 +1055,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      *        $comments = Comment::getMultitable( "Blog a, Comment b", "b.blog_id = a.blog_id and a.blog_name like '%Web%'" );
      * @param string|array $from 来自多张表或者多个类[必须是数据对象类名], 在from后的多张表名, 表名之间以逗号[,]隔开
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "table1, table2"
      *        1. array("table1", "table2")
@@ -1060,7 +1063,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        3. array("class1", "class2")
      *
      * @param object|string|array $filter 查询条件, 在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *        0. "id = 1, name = 'sky'"
      *        1. array("id = 1", "name = 'sky'")
@@ -1071,7 +1074,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @param string $sort 排序条件
      * 默认为 id desc
-     * 示例如下: 
+     * 示例如下:
      *
      *        1. id asc;
      *        2. name desc;
@@ -1079,7 +1082,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public static function getMultitable($from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        return DataObjectFunc::getMultitable( get_called_class(), $from, $filter, $sort );
+        return DataObjectFunc::getMultitable(get_called_class(), $from, $filter, $sort);
     }
     //</editor-fold>
 
@@ -1101,7 +1104,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function toXml($isAll = true, $filterArray = null)
     {
-        return UtilObject::object_to_xml( $this, $filterArray, $isAll );
+        return UtilObject::object_to_xml($this, $filterArray, $isAll);
     }
 
     /**
@@ -1117,7 +1120,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function toJson($isAll = false)
     {
-        return DataObjectFunc::toJson( $this, $isAll );
+        return DataObjectFunc::toJson($this, $isAll);
     }
 
     /**
@@ -1133,8 +1136,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      */
     public function toArray($isAll = true)
     {
-        return UtilObject::object_to_array( $this, $isAll );
+        return UtilObject::object_to_array($this, $isAll);
     }
     //</editor-fold>
-
 }

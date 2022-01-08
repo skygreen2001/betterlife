@@ -72,9 +72,12 @@ class Log_daemon extends Log
      * @param int    $maxLevel Maximum level at which to log.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                        $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         /* Ensure we have a valid integer value for $name. */
         if (empty($name) || !is_int($name)) {
             $name = LOG_SYSLOG;
@@ -124,11 +127,12 @@ class Log_daemon extends Log
     {
         if (!$this->_opened) {
             $this->_opened = (bool)($this->_socket = @fsockopen(
-                                                $this->_proto . $this->_ip,
-                                                $this->_port,
-                                                $errno,
-                                                $errstr,
-                                                $this->_timeout));
+                $this->_proto . $this->_ip,
+                $this->_port,
+                $errno,
+                $errstr,
+                $this->_timeout
+            ));
         }
         return $this->_opened;
     }
@@ -232,5 +236,4 @@ class Log_daemon extends Log
 
         return $priorities[$priority];
     }
-
 }

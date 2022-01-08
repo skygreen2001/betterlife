@@ -9,7 +9,8 @@
  * @subpackage crud
  * @author skygreen
  */
-abstract class Crud_SQL {
+abstract class Crud_SQL
+{
     const SQL_KEYWORD_INSERT  = "insert";
     const SQL_KEYWORD_DELETE  = "delete";
     const SQL_KEYWORD_UPDATE  = "update";
@@ -52,7 +53,7 @@ abstract class Crud_SQL {
      *
      * 一般在insert的values和update的set里使用
      *
-     * 当$type_rep为: 
+     * 当$type_rep为:
      *
      *   1  : INSERT INTO REGISTRY (name, value) VALUES ($1,$2)
      *
@@ -64,7 +65,7 @@ abstract class Crud_SQL {
     /**
      * 默认是where的值如何是字符串必须带引号。
      *
-     * 但是表达关系的时候不能将where所带的值带引号，如: 
+     * 但是表达关系的时候不能将where所带的值带引号，如:
      *
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
      *
@@ -77,7 +78,7 @@ abstract class Crud_SQL {
      *
      * 默认是where的值如何是字符串必须带引号。
      *
-     * 但是表达关系的时候不能将where所带的值带引号，如: 
+     * 但是表达关系的时候不能将where所带的值带引号，如:
      *
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
      *
@@ -118,7 +119,7 @@ abstract class Crud_SQL {
                 if (isset($detailclause[0])) {
                     if (is_object($detailclause[0])) {
                         //第四种情况[通过whereOr传入]
-                        $detailclause = UtilObject::object_to_array( $clause[0] );
+                        $detailclause = UtilObject::object_to_array($clause[0]);
                     } else {
                         if (is_array($detailclause[0])) {
                             $detailclause = $detailclause[0];
@@ -127,7 +128,7 @@ abstract class Crud_SQL {
                             $isRepeatClause = true;
                             if (is_array($detailclause) && count($detailclause) > 0) {
                                 foreach ($detailclause as $dc) {
-                                    if (!contain( $dc, "=" )) {
+                                    if (!contain($dc, "=")) {
                                         $isRepeatClause = false;
                                         break;
                                     }
@@ -138,7 +139,7 @@ abstract class Crud_SQL {
                                 //第零种情况|第一种情况:[通过whereOr传入]
                                 $detailclause = implode(",", $detailclause);
                                 if (!empty($detailclause)) {
-                                    $detailclause = $this->parseValidInputParam( $detailclause );
+                                    $detailclause = $this->parseValidInputParam($detailclause);
                                     if (is_string($detailclause)) {
                                         $this->whereClause = $detailclause;
                                     }
@@ -159,16 +160,16 @@ abstract class Crud_SQL {
                 }
             } elseif (is_object($clause[0])) {
                 //第四种情况
-                $detailclause = UtilObject::object_to_array( $clause[0] );
+                $detailclause = UtilObject::object_to_array($clause[0]);
             } else {
                 //第零种情况|第一种情况
                 if (is_array($clause) && count($clause) == 1) {
                     $detailStr = $clause[0];
-                    if (contains( $detailStr, array(self::SQL_OR, self::SQL_LIKE, "(") )) {
+                    if (contains($detailStr, array(self::SQL_OR, self::SQL_LIKE, "("))) {
                         $this->whereClause = $detailStr;
                         return $this;
                     }
-                    if (!contain( $detailStr, "," )) {
+                    if (!contain($detailStr, ",")) {
                         $this->whereClause = $detailStr;
                         return $this;
                     }
@@ -176,7 +177,7 @@ abstract class Crud_SQL {
                 $detailclause = str_replace(trim(self::SQL_AND), ",", $clause);
                 $detailclause = implode(",", $detailclause);
                 if (!empty($detailclause)) {
-                    $detailclause = $this->parseValidInputParam( $detailclause );
+                    $detailclause = $this->parseValidInputParam($detailclause);
                 } else {
                     return $this;
                 }
@@ -189,7 +190,7 @@ abstract class Crud_SQL {
                         if ($this->isLike) {
                             $asWhereClause[$key] = $key . self::SQL_LIKE . " '%?%' ";
                         } else {
-                            if (contains( $value, array('>', "<", "=", ">=", "<=") ) || ( contains( strtolower($value), array("like ", "between ")))) {
+                            if (contains($value, array('>', "<", "=", ">=", "<=")) || ( contains(strtolower($value), array("like ", "between ")))) {
                                 if (is_numeric($key)) {
                                     $asWhereClause[$key] = $value;
                                 } else {
@@ -212,22 +213,22 @@ abstract class Crud_SQL {
                                     $quotes = "";
                                     if (!$this->ignore_quotes) {
                                         if (!preg_match("/^['\"]/", trim($value))) {
-                                            $quotes='\'';
+                                            $quotes = '\'';
                                         }
                                     }
                                     if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
-                                        if (contains( $value, array('>', "<", "=", ">=", "<=") ) || ( contains( strtolower($value), array("like ", "between ")) )) {
+                                        if (contains($value, array('>', "<", "=", ">=", "<=")) || ( contains(strtolower($value), array("like ", "between ")) )) {
                                             $asWhereClause[$key] = $key . " " . $value . " ";
                                         } else {
                                             $asWhereClause[$key] = $key . "=" . $quotes;
                                             if (UtilString::is_utf8($value) && Config_Adodb::driver() != Config_Adodb::DRIVER_MSSQL_UTF8) {
-                                                $asWhereClause[$key] .= UtilString::utf82gbk( $value ) . $quotes;
+                                                $asWhereClause[$key] .= UtilString::utf82gbk($value) . $quotes;
                                             } else {
                                                 $asWhereClause[$key] .= $value . $quotes;
                                             }
                                         }
                                     } else {
-                                        if (contains( $value, array('>', "<", "=", ">=", "<=") ) || ( contains( strtolower($value), array("like ", "between ")))) {
+                                        if (contains($value, array('>', "<", "=", ">=", "<=")) || ( contains(strtolower($value), array("like ", "between ")))) {
                                             $asWhereClause[$key] = $key . " " . $value . " ";
                                         } else {
                                             $asWhereClause[$key] = $key . "=" . $quotes . $value . $quotes;
@@ -243,7 +244,7 @@ abstract class Crud_SQL {
         }
 
         if (!empty($whereClause)) {
-            if (contain( $whereClause, "(" ) && contain( $whereClause, ")" )) {
+            if (contain($whereClause, "(") && contain($whereClause, ")")) {
                 $this->whereClause .= $whereClause;
             } else {
                 $this->whereClause .= "(" . $whereClause . ")";
@@ -257,14 +258,16 @@ abstract class Crud_SQL {
      *
      * @return string where语句
      */
-    public function getWhereClause() {
+    public function getWhereClause()
+    {
         return $this->whereClause;
     }
 
     /**
      * 初始化where语句
      */
-    public function initWhereClause() {
+    public function initWhereClause()
+    {
         $this->whereClause = "";
     }
 
@@ -284,13 +287,14 @@ abstract class Crud_SQL {
      *
      * @return SQL构造器本身
      */
-    public function whereOr() {
+    public function whereOr()
+    {
         $clause = func_get_args();
         $this->whereConcat = self::SQL_OR;
         if (!empty($clause) && is_array($clause) && count($clause) == 1) {
             $clause = $clause[0];
         }
-        return $this->where( $clause );
+        return $this->where($clause);
     }
 
     /**
@@ -308,20 +312,22 @@ abstract class Crud_SQL {
      * 默认:SQL Where条件子语句。如: name like 'sky'
      *
      */
-    public function whereLike() {
+    public function whereLike()
+    {
         $clause = func_get_args();
         $this->isLike = true;
-        if (!empty($clause) && is_array($clause )&& count($clause) == 1) {
+        if (!empty($clause) && is_array($clause) && count($clause) == 1) {
             $clause = $clause[0];
         }
-        return $this->where( $clause );
+        return $this->where($clause);
     }
 
     /**
      * 打印生成的SQL语句
      * @return string 打印生成的SQL语句
      */
-    public function  __toString() {
+    public function __toString()
+    {
         return $this->result();
     }
 
@@ -355,17 +361,17 @@ abstract class Crud_SQL {
             if (empty($param)) {
                 return $result;
             }
-            if (contains( $param, array(self::SQL_OR, self::SQL_LIKE, "(") )) {
-                if (contain( $param, "," ) && (!contains( $param, array(" in ", " in(", " in (")))) {
+            if (contains($param, array(self::SQL_OR, self::SQL_LIKE, "("))) {
+                if (contain($param, ",") && (!contains($param, array(" in ", " in(", " in (")))) {
                     $pparam = strtolower(trim($param));
                     $pparam = str_replace(" ", "", $pparam);
-                    if ( !contains( $pparam, self::DB_FUNC_KEYWORD )) {
+                    if (!contains($pparam, self::DB_FUNC_KEYWORD)) {
                         $param = str_replace(",", " and ", $param);
                     }
                 }
                 return $param;
             } else {
-                if (contain( $param, "," )) {
+                if (contain($param, ",")) {
                     $param = explode(",", $param);
                 } else {
                     return $param;
@@ -374,7 +380,7 @@ abstract class Crud_SQL {
         }
         if (is_array($param)) {
             $filterc = each($param);
-            if (is_string($filterc["value"]) && contains( $filterc["value"], array("=", self::SQL_LIKE) )) {
+            if (is_string($filterc["value"]) && contains($filterc["value"], array("=", self::SQL_LIKE))) {
                 $f_values = $param;
                 foreach ($f_values as $key => $value) {
                     if (is_numeric($key) && (self::isComplicatedCondition($value) )) {
@@ -418,9 +424,11 @@ abstract class Crud_SQL {
                 foreach ($param as $key => $value) {
                     if ($this->isPreparedStatement) {
                         $isFilter = true;
-                        if (contains( $value, array('"', "'") ) && (contains( strtolower($value), array('like','between')))) {
-                            if (( contain( strtolower($value), 'like') && ((substr_count($value, '"') % 2 == 0 ) || ( substr_count($value, "'") % 2 == 0)) ) ||
-                                ( contain( strtolower($value), 'between' ) && (( substr_count($value, '"') % 4 == 0 ) || ( substr_count($value, "'") % 4 == 0)) )) {
+                        if (contains($value, array('"', "'")) && (contains(strtolower($value), array('like','between')))) {
+                            if (
+                                ( contain(strtolower($value), 'like') && ((substr_count($value, '"') % 2 == 0 ) || ( substr_count($value, "'") % 2 == 0)) ) ||
+                                ( contain(strtolower($value), 'between') && (( substr_count($value, '"') % 4 == 0 ) || ( substr_count($value, "'") % 4 == 0)) )
+                            ) {
                                 $isFilter = false;
                             }
                         }
@@ -441,7 +449,7 @@ abstract class Crud_SQL {
             }
         }
         if (is_object($param)) {
-            $result = UtilObject::object_to_array( $param );
+            $result = UtilObject::object_to_array($param);
         }
         return $result;
     }
@@ -451,7 +459,7 @@ abstract class Crud_SQL {
      */
     private static function isComplicatedCondition($value)
     {
-        if (contains( $value, array(">",">=","<=","<","!=","<>") )) {
+        if (contains($value, array(">",">=","<=","<","!=","<>"))) {
             return true;
         }
         $count  = 0;
@@ -470,5 +478,3 @@ abstract class Crud_SQL {
      */
     abstract public function result();
 }
-
-?>

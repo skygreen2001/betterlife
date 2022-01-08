@@ -18,7 +18,7 @@ class EnumJsFramework extends Enum
 /**
  * 请求响应的数据类型
  */
-class EnumResponseType extends Enum 
+class EnumResponseType extends Enum
 {
     const JSON       = "json";
     const XML        = "xml";
@@ -136,7 +136,9 @@ class UtilAjax extends Util
     /**
      * 初始化方能加载枚举类型。
      */
-    public static function init() {}
+    public static function init()
+    {
+    }
 
     /**
      * @return string 当前类名
@@ -152,7 +154,7 @@ class UtilAjax extends Util
     public static function loadDefaultAjax()
     {
         $version       = self::$ajax_fw_version_default;
-        $loadJsLibrary = self::name() . ucfirst( self::$ajax_fw_name_default );
+        $loadJsLibrary = self::name() . ucfirst(self::$ajax_fw_name_default);
         $viewObject    = new ViewObject();
         call_user_func("$loadJsLibrary::load", $version, $viewObject);
         $result        = $viewObject->js_ready;
@@ -167,11 +169,10 @@ class UtilAjax extends Util
      */
     public static function loadAjaxJs($jsFlag, $version = "", $viewobject = null)
     {
-        if ($viewobject )
-        {
-            self::loadJsReady( $viewobject, "", true, $jsFlag, $version );
+        if ($viewobject) {
+            self::loadJsReady($viewobject, "", true, $jsFlag, $version);
         } else {
-            echo self::loadJsSentence( "", true, $jsFlag, $version );
+            echo self::loadJsSentence("", true, $jsFlag, $version);
         }
     }
 
@@ -188,11 +189,10 @@ class UtilAjax extends Util
      */
     public static function loadJs($jsFile, $isGzip = false, $jsFlag = null, $version = "", $viewobject = null)
     {
-        if ($viewobject )
-        {
-            self::loadJsReady( $viewobject, $jsFile, $isGzip, $jsFlag, $version );
+        if ($viewobject) {
+            self::loadJsReady($viewobject, $jsFile, $isGzip, $jsFlag, $version);
         } else {
-            echo self::loadJsSentence( $jsFile, $isGzip, $jsFlag, $version );
+            echo self::loadJsSentence($jsFile, $isGzip, $jsFlag, $version);
         }
     }
 
@@ -213,7 +213,7 @@ class UtilAjax extends Util
             if (!isset($viewobject->js_ready) || empty($viewobject->js_ready)) {
                 $viewobject->js_ready = "";
             }
-            $viewobject->js_ready .= self::loadJsSentence( $jsFile, $isGzip, $jsFlag, $version );
+            $viewobject->js_ready .= self::loadJsSentence($jsFile, $isGzip, $jsFlag, $version);
         }
     }
 
@@ -243,26 +243,28 @@ class UtilAjax extends Util
                     return ;
                 }
                 $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
-                if (contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" )) {
-                  $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
+                if (contain(Gc::$nav_root_path, "/mnt/") && contain($file_sub_dir, "/var/")) {
+                    $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
                 }
-                if (contain( $file_sub_dir, Gc::$nav_root_path )) {
+                if (contain($file_sub_dir, Gc::$nav_root_path)) {
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . self::$JS_GZIP . "{$jsFile}\"></script>" . HH;
                 } else {
                     $isLocalJsFile = str_replace(Gc::$url_base, $file_sub_dir, $jsFile);
-                    if (contain( $isLocalJsFile, "home" . DS )) {
+                    if (contain($isLocalJsFile, "home" . DS)) {
                         $isLocalJsFile = substr($isLocalJsFile, 0, strpos($isLocalJsFile, "home" . DS));
                     }
                     $js_gzip = str_replace($_SERVER["DOCUMENT_ROOT"], "", $isLocalJsFile);
                     $js_gzip = str_replace("\\", "/", $js_gzip);
 
-                    if (contain( strtolower(php_uname()), "darwin" )) {
+                    if (contain(strtolower(php_uname()), "darwin")) {
                         $js_gzip   = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir);
 
                         $start_str = substr($js_gzip, 0, strpos($js_gzip, "/"));
                         $url_basei = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ($start_str == $end_str ) $js_gzip = str_replace($end_str . "/", "", $js_gzip);
+                        if ($start_str == $end_str) {
+                            $js_gzip = str_replace($end_str . "/", "", $js_gzip);
+                        }
                     }
 
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . $js_gzip . self::$JS_GZIP . "{$jsFile}\"></script>" . HH;
@@ -271,17 +273,19 @@ class UtilAjax extends Util
                 if (in_array($jsFile, self::$JsLoaded)) {
                     return ;
                 }
-                if (startWith( $jsFile, "http" )) {
+                if (startWith($jsFile, "http")) {
                     $result = "    <script type=\"text/javascript\" src=\"" . $jsFile . "\"></script>" . HH;
                 } else {
-                    if (contain( strtolower(php_uname()), "darwin")) {
+                    if (contain(strtolower(php_uname()), "darwin")) {
                         $file_sub_dir = str_replace("/", DS, dirname($_SERVER["SCRIPT_FILENAME"])) . DS;
                         $jsFile       = str_replace($_SERVER["DOCUMENT_ROOT"] . "/", "", $file_sub_dir) . $jsFile;
 
-                        $start_str = substr($jsFile, 0,strpos($jsFile, "/"));
+                        $start_str = substr($jsFile, 0, strpos($jsFile, "/"));
                         $url_basei = substr($url_base, 0, strlen($url_base) - 1);
                         $end_str   = substr($url_basei, strrpos($url_basei, "/") + 1);
-                        if ($start_str == $end_str ) $jsFile = str_replace($end_str . "/", "", $jsFile);
+                        if ($start_str == $end_str) {
+                            $jsFile = str_replace($end_str . "/", "", $jsFile);
+                        }
                     }
                     $result = "    <script type=\"text/javascript\" src=\"" . $url_base . $jsFile . "\"></script>" . HH;
                 }
@@ -297,7 +301,7 @@ class UtilAjax extends Util
      */
     public static function loadJsContent($jsContent)
     {
-        echo self::loadJsContentSentence( $jsContent );
+        echo self::loadJsContentSentence($jsContent);
     }
 
     /**
@@ -311,7 +315,7 @@ class UtilAjax extends Util
             if (!isset($viewobject->js_ready) || empty($viewobject->js_ready)) {
                 $viewobject->js_ready = "";
             }
-            $viewobject->js_ready .= self::loadJsContentSentence( $jsContent );
+            $viewobject->js_ready .= self::loadJsContentSentence($jsContent);
         }
     }
 
@@ -321,7 +325,7 @@ class UtilAjax extends Util
      */
     public static function loadJsContentSentence($jsContent)
     {
-        if (!contain( $jsContent, "<script" )) {
+        if (!contain($jsContent, "<script")) {
             $result  = "    <script type=\"text/javascript\">" . HH;
             $result .= "        " . $jsContent . HH;
             $result .= "    </script>" . HH;

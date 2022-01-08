@@ -8,7 +8,8 @@
  * @subpackage dal
  * @author skygreen
  */
-interface IDal {
+interface IDal
+{
     /**
      * 保存新建对象
      * @param Object $object
@@ -155,4 +156,3 @@ interface IDal {
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
 }
-?>

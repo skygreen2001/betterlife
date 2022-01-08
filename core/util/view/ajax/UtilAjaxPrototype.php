@@ -18,22 +18,19 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        if (self::$IsGoogleApi )
-        {
-            if ($viewObject )
-            {
-                self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/prototype/$version/prototype.js" );
+        if (self::$IsGoogleApi) {
+            if ($viewObject) {
+                self::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/prototype/$version/prototype.js");
             } else {
-                self::loadJs( "https://ajax.googleapis.com/ajax/libs/prototype/$version/prototype.js" );
+                self::loadJs("https://ajax.googleapis.com/ajax/libs/prototype/$version/prototype.js");
             }
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_PROTOTYPE;
-            if ($viewObject )
-            {
-                self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . ".js" );
+            if ($viewObject) {
+                self::loadJsReady($viewObject, $ajax_root . $group . "/" . $group . ".js");
             } else {
-                self::loadJs( $ajax_root . $group . "/" . $group . ".js" );
+                self::loadJs($ajax_root . $group . "/" . $group . ".js");
             }
         }
     }
@@ -50,16 +47,14 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if (!empty($callback) )
-        {
+        if (!empty($callback)) {
             $url_base = UtilNet::urlbase();
-            $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
+            $result   = self::loadJsSentence($url_base . "misc/js/util/xmltojson.js");
         }
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="ProtoType">
 
-        if (( is_array($dataArray) ) && (count($dataArray) > 0))
-        {
+        if (( is_array($dataArray) ) && (count($dataArray) > 0)) {
             $data = http_build_query($dataArray);
         }
         $result .= "new Ajax.Request('$url',{";
@@ -80,7 +75,7 @@ class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
                     console.log('请求失败! :(');
                   }" . HH;
         } else {
-            $result  = substr($result, 0,  strlen($result) - 1);
+            $result  = substr($result, 0, strlen($result) - 1);
         }
         $result .= "});";
         //</editor-fold>

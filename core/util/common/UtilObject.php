@@ -8,7 +8,6 @@
  */
 class UtilObject extends Util
 {
-
     //<editor-fold defaultstate="collapsed" desc="object and xml">
     /**
      * 将对象转换成xml
@@ -18,14 +17,14 @@ class UtilObject extends Util
      * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
      * @return xml内容
      */
-    public static function object_to_xml($object, $filterArray = null,$isAll = false)
+    public static function object_to_xml($object, $filterArray = null, $isAll = false)
     {
         $dom       = new DOMDocument("1.0", "utf-8");
         $root      = $dom->createElement(get_class($object));
-        $objectArr = self::object_to_array( $object, $isAll );
+        $objectArr = self::object_to_array($object, $isAll);
         foreach ($objectArr as $key => $value) {
-            $node = self::createNode( $dom, $key, $value, $filterArray, $isAll );
-            if ($node != NULL) {
+            $node = self::createNode($dom, $key, $value, $filterArray, $isAll);
+            if ($node != null) {
                 $root->appendChild($node);
             }
         }
@@ -35,12 +34,12 @@ class UtilObject extends Util
 
     private static function createNode($dom, $key, $value, $filterArray = null, $isAll = true)
     {
-        $node = NULL;
-        if (is_string($value) || is_numeric($value) || is_bool($value) || $value == NULL) {
-            if ($value == NULL) {
+        $node = null;
+        if (is_string($value) || is_numeric($value) || is_bool($value) || $value == null) {
+            if ($value == null) {
                 if ($isAll) {
                     if (isset($filterArray) && in_array($key, $filterArray)) {
-                    } else{
+                    } else {
                         $node = $dom->createElement($key);
                     }
                 }
@@ -52,10 +51,10 @@ class UtilObject extends Util
             }
         } else {
             $node = $dom->createElement($key);
-            if ($value != NULL) {
+            if ($value != null) {
                 foreach ($value as $key => $value) {
-                    $sub = self::createNode( $dom, $key, $value );
-                    if ($sub != NULL) {
+                    $sub = self::createNode($dom, $key, $value);
+                    if ($sub != null) {
                         $node->appendChild($sub);
                     }
                 }
@@ -71,7 +70,7 @@ class UtilObject extends Util
      * @param datobject 需转换的对象
      * @param boolean $isAll 是否包含所有的属性【包括没有赋值的属性】
      */
-    public static function array_to_object($array = array() , $object = null, $isAll = true)
+    public static function array_to_object($array = array(), $object = null, $isAll = true)
     {
         if (!empty($array)) {
             if (is_string($object)) {
@@ -144,14 +143,16 @@ class UtilObject extends Util
 
             // while ( list ($key, $value) = each ($clone)) {
             foreach ($clone as $key => $value) {
-                $aux    = explode ("\0", $key);
-                $newkey = $aux[count($aux)-1];
+                $aux    = explode("\0", $key);
+                $newkey = $aux[count($aux) - 1];
                 if ($isAll) {
                     $rtn[$newkey] = $rtn['source_keys'][$key];
                 } else {
                     if (isset($rtn['source_keys'][$key]) || is_bool($rtn['source_keys'][$key])) {
                         $rtn[$newkey] = $rtn['source_keys'][$key];
-                        if ($rtn[$newkey] === false ) $rtn[$newkey] = 0;
+                        if ($rtn[$newkey] === false) {
+                            $rtn[$newkey] = 0;
+                        }
                     }
                 }
             }
@@ -166,7 +167,7 @@ class UtilObject extends Util
                 }
             }
             if ($obj instanceof DataObject) {
-                $rtn = DataObjectSpec::removeNotObjectDataField( $rtn, $obj );
+                $rtn = DataObjectSpec::removeNotObjectDataField($rtn, $obj);
             }
             return $rtn;
         } else {
@@ -185,13 +186,11 @@ class UtilObject extends Util
             if (is_array($source) || is_object($source)) {
                 foreach ($source as $key => $value) {
                     if (is_array($dest)) {
-                        if (array_key_exists($key,$dest) )
-                        {
+                        if (array_key_exists($key, $dest)) {
                             $dest[$key] = $value;
                         }
                     } elseif (is_object($dest)) {
-                        if (property_exists($dest,$key) )
-                        {
+                        if (property_exists($dest, $key)) {
                             $dest->$key = $value;
                         }
                     }
@@ -202,4 +201,3 @@ class UtilObject extends Util
         return $source;
     }
 }
-?>

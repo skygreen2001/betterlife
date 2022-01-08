@@ -1,4 +1,5 @@
 <?php
+
 $title    = "一键生成指定表前后台所有模板";
 $url_base = UtilNet::urlbase();
 $form_css = UtilCss::form_css();
@@ -8,7 +9,7 @@ if (!empty($inputArr)) {
         $show_table_lists .= "        <option value=\"$key\">$value</option>" . HH;
     }
 
-$show_table_lists_model = <<<SHOWTABLELIST
+    $show_table_lists_model = <<<SHOWTABLELIST
       <br>
       <label>选择需要生成的表</label>
       <select multiple="multiple" size="8" style="height:320px;width:415px;" name="table_names[]">
@@ -41,5 +42,3 @@ $userinput_model = <<<USERINPUT
     </body>
 </html>
 USERINPUT;
-
-?>

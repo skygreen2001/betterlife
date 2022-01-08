@@ -1,4 +1,5 @@
 <?php
+
 $classname         = isset($classname) ? $classname : "";
 $instancename      = isset($instancename) ? $instancename : "";
 $classname_rela    = isset($classname_rela) ? $classname_rela : "";
@@ -128,4 +129,3 @@ $edit_json_enums
     ]
 }
 EDIT_JSON;
-

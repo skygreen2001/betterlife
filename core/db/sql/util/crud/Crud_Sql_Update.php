@@ -6,7 +6,8 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Update extends Crud_SQL {
+class Crud_Sql_Update extends Crud_SQL
+{
     private $values;
     /**
      * 是否预处理SQL语句
@@ -15,7 +16,8 @@ class Crud_Sql_Update extends Crud_SQL {
      *
      * @param boolean $isPreparedStatement
      */
-    public function  __construct($isPreparedStatement = true) {
+    public function __construct($isPreparedStatement = true)
+    {
         $this->isPreparedStatement = $isPreparedStatement;
     }
 
@@ -24,19 +26,21 @@ class Crud_Sql_Update extends Crud_SQL {
      * @param string $tableorclassName 表名|类名[映射表]
      * @return SQL构造器本身
      */
-    public function update($tableorclassName) {
+    public function update($tableorclassName)
+    {
         if (class_exists($tableorclassName)) {
-            $this->tableName = Config_Db::orm( $tableorclassName );
+            $this->tableName = Config_Db::orm($tableorclassName);
         } else {
             $this->tableName = $tableorclassName;
         }
         return $this;
     }
 
-    public function where() {
+    public function where()
+    {
         $clause = func_get_args();
         $this->isPreparedStatement = false;
-        return parent::where( $clause );
+        return parent::where($clause);
     }
 
     /**
@@ -53,7 +57,8 @@ class Crud_Sql_Update extends Crud_SQL {
      * 2. set(array("id"=>"1","name"=>"sky"))
      *
      */
-    public function set() {
+    public function set()
+    {
         $values = func_get_args();
         if (count($values) > 0) {
             if (is_array($values[0])) {
@@ -77,10 +82,10 @@ class Crud_Sql_Update extends Crud_SQL {
                         if ($value === 1) {
                             $asValues[$key] = $key . "=1";
                         }
-                        if ($value ===true) {
+                        if ($value === true) {
                             $asValues[$key] = $key . "=true";
                         }
-                        if ($value ===false) {
+                        if ($value === false) {
                             $asValues[$key] = $key . "=false";
                         }
                     }
@@ -89,11 +94,13 @@ class Crud_Sql_Update extends Crud_SQL {
             } else {
                 //第一种情况
                 foreach ($values as &$value) {
-                    if (contain( $value, "=" )) {
+                    if (contain($value, "=")) {
                         $valueA = explode("=", $value);
                         if (empty($valueA[1])) {
                             $value = $valueA[0] . "='" . $valueA[1] . "'";
-                            if ($valueA[1] == 0 ) $value = $valueA[0] . "=" . $valueA[1];
+                            if ($valueA[1] == 0) {
+                                $value = $valueA[0] . "=" . $valueA[1];
+                            }
                         } elseif (strlen(trim($valueA[1])) == 0) {
                             $value = $valueA[0] . "='" . $valueA[1] . "'";
                         }
@@ -102,7 +109,7 @@ class Crud_Sql_Update extends Crud_SQL {
                 $this->values = join(",", $values);
             }
         } else {
-            ExceptionDb::recordException( Wl::ERROR_INFO_UPDATE_VALUE_NULL, __FILE__, __LINE__, $this );
+            ExceptionDb::recordException(Wl::ERROR_INFO_UPDATE_VALUE_NULL, __FILE__, __LINE__, $this);
         }
         return $this;
     }
@@ -111,11 +118,11 @@ class Crud_Sql_Update extends Crud_SQL {
      * 生成需要的完整的SQL语句
      * @return string SQL完整的语句
      */
-    public function result() {
+    public function result()
+    {
         $this->query  = self::SQL_UPDATE . $this->tableName . self::SQL_SET;
         $this->query .= $this->values;
         $this->query .= self::SQL_WHERE . $this->whereClause;
         return $this->query;
     }
 }
-?>

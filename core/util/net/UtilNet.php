@@ -34,7 +34,7 @@ class UtilNet extends Util
     {
         $addrs = array();
         if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
-            $addrs = array_reverse( explode( ',',  $_SERVER['HTTP_X_FORWARDED_HOST']));
+            $addrs = array_reverse(explode(',', $_SERVER['HTTP_X_FORWARDED_HOST']));
         }
         return isset($addrs[0]) ? trim($addrs[0]) : $_SERVER['HTTP_HOST'];
     }
@@ -49,19 +49,23 @@ class UtilNet extends Util
         $with_file    = $_SERVER["SCRIPT_FILENAME"];
         $file_sub_dir = dirname($with_file) . DS;
 
-        if (contain( Gc::$nav_root_path, "/mnt/" ) && contain( $file_sub_dir, "/var/" )) {
-          $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
+        if (contain(Gc::$nav_root_path, "/mnt/") && contain($file_sub_dir, "/var/")) {
+            $file_sub_dir = str_replace("/var/", "/mnt/", $file_sub_dir);
         }
         $file_sub_dir = str_replace("/", DS, $file_sub_dir);
-        if (contain( $file_sub_dir, Gc::$nav_root_path)) {
+        if (contain($file_sub_dir, Gc::$nav_root_path)) {
             $file_sub_dir = str_replace(Gc::$nav_root_path, "", $file_sub_dir);
         } else {
             $file_sub_dir = str_replace($_SERVER["DOCUMENT_ROOT"], "", $file_sub_dir);
         }
         $file_sub_dir = str_replace(DS, "/", $file_sub_dir);
         $url_base = Gc::$url_base;
-        if ($file_sub_dir != "/" ) $url_base = str_replace($file_sub_dir, "", $url_base);
-        if (!endwith($url_base, "/") ) $url_base .= "/";
+        if ($file_sub_dir != "/") {
+            $url_base = str_replace($file_sub_dir, "", $url_base);
+        }
+        if (!endwith($url_base, "/")) {
+            $url_base .= "/";
+        }
         return $url_base;
     }
 
@@ -70,14 +74,18 @@ class UtilNet extends Util
     * @param string $with_file 如指定文件名，则路径会带上文件名。
     * @return Url基本路径
     */
-    public static function base_url($with_file=false)
+    public static function base_url($with_file = false)
     {
-        if (isset($_SERVER['HTTPS']) && strpos('on',$_SERVER['HTTPS'])) {
+        if (isset($_SERVER['HTTPS']) && strpos('on', $_SERVER['HTTPS'])) {
             $baseurl = 'https://' . $_SERVER['HTTP_HOST'];
-            if ($_SERVER['SERVER_PORT'] != 443 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+            if ($_SERVER['SERVER_PORT'] != 443) {
+                $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+            }
         } else {
             $baseurl = 'http://' . $_SERVER['HTTP_HOST'];
-            if ($_SERVER['SERVER_PORT'] != 80 ) $baseurl  .= ':' . $_SERVER['SERVER_PORT'];
+            if ($_SERVER['SERVER_PORT'] != 80) {
+                $baseurl  .= ':' . $_SERVER['SERVER_PORT'];
+            }
         }
         if ($with_file) {
             $baseurl .= $_SERVER['SCRIPT_NAME'];
@@ -97,7 +105,7 @@ class UtilNet extends Util
      */
     public static function download($fname = 'data', $data = null, $mimeType = 'application/force-download')
     {
-        if (headers_sent($file,$line)) {
+        if (headers_sent($file, $line)) {
             echo 'Header already sent @ ' . $file . ': ' . $line;
             exit();
         }
@@ -184,32 +192,19 @@ class UtilNet extends Util
     public static function client_ip()
     {
         //php获取ip的算法
-        if ($_SERVER["HTTP_X_FORWARDED_FOR"] )
-        {
+        if ($_SERVER["HTTP_X_FORWARDED_FOR"]) {
             $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-        }
-        elseif ($_SERVER["HTTP_CLIENT_IP"] )
-        {
+        } elseif ($_SERVER["HTTP_CLIENT_IP"]) {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
-        }
-        elseif ($_SERVER["REMOTE_ADDR"] )
-        {
+        } elseif ($_SERVER["REMOTE_ADDR"]) {
             $ip = $_SERVER["REMOTE_ADDR"];
-        }
-        elseif (getenv("HTTP_X_FORWARDED_FOR") )
-        {
+        } elseif (getenv("HTTP_X_FORWARDED_FOR")) {
             $ip = getenv("HTTP_X_FORWARDED_FOR");
-        }
-        elseif (getenv("HTTP_CLIENT_IP") )
-        {
+        } elseif (getenv("HTTP_CLIENT_IP")) {
             $ip = getenv("HTTP_CLIENT_IP");
-        }
-        elseif (getenv("REMOTE_ADDR") )
-        {
+        } elseif (getenv("REMOTE_ADDR")) {
             $ip = getenv("REMOTE_ADDR");
-        }
-        else
-        {
+        } else {
             $ip = "Unknown";
         }
         //echo "你的IP:" . $ip ;
@@ -221,7 +216,8 @@ class UtilNet extends Util
      * @param string $url
      * @return mixed
      */
-    public static function curl_get($url) {
+    public static function curl_get($url)
+    {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
@@ -242,7 +238,9 @@ class UtilNet extends Util
      * @param var $data
      * @return mixed
      */
-    public static function curl_post($url, $data) { // 模拟提交数据函数
+    public static function curl_post($url, $data)
+    {
+ // 模拟提交数据函数
         $curl = curl_init(); // 启动一个CURL会话
         curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
@@ -264,5 +262,3 @@ class UtilNet extends Util
         return $tmpInfo; // 返回数据
     }
 }
-
-?>

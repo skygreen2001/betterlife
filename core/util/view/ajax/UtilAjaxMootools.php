@@ -18,20 +18,18 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
     public static function load($version = "", $viewObject = null)
     {
         if (self::$IsGoogleApi) {
-            if ($viewObject )
-            {
-                self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/mootools/$version/mootools-yui-compressed.js" );
+            if ($viewObject) {
+                self::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/mootools/$version/mootools-yui-compressed.js");
             } else {
-                self::loadJs( "https://ajax.googleapis.com/ajax/libs/mootools/$version/mootools-yui-compressed.js" );
+                self::loadJs("https://ajax.googleapis.com/ajax/libs/mootools/$version/mootools-yui-compressed.js");
             }
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_MOOTOOLS;
-            if ($viewObject )
-            {
-                self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . ".js" );
+            if ($viewObject) {
+                self::loadJsReady($viewObject, $ajax_root . $group . "/" . $group . ".js");
             } else {
-                self::loadJs( $ajax_root . $group . "/" . $group . ".js" );
+                self::loadJs($ajax_root . $group . "/" . $group . ".js");
             }
         }
     }
@@ -48,10 +46,9 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
     public static function ajaxRequstStatement($url, $dataArray, $method, $response_type = EnumResponseType::XML, $callback = null)
     {
         $result = "";
-        if (!empty($callback) )
-        {
+        if (!empty($callback)) {
             $url_base = UtilNet::urlbase();
-            $result   = self::loadJsSentence( $url_base . "misc/js/util/xmltojson.js" );
+            $result   = self::loadJsSentence($url_base . "misc/js/util/xmltojson.js");
             $result  .= "<script type='text/javascript'>
                     Element.implement({
                         appendHTML: function(html,where) {
@@ -75,19 +72,18 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
 //                $data .= "}";
             }
         } elseif ($response_type == EnumResponseType::XML) {
-            if (( is_array($dataArray) ) && (count($dataArray) > 0))
-            {
-                $data = http_build_query( $dataArray );
+            if (( is_array($dataArray) ) && (count($dataArray) > 0)) {
+                $data = http_build_query($dataArray);
             }
         }
         if ($response_type == EnumResponseType::JSON) {
             $result .= "var myRequest = new Request.JSON({";
-        } elseif ($response_type==EnumResponseType::XML) {
+        } elseif ($response_type == EnumResponseType::XML) {
             $result .= "var myRequest = new Request({";
             $result .= "method:'" . $method . "',";
         }
         $result .= "url:'" . $url . "',";
-        if (isset ($callback)) {
+        if (isset($callback)) {
             $result .= "onSuccess: $callback,";
         }
         if (Gc::$dev_debug_on) {
@@ -140,7 +136,7 @@ class UtilAjaxMootools extends UtilAjax implements IUtilAjax
                     h1.appendText('$class_name');";
         }
         if ($response_type == EnumResponseType::JSON) {
-           $result  .= "
+            $result  .= "
                     for(var item in response) {
                         var value = response[item];
                         ol.appendHTML('<li>'+item+':'+value+'</li>');

@@ -13,10 +13,12 @@ class AutoCodeOneKey extends AutoCode
      */
     public static function AutoCode($table_names = "")
     {
-        $dest_directory = Gc::$nav_root_path."tools".DS."tools".DS."autocode".DS;
-        $filename       = $dest_directory."autocode.config.xml";
+        $dest_directory = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS;
+        $filename       = $dest_directory . "autocode.config.xml";
         AutoCodeValidate::run();
-        if (Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW ) AutoCodeConfig::run();
+        if (Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) {
+            AutoCodeConfig::run();
+        }
         if (!file_exists($filename)) {
             AutoCodeConfig::run();
             die("<br><br><div align='center'>&nbsp;&nbsp;自动生成代码的配置文件已生成，请再次运行以生成所有web应用代码!</div>");
@@ -39,21 +41,21 @@ class AutoCodeOneKey extends AutoCode
         AutoCodeAction::$type     = 0;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforeaction();
         AutoCodeAction::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeAction::AutoCode( $table_names );
+        AutoCodeAction::AutoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeAction::AutoCode( $table_names );
+        AutoCodeAction::AutoCode($table_names);
         AutoCodeAction::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeAction::AutoCode( $table_names );
+        AutoCodeAction::AutoCode($table_names);
         self::$showReport        .= AutoCodeFoldHelper::foldafteraction();
 
         //生成表示层[前端、后台和通用模版]
         self::$showReport      .= AutoCodeFoldHelper::foldbeforeviewdefault();
         AutoCodeView::$type     = EnumAutoCodeViewType::FRONT;
-        AutoCodeView::AutoCode( $table_names );
+        AutoCodeView::AutoCode($table_names);
         AutoCodeView::$type     = EnumAutoCodeViewType::MODEL;
-        AutoCodeView::AutoCode( $table_names );
+        AutoCodeView::AutoCode($table_names);
         AutoCodeView::$type     = EnumAutoCodeViewType::ADMIN;
-        AutoCodeView::AutoCode( $table_names );
+        AutoCodeView::AutoCode($table_names);
         self::$showReport      .= AutoCodeFoldHelper::foldafterviewdefault();
 
         if (Config_AutoCode::SHOW_PREVIEW_REPORT) {
@@ -70,7 +72,7 @@ class AutoCodeOneKey extends AutoCode
     /**
      * 用户输入需求
      */
-    public static function UserInput( $title="", $inputArr=null, $default_value="", $more_content="" )
+    public static function UserInput($title = "", $inputArr = null, $default_value = "", $more_content = "")
     {
         parent::UserInput("一键生成前后台所有模板文件");
     }

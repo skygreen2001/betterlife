@@ -8,11 +8,11 @@ class EnumReturnType extends Enum
     /**
      * 数据对象
      */
-    const DATAOBJECT=0;
+    const DATAOBJECT = 0;
     /**
      * 数组
      */
-    const ARRAYTYPE=1;
+    const ARRAYTYPE = 1;
 }
 
 /**
@@ -21,7 +21,7 @@ class EnumReturnType extends Enum
  * @package core
  * @author skygreen
  */
-abstract class BBObject 
+abstract class BBObject
 {
     /***********************************魔术方法**************************************************/
     /**
@@ -32,8 +32,9 @@ abstract class BBObject
      */
     public function __set($name, $value)
     {
-        if (property_exists($this, $name) )
+        if (property_exists($this, $name)) {
             $this->$name = $value;
+        }
     }
 
     /**
@@ -46,7 +47,7 @@ abstract class BBObject
     {
         return isset($this->$name) ? $this->$name : null;
     }
-    
+
     /***********************************魔术方法**************************************************/
     /**
      * 获取被调用类的类名

@@ -7,7 +7,7 @@
  * @author skygreen
  */
 class UtilXmlSimple extends Util
-{ 
+{
     /**
      * Xml文件里的XML转换成Array
      * @param string filename 文件名
@@ -19,12 +19,12 @@ class UtilXmlSimple extends Util
         $result = self::sxiToArray($sxi);
         return $result;
     }
-    
+
     /**
      * Xml文件里的XML转换成Array
      * 特殊类型的xml文件:Xml文件定义里只有属性
      * @param string filename 文件名
-     * @example 
+     * @example
      * <?xml version="1.0" encoding="utf-8"?>
      * <tasks>
      *      <task name="festival" cycle="custom" interval="3600" due_time="" last_time="" />
@@ -33,17 +33,13 @@ class UtilXmlSimple extends Util
      */
     public static function fileXmlAttributesToArray($filename)
     {
-        $resultXml = self::fileXmlToObject( $filename );
+        $resultXml = self::fileXmlToObject($filename);
         $result    = array();
-        if ($resultXml )
-        {
-            foreach ($resultXml as $xml_attributes) 
-            {
-                if ($xml_attributes )
-                { 
+        if ($resultXml) {
+            foreach ($resultXml as $xml_attributes) {
+                if ($xml_attributes) {
                     $attributes = $xml_attributes->attributes();
-                    if ($attributes )
-                    {
+                    if ($attributes) {
                         $arrObjData = get_object_vars($attributes);
                         $arrObjData = end($arrObjData);
                         $result[]   = $arrObjData;
@@ -57,17 +53,17 @@ class UtilXmlSimple extends Util
     /**
      * SimpleXmlIterator转换成Array
      * @param SimpleXmlIterator $sxi
-     * @return array 
+     * @return array
      */
     private static function sxiToArray($sxi)
     {
         $a = array();
-        for ( $sxi->rewind(); $sxi->valid(); $sxi->next()) {
+        for ($sxi->rewind(); $sxi->valid(); $sxi->next()) {
             if (!array_key_exists($sxi->key(), $a)) {
                 $a[$sxi->key()] = array();
             }
             if ($sxi->hasChildren()) {
-                $a[$sxi->key()][] = self::sxiToArray( $sxi->current() );
+                $a[$sxi->key()][] = self::sxiToArray($sxi->current());
             } else {
                 $sxiCurrent = $sxi->current();
                 $tmp        = array();
@@ -80,7 +76,7 @@ class UtilXmlSimple extends Util
             }
         }
         return $a;
-    }    
+    }
 
     /**
      * Xml文件里的XML转换成对象
@@ -89,18 +85,17 @@ class UtilXmlSimple extends Util
      */
     public static function fileXmlToObject($xml_filename)
     {
-        if (file_exists($xml_filename) )
-        {
+        if (file_exists($xml_filename)) {
             return simplexml_load_file($xml_filename);
         }
         return null;
     }
-    
+
     /**
      * 将xml数组对象转换成数组
      * @param string $arrObjData
      * @param array $arrSkipIndices
-     * @return array 
+     * @return array
      */
     public static function objectsIntoArray($arrObjData, $arrSkipIndices = array())
     {
@@ -124,11 +119,11 @@ class UtilXmlSimple extends Util
         }
         return $arrData;
     }
-    
+
     /**
      * 示例: 显示Flickr图片内容
      */
-    public static function sample_flickr() 
+    public static function sample_flickr()
     {
         $content = file_get_contents("http://www.flickr.com/services/feeds/photos_public.gne");
         $sx      = simplexml_load_string($content);
@@ -141,7 +136,7 @@ class UtilXmlSimple extends Util
     /**
      * 示例: 显示Email
      */
-    public static function sample_email() 
+    public static function sample_email()
     {
         $str = <<< EMAIL
         <emails>
@@ -173,7 +168,7 @@ EMAIL;
     /**
      * 示例: XPath寻径显示ACL
      */
-    public static function sample_xpath_acl() 
+    public static function sample_xpath_acl()
     {
         $str = <<< ROLES
     <roles>
@@ -208,5 +203,3 @@ ROLES;
 //UtilXmlSimple::sample_email();
 //UtilXmlSimple::sample_flickr();
 //UtilXmlSimple::sample_xpath_acl();
-
-?>

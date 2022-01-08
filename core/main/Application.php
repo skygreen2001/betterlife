@@ -18,7 +18,7 @@ class Application
      */
     public function __construct($environment = null)
     {
-        self::init( $environment );
+        self::init($environment);
     }
 
     /**
@@ -56,11 +56,10 @@ class Application
     {
         header("Content-Type:text/html; charset=\"" . Gc::$encoding . "\"");
         $router = new Router();
-        Dispatcher::dispatch( $router );
+        Dispatcher::dispatch($router);
         ob_end_flush();
         $router = null;
         LogMe::showLogs();
         e_view();//Debug模式下打印异常
     }
 }
-?>

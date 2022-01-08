@@ -70,9 +70,12 @@ class Log_win extends Log
      * @param int    $level    Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                          $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_name = str_replace(' ', '_', $name);
         $this->_ident = $ident;
@@ -268,8 +271,11 @@ EOT;
 
         /* Build the output line that contains the log entry row. */
         $line  = '<tr>';
-        $line .= sprintf('<td>%s.%s</td>',
-                         strftime('%H:%M:%S', $sec), substr($usec, 2, 2));
+        $line .= sprintf(
+            '<td>%s.%s</td>',
+            strftime('%H:%M:%S', $sec),
+            substr($usec, 2, 2)
+        );
         if (!empty($this->_ident)) {
             $line .= '<td>' . $this->_ident . '</td>';
         }
@@ -283,5 +289,4 @@ EOT;
 
         return true;
     }
-
 }

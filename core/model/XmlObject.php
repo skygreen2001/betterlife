@@ -108,7 +108,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public function __set($property, $value)
     {
-        if (method_exists($this, "set".ucfirst($property))) {
+        if (method_exists($this, "set" . ucfirst($property))) {
             $methodname = "set" . ucfirst($property);
             $this->{$methodname}($value);
         } else {
@@ -131,7 +131,7 @@ class XmlObject extends BBObject implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
-        $method = "get".ucfirst($key);
+        $method = "get" . ucfirst($key);
         return method_exists($this, $method);
     }
 
@@ -193,7 +193,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param string $xmlObject_classname 具体的Xml对象类名
      * @param string $filter 查询条件，在where后的条件
      *
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id=1,name='sky'"
      *      1. array("id=1","name='sky'")
@@ -203,16 +203,15 @@ class XmlObject extends BBObject implements ArrayAccess
     public static function get($xmlObject_classname, $filter = null)
     {
         if ($xmlObject_classname == null) {
-            $classname=get_called_class();
+            $classname = get_called_class();
         } else {
-            $classname=$xmlObject_classname;
+            $classname = $xmlObject_classname;
         }
         $filename     = call_user_func("$classname::address");
-        $spec_library = UtilXmlSimple::fileXmlToArray( $filename );
+        $spec_library = UtilXmlSimple::fileXmlToArray($filename);
         $result       = array();
         $classname    = lcfirst($classname);
-        foreach ($spec_library[$classname] as $block)
-        {
+        foreach ($spec_library[$classname] as $block) {
             $blockAttr = $block[Util::XML_ELEMENT_ATTRIBUTES];
             $result[]  = $blockAttr;
         }
@@ -223,7 +222,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * Xml数据对象总计数
      *
      * @param object|string|array $filter
-     *      $filter 格式示例如下: 
+     *      $filter 格式示例如下:
      *
      *          0. 允许对象如new User(id="1",name="green");
      *          1. "id=1","name='sky'"
@@ -252,7 +251,7 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param int $endPoint    分页结束记录数
      * @param string|array $filter 过滤条件
      *
-     * 示例如下: 
+     * 示例如下:
      *
      *      string[只有一个查询条件]
      *
@@ -273,13 +272,12 @@ class XmlObject extends BBObject implements ArrayAccess
             $classname = $xmlObject_classname;
         }
         $filename = call_user_func("$classname::address");
-        $spec_library = UtilXmlSimple::fileXmlToArray( $filename );
+        $spec_library = UtilXmlSimple::fileXmlToArray($filename);
         $result = array();
         $classname = lcfirst($classname);
-        foreach ($spec_library[$classname] as $block)
-        {
+        foreach ($spec_library[$classname] as $block) {
             $blockAttr = $block[Util::XML_ELEMENT_ATTRIBUTES];
-            if (self::isValidData( $blockAttr, $filter )) {
+            if (self::isValidData($blockAttr, $filter)) {
                 $result[] = $blockAttr;
             }
         }
@@ -305,55 +303,57 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public static function isValidData($blockAttr, $filter)
     {
-        if (empty($filter) ) return true;
+        if (empty($filter)) {
+            return true;
+        }
         if (is_string($filter)) {
-           if (contain($filter, "and")) {
-               $condition = explode("and", $filter);
-               if (count($condition) == 2) {
-                   $column    = trim($condition[0]);
-                   $col_value = trim($condition[1]);
-                   if (array_key_exists($column, $blockAttr)) {
+            if (contain($filter, "and")) {
+                $condition = explode("and", $filter);
+                if (count($condition) == 2) {
+                    $column    = trim($condition[0]);
+                    $col_value = trim($condition[1]);
+                    if (array_key_exists($column, $blockAttr)) {
                         $block_value = $blockAttr[$column];
                         if (strtolower($block_value) == strtolower($col_value)) {
                             return true;
                         }
-                   }
-               }
-           } elseif (contain( $filter, "contain" )) {
-               $condition = explode("contain", $filter);
-               if (count($condition) == 2) {
-                   $column    = trim($condition[0]);
-                   $col_value = trim($condition[1]);
-                   if (array_key_exists($column, $blockAttr)) {
+                    }
+                }
+            } elseif (contain($filter, "contain")) {
+                $condition = explode("contain", $filter);
+                if (count($condition) == 2) {
+                    $column    = trim($condition[0]);
+                    $col_value = trim($condition[1]);
+                    if (array_key_exists($column, $blockAttr)) {
                         $block_value = $blockAttr[$column];
-                        if (contain( $block_value, $col_value )) {
+                        if (contain($block_value, $col_value)) {
                             return true;
                         }
-                   }
-               }
-           }
+                    }
+                }
+            }
         } else {
             foreach ($filter as $key => $value) {
                 if (is_int($key)) {
-                   $condition = explode("contain", $value);
-                   if (count($condition) == 2) {
-                       $column    = trim($condition[0]);
-                       $col_value = trim($condition[1]);
-                       if (array_key_exists($column, $blockAttr)) {
+                    $condition = explode("contain", $value);
+                    if (count($condition) == 2) {
+                        $column    = trim($condition[0]);
+                        $col_value = trim($condition[1]);
+                        if (array_key_exists($column, $blockAttr)) {
                             $block_value = $blockAttr[$column];
                             $col_value   = str_replace("'", "", $col_value);
-                            if (contain( $block_value, $col_value )) {
+                            if (contain($block_value, $col_value)) {
                                 return true;
                             }
-                       }
-                   }
+                        }
+                    }
                 } else {
-                   if (array_key_exists($key, $blockAttr)) {
+                    if (array_key_exists($key, $blockAttr)) {
                         $block_value = $blockAttr[$key];
                         if (strtolower($block_value) == strtolower($value)) {
                             return true;
                         }
-                   }
+                    }
                 }
             }
         }
@@ -367,7 +367,7 @@ class XmlObject extends BBObject implements ArrayAccess
     public function save()
     {
         $this->commitTime = UtilDateTime::now();
-        $data = UtilObject::object_to_array( $this );
+        $data = UtilObject::object_to_array($this);
         $classname = $this->classname();
         $filename  = call_user_func("$classname::address");
         $xml       = UtilXmlSimple::fileXmlToObject($filename);
@@ -379,11 +379,11 @@ class XmlObject extends BBObject implements ArrayAccess
         $child->addAttribute(self::$name_id_property, $this->id);
         foreach ($data as $key => $value) {
             if ($value != null && !endWith($key, "Show")) {
-                $value=htmlentities($value, ENT_COMPAT, "UTF-8");
+                $value = htmlentities($value, ENT_COMPAT, "UTF-8");
                 $child->addAttribute($key, $value);
             }
         }
-        $dom = new DOMDocument('1.0',"UTF-8");
+        $dom = new DOMDocument('1.0', "UTF-8");
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
@@ -398,16 +398,15 @@ class XmlObject extends BBObject implements ArrayAccess
     public function update()
     {
         $this->updateTime = UtilDateTime::now();
-        $data = UtilObject::object_to_array( $this );
+        $data = UtilObject::object_to_array($this);
         unset($data[self::$name_id_property]);
         $node      = $this->getId();
         $classname = $this->classname();
         $filename  = call_user_func("$classname::address");
-        $xml       = UtilXmlSimple::fileXmlToObject( $filename );
+        $xml       = UtilXmlSimple::fileXmlToObject($filename);
         $classname = lcfirst($classname);
         $xml_child = $xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
-        if ($xml_child )
-        {
+        if ($xml_child) {
             $xml_attributes = $xml_child[0];
             if ($xml_child) {
                 $attributes = $xml_attributes->attributes();
@@ -415,7 +414,7 @@ class XmlObject extends BBObject implements ArrayAccess
                     $arrObjData = get_object_vars($attributes);
                     $arrObjData = end($arrObjData);
                     foreach ($arrObjData as $key => $value) {
-                        $methodName = "set". ucfirst($key);
+                        $methodName = "set" . ucfirst($key);
                         if (method_exists($this, $methodName)) {
                             $this->$methodName($value);
                         }
@@ -442,22 +441,21 @@ class XmlObject extends BBObject implements ArrayAccess
     /**
      * 删除Xml对象的信息
      */
-    public function  delete()
+    public function delete()
     {
         $node      = $this->getId();
         $classname = $this->classname();
         $filename  = call_user_func("$classname::address");
         $xml       = UtilXmlSimple::fileXmlToObject($filename);
-        $classname= lcfirst($classname);
-        $xml_child=$xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
-        foreach ($xml_child  as $el) {
-            if ($el[self::$name_id_property] == $node )
-            {
+        $classname = lcfirst($classname);
+        $xml_child = $xml->xpath("//$classname" . "[@" . self::$name_id_property . "='$node']");
+        foreach ($xml_child as $el) {
+            if ($el[self::$name_id_property] == $node) {
                 $domRef = dom_import_simplexml($el);
                 $domRef->parentNode->removeChild($domRef);
             }
         }
-        $dom = new DOMDocument('1.0',"UTF-8");
+        $dom = new DOMDocument('1.0', "UTF-8");
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
@@ -470,9 +468,8 @@ class XmlObject extends BBObject implements ArrayAccess
      * @param $isAll 是否对象所有的field都要生成，包括没有内容或者内容为空的field
      * @return 数组
      */
-    public function toArray($isAll=true)
+    public function toArray($isAll = true)
     {
-       return UtilObject::object_to_array( $this, $isAll );
+        return UtilObject::object_to_array($this, $isAll);
     }
 }
-?>

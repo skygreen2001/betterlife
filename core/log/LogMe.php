@@ -19,11 +19,12 @@ class LogMe extends BBObject
      * @param type $level
      * @return type
      */
-    private static function isNeedLog($level) {
+    private static function isNeedLog($level)
+    {
         $logLevels = UtilReflection::getClassConsts("EnumLogLevel");
         if (in_array($level, $logLevels)) {
             $levelKey = array_search($level, $logLevels);
-            if (in_array($levelKey,Gc::$log_config["log_record_level"])) {
+            if (in_array($levelKey, Gc::$log_config["log_record_level"])) {
                 return true;
             }
         }
@@ -35,7 +36,8 @@ class LogMe extends BBObject
      *
      * 前提条件: 采用文件方式记录日志。
      */
-    public static function logPath($destination) {
+    public static function logPath($destination)
+    {
         if (empty(Gc::$log_config["logpath"])) {
             Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
         }
@@ -52,8 +54,8 @@ class LogMe extends BBObject
         if (is_file($destination) && (Gc::$log_config["log_file_size"] <= filesize($destination) )) {
             rename($destination, dirname($destination) . DS . basename($destination, Config_F::SUFFIX_FILE_LOG) . '-' . time() . Config_F::SUFFIX_FILE_LOG);
         }
-        if (isset ($destination)) {
-            UtilFileSystem::createDir( dirname($destination) );
+        if (isset($destination)) {
+            UtilFileSystem::createDir(dirname($destination));
         }
         system_dir_info(dirname($destination));
         return $destination;
@@ -65,29 +67,30 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log($message, $level = EnumLogLevel::INFO, $category = '') {
-        if (self::isNeedLog( $level )) {
+    public static function log($message, $level = EnumLogLevel::INFO, $category = '')
+    {
+        if (self::isNeedLog($level)) {
             switch (Gc::$log_config["logType"]) {
                 case EnumLogType::SYSTEM:
-                    self::log_console( $message, $level, $category );
+                    self::log_console($message, $level, $category);
                     break;
                 case EnumLogType::BROWSER:
-                    self::log_browser( $message, $level, $category );
+                    self::log_browser($message, $level, $category);
                     break;
                 case EnumLogType::FILE:
-                    self::log_file( $message, $level, $category );
+                    self::log_file($message, $level, $category);
                     break;
                 case EnumLogType::MAIL:
-                    self::log_email( $message, $level, $category );
+                    self::log_email($message, $level, $category);
                     break;
                 case EnumLogType::DB:
-                    self::log_db( $message, $level, $category );
+                    self::log_db($message, $level, $category);
                     break;
                 case EnumLogType::FIREBUG:
-                    self::log_firebug( $message, $level, $category );
+                    self::log_firebug($message, $level, $category);
                     break;
-                default :
-                    self::record( $message, $level );
+                default:
+                    self::record($message, $level);
                     break;
             }
         }
@@ -99,10 +102,11 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_console($message, $level = EnumLogLevel::INFO, $category = "") {
+    public static function log_console($message, $level = EnumLogLevel::INFO, $category = "")
+    {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
-        Log::singleton( 'console', '', $category, $conf )->log($message, $level);
+        Log::singleton('console', '', $category, $conf)->log($message, $level);
     }
 
     /**
@@ -111,7 +115,8 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_browser($message, $level = EnumLogLevel::INFO, $category = "") {
+    public static function log_browser($message, $level = EnumLogLevel::INFO, $category = "")
+    {
         echo $message . "";
     }
 
@@ -121,10 +126,11 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_file($message, $level = EnumLogLevel::INFO, $category = "") {
+    public static function log_file($message, $level = EnumLogLevel::INFO, $category = "")
+    {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
-        Log::singleton( 'file', self::logPath( $category ), $category, $conf )->log($message, $level);
+        Log::singleton('file', self::logPath($category), $category, $conf)->log($message, $level);
     }
 
     /**
@@ -133,10 +139,11 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_email($message, $level = EnumLogLevel::EMERG, $category = "") {
+    public static function log_email($message, $level = EnumLogLevel::EMERG, $category = "")
+    {
         UtilDateTime::ChinaTime();
         Gc::$log_config["config_mail_log"]["timeFormat"] = Gc::$log_config["timeFormat"];
-        Log::singleton( 'mail', Gc::$email_config["mailto"], $category, Gc::$log_config["config_mail_log"] )->log($message, $level);
+        Log::singleton('mail', Gc::$email_config["mailto"], $category, Gc::$log_config["config_mail_log"])->log($message, $level);
     }
 
     /**
@@ -145,11 +152,12 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_db($message, $level = EnumLogLevel::INFO, $category = "") {
+    public static function log_db($message, $level = EnumLogLevel::INFO, $category = "")
+    {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
         $conf = array('dsn' => Config_Mdb2::dsn());
-        Log::singleton('sql',Gc::$log_config["log_table"], $category, $conf)->log($message, $level);
+        Log::singleton('sql', Gc::$log_config["log_table"], $category, $conf)->log($message, $level);
     }
 
     /**
@@ -158,10 +166,11 @@ class LogMe extends BBObject
      * @param enum $level 日志记录级别
      * @param string $category 日志内容业务分类
      */
-    public static function log_firebug($message, $level = EnumLogLevel::INFO, $category = "") {
+    public static function log_firebug($message, $level = EnumLogLevel::INFO, $category = "")
+    {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
-        Log::singleton( 'firebug', '', $category, $conf )->log($message, $level);
+        Log::singleton('firebug', '', $category, $conf)->log($message, $level);
     }
     //</editor-fold>
 
@@ -183,13 +192,14 @@ class LogMe extends BBObject
      * @param boolean $record  是否强制记录保存在文件里
      * @return void
      */
-    public static function record($message, $level = EnumLogLevel::ERR, $record = false) {
+    public static function record($message, $level = EnumLogLevel::ERR, $record = false)
+    {
         if (Gc::$dev_debug_on) {
-            if ($record || self::isNeedLog( $level )) {
+            if ($record || self::isNeedLog($level)) {
                 UtilDateTime::ChinaTime();
                 $now = "[ " . strftime(Gc::$log_config["timeFormat"]) . " ]";
                 //UtilReflection::getClassProperty(EnumLogLevel, $level);
-                $level = UtilReflection::getClassConstNameByValue( "EnumLogLevel", $level );
+                $level = UtilReflection::getClassConstNameByValue("EnumLogLevel", $level);
                 self::$log[] = "{$now} {$level}: {$message}" . HH;
             }
         }
@@ -203,9 +213,10 @@ class LogMe extends BBObject
      * @param string $extra 额外参数
      * @return void
      */
-    private static function save($destination = '',$extra = '',$type = EnumLogType::FILE) {
+    private static function save($destination = '', $extra = '', $type = EnumLogType::FILE)
+    {
         Gc::$log_config["logpath"] = self::logPath($destination);
-        error_log(implode("", self::$log), $type, Gc::$log_config["logpath"] ,$extra);
+        error_log(implode("", self::$log), $type, Gc::$log_config["logpath"], $extra);
         // 保存后清空日志缓存
         self::$log = array();
         clearstatcache();
@@ -214,7 +225,8 @@ class LogMe extends BBObject
     /**
      * 显示当前运行的日志。
      */
-    public static function showLogs() {
+    public static function showLogs()
+    {
         if (Gc::$dev_debug_on) {
             if (self::$log) {
                 foreach (self::$log as $log) {
@@ -229,5 +241,3 @@ class LogMe extends BBObject
     }
     //</editor-fold>
 }
-
-?>

@@ -17,8 +17,8 @@ class Config_Mdb2 extends Config_Db
      * @link http://pear.php.net/manual/en/package.database.mdb2.intro-fetch.php
      * MDB2_FETCHMODE_ASSOC, MDB2_FETCHMODE_ORDERED and MDB2_FETCHMODE_OBJECT
      */
-    public static $fetchmode= MDB2_FETCHMODE_OBJECT;
-    
+    public static $fetchmode = MDB2_FETCHMODE_OBJECT;
+
     /**
      * @var array 数据库连接参数
      */
@@ -26,21 +26,22 @@ class Config_Mdb2 extends Config_Db
         'debug' => 2,
         'result_buffering' => false,
         'portability' => MDB2_PORTABILITY_ALL,
-    );    
+    );
 
     /**
      * 返回ODBC所需的dsn字符串
      * @param string $host
-     * @param string $port 
+     * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @link http://pear.php.net/manual/en/package.database.mdb2.intro-connect.php
      * @return array ODBC所需的dsn
      */
-    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null) {      
+    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null)
+    {
         if (isset($host)) {
             if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
@@ -60,7 +61,7 @@ class Config_Mdb2 extends Config_Db
           "password" => $password,
           "database" => $dbname
         );
-        
+
         switch ($dbtype) {
             case EnumDbSource::DB_MYSQL:
                 $dsn["phptype"] = "mysqli";
@@ -75,7 +76,7 @@ class Config_Mdb2 extends Config_Db
             case EnumDbSource::DB_PGSQL:
                 $dsn["phptype"] = "pgsql";
                 break;
-            case EnumDbSource::DB_INTERBASE:   
+            case EnumDbSource::DB_INTERBASE:
             case EnumDbSource::DB_FIREBIRD:
                 $dsn["phptype"] = "ibase";
                 break;
@@ -89,5 +90,3 @@ class Config_Mdb2 extends Config_Db
         return $dsn;
     }
 }
-
-?>

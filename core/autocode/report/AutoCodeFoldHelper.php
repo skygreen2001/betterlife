@@ -117,7 +117,7 @@ HTMLCONTENT;
     public static function foldbeforeaction()
     {
         $htmlContent  = '  <a href="javascript:" onClick="(document.getElementById(\'Content_3\').style.display=(document.getElementById(\'Content_3\').style.display==\'none\')?\'\':\'none\')">';
-        $htmlContent .= "    <font color='#77cc6d'>&nbsp;&nbsp;[" . str_repeat("-", 32) . "生成Action类[增删改查模板、前端和后台]:start" . str_repeat("-", 32)."]</font>
+        $htmlContent .= "    <font color='#77cc6d'>&nbsp;&nbsp;[" . str_repeat("-", 32) . "生成Action类[增删改查模板、前端和后台]:start" . str_repeat("-", 32) . "]</font>
                           </a>";
         $htmlContent .= '  <div id="Content_3" style="display:block;">';
         return $htmlContent;
@@ -189,5 +189,4 @@ HTMLCONTENT;
         $htmlContent .= "  </div><br/>";
         return $htmlContent;
     }
-
 }

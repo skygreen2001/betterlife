@@ -39,23 +39,23 @@ class Dal_Mdb2 extends Dal implements IDal
             $dbname = Config_Mdb2::$dbname;
         }
         if (!isset($dbtype)) {
-           $dbtype = Config_Mdb2::$db;
+            $dbtype = Config_Mdb2::$db;
         }
         $this->dbtype = $dbtype;
-        try{
-            $this->connection = &MDB2::connect( Config_Mdb2::dsn( $host, $port, $username, $password, $dbname, $dbtype ), Config_Mdb2::$options );
+        try {
+            $this->connection = &MDB2::connect(Config_Mdb2::dsn($host, $port, $username, $password, $dbname, $dbtype), Config_Mdb2::$options);
             if (PEAR::isError($this->connection)) {
                 die($this->connection->getMessage());
             }
 
             if ($dbtype == EnumDbSource::DB_MYSQL) {
-               $this->change_character_set( $character_code = Config_Db::$character );
+                $this->change_character_set($character_code = Config_Db::$character);
             }
             if (!$this->connection) {
-                ExceptionDb::log( Wl::ERROR_INFO_CONNECT_FAIL );
+                ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL);
             }
         } catch (Exception $e) {
-            ExceptionDb::log( $e->getMessage() );
+            ExceptionDb::log($e->getMessage());
         }
     }
 
@@ -67,12 +67,12 @@ class Dal_Mdb2 extends Dal implements IDal
     {
         try {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL:" . $this->sQuery );
+                LogMe::log("SQL:" . $this->sQuery);
             }
             $columnCount = 0;
-            $this->stmt = &$this->connection->query( $this->sQuery );
+            $this->stmt = &$this->connection->query($this->sQuery);
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -84,11 +84,11 @@ class Dal_Mdb2 extends Dal implements IDal
     private function getResultToObjects($object)
     {
         $result = null;
-        $rows   = $this->stmt->fetchAll( Config_Mdb2::$fetchmode );
+        $rows   = $this->stmt->fetchAll(Config_Mdb2::$fetchmode);
         foreach ($rows as $row) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
-                    $c        = UtilObject::array_to_object( $row, $this->classname );
+                    $c        = UtilObject::array_to_object($row, $this->classname);
                     $result[] = $c;
                 }
             } else {
@@ -105,7 +105,7 @@ class Dal_Mdb2 extends Dal implements IDal
                 }
             }
         }
-        $result = $this->getValueIfOneValue( $result );
+        $result = $this->getValueIfOneValue($result);
         return $result;
     }
 
@@ -126,22 +126,22 @@ class Dal_Mdb2 extends Dal implements IDal
             $type  = strtolower($parts[0]);
 
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL:" . $sql );
+                LogMe::log("SQL:" . $sql);
             }
             if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
-                $this->connection->exec( $sql );
+                $this->connection->exec($sql);
                 return true;
             } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
-                $this->connection->exec( $sql );
+                $this->connection->exec($sql);
                 $autoId = $this->connection->lastInsertId();
                 return $autoId;
             }
-            $this->stmt = $this->connection->query( $sql );
-            $result     = $this->getResultToObjects( $object );
+            $this->stmt = $this->connection->query($sql);
+            $result     = $this->getResultToObjects($object);
             $sql_s      = preg_replace("/\s/", "", $sql);
             $sql_s      = strtolower($sql_s);
             if (!empty($result) && !is_array($result)) {
-                if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
+                if (!( contains($sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                     $tmp      = $result;
                     $result   = null;
                     $result[] = $tmp;
@@ -149,9 +149,8 @@ class Dal_Mdb2 extends Dal implements IDal
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
-
     }
 
     /**
@@ -162,32 +161,32 @@ class Dal_Mdb2 extends Dal implements IDal
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
             $_SQL->isPreparedStatement = true;
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
-            $this->saParams = UtilObject::object_to_array( $object );
+            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+            $this->saParams = UtilObject::object_to_array($object);
             $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
-             if (!empty($this->saParams)) {
-                $type = array_values($this->getColumnTypes( $object, $this->saParams, 2 ));
+            if (!empty($this->saParams)) {
+                $type = array_values($this->getColumnTypes($object, $this->saParams, 2));
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL:" . $this->sQuery );
+                    LogMe::log("SQL:" . $this->sQuery);
                     if (!empty($this->saParams)) {
-                        LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
+                        LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
                     }
                 }
-                $sth = $this->connection->prepare( $this->sQuery, $type, MDB2_PREPARE_MANIP );
-                $sth->execute( array_values($this->saParams) );
+                $sth = $this->connection->prepare($this->sQuery, $type, MDB2_PREPARE_MANIP);
+                $sth->execute(array_values($this->saParams));
             }
             $autoId = $this->connection->lastinsertid();
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
-        if (!empty($object)&&is_object($object)) {
-            $object->setId( $autoId );//当保存返回对象时使用
+        if (!empty($object) && is_object($object)) {
+            $object->setId($autoId);//当保存返回对象时使用
         }
         return $autoId;
     }
@@ -202,7 +201,7 @@ class Dal_Mdb2 extends Dal implements IDal
     public function delete($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
 
@@ -213,12 +212,12 @@ class Dal_Mdb2 extends Dal implements IDal
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL: " . $this->sQuery);
+                    LogMe::log("SQL: " . $this->sQuery);
                 }
-                $this->connection->exec( $this->sQuery );
+                $this->connection->exec($this->sQuery);
                 $result = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
             }
         }
         return $result;
@@ -233,37 +232,37 @@ class Dal_Mdb2 extends Dal implements IDal
     public function update($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
         $id = $object->getId();
         if (!empty($id)) {
             try {
                 $_SQL = new Crud_Sql_Update();
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
-                $this->saParams = UtilObject::object_to_array( $object );
-                unset($this->saParams[DataObjectSpec::getRealIDColumnName( $object )]);
-                $this->saParams = $this->filterViewProperties( $this->saParams );
+                $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
+                $this->saParams = UtilObject::object_to_array($object);
+                unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
+                $this->saParams = $this->filterViewProperties($this->saParams);
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL: " . $this->sQuery );
+                    LogMe::log("SQL: " . $this->sQuery);
                     if (!empty($this->saParams)) {
-                        LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                        LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                     }
                 }
                 if (!empty($this->saParams)) {
-                    $type = array_values($this->getColumnTypes( $object, $this->saParams, 2 ));
-                    $sth  = $this->connection->prepare( $this->sQuery, $type, MDB2_PREPARE_MANIP );
-                    $sth->execute( array_values($this->saParams) );
+                    $type = array_values($this->getColumnTypes($object, $this->saParams, 2));
+                    $sth  = $this->connection->prepare($this->sQuery, $type, MDB2_PREPARE_MANIP);
+                    $sth->execute(array_values($this->saParams));
                 }
                 $result = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
                 $result = false;
             }
         } else {
-           x( Wl::ERROR_INFO_UPDATE_ID, $this );
+            x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
         return $result;
     }
@@ -277,9 +276,9 @@ class Dal_Mdb2 extends Dal implements IDal
     {
         $id = $dataobject->getId();
         if (isset($id)) {
-            $result = $this->update( $dataobject );
+            $result = $this->update($dataobject);
         } else {
-            $result = $this->save( $dataobject );
+            $result = $this->save($dataobject);
         }
         return $result;
     }
@@ -311,11 +310,11 @@ class Dal_Mdb2 extends Dal implements IDal
      *
      * @return 对象列表数组
      */
-    public function get($object, $filter=null, $sort=Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
@@ -324,14 +323,14 @@ class Dal_Mdb2 extends Dal implements IDal
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($limit)->result();
             $this->executeSQL();
             $result                    = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -359,28 +358,28 @@ class Dal_Mdb2 extends Dal implements IDal
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        $result=null;
+        $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
-            $row = $this->stmt->fetchRow( Config_Mdb2::$fetchmode );
+            $row = $this->stmt->fetchRow(Config_Mdb2::$fetchmode);
             if (isset($row)) {
-                $result = UtilObject::array_to_object( $row, $this->classname );
+                $result = UtilObject::array_to_object($row, $this->classname);
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -394,23 +393,23 @@ class Dal_Mdb2 extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             if ($id != null && $id > 0) {
                 $_SQL = new Crud_Sql_Select();
-                $where        = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $row          = $this->stmt->fetchRow(Config_Mdb2::$fetchmode);
                 if (isset($row)) {
-                    $result = UtilObject::array_to_object( $row, $this->classname );
+                    $result = UtilObject::array_to_object($row, $this->classname);
                 }
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -433,25 +432,25 @@ class Dal_Mdb2 extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
-            $this->stmt = &$this->connection->query( $this->sQuery );
+            $this->stmt = &$this->connection->query($this->sQuery);
             $result     = $this->stmt->fetchOne();
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -482,31 +481,34 @@ class Dal_Mdb2 extends Dal implements IDal
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) return null;
-            if (!$this->validParameter( $object)) return null;
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
+                return null;
+            }
+            if (!$this->validParameter($object)) {
+                return null;
+            }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             if (Config_Db::$db == EnumDbSource::DB_MYSQL) {
-                $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint.",".($endPoint - $startPoint + 1))->result();
+                $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             } elseif (Config_Db::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Mdb2::orm( $this->classname );
-                $whereclause  = SqlServer_Crud_Sql_Select::pageSql( $startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort );
+                $tablename    = Config_Mdb2::orm($this->classname);
+                $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             }
-            $result = $this->sqlExecute( $this->sQuery, $object );
+            $result = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 }
-?>

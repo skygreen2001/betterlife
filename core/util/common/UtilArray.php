@@ -16,7 +16,7 @@ class UtilArray extends Util
      * The main function for converting to an XML document.
      * Pass in a multi dimensional array and this recrusively loops through and builds up an XML document.
      * @example
-     * 示例: 
+     * 示例:
      *     $data = array("id" => "8", "member_id" => "5", "app_name" => "mall", "username" => "pass", "relation" => array("Role" => "roleId", "Function" => "functionId"));
      *     $data = array("a", "b", "c", "d", "e" => array("a", "b", "c"));
      *     echo UtilArray::array_to_xml( $data, 'Member' );
@@ -40,7 +40,7 @@ class UtilArray extends Util
      *                )
      *            )
      *        );
-     * 生成xml如下: 
+     * 生成xml如下:
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
      *     <class>
@@ -62,13 +62,17 @@ class UtilArray extends Util
     public static function array_to_xml($data, $rootNodeName = 'data', &$xml = null)
     {
         // turn off compatibility mode as simple xml throws a wobbly if you don't.
-        if (ini_get('zend.ze1_compatibility_mode') == 1 ) ini_set ( 'zend.ze1_compatibility_mode', 0 );
-        if (is_null( $xml)) $xml = new SimpleXMLElement("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+        if (ini_get('zend.ze1_compatibility_mode') == 1) {
+            ini_set('zend.ze1_compatibility_mode', 0);
+        }
+        if (is_null($xml)) {
+            $xml = new SimpleXMLElement("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+        }
 
         // loop through the data passed in.
-        foreach ( $data as $key => $value) {
+        foreach ($data as $key => $value) {
             // no numeric keys in our xml please!
-            if (is_numeric( $key )) {
+            if (is_numeric($key)) {
                 $key = $rootNodeName;
             }
 
@@ -98,8 +102,8 @@ class UtilArray extends Util
 
             // if there is another array found recrusively call this function
             if (is_array($value)) {
-                $node = self::is_assoc( $value ) || is_numeric($value) ? $xml->addChild($key) : $xml;
-                self::array_to_xml( $value, $key, $node );
+                $node = self::is_assoc($value) || is_numeric($value) ? $xml->addChild($key) : $xml;
+                self::array_to_xml($value, $key, $node);
             } else {
                 // add single node.
                 $value = htmlentities($value, ENT_COMPAT, "UTF-8");
@@ -113,7 +117,7 @@ class UtilArray extends Util
         // if you want the XML to be formatted, use the below instead to return the XML
         $doc = new DOMDocument('1.0', "UTF-8");
         $doc->preserveWhiteSpace = false;
-        $doc->loadXML( $xml->asXML() );
+        $doc->loadXML($xml->asXML());
         $doc->formatOutput = true;
         return $doc->saveXML();
     }
@@ -123,7 +127,7 @@ class UtilArray extends Util
      * @param array $filename 文件名
      * @param array $data 符合cml格式的数据
      * @example
-     * 示例: 
+     * 示例:
      *     $data=array("id"=>"8","member_id"=>"5","app_name"=>"mall","username"=>"pass","relation"=>array("Role"=>"roleId","Function"=>"functionId"));
      *     $data=array("a","b","c","d","e"=>array("a","b","c"));
      *     echo UtilArray::array_to_xml($data, 'Member');
@@ -147,7 +151,7 @@ class UtilArray extends Util
      *                )
      *            )
      *        );
-     * 生成xml如下: 
+     * 生成xml如下:
      * <?xml version="1.0" encoding="utf-8"?>
      * <classes>
      *     <class>
@@ -164,7 +168,7 @@ class UtilArray extends Util
      */
     public static function saveXML($filename, $data, $rootNodeName = 'data')
     {
-        $result = UtilArray::array_to_xml( $data, $rootNodeName );
+        $result = UtilArray::array_to_xml($data, $rootNodeName);
         $result = str_replace("  ", "    ", $result);
         $result = str_replace("    ", "    ", $result);
         file_put_contents($filename, $result);
@@ -173,7 +177,7 @@ class UtilArray extends Util
     /**
      * Convert an XML document to a multi dimensional array
      * Pass in an XML document (or SimpleXMLElement object) and this recrusively loops through and builds a representative array
-     * 示例: 
+     * 示例:
      *     $data = array("id" => "8", "member_id" => "5", "app_name" => "mall", "username" => "pass", "relation" => array("Role" => "roleId", "Function" => "functionId"));
      *     $data = array("a", "b", "c", "d", "e" => array("a", "b", "c"));
      *     $xml = UtilArray::array_to_xml( $data, 'Member' );
@@ -197,11 +201,11 @@ class UtilArray extends Util
         // $attr_key = "@".self::XML_ELEMENT_ATTRIBUTES;
         // unset($children[$attr_key]);
         foreach ($children as $key => $node) {
-            $node = self::xml_to_array( $node, $rootNodeName );
+            $node = self::xml_to_array($node, $rootNodeName);
 
             // support for 'anon' non-associative arrays
-            if (contain( $key, $rootNodeName . "_" )) {
-               $key = count($arr);
+            if (contain($key, $rootNodeName . "_")) {
+                $key = count($arr);
             }
             // if ($key == 'anon' ) $key = count( $arr );
 
@@ -227,7 +231,7 @@ class UtilArray extends Util
 
     /**
     * 获取多重数组指定key的值
-    * 当数据为多重时，可以通过点隔开的key获取指定key的值  
+    * 当数据为多重时，可以通过点隔开的key获取指定key的值
     * @param $array_key 中间以小数点隔开
     * @return unknown
     * @example:
@@ -238,10 +242,12 @@ class UtilArray extends Util
     {
          $var = explode('.', $array_multi_key);
          $result = $array_multi;
-         foreach ($var as $key) {
-            if (!isset($result[$key])) { return false; }
+        foreach ($var as $key) {
+            if (!isset($result[$key])) {
+                return false;
+            }
             $result = $result[$key];
-         }
+        }
          return $result;
     }
 
@@ -271,7 +277,7 @@ class UtilArray extends Util
         static $result_array = array();
         foreach ($array as $value) {
             if (is_array($value)) {
-                UtilArray::array_multi2single( $value );
+                UtilArray::array_multi2single($value);
             } else {
                 $result_array[] = $value;
             }
@@ -303,7 +309,7 @@ class UtilArray extends Util
                 } else {
                     foreach ($arr as $key => $value) {
                         if ($propertyValue == $value) {
-                            if (endWith( $key, $pre1sufix )) {
+                            if (endWith($key, $pre1sufix)) {
                                 return $key;
                             }
                         }
@@ -327,10 +333,10 @@ class UtilArray extends Util
         $NullValue = "^^^";
         foreach ($Array as $Key => $Value) {
             if (is_object($Value)) {
-                $Value = UtilObject::object_to_array( $Value );
+                $Value = UtilObject::object_to_array($Value);
             }
             if (is_array($Value)) {
-                $ReturnValue = '^^array^'.self::Array2String($Value);
+                $ReturnValue = '^^array^' . self::Array2String($Value);
             } else {
                 $ReturnValue = ( strlen($Value) > 0 ) ? $Value : $NullValue;
             }
@@ -355,11 +361,11 @@ class UtilArray extends Util
             if ($Value != $NullValue) {
                 $ReturnValue = base64_decode(urldecode($Value));
                 if (substr($ReturnValue, 0, 8) == '^^array^') {
-                    $ReturnValue = self::String2Array( substr($ReturnValue,8) );
+                    $ReturnValue = self::String2Array(substr($ReturnValue, 8));
                 }
                 $Return[$DecodedKey] = $ReturnValue;
             } else {
-              $Return[$DecodedKey] = NULL;
+                $Return[$DecodedKey] = null;
             }
         }
         return $Return;
@@ -470,7 +476,9 @@ class UtilArray extends Util
     public static function sort(&$two_dimension_array, $key, $order)
     {
         $isAsc = true;
-        if (trim(strtolower($order)) == "desc" ) $isAsc = false;
+        if (trim(strtolower($order)) == "desc") {
+            $isAsc = false;
+        }
         usort($two_dimension_array, build_sorter($key, $isAsc));
     }
 
@@ -478,7 +486,9 @@ class UtilArray extends Util
     {
         return function ($a, $b) use ($key, $isAsc) {
             $result = strnatcmp($a[$key], $b[$key]);
-            if (!$isAsc ) $result = 0 - $result;
+            if (!$isAsc) {
+                $result = 0 - $result;
+            }
             return $result;
         };
     }
@@ -497,11 +507,14 @@ class UtilArray extends Util
      * )
      * $content = UtilArray::like( $content, "db" );
      */
-    public static function like($data, $needle) {
+    public static function like($data, $needle)
+    {
         $result = array();
-        foreach ($data as $key => $value)
-          if (preg_match('/' . $needle . '/', $key) )
-            $result[$key] = $value;
+        foreach ($data as $key => $value) {
+            if (preg_match('/' . $needle . '/', $key)) {
+                $result[$key] = $value;
+            }
+        }
         return $result;
     }
 
@@ -519,12 +532,15 @@ class UtilArray extends Util
      * )
      * $content = UtilArray::likeValue( $content, "keys=38," );
      */
-    public static function likeValue($data, $needle) {
+    public static function likeValue($data, $needle)
+    {
         $result = array();
         if ($data && is_array($data)) {
-            foreach ($data as $key => $value)
-            if (preg_match('/' . $needle . '/', $value) )
-                $result[$key] = $value;
+            foreach ($data as $key => $value) {
+                if (preg_match('/' . $needle . '/', $value)) {
+                    $result[$key] = $value;
+                }
+            }
         }
         return $result;
     }
@@ -535,15 +551,18 @@ class UtilArray extends Util
      * 示例:
      *    Array
      *     (
-     *        [0] => 
-     *        [1] => 
-     *        [2] => 
+     *        [0] =>
+     *        [1] =>
+     *        [2] =>
      *     )
      * @param array $data 源数组
      * @return boolean 数组所有元素是否都是空值
      */
-     public static function empty($data) {
-        if (empty($data) ) return true;
+    public static function empty($data)
+    {
+        if (empty($data)) {
+            return true;
+        }
         if ((is_array($data)) && count($data) > 0) {
             foreach ($data as $one) {
                 if (!empty($one)) {
@@ -554,5 +573,3 @@ class UtilArray extends Util
         return true;
     }
 }
-
-?>

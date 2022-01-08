@@ -1,4 +1,5 @@
 <?php
+
 //<editor-fold defaultstate="collapsed" desc="枚举类型">
 /**
  * -----------| 枚举类型: DataObject默认关键字 |-----------
@@ -52,7 +53,7 @@ class EnumDataObjectDefaultKeyword extends Enum
  *
  * 数据对象关系定义
  *
- * 数据对象间关系对应表关系定义，有以下关系: 
+ * 数据对象间关系对应表关系定义，有以下关系:
  *
  * 一对一，一对多，多对多
  * @category betterlife
@@ -108,7 +109,7 @@ class EnumIDNameStrategy extends Enum
      */
     const TABLENAMEID = 1;
     /**
-     * ID名称为:对象名+连接符+'id' 
+     * ID名称为:对象名+连接符+'id'
      *
      * 如果对象名为User,连接符为'_';则ID名称为:user_id【头字母大小写均可】
      */
@@ -130,7 +131,7 @@ class EnumForeignIDNameStrategy extends Enum
      */
     const TABLENAMEID = 1;
     /**
-     * ID名称为:对象名+连接符+'id' 
+     * ID名称为:对象名+连接符+'id'
      *
      * 如果对象名为User,连接符为'_';则ID名称为:user_id【头字母大小写均可】
      */
@@ -177,7 +178,7 @@ class EnumDataSpec extends Enum
  *
  * - many_many_table:多对多关系表名称定义，如无定义，则按默认规则查找指定表。
  *
- *   多对多表名默认规则: 
+ *   多对多表名默认规则:
  *
  *        多对多【主控端-即定义为$many_many】:数据库表名前缀+“_”+[文件夹目录+“_”]...+TABLENAME_RELATION+"_"+主表名+关系表名。
  *
@@ -189,7 +190,7 @@ class EnumDataSpec extends Enum
  *
  * - foreign_id:在对象之间或者说表之间存在一对一，一对多，多对多的关系时，可通过它指定外键的名称，如果没有指定，则按默认定义。
  *
- *   外键的名称默认定义: 
+ *   外键的名称默认定义:
  *
  *   一对一:【关系表类名+"_"+id】；注意关系表类名头字母小写
  *
@@ -205,13 +206,13 @@ class EnumDataSpec extends Enum
  *
  *   多对多【主控端】:多对多关系会产生一张中间表,它定义在EnumDataSpec::MANY_MANY_TABLE里，
  *
- *          注意表类名头字母小写 
+ *          注意表类名头字母小写
  *
  *          主表类外键名称: 【主表类名+"_"+id】，关系表类外键名称: 【关系表类名+"_"+id】
  *
  *   多对多【从属端】:多对多关系会产生一张中间表,它定义在EnumDataSpec::MANY_MANY_TABLE里，
  *
- *         注意表类名头字母小写 
+ *         注意表类名头字母小写
  *
  *         主表类外键名称: 【主表类名+"_"+id】，关系表类外键名称: 【关系表类名+"_"+id】
  *
@@ -250,7 +251,9 @@ class DataObjectSpec
     /**
      * 初始化方法
      */
-    public static function init() {}
+    public static function init()
+    {
+    }
 
     //<editor-fold defaultstate="collapsed" desc="数据对象的列规格的处理维护方法">
     /**
@@ -273,7 +276,9 @@ class DataObjectSpec
         }
         $propertyname = EnumDataObjectDefaultKeyword::NAME_FIELD_SPEC;
         if (is_string($dataobject)) {
-            if (class_exists($dataobject) ) $dataobject = new $dataobject();
+            if (class_exists($dataobject)) {
+                $dataobject = new $dataobject();
+            }
         }
         if (method_exists($dataobject, 'classname')) {
             $classname      = $dataobject->classname();
@@ -307,7 +312,7 @@ class DataObjectSpec
      */
     public static function getRealIDColumnNameStatic($dataobject)
     {
-        $field_spec = self::real_field_spec_static( $dataobject );
+        $field_spec = self::real_field_spec_static($dataobject);
         $columnName = EnumColumnNameDefault::ID;
         if (isset($field_spec)) {
             if (array_key_exists(EnumColumnNameDefault::ID, $field_spec)) {
@@ -315,7 +320,7 @@ class DataObjectSpec
             }
         }
         if ($columnName === EnumColumnNameDefault::ID) {
-            $idname_strategy = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY );
+            $idname_strategy = UtilReflection::getClassStaticPropertyValue($dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY);
             switch ($idname_strategy) {
                 case EnumIDNameStrategy::ID:
                     break;
@@ -335,7 +340,7 @@ class DataObjectSpec
                         $classname = $dataobject;
                     }
                     $classname     = lcfirst($classname);
-                    $idname_concat = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT );
+                    $idname_concat = UtilReflection::getClassStaticPropertyValue($dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT);
                     $columnName    = $classname . $idname_concat . EnumColumnNameDefault::ID;
                     break;
                 default:
@@ -348,12 +353,13 @@ class DataObjectSpec
     /**
      * 针对DataObject对象定义的非数据对象属性需要被过滤掉。
      *
-     * 根据数据对象列规格说明移除指定的列。 
+     * 根据数据对象列规格说明移除指定的列。
      * @param array $arrDataObject 数据对象数组
      * @param mixed $obj 指明所属的对象
      * @return array DataObject对象定义的非数据对象属性被过滤掉后的数据对象数组
      */
-    public static function removeNotObjectDataField($arrDataObject, $obj) {
+    public static function removeNotObjectDataField($arrDataObject, $obj)
+    {
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FIELD_SPEC]);
         //unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FIELD_SPEC_DEFAULT]);
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY]);
@@ -362,7 +368,7 @@ class DataObjectSpec
         unset($arrDataObject[EnumDataObjectDefaultKeyword::NAME_FOREIGNID_CONCAT]);
         unset($arrDataObject[self::NAME_REAL_FIELDSPEC]);
         unset($arrDataObject["currentDao"]);
-        $field_spec = self::real_field_spec( $obj );
+        $field_spec = self::real_field_spec($obj);
         if (isset($field_spec)) {
             if (array_key_exists(EnumDataSpec::REMOVE, $field_spec)) {
                 $field_spec_remove = $field_spec[EnumDataSpec::REMOVE];
@@ -393,9 +399,10 @@ class DataObjectSpec
      * @param object $dataobject 当前对象
      * @return array 当前数据对象的列规格说明
      */
-    public static function real_field_spec($dataobject) {
+    public static function real_field_spec($dataobject)
+    {
         if (!isset($dataobject->real_fieldspec)) {
-            $dataobject->real_fieldspec = self::real_field_spec_static( $dataobject );
+            $dataobject->real_fieldspec = self::real_field_spec_static($dataobject);
             //var_dump($dataobject->real_fieldspec);
         }
         return $dataobject->real_fieldspec;
@@ -407,7 +414,8 @@ class DataObjectSpec
      * @param string $columnFlag 默认列标识字段,定义在枚举类型: EnumColumnNameDefault
      * @param string 实际列名
      */
-    public static function getRealColumnName($dataobject, $columnFlag) {
+    public static function getRealColumnName($dataobject, $columnFlag)
+    {
         $field_spec = self::real_field_spec($dataobject);
         if (isset($field_spec)) {
             if (array_key_exists($columnFlag, $field_spec)) {
@@ -423,9 +431,10 @@ class DataObjectSpec
      * @param string 列名
      * @param mixed 列值
      */
-    public static function setRealProperty($dataobject, $columnFlag, $value) {
+    public static function setRealProperty($dataobject, $columnFlag, $value)
+    {
         if ($dataobject instanceof DataObject) {
-            $columnName = self::getRealColumnName( $dataobject, $columnFlag );
+            $columnName = self::getRealColumnName($dataobject, $columnFlag);
             $dataobject->$columnName = $value;
         } else {
             LogMe::record(Wl::ERROR_INFO_EXTENDS_CLASS);
@@ -437,20 +446,23 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * @param string $columnName 列名称
      */
-    public static function isColumnRemove($dataobject, $columnName) {
+    public static function isColumnRemove($dataobject, $columnName)
+    {
         if ($dataobject instanceof DataObject) {
-            $field_spec_remove = self::getRealColumnName( $dataobject, EnumDataSpec::REMOVE );
+            $field_spec_remove = self::getRealColumnName($dataobject, EnumDataSpec::REMOVE);
             if (is_array($field_spec_remove)) {
                 $columnNameLcfirst = $columnName;
                 $columnNameLcfirst = lcfirst($columnNameLcfirst);
-                if (in_array($columnNameLcfirst, $field_spec_remove) ||
-                     in_array(ucfirst($columnName), $field_spec_remove)) {
+                if (
+                    in_array($columnNameLcfirst, $field_spec_remove) ||
+                     in_array(ucfirst($columnName), $field_spec_remove)
+                ) {
                     return true;
                 }
             }
             return false;
         } else {
-            LogMe::record( Wl::ERROR_INFO_EXTENDS_CLASS );
+            LogMe::record(Wl::ERROR_INFO_EXTENDS_CLASS);
         }
     }
 
@@ -459,7 +471,8 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * @return string 数据对象当前唯一标识列名
      */
-    public static function getRealIDColumnName($dataobject) {
+    public static function getRealIDColumnName($dataobject)
+    {
         if (is_string($dataobject)) {
             if (class_exists($dataobject)) {
                 $dataobject = new $dataobject();
@@ -467,10 +480,10 @@ class DataObjectSpec
         }
 
         if ($dataobject instanceof DataObject) {
-            $columnName = self::getRealColumnName( $dataobject, EnumColumnNameDefault::ID );
+            $columnName = self::getRealColumnName($dataobject, EnumColumnNameDefault::ID);
 
             if ($columnName === EnumColumnNameDefault::ID) {
-                $idname_strategy = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY );
+                $idname_strategy = UtilReflection::getClassStaticPropertyValue($dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_STRATEGY);
                 switch ($idname_strategy) {
                     case EnumIDNameStrategy::ID:
                         break;
@@ -482,7 +495,7 @@ class DataObjectSpec
                     case EnumIDNameStrategy::TABLENAME_ID:
                         $classname     = $dataobject->classname();
                         $classname     = lcfirst($classname);
-                        $idname_concat = UtilReflection::getClassStaticPropertyValue( $dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT );
+                        $idname_concat = UtilReflection::getClassStaticPropertyValue($dataobject, EnumDataObjectDefaultKeyword::NAME_IDNAME_CONCAT);
                         $columnName = $classname . $idname_concat . EnumColumnNameDefault::ID;
                         break;
                     default:
@@ -491,7 +504,7 @@ class DataObjectSpec
             }
             return $columnName;
         } else {
-            LogMe::log( Wl::ERROR_INFO_EXTENDS_CLASS );
+            LogMe::log(Wl::ERROR_INFO_EXTENDS_CLASS);
         }
     }
     //</editor-fold>
@@ -502,9 +515,10 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * return bool 是否需要记录唯一标识。
      */
-    public static function isNeedID($dataobject) {
+    public static function isNeedID($dataobject)
+    {
         $idName = self::getRealIDColumnName($dataobject);
-        if (self::isColumnRemove( $dataobject, $idName )) {
+        if (self::isColumnRemove($dataobject, $idName)) {
             return false;
         }
         return true;
@@ -517,9 +531,10 @@ class DataObjectSpec
      * @param string $dataobject 当前对象
      * return bool 是否需要记录CommitTime
      */
-    public static function isNeedCommitTime($dataobject) {
-        $commitTimeName = self::getRealColumnName( $dataobject, EnumColumnNameDefault::COMMITTIME );
-        if (self::isColumnRemove( $dataobject, $commitTimeName )) {
+    public static function isNeedCommitTime($dataobject)
+    {
+        $commitTimeName = self::getRealColumnName($dataobject, EnumColumnNameDefault::COMMITTIME);
+        if (self::isColumnRemove($dataobject, $commitTimeName)) {
             return false;
         }
         return true;
@@ -531,13 +546,13 @@ class DataObjectSpec
      * 它有可能有别名，因此也需要判断其别名是否存在。
      * @param string $dataobject 当前对象
      */
-    public static function isNeedUpdateTime($dataobject) {
-        $updateTimeName = self::getRealColumnName( $dataobject, EnumColumnNameDefault::UPDATETIME );
-        if (self::isColumnRemove( $dataobject, $updateTimeName )) {
+    public static function isNeedUpdateTime($dataobject)
+    {
+        $updateTimeName = self::getRealColumnName($dataobject, EnumColumnNameDefault::UPDATETIME);
+        if (self::isColumnRemove($dataobject, $updateTimeName)) {
             return false;
         }
         return true;
     }
     //</editor-fold>
-
 }

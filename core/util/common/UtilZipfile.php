@@ -41,7 +41,7 @@ class UtilZipfile
     public $is_dir_info_include = false;
 
     /**
-     * Converts an Unix timestamp to a four byte DOS date and time format (date 
+     * Converts an Unix timestamp to a four byte DOS date and time format (date
      * in high two bytes, time in low two bytes allowing magnitude comparison).
      *
      * @param  integer  the current Unix timestamp
@@ -54,8 +54,7 @@ class UtilZipfile
     {
         $timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
 
-        if ($timearray['year'] < 1980)
-        {
+        if ($timearray['year'] < 1980) {
             $timearray['year']    = 1980;
             $timearray['mon']     = 1;
             $timearray['mday']    = 1;
@@ -90,10 +89,16 @@ class UtilZipfile
             }
         } else {
             $name = basename($name);
-            if (!is_int($showName) ) $name = $showName;
+            if (!is_int($showName)) {
+                $name = $showName;
+            }
         }
 
-        if (contain(strtolower(client_os()), "windows") ) if (UtilString::is_utf8( $name)) $name = UtilString::utf82gbk( $name );
+        if (contain(strtolower(client_os()), "windows")) {
+            if (UtilString::is_utf8($name)) {
+                $name = UtilString::utf82gbk($name);
+            }
+        }
 
         $dtime    = dechex($this->unix2DosTime($time));
         $hexdtime = '\x' . $dtime[6] . $dtime[7]
@@ -144,14 +149,14 @@ class UtilZipfile
         $cdrec .= pack('V', $crc);            // crc32
         $cdrec .= pack('V', $c_len);        // compressed filesize
         $cdrec .= pack('V', $unc_len);        // uncompressed filesize
-        $cdrec .= pack('v', strlen($name) );// length of filename
-        $cdrec .= pack('v', 0 );            // extra field length
-        $cdrec .= pack('v', 0 );            // file comment length
-        $cdrec .= pack('v', 0 );            // disk number start
-        $cdrec .= pack('v', 0 );            // internal file attributes
-        $cdrec .= pack('V', 32 );            // external file attributes - 'archive' bit set
+        $cdrec .= pack('v', strlen($name));// length of filename
+        $cdrec .= pack('v', 0);            // extra field length
+        $cdrec .= pack('v', 0);            // file comment length
+        $cdrec .= pack('v', 0);            // disk number start
+        $cdrec .= pack('v', 0);            // internal file attributes
+        $cdrec .= pack('V', 32);            // external file attributes - 'archive' bit set
 
-        $cdrec .= pack('V', $this -> old_offset ); // relative offset of local header
+        $cdrec .= pack('V', $this -> old_offset); // relative offset of local header
         $this  -> old_offset += strlen($fr);
 
         $cdrec .= $name;
@@ -202,21 +207,27 @@ class UtilZipfile
     private function addFiles($files)/*Only Pass Array*/
     {
         if (is_array($files)) {
-            foreach ($files as $showName => $file)
-            {
-                if (contain(strtolower(php_uname()),"windows") ) if (UtilString::is_utf8( $file)) $file = UtilString::utf82gbk( $file );
-                if (is_file($file) ) //directory check
-                {
-                    $data = implode("",file($file));
-                    $this->addFile($data,$file,$showName);
+            foreach ($files as $showName => $file) {
+                if (contain(strtolower(php_uname()), "windows")) {
+                    if (UtilString::is_utf8($file)) {
+                        $file = UtilString::utf82gbk($file);
+                    }
+                }
+                if (is_file($file)) { //directory check
+                    $data = implode("", file($file));
+                    $this->addFile($data, $file, $showName);
                 }
             }
         } elseif (is_string($files)) {
-            if (contain(strtolower(php_uname()),"windows") ) if (UtilString::is_utf8( $files)) $files = UtilString::utf82gbk( $files );
+            if (contain(strtolower(php_uname()), "windows")) {
+                if (UtilString::is_utf8($files)) {
+                    $files = UtilString::utf82gbk($files);
+                }
+            }
             if (is_file($files)) {
-                $data     = implode("",file($files));
+                $data     = implode("", file($files));
                 $showName = basename($files);
-                $this->addFile( $data, $files, $showName );
+                $this->addFile($data, $files, $showName);
             }
         }
     }
@@ -232,7 +243,7 @@ class UtilZipfile
      */
     private function output($file)
     {
-        $fp = fopen($file,"w");
+        $fp = fopen($file, "w");
         fwrite($fp, $this->file());
         fclose($fp);
     }
@@ -289,7 +300,7 @@ class UtilZipfile
      *    UtilZipfile::zip($texFName, $outputFile, $img_dir, "images");
      * ```
      */
-    public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password=null)
+    public static function zip($main_filename, $out_zip_filename, $attachment_source_dir = null, $attachment_dest_dir = "images", $password = null)
     {
         if (!empty($out_zip_filename) && !empty($main_filename)) {
             ini_set('memory_limit', '-1'); //取消内存限制
@@ -307,7 +318,9 @@ class UtilZipfile
             }
             $zip_dir = dirname($out_zip_filename);
             UtilFileSystem::createDir($zip_dir);
-            if (!empty($attachment_source_dir) ) $zipFile->addDir($attachment_source_dir, $attachment_dest_dir, $zip_method);
+            if (!empty($attachment_source_dir)) {
+                $zipFile->addDir($attachment_source_dir, $attachment_dest_dir, $zip_method);
+            }
             $zipFile
                 ->saveAsFile($out_zip_filename)
                 ->close();
@@ -327,9 +340,7 @@ class UtilZipfile
         }
         $zipFile    = new \PhpZip\ZipFile();
         $zipFile->openFile($zip_filename);
-        UtilFileSystem::createDir( $outputDir );
+        UtilFileSystem::createDir($outputDir);
         $zipFile->extractTo($outputDir);
     }
 }
-
-?>

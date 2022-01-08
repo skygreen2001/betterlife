@@ -59,4 +59,3 @@ class Config_AutoCode extends ConfigBB
      */
     const GROUP_ADMIN_MENU_CORE = "core";
 }
-?>

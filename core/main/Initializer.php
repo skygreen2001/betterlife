@@ -80,9 +80,9 @@ class Initializer
      */
     public static function autoload($class_name)
     {
-        if (!empty (self::$coreFiles)) {
+        if (!empty(self::$coreFiles)) {
             foreach (self::$coreFiles as $coreFile) {
-                if (array_key_exists($class_name,  $coreFile)) {
+                if (array_key_exists($class_name, $coreFile)) {
                     class_exists($class_name) || require($coreFile[$class_name]);
                     return;
                 }
@@ -128,8 +128,8 @@ class Initializer
             require_once 'helper/Profiler.php';
             Profiler::init();
             set_include_path(get_include_path() . PATH_SEPARATOR . Gc::$nav_root_path . "core" . DS . "lang");
-            Profiler::mark( Wl::LOG_INFO_PROFILE_RUN );
-            Profiler::mark( Wl::LOG_INFO_PROFILE_INIT );
+            Profiler::mark(Wl::LOG_INFO_PROFILE_RUN);
+            Profiler::mark(Wl::LOG_INFO_PROFILE_INIT);
         }
         /**
          * 初始检验闸门
@@ -167,7 +167,7 @@ class Initializer
          * 其他需要初始化的工作
          */
         if (Gc::$dev_profile_on) {
-            Profiler::unmark( Wl::LOG_INFO_PROFILE_INIT );
+            Profiler::unmark(Wl::LOG_INFO_PROFILE_INIT);
         }
     }
 
@@ -180,7 +180,7 @@ class Initializer
         $file_tag_root = Gc::$nav_root_path . $root_taglib;
 
         if (is_dir($file_tag_root)) {
-            $tmps = UtilFileSystem::getAllFilesInDirectory( $file_tag_root );
+            $tmps = UtilFileSystem::getAllFilesInDirectory($file_tag_root);
             foreach ($tmps as $tmp) {
                 require_once($tmp);
             }
@@ -198,19 +198,39 @@ class Initializer
         if ($phpver >= 7) {
             $pos1 = strpos($phpver, ".");
             $pos2 = strpos($phpver, ".", $pos1 + strlen("."));
-            $pi= substr($phpver, 0, $pos2);
+            $pi = substr($phpver, 0, $pos2);
         }
         //if (ini_get('register_globals') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置register_globals = On<br/></p>";$is_not_run_betterlife=true;}
         //if (ini_get('allow_call_time_pass_reference') != 1) {echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>请在php.ini配置文件里设置allow_call_time_pass_reference = On<br/></p>";$is_not_run_betterlife=true;}
-        if (!function_exists("imagecreate")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd php$pi-gd<br/></p>";$is_not_run_betterlife = true; }
-        if (!function_exists("curl_init")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl php$pi-curl<br/></p>";$is_not_run_betterlife = true; }
-        if (!function_exists("mb_check_encoding")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring php$pi-mbstring<br/></p>";$is_not_run_betterlife = true; }
-        if (!function_exists('mysqli_prepare')) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";$is_not_run_betterlife = true; }
-        if (!class_exists("SimpleXmlIterator")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";$is_not_run_betterlife = true; }
-        if (version_compare(phpversion(), 5.3, '<')) {
-            if (!function_exists("mysqli_stmt_fetch")) { echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";$is_not_run_betterlife = true; }
+        if (!function_exists("imagecreate")) {
+            echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装GD模块支持,名称:php_gd2,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-gd && sudo apt-get install php5-gd php$pi-gd<br/></p>";
+            $is_not_run_betterlife = true;
         }
-        if ($is_not_run_betterlife ) die();
+        if (!function_exists("curl_init")) {
+            echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Curl模块支持,名称:php_curl,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-curl && sudo apt-get install php5-curl php$pi-curl<br/></p>";
+            $is_not_run_betterlife = true;
+        }
+        if (!function_exists("mb_check_encoding")) {
+            echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mbstring模块支持,名称:php_mbstring,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mbstring php$pi-mbstring<br/></p>";
+            $is_not_run_betterlife = true;
+        }
+        if (!function_exists('mysqli_prepare')) {
+            echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php$pi-mysqli</p>";
+            $is_not_run_betterlife = true;
+        }
+        if (!class_exists("SimpleXmlIterator")) {
+            echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装simplexml模块支持,名称:php_xml,请加载<br/>Ubuntu服务器下执行: sudo apt install php-zip php-xml php$pi-zip php$pi-xml<br/></p>";
+            $is_not_run_betterlife = true;
+        }
+        if (version_compare(phpversion(), 5.3, '<')) {
+            if (!function_exists("mysqli_stmt_fetch")) {
+                echo "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装mysqli模块支持,名称:php_mysqli,请加载<br/>Ubuntu服务器下执行: sudo apt-get install php-mysqli php5-mysqli<br/></p>";
+                $is_not_run_betterlife = true;
+            }
+        }
+        if ($is_not_run_betterlife) {
+            die();
+        }
     }
 
     /**
@@ -225,7 +245,7 @@ class Initializer
         //初始化PHP版本校验
         if (version_compare(phpversion(), 5, '<')) {
             header("HTTP/1.1 500 Server Error");
-            echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>".phpversion()."</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
+            echo "<h1>需要PHP 5</h1><h2>才能运行Betterlife框架, 请安装PHP 5.0或者更高的版本.</h2><p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>我们已经探测到您正在运行 PHP 版本号: <b>" . phpversion() . "</b>.  为了能正常运行 BetterLife,您的电脑上需要安装PHP 版本 5.1 或者更高的版本, 并且如果可能的话，我们推荐安装 PHP 5.2 或者更高的版本.</p>";
             die();
         }
         /**
@@ -237,12 +257,13 @@ class Initializer
             ini_set('display_errors', 1);
             if (defined('E_DEPRECATED')) {
                 if (Gc::$dev_php_debug_on) {
-                    error_reporting( E_ALL ^ E_DEPRECATED);
+                    error_reporting(E_ALL ^ E_DEPRECATED);
                 } else {
-                    error_reporting( E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
+                    error_reporting(E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
                 }
+            } else {
+                error_reporting(E_ALL ^ E_WARNING);
             }
-            else error_reporting(E_ALL ^ E_WARNING);
             ini_set('display_errors', 1);
         } else {
             error_reporting(0);
@@ -255,7 +276,8 @@ class Initializer
          * class_alias需要PHP 版本>=5.3低于5.3需要以下方法方可以使用
          */
         if (!function_exists('class_alias')) {
-            function class_alias($original, $alias) {
+            function class_alias($original, $alias)
+            {
                 eval('class ' . $alias . ' extends ' . $original . ' {}');
             }
         }
@@ -272,11 +294,13 @@ class Initializer
     public static function loadCommonFunctionLibrarys()
     {
         $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
-        $files = UtilFileSystem::getAllFilesInDirectory( $dir_include_function );
+        $files = UtilFileSystem::getAllFilesInDirectory($dir_include_function);
         if (!class_exists("PEAR")) {
             require_once("helper/PEAR.php");
         }
-        if (ini_get('allow_call_time_pass_reference') === 1 ) require_once("helper/PEAR5.php");
+        if (ini_get('allow_call_time_pass_reference') === 1) {
+            require_once("helper/PEAR5.php");
+        }
         foreach ($files as $file) {
             require_once($file);
         }
@@ -295,16 +319,16 @@ class Initializer
                 self::$NAV_CORE_PATH . $core_util . DS . "common",
         );
         set_include_path(get_include_path() . PATH_SEPARATOR . join(PATH_SEPARATOR, $include_paths));
-        $dirs_root     = UtilFileSystem::getAllDirsInDriectory( self::$NAV_CORE_PATH );
+        $dirs_root     = UtilFileSystem::getAllDirsInDriectory(self::$NAV_CORE_PATH);
         $include_paths = $dirs_root;
         $module_Dir    = Gc::$nav_root_path;
         if (strlen(Gc::$module_root) > 0) {
-            $module_Dir .= Gc::$module_root.DS;
+            $module_Dir .= Gc::$module_root . DS;
         }
         foreach (Gc::$module_names as $moduleName) {
             $moduleDir = $module_Dir . $moduleName . DS;
             if (is_dir($moduleDir)) {
-                $modulesubdir = array_keys(UtilFileSystem::getSubDirsInDirectory( $moduleDir ));
+                $modulesubdir = array_keys(UtilFileSystem::getSubDirsInDirectory($moduleDir));
                 /**
                  * view主要为html,javascript,css文件；因此应该排除在外
                  */
@@ -314,7 +338,7 @@ class Initializer
                     if (is_dir($moduleDir . $subdir)) {
                         $modulePath .= $subdir . DS;
                     }
-                    $tmps = UtilFileSystem::getAllDirsInDriectory( $modulePath );
+                    $tmps = UtilFileSystem::getAllDirsInDriectory($modulePath);
                     $include_paths = array_merge($include_paths, $tmps);
                 }
             } else {
@@ -341,8 +365,10 @@ class Initializer
 
         $files = new AppendIterator();
         foreach ($dirs_root as $dir) {
-            $tmp = new ArrayObject(UtilFileSystem::getAllFilesInDirectory( $dir ));
-            if (isset($tmp) ) $files->append($tmp->getIterator());
+            $tmp = new ArrayObject(UtilFileSystem::getAllFilesInDirectory($dir));
+            if (isset($tmp)) {
+                $files->append($tmp->getIterator());
+            }
         }
 
         foreach ($files as $file) {
@@ -364,13 +390,14 @@ class Initializer
             load_module($moduleName, $moduleDir, Gc::$module_exclude_subpackage);
         }
     }
-    
+
     /**
      * 加载异常处理
      */
-    public static function loadException() {
+    public static function loadException()
+    {
         if (Gc::$dev_debug_on) {
-            switch ( Config_Exception::EXCEPTION_WAY) {
+            switch (Config_Exception::EXCEPTION_WAY) {
                 case Config_Exception::EW_WHOOPS:
                     $run     = new Whoops\Run();
                     $handler = new Whoops\Handler\PrettyPageHandler();

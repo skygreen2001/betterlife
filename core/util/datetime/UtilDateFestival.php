@@ -7,8 +7,8 @@
  * @subpackage datetime
  * @author skygreen
  */
-class UtilDateFestival extends Util 
-{ 
+class UtilDateFestival extends Util
+{
     /**
      * 元旦在指定年的日期
      * @param string $year 年。如:2012
@@ -32,10 +32,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::newyear( $year );
+        $nowfesstival       = self::newyear($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -50,7 +52,7 @@ class UtilDateFestival extends Util
         $nowyear    = $year;
         $lunarmonth = "01";
         $lunarday   = "01";
-        $date       = UtilDateLunar::convertLunarToSolar( $nowyear, $lunarmonth, $lunarday );    
+        $date       = UtilDateLunar::convertLunarToSolar($nowyear, $lunarmonth, $lunarday);
 
         return $date;
     }
@@ -64,10 +66,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::chineseNewyear( $year );
+        $nowfesstival       = self::chineseNewyear($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -81,7 +85,7 @@ class UtilDateFestival extends Util
         $nowyear = $year;
         $month   = "03";
         $day     = "08";
-        
+
         return array($nowyear, $month, $day);
     }
 
@@ -94,13 +98,15 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::womenday( $year );
+        $nowfesstival       = self::womenday($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
-    
+
     /**
      * 国庆节在指定年的日期
      * @param string $year 年。如:2012
@@ -111,7 +117,7 @@ class UtilDateFestival extends Util
         $nowyear = $year;
         $month   = "10";
         $day     = "01";
-        
+
         return array($nowyear, $month, $day);
     }
 
@@ -124,10 +130,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival = self::nationalDay( $year );
+        $nowfesstival = self::nationalDay($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -141,7 +149,7 @@ class UtilDateFestival extends Util
         $nowyear = $year;
         $month   = "09";
         $day     = "10";
-        
+
         return array($nowyear, $month, $day);
     }
 
@@ -154,10 +162,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::teacherDay( $year );
+        $nowfesstival       = self::teacherDay($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -184,10 +194,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::laborDay( $year );
+        $nowfesstival       = self::laborDay($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -204,7 +216,7 @@ class UtilDateFestival extends Util
         //得到今年的5月1号是星期几
         $w   = date('w', strtotime($nowyear . "-05" . "-01"));
         $day = 14 - $w + $day;
-        
+
         return array($nowyear, $month, $day);
     }
 
@@ -217,10 +229,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::motherDay( $year );
+        $nowfesstival       = self::motherDay($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -247,10 +261,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::christmas( $year );
+        $nowfesstival       = self::christmas($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -264,7 +280,7 @@ class UtilDateFestival extends Util
         $nowyear    = $year;
         $lunarmonth = "05";
         $lunarday   = "05";
-        $date       = UtilDateLunar::convertLunarToSolar( $nowyear, $lunarmonth, $lunarday );
+        $date       = UtilDateLunar::convertLunarToSolar($nowyear, $lunarmonth, $lunarday);
 
         return $date;
     }
@@ -278,10 +294,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::dragonboat( $year );
+        $nowfesstival       = self::dragonboat($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -308,10 +326,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::childrenday( $year );
+        $nowfesstival       = self::childrenday($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -325,7 +345,7 @@ class UtilDateFestival extends Util
         $nowyear    = $year;
         $lunarmonth = "01";
         $lunarday   = "15";
-        $date       = UtilDateLunar::convertLunarToSolar( $nowyear, $lunarmonth, $lunarday );
+        $date       = UtilDateLunar::convertLunarToSolar($nowyear, $lunarmonth, $lunarday);
 
         return $date;
     }
@@ -339,10 +359,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::isLantern( $year );
+        $nowfesstival       = self::isLantern($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -356,7 +378,7 @@ class UtilDateFestival extends Util
         $nowyear    = $year;
         $lunarmonth = "08";
         $lunarday   = "15";
-        $date       = UtilDateLunar::convertLunarToSolar( $nowyear, $lunarmonth, $lunarday );
+        $date       = UtilDateLunar::convertLunarToSolar($nowyear, $lunarmonth, $lunarday);
 
         return $date;
     }
@@ -370,10 +392,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival = self::midAutumn( $year );
-        $$nowfesstival_date =$nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
+        $nowfesstival = self::midAutumn($year);
+        $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -387,7 +411,7 @@ class UtilDateFestival extends Util
         $nowyear    = $year;
         $lunarmonth = "09";
         $lunarday   = "09";
-        $date       = UtilDateLunar::convertLunarToSolar( $nowyear, $lunarmonth, $lunarday );
+        $date       = UtilDateLunar::convertLunarToSolar($nowyear, $lunarmonth, $lunarday);
 
         return $date;
     }
@@ -401,10 +425,12 @@ class UtilDateFestival extends Util
     {
         $flag = false;
         $year = substr($date, 0, 4);
-        $nowfesstival       = self::doubleninth( $year );
+        $nowfesstival       = self::doubleninth($year);
         $$nowfesstival_date = $nowfesstival[0] . "-" . $nowfesstival[1] . "-" . $nowfesstival[2];
 
-        if ($$nowfesstival_date == $date ) $flag = true;
+        if ($$nowfesstival_date == $date) {
+            $flag = true;
+        }
         return $flag;
     }
 
@@ -415,20 +441,20 @@ class UtilDateFestival extends Util
     {
         $year   = Date("Y");
         $result = array();
-        
-        $newyear        = UtilDateFestival::newyear( $year );
-        $chineseNewyear = UtilDateFestival::chineseNewyear( $year );
-        $womenday       = UtilDateFestival::womenday( $year );
-        $nationalDay    = UtilDateFestival::nationalDay( $year );
-        $teacherDay     = UtilDateFestival::teacherDay( $year );
-        $laborDay       = UtilDateFestival::laborDay( $year );
-        $motherDay      = UtilDateFestival::motherDay( $year );
-        $christmas      = UtilDateFestival::christmas( $year );
-        $dragonboat     = UtilDateFestival::dragonboat( $year );
-        $childrenday    = UtilDateFestival::childrenday( $year );
-        $lantern        = UtilDateFestival::lantern( $year );
-        $midAutumn      = UtilDateFestival::midAutumn( $year );
-        $doubleninth    = UtilDateFestival::doubleninth( $year );
+
+        $newyear        = UtilDateFestival::newyear($year);
+        $chineseNewyear = UtilDateFestival::chineseNewyear($year);
+        $womenday       = UtilDateFestival::womenday($year);
+        $nationalDay    = UtilDateFestival::nationalDay($year);
+        $teacherDay     = UtilDateFestival::teacherDay($year);
+        $laborDay       = UtilDateFestival::laborDay($year);
+        $motherDay      = UtilDateFestival::motherDay($year);
+        $christmas      = UtilDateFestival::christmas($year);
+        $dragonboat     = UtilDateFestival::dragonboat($year);
+        $childrenday    = UtilDateFestival::childrenday($year);
+        $lantern        = UtilDateFestival::lantern($year);
+        $midAutumn      = UtilDateFestival::midAutumn($year);
+        $doubleninth    = UtilDateFestival::doubleninth($year);
         $result['newyear']        = $newyear;
         $result['chineseNewyear'] = $chineseNewyear;
         $result['womenday']       = $womenday;
@@ -446,4 +472,3 @@ class UtilDateFestival extends Util
         print_r($result);
     }
 }
-?>

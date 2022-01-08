@@ -17,7 +17,6 @@ class ExceptionDb extends ExceptionMe
      */
     public static function record($extra = null, $category = null, $link = null)
     {
-
     }
     /**
      * PDO 异常记录: 记录PDO的异常信息
@@ -26,7 +25,7 @@ class ExceptionDb extends ExceptionMe
     public static function log($errorInfo, $object = null, $code = 0, $extra = null)
     {
         if (Gc::$dev_debug_on) {
-            parent::recordException( $errorInfo, $object, $code, $extra );
+            parent::recordException($errorInfo, $object, $code, $extra);
         }
     }
 }

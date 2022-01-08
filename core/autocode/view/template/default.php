@@ -1,4 +1,5 @@
 <?php
+
 $view_contents   = isset($view_contents) ? $view_contents : "";
 $headers         = isset($headers) ? $headers : "";
 $contents        = isset($contents) ? $contents : "";
@@ -8,7 +9,7 @@ $idColumnName    = isset($idColumnName) ? $idColumnName : "";
 $edit_contents   = isset($edit_contents) ? $edit_contents : "";
 $edit_js_content = isset($edit_js_content) ? $edit_js_content : "";
 $ueTextareacontents = isset($ueTextareacontents) ? $ueTextareacontents : "";
-$list_template =<<<LISTS
+$list_template = <<<LISTS
 <div class="block">
     <div><h1>{$table_comment}列表(共计{\$count{$classname}s}个)</h1></div>
     <table class="viewdoblock">
@@ -70,4 +71,3 @@ $view_contents
     <div class="footer" align="center"><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.lists&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>返回列表</my:a><my:a href='{\$url_base}index.php?go=$appname.{$instancename}.edit&amp;id={\${$instancename}.$realId}&amp;pageNo={\$smarty.get.pageNo|default:"1"}'>修改{$table_comment}</my:a></div>
 </div>
 VIEW;
-?>

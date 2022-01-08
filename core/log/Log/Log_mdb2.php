@@ -113,9 +113,12 @@ class Log_mdb2 extends Log
      * @param int $level           Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                     $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_table = $name;
         $this->_mask = Log::UPTO($level);
@@ -348,10 +351,12 @@ class Log_mdb2 extends Log
     function _prepareStatement()
     {
         $this->_statement = $this->_db->prepare(
-                'INSERT INTO ' . $this->_table .
+            'INSERT INTO ' . $this->_table .
                 ' (id, logtime, ident, priority, message)' .
                 ' VALUES(:id, :logtime, :ident, :priority, :message)',
-                $this->_types, MDB2_PREPARE_MANIP);
+            $this->_types,
+            MDB2_PREPARE_MANIP
+        );
 
         /* Return success if we didn't generate an error. */
         return (PEAR::isError($this->_statement) === false);

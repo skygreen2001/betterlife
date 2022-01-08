@@ -16,19 +16,20 @@ class Config_Pdo extends Config_Db
      * PDO::FETCH_ASSOC, PDO::FETCH_BOTH, PDO::FETCH_LAZY and PDO::FETCH_OBJ
      */
     public static $fetchmode = PDO::FETCH_ASSOC;
-    
+
     /**
      * 返回ODBC所需的dsn字符串
      * @param string $host
-     * @param string $port 
+     * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return string ODBC所需的dsn字符串
      */
-    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
+    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
+    {
         if (!isset($dbname)) {
             $dbname = self::$dbname;
         }
@@ -86,6 +87,4 @@ class Config_Pdo extends Config_Db
         }
         return $dsn;
     }
-
 }
-?>

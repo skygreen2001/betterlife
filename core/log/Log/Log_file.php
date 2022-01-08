@@ -96,9 +96,12 @@ class Log_file extends Log
      * @param int    $level    Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                      $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_filename = $name;
         $this->_ident = $ident;
@@ -129,9 +132,11 @@ class Log_file extends Log
         }
 
         if (!empty($conf['lineFormat'])) {
-            $this->_lineFormat = str_replace(array_keys($this->_formatMap),
-                                             array_values($this->_formatMap),
-                                             $conf['lineFormat']);
+            $this->_lineFormat = str_replace(
+                array_keys($this->_formatMap),
+                array_values($this->_formatMap),
+                $conf['lineFormat']
+            );
         }
 
         if (!empty($conf['timeFormat'])) {
@@ -291,9 +296,12 @@ class Log_file extends Log
         $message = $this->_extractMessage($message);
 
         /* Build the string containing the complete log line. */
-        $line = $this->_format($this->_lineFormat,
-                               strftime($this->_timeFormat),
-                               $priority, $message) . $this->_eol;
+        $line = $this->_format(
+            $this->_lineFormat,
+            strftime($this->_timeFormat),
+            $priority,
+            $message
+        ) . $this->_eol;
 
         /* If locking is enabled, acquire an exclusive lock on the file. */
         if ($this->_locking) {
@@ -303,7 +311,7 @@ class Log_file extends Log
         /* Write the log line to the log file. */
         $success = (fwrite($this->_fp, $line) !== false);
 
-        /* Unlock the file now that we're finished writing to it. */ 
+        /* Unlock the file now that we're finished writing to it. */
         if ($this->_locking) {
             flock($this->_fp, LOCK_UN);
         }
@@ -313,5 +321,4 @@ class Log_file extends Log
 
         return $success;
     }
-
 }

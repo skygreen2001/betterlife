@@ -12,25 +12,25 @@
  */
 
 // 日志级别 从上到下，由低到高
-define('PEAR_LOG_EMERG',    0);     // 严重错误: 导致系统崩溃无法使用/* System is unusable */
-define('PEAR_LOG_ALERT',    1);     // 警戒性错误: 必须被立即修改的错误/* Immediate action required */
-define('PEAR_LOG_CRIT',     2);     // 临界值错误: 超过临界值的错误，例如一天24小时，而输入的是25小时这样/* Critical conditions */
-define('PEAR_LOG_ERR',      3);     // 一般错误: 一般性错误/* Error conditions */
-define('PEAR_LOG_WARNING',  4);     // 警告性错误: 需要发出警告的错误/* Warning conditions */
-define('PEAR_LOG_NOTICE',   5);     // 通知: 程序可以运行但是还不够完美的错误/* Normal but significant */
-define('PEAR_LOG_INFO',     6);     // 信息: 程序输出信息/* Informational */
-define('PEAR_LOG_DEBUG',    7);     // 调试: 调试信息/* Debug-level messages */
-define('PEAR_LOG_SQL',    8);     // SQL: SQL语句 注意只在调试模式开启时有效
+define('PEAR_LOG_EMERG', 0);     // 严重错误: 导致系统崩溃无法使用/* System is unusable */
+define('PEAR_LOG_ALERT', 1);     // 警戒性错误: 必须被立即修改的错误/* Immediate action required */
+define('PEAR_LOG_CRIT', 2);     // 临界值错误: 超过临界值的错误，例如一天24小时，而输入的是25小时这样/* Critical conditions */
+define('PEAR_LOG_ERR', 3);     // 一般错误: 一般性错误/* Error conditions */
+define('PEAR_LOG_WARNING', 4);     // 警告性错误: 需要发出警告的错误/* Warning conditions */
+define('PEAR_LOG_NOTICE', 5);     // 通知: 程序可以运行但是还不够完美的错误/* Normal but significant */
+define('PEAR_LOG_INFO', 6);     // 信息: 程序输出信息/* Informational */
+define('PEAR_LOG_DEBUG', 7);     // 调试: 调试信息/* Debug-level messages */
+define('PEAR_LOG_SQL', 8);     // SQL: SQL语句 注意只在调试模式开启时有效
 
-define('PEAR_LOG_ALL',      0xffffffff);    /* All messages */
-define('PEAR_LOG_NONE',     0x00000000);    /* No message */
+define('PEAR_LOG_ALL', 0xffffffff);    /* All messages */
+define('PEAR_LOG_NONE', 0x00000000);    /* No message */
 
 /* Log types for PHP's native error_log() function. */
-define('PEAR_LOG_TYPE_SYSTEM',  0); /* Use PHP's system logger */
-define('PEAR_LOG_TYPE_MAIL',    1); /* Use PHP's mail() function */
-define('PEAR_LOG_TYPE_DEBUG',   2); /* Use PHP's debugging connection */
-define('PEAR_LOG_TYPE_FILE',    3); /* Append to a file */
-define('PEAR_LOG_TYPE_SAPI',    4); /* Use the SAPI logging handler */
+define('PEAR_LOG_TYPE_SYSTEM', 0); /* Use PHP's system logger */
+define('PEAR_LOG_TYPE_MAIL', 1); /* Use PHP's mail() function */
+define('PEAR_LOG_TYPE_DEBUG', 2); /* Use PHP's debugging connection */
+define('PEAR_LOG_TYPE_FILE', 3); /* Append to a file */
+define('PEAR_LOG_TYPE_SAPI', 4); /* Use the SAPI logging handler */
 
 /**
  * The Log:: class implements both an abstraction for various logging
@@ -133,9 +133,13 @@ class Log
      * @access public
      * @since Log 1.0
      */
-    public static function factory($handler, $name = '', $ident = '',
-                                   $conf = array(), $level = PEAR_LOG_DEBUG)
-    {
+    public static function factory(
+        $handler,
+        $name = '',
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $handler = strtolower($handler);
         $class = 'Log_' . $handler;
         $classfile = 'Log/' . $class . '.php';
@@ -195,16 +199,27 @@ class Log
      * @access public
      * @since Log 1.0
      */
-    public static function singleton($handler, $name = '', $ident = '',
-                                     $conf = array(), $level = PEAR_LOG_DEBUG)
-    {
+    public static function singleton(
+        $handler,
+        $name = '',
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         static $instances;
-        if (!isset($instances)) $instances = array();
+        if (!isset($instances)) {
+            $instances = array();
+        }
 
         $signature = serialize(array($handler, $name, $ident, $conf, $level));
         if (!isset($instances[$signature])) {
-            $instances[$signature] = Log::factory($handler, $name, $ident,
-                                                  $conf, $level);
+            $instances[$signature] = Log::factory(
+                $handler,
+                $name,
+                $ident,
+                $conf,
+                $level
+            );
         }
 
         return $instances[$signature];
@@ -428,7 +443,7 @@ class Log
             } else {
                 $message = var_export($message, true);
             }
-        } elseif (is_bool($message) || $message === NULL) {
+        } elseif (is_bool($message) || $message === null) {
             $message = var_export($message, true);
         }
 
@@ -486,8 +501,10 @@ class Log
          * However, if log() was called from one of our "shortcut" functions,
          * we're going to need to go back an additional step.
          */
-        if (in_array($func, array('emerg', 'alert', 'crit', 'err', 'warning',
-                                  'notice', 'info', 'debug'))) {
+        if (
+            in_array($func, array('emerg', 'alert', 'crit', 'err', 'warning',
+                                  'notice', 'info', 'debug'))
+        ) {
             $bt2 = isset($bt[$depth + 2]) ? $bt[$depth + 2] : null;
 
             $file = is_array($bt1) ? $bt1['file'] : null;
@@ -532,15 +549,17 @@ class Log
          * "argument swapping" capability to dynamically select and position
          * the variables which will ultimately appear in the log string.
          */
-        return sprintf($format,
-                       $timestamp,
-                       $this->_ident,
-                       $this->priorityToString($priority),
-                       $message,
-                       isset($file) ? $file : '',
-                       isset($line) ? $line : '',
-                       isset($func) ? $func : '',
-                       isset($class) ? $class : '');
+        return sprintf(
+            $format,
+            $timestamp,
+            $this->_ident,
+            $this->priorityToString($priority),
+            $message,
+            isset($file) ? $file : '',
+            isset($line) ? $line : '',
+            isset($func) ? $func : '',
+            isset($class) ? $class : ''
+        );
     }
 
     /**
@@ -780,8 +799,10 @@ class Log
      */
     function detach($observer)
     {
-        if (!is_a($observer, 'Log_observer') ||
-            !isset($this->_listeners[$observer->_id])) {
+        if (
+            !is_a($observer, 'Log_observer') ||
+            !isset($this->_listeners[$observer->_id])
+        ) {
             return false;
         }
 

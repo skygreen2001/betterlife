@@ -39,8 +39,8 @@ class Log_syslog extends Log
     var $_inherit = false;
 
     /**
-     * Maximum message length that will be sent to syslog().  If the handler 
-     * receives a message longer than this length limit, it will be split into 
+     * Maximum message length that will be sent to syslog().  If the handler
+     * receives a message longer than this length limit, it will be split into
      * multiple syslog() calls.
      * @var integer
      * @access private
@@ -72,9 +72,12 @@ class Log_syslog extends Log
      * @param int    $level    Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                        $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         /* Ensure we have a valid integer value for $name. */
         if (empty($name) || !is_int($name)) {
             $name = LOG_SYSLOG;
@@ -88,9 +91,11 @@ class Log_syslog extends Log
             $this->_maxLength = $conf['maxLength'];
         }
         if (!empty($conf['lineFormat'])) {
-            $this->_lineFormat = str_replace(array_keys($this->_formatMap),
-                                             array_values($this->_formatMap),
-                                             $conf['lineFormat']);
+            $this->_lineFormat = str_replace(
+                array_keys($this->_formatMap),
+                array_values($this->_formatMap),
+                $conf['lineFormat']
+            );
         }
         if (!empty($conf['timeFormat'])) {
             $this->_timeFormat = $conf['timeFormat'];
@@ -170,9 +175,12 @@ class Log_syslog extends Log
         }
 
         /* Apply the configured line format to the message string. */
-        $message = $this->_format($this->_lineFormat,
-                                  strftime($this->_timeFormat),
-                                  $priority, $message);
+        $message = $this->_format(
+            $this->_lineFormat,
+            strftime($this->_timeFormat),
+            $priority,
+            $message
+        );
 
         /* Split the string into parts based on our maximum length setting. */
         $parts = str_split($message, $this->_maxLength);
@@ -225,5 +233,4 @@ class Log_syslog extends Log
 
         return $priorities[$priority];
     }
-
 }

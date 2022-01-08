@@ -20,7 +20,8 @@ abstract class DbInfo extends BBObject
      * @param string $dbname
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      */
-    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null) {
+    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
+    {
         $this->connect($host, $port, $username, $password, $dbname, $engine);
     }
 
@@ -36,4 +37,3 @@ abstract class DbInfo extends BBObject
      */
     abstract protected function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null);
 }
-?>

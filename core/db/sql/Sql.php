@@ -6,11 +6,13 @@
  * @package core.db.sql
  * @author skygreen
  */
-abstract class Sql {
-    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null) {
-        $this->connect( $host, $port, $username, $password, $dbname );
+abstract class Sql
+{
+    public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null)
+    {
+        $this->connect($host, $port, $username, $password, $dbname);
     }
-    
+
     /**
      * 连接数据库
      */

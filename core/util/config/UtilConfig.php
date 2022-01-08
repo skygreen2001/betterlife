@@ -21,7 +21,8 @@ class UtilConfig extends Util
     private static $current;
     public static $config = 1;
 
-    public static function Instance() {
+    public static function Instance()
+    {
         switch (self::$config) {
             case self::$config_xml:
                 self::$current = new UtilConfigXml();
@@ -47,18 +48,21 @@ class UtilConfig extends Util
      * @param string $var
      * @return unknown
      */
-    public function get($var) {
+    public function get($var)
+    {
         $var    = explode('.', $var);
         $result = $this->_settings;
         foreach ($var as $key) {
-            if (!isset($result[$key])) { return false; }
+            if (!isset($result[$key])) {
+                return false;
+            }
             $result = $result[$key];
         }
         return $result;
     }
 
-    public function load($file) {
+    public function load($file)
+    {
         trigger_error('Not yet implemented', E_USER_ERROR);
     }
 }
-?>

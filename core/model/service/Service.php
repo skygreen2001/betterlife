@@ -7,12 +7,14 @@
  * @subpackage service
  * @author skygreen
  */
-class Service extends BBObject {
+class Service extends BBObject
+{
     /**
      * @var IDao 当前使用的数据库调用对象
      */
     private static $currentDao;
-    protected static function dao() {
+    protected static function dao()
+    {
         if (empty(self::$currentDao)) {
             self::$currentDao = Manager_Db::newInstance()->dao();
         }
@@ -27,7 +29,7 @@ class Service extends BBObject {
      */
     public static function fieldsMean($tablename)
     {
-       return Manager_Db::newInstance()->dbinfo()->fieldMapNameList( $tablename );
+        return Manager_Db::newInstance()->dbinfo()->fieldMapNameList($tablename);
     }
 
     /**
@@ -40,24 +42,26 @@ class Service extends BBObject {
         if (is_array($filter)) {
             $condition = $filter;
         } elseif (is_object($filter)) {
-            $condition = UtilObject::object_to_array( $filter );
+            $condition = UtilObject::object_to_array($filter);
         }
         if (!empty($condition) && (count($condition) > 0 )) {
             $conditionArr = array();
             foreach ($condition as $key => $value) {
-                if (empty($value) && $value !== 0 && $value !== '0' ) continue;
-                if (!UtilString::is_utf8( $value )) {
-                    $value = UtilString::gbk2utf8( $value );
+                if (empty($value) && $value !== 0 && $value !== '0') {
+                    continue;
+                }
+                if (!UtilString::is_utf8($value)) {
+                    $value = UtilString::gbk2utf8($value);
                 }
                 if (is_int($value) || is_bool($value)) {
                     $conditionArr[] = $key . "='" . $value . "'";
-                } elseif (contain($value, "T00:00:00" )) {
+                } elseif (contain($value, "T00:00:00")) {
                     $value = str_replace("T00:00:00", "", $value);
                     $conditionArr[] = $key . "='" . $value . "'";
                 } else {
                     if (is_numeric($value)) {
                         $judgeKey = strtolower($key);
-                        if (contains( $judgeKey, array("type", "stat") )) {//如果是枚举类型
+                        if (contains($judgeKey, array("type", "stat"))) {//如果是枚举类型
                             $conditionArr[] = $key . "='" . $value . "'";
                             continue;
                         }
@@ -66,7 +70,7 @@ class Service extends BBObject {
                     $where_clause_one = "(";
                     $search_atom  = explode(" ", trim($value));
                     $search_key = $key;
-                    array_walk($search_atom, function(&$value, $key, $search_key) {
+                    array_walk($search_atom, function (&$value, $key, $search_key) {
                         $value = " ( $search_key LIKE '%" . $value . "%' ) ";
                     }, $search_key);
                     $where_clause_one .= implode(" and ", $search_atom);
@@ -87,34 +91,35 @@ class Service extends BBObject {
      * 转换成数组
      * @return int
      */
-    public static function toArray() {
+    public static function toArray()
+    {
         $servicename = get_called_class();
         $result      = null;
         $services = array();
         if (class_exists($servicename)) {
-           $service    = new ReflectionClass($servicename);
-           $methods    = $service->getMethods();
-           $methodsArr = array();
-           foreach ($methods as $method) {
-               if ($method->isPublic()) {
-                   $methodname = $method->getName();
-                   $params     = $method->getParameters();
-                   $paramArr   = array();
-                   $count      = 1;
-                   foreach ($params as $i => $param) {
-                       $paramname = $param->getName();
-                       if ($param->isDefaultValueAvailable()) {
-                          $paramArr[$paramname]  = $param->getDefaultValue();
-                       } else {
-                           $paramArr[$paramname] = "无默认值";
-                       }
-                       $methodsArr[$methodname]  = $paramArr;
-                   }
-               }
-               $services[$servicename] = array('methods'=>$methodsArr);
-               unset($services[$servicename]['methods']["__set"]);
-               unset($services[$servicename]['methods']["__get"]);
-           }
+            $service    = new ReflectionClass($servicename);
+            $methods    = $service->getMethods();
+            $methodsArr = array();
+            foreach ($methods as $method) {
+                if ($method->isPublic()) {
+                    $methodname = $method->getName();
+                    $params     = $method->getParameters();
+                    $paramArr   = array();
+                    $count      = 1;
+                    foreach ($params as $i => $param) {
+                        $paramname = $param->getName();
+                        if ($param->isDefaultValueAvailable()) {
+                            $paramArr[$paramname]  = $param->getDefaultValue();
+                        } else {
+                            $paramArr[$paramname] = "无默认值";
+                        }
+                        $methodsArr[$methodname]  = $paramArr;
+                    }
+                }
+                $services[$servicename] = array('methods' => $methodsArr);
+                unset($services[$servicename]['methods']["__set"]);
+                unset($services[$servicename]['methods']["__get"]);
+            }
         }
         if (count($services) > 0) {
             $result = $services;
@@ -123,4 +128,3 @@ class Service extends BBObject {
         return $result;
     }
 }
-?>

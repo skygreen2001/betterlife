@@ -1,15 +1,18 @@
 <?php
+
 $url_base = UtilNet::urlbase();
 $form_css = UtilCss::form_css();
-$default_dir=Gc::$nav_root_path."model".DS;
+$default_dir = Gc::$nav_root_path . "model" . DS;
 $show_select_lists = "";
 if (!empty($inputArr)) {
     foreach ($inputArr as $key => $value) {
         $selectd = "";
-        if ($default_value == $key ) $selectd = 'selected="selected"';
+        if ($default_value == $key) {
+            $selectd = 'selected="selected"';
+        }
         $show_select_lists .= "      <option value=\"$key\" $selectd>$value</option>";
     }
-$show_select_lists_model = <<<SHOWTABLELIST
+    $show_select_lists_model = <<<SHOWTABLELIST
       <br>
       <label class="mode">生成模式</label>
       <select name="type">
@@ -43,5 +46,3 @@ $userinput_model = <<<USERINPUT
     </body>
 </html>
 USERINPUT;
-
-?>

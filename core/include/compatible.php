@@ -18,7 +18,7 @@
  *
  *     主要是因为是应用中发现如果出现了换行，将无法找到静态引用的类
  *
- *     主要针对以下情况: 
+ *     主要针对以下情况:
  *     ```
  *         User::get( array("name" => $user->getName(),
  *                    "password" => md5($user->getPassword())) );
@@ -43,10 +43,11 @@ if (!function_exists('get_called_class')) {
              */
             $bt = debug_backtrace();
             //使用call_user_func或call_user_func_array函数调用类方法，处理如下
-            if (array_key_exists(3, $bt)
+            if (
+                array_key_exists(3, $bt)
                 && array_key_exists('function', $bt[3])
                 && in_array($bt[3]['function'], array('call_user_func', 'call_user_func_array'))
-              ) {
+            ) {
                 //如果参数是数组
                 if (is_array($bt[3]['args'][0])) {
                     $toret = $bt[3]['args'][0][0];
@@ -68,9 +69,9 @@ if (!function_exists('get_called_class')) {
             }
             $lines = file($bt[2]['file']);
             $match_line_start_pos = $bt[2]['line'] - 1;
-            if (!contain( $lines[$match_line_start_pos], "::" )) {
+            if (!contain($lines[$match_line_start_pos], "::")) {
                 $match_line_start_pos = $match_line_start_pos - 1;
-                while ( !contain( $lines[$match_line_start_pos], "::" )) {
+                while (!contain($lines[$match_line_start_pos], "::")) {
                     $match_line_start_pos = $match_line_start_pos - 1;
                     if ($match_line_start_pos == -1) {
                         break;
@@ -78,12 +79,13 @@ if (!function_exists('get_called_class')) {
                 }
             }
             if ($match_line_start_pos >= 0) {
-                preg_match_all('/([a-zA-Z0-9\_]+)::' . $bt[2]['function'] . '/',
+                preg_match_all(
+                    '/([a-zA-Z0-9\_]+)::' . $bt[2]['function'] . '/',
                     $lines[$match_line_start_pos],
                     $matches
                 );
                 if (count($matches[1]) == 1) {
-                   return $matches[1][0];
+                    return $matches[1][0];
                 } else {
                     return $matches[1][self::$i];
                 }
@@ -103,13 +105,16 @@ if (!function_exists('get_called_class')) {
  */
 if (!function_exists('file_put_contents')) {
     define('FILE_APPEND', 1);
-    function file_put_contents($n, $d, $flag = false) {
+    function file_put_contents($n, $d, $flag = false)
+    {
         $mode = ($flag == FILE_APPEND || strtoupper($flag) == 'FILE_APPEND') ? 'a' : 'wb';
         $f = @fopen($n, $mode);
         if ($f === false) {
             return 0;
         } else {
-            if (is_array($d)) $d = implode($d);
+            if (is_array($d)) {
+                $d = implode($d);
+            }
             flock($f, LOCK_EX);
             $bytes_written = fwrite($f, $d);
             flock($f, LOCK_UN);
@@ -127,8 +132,9 @@ if (!function_exists('file_put_contents')) {
  * @return 值的JSON编码呈现
  */
 if (!function_exists('json_encode')) {
-    function json_encode($value) {
-        switch ( gettype($value)) {
+    function json_encode($value)
+    {
+        switch (gettype($value)) {
             case 'double':
             case 'integer':
                 return $value > 0 ? $value : '"' . $value . '"';
@@ -156,7 +162,9 @@ if (!function_exists('json_encode')) {
                 // } else {
                 $result = '{';
                 foreach ($value as $k => $v) {
-                    if ($result != '{' ) $result .= ',';
+                    if ($result != '{') {
+                        $result .= ',';
+                    }
                     $result .= json_encode($k) . ':' . json_encode($v);
                 }
                 return $result . '}';
@@ -174,7 +182,8 @@ if (!function_exists('json_encode')) {
  * @return mixed 对象或者数组
  */
 if (!function_exists('json_decode')) {
-    function json_decode($json, $assoc) {
+    function json_decode($json, $assoc)
+    {
         include_once(dirname(__FILE__) . '/lib/json.php');
         $o = new Services_JSON();
         return $o->decode($json, $assoc);
@@ -185,9 +194,10 @@ if (!function_exists('json_decode')) {
  * 获取HTTP Request Header头信息
  */
 if (!function_exists('apache_request_headers')) {
-    function apache_request_headers() {
+    function apache_request_headers()
+    {
         foreach ($_SERVER as $key => $value) {
-            if (substr($key,0,5) == "HTTP_") {
+            if (substr($key, 0, 5) == "HTTP_") {
                 $key = str_replace(" ", "-", ucwords(strtolower(str_replace("_", " ", substr($key, 5)))));
                 $out[$key] = $value;
             } else {
@@ -202,7 +212,8 @@ if (!function_exists('apache_request_headers')) {
  *  返回数组中当前的键／值对
  */
 if (!function_exists('each')) {
-    function each($array_param) {
+    function each($array_param)
+    {
         $result = array();
         if (is_array($array_param) && count($array_param) > 0) {
             $result          = [key($array_param), current($array_param)];
@@ -212,4 +223,3 @@ if (!function_exists('each')) {
         return $result;
     }
 }
-?>

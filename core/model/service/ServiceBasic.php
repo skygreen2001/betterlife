@@ -31,7 +31,7 @@ class ServiceBasic extends Service implements IServiceBasic
      *
      *     服务类 = Service+数据对象类命名
      *
-     * 示例如下: 
+     * 示例如下:
      *
      *     - 数据对象类   : Task
      *     - 服务类      : ServiceTask
@@ -56,7 +56,7 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function save($dataobject)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             if (is_array($dataobject)) {
                 $dataobject = new $dataobject_class($dataobject);
@@ -67,7 +67,7 @@ class ServiceBasic extends Service implements IServiceBasic
                 return false;
             }
         } else {
-             LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
              return false;
         }
     }
@@ -79,7 +79,7 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function update($dataobject)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             if (is_array($dataobject)) {
                 $dataobject = new $dataobject_class($dataobject);
@@ -90,7 +90,7 @@ class ServiceBasic extends Service implements IServiceBasic
                 return false;
             }
         } else {
-             LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+             LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
              return false;
         }
     }
@@ -102,11 +102,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function deleteByID($id)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func($dataobject_class . "::deleteByID", $id);
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
         }
     }
@@ -125,11 +125,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function deleteByIds($ids)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func($dataobject_class . "::deleteByIds", $ids);
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
         }
     }
@@ -138,7 +138,7 @@ class ServiceBasic extends Service implements IServiceBasic
      * 对属性进行递增
      *
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -153,11 +153,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function increment($filter = null, $property_name, $incre_value)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func_array($dataobject_class . "::increment", array($filter, $property_name, $incre_value));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
         }
     }
@@ -166,7 +166,7 @@ class ServiceBasic extends Service implements IServiceBasic
      * 对属性进行递减
      *
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -181,11 +181,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function decrement($filter = null, $property_name, $decre_value)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func_array($dataobject_class . "::decrement", array($filter, $property_name, $decre_value));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return false;
         }
     }
@@ -193,12 +193,12 @@ class ServiceBasic extends Service implements IServiceBasic
     /**
      * 查询当前对象需显示属性的列表
      * @param string $columns 指定的显示属性，同SQL语句中的Select部分。
-     * 示例如下: 
+     * 示例如下:
      *
      *     id, name, commitTime
      *
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -208,13 +208,13 @@ class ServiceBasic extends Service implements IServiceBasic
      * 默认:SQL Where条件子语句。如: ( id=1 and name = 'sky' ) or ( name like '%sky%' )
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      1. id asc;
      *      2. name desc;
      *
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下: 
+     * 示例如下:
      *
      *    - 6, 10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
      *    - 1, 10 (相当于第1-第10条)
@@ -224,20 +224,19 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func_array($dataobject_class . "::select", array($columns, $filter, $sort, $limit));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
         }
-
     }
 
     /**
      * 查询当前对象列表
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -247,13 +246,13 @@ class ServiceBasic extends Service implements IServiceBasic
      * 默认:SQL Where条件子语句。如: ( id=1 and name = 'sky' ) or ( name like '%sky%' )
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      1. id asc;
      *      2. name desc;
      *
      * @param string $limit 分页数量:limit起始数被改写，默认从1开始，如果是0，同Mysql limit语法；
-     * 示例如下: 
+     * 示例如下:
      *
      *    - 6, 10  从第6条开始取10条(如果是mysql的limit，意味着从第五条开始，框架里不是这个意义。)
      *    - 1, 10 (相当于第1-第10条)
@@ -263,11 +262,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func_array($dataobject_class . "::get", array($filter, $sort, $limit));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
         }
     }
@@ -275,7 +274,7 @@ class ServiceBasic extends Service implements IServiceBasic
     /**
      * 查询得到单个对象实体
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -285,7 +284,7 @@ class ServiceBasic extends Service implements IServiceBasic
      * 默认:SQL Where条件子语句。如: ( id=1 and name = 'sky' ) or ( name like '%sky%' )
      *
      * @param string $sort 排序条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      1. id asc;
      *      2. name desc;
@@ -293,11 +292,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function get_one($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func_array($dataobject_class . "::get_one", array($filter, $sort));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
         }
     }
@@ -309,11 +308,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function get_by_id($id)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
             return call_user_func($dataobject_class . "::get_by_id", $id);
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
         }
     }
@@ -321,7 +320,7 @@ class ServiceBasic extends Service implements IServiceBasic
     /**
      * 对象总计数
      * @param object|string|array $filter
-     * $filter 格式示例如下: 
+     * $filter 格式示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -334,11 +333,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function count($filter = null)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func($dataobject_class . "::count",$filter);
+            return call_user_func($dataobject_class . "::count", $filter);
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return 0;
         }
     }
@@ -348,7 +347,7 @@ class ServiceBasic extends Service implements IServiceBasic
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
      * @param object|string|array $filter 查询条件，在where后的条件
-     * 示例如下: 
+     * 示例如下:
      *
      *      0. "id = 1, name = 'sky'"
      *      1. array("id = 1", "name = 'sky'")
@@ -360,7 +359,7 @@ class ServiceBasic extends Service implements IServiceBasic
      * @param string $sort 排序条件
      * 默认为 id desc
      *
-     * 示例如下: 
+     * 示例如下:
      *
      *      1. id asc;
      *      2. name desc;
@@ -368,11 +367,11 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-        $dataobject_class = self::std( $this->classname() );
+        $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
-            return call_user_func_array($dataobject_class . "::queryPage",array($startPoint,$endPoint,$filter,$sort));
+            return call_user_func_array($dataobject_class . "::queryPage", array($startPoint,$endPoint,$filter,$sort));
         } else {
-            LogMe::log( Wl::ERROR_INFO_OBJECT_UNKNOWN );
+            LogMe::log(Wl::ERROR_INFO_OBJECT_UNKNOWN);
             return null;
         }
     }
@@ -387,8 +386,8 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     public function sqlExecute($sql)
     {
-        $dataobject_class = self::std( $this->classname() );
-        return self::dao()->sqlExecute( $sql, $dataobject_class );
+        $dataobject_class = self::std($this->classname());
+        return self::dao()->sqlExecute($sql, $dataobject_class);
     }
 
     /**
@@ -396,7 +395,7 @@ class ServiceBasic extends Service implements IServiceBasic
      */
     private static function std($current_servicename)
     {
-        if (array_key_exists($current_servicename,self::$std)) {
+        if (array_key_exists($current_servicename, self::$std)) {
             $current_dataobjectname = self::$std[$current_servicename];
         } else {
             $current_servicename    = str_replace("ExtService", "", $current_servicename);
@@ -422,7 +421,7 @@ class ServiceBasic extends Service implements IServiceBasic
         if (!empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"])) {
             $tmptail    = end(explode('.', $files[$uploadFlag]["name"]));
             $uploadPath = GC::$upload_path . "images" . DS . $categoryId . DS . $upload_dir . DS . $diffpart . "." . $tmptail;
-            $result     = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag );
+            $result     = UtilFileSystem::uploadFile($files, $uploadPath, $uploadFlag);
             if ($result && ($result['success'] == true )) {
                 $result['file_name'] = "$categoryId/$upload_dir/$diffpart.$tmptail";
             } else {
@@ -444,19 +443,18 @@ class ServiceBasic extends Service implements IServiceBasic
     public function batchUploadImages($files, $upload_field_name, $class_name, $classname_comment, $img_column_name)
     {
         $instance_name = strtolower($class_name);
-        if (!empty($files) && !empty($files[$upload_field_name]["name"]) )
-        {
+        if (!empty($files) && !empty($files[$upload_field_name]["name"])) {
             //上传压缩文件并解压
             $filename   = date("YmdHis");
             $upload_dir = GC::$upload_path . "images" . DS . $instance_name . DS;
             $upload_zip_dir = $upload_dir . "zip" . DS;
             $tmptail    = end(explode('.', $files[$upload_field_name]["name"]));
             $uploadPath = $upload_zip_dir . $filename . "." . $tmptail;
-            UtilFileSystem::createDir( $upload_zip_dir );
+            UtilFileSystem::createDir($upload_zip_dir);
             $IsUploadSucc = move_uploaded_file($files[$upload_field_name]["tmp_name"], $uploadPath);
-            $zip = new ZipArchive;
+            $zip = new ZipArchive();
             $res = $zip->open($uploadPath);
-            if ($res === TRUE) {
+            if ($res === true) {
                 $zip->extractTo($upload_zip_dir);
                 $zip->close();
             } else {
@@ -464,17 +462,18 @@ class ServiceBasic extends Service implements IServiceBasic
             }
             //与数据对象的图片路径信息列比对，如果是中文名同名，转换成拼音名文件存储并更新数据库信息；
             //如果是英文字母和数字则保持原名称并覆盖同名文件。如果没有找到同名文件，提示信息未找到的文件。
-            $allImageFiles = UtilFileSystem::getAllFilesInDirectory( $upload_zip_dir, array("jpg","png","gif","JPG","PNG","GIF") );
-            $info_noneed = ""; $info_failed = "";
+            $allImageFiles = UtilFileSystem::getAllFilesInDirectory($upload_zip_dir, array("jpg","png","gif","JPG","PNG","GIF"));
+            $info_noneed = "";
+            $info_failed = "";
             foreach ($allImageFiles as $imgFile) {
-                $extension     = UtilFileSystem::fileExtension( $imgFile );
-                $query_imgFile = UtilString::gbk2utf8( basename($imgFile, "." . $extension) );
+                $extension     = UtilFileSystem::fileExtension($imgFile);
+                $query_imgFile = UtilString::gbk2utf8(basename($imgFile, "." . $extension));
                 $img_object    = call_user_func("$class_name::get_one", "$img_column_name like '%$query_imgFile%'");
                 //$class_name::get_one("$img_column_name like '%$query_imgFile%'");
                 $imgFile       = basename($imgFile);
                 if ($img_object) {
-                    if (UtilString::is_chinese( $query_imgFile )) {
-                        $image_name = UtilPinyin::translate( $query_imgFile );
+                    if (UtilString::is_chinese($query_imgFile)) {
+                        $image_name = UtilPinyin::translate($query_imgFile);
                         $img_object->{$img_column_name} = $instance_name . "/" . $image_name . "." . $extension;
                         $img_object->update();
                     }
@@ -482,8 +481,8 @@ class ServiceBasic extends Service implements IServiceBasic
                         $info_failed .= "上传文件失败:" . $uploadPath . $imgFile . "";
                     }
                 } else {
-                    if (UtilString::is_chinese( $query_imgFile )) {
-                        $image_name = UtilPinyin::translate( $query_imgFile );
+                    if (UtilString::is_chinese($query_imgFile)) {
+                        $image_name = UtilPinyin::translate($query_imgFile);
                         $img_object = call_user_func("$class_name::get_one", "$img_column_name like '%$image_name%'");
                         //Product::get_one("$img_column_name like '%$image_name%'");
                         if ($img_object) {
@@ -502,7 +501,7 @@ class ServiceBasic extends Service implements IServiceBasic
                 $info_noneed = "请先批量上传 $classname_comment 数据(Excel文档格式)，并在图片列中指定图片文件名!" . $info_noneed;
             }
             //删除压缩文件目录
-            $isRmSucc = UtilFileSystem::deleteDir( $upload_zip_dir );
+            $isRmSucc = UtilFileSystem::deleteDir($upload_zip_dir);
         }
         if (( empty($info_noneed) ) && (empty($info_failed) )) {
             return array('success' => true,'data' => true);

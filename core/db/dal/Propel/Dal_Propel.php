@@ -13,6 +13,4 @@
  */
 class Dal_Propel //extends IDal implements IDal
 {
-
 }
-?>

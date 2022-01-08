@@ -14,6 +14,4 @@
  */
 class Dal_ActiveRecord //extends Dal implements IDal
 {
-
 }
-?>

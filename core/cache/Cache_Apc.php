@@ -58,18 +58,19 @@
  */
 class Cache_Apc extends Cache_Base
 {
-
     public static $name = 'Alternative PHP Cache (APC)';
     public static $desc = 'The Alternative PHP Cache (APC) is a free and open opcode cache for PHP. It was conceived of to provide a free, open, and robust framework for caching and optimizing PHP intermediate code.';
 
-    public function TestRun() {
-        $this->save("test","Hello boy");
-        $this->set("test","Hello girl");
-        $test=$this->get("test");
+    public function TestRun()
+    {
+        $this->save("test", "Hello boy");
+        $this->set("test", "Hello girl");
+        $test = $this->get("test");
         echo $test;
     }
 
-    public function Cache_Apc() {
+    public function Cache_Apc()
+    {
     }
 
     /**
@@ -80,7 +81,8 @@ class Cache_Apc extends Cache_Base
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
      * @return bool
      */
-    public function save($key, $value) {
+    public function save($key, $value)
+    {
         return apc_add($key, $value);
     }
 
@@ -93,7 +95,8 @@ class Cache_Apc extends Cache_Base
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
      * @return bool
      */
-    public function set($key, $value) {
+    public function set($key, $value)
+    {
         return apc_store($key, $value);
     }
 
@@ -156,17 +159,18 @@ class Cache_Apc extends Cache_Base
      * @param mixed $curBytes
      * @param mixed $totalBytes
      */
-    public function status(&$curBytes, &$totalBytes) {
+    public function status(&$curBytes, &$totalBytes)
+    {
         $minfo = apc_sma_info();
         $cinfo = apc_cache_info('user');
         foreach ($minfo['block_lists'] as $c) {
             $blocks[] = count($c);
         }
 
-        $curBytes   = $minfo['seg_size']-$minfo['avail_mem'];
+        $curBytes   = $minfo['seg_size'] - $minfo['avail_mem'];
         $totalBytes = $minfo['seg_size'];
 
-        $return[] = array('name' => '子系统运行时间', 'value' => timeLength(time()-$cinfo['start_time']));
+        $return[] = array('name' => '子系统运行时间', 'value' => timeLength(time() - $cinfo['start_time']));
         $return[] = array('name' => '可用内存', 'value'      => formatBytes($minfo['avail_mem']) . ' / ' . formatBytes($minfo['seg_size']));
         $return[] = array('name' => '内存使用方式', 'value'   => $cinfo['memory_type']);
         $return[] = array('name' => '内存数据段', 'value'     => $minfo['num_seg'] . '块 (' . implode(',', $blocks) . ')');

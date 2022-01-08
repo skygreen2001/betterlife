@@ -7,7 +7,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class DbInfo_Mysql extends  DbInfo implements IDbInfo
+class DbInfo_Mysql extends DbInfo implements IDbInfo
 {
     /**
     * Mysql的版本号
@@ -31,7 +31,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      * @return TRUE/FALSE 是否已打开.
      */
     public static function extension_is_available()
-    { return function_exists('mysql_connect'); }
+    {
+        return function_exists('mysql_connect');
+    }
 
     /**
      * 在mysql数据库中执行SQL脚本
@@ -39,10 +41,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public static function run_script($db_config)
     {
-        if (!self::extension_is_available() )
-        {
+        if (!self::extension_is_available()) {
             LogMe::log('默认的PHP MySQL Extension没有打开.您需要打开对应的 php extensions');
-            return FALSE;
+            return false;
         }
 
         // Decode url-encoded information in the db connection string.
@@ -53,66 +54,61 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         $script_filename = $db_config["script_filename"];
 
         // Allow for non-standard MySQL port.
-        if (isset($db_config["port"]) && !empty($db_config["port"]) )
-        {
+        if (isset($db_config["port"]) && !empty($db_config["port"])) {
             $host = $host . ':' . $db_config["port"];
         }
 
         // Test connecting to the database.
-        $connection = @mysql_connect($host, $user, $password, TRUE, 2);
+        $connection = @mysql_connect($host, $user, $password, true, 2);
 
-        if (!$connection )
-        {
+        if (!$connection) {
             LogMe::log(
                 '连接到 MySQL 数据库失败. MySQL报告错误信息: ' . mysql_error()
-                    . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>' );
-            return FALSE;
+                . '<ul><li>确认用户名和密码正确吗?</li><li>确认输入正确的数据库主机名?</li><li确认数据库服务器在运行?</li></ul>'
+            );
+            return false;
         }
 
         // Test selecting the database.
-        if (!mysql_select_db($dbname) )
-        {
-            if (mysql_query("CREATE DATABASE $dbname", $connection) )
-            {
-                LogMe::log( "指定数据库不存在，创建数据库$dbname成功!<br/>" );
-                if (!mysql_select_db($dbname) )
-                {
-                   LogMe::log( "无法指定数据库，数据库报告错误信息: " . mysql_error() );
-                   return FALSE;
+        if (!mysql_select_db($dbname)) {
+            if (mysql_query("CREATE DATABASE $dbname", $connection)) {
+                LogMe::log("指定数据库不存在，创建数据库$dbname成功!<br/>");
+                if (!mysql_select_db($dbname)) {
+                    LogMe::log("无法指定数据库，数据库报告错误信息: " . mysql_error());
+                    return false;
                 }
             } else {
-              LogMe::log( "指定数据库不存在，创建数据库失败错误信息: " . mysql_error() );
-              return FALSE;
+                LogMe::log("指定数据库不存在，创建数据库失败错误信息: " . mysql_error());
+                return false;
             }
         }
         $isSetcharset = mysql_set_charset(Config_C::CHARACTER_UTF8, $connection);
         if (!$isSetcharset) {
             $error = mysql_error();
-            LogMe::log( '执行字符集操作命令发生错误脚本: ' . $v
-                                   . '<br/> MySQL报告错误信息:' . $error."<br/>" );
+            LogMe::log('执行字符集操作命令发生错误脚本: ' . $v
+                                   . '<br/> MySQL报告错误信息:' . $error . "<br/>");
         }
         if (file_exists($script_filename)) {
-            $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES|FILE_TEXT);
+            $query = file($script_filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES | FILE_TEXT);
             $query = implode("\n", $query);
             $query = str_replace("&nbsp;", "--&nbsp--", $query);
             $query_e = explode(';', $query);
 
-            foreach ($query_e as $k => $v)
-            {
+            foreach ($query_e as $k => $v) {
                 $v = str_replace("--&nbsp--", "&nbsp;", $v);
                 if (!empty($v) && ($v != "\r")) {
                     $result = mysql_query($v);
                     if (!$result) {
                         $error = mysql_error();
-                        LogMe::log( '数据库服务器执行命令发生错误脚本: ' . $v
-                                       . '<br/> MySQL报告错误信息:' . $error );
-                        return FALSE;
+                        LogMe::log('数据库服务器执行命令发生错误脚本: ' . $v
+                                       . '<br/> MySQL报告错误信息:' . $error);
+                        return false;
                     }
                 }
             }
-            LogMe::log( "数据库操作成功，无异常!" );
+            LogMe::log("数据库操作成功，无异常!");
         } else {
-            LogMe::log( '指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename );
+            LogMe::log('指定的脚本文件路径错误，请查看路径文件名: ' . $script_filename);
         }
     }
 
@@ -147,7 +143,7 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     public function character_set()
     {
         $sql    = "SHOW VARIABLES LIKE '%character%'";
-        $result =  mysql_query($sql,$this->connection);
+        $result =  mysql_query($sql, $this->connection);
         if (!$result) {
             echo "ERROR : " . mysql_error($this->connection) . "<br>";
             return;
@@ -211,7 +207,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
                 $tableInfoList[$tableInfo['Name']] = $tableInfo;
             }
         }
-        if (isset($tableInfoList) ) return $tableInfoList;
+        if (isset($tableInfoList)) {
+            return $tableInfoList;
+        }
         return null;
     }
 
@@ -229,7 +227,9 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
         foreach ($fields as $field) {
             $fieldList[$field['Field']] = $field;
         }
-        if (isset ($fieldList)) return $fieldList;
+        if (isset($fieldList)) {
+            return $fieldList;
+        }
         return null;
     }
 
@@ -256,15 +256,20 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
             }
 
             if ($field['Default'] || $field['Default'] === "0") {
-                if (is_numeric($field['Default']) )
+                if (is_numeric($field['Default'])) {
                     $fieldSpec .= " default " . addslashes($field['Default']);
-                else
+                } else {
                     $fieldSpec .= " default '" . addslashes($field['Default']) . "'";
+                }
             }
-            if ($field['Extra'] ) $fieldSpec .= " $field[Extra]";
+            if ($field['Extra']) {
+                $fieldSpec .= " $field[Extra]";
+            }
             $fieldList[$field['Field']] = $fieldSpec;
         }
-        if (isset($fieldList) ) return $fieldList;
+        if (isset($fieldList)) {
+            return $fieldList;
+        }
         return null;
     }
 
@@ -279,16 +284,14 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     public function fieldMapNameList($table, $isCommentFull = false)
     {
-        $fieldList = $this->fieldInfoList( $table );
+        $fieldList = $this->fieldInfoList($table);
         $result    = array();
         if (!empty($fieldList)) {
-            foreach ($fieldList as $field)
-            {
+            foreach ($fieldList as $field) {
                 if ($isCommentFull) {
                     $result[$field["Field"]] = $field["Comment"];
                 } else {
-                    if (contain($field["Comment"], "\n"))
-                    {
+                    if (contain($field["Comment"], "\n")) {
                         $comment = explode("\n", $field["Comment"]);
                         if (count($comment) > 0) {
                             $result[$field["Field"]] = $comment[0];
@@ -313,17 +316,19 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
     {
         if (is_array($Column_names)) {
              $conditions = array();
-             foreach ($Column_names as $Column_name) {
+            foreach ($Column_names as $Column_name) {
                 $conditions[] = "Column_name='$Column_name'";
-             }
+            }
              $condition = implode(" or ", $conditions);
         } else {
              $condition = "Column_name='$Column_names'";
         }
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
-        LogMe::log( $sqlUnique );
-        $uniqueSql = $this->query( $sqlUnique );
-        if ($uniqueSql && is_object($uniqueSql) ) return (bool)($uniqueSql->value());
+        LogMe::log($sqlUnique);
+        $uniqueSql = $this->query($sqlUnique);
+        if ($uniqueSql && is_object($uniqueSql)) {
+            return (bool)($uniqueSql->value());
+        }
         return false;
     }
 
@@ -379,21 +384,24 @@ class DbInfo_Mysql extends  DbInfo implements IDbInfo
      */
     private function query($sql, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
-        $handle = NULL;
+        $handle = null;
         if (isset($_REQUEST['showqueries'])) {
             $starttime = microtime(true);
         }
-        if ($this->connection ) $handle = mysql_query($sql, $this->connection);
+        if ($this->connection) {
+            $handle = mysql_query($sql, $this->connection);
+        }
 
         if (isset($_REQUEST['showqueries'])) {
             $endtime = microtime(true);
             echo "\n$sql\n开始:{$starttime}-结束:{$endtime}ms\n";
         }
-        if (!$handle && $errorLevel && $this->connection )x( "无法运行查询语句: $sql | " . mysql_error($this->connection), $this );
-        if ($handle ) return new Query_Mysql($handle);
+        if (!$handle && $errorLevel && $this->connection) {
+            x("无法运行查询语句: $sql | " . mysql_error($this->connection), $this);
+        }
+        if ($handle) {
+            return new Query_Mysql($handle);
+        }
         return null;
     }
-
 }
-
-?>

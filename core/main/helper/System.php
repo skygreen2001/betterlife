@@ -146,7 +146,7 @@ class System
             foreach ($list as $val) {
                 $path = $sPath . DS . $val;
                 if (is_dir($path) && !is_link($path)) {
-                    $tmp    = System::_dirToStruct($path, $maxinst, $aktinst+1, $silent);
+                    $tmp    = System::_dirToStruct($path, $maxinst, $aktinst + 1, $silent);
                     $struct = array_merge_recursive($struct, $tmp);
                 } else {
                     $struct['files'][] = $path;
@@ -265,8 +265,10 @@ class System
         if (isset($create_parents)) {
             foreach ($opts[1] as $dir) {
                 $dirstack = array();
-                while ((!file_exists($dir) || !is_dir($dir)) &&
-                        $dir != DIRECTORY_SEPARATOR) {
+                while (
+                    (!file_exists($dir) || !is_dir($dir)) &&
+                        $dir != DIRECTORY_SEPARATOR
+                ) {
                     array_unshift($dirstack, $dir);
                     $dir = dirname($dir);
                 }
@@ -320,11 +322,11 @@ class System
         for ($i = 0; $i < $count_args; $i++) {
             if ($args[$i] == '>') {
                 $mode = 'wb';
-                $outputfile = $args[$i+1];
+                $outputfile = $args[$i + 1];
                 break;
             } elseif ($args[$i] == '>>') {
                 $mode = 'ab+';
-                $outputfile = $args[$i+1];
+                $outputfile = $args[$i + 1];
                 break;
             } else {
                 $files[] = $args[$i];
@@ -514,7 +516,7 @@ class System
                                 ? explode(PATH_SEPARATOR, getenv('PATHEXT'))
                                 : array('.exe', '.bat', '.cmd', '.com');
             // allow passing a command.exe param
-            if (strpos($program, '.' ) !== false) {
+            if (strpos($program, '.') !== false) {
                 array_unshift($exe_suffixes, '');
             }
             // is_executable() is not available on windows for PHP4
@@ -575,8 +577,8 @@ class System
         for ($i = 0; $i < $args_count; $i++) {
             switch ($args[$i]) {
                 case '-type':
-                    if (in_array($args[$i+1], array('d', 'f'))) {
-                        if ($args[$i+1] == 'd') {
+                    if (in_array($args[$i + 1], array('d', 'f'))) {
+                        if ($args[$i + 1] == 'd') {
                             $do_files = false;
                         } else {
                             $do_dirs = false;
@@ -585,7 +587,7 @@ class System
                     $i++;
                     break;
                 case '-name':
-                    $name = preg_quote($args[$i+1], '#');
+                    $name = preg_quote($args[$i + 1], '#');
                     // our magic characters ? and * have just been escaped,
                     // so now we change the escaped versions to PCRE operators
                     $name = strtr($name, array('\?' => '.', '\*' => '.*'));
@@ -593,7 +595,7 @@ class System
                     $i++;
                     break;
                 case '-maxdepth':
-                    $depth = $args[$i+1];
+                    $depth = $args[$i + 1];
                     break;
             }
         }

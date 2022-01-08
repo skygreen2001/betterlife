@@ -8,7 +8,6 @@
  */
 abstract class ExceptionMe extends Exception
 {
-
     const CLASSNAME = __CLASS__;
 
     public static $messages = array();
@@ -21,7 +20,8 @@ abstract class ExceptionMe extends Exception
     /**
      * 倒退跟踪调用
      */
-    public static function backtrace() {
+    public static function backtrace()
+    {
         echo "<pre>";
         debug_print_backtrace();
         echo "</pre>";
@@ -34,7 +34,8 @@ abstract class ExceptionMe extends Exception
      * @param string $extra  补充存在多余调试信息
      * @return void
      */
-    public static function recordException($errorInfo, $object = null, $code = 0, $extra = null) {
+    public static function recordException($errorInfo, $object = null, $code = 0, $extra = null)
+    {
         if (Gc::$dev_debug_on) {
             if (Config_Exception::EXCEPTION_WAY != 0) {
                 throw new Exception($errorInfo);
@@ -42,7 +43,7 @@ abstract class ExceptionMe extends Exception
         }
 
         //记录系统日志
-        $exception = new ExceptionCustomize( $errorInfo, $code, $extra );
+        $exception = new ExceptionCustomize($errorInfo, $code, $extra);
         if (is_object($object)) {
             self::$messages[get_class($object)] = $exception->showMessage();
         } else {
@@ -57,7 +58,8 @@ abstract class ExceptionMe extends Exception
      * 设置处理所有未捕获异常的用户定义函数
      * @param <type> $exception
      */
-    public static function recordUncatchedException($exception) {
+    public static function recordUncatchedException($exception)
+    {
         $exception = new ExceptionCustomize($exception);
         self::$messages[$exception->getType()] = $exception->showMessage();
     }
@@ -71,7 +73,8 @@ abstract class ExceptionMe extends Exception
      * 3. 树方式【HTML样式】
      * 4. XML方式
      */
-    public static function showMessage($type) {
+    public static function showMessage($type)
+    {
         switch ($type) {
             case self::VIEW_TYPE_TEXT:
                 return self::showMessageByText();
@@ -88,8 +91,8 @@ abstract class ExceptionMe extends Exception
      *
      * @todo 以普通文本形式显示异常信息
      */
-    private static function showMessageByText() {
-
+    private static function showMessageByText()
+    {
     }
 
 
@@ -97,8 +100,8 @@ abstract class ExceptionMe extends Exception
      *
      * @todo 以XML形式显示异常信息
      */
-    private static function showMessageByXml() {
-
+    private static function showMessageByXml()
+    {
     }
 
 
@@ -106,15 +109,16 @@ abstract class ExceptionMe extends Exception
      *
      * @todo 以树形式显示异常信息[HTML格式]
      */
-    private static function showMessageByTree() {
-
+    private static function showMessageByTree()
+    {
     }
 
 
     /**
      * 以表形式显示异常信息[HTML格式]
      */
-    private static function showMessageByTable() {
+    private static function showMessageByTable()
+    {
         if (!empty(self::$messages)) {
             UtilCss::report_info();
             $errorInfo  = '<div>';
@@ -134,7 +138,7 @@ abstract class ExceptionMe extends Exception
                     $errorInfo .= '          <td>&nbsp;' . $value['message'] . "</td>";
                     $errorInfo .= '       </tr>';
                 }
-                if (!empty ($value['extra'])) {
+                if (!empty($value['extra'])) {
                     $errorInfo .= '       <tr>';
                     $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                     $errorInfo .= '          <td width="100px" border="1">' . Wl::EXCEPTION_REPORT_ADDITION . '</td>';
@@ -167,7 +171,7 @@ abstract class ExceptionMe extends Exception
                     $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_PARAMETER . '</td>';
                     $errorInfo .= '          <td>&nbsp;';
                     if (is_string($value['param'][0])) {
-                        $errorInfo .= implode(' | ',$value['param']);
+                        $errorInfo .= implode(' | ', $value['param']);
                     } elseif (is_object($value['param'][0])) {
                         foreach ($value['param'] as $object) {
                             $errorInfo .= $object->classname() . " | ";
@@ -190,7 +194,7 @@ abstract class ExceptionMe extends Exception
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                 $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_TRACKINFO . '</td>';
-                $errorInfo .= '          <td>' . "<br/>" . str_replace("\n", "<br/>",$value['trace']) . "<br/>" . "</td>";
+                $errorInfo .= '          <td>' . "<br/>" . str_replace("\n", "<br/>", $value['trace']) . "<br/>" . "</td>";
                 $errorInfo .= '       </tr>';
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';

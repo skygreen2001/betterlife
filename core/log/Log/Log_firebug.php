@@ -79,9 +79,12 @@ class Log_firebug extends Log
      * @param int    $level    Log messages up to and including this level.
      * @access public
      */
-    function __construct($name = '', $ident = 'PHP', $conf = array(),
-                         $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name = '',
+        $ident = 'PHP',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_ident = $ident;
         $this->_mask = Log::UPTO($level);
@@ -94,9 +97,11 @@ class Log_firebug extends Log
         }
 
         if (!empty($conf['lineFormat'])) {
-            $this->_lineFormat = str_replace(array_keys($this->_formatMap),
-                                             array_values($this->_formatMap),
-                                             $conf['lineFormat']);
+            $this->_lineFormat = str_replace(
+                array_keys($this->_formatMap),
+                array_values($this->_formatMap),
+                $conf['lineFormat']
+            );
         }
 
         if (!empty($conf['timeFormat'])) {
@@ -140,7 +145,8 @@ class Log_firebug extends Log
      *
      * @access public
      */
-    function flush() {
+    function flush()
+    {
         if (count($this->_buffer)) {
             print '<script type="text/javascript">';
             print "\nif (('console' in window) && ('firebug' in console)) {\n";
@@ -183,12 +189,14 @@ class Log_firebug extends Log
 
         /* normalize line breaks and escape quotes*/
         $message = preg_replace("/\r?\n/", "\\n", addslashes($message));
-        
+
         /* Build the string containing the complete log line. */
-        $line = $this->_format($this->_lineFormat,
-                               strftime($this->_timeFormat),
-                               $priority, 
-                               $message);
+        $line = $this->_format(
+            $this->_lineFormat,
+            strftime($this->_timeFormat),
+            $priority,
+            $message
+        );
 
         if ($this->_buffering) {
             $this->_buffer[] = sprintf('console.%s("%s");', $method, $line);

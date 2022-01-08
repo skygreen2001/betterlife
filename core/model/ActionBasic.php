@@ -83,10 +83,10 @@ class ActionBasic extends BBObject
     public function __construct($moduleName)
     {
         $this->modulename = $moduleName;
-        $this->model      = Loader::load( Loader::CLASS_MODEL );
-        $this->model->setAction( $this );
+        $this->model      = Loader::load(Loader::CLASS_MODEL);
+        $this->model->setAction($this);
     }
-    
+
     /**
      * 自动变量设置
      * @access public
@@ -154,7 +154,7 @@ class ActionBasic extends BBObject
      */
     public function loadCss($defaultCssFile = "resources/css/index.css")
     {
-        if (contain( $defaultCssFile, "misc/js/ajax/" )) {
+        if (contain($defaultCssFile, "misc/js/ajax/")) {
             $defaultCssFile = Gc::$url_base . $defaultCssFile;
         } else {
             $defaultCssFile = $this->view->template_url . $defaultCssFile;
@@ -164,9 +164,9 @@ class ActionBasic extends BBObject
             $this->view->viewObject = new ViewObject();
         }
         if ($this->view->viewObject) {
-            UtilCss::loadCssReady( $this->view->viewObject, $defaultCssFile, true );
+            UtilCss::loadCssReady($this->view->viewObject, $defaultCssFile, true);
         } else {
-            UtilCss::loadCss( $defaultCssFile, true );
+            UtilCss::loadCss($defaultCssFile, true);
         }
     }
 
@@ -180,7 +180,7 @@ class ActionBasic extends BBObject
      */
     public function loadJs($defaultJsFile = "js/index.js")
     {
-        if (startWith($defaultJsFile, "misc/js/ajax/" )) {
+        if (startWith($defaultJsFile, "misc/js/ajax/")) {
             $defaultJsFile = Gc::$url_base . $defaultJsFile;
         } else {
             $defaultJsFile = $this->view->template_url . $defaultJsFile;
@@ -190,9 +190,9 @@ class ActionBasic extends BBObject
             $this->view->viewObject = new ViewObject();
         }
         if ($this->view->viewObject) {
-            UtilJavascript::loadJsReady( $this->view->viewObject, $defaultJsFile, true );
+            UtilJavascript::loadJsReady($this->view->viewObject, $defaultJsFile, true);
         } else {
-            UtilJavascript::loadJs( $defaultJsFile, true );
+            UtilJavascript::loadJs($defaultJsFile, true);
         }
     }
 
@@ -225,7 +225,7 @@ class ActionBasic extends BBObject
      */
     public function redirect_url($url)
     {
-        if (contain( $url, "http://")) {
+        if (contain($url, "http://")) {
             header("Location:" . $url);
         } else {
             header("Location:http://" . $url);
@@ -296,7 +296,9 @@ class ActionBasic extends BBObject
                     if ($key == Router::VAR_DISPATCH) {
                          $querystring_tmp .= $key . "=" . $this->modulename . "." . $action . "." . $method . Router::URL_CONNECTOR;
                     } else {
-                        if ($value == "undefined" ) $value = 0;
+                        if ($value == "undefined") {
+                            $value = 0;
+                        }
                         if (!(is_array($value))) {
                             $querystring_tmp .= $key . "=" . $value . Router::URL_CONNECTOR;
                         }
@@ -321,13 +323,13 @@ class ActionBasic extends BBObject
         if ($urlMode == Router::URL_REWRITE) {
              $querystring = str_replace(Router::URL_CONNECTOR, Router::URL_SLASH, $querystring);
              $querystring = str_replace(Router::URL_EQUAL, Router::URL_SLASH, $querystring);
-             if (Router::URL_PATHINFO_MODEL == Router::URL_PATHINFO_NORMAL) {
+            if (Router::URL_PATHINFO_MODEL == Router::URL_PATHINFO_NORMAL) {
                 header($Header_Location . Gc::$url_base . Router::VAR_GROUP . $CONNECTOR . $this->modulename . $CONNECTOR . Router::VAR_MODULE . $CONNECTOR . $action . $CONNECTOR .
-                    Router::VAR_ACTION . $CONNECTOR . $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
-             } else {
+                   Router::VAR_ACTION . $CONNECTOR . $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
+            } else {
                 header($Header_Location . Gc::$url_base . $this->modulename . $CONNECTOR . $action . $CONNECTOR .
-                    $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
-             }
+                   $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
+            }
         } elseif ($urlMode == Router::URL_PATHINFO) {
             $querystring = str_replace(Router::URL_CONNECTOR, Router::URL_SLASH, $querystring);
             $querystring = str_replace(Router::URL_EQUAL, Router::URL_SLASH, $querystring);
@@ -366,36 +368,36 @@ class ActionBasic extends BBObject
                 if (empty($viewObject)) {
                     $this->view->viewObject = new ViewObject();
                 }
-                
+
                 $uc_file = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
                 if (file_exists($uc_file)) {
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.config.js" );
+                    UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.config.js");
                     if (UtilAjax::$IsDebug) {
-                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.js" );
-                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.js" );
+                        UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.js");
+                        UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.js");
                     } else {
-                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.min.js" );
-                        UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.min.js" );
+                        UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.all.min.js");
+                        UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/ueditor.parse.min.js");
                     }
-                    UtilJavascript::loadJsReady( $this->view->viewObject, "misc/js/onlineditor/ueditor/lang/zh-cn/zh-cn.js" );
+                    UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/lang/zh-cn/zh-cn.js");
                 }
                 if (is_array($textarea_ids) && (count($textarea_ids) > 0 )) {
                     for ($i = 0; $i < count($textarea_ids); $i++) {
-                        UtilUeditor::loadJsFunction( $textarea_ids[$i], $this->view->viewObject, null );
+                        UtilUeditor::loadJsFunction($textarea_ids[$i], $this->view->viewObject, null);
                     }
                 } else {
-                    UtilUeditor::loadJsFunction( $textarea_ids, $this->view->viewObject, null );
+                    UtilUeditor::loadJsFunction($textarea_ids, $this->view->viewObject, null);
                 }
                 $this->view->online_editor = "UEditor";
                 break;
             case EnumOnlineEditorType::CKEDITOR:
                 if (is_array($textarea_ids) && (count($textarea_ids) > 0)) {
-                    $this->view->editorHtml = UtilCKEeditor::loadReplace( $textarea_ids[0] );
+                    $this->view->editorHtml = UtilCKEeditor::loadReplace($textarea_ids[0]);
                     for ($i = 1; $i < count($textarea_ids); $i++) {
-                        $this->view->editorHtml .= UtilCKEeditor::loadReplace( $textarea_ids[$i], false );
+                        $this->view->editorHtml .= UtilCKEeditor::loadReplace($textarea_ids[$i], false);
                     }
                 } else {
-                    $this->view->editorHtml = UtilCKEeditor::loadReplace( $textarea_ids );
+                    $this->view->editorHtml = UtilCKEeditor::loadReplace($textarea_ids);
                 }
                 $this->view->online_editor = "CKEditor";
                 break;
@@ -413,7 +415,7 @@ class ActionBasic extends BBObject
      *
      *   - 返回数组key定义
      *     - success    : 是否操作成功
-     *     - file_name[]: 数组, 多个文件存储根路径upload/images的相对路径 
+     *     - file_name[]: 数组, 多个文件存储根路径upload/images的相对路径
      *
      * @Example
      *     - $this->uploadImgs($_FILES, "icon_url", "icon_url", "blog");
@@ -433,9 +435,9 @@ class ActionBasic extends BBObject
                  *   (
                  *       [upload_single_img] => Array
                  *           (
-                 *               [name] => 
-                 *               [type] => 
-                 *               [tmp_name] => 
+                 *               [name] =>
+                 *               [type] =>
+                 *               [tmp_name] =>
                  *               [error] => 4
                  *               [size] => 0
                  *           )
@@ -457,7 +459,7 @@ class ActionBasic extends BBObject
                 $files_upload = $files[$uploadFlag];
                 $countFiles   = count($files[$uploadFlag]["name"]);
                 $isExistUpload = false;
-                for ($i = 0; $i < $countFiles; $i++) { 
+                for ($i = 0; $i < $countFiles; $i++) {
                     if (!empty($files[$uploadFlag]["name"][$i])) {
                         $isExistUpload = true;
                         break;
@@ -465,7 +467,7 @@ class ActionBasic extends BBObject
                 }
                 if ($isExistUpload) {
                     $file_keys = array_keys($files_upload);
-                    for ($i = 0; $i < $countFiles; $i++) { 
+                    for ($i = 0; $i < $countFiles; $i++) {
                         if (!empty($files[$uploadFlag]["name"][$i])) {
                             $files_single = array();
                             $files_single[$uploadFlag] = array();
@@ -474,7 +476,7 @@ class ActionBasic extends BBObject
                                 $file_single[$key] = $files_upload[$key][$i];
                             }
                             $files_single[$uploadFlag] = $file_single;
-                            $result_one = $this->uploadImg( $files_single, $uploadFlag, $upload_dir, $defaultId, $file_permit_upload_size );
+                            $result_one = $this->uploadImg($files_single, $uploadFlag, $upload_dir, $defaultId, $file_permit_upload_size);
                             if ($result_one && ($result_one['success'] == true )) {
                                 $result["success"] = true;
                                 $result['file_name'][] = $result_one['file_name'];
@@ -495,7 +497,7 @@ class ActionBasic extends BBObject
         }
         return $result;
     }
- 
+
     /**
      * 上传图片文件
      * @param array  $files 上传的文件对象
@@ -508,7 +510,7 @@ class ActionBasic extends BBObject
      *
      *   - 返回数组key定义
      *     - success  : 是否操作成功
-     *     - file_name: 文件存储根路径upload/images的相对路径 
+     *     - file_name: 文件存储根路径upload/images的相对路径
      *
      * @Example
      *     - $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
@@ -529,21 +531,29 @@ class ActionBasic extends BBObject
             $tmptail    = end($path_r);
             $upload_url = $upload_dir;
             if (contain($defaultId, ".")) {
-                if (!empty($upload_dir) ) $upload_dir .= DS;
+                if (!empty($upload_dir)) {
+                    $upload_dir .= DS;
+                }
                 $defaultId  = substr($defaultId, 0, strpos($defaultId, "."));
-                $uploadPath = Gc::$upload_path . "images" . DS . $upload_dir . $defaultId. "." . $tmptail;
-                if (!empty($upload_url) ) $upload_url .= "/";
+                $uploadPath = Gc::$upload_path . "images" . DS . $upload_dir . $defaultId . "." . $tmptail;
+                if (!empty($upload_url)) {
+                    $upload_url .= "/";
+                }
                 $file_name  = $upload_url . $defaultId . "." . $tmptail;
                 $is_permit_same_filename = true;
             } else {
                 $diffpart   = date("YmdHis") . UtilString::rand_string();
-                if (!empty($upload_dir) ) $upload_dir .= DS;
+                if (!empty($upload_dir)) {
+                    $upload_dir .= DS;
+                }
                 $uploadPath = Gc::$upload_path . "images" . DS . $defaultId . DS . $upload_dir . $diffpart . "." . $tmptail;
-                if (!empty($upload_url) ) $upload_url .= "/";
+                if (!empty($upload_url)) {
+                    $upload_url .= "/";
+                }
                 $file_name  = "$defaultId/" . $upload_url . "$diffpart.$tmptail";
             }
             // print_pre($file_name, true);
-            $result = UtilFileSystem::uploadFile( $files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size );
+            $result = UtilFileSystem::uploadFile($files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size);
             if ($result && ($result['success'] == true )) {
                 $result['file_name'] = $file_name;
             } else {
@@ -571,7 +581,7 @@ class ActionBasic extends BBObject
      */
     public function afterAction()
     {
-        $this->view->set( "keywords", $this->keywords );
-        $this->view->set( "description", $this->description );
+        $this->view->set("keywords", $this->keywords);
+        $this->view->set("description", $this->description);
     }
 }

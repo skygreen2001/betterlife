@@ -100,4 +100,3 @@ class Config_F extends ConfigBB
      */
     const SUFFIX_FILE_XML  = ".xml";
 }
-?>

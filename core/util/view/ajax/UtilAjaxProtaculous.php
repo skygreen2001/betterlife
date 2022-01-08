@@ -15,8 +15,8 @@ class UtilAjaxProtaculous extends UtilAjax implements IUtilAjax
      */
     public static function load($version = "", $viewObject = null)
     {
-        self::loadAjaxJs( EnumJsFramework::JS_FW_PROTOTYPE, $version, $viewObject );
-        self::loadAjaxJs( EnumJsFramework::JS_FW_SCRIPTACULOUS, $version, $viewObject );
+        self::loadAjaxJs(EnumJsFramework::JS_FW_PROTOTYPE, $version, $viewObject);
+        self::loadAjaxJs(EnumJsFramework::JS_FW_SCRIPTACULOUS, $version, $viewObject);
     }
 
     /**

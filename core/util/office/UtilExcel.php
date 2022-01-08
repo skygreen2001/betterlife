@@ -1,5 +1,7 @@
 <?php
+
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+
 /**
  * -----------| 功能:处理Excel相关的事宜方法 |-----------
  *
@@ -26,16 +28,19 @@ class UtilExcel extends Util
     {
         $pv = (float) phpversion();
         if ($pv <= 5.5) {
-            UtilExcelOld::arraytoExcel( $arr_output_header, $excelarr, $outputFileName, $isDirectDownload, $isExcel2007 );
+            UtilExcelOld::arraytoExcel($arr_output_header, $excelarr, $outputFileName, $isDirectDownload, $isExcel2007);
             die();
         }
-        UtilFileSystem::createDir( dirname($outputFileName) );
+        UtilFileSystem::createDir(dirname($outputFileName));
         $objActSheet = array ();
         $objExcel    = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         self::addSuffixInfo($objExcel);
 
         if ($isExcel2007) {
-            if (!function_exists("zip_open")) { LogMe::log( "后台下载功能需要Zip模块支持,名称:php_zip<br/>", EnumLogLevel::ALERT ); die(); }
+            if (!function_exists("zip_open")) {
+                LogMe::log("后台下载功能需要Zip模块支持,名称:php_zip<br/>", EnumLogLevel::ALERT);
+                die();
+            }
             $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objExcel);
             $objWriter->setOffice2003Compatibility(true);
         } else {
@@ -48,9 +53,10 @@ class UtilExcel extends Util
         $i = 1;
         if ($arr_output_header) {
             $column = 'A';
-            foreach ($arr_output_header as $key => $value)
-            {
-                if ($column > 'A' ) $value = str_replace(array('标识', '编号', '主键'), "", $value);
+            foreach ($arr_output_header as $key => $value) {
+                if ($column > 'A') {
+                    $value = str_replace(array('标识', '编号', '主键'), "", $value);
+                }
                 $objActsheet->setCellValue($column . $i, $value);
                 $column++;
             }
@@ -58,12 +64,12 @@ class UtilExcel extends Util
         }
         //获取表内容
         if (!empty($excelarr)) {
-            if (is_object($excelarr) ) $excelarr = array($excelarr);
-            foreach ($excelarr as $record)
-            {
+            if (is_object($excelarr)) {
+                $excelarr = array($excelarr);
+            }
+            foreach ($excelarr as $record) {
                 $column = 'A';
-                foreach ($arr_output_header as $key => $value)
-                {
+                foreach ($arr_output_header as $key => $value) {
                     if (is_array($record)) {
                         // $objActsheet->setCellValue($column . $i, $record[$key]);
                         // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也以文本格式导出。
@@ -83,12 +89,20 @@ class UtilExcel extends Util
         }
 
         if (empty($outputFileName)) {
-            if ($isExcel2007 ) $outputFileName = date("YmdHis") . ".xlsx"; else $outputFileName = date("YmdHis") . ".xls";
+            if ($isExcel2007) {
+                $outputFileName = date("YmdHis") . ".xlsx";
+            } else {
+                $outputFileName = date("YmdHis") . ".xls";
+            }
         } else {
             if ($isExcel2007) {
-                if (endWith($outputFileName, ".xls") ) $outputFileName  = str_replace(".xls", ".xlsx", $outputFileName);
+                if (endWith($outputFileName, ".xls")) {
+                    $outputFileName  = str_replace(".xls", ".xlsx", $outputFileName);
+                }
             } else {
-                if (endWith($outputFileName, ".xlsx") ) $outputFileName = str_replace(".xlsx", ".xls", $outputFileName);
+                if (endWith($outputFileName, ".xlsx")) {
+                    $outputFileName = str_replace(".xlsx", ".xls", $outputFileName);
+                }
             }
         }
 
@@ -123,8 +137,7 @@ class UtilExcel extends Util
      */
     public static function exceltimtetophp($days, $time = false)
     {
-        if (is_numeric($days) )
-        {
+        if (is_numeric($days)) {
             $jd        = GregorianToJD(1, 1, 1970);
             $gregorian = JDToGregorian($jd + intval($days) - 25569);
             $myDate    = explode('/', $gregorian);
@@ -156,20 +169,18 @@ class UtilExcel extends Util
     {
         $pv = (float) phpversion();
         if ($pv <= 5.5) {
-            UtilExcelOld::exceltoArray( $importFileName, $arr_import_header );
+            UtilExcelOld::exceltoArray($importFileName, $arr_import_header);
             die();
         }
         $result   = null;
         $filetype = explode('.', $importFileName);
         $filetype = end($filetype);
 
-        if (empty($importFileName) )
-        {
-            LogMe::log( '路径或文件名有错!' );
+        if (empty($importFileName)) {
+            LogMe::log('路径或文件名有错!');
             return null;
         }
-        if ($filetype == 'xls' || $filetype == 'xlsx' )
-        {
+        if ($filetype == 'xls' || $filetype == 'xlsx') {
             if ($filetype == 'xls') {
                 $PHPReader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
             } else {
@@ -177,23 +188,22 @@ class UtilExcel extends Util
             }
             $PHPExcel  = $PHPReader->load($importFileName);
             if (!$PHPExcel) {
-                LogMe::log( '请确保Excel格式正确!' );
+                LogMe::log('请确保Excel格式正确!');
                 return null;
             }
 
             if ($PHPExcel->getSheetCount() <= 0) {
-                LogMe::log( '请确保Excel存在数据!' );
-                LogMe::log( print_pre( $PHPExcel));
+                LogMe::log('请确保Excel存在数据!');
+                LogMe::log(print_pre($PHPExcel));
                 return null;
             }
-            try
-            {
+            try {
                 $PHPReader->setReadDataOnly(true);
                 // LogMe::log( print_pre( $PHPExcel));
                 if (is_numeric($sheetIndexOrName)) {
-                    $currentSheet = $PHPExcel->getSheet( $sheetIndexOrName );
+                    $currentSheet = $PHPExcel->getSheet($sheetIndexOrName);
                 } else {
-                    $currentSheet = $PHPExcel->getSheetByName( $sheetIndexOrName );
+                    $currentSheet = $PHPExcel->getSheetByName($sheetIndexOrName);
                 }
                 if (!$currentSheet) {
                     return array();
@@ -202,10 +212,8 @@ class UtilExcel extends Util
                 //取得excel的sheet
                 $allColumn    = $currentSheet->getHighestColumn(); //表中列数
                 $allRow       = $currentSheet->getHighestRow(); //表中行数
-            }
-            catch(Exception $e)
-            {
-                LogMe::log( $e );
+            } catch (Exception $e) {
+                LogMe::log($e);
                 return null;
             }
 
@@ -214,14 +222,16 @@ class UtilExcel extends Util
             $num_currentColumn = alphatonumber($currentColumn);
             //从Excel文档中获取头信息
             for ($num_currentColumn; $num_currentColumn <= $num_tempcol; $num_currentColumn++) {
-                $address  = $currentColumn."1";
+                $address  = $currentColumn . "1";
                 $header[] = trim($currentSheet->getCell($address)->getValue());
                 $currentColumn++;
             }
             $arr_import_header = array_flip($arr_import_header);
             $arr_head          = array();
             foreach ($header as $value) {
-                if (empty($value) ) continue;
+                if (empty($value)) {
+                    continue;
+                }
                 if (!array_key_exists($value, $arr_import_header)) {
                     $key_words = array('标识', '编号', '主键');
                     foreach ($key_words as $key_word) {
@@ -230,19 +240,21 @@ class UtilExcel extends Util
                             break;
                         }
                     }
-                   if (!array_key_exists($value,$arr_import_header) ) $arr_head[] = $value;
+                    if (!array_key_exists($value, $arr_import_header)) {
+                        $arr_head[] = $value;
+                    }
                 }
-                if (!in_array($value, $arr_head) && array_key_exists($value, $arr_import_header) ) $arr_head[] = $arr_import_header[$value];
+                if (!in_array($value, $arr_head) && array_key_exists($value, $arr_import_header)) {
+                    $arr_head[] = $arr_import_header[$value];
+                }
             }
 
             //从Excel文档中获取所有内容
-            for ($currentRow = 2, $i = 1; $currentRow <= $allRow; $currentRow++, $i++)
-            {
+            for ($currentRow = 2, $i = 1; $currentRow <= $allRow; $currentRow++, $i++) {
                 $num_tempcol       = alphatonumber($allColumn);
                 $currentColumn     = 'A';
                 $num_currentColumn = alphatonumber($currentColumn);
-                for ($num_currentColumn; $num_currentColumn <= $num_tempcol; $num_currentColumn++)
-                {
+                for ($num_currentColumn; $num_currentColumn <= $num_tempcol; $num_currentColumn++) {
                     $address      = $currentColumn . $currentRow;
                     $result[$i][] = trim($currentSheet->getCell($address)->getValue());
                     ++$currentColumn;
@@ -272,7 +284,8 @@ class UtilExcel extends Util
      * 添加Excel文档附加信息
      * @param @mixed $spreadsheet Excel文档
      */
-    private static function addSuffixInfo($spreadsheet) {
+    private static function addSuffixInfo($spreadsheet)
+    {
         $spreadsheet->getProperties()
                     ->setCreator('skygreen2001')
                     ->setLastModifiedBy("skygreen2001")
@@ -303,7 +316,7 @@ class UtilExcel extends Util
         } else {
             $fp = fopen($outputFileName, 'w');
         }
-        
+
         if ($isDirectDownload) {
             $outputFileName = basename($outputFileName);
             ob_end_clean();
@@ -339,7 +352,7 @@ class UtilExcel extends Util
             $num++;
 
              //刷新一下输出buffer，防止由于数据过多造成问题
-             if ($limit == $num) {
+            if ($limit == $num) {
                 ob_flush();
                 flush();
                 $num = 0;
@@ -387,7 +400,8 @@ class UtilExcel extends Util
         $handle = fopen($importFileName, 'r');
         if (!$handle) {
             return  '文件打开失败';
-            LogMe::log( "文件打开失败:" . $importFileName ); die();
+            LogMe::log("文件打开失败:" . $importFileName);
+            die();
         }
 
         if (!empty($arr_import_header)) {
@@ -404,7 +418,7 @@ class UtilExcel extends Util
         $i = 0;
         $j = 0;
         $result = [];
-        while ( $data = fgetcsv($handle)) {
+        while ($data = fgetcsv($handle)) {
             //小于偏移量则不读取,但$i仍然需要自增
             if ($i < $offset && $offset) {
                 $i++;
@@ -418,7 +432,7 @@ class UtilExcel extends Util
                 $header = array();
             }
             foreach ($data as $key => $value) {
-                $content = iconv("gbk","utf-8//IGNORE",$value);//转化编码
+                $content = iconv("gbk", "utf-8//IGNORE", $value);//转化编码
                 if ($j > 0) {
                     $result[$j][] = $content;
                 } else {
@@ -430,7 +444,9 @@ class UtilExcel extends Util
 
             if (!empty($arr_import_header)) {
                 foreach ($header as $value) {
-                    if (empty($value) ) continue;
+                    if (empty($value)) {
+                        continue;
+                    }
                     if (!array_key_exists($value, $arr_import_header)) {
                         $key_words = array('标识', '编号', '主键');
                         foreach ($key_words as $key_word) {
@@ -439,9 +455,13 @@ class UtilExcel extends Util
                                 break;
                             }
                         }
-                        if (!array_key_exists($value, $arr_import_header) ) $arr_head[] = $value;
+                        if (!array_key_exists($value, $arr_import_header)) {
+                            $arr_head[] = $value;
+                        }
                     }
-                    if (!in_array($value, $arr_head) && array_key_exists($value, $arr_import_header) ) $arr_head[] = $arr_import_header[$value];
+                    if (!in_array($value, $arr_head) && array_key_exists($value, $arr_import_header)) {
+                        $arr_head[] = $arr_import_header[$value];
+                    }
                 }
             }
             $i++;

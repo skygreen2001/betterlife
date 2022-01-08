@@ -1,4 +1,5 @@
 <?php
+
 //<editor-fold defaultstate = "collapsed" desc = "枚举类型">
 /**
  * -----------| 枚举类型: 数据库方式类别|数据源定义 |-----------
@@ -79,7 +80,7 @@ class EnumDbSource extends Enum
      *
      * 可通过Config_Db::$engine = ENGINE_DAL_ADODB配合使用
      *
-     * 需要配置如下: 
+     * 需要配置如下:
      *
      *        Config_Db::$host   = 'ldap.baylor.edu';
      *
@@ -240,7 +241,7 @@ class Config_Db extends ConfigBB
      * 目前调试通过  该参数对Config_Db::$engine
      *
      *     * ENGINE_DAL_ADODB
-     *     * ENGINE_OBJECT_ODBC 有效  
+     *     * ENGINE_OBJECT_ODBC 有效
      *
      * 是否使用了Dsn的设置
      *
@@ -308,7 +309,8 @@ class Config_Db extends ConfigBB
      * @return 根据对象定义返回表名
      * @final
      */
-    final public static function orm($classname) {
+    final public static function orm($classname)
+    {
         if (array_key_exists($classname, self::$orm)) {
             return self::$orm[$classname];//在Config_Db::$orm里手动配置类与表的对应关系
         } else {
@@ -330,11 +332,12 @@ class Config_Db extends ConfigBB
      * @return 根据表名称返回对象名称定义
      * @final
      */
-    final public static function tom($tablename) {
+    final public static function tom($tablename)
+    {
         if (in_array($tablename, self::$orm)) {
             return array_search($tablename, self::$orm);//在Config_Db::$orm里手动配置类与表的对应关系
         } else {
-            return self::tomByRule( $tablename );
+            return self::tomByRule($tablename);
         }
     }
 
@@ -357,9 +360,10 @@ class Config_Db extends ConfigBB
      * @param string $classname 数据库实体对象POJO类名
      * @return string 遵循命名规则和规范的表名
      */
-    private static function ormByRule($classname) {
+    private static function ormByRule($classname)
+    {
         $class_root_dir = Config_F::DOMAIN_ROOT;
-        $class          = new ReflectionClass( $classname );
+        $class          = new ReflectionClass($classname);
         $filename       = strtolower(dirname($class->getFileName()));
         $subDirname     = substr($filename, strpos($filename, $class_root_dir) + strlen($class_root_dir) + 1);
         if ($subDirname) {
@@ -380,7 +384,8 @@ class Config_Db extends ConfigBB
       * @param string $tablename 遵循命名规则和规范的表名
       * @return string 数据库实体对象POJO类名
       */
-    private static function tomByRule($tablename) {
+    private static function tomByRule($tablename)
+    {
         $classname      = str_replace(self::$table_prefix, "", $tablename);
         $classnamepart  = explode(self::TABLENAME_CONCAT, $classname);
         $classnamepart  = array_reverse($classnamepart);
@@ -399,7 +404,8 @@ class Config_Db extends ConfigBB
     /**
      * 初始化全局变量: Gc::$database_config
      */
-    public static function initGc() {
+    public static function initGc()
+    {
         if (isset(Gc::$database_config)) {
             $db_config = Gc::$database_config;
             if (isset($db_config['db_type'])) {

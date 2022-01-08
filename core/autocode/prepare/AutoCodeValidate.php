@@ -43,14 +43,14 @@ class AutoCodeValidate extends AutoCode
                         );
         $isValid         = true;
         $invaid_keywords = array("desc", "from", "describe", "case");
-        $fieldInfos      = self::fieldInfosByTable_names( $table_names );
+        $fieldInfos      = self::fieldInfosByTable_names($table_names);
         foreach ($fieldInfos as $tablename => $fieldInfo) {
-            $tableCommentKey = self::tableCommentKey( $tablename );
+            $tableCommentKey = self::tableCommentKey($tablename);
             if (empty($tableCommentKey)) {
                 $table_error["nocomment"][] = $tablename;
             }
 
-            $realId = DataObjectSpec::getRealIDColumnName( self::getClassname( $tablename));
+            $realId = DataObjectSpec::getRealIDColumnName(self::getClassname($tablename));
             if ($realId) {
                 $fieldInfo_upperkey = array_change_key_case($fieldInfo, CASE_UPPER);
                 $realId_upper       = strtoupper($realId);
@@ -60,8 +60,7 @@ class AutoCodeValidate extends AutoCode
             } else {
                 $table_error["unlocation_domain"][] = $tablename;
             }
-            foreach ($fieldInfo as $fieldname => $field)
-            {
+            foreach ($fieldInfo as $fieldname => $field) {
                 $field_comment = $field["Comment"];
                 if (empty($field_comment)) {
                     $table_error["column_nocomment"][$tablename][] = $fieldname;
@@ -72,7 +71,7 @@ class AutoCodeValidate extends AutoCode
                 if (in_array($fieldname, $invaid_keywords)) {
                     $table_error["invaid_keywords"][$tablename][]  = $fieldname;
                 }
-                if (contain( $fieldname, "＿" )) {
+                if (contain($fieldname, "＿")) {
                     $table_error["specialkey_half"][$tablename][]  = $fieldname;
                 }
             }
@@ -91,7 +90,7 @@ class AutoCodeValidate extends AutoCode
             if (count($table_error[$key]) > 0) {
                 $isValid        = false;
                 $showValidInfo .= "&nbsp;&nbsp;<font color='#FF0000'>&nbsp;&nbsp;/" . str_repeat("*", 35) . $value . str_repeat("*", 35) . "/</font></a><br/>" . HH;
-                foreach ($table_error[$key] as $first=>$second) {
+                foreach ($table_error[$key] as $first => $second) {
                     if (is_numeric($first)) {
                         $showValidInfo .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $second . "<br/>" . HH;
                     } else {

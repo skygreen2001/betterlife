@@ -11,7 +11,6 @@
  */
 class UtilUeditor extends Util
 {
-
     /**
      * 设置标准toolbar
      */
@@ -48,13 +47,12 @@ class UtilUeditor extends Util
         $uc_file       = Gc::$nav_root_path . "misc" . DS . "js" . DS . "onlineditor" . DS . "ueditor" . DS . "ueditor.config.js";
         if (!file_exists($uc_file)) {
             $info_install_ueditor = '<div class=\"alert alert-danger\" role=\"alert\">很遗憾不能正常显示在线编辑器! <a target="_blank" href=\"' . $ue_readme_url . '\" class=\"alert-link\">请下载帮助文档后按要求安装好UEditor</a>.</div>';
-            UtilJavascript::loadJsContentReady( $viewObject, "
+            UtilJavascript::loadJsContentReady($viewObject, "
                 $('#$textarea_id').before('$info_install_ueditor');
-                "
-            );
+                ");
         } else {
             if ($is_toolbar_full) {
-                UtilJavascript::loadJsContentReady( $viewObject, "
+                UtilJavascript::loadJsContentReady($viewObject, "
                     var ue_{$textarea_id};
                     function pageInit_ue_{$textarea_id}()
                     {
@@ -62,13 +60,12 @@ class UtilUeditor extends Util
                             allowDivTransToP: false
                         });
                     }
-                    "
-                );
+                    ");
             } else {
                 if (empty($configString)) {
                     $configString = self::toolbar_normal();
                 }
-                UtilJavascript::loadJsContentReady( $viewObject, "
+                UtilJavascript::loadJsContentReady($viewObject, "
                     var ue_{$textarea_id};
                     function pageInit_ue_{$textarea_id}()
                     {
@@ -78,10 +75,8 @@ class UtilUeditor extends Util
                         });
                         $.edit.ueditorFullscreen('$textarea_id');
                     }
-                    "
-                );
+                    ");
             }
         }
     }
-
 }

@@ -13,8 +13,8 @@
  * @package core.db.sql.util.query
  * @author skygreen
  */
-abstract class Query implements Iterator {
-
+abstract class Query implements Iterator
+{
     /**
      * The current record in the interator.
      * @var array
@@ -39,12 +39,16 @@ abstract class Query implements Iterator {
      * @param string $column
      * @return array
      */
-    public function column($column = null) {
+    public function column($column = null)
+    {
         $result = array();
 
         while ($record = $this->next()) {
-            if ($column ) $result[] = $record[$column];
-            else $result[] = $record[key($record)];
+            if ($column) {
+                $result[] = $record[$column];
+            } else {
+                $result[] = $record[key($record)];
+            }
         }
 
         return $result;
@@ -55,7 +59,8 @@ abstract class Query implements Iterator {
      * same as the values.
      * @return array
      */
-    public function keyedColumn() {
+    public function keyedColumn()
+    {
         $column = array();
         foreach ($this as $record) {
             $val = $record[key($record)];
@@ -68,7 +73,8 @@ abstract class Query implements Iterator {
      * Return a map from the first column to the second column.
      * @return array
      */
-    public function map() {
+    public function map()
+    {
         $column = array();
         foreach ($this as $record) {
             $key = reset($record);
@@ -82,7 +88,8 @@ abstract class Query implements Iterator {
      * Returns the next record in the iterator.
      * @return array
      */
-    public function record() {
+    public function record()
+    {
         return $this->next();
     }
 
@@ -90,9 +97,12 @@ abstract class Query implements Iterator {
      * Returns the first column of the first record.
      * @return string
      */
-    public function value() {
+    public function value()
+    {
         $record = $this->next();
-        if ($record ) return $record[key($record)];
+        if ($record) {
+            return $record[key($record)];
+        }
     }
 
 
@@ -103,9 +113,12 @@ abstract class Query implements Iterator {
      * @param array|string $val String to escape, or array of strings
      * @return array|string
      */
-    public static function raw2xml($val) {
+    public static function raw2xml($val)
+    {
         if (is_array($val)) {
-            foreach ($val as $k => $v) $val[$k] = self::raw2xml($v);
+            foreach ($val as $k => $v) {
+                $val[$k] = self::raw2xml($v);
+            }
             return $val;
         } else {
             return htmlspecialchars($val, ENT_QUOTES, 'UTF-8');
@@ -116,7 +129,8 @@ abstract class Query implements Iterator {
     /**
      * Return an HTML table containing the full result-set
      */
-    public function table() {
+    public function table()
+    {
         $first  = true;
         $result = "<table>\n";
 
@@ -125,7 +139,7 @@ abstract class Query implements Iterator {
                 $result .= "<tr>";
                 foreach ($record as $k => $v) {
                     $result .= "<th>" . self::raw2xml($k) . "</th> ";
-                 }
+                }
                 $result .= "</tr> \n";
             }
 
@@ -138,7 +152,9 @@ abstract class Query implements Iterator {
             $first = false;
         }
 
-        if ($first ) return "No records found";
+        if ($first) {
+            return "No records found";
+        }
         return $result;
     }
 
@@ -148,7 +164,8 @@ abstract class Query implements Iterator {
      * @return array
      */
     #[\ReturnTypeWillChange]
-    public function rewind() {
+    public function rewind()
+    {
         if ($this->queryHasBegun && $this->numRecords() > 0) {
             $this->queryHasBegun = false;
             return $this->seek(0);
@@ -159,7 +176,8 @@ abstract class Query implements Iterator {
      * Iterator function implementation. Return the current item of the iterator.
      * @return array
      */
-    public function current() {
+    public function current()
+    {
         if (!$this->currentRecord) {
             return $this->next();
         } else {
@@ -171,7 +189,8 @@ abstract class Query implements Iterator {
      * Iterator function implementation. Return the first item of this iterator.
      * @return array
      */
-    public function first() {
+    public function first()
+    {
         $this->rewind();
         return $this->current();
     }
@@ -180,7 +199,8 @@ abstract class Query implements Iterator {
      * Iterator function implementation. Return the row number of the current item.
      * @return int
      */
-    public function key() {
+    public function key()
+    {
         return $this->rowNum;
     }
 
@@ -190,7 +210,8 @@ abstract class Query implements Iterator {
      * @return array
      */
     #[\ReturnTypeWillChange]
-    public function next() {
+    public function next()
+    {
         $this->queryHasBegun = true;
         $this->currentRecord = $this->nextRecord();
         $this->rowNum++;
@@ -202,8 +223,11 @@ abstract class Query implements Iterator {
      * @return boolean
      */
     #[\ReturnTypeWillChange]
-    public function valid() {
-        if (!$this->currentRecord ) $this->next();
+    public function valid()
+    {
+        if (!$this->currentRecord) {
+            $this->next();
+        }
         return $this->currentRecord !== false;
     }
 

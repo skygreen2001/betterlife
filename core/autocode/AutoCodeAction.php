@@ -76,9 +76,9 @@ class AutoCodeAction extends AutoCode
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function AutoCode( $table_names = "" )
+    public static function AutoCode($table_names = "")
     {
-        switch ( self::$type) {
+        switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 self::$app_dir = Gc::$appName;
                 break;
@@ -89,14 +89,16 @@ class AutoCodeAction extends AutoCode
                 self::$app_dir = "admin";
                 break;
         }
-        self::$action_dir_full = self::$save_dir . Gc::$module_root . DS .self::$app_dir . DS . self::$action_dir . DS;
-        $view_dir_full         = self::$save_dir . Gc::$module_root . DS .self::$app_dir . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS;
+        self::$action_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$action_dir . DS;
+        $view_dir_full         = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS;
 
-        if (!UtilString::is_utf8( self::$action_dir_full )) {
-            self::$action_dir_full = UtilString::gbk2utf8( self::$action_dir_full );
+        if (!UtilString::is_utf8(self::$action_dir_full)) {
+            self::$action_dir_full = UtilString::gbk2utf8(self::$action_dir_full);
         }
         self::init();
-        if (self::$isOutputCss ) self::$showReport .= UtilCss::form_css() . HH;
+        if (self::$isOutputCss) {
+            self::$showReport .= UtilCss::form_css() . HH;
+        }
         self::$echo_result = "";
 
         switch (self::$type) {
@@ -110,27 +112,29 @@ class AutoCodeAction extends AutoCode
                 self::$showReport .= AutoCodeFoldHelper::foldbeforeaction2();
                 break;
         }
-        $link_action_dir_href = "file:///".str_replace("\\", "/", self::$action_dir_full);
+        $link_action_dir_href = "file:///" . str_replace("\\", "/", self::$action_dir_full);
         self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_action_dir_href . "'>" . self::$action_dir_full . "</a></font>";
 
-        $fieldInfos = self::fieldInfosByTable_names( $table_names );
-        foreach ( $fieldInfos as $tablename => $fieldInfo) {
+        $fieldInfos = self::fieldInfosByTable_names($table_names);
+        foreach ($fieldInfos as $tablename => $fieldInfo) {
             if (self::$type == EnumAutoCodeViewType::FRONT) {
-                $classname=self::getClassname($tablename);
-                if ($classname=="Admin")continue;
+                $classname = self::getClassname($tablename);
+                if ($classname == "Admin") {
+                    continue;
+                }
             }
-            $definePhpFileContent      = self::tableToActionDefine($tablename,$fieldInfo);
+            $definePhpFileContent      = self::tableToActionDefine($tablename, $fieldInfo);
             if (!empty($definePhpFileContent)) {
                 if (isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent)) {
-                    $classname         = self::saveActionDefineToDir( $tablename, $definePhpFileContent );
+                    $classname         = self::saveActionDefineToDir($tablename, $definePhpFileContent);
                     self::$showReport .= "生成导出完成:$tablename => $classname!";
                 } else {
-                    self::$showReport .= $definePhpFileContent."";
+                    self::$showReport .= $definePhpFileContent . "";
                 }
             }
         }
 
-        self::$showReport.= '</div>';
+        self::$showReport .= '</div>';
         $category_cap = Gc::$appName;
         $category_cap = ucfirst($category_cap);
         /**
@@ -143,14 +147,14 @@ class AutoCodeAction extends AutoCode
      * 用户输入需求
      * @param $default_value 默认值
      */
-    public static function UserInput( $default_value="", $title="", $inputArr=null, $more_content="" )
+    public static function UserInput($default_value = "", $title = "", $inputArr = null, $more_content = "")
     {
         $inputArr = array(
             EnumAutoCodeViewType::FRONT => "前端Action,继承基本Action",
             EnumAutoCodeViewType::MODEL => "生成标准的增删改查模板Action,继承ActionModel",
             EnumAutoCodeViewType::ADMIN => "后台Action,继承基本Action",
         );
-        parent::UserInput( "一键生成控制器Action类定义层", $inputArr, $default_value );
+        parent::UserInput("一键生成控制器Action类定义层", $inputArr, $default_value);
     }
 
     /**
@@ -158,19 +162,19 @@ class AutoCodeAction extends AutoCode
      * @param string $tablename 表名
      * @param array $fieldInfo 表列信息列表
      */
-    private static function tableToActionDefine( $tablename, $fieldInfo )
+    private static function tableToActionDefine($tablename, $fieldInfo)
     {
         $result        = "<?php" . HH;
-        $table_comment = self::tableCommentKey( $tablename );
-        $classname     = self::getClassname( $tablename );
-        $instancename  = self::getInstancename( $tablename );
+        $table_comment = self::tableCommentKey($tablename);
+        $classname     = self::getClassname($tablename);
+        $instancename  = self::getInstancename($tablename);
 
         $category      = Gc::$appName;
         $package       = self::$package_front;
         $author        = self::$author;
 
         $action_parent = "Action";
-        switch ( self::$type) {
+        switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 $action_parent = "Action";
                 $package       = self::$package_front;
@@ -196,13 +200,13 @@ class AutoCodeAction extends AutoCode
 
         switch (self::$type) {
             case EnumAutoCodeViewType::MODEL:
-                $result .= self::modelActionContent( $fieldInfo, $classname, $instancename, $table_comment );
+                $result .= self::modelActionContent($fieldInfo, $classname, $instancename, $table_comment);
                 break;
             case EnumAutoCodeViewType::ADMIN:
-                $result .= self::adminActionContent( $fieldInfo, $classname, $instancename, $table_comment );
+                $result .= self::adminActionContent($fieldInfo, $classname, $instancename, $table_comment);
                 break;
             default:
-                $result .= self::frontActionContent( $table_comment );
+                $result .= self::frontActionContent($table_comment);
                 break;
         }
 
@@ -227,15 +231,13 @@ class AutoCodeAction extends AutoCode
         $editTextareaContent = "";
         $text_area_fieldname = array();
 
-        $relation_data = self::relationData( $fieldInfo, $classname );
+        $relation_data = self::relationData($fieldInfo, $classname);
 
         $relation_content = $relation_data["relation_content"];
         $rela_m2m_content = $relation_data["rela_m2m_content"];
-        foreach ($fieldInfo as $fieldname => $field)
-        {
+        foreach ($fieldInfo as $fieldname => $field) {
             $field_comment = $field["Comment"];
-            if (self::columnIsTextArea( $fieldname, $field["Type"]))
-            {
+            if (self::columnIsTextArea($fieldname, $field["Type"])) {
                 $text_area_fieldname[] = "'" . $fieldname . "'";
             }
 
@@ -257,12 +259,12 @@ class AutoCodeAction extends AutoCode
 
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
-              case 'bit':
-                $editBitContent .= "            if (\${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
-                break;
+                case 'bit':
+                    $editBitContent .= "            if (\${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
+                    break;
             }
         }
-        $editBitContent = $editBitContent.
+        $editBitContent = $editBitContent .
                           "            if (!empty(\$id)) {" . HH .
                           "                \${$instancename}->update();" . HH .
                           "            } else {" . HH .
@@ -289,7 +291,7 @@ class AutoCodeAction extends AutoCode
                   "    {" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
                   "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
-                  $viewImgContent.
+                  $viewImgContent .
                   "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
                   "    }" . HH .
                   "    /**" . HH .
@@ -301,9 +303,9 @@ class AutoCodeAction extends AutoCode
                   "            \$$instancename = \$this->model->$classname;" . HH .
                   "            \$id = \${$instancename}->getId();" . HH .
                   "            \$isRedirect = true;" . HH .
-                  $editImgContent.
-                  $editBitContent.
-                  $rela_m2m_content.
+                  $editImgContent .
+                  $editBitContent .
+                  $rela_m2m_content .
                   "            if (\$isRedirect) {" . HH .
                   "                \$this->redirect( \"$instancename\", \"view\", \"id=\$id\" );" . HH .
                   "                exit;" . HH .
@@ -312,8 +314,8 @@ class AutoCodeAction extends AutoCode
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
                   "        \${$instancename}   = $classname::get_by_id( \${$instancename}Id );" . HH .
                   "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
-                  $relation_content.
-                  $editTextareaContent.
+                  $relation_content .
+                  $editTextareaContent .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 删除{$table_comment}" . HH .
@@ -337,7 +339,7 @@ class AutoCodeAction extends AutoCode
                   "        return array(\"error\" => 500,\"info\" => \"No Data\");" . HH .
                   "    }" . HH;
 
-        $classNameField   = self::getShowFieldName( $classname );
+        $classNameField   = self::getShowFieldName($classname);
         $export = HH .
                   "    /**" . HH .
                   "     * 导出{$table_comment}" . HH .
@@ -362,7 +364,7 @@ class AutoCodeAction extends AutoCode
      * @param string $instancename 实例名
      * @param string $table_comment 表注释
      */
-    private static function frontActionContent( $table_comment )
+    private static function frontActionContent($table_comment)
     {
         $result = "    /**" . HH .
                   "     * {$table_comment}列表" . HH .
@@ -447,22 +449,21 @@ class AutoCodeAction extends AutoCode
 
         $rela_m2m_content    = "";
         $relation_content    = "";
-        $relation_data = self::relationData( $fieldInfo, $classname );
+        $relation_data = self::relationData($fieldInfo, $classname);
 
         $relation_content = $relation_data["relation_content"];
         $rela_m2m_content = $relation_data["rela_m2m_content"];
 
-        foreach ($fieldInfo as $fieldname => $field)
-        {
+        foreach ($fieldInfo as $fieldname => $field) {
             // $field_comment = $field["Comment"];
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
-              case 'bit':
-                $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
-                break;
+                case 'bit':
+                    $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
+                    break;
             }
         }
-        $editContent = $editBitContent.
+        $editContent = $editBitContent .
                        "            if (!empty(\$id)) {" . HH .
                        "                \${$instancename}->update();" . HH .
                        "            } else {" . HH .
@@ -478,9 +479,9 @@ class AutoCodeAction extends AutoCode
                    "            \${$instancename} = \$this->model->{$classname};" . HH .
                    "            \$id         = \${$instancename}->getId();" . HH .
                    "            \$isRedirect = true;" . HH .
-                   self::uploadImgInEdit( $instancename, $fieldInfo ).
-                   $editContent.
-                   $rela_m2m_content.
+                   self::uploadImgInEdit($instancename, $fieldInfo) .
+                   $editContent .
+                   $rela_m2m_content .
                    "            if (\$isRedirect) {" . HH .
                    "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );" . HH .
                    "                exit;" . HH .
@@ -491,10 +492,8 @@ class AutoCodeAction extends AutoCode
                    "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
                    $relation_content;
         $text_area_fieldname = array();
-        foreach ($fieldInfo as $fieldname => $field)
-        {
-            if (self::columnIsTextArea($fieldname, $field["Type"]) )
-            {
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (self::columnIsTextArea($fieldname, $field["Type"])) {
                 $text_area_fieldname[] = "'" . $fieldname . "'";
             }
         }
@@ -519,16 +518,17 @@ class AutoCodeAction extends AutoCode
         return $result;
     }
 
-    private static function relationData($fieldInfo, $classname) {
+    private static function relationData($fieldInfo, $classname)
+    {
         $relation_content = "";
         $rela_m2m_content = "";
         $relation_data    = array();
-        if (array_key_exists($classname, self::$relation_all) ) $relationSpec = self::$relation_all[$classname];
-        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0))
-        {
+        if (array_key_exists($classname, self::$relation_all)) {
+            $relationSpec = self::$relation_all[$classname];
+        }
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0)) {
             //从属一对一关系规范定义(如果存在)
-            if (array_key_exists("belong_has_one", $relationSpec) )
-            {
+            if (array_key_exists("belong_has_one", $relationSpec)) {
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
                     $realId            = DataObjectSpec::getRealIDColumnName($key);
@@ -538,16 +538,15 @@ class AutoCodeAction extends AutoCode
             }
 
             //多对多关系规范定义(如果存在)
-            if (array_key_exists("many_many", $relationSpec) )
-            {
+            if (array_key_exists("many_many", $relationSpec)) {
                 $many_many        = $relationSpec["many_many"];
                 foreach ($many_many as $key => $value) {
                     $realId            = DataObjectSpec::getRealIDColumnName($classname);
                     $realId_m2m        = DataObjectSpec::getRealIDColumnName($key);
-                    $tablename         = self::getTablename( $classname );
-                    $instancename      = self::getInstancename( $tablename );
-                    $talname_rela      = self::getTablename( $key );
-                    $instancename_rela = self::getInstancename( $talname_rela );
+                    $tablename         = self::getTablename($classname);
+                    $instancename      = self::getInstancename($tablename);
+                    $talname_rela      = self::getTablename($key);
+                    $instancename_rela = self::getInstancename($talname_rela);
                     $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];" . HH .
                                          "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );" . HH;
                 }
@@ -618,31 +617,28 @@ class AutoCodeAction extends AutoCode
      * @param string $instancename 实体变量
      * @param array $fieldInfo 表列信息列表
      */
-    private static function uploadImgInEdit($instancename,$fieldInfo)
+    private static function uploadImgInEdit($instancename, $fieldInfo)
     {
         $result               = "";
         $fieldNameAndComments = array();
-        foreach ( $fieldInfo as $fieldname => $field )
-        {
+        foreach ($fieldInfo as $fieldname => $field) {
             $field_comment = $field["Comment"];
-            if (contain( $field_comment, "\r" ) || contain( $field_comment, "\n"))
-            {
+            if (contain($field_comment, "\r") || contain($field_comment, "\n")) {
                 $field_comment = preg_split("/[\s,]+/", $field_comment);
                 $field_comment = $field_comment[0];
             }
             $fieldNameAndComments[$fieldname] = $field_comment;
         }
         $img_fieldname = array();
-        foreach ( $fieldNameAndComments as $key => $value) {
-            $isImage = self::columnIsImage( $key, $value );
-            if ($isImage )
-            {
+        foreach ($fieldNameAndComments as $key => $value) {
+            $isImage = self::columnIsImage($key, $value);
+            if ($isImage) {
                 $img_fieldname[] = $key;
             }
         }
 
         if ($img_fieldname && count($img_fieldname) > 0) {
-            foreach ( $img_fieldname as $fieldname) {
+            foreach ($img_fieldname as $fieldname) {
                 $result .= "            if (!empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"])) {" . HH .
                            "                \$result = \$this->uploadImg( \$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\" );" . HH .
                            "                if (\$result && (\$result['success'] == true )) {" . HH .
@@ -666,8 +662,12 @@ class AutoCodeAction extends AutoCode
         $package       = self::$package_front;
         $author        = self::$author;
         $action_parent = "Action";
-        if (self::$type == 1 ) $package       = self::$package_model;
-        if (self::$type == 1 ) $action_parent = "ActionModel";
+        if (self::$type == 1) {
+            $package       = self::$package_model;
+        }
+        if (self::$type == 1) {
+            $action_parent = "ActionModel";
+        }
         $result = "<?php" . HH .
                   "/**" . HH .
                   " * -----------| 控制器:首页导航 |-----------" . HH .
@@ -685,7 +685,7 @@ class AutoCodeAction extends AutoCode
                   "        " . HH .
                   "    }" . HH .
                   "}" . HH . HH;
-        self::saveDefineToDir( self::$action_dir_full, "Action_Index.php", $result );
+        self::saveDefineToDir(self::$action_dir_full, "Action_Index.php", $result);
     }
 
     /**
@@ -693,12 +693,12 @@ class AutoCodeAction extends AutoCode
      * @param string $tablename 表名称
      * @param string $definePhpFileContent 生成的代码
      */
-    private static function saveActionDefineToDir($tablename,$definePhpFileContent)
+    private static function saveActionDefineToDir($tablename, $definePhpFileContent)
     {
         $classname     = self::getClassname($tablename);
         $filename      = "Action_" . $classname . ".php";
         $relative_path = str_replace(self::$save_dir, "", self::$action_dir_full . $filename);
-        switch ( self::$type) {
+        switch (self::$type) {
             case EnumAutoCodeViewType::FRONT:
                 AutoCodePreviewReport::$action_front_files[$classname] = $relative_path;
                 break;
@@ -709,6 +709,6 @@ class AutoCodeAction extends AutoCode
                 AutoCodePreviewReport::$action_admin_files[$classname] = $relative_path;
                 break;
         }
-        return self::saveDefineToDir( self::$action_dir_full, $filename, $definePhpFileContent );
+        return self::saveDefineToDir(self::$action_dir_full, $filename, $definePhpFileContent);
     }
 }

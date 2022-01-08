@@ -22,4 +22,3 @@ class EnumColumnNameDefault extends Enum
      */
     const UPDATETIME = "updateTime";
 }
-?>

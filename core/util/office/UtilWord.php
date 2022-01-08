@@ -8,6 +8,4 @@
  */
 class UtilWord extends Util
 {
-
-
 }

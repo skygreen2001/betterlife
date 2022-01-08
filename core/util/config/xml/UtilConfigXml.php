@@ -9,9 +9,11 @@
  */
 class UtilConfigXml extends UtilConfig
 {
-    public function load ($file)
+    public function load($file)
     {
-        if (file_exists($file) == false) { return false; }
+        if (file_exists($file) == false) {
+            return false;
+        }
         /**xmllib.php为PHP XML Library, version 1.2b,
          * 相关连接:http://keithdevens.com/software/phpxml
          * xmllib.php主要特点是把一个数组转换成一个xml或吧xml转换成一个数组
@@ -20,7 +22,7 @@ class UtilConfigXml extends UtilConfig
          * 自PHP5起,simpleXML就很不错,但还是不支持将xml转换成数组的功能,所以xmlLIB还是很不错的.
          */
         $xml = file_get_contents($file);
-        $this->_settings = UtilArray::xml_to_array( $xml, "settings" );
+        $this->_settings = UtilArray::xml_to_array($xml, "settings");
     }
 
     /**
@@ -30,9 +32,7 @@ class UtilConfigXml extends UtilConfig
     {
         // Load settings (XML)
         $settings = new UtilConfigXml();
-        $settings->load( __DIR__ . DS . "setting.xml" );
+        $settings->load(__DIR__ . DS . "setting.xml");
         echo 'XML: ' . $settings->get('db.host') . '';
     }
-
 }
-?>

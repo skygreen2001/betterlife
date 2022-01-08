@@ -1,4 +1,5 @@
 <?php
+
 require_once("phpmailer/class.phpmailer.php");
 /**
  * -----------| 邮件发送 |-----------
@@ -69,9 +70,8 @@ class UtilEmailer
             "success" => $mail->Send(),
             "info"    => $mail->ErrorInfo
         );
-        LogMe::log( print_pre($result) );
+        LogMe::log(print_pre($result));
         // print_pre($result, true);
         return $result;
     }
 }
-?>

@@ -42,15 +42,15 @@ class Dal_Pdo extends Dal implements IDal
 
         try {
             if ($dbtype == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $this->connection = new PDO( Config_Pdo::dsn( $host, $port, $username, $password, $dbname, $dbtype, $engine));
+                $this->connection = new PDO(Config_Pdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine));
             } else {
-                $this->connection = new PDO( Config_Pdo::dsn( $host, $port, $username, $password, $dbname, $dbtype, $engine ), $username, $password );
+                $this->connection = new PDO(Config_Pdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
             }
             if ($dbtype == EnumDbSource::DB_MYSQL) {
-                $this->change_character_set( $character_code = Config_Db::$character );
+                $this->change_character_set($character_code = Config_Db::$character);
             }
         } catch (PDOException $e) {
-            ExceptionDb::log( $e->getMessage() );
+            ExceptionDb::log($e->getMessage());
         }
     }
 
@@ -63,24 +63,24 @@ class Dal_Pdo extends Dal implements IDal
     {
         try {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM:" . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
                 }
             }
-            $this->stmt  = $this->connection->prepare( $this->sQuery );
+            $this->stmt  = $this->connection->prepare($this->sQuery);
             $columnCount = 0;
             if (!empty($this->saParams) && is_array($this->saParams) && (count($this->saParams) > 0 )) {
                 foreach ($this->saParams as $key => $value) {
                     $columnCount += 1;
                     // echo $columnCount . $key . ":" . $value;
                     $saveColumn[$columnCount] = $value;
-                    $this->stmt->bindParam( $columnCount, $saveColumn[$columnCount] );
+                    $this->stmt->bindParam($columnCount, $saveColumn[$columnCount]);
                 }
             }
             $this->stmt->execute();
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -92,11 +92,11 @@ class Dal_Pdo extends Dal implements IDal
     private function getResultToObjects($object)
     {
         $result = null;
-        $rows   = $this->stmt->fetchAll( Config_Pdo::$fetchmode );
+        $rows   = $this->stmt->fetchAll(Config_Pdo::$fetchmode);
         foreach ($rows as $row) {
             if (!empty($object)) {
-                if ($this->validParameter( $object )) {
-                    $c = UtilObject::array_to_object( $row, $this->classname );
+                if ($this->validParameter($object)) {
+                    $c = UtilObject::array_to_object($row, $this->classname);
                     $result[] = $c;
                 }
             } else {
@@ -113,7 +113,7 @@ class Dal_Pdo extends Dal implements IDal
                 }
             }
         }
-        $result = $this->getValueIfOneValue( $result );
+        $result = $this->getValueIfOneValue($result);
         return $result;
     }
 
@@ -129,9 +129,9 @@ class Dal_Pdo extends Dal implements IDal
         $result = null;
         try {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $sql );
+                LogMe::log("SQL: " . $sql);
             }
-            $this->stmt = $this->connection->prepare( $sql );
+            $this->stmt = $this->connection->prepare($sql);
             $this->stmt->execute();
             $parts = explode(" ", trim($sql));
             $type  = strtolower($parts[0]);
@@ -141,11 +141,11 @@ class Dal_Pdo extends Dal implements IDal
                 $autoId = $this->connection->lastInsertId();
                 return $autoId;
             }
-            $result = $this->getResultToObjects( $object );
+            $result = $this->getResultToObjects($object);
             $sql_s  = preg_replace("/\s/", "", $sql);
             $sql_s  = strtolower($sql_s);
             if (( !empty($result) ) && (!is_array($result) )) {
-                if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
+                if (!( contains($sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                     $tmp      = $result;
                     $result   = null;
                     $result[] = $tmp;
@@ -153,7 +153,7 @@ class Dal_Pdo extends Dal implements IDal
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -177,25 +177,25 @@ class Dal_Pdo extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams = $_SQL->parseValidInputParam( $filter );
+            $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery   = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (Config_Db::$debug_show_sql) {
-                LogMe::log("SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
-            $this->stmt = $this->connection->query( $this->sQuery, PDO::FETCH_NUM );
+            $this->stmt = $this->connection->query($this->sQuery, PDO::FETCH_NUM);
             $result     = $this->stmt->fetchColumn();
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -228,30 +228,34 @@ class Dal_Pdo extends Dal implements IDal
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (( $startPoint>$endPoint ) || ( $endPoint == 0)) return null;
-            if (!$this->validParameter( $object)) return null;
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
+                return null;
+            }
+            if (!$this->validParameter($object)) {
+                return null;
+            }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             if (Config_Db::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             } elseif (Config_Db::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Pdo::orm( $this->classname );
-                $whereclause  = SqlServer_Crud_Sql_Select::pageSql( $startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort );
+                $tablename    = Config_Pdo::orm($this->classname);
+                $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             }
-            $result = $this->sqlExecute( $this->sQuery, $object );
+            $result = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -263,22 +267,22 @@ class Dal_Pdo extends Dal implements IDal
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
             $_SQL->isPreparedStatement = true;
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
-            $this->saParams = UtilObject::object_to_array( $object );
+            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+            $this->saParams = UtilObject::object_to_array($object);
             $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
             $this->executeSQL();
             $autoId         = $this->connection->lastInsertId();
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
         if (!empty($object) && is_object($object)) {
-            $object->setId( $autoId );//当保存返回对象时使用
+            $object->setId($autoId);//当保存返回对象时使用
         }
         return $autoId;
     }
@@ -292,7 +296,7 @@ class Dal_Pdo extends Dal implements IDal
     public function delete($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
 
@@ -300,12 +304,12 @@ class Dal_Pdo extends Dal implements IDal
         if (!empty($id)) {
             try {
                 $_SQL         = new Crud_Sql_Delete();
-                $where        = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $result       = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
             }
         }
         return $result;
@@ -320,27 +324,27 @@ class Dal_Pdo extends Dal implements IDal
     public function update($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
         $id = $object->getId();
         if (!empty($id)) {
             try {
                 $_SQL = new Crud_Sql_Update();
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
-                $this->saParams = UtilObject::object_to_array( $object );
-                unset($this->saParams[DataObjectSpec::getRealIDColumnName( $object )]);
-                $this->saParams = $this->filterViewProperties( $this->saParams );
-                $where          = $this->sql_id( $object ) . self::EQUAL . $id;
+                $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
+                $this->saParams = UtilObject::object_to_array($object);
+                unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
+                $this->saParams = $this->filterViewProperties($this->saParams);
+                $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
                 $this->executeSQL();
                 $result         = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
                 $result         = false;
             }
         } else {
-           x( Wl::ERROR_INFO_UPDATE_ID, $this );
+            x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
         return $result;
     }
@@ -354,9 +358,9 @@ class Dal_Pdo extends Dal implements IDal
     {
         $id = $dataobject->getId();
         if (isset($id)) {
-            $result = $this->update( $dataobject );
+            $result = $this->update($dataobject);
         } else {
-            $result = $this->save( $dataobject );
+            $result = $this->save($dataobject);
         }
         return $result;
     }
@@ -393,16 +397,16 @@ class Dal_Pdo extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $filter_arr                = $_SQL->parseValidInputParam( $filter );
+            $filter_arr                = $_SQL->parseValidInputParam($filter);
             if (is_array($filter_arr) && count($filter_arr) > 0) {
                 $this->saParams = $filter_arr;
             } else {
@@ -411,17 +415,17 @@ class Dal_Pdo extends Dal implements IDal
             if (Config_Db::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             } elseif (Config_Db::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Pdo::orm( $this->classname );
-                $whereclause  = SqlServer_Crud_Sql_Select::getSql( $_SQL, $tablename, $filter_arr, $sort, $limit );
+                $tablename    = Config_Pdo::orm($this->classname);
+                $whereclause  = SqlServer_Crud_Sql_Select::getSql($_SQL, $tablename, $filter_arr, $sort, $limit);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             }
             $this->executeSQL();
-            $result = $this->getResultToObjects( $object );
+            $result = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -451,30 +455,30 @@ class Dal_Pdo extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $filter_arr = $_SQL->parseValidInputParam( $filter );
+            $filter_arr = $_SQL->parseValidInputParam($filter);
             if (is_array($filter_arr) && count($filter_arr) > 0) {
                 $this->saParams = $filter_arr;
             } else {
                 $_SQL->isPreparedStatement = false;
             }
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->result();
             $this->executeSQL();
             $rows = $this->stmt->fetchAll();
             if (count($rows) > 0) {
-                $result = UtilObject::array_to_object( $rows[0], $this->classname );
+                $result = UtilObject::array_to_object($rows[0], $this->classname);
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -488,28 +492,26 @@ class Dal_Pdo extends Dal implements IDal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             if ($id != null && $id > 0) {
                 $_SQL         = new Crud_Sql_Select();
-                $where        = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL:" . $this->sQuery );
+                    LogMe::log("SQL:" . $this->sQuery);
                 }
-                $rows = $this->connection->query( $this->sQuery );
-                $rows->setFetchMode( PDO::FETCH_OBJ );
+                $rows = $this->connection->query($this->sQuery);
+                $rows->setFetchMode(PDO::FETCH_OBJ);
                 foreach ($rows as $row) {
-                    $result = UtilObject::array_to_object( $row, $this->classname );
+                    $result = UtilObject::array_to_object($row, $this->classname);
                 }
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
-
 }
-?>

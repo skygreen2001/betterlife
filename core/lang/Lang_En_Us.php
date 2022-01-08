@@ -6,7 +6,8 @@
  * @package core.lang
  * @author skygreen <skygreen2001@gmail.com>
  */
-class Lang_En_Us {
+class Lang_En_Us
+{
     const INFO_REDIRECT_PART1 = "System will wait till";
     const INFO_REDIRECT_PART2 = "seconds to redirect";
     const INFO_DB_CHARACTER   = "Current connected database client charset:";
@@ -39,6 +40,4 @@ class Lang_En_Us {
     const EXCEPTION_REPORT_TRACKTIME = "Trace time";
     const EXCEPTION_REPORT_TRACKINFO = "Trace message";
     const EXCEPTION_REPORT_TYPE      = "Exception type";
-
 }
-?>

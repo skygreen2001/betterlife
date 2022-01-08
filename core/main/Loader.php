@@ -8,7 +8,8 @@
  * @package core.main
  * @author skygreen
  */
-class Loader {
+class Loader
+{
     const CLASS_CACHE = "Cache";
     const CLASS_MODEL = "Model";
     const CLASS_VIEW  = "View";
@@ -20,7 +21,8 @@ class Loader {
      * @param $param2 构造对象时传入的参数
      * @return Object
      */
-    public static function load($object, $param1 = null, $param2 = null) {
+    public static function load($object, $param1 = null, $param2 = null)
+    {
         $valid = array(
                 self::CLASS_CACHE,
                 self::CLASS_MODEL,
@@ -35,13 +37,13 @@ class Loader {
             } else {
                 $error_info = "不是有效的可以加载的 '{$object}'!";
             }
-            x( $error_info, new Loader() );
+            x($error_info, new Loader());
         }
         if (empty(self::$loaded[$object])) {
             if (empty($param1)) {
                 self::$loaded[$object] = new $object();
             } else {
-                self::$loaded[$object] = new $object( $param1, $param2 );
+                self::$loaded[$object] = new $object($param1, $param2);
             }
         }
         return self::$loaded[$object];
@@ -51,7 +53,8 @@ class Loader {
      * 获取网站物理路径
      * @return string 获取路径
      */
-    public static function basePath() {
+    public static function basePath()
+    {
         return getcwd();
     }
 }

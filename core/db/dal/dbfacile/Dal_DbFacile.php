@@ -34,7 +34,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function save($object)
     {
-
     }
 
 
@@ -46,7 +45,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function delete($object)
     {
-
     }
 
     /**
@@ -57,7 +55,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function update($object)
     {
-
     }
 
     /**
@@ -97,7 +94,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
-
     }
 
     /**
@@ -123,7 +119,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function get_one($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-
     }
 
     /**
@@ -134,7 +129,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function get_by_id($object, $id)
     {
-
     }
 
     /**
@@ -167,7 +161,6 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function count($object, $filter = null)
     {
-
     }
 
     /**
@@ -197,7 +190,5 @@ class Dal_DbFacile extends Dal implements IDal
      */
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
-
     }
 }
-?>

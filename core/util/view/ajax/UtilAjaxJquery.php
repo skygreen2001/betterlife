@@ -15,8 +15,9 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
      * @param ViewObject $viewObject 表示层显示对象,只在Web框架中使用,一般结合loadJsReady使用
      * @param string $version javascript框架的版本号
      */
-    public static function loadReady($viewObject = null, $version = "1.6.1") {
-        self::load( $version, $viewObject );
+    public static function loadReady($viewObject = null, $version = "1.6.1")
+    {
+        self::load($version, $viewObject);
     }
 
     /**
@@ -30,36 +31,32 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
     {
         if (self::$IsGoogleApi) {
             if (self::$IsDebug) {
-                if ($viewObject )
-                {
-                    self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
+                if ($viewObject) {
+                    self::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js");
                 } else {
-                    self::loadJs( "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js" );
+                    self::loadJs("https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.js");
                 }
             } else {
-                if ($viewObject )
-                {
-                    self::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js" );
+                if ($viewObject) {
+                    self::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js");
                 } else {
-                    self::loadJs( "https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js" );
+                    self::loadJs("https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js");
                 }
             }
         } else {
             $ajax_root = "misc/js/ajax/";
             $group     = EnumJsFramework::JS_FW_JQUERY;
             if (self::$IsDebug) {
-                if ($viewObject )
-                {
-                    self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
+                if ($viewObject) {
+                    self::loadJsReady($viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".js");
                 } else {
-                    self::loadJs( $ajax_root . $group . "/" . $group . "-" . $version . ".js" );
+                    self::loadJs($ajax_root . $group . "/" . $group . "-" . $version . ".js");
                 }
             } else {
-                if ($viewObject )
-                {
-                    self::loadJsReady( $viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".min.js" );
+                if ($viewObject) {
+                    self::loadJsReady($viewObject, $ajax_root . $group . "/" . $group . "-" . $version . ".min.js");
                 } else {
-                    self::loadJs( $ajax_root . $group . "/" . $group . "-" . $version . ".min.js" );
+                    self::loadJs($ajax_root . $group . "/" . $group . "-" . $version . ".min.js");
                 }
             }
         }
@@ -74,15 +71,15 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
     {
         if (self::$IsGoogleApi) {
             if (self::$IsDebug) {
-                UtilJavascript::loadJsReady( $viewObject, "https://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.js" );
+                UtilJavascript::loadJsReady($viewObject, "https://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.js");
             } else {
-                UtilJavascript::loadJsReady($viewObject, "http://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.min.js" );
+                UtilJavascript::loadJsReady($viewObject, "http://ajax.googleapis.com/ajax/libs/jqueryui/$version/jquery-ui.min.js");
             }
         } else {
             if (self::$IsDebug) {
-                UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.js", true );
+                UtilJavascript::loadJsReady($viewObject, "ajax/jquery/jqueryui/jquery-ui.js", true);
             } else {
-                UtilJavascript::loadJsReady( $viewObject, "ajax/jquery/jqueryui/jquery-ui.min.js", true );
+                UtilJavascript::loadJsReady($viewObject, "ajax/jquery/jqueryui/jquery-ui.min.js", true);
             }
         }
     }
@@ -102,8 +99,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         $result .= "<script type='text/javascript'>";
         //<editor-fold defaultstate="collapsed" desc="JQuery">
         //@link http://api.jquery.com/jQuery.ajax/
-        if (( is_array($dataArray) ) && (count($dataArray) > 0))
-        {
+        if (( is_array($dataArray) ) && (count($dataArray) > 0)) {
             $data = json_encode($dataArray);
 //            $data = "{";
 //            foreach ($dataArray as $key => $value) {
@@ -136,7 +132,7 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
                 }
               }";
         } else {
-            $result = substr($result, 0,  strlen($result) - 1);
+            $result = substr($result, 0, strlen($result) - 1);
         }
         $result .= "})";
         //</editor-fold>
@@ -189,5 +185,4 @@ class UtilAjaxJquery extends UtilAjax implements IUtilAjax
         }
         return $result;
     }
-
 }

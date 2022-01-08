@@ -11,8 +11,9 @@ class Enum
     /**
      * 获取所有的枚举值
      */
-    public static function allEnums() {
-        $class  = new ReflectionClass( get_called_class() );
+    public static function allEnums()
+    {
+        $class  = new ReflectionClass(get_called_class());
         $consts = $class->getConstants();
         return $consts;
     }
@@ -22,18 +23,19 @@ class Enum
      * @param string $value 指定的枚举值
      * @return bool 指定的枚举值是否存在
      */
-    public static function isEnumValue($value) {
-       if (!empty($value)) {
-           $class  = new ReflectionClass( get_called_class() );
-           $consts = $class->getConstants();
-           //$consts= self::allEnums();
-           if (isset($consts)) {
+    public static function isEnumValue($value)
+    {
+        if (!empty($value)) {
+            $class  = new ReflectionClass(get_called_class());
+            $consts = $class->getConstants();
+            //$consts= self::allEnums();
+            if (isset($consts)) {
                 if (in_array($value, $consts)) {
-                   return true;
+                    return true;
                 }
-           }
-       }
-       return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -41,11 +43,12 @@ class Enum
      * @param string $value 指定的枚举键
      * @return bool 指定的枚举键是否存在
      */
-    public static function isEnumKey($key) {
+    public static function isEnumKey($key)
+    {
         if (!empty($key)) {
             $consts = self::allEnums();
             if (isset($consts)) {
-                if (array_key_exists($key,$consts)) {
+                if (array_key_exists($key, $consts)) {
                     return true;
                 }
             }
@@ -58,13 +61,12 @@ class Enum
      * @param mixed $data 数据对象数组|数据对象。如:array(user,user)
      * @param mixed $property_name  属性名【可以一次指定多个属性名】
      */
-    public static function propertyShow($data, $property_name) {
+    public static function propertyShow($data, $property_name)
+    {
         $class_name = get_called_class();
-        if (!empty($class_name) )
-        {
+        if (!empty($class_name)) {
             $class_property_name = array($class_name);
-            if (is_string($property_name) )
-            {
+            if (is_string($property_name)) {
                 $class_property_name[] = $property_name;
             } elseif (is_array($property_name)) {
                 $class_property_name = array_merge($class_property_name, $property_name);
@@ -75,8 +77,7 @@ class Enum
                 }
             } elseif (is_object($data)) {
                 unset($class_property_name[0]);
-                foreach ($class_property_name as $property_name)
-                {
+                foreach ($class_property_name as $property_name) {
                     $data->$property_name = call_user_func($class_name . "::" . $property_name . "show", $property_name);
                 }
             }
@@ -93,8 +94,7 @@ class Enum
     {
         $enum_name = $class_property_name[0];
         unset($class_property_name[0]);
-        foreach ($class_property_name as $property_name)
-        {
+        foreach ($class_property_name as $property_name) {
             if (is_string($key) && ($key === $property_name )) {
                 $static_method_name = $property_name . "Show";
                 $item = call_user_func($enum_name . "::" . $static_method_name, $item);

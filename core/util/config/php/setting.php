@@ -7,12 +7,11 @@
  * @subpackage php
  * @author skygreen
  */
-$db = array();
+
+ $db = array();
 
 // Enter your database name here:
-$db['name'] = 'setting';
+ $db['name'] = 'setting';
 
 // Enter the hostname of your MySQL server:
-$db['host'] = 'localhost';
-
-?>
+ $db['host'] = 'localhost';

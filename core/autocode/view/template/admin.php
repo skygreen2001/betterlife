@@ -1,4 +1,5 @@
 <?php
+
 $appname = isset($appname) ? $appname : "";
 $classname = isset($classname) ? $classname : "";
 $realId = isset($realId) ? $realId : "";
@@ -616,4 +617,3 @@ $navbar_menus
       </div>
     </nav>
 NAVBAR;
-?>

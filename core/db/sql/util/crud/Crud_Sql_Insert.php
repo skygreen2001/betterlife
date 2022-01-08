@@ -6,9 +6,10 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Insert extends Crud_SQL {
+class Crud_Sql_Insert extends Crud_SQL
+{
     /**
-     * @var array 表所有列名数组 
+     * @var array 表所有列名数组
      */
     private $columns;
     /**
@@ -18,11 +19,12 @@ class Crud_Sql_Insert extends Crud_SQL {
     /**
      * 创建Insert 表名字符串
      * @param string $tableorclassName 表名|类名[映射表]
-     * @return Crud_Sql_Insert 
+     * @return Crud_Sql_Insert
      */
-    public function insert($tableorclassName) {
+    public function insert($tableorclassName)
+    {
         if (class_exists($tableorclassName)) {
-            $this->tableName = Config_Db::orm( $tableorclassName );
+            $this->tableName = Config_Db::orm($tableorclassName);
         } else {
             $this->tableName = $tableorclassName;
         }
@@ -46,7 +48,8 @@ class Crud_Sql_Insert extends Crud_SQL {
      * @param $type_rep 替代符的类型。1:$, 其他:?
      * @return Crud_Sql_Insert 其中:values Insert语句子字符串
      */
-    public function values($values, $type_rep = null) {
+    public function values($values, $type_rep = null)
+    {
         $count = 1;
         foreach ($values as $key => $value) {
             $this->columns .= $key . ",";
@@ -69,19 +72,20 @@ class Crud_Sql_Insert extends Crud_SQL {
      * 生成需要的完整的SQL语句
      * @return string SQL完整的语句
      */
-    public function result() {
+    public function result()
+    {
         $this->query  = self::SQL_INSERT . $this->tableName;
         $this->query .= " (" . $this->columns . ")";
         $this->query .= self::SQL_INSERT_VALUE . "(" . $this->values . ")";
         return $this->query;
     }
-    
+
     /**
      * 从插入Insert Sql 语句中获取表名
      *
-     * 算法说明: 
+     * 算法说明:
      *
-     *     Insert SQl语句的形式如下: 
+     *     Insert SQl语句的形式如下:
      *
      *       1. INSERT INTO Store_Information (store_name, Sales, Date) SELECT store_name, Sales, Date FROM Sales_Information WHERE Year(Date) = 1998
      *       2. INSERT INTO Persons VALUES ('Gates', 'Bill', 'Xuanwumen 10', 'Beijing')
@@ -92,9 +96,10 @@ class Crud_Sql_Insert extends Crud_SQL {
      * @param type $sqlstring 插入Insert Sql 语句
      * @return string 表名
      */
-    public static function tablename($sqlstring) {
+    public static function tablename($sqlstring)
+    {
         if (isset($sqlstring)) {
-            $sql_need = UtilString::word_trim( $sqlstring, 3 );
+            $sql_need = UtilString::word_trim($sqlstring, 3);
             if (isset($sql_need)) {
                 $tablenamepart = preg_split("/[\s]+/", $sql_need);
                 if (count($tablenamepart) == 3) {
@@ -106,4 +111,3 @@ class Crud_Sql_Insert extends Crud_SQL {
         return null;
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
 // | PHP Version 5                                                        |
@@ -26,7 +27,8 @@ require_once 'PEAR.php';
  * @package core.main.helper
  * @author Andrei Zmievski <andrei@php.net>
  */
-class Console_Getopt {
+class Console_Getopt
+{
     /**
      * Parses the command-line options.
      *
@@ -72,7 +74,7 @@ class Console_Getopt {
      * This function expects $args to start with the script name (POSIX-style).
      * Preserved for backwards compatibility.
      * @see getopt2()
-     */    
+     */
     function getopt($args, $short_options, $long_options = null)
     {
         return Console_Getopt::doGetopt(1, $args, $short_options, $long_options);
@@ -111,7 +113,6 @@ class Console_Getopt {
 
         reset($args);
         while (list($i, $arg) = each($args)) {
-
             /* The special element '--' means explicit end of
                options. Treat the rest of the arguments as non-options
                and end the loop. */
@@ -125,16 +126,18 @@ class Console_Getopt {
                 break;
             } elseif (strlen($arg) > 1 && $arg[1] == '-') {
                 $error = Console_Getopt::_parseLongOption(substr($arg, 2), $long_options, $opts, $args);
-                if (PEAR::isError($error))
+                if (PEAR::isError($error)) {
                     return $error;
+                }
             } elseif ($arg == '-') {
                 // - is stdin
                 $non_opts = array_merge($non_opts, array_slice($args, $i));
                 break;
             } else {
                 $error = Console_Getopt::_parseShortOption(substr($arg, 1), $short_options, $opts, $args);
-                if (PEAR::isError($error))
+                if (PEAR::isError($error)) {
                     return $error;
+                }
             }
         }
 
@@ -152,8 +155,7 @@ class Console_Getopt {
             $opt_arg = null;
 
             /* Try to find the short option in the specifier string. */
-            if (($spec = strstr($short_options, $opt)) === false || $arg{$i} == ':')
-            {
+            if (($spec = strstr($short_options, $opt)) === false || $arg{$i} == ':') {
                 return PEAR::raiseError("Console_Getopt: unrecognized option -- $opt");
             }
 
@@ -233,11 +235,13 @@ class Console_Getopt {
             } else {
                 $next_option_rest = '';
             }
-            if ($opt_rest != '' && $opt[0] != '=' &&
+            if (
+                $opt_rest != '' && $opt[0] != '=' &&
                 $i + 1 < count($long_options) &&
-                $opt == substr($long_options[$i+1], 0, $opt_len) &&
+                $opt == substr($long_options[$i + 1], 0, $opt_len) &&
                 $next_option_rest != '' &&
-                $next_option_rest[0] != '=') {
+                $next_option_rest[0] != '='
+            ) {
                 return PEAR::raiseError("Console_Getopt: option --$opt is ambiguous");
             }
 
@@ -284,7 +288,4 @@ class Console_Getopt {
         }
         return $argv;
     }
-
 }
-
-?>

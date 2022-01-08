@@ -17,8 +17,8 @@ class UtilCKEeditor extends Util
      */
     public static function ckFinder()
     {
-       $out = "    <script type=\"text/javascript\" src=\"" . Gc::$url_base . "misc/js/onlineditor/ckfinder/ckfinder.js\"></script>\n";
-       return $out;
+        $out = "    <script type=\"text/javascript\" src=\"" . Gc::$url_base . "misc/js/onlineditor/ckfinder/ckfinder.js\"></script>\n";
+        return $out;
     }
 
     /**
@@ -44,7 +44,7 @@ class UtilCKEeditor extends Util
         $config['toolbarStartupExpanded'] = true;
         $config['startupOutlineBlocks']   = true;
         $config['removeDialogTabs']       = 'image:Link;image:advanced';
-        $result = $CKEditor->editor($textarea_id, $content,$config);
+        $result = $CKEditor->editor($textarea_id, $content, $config);
         return $result;
         //return $CKEditor->editor($textarea_id, $content,$config);
     }
@@ -68,9 +68,9 @@ class UtilCKEeditor extends Util
      */
     public static function loadReplace($textarea_id, $isLoadCkFinder = true)
     {
-        $result = self::load() . UtilAjax::loadJsContentSentence( self::replace( $textarea_id, $isLoadCkFinder));
+        $result = self::load() . UtilAjax::loadJsContentSentence(self::replace($textarea_id, $isLoadCkFinder));
         if ($isLoadCkFinder) {
-            $result .= self::ckFinder( $isLoadCkFinder );
+            $result .= self::ckFinder($isLoadCkFinder);
         }
         return $result;
     }
@@ -103,7 +103,7 @@ class UtilCKEeditor extends Util
                    "        function ckeditor_replace$suffix_cr()" . HH .
                    "        {" . HH .
                    "             " . $jsContent . HH .
-                   "".
+                   "" .
                    "        }" . HH;
         return $jsContent;
     }

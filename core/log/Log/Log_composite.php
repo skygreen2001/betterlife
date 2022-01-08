@@ -43,9 +43,12 @@ class Log_composite extends Log
      *
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                           $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_ident = $ident;
     }
 
@@ -144,12 +147,12 @@ class Log_composite extends Log
         }
 
         /*
-         * Abort early if the priority is above the composite handler's 
+         * Abort early if the priority is above the composite handler's
          * maximum logging level.
          *
          * XXX: Consider whether or not introducing this change would break
-         * backwards compatibility.  Some users may be expecting composite 
-         * handlers to pass on all events to their children regardless of 
+         * backwards compatibility.  Some users may be expecting composite
+         * handlers to pass on all events to their children regardless of
          * their own priority.
          */
         #if (!$this->_isMasked($priority)) {
@@ -157,9 +160,9 @@ class Log_composite extends Log
         #}
 
         /*
-         * Iterate over all of our children.  If a unopened child will respond 
+         * Iterate over all of our children.  If a unopened child will respond
          * to this log event, we attempt to open it immediately.  The composite
-         * handler's opened state will be enabled as soon as the first child 
+         * handler's opened state will be enabled as soon as the first child
          * handler is successfully opened.
          *
          * We track an overall success state that indicates whether or not all
@@ -271,5 +274,4 @@ class Log_composite extends Log
 
         return true;
     }
-
 }

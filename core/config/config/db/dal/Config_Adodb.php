@@ -30,9 +30,10 @@ class Config_Adodb extends Config_Db
     /**
      * 获取数据库驱动字符串
      * @param mixed $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
-     * @return string 数据库驱动字符串 
+     * @return string 数据库驱动字符串
      */
-    public static function driver($dbtype = null) {
+    public static function driver($dbtype = null)
+    {
         switch ($dbtype) {
             case EnumDbSource::DB_MYSQL:
                 return "mysql";
@@ -42,14 +43,14 @@ class Config_Adodb extends Config_Db
             case EnumDbSource::DB_INTERBASE:
                 return "ibase";
             case EnumDbSource::DB_LDAP:
-                $LDAP_CONNECT_OPTIONS = Array(
-                        Array ("OPTION_NAME" => LDAP_OPT_DEREF, "OPTION_VALUE" => 2),
-                        Array ("OPTION_NAME" => LDAP_OPT_SIZELIMIT, "OPTION_VALUE" => 100),
-                        Array ("OPTION_NAME" => LDAP_OPT_TIMELIMIT, "OPTION_VALUE" => 30),
-                        Array ("OPTION_NAME" => LDAP_OPT_PROTOCOL_VERSION, "OPTION_VALUE" => 3),
-                        Array ("OPTION_NAME" => LDAP_OPT_ERROR_NUMBER, "OPTION_VALUE" => 13),
-                        Array ("OPTION_NAME" => LDAP_OPT_REFERRALS, "OPTION_VALUE" => FALSE),
-                        Array ("OPTION_NAME" => LDAP_OPT_RESTART, "OPTION_VALUE" => FALSE)
+                $LDAP_CONNECT_OPTIONS = array(
+                        array ("OPTION_NAME" => LDAP_OPT_DEREF, "OPTION_VALUE" => 2),
+                        array ("OPTION_NAME" => LDAP_OPT_SIZELIMIT, "OPTION_VALUE" => 100),
+                        array ("OPTION_NAME" => LDAP_OPT_TIMELIMIT, "OPTION_VALUE" => 30),
+                        array ("OPTION_NAME" => LDAP_OPT_PROTOCOL_VERSION, "OPTION_VALUE" => 3),
+                        array ("OPTION_NAME" => LDAP_OPT_ERROR_NUMBER, "OPTION_VALUE" => 13),
+                        array ("OPTION_NAME" => LDAP_OPT_REFERRALS, "OPTION_VALUE" => false),
+                        array ("OPTION_NAME" => LDAP_OPT_RESTART, "OPTION_VALUE" => false)
                 );
                 return "ldap";
             case EnumDbSource::DB_SQLITE2:
@@ -82,15 +83,16 @@ class Config_Adodb extends Config_Db
      *
      *    $dsn可以直接在System DSN里配置；然后在配置里设置: Config_Db::$dbname
      * @param string $host
-     * @param string $port 
+     * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return string ODBC所需的dsn_less字符串
      */
-    public static function dsn_less($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
+    public static function dsn_less($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
+    {
         if (isset($host)) {
             if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
@@ -105,15 +107,15 @@ class Config_Adodb extends Config_Db
             }
         }
         if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
-            $connecturl = self::driver( $dbtype ) . ":host=" . $connecturl;
-        }       
-        $dsn_less = ""; 
+            $connecturl = self::driver($dbtype) . ":host=" . $connecturl;
+        }
+        $dsn_less = "";
         switch ($dbtype) {
             case EnumDbSource::DB_SQLSERVER:
                 if (!( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8))) {
                     $dsn_less = "Driver={SQL Server Native Client 10.0};Server=" . $connecturl . ";Database=" . $dbname . ";";
                 } else {
-                    $dsn_less = $connecturl;  
+                    $dsn_less = $connecturl;
                 }
                 break;
             case EnumDbSource::DB_MICROSOFT_ACCESS:
@@ -121,34 +123,35 @@ class Config_Adodb extends Config_Db
                 break;
             case EnumDbSource::DB_DB2:
                 $dsn_less = "driver={IBM db2 odbc DRIVER};Database=" . $dbname . ";hostname=" . $host . ";port=" . $port . ";protocol=TCPIP;uid=" . $username . "; pwd=" . $password;
-                break;                
+                break;
             case EnumDbSource::DB_FIREBIRD:
             case EnumDbSource::DB_INTERBASE:
                 $dsn_less .= ":" . $dbname;
                 break;
             case EnumDbSource::DB_SQLITE2:
             case EnumDbSource::DB_SQLITE3:
-                $dsn_less = $dbname;  
-                break;            
+                $dsn_less = $dbname;
+                break;
             default:
                 $dsn_less = $connecturl;
                 break;
         }
         return $dsn_less;
     }
-    
+
     /**
      * 返回ODBC所需的dsn字符串
      * @param string $host
-     * @param string $port 
+     * @param string $port
      * @param string $username
      * @param string $password
-     * @param string $dbname 
+     * @param string $dbname
      * @param enum $dbtype 指定数据库类型。{该字段的值参考: EnumDbSource}
      * @param mixed $engine 指定操作数据库引擎。{该字段的值参考: EnumDbEngine}
      * @return string ODBC所需的dsn字符串
      */
-    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null) {
+    public static function dsn($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
+    {
         if (isset($host)) {
             if (strlen($port) > 0) {
                 $connecturl = $host . ":" . $port;
@@ -162,19 +165,19 @@ class Config_Adodb extends Config_Db
                 $connecturl = self::$host;
             }
         }
-        $dsn = self::driver( $dbtype ) . "://";
+        $dsn = self::driver($dbtype) . "://";
         switch ($dbtype) {
             case EnumDbSource::DB_LDAP:
                 $dsn .= $host . "/" . $dbname;
                 break;
             case EnumDbSource::DB_SQLITE2:
-            case EnumDbSource::DB_SQLITE3:             
+            case EnumDbSource::DB_SQLITE3:
                 $path = urlencode($dbname);
                 $dsn .= $path;
                 if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
                     $dsn = "pdo_" . $dsn;
                 }
-                break;   
+                break;
             default:
                 $dsn .= $username . ":" . $password . "@" . $connecturl . "/" . $dbname;
                 if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
@@ -185,4 +188,3 @@ class Config_Adodb extends Config_Db
         return $dsn;
     }
 }
-?>

@@ -22,34 +22,34 @@ class Cache_Memcache extends Cache_Base
     public function TestRun()
     {
         $value = "Hello World";
-        for ($i = 0;$i < 100; $i++) {
-           $this->set( $i, $i . ":testrrrr" . $value );
+        for ($i = 0; $i < 100; $i++) {
+            $this->set($i, $i . ":testrrrr" . $value);
         }
 
         //$mem->save("key", $value);
-        $this->update( "key", "I'm a newbie!" );
-        $val = $this->get( "key" );
+        $this->update("key", "I'm a newbie!");
+        $val = $this->get("key");
         echo $val;
-        $this->update( "key", array("Home"=>$value, "Guest"=>"I'm a newbie!") );
-        $val = $this->get( "key" );
+        $this->update("key", array("Home" => $value, "Guest" => "I'm a newbie!"));
+        $val = $this->get("key");
         print_r($val);
-        $this->delete( "key" );
-        $val = $this->get( "key" );
+        $this->delete("key");
+        $val = $this->get("key");
         echo $val;
         $member = new User();
         $member->setName("skygreen2001");
         $member->setPassword("administrator");
         $member->setDepartmentId(3211);
-        $this->save( "Member1", $member );
-        $user = $this->get( "Member1" );
+        $this->save("Member1", $member);
+        $user = $this->get("Member1");
         echo $user;
         $member = new User();
         $member->setName("学必填");
         $member->setPassword("password");
         $member->setDepartmentId(3212);
-        $this->save( "Member2", $member );
+        $this->save("Member2", $member);
 
-        $users = $this->gets( Array('Member1', 'Member2') );
+        $users = $this->gets(array('Member1', 'Member2'));
         print_r($users);
         $this->clear();
         $this->close();
@@ -58,12 +58,11 @@ class Cache_Memcache extends Cache_Base
     public function Cache_Memcache()
     {
         if (!class_exists('Memcache')) {
-            LogMe::log('请检查是否启动了Php Extensions:php_memcache',EnumLogLevel::ERR);
+            LogMe::log('请检查是否启动了Php Extensions:php_memcache', EnumLogLevel::ERR);
         }
-        $this->obj = new Memcache;
+        $this->obj = new Memcache();
         //加载所有的分布式服务器
-        foreach (Config_Memcache::$cache_servers as $cache_server)
-        {
+        foreach (Config_Memcache::$cache_servers as $cache_server) {
             $this->obj->addServer($cache_server[0], $cache_server[1]);
         }
 //        if (!$this->obj->connect($host, $port)) {
@@ -78,10 +77,10 @@ class Cache_Memcache extends Cache_Base
     public function contains($key)
     {
         if (isset($this->obj)) {
-            $tmp = $this->get( $key );
-           if (!empty($tmp)) {
-             return true;
-           }
+            $tmp = $this->get($key);
+            if (!empty($tmp)) {
+                return true;
+            }
         }
         return false;
     }
@@ -206,4 +205,3 @@ class Cache_Memcache extends Cache_Base
         $this->obj->close();
     }
 }
-?>

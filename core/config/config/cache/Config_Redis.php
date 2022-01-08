@@ -46,6 +46,4 @@ class Config_Redis extends ConfigBB
      * 所有键的前缀名，默认为无
      */
     public static $prefix_key = "";
-
 }
-?>

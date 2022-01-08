@@ -45,7 +45,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
         }
 
         if (!$this->connection) {
-            ExceptionDb::log( Wl::ERROR_INFO_CONNECT_FAIL );
+            ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL);
         }
     }
 
@@ -58,11 +58,11 @@ class Dao_Postgres extends Dao implements IDaoNormal
     private function executeSQL()
     {
         if (Config_Db::$debug_show_sql) {
-            LogMe::log( "SQL: " . $this->sQuery );
+            LogMe::log("SQL: " . $this->sQuery);
         }
         $this->result = pg_query($this->connection, $this->sQuery);
         if (!$this->result) {
-            ExceptionDb::log( Wl::ERROR_INFO_DB_HANDLE );
+            ExceptionDb::log(Wl::ERROR_INFO_DB_HANDLE);
         }
     }
 
@@ -74,10 +74,10 @@ class Dao_Postgres extends Dao implements IDaoNormal
     private function getResultToObjects($object)
     {
         $result = array();
-        while ($currentrow = pg_fetch_array($this->result, NULL, Config_Postgres::$fetchmode)) {
+        while ($currentrow = pg_fetch_array($this->result, null, Config_Postgres::$fetchmode)) {
             if (!empty($object)) {
-                if ($this->validParameter( $object )) {
-                    $c        = UtilObject::array_to_object( $currentrow, $this->classname );
+                if ($this->validParameter($object)) {
+                    $c        = UtilObject::array_to_object($currentrow, $this->classname);
                     $result[] = $c;
                 }
             } else {
@@ -97,7 +97,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
         if (count($result) == 0) {
             $result = null;
         }
-        $result = $this->getValueIfOneValue( $result );
+        $result = $this->getValueIfOneValue($result);
         pg_free_result($this->result);
         return $result;
     }
@@ -110,24 +110,24 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
             $_SQL->type_rep            = 1;
             $_SQL->isPreparedStatement = true;
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
-            $this->saParams = UtilObject::object_to_array( $object );
-            $this->saParams = $this->filterViewProperties( $this->saParams );
+            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+            $this->saParams = UtilObject::object_to_array($object);
+            $this->saParams = $this->filterViewProperties($this->saParams);
             foreach ($this->saParams as $key => &$value) {
-                $value = $this->escape( $value );
+                $value = $this->escape($value);
             }
-            $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams, 1)->result() . " RETURNING " . $this->sql_id( $object );
+            $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams, 1)->result() . " RETURNING " . $this->sql_id($object);
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
             $this->result = pg_prepare($this->connection, "insert_query", $this->sQuery);
@@ -138,10 +138,10 @@ class Dao_Postgres extends Dao implements IDaoNormal
             }
             pg_free_result($this->result);
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
-        if (empty($object)&&is_object($object)) {
-            $object->setId( $autoId );//当保存返回对象时使用
+        if (empty($object) && is_object($object)) {
+            $object->setId($autoId);//当保存返回对象时使用
         }
         return $autoId;
     }
@@ -156,23 +156,23 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function delete($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
         $id = $object->getId();
         if (!empty($id)) {
             try {
                 $_SQL  = new Crud_Sql_Delete();
-                $where = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log( "SQL: " . $this->sQuery);
+                    LogMe::log("SQL: " . $this->sQuery);
                 }
                 $result = pg_query($this->connection, $this->sQuery);
                 pg_free_result($result);
                 $result = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
             }
         }
         return $result;
@@ -187,7 +187,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function update($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
 
@@ -196,20 +196,20 @@ class Dao_Postgres extends Dao implements IDaoNormal
             try {
                 $_SQL = new Crud_Sql_Update();
                 $_SQL->type_rep = 1;
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
-                $object->setId( null );
-                $this->saParams = UtilObject::object_to_array( $object );
-                unset($this->saParams[DataObjectSpec::getRealIDColumnName( $object )]);
-                $this->saParams = $this->filterViewProperties( $this->saParams );
-                $where = $this->sql_id( $object ) . self::EQUAL . $id;
+                $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
+                $object->setId(null);
+                $this->saParams = UtilObject::object_to_array($object);
+                unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
+                $this->saParams = $this->filterViewProperties($this->saParams);
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 foreach ($this->saParams as $key => &$value) {
-                    $value = $this->escape( $value );
+                    $value = $this->escape($value);
                 }
                 $this->sQuery = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
                 if (Config_Db::$debug_show_sql) {
-                    LogMe::log("SQL: " . $this->sQuery );
+                    LogMe::log("SQL: " . $this->sQuery);
                     if (!empty($this->saParams)) {
-                        LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                        LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                     }
                 }
                 $this->result = pg_prepare($this->connection, "update_query", $this->sQuery);
@@ -217,11 +217,11 @@ class Dao_Postgres extends Dao implements IDaoNormal
                 pg_free_result($this->result);
                 $result = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
                 $result = false;
             }
         } else {
-           x( Wl::ERROR_INFO_UPDATE_ID, $this );
+            x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
         return $result;
     }
@@ -235,9 +235,9 @@ class Dao_Postgres extends Dao implements IDaoNormal
     {
         $id = $dataobject->getId();
         if (isset($id)) {
-            $result = $this->update( $dataobject );
+            $result = $this->update($dataobject);
         } else {
-            $result = $this->save( $dataobject );
+            $result = $this->save($dataobject);
         }
         return $result;
     }
@@ -273,24 +273,24 @@ class Dao_Postgres extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $filter_arr                = $_SQL->parseValidInputParam( $filter );
+            $filter_arr                = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             $this->executeSQL();
-            $result = $this->getResultToObjects( $object );
+            $result = $this->getResultToObjects($object);
 
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -319,27 +319,27 @@ class Dao_Postgres extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
-            $result       = $this->getResultToObjects( $object );
+            $result       = $this->getResultToObjects($object);
             if (count($result) >= 1) {
                 $result = $result[0];
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -354,24 +354,24 @@ class Dao_Postgres extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             if (!empty($id) && is_scalar($id)) {
                 $_SQL           = new Crud_Sql_Select();
-                $where          = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
-                $result = $this->getResultToObjects( $object );
+                $result = $this->getResultToObjects($object);
                 if (count($result) == 1) {
                     $result = $result[0];
                 }
                 return $result;
             }
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
@@ -385,7 +385,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function sqlExecute($sql, $object = null)
     {
         if (Config_Db::$debug_show_sql) {
-            LogMe::log( "SQL: " . $sql );
+            LogMe::log("SQL: " . $sql);
         }
         $parts = explode(" ", trim($sql));
         $type  = strtolower($parts[0]);
@@ -394,10 +394,10 @@ class Dao_Postgres extends Dao implements IDaoNormal
             pg_free_result($this->result);
             return true;
         } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
-            if (strpos($sql,"RETURNING") !== false) {
+            if (strpos($sql, "RETURNING") !== false) {
                 $addfoot_sql = "";
             } else {
-                $addfoot_sql = " RETURNING " . $this->sql_id( $object );
+                $addfoot_sql = " RETURNING " . $this->sql_id($object);
             }
             $this->result = pg_query($this->connection, $sql . $addfoot_sql);
             $row          = pg_fetch_row($this->result);
@@ -408,14 +408,14 @@ class Dao_Postgres extends Dao implements IDaoNormal
             return $autoId;
         }
         $this->result = pg_query($this->connection, $sql);
-        $result       = $this->getResultToObjects( $object );
+        $result       = $this->getResultToObjects($object);
         // if (is_array($result)&&count($result)==1) {
         //     $result=$result[0];
         // }
         $sql_s = preg_replace("/\s/", "", $sqlstring);
         $sql_s = strtolower($sql_s);
         if (!empty($result) && !is_array($result)) {
-            if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
+            if (!( contains($sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                 $tmp      = $result;
                 $result   = null;
                 $result[] = $tmp;
@@ -444,18 +444,18 @@ class Dao_Postgres extends Dao implements IDaoNormal
     {
         $result = 0;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log( "SQL PARAM: " . var_export($this->saParams, true) );
+                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
                 }
             }
             $this->result = pg_query($this->connection, $this->sQuery);
@@ -467,7 +467,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
             pg_free_result($this->result);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
@@ -499,49 +499,51 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) return null;
-            if (!$this->validParameter( $object))return null;
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
+                return null;
+            }
+            if (!$this->validParameter($object)) {
+                return null;
+            }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($endPoint-$startPoint+1)->offset($startPoint)->result();
-            $result       = $this->sqlExecute( $this->sQuery, $object );
+            $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($endPoint - $startPoint + 1)->offset($startPoint)->result();
+            $result       = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
     public function transBegin()
     {
         return @pg_exec($this->connection, "BEGIN");
-        return TRUE;
+        return true;
     }
     public function transCommit()
     {
         return @pg_exec($this->connection, "COMMIT");
-        return TRUE;
+        return true;
     }
     public function transRollback()
     {
         return @pg_exec($this->connection, "ROLLBACK");
-        return TRUE;
+        return true;
     }
 
     public function escape($sql)
     {
         if (function_exists('pg_escape_string')) {
-            return pg_escape_string( $sql);
+            return pg_escape_string($sql);
         } else {
             return addslashes($sql);
         }
     }
-
 }
-?>

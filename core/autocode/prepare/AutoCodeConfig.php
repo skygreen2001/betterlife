@@ -48,30 +48,29 @@ class AutoCodeConfig extends AutoCode
     /**
      * 自动生成配置
      * @param array|string $table_names
-     * 示例如下: 
+     * 示例如下:
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
     public static function run($table_names = "")
     {
         $filename = self::$filename_config_xml;
-        if ((!Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename) )
-        {
+        if ((!Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename)) {
             $filename = dirname($filename) . DS . "autocode_create.config.xml";
             self::$filename_config_xml = $filename;
             self::$url_config_xml = Gc::$url_base . "tools/tools/autocode/autocode_create.config.xml";
         }
 
-        self::$config_classes = array("class"=>array());
+        self::$config_classes = array("class" => array());
         self::$table_key_map  = array();
         self::init();
 
-        $fieldInfos = self::fieldInfosByTable_names( $table_names );
-        foreach ($fieldInfos as $tablename=>$fieldInfo) {
-            $classname = self::getClassname( $tablename );
+        $fieldInfos = self::fieldInfosByTable_names($table_names);
+        foreach ($fieldInfos as $tablename => $fieldInfo) {
+            $classname = self::getClassname($tablename);
             $current_class_config = array(
                 '@attributes' => array(
-                    "name"=>$classname
+                    "name" => $classname
                 ),
                 "conditions"  => array(
                     "condition" => array()
@@ -85,9 +84,9 @@ class AutoCodeConfig extends AutoCode
             $relationShows = $current_class_config["relationShows"]["show"];
 
             //添加查询条件配置
-            $conditions    = self::conditionsToConfig( $classname, $tablename, $fieldInfo, $conditions );
+            $conditions    = self::conditionsToConfig($classname, $tablename, $fieldInfo, $conditions);
             //表关系主键显示配置
-            $relationShows = self::relationShowsToConfig( $classname, $fieldInfo, $relationShows );
+            $relationShows = self::relationShowsToConfig($classname, $fieldInfo, $relationShows);
 
             $current_class_config["conditions"]["condition"] = $conditions;
             $current_class_config["relationShows"]["show"]   = $relationShows;
@@ -108,13 +107,13 @@ class AutoCodeConfig extends AutoCode
             }
         }
         foreach ($fieldInfos as $tablename => $fieldInfo) {
-            $classname = self::getClassname( $tablename );
+            $classname = self::getClassname($tablename);
             $current_class_config = self::$config_classes["class"][self::$table_key_map[$classname]];
-            foreach ($relation_keys as  $relation_key) {
+            foreach ($relation_keys as $relation_key) {
                 $relation_fives[$relation_key] = $current_class_config[$relation_key];
             }
             //数据对象之间关系配置
-            $relation_fives = self::relationFives( $classname, $tablename, $fieldInfo, $relation_fives );
+            $relation_fives = self::relationFives($classname, $tablename, $fieldInfo, $relation_fives);
             foreach ($relation_keys as $relation_key) {
                 $current_class_config[$relation_key] = $relation_fives[$relation_key];
             }
@@ -126,13 +125,15 @@ class AutoCodeConfig extends AutoCode
                 $c_c   = self::$config_classes["class"][$t_k_m];
                 if (array_key_exists($relation_key, $c_c)) {
                     $c_c_r = $c_c[$relation_key];
-                    if (count($c_c_r) == 0 ) unset($c_c_r);
+                    if (count($c_c_r) == 0) {
+                        unset($c_c_r);
+                    }
                 }
             }
         }
         $dir_autocode = dirname($filename);
-        UtilFileSystem::createDir( $dir_autocode );
-        $result = UtilArray::saveXML( $filename, self::$config_classes, "classes" );
+        UtilFileSystem::createDir($dir_autocode);
+        $result = UtilArray::saveXML($filename, self::$config_classes, "classes");
 
         if (!file_exists($filename)) {
             system_dir_info($dir_autocode);
@@ -158,30 +159,33 @@ class AutoCodeConfig extends AutoCode
     {
         $exists_condition = array();
         $showfieldname    = "";
-        if (!self::isMany2ManyByClassname( $classname )) {
-            $showfieldname = self::getShowFieldNameByClassname( $classname, true );
+        if (!self::isMany2ManyByClassname($classname)) {
+            $showfieldname = self::getShowFieldNameByClassname($classname, true);
             if (!empty($showfieldname)) {
-                if (( !contain( $tablename, Config_Db::TABLENAME_RELATION)) && (!in_array($showfieldname, $exists_condition) )) {
+                if (( !contain($tablename, Config_Db::TABLENAME_RELATION)) && (!in_array($showfieldname, $exists_condition) )) {
                     $conditions[]       = array("@value" => $showfieldname);
                     $exists_condition[] = $showfieldname;
                 }
             }
         }
-        foreach  ($fieldInfo as $fieldname => $field)
-        {
-            if (!self::isNotColumnKeywork( $fieldname))continue;
-            if ($fieldname == self::keyIDColumn( $classname)) continue;
-            if (( !in_array($fieldname, $exists_condition) ) && contains( $fieldname, array("name", "title") ) && ($fieldname != $showfieldname ) && (!contain( $fieldname, "_id"))) {
-                $conditions[]       = array("@value"=>$fieldname);
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (!self::isNotColumnKeywork($fieldname)) {
+                continue;
+            }
+            if ($fieldname == self::keyIDColumn($classname)) {
+                continue;
+            }
+            if (( !in_array($fieldname, $exists_condition) ) && contains($fieldname, array("name", "title")) && ($fieldname != $showfieldname ) && (!contain($fieldname, "_id"))) {
+                $conditions[]       = array("@value" => $fieldname);
                 $exists_condition[] = $fieldname;
             }
 
             if (count($conditions) < self::$count_condition) {
-                if (( !in_array($fieldname, $exists_condition) ) && contains( $fieldname, array("code", "_no", "status", "type") ) && (!contain( $fieldname, "_id"))) {
+                if (( !in_array($fieldname, $exists_condition) ) && contains($fieldname, array("code", "_no", "status", "type")) && (!contain($fieldname, "_id"))) {
                     $conditions[]       = array("@value" => $fieldname);
                     $exists_condition[] = $fieldname;
                 }
-                if (contain( $fieldname, "_id" ) && (!contain( $fieldname, "parent_id"))) {
+                if (contain($fieldname, "_id") && (!contain($fieldname, "parent_id"))) {
                     $relation_classname = str_replace("_id", "", $fieldname);
                     $relation_classname = ucfirst($relation_classname);
                     $relation_class        = null;
@@ -189,7 +193,7 @@ class AutoCodeConfig extends AutoCode
                         $relation_class = new $relation_classname();
                     }
                     if (( !in_array($fieldname, $exists_condition) ) && ($relation_class instanceof DataObject )) {
-                        $showfieldname_relation = self::getShowFieldName( $relation_classname );
+                        $showfieldname_relation = self::getShowFieldName($relation_classname);
                         if (!in_array($showfieldname_relation, $exists_condition)) {
                             $conditions[] = array(
                                 '@attributes' => array(
@@ -216,11 +220,14 @@ class AutoCodeConfig extends AutoCode
      */
     private static function relationShowsToConfig($classname, $fieldInfo, $relationShows)
     {
-        foreach  ($fieldInfo as $fieldname => $field)
-        {
-            if (!self::isNotColumnKeywork( $fieldname)) continue;
-            if ($fieldname == self::keyIDColumn( $classname)) continue;
-            if (contain( $fieldname, "_id" ) || ( contain( strtoupper($fieldname), "PARENT_ID"))) {
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (!self::isNotColumnKeywork($fieldname)) {
+                continue;
+            }
+            if ($fieldname == self::keyIDColumn($classname)) {
+                continue;
+            }
+            if (contain($fieldname, "_id") || ( contain(strtoupper($fieldname), "PARENT_ID"))) {
                 $relation_classname = str_replace("_id", "", $fieldname);
                 $relation_classname = ucfirst($relation_classname);
                 if (strtoupper($relation_classname) == "PARENT") {
@@ -238,7 +245,7 @@ class AutoCodeConfig extends AutoCode
                         $relation_class = new $relation_classname();
                     }
                     if ($relation_class instanceof DataObject) {
-                        $showfieldname = self::getShowFieldName( $relation_classname );
+                        $showfieldname = self::getShowFieldName($relation_classname);
                         $relationShows[] = array(
                             '@attributes' => array(
                                 "local_key"      => $fieldname,
@@ -257,14 +264,14 @@ class AutoCodeConfig extends AutoCode
      * 第一次生成实体类的时候，因为框架生成的应用内没有该实体类
      * 而实体类的主键是通过实体类的命名规则生成，当没有实体类的时候就需要通过表定义和主键的定义规则来确定该实体类的主键
      * 优先判断规则为:
-     * 表名+"_id"  > "id" > 表名+"id" 
+     * 表名+"_id"  > "id" > 表名+"id"
      * @param string $classname 数据对象类名
      * @param array $fieldInfo 表列信息列表
      */
-    private static function getRealIDByTable($classname, $fieldInfo) {
+    private static function getRealIDByTable($classname, $fieldInfo)
+    {
         $classname = strtolower($classname);
-        foreach  ($fieldInfo as $fieldname => $field)
-        {
+        foreach ($fieldInfo as $fieldname => $field) {
             $cf     = strtolower($fieldname);
             $realId = strtolower($classname) . "_id";
             if (( $cf == $classname . "_id" ) || ( $cf == "id" ) || ( $cf == $classname . "id" )) {
@@ -272,7 +279,7 @@ class AutoCodeConfig extends AutoCode
             }
         }
     }
-    
+
     /**
      * 表五种关系映射配置
      * @param array $classname 数据对象类名
@@ -282,14 +289,17 @@ class AutoCodeConfig extends AutoCode
      */
     private static function relationFives($classname, $tablename, $fieldInfo, $relation_fives)
     {
-        $realId = self::getRealIDByTable( $classname, $fieldInfo );
-        foreach  ($fieldInfo as $fieldname => $field)
-        {
-            if (!self::isNotColumnKeywork( $fieldname)) continue;
-            if ($fieldname == self::keyIDColumn( $classname)) continue;
+        $realId = self::getRealIDByTable($classname, $fieldInfo);
+        foreach ($fieldInfo as $fieldname => $field) {
+            if (!self::isNotColumnKeywork($fieldname)) {
+                continue;
+            }
+            if ($fieldname == self::keyIDColumn($classname)) {
+                continue;
+            }
 
             // $realId = DataObjectSpec::getRealIDColumnName( $classname );
-            if (contain( $fieldname, "_id" ) || ( contain( $fieldname, "parent_id"))) {
+            if (contain($fieldname, "_id") || ( contain($fieldname, "parent_id"))) {
                 $relation_classname = str_replace("_id", "", $fieldname);
                 $relation_classname = ucfirst($relation_classname);
                 if (strtoupper($relation_classname) == "PARENT") {
@@ -299,7 +309,7 @@ class AutoCodeConfig extends AutoCode
                         '@attributes' => array(
                             "name" => $classname
                         ),
-                        '@value' => $instance_name."_p"
+                        '@value' => $instance_name . "_p"
                     );
                 } else {
                     $relation_class = null;
@@ -309,8 +319,7 @@ class AutoCodeConfig extends AutoCode
                     if ($relation_class instanceof DataObject) {
                         //belong_has_one:[当前表有归属表的标识，归属表没有当前表的标识]
                         // if (!array_key_exists($realId, $relation_class) )
-                        if (!(property_exists($relation_class, $realId)) ) 
-                        {
+                        if (!(property_exists($relation_class, $realId))) {
                             $instance_name = $relation_classname;
                             $instance_name = lcfirst($instance_name);
                             $relation_fives["belong_has_one"]["relationclass"][] = array(
@@ -323,8 +332,7 @@ class AutoCodeConfig extends AutoCode
 
                         //has_many[归属表没有当前表的标识，当前表有归属表的标识]
                         //has_one:[归属表没有当前表的标识，当前表有归属表的标识，并且当前表里归属表的标识为Unique]
-                        if (!property_exists($relation_class, $realId) )
-                        {
+                        if (!property_exists($relation_class, $realId)) {
                             if (array_key_exists($relation_classname, self::$table_key_map)) {
                                 $relation_tablename_key = self::$table_key_map[$relation_classname];
                                 $instance_name = $classname;
@@ -335,14 +343,13 @@ class AutoCodeConfig extends AutoCode
                                                          ["has_one"]["relationclass"][] = array(
                                         '@attributes' => array(
                                             "name" => $classname
-                                        ),
-                                        '@value' => $instance_name
-                                    );
-
+                                                         ),
+                                                         '@value' => $instance_name
+                                                         );
                                 } else {
                                     $instance_name    .= "s";
                                     $is_create_hasmany = true;
-                                    if (( !Config_AutoCode::AUTOCONFIG_CREATE_FULL ) && (self::isMany2ManyByClassname( $classname))) {
+                                    if (( !Config_AutoCode::AUTOCONFIG_CREATE_FULL ) && (self::isMany2ManyByClassname($classname))) {
                                         $is_create_hasmany = false;
                                     }
                                     if ($is_create_hasmany) {
@@ -350,9 +357,9 @@ class AutoCodeConfig extends AutoCode
                                                              ["has_many"]["relationclass"][] = array(
                                             '@attributes' => array(
                                                 "name" => $classname
-                                            ),
-                                            '@value' => $instance_name
-                                        );
+                                                             ),
+                                                             '@value' => $instance_name
+                                                             );
                                     }
                                 }
                             }
@@ -362,21 +369,19 @@ class AutoCodeConfig extends AutoCode
             }
         }
 
-        if (contain( $tablename, Config_Db::TABLENAME_RELATION )) {
-            if (self::isMany2ManyByClassname( $classname))
-            {
+        if (contain($tablename, Config_Db::TABLENAME_RELATION)) {
+            if (self::isMany2ManyByClassname($classname)) {
                 $fieldInfo_m2m = self::$fieldInfos[self::getTablename($classname)];
                 unset($fieldInfo_m2m['updateTime'], $fieldInfo_m2m['commitTime']);
 
-                $realId        = self::getRealIDByTable( $classname, $fieldInfo );
+                $realId        = self::getRealIDByTable($classname, $fieldInfo);
                 // $realId        = DataObjectSpec::getRealIDColumnName($classname);
                 unset($fieldInfo_m2m[$realId]);
                 if (count($fieldInfo_m2m) == 2) {
                     //many_many[在关系表中有两个关系主键，并且表名的前半部分是其中一个主键]
                     //belongs_many_many[在关系表中有两个关系主键，并且表名的后半部分是其中一个主键]
                     $class_onetwo = array();
-                    foreach (array_keys($fieldInfo_m2m) as $fieldname_m2m)
-                    {
+                    foreach (array_keys($fieldInfo_m2m) as $fieldname_m2m) {
                         $class_onetwo_element = str_replace("_id", "", $fieldname_m2m);
                         $class_onetwo[]       = $class_onetwo_element;
                     }
@@ -384,13 +389,13 @@ class AutoCodeConfig extends AutoCode
                     if ($class_onetwo[0] . $class_onetwo[1] == strtolower($classname)) {
                         $ownerClassname     = $class_onetwo[0];
                         $belongClassname    = $class_onetwo[1];
-                        $ownerInstancename  = $class_onetwo[0]."s";
-                        $belongInstancename = $class_onetwo[1]."s";
+                        $ownerInstancename  = $class_onetwo[0] . "s";
+                        $belongInstancename = $class_onetwo[1] . "s";
                     } elseif ($class_onetwo[1] . $class_onetwo[0] == strtolower($classname)) {
                         $ownerClassname     = $class_onetwo[1];
                         $belongClassname    = $class_onetwo[0];
-                        $ownerInstancename  = $class_onetwo[1]."s";
-                        $belongInstancename = $class_onetwo[0]."s";
+                        $ownerInstancename  = $class_onetwo[1] . "s";
+                        $belongInstancename = $class_onetwo[0] . "s";
                     }
                     $ownerClassname  = ucfirst($ownerClassname);
                     $belongClassname = ucfirst($belongClassname);
@@ -401,9 +406,9 @@ class AutoCodeConfig extends AutoCode
                                              ["many_many"]["relationclass"][] = array(
                             '@attributes' => array(
                                 "name" => $belongClassname
-                            ),
-                            '@value' => $belongInstancename
-                        );
+                                             ),
+                                             '@value' => $belongInstancename
+                                             );
                     }
                     $relation_tablename_key_m2m = self::$table_key_map[$belongClassname];
                     if (self::$config_classes["class"][$relation_tablename_key_m2m]) {
@@ -411,9 +416,9 @@ class AutoCodeConfig extends AutoCode
                                              ["belongs_many_many"]["relationclass"][] = array(
                             '@attributes' => array(
                                 "name" => $ownerClassname
-                            ),
-                            '@value' => $ownerInstancename
-                        );
+                                             ),
+                                             '@value' => $ownerInstancename
+                                             );
                     }
                 }
             }
@@ -427,7 +432,7 @@ class AutoCodeConfig extends AutoCode
     /**
      * 代码生成配置xml文件转换成数据结构
      * @param array|string $table_names
-     * 示例如下: 
+     * 示例如下:
      *  1.array:array('bb_user_admin','bb_core_blog')
      *  2.字符串:'bb_user_admin,bb_core_blog'
      */
@@ -435,21 +440,22 @@ class AutoCodeConfig extends AutoCode
     {
         self::init();
         //读取配置文件里查询条件和关系列显示的配置
-        if (file_exists(self::$filename_config_xml) )
-        {
-            $classes = UtilXmlSimple::fileXmlToObject( self::$filename_config_xml );
+        if (file_exists(self::$filename_config_xml)) {
+            $classes = UtilXmlSimple::fileXmlToObject(self::$filename_config_xml);
             if (!empty($table_names)) {
-                if (is_string($table_names) ) $table_names=explode(",", $table_names);
+                if (is_string($table_names)) {
+                    $table_names = explode(",", $table_names);
+                }
                 $class_names = array();
                 foreach ($table_names as $table_name) {
-                    $class_names[] = AutoCodeConfig::getClassname( $table_name );
+                    $class_names[] = AutoCodeConfig::getClassname($table_name);
                 }
                 if (is_string($class_names)) {
                     $class_names = explode(",", $class_names);
                 }
                 $xpath_arr = array();
                 if ($class_names && (count($class_names) > 0 )) {
-                    for($i=0; $i < count($class_names); $i++) {
+                    for ($i = 0; $i < count($class_names); $i++) {
                         if (!empty($class_names[$i])) {
                             $class_name  = $class_names[$i];
                             $xpath_arr[] = "@name='$class_name'";
@@ -510,9 +516,11 @@ class AutoCodeConfig extends AutoCode
                             $redundancy_field_obj = $redundancy_table->field;
                             foreach ($redundancy_field_obj as $redundancy_field) {
                                 $attributes = $redundancy_field->attributes();
-                                $field_name = $attributes->name."";
-                                $field_come = $attributes->come."";
-                                if (empty($field_come) ) $field_come = $field_name;
+                                $field_name = $attributes->name . "";
+                                $field_come = $attributes->come . "";
+                                if (empty($field_come)) {
+                                    $field_come = $field_name;
+                                }
                                 $redundancy_table_fields[$table_name][$field_name] = $field_come;
                             }
                         }
@@ -520,7 +528,7 @@ class AutoCodeConfig extends AutoCode
                     }
 
                     //**********************start:导出数据对象之间关系规范定义*************************
-                    self::relation_specification_create( $classname, $dataobject );
+                    self::relation_specification_create($classname, $dataobject);
                     //**********************end  :导出数据对象之间关系规范定义*************************
                 }
             }

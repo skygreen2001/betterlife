@@ -27,14 +27,16 @@ class AutoCodeCreateReport extends AutoCode
     public static function AutoCode($config)
     {
         extract($config);
-        include( "template" . DS . "report.php" );
+        include("template" . DS . "report.php");
 
         // 初始化配置
         if (!isset($reportEname) || empty($reportEname)) {
             //没有定义英文名时，之后写算法取出中文名首字母
-            $reportEname = UtilPinyin::getPinyinName( $reportCname );
-            if (strlen($reportEname) > self::$ename_limit_count ) $reportEname = substr($reportEname, 0, self::$ename_limit_count);
-        } else{
+            $reportEname = UtilPinyin::getPinyinName($reportCname);
+            if (strlen($reportEname) > self::$ename_limit_count) {
+                $reportEname = substr($reportEname, 0, self::$ename_limit_count);
+            }
+        } else {
             $reportEname = ucfirst($reportEname);
         }
         if (!isset($reportDesc) || empty($reportDesc)) {
@@ -66,37 +68,44 @@ class AutoCodeCreateReport extends AutoCode
             foreach ($selCols as $selCol) {
                 $configCols .= "        \"" . $selCol . "\"," . HH;
             }
-            if ($configCols ) $configCols = substr($configCols, 0, strlen($configCols) - strlen(HH) - 1);
-            include( "template" . DS . "report.php" );
+            if ($configCols) {
+                $configCols = substr($configCols, 0, strlen($configCols) - strlen(HH) - 1);
+            }
+            include("template" . DS . "report.php");
 
             $fileContent = $fileContent . $sql_config_template;
             self::saveDefineToFile($dest_report_config_file, $fileContent);
-
         } else {
             // 自定义生成的报表文件内容
             $tplColumns = "";
             foreach ($selCols as $selCol) {
                 $tplColumns .= "                                    <th>" . $selCol . "</th>" . HH;
             }
-            if ($tplColumns ) $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
+            if ($tplColumns) {
+                $tplColumns = substr($tplColumns, 0, strlen($tplColumns) - 2);
+            }
 
             $jsColumns = "";
             foreach ($selCols as $selCol) {
                 $jsColumns .= "                { data: \"" . $selCol . "\" }," . HH;
             }
-            if ($jsColumns ) $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - strlen(HH) - 1);
+            if ($jsColumns) {
+                $jsColumns = substr($jsColumns, 0, strlen($jsColumns) - strlen(HH) - 1);
+            }
 
 
-            $reptTimeCol = ServiceReport::getFilterTime( $reportSql );
-            $reptOrderBy = ServiceReport::getOrderBy( $reportSql );
-            $filterCols  = ServiceReport::getFilterCols( $reportSql );
+            $reptTimeCol = ServiceReport::getFilterTime($reportSql);
+            $reptOrderBy = ServiceReport::getOrderBy($reportSql);
+            $filterCols  = ServiceReport::getFilterCols($reportSql);
             $reptFiltCol = "";
             foreach ($filterCols as $filterCol) {
                 $reptFiltCol .= "'$filterCol', ";
             }
-            if ($reptFiltCol ) $reptFiltCol = substr($reptFiltCol, 0, strlen($reptFiltCol) - 2);
+            if ($reptFiltCol) {
+                $reptFiltCol = substr($reptFiltCol, 0, strlen($reptFiltCol) - 2);
+            }
 
-            include( "template" . DS . "report.php" );
+            include("template" . DS . "report.php");
             /**
              * api_file   : 生成API文件[为页面提供数据的接口文件]: 模板文件中$api_template
              * action_file: 生成Action类[控制某一页的报表]: 模板文件中$action_template
@@ -104,7 +113,7 @@ class AutoCodeCreateReport extends AutoCode
              * js_file    : 生成页面js文件: 模板文件中$js_template
              */
             $dest_file_path = array(
-                "api_file"    => $dest_root_path . "api" . DS."web" . DS . "report" . DS . "report" . $reportEname . ".php",
+                "api_file"    => $dest_root_path . "api" . DS . "web" . DS . "report" . DS . "report" . $reportEname . ".php",
                 "action_file" => $dest_home_path . "action" . DS . "Action_Report" . $reportEname . ".php",
                 "tpl_file"    => $dest_view_path . "core" . DS . "report" . $reportEname . DS . "lists.tpl",
                 "js_file"     => $dest_view_path . "js" . DS . "core" . DS . "report" . $reportEname . ".js",
@@ -114,11 +123,11 @@ class AutoCodeCreateReport extends AutoCode
             self::saveDefineToFile($dest_file_path["tpl_file"], $tpl_template);
             self::saveDefineToFile($dest_file_path["js_file"], $js_template);
 
-            self::createServiceFile( $isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path);
+            self::createServiceFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path);
         }
 
         // 两种生成报表的类型都会创建的文件内容
-        self::createLayoutFile( $isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path );
+        self::createLayoutFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path);
     }
 
     /**
@@ -131,8 +140,9 @@ class AutoCodeCreateReport extends AutoCode
      * @param string $reportSql  : 报表SQL
      * @param string $dest_home_path: 存储项目根路径
      */
-    private static function createServiceFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path) {
-        include( "template" . DS . "report.php" );
+    private static function createServiceFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_home_path)
+    {
+        include("template" . DS . "report.php");
         $dest_service_path = $dest_home_path . "src" . DS . "services" . DS;
 
         // 生成报表服务类[控制导出报表]: 模板文件中$service_template
@@ -182,8 +192,9 @@ SERVICE;
      * @param string $reportSql  : 报表SQL
      * @param string $dest_view_path: 表示层存储根路径
      */
-    private static function createLayoutFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path) {
-        include( "template" . DS . "report.php" );
+    private static function createLayoutFile($isProd, $reportType, $reportCname, $reportEname, $reportDesc, $reportSql, $dest_view_path)
+    {
+        include("template" . DS . "report.php");
 
         /**
          * navbar_file: 修改页面导航栏[navbar、sidebar 添加新增报表导航]
@@ -245,7 +256,4 @@ SIDE;
         }
         self::saveDefineToFile($dest_file_path["sidebar_file"], $fileContent);
     }
-
 }
-
-?>

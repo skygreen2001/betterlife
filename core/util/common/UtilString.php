@@ -39,30 +39,28 @@ class UtilString extends Util
      * @param string $title 中文文字内容
      * @return int 中文文字内容的长度
      */
-    public static function cn_strlen( $title )
+    public static function cn_strlen($title)
     {
         if (function_exists("mb_strlen")) {
             return mb_strlen($title);
         } else {
             $realnum = 0;
-            for ($i = 0; $i < strlen($title); $i++)
-            {
+            for ($i = 0; $i < strlen($title); $i++) {
                 // $ctype = 0;
                 // $cstep = 0;
 
                 $cur = substr($title, $i, 1);
-                if ($cur == "&" )
-                {
+                if ($cur == "&") {
                     if (substr($title, $i, 4) == "&lt;") {
                         $i += 3;
                         $realnum++;
                     } elseif (substr($title, $i, 4) == "&gt;") {
                         $i += 3;
                         $realnum++;
-                    } elseif (substr($title,$i,5) == "&amp;") {
+                    } elseif (substr($title, $i, 5) == "&amp;") {
                         $i += 4;
                         $realnum++;
-                    } elseif (substr($title,$i,6) == "&quot;") {
+                    } elseif (substr($title, $i, 6) == "&quot;") {
                         $i += 5;
                         $realnum++;
                     } elseif (preg_match("/&#(\d+);?/i", substr($title, $i, 8), $match)) {
@@ -102,7 +100,7 @@ class UtilString extends Util
     public static function is_utf8($str)
     {
         if (function_exists('mb_check_encoding')) {
-            if (mb_check_encoding($str,'UTF-8')) {
+            if (mb_check_encoding($str, 'UTF-8')) {
                 return true;
             } else {
                 return false;
@@ -115,18 +113,30 @@ class UtilString extends Util
             for ($i = 0; $i < $len; $i++) {
                 $c = ord($str[$i]);
                 if ($c > 128) {
-                    if ($c >= 254 ) return false;
-                    elseif ($c >= 252 ) $bits=6;
-                    elseif ($c >= 248 ) $bits=5;
-                    elseif ($c >= 240 ) $bits=4;
-                    elseif ($c >= 224 ) $bits=3;
-                    elseif ($c >= 192 ) $bits=2;
-                    else return false;
-                    if (($i+$bits) > $len ) return false;
-                    while ( $bits > 1) {
+                    if ($c >= 254) {
+                        return false;
+                    } elseif ($c >= 252) {
+                        $bits = 6;
+                    } elseif ($c >= 248) {
+                        $bits = 5;
+                    } elseif ($c >= 240) {
+                        $bits = 4;
+                    } elseif ($c >= 224) {
+                        $bits = 3;
+                    } elseif ($c >= 192) {
+                        $bits = 2;
+                    } else {
+                        return false;
+                    }
+                    if (($i + $bits) > $len) {
+                        return false;
+                    }
+                    while ($bits > 1) {
                         $i++;
                         $b = ord($str[$i]);
-                        if ($b < 128 || $b > 191 ) return false;
+                        if ($b < 128 || $b > 191) {
+                            return false;
+                        }
                         $bits--;
                     }
                 }
@@ -167,8 +177,8 @@ class UtilString extends Util
      */
     public static function chinese_filename($filepath)
     {
-          $basename = ltrim(substr($filepath, strrpos($filepath, '/')),"/");
-          $filename = ltrim(substr($basename, 0, strrpos($basename, '.')),"/");
+          $basename = ltrim(substr($filepath, strrpos($filepath, '/')), "/");
+          $filename = ltrim(substr($basename, 0, strrpos($basename, '.')), "/");
           return $filename;
 //        $path_parts = array();
 //        $path_parts ['dirname'] = rtrim(substr($filepath, 0, strrpos($filepath, '/')),"/")."/";
@@ -183,7 +193,7 @@ class UtilString extends Util
      */
     public static function online_optimize($result)
     {
-        $result = preg_replace("/(\/\/[\s\S]*?([\r]|[\n]))/", "",$result); //去掉js行注释如://
+        $result = preg_replace("/(\/\/[\s\S]*?([\r]|[\n]))/", "", $result); //去掉js行注释如://
         $result = preg_replace("/(\/\*[\s\S]*?\*\/|[\r]|[\n]|[\r\n])/", "", $result);//去掉css注释如:/*   */
         $result = str_replace(array(HH, "    ", "    ", "\r", "\n", "\t"), "", $result);
         /** 移除无需的空格 */
@@ -214,7 +224,7 @@ class UtilString extends Util
     public static function word_trim($string, $count, $ellipsis = true, $isChinese = true)
     {
         if ($isChinese) {
-            $string = UtilString::msubstr( $string, 0, $count );
+            $string = UtilString::msubstr($string, 0, $count);
             if (is_string($ellipsis)) {
                 $string .= $ellipsis;
             } elseif ($ellipsis) {
@@ -249,9 +259,9 @@ class UtilString extends Util
      */
     public static function msubstr($str, $start = 0, $length = 0, $charset = "utf-8", $suffix = true)
     {
-        if (function_exists("mb_substr") )
+        if (function_exists("mb_substr")) {
             return mb_substr($str, $start, $length, $charset);
-        elseif (function_exists('iconv_substr')) {
+        } elseif (function_exists('iconv_substr')) {
             return iconv_substr($str, $start, $length, $charset);
         }
         $re['utf-8']  = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
@@ -260,7 +270,9 @@ class UtilString extends Util
         $re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
         preg_match_all($re[$charset], $str, $match);
         $slice = join("", array_slice($match[0], $start, $length));
-        if ($suffix ) return $slice . "…";
+        if ($suffix) {
+            return $slice . "…";
+        }
         return $slice;
     }
 
@@ -309,11 +321,11 @@ class UtilString extends Util
         if (( $type == 4 ) || ( $type == 5 )) {
             // 中文随机字
             for ($i = 0; $i < $len; $i++) {
-                $str .= self::msubstr( $chars, floor(mt_rand(0, mb_strlen($chars, 'utf-8') - 1)), 1 );
+                $str .= self::msubstr($chars, floor(mt_rand(0, mb_strlen($chars, 'utf-8') - 1)), 1);
             }
         } else {
             $chars = str_shuffle($chars);
-            $str   = substr($chars,0,$len);
+            $str   = substr($chars, 0, $len);
         }
         return $str;
     }
@@ -336,15 +348,15 @@ class UtilString extends Util
         }
         $rand = array();
         for ($i = 0; $i < $number; $i++) {
-            $rand[] = self::rand_string( $length, $mode );
+            $rand[] = self::rand_string($length, $mode);
         }
         $unqiue = array_unique($rand);
         if (count($unqiue) == count($rand)) {
             return $rand;
         }
         $count = count($rand) - count($unqiue);
-        for ($i=0; $i<$count*3; $i++) {
-            $rand[] = self::rand_string( $length, $mode );
+        for ($i = 0; $i < $count * 3; $i++) {
+            $rand[] = self::rand_string($length, $mode);
         }
         $rand = array_slice(array_unique($rand), 0, $number);
         return $rand;
@@ -371,16 +383,16 @@ class UtilString extends Util
                 $char = substr($format, $i, 1);
                 switch ($char) {
                     case "*"://字母和数字混合
-                        $strtemp .= self::rand_string( 1 );
+                        $strtemp .= self::rand_string(1);
                         break;
                     case "#"://数字
-                        $strtemp .= self::rand_string( 1, 1 );
+                        $strtemp .= self::rand_string(1, 1);
                         break;
                     case "$"://大写字母
-                        $strtemp .= self::rand_string( 1, 2 );
+                        $strtemp .= self::rand_string(1, 2);
                         break;
                     case "."://小写字母
-                        $strtemp .= self::rand_string( 1, 3 );
+                        $strtemp .= self::rand_string(1, 3);
                         break;
                     default://其他格式均不转换
                         $strtemp .= $char;
@@ -389,7 +401,7 @@ class UtilString extends Util
             }
             $str[] = $strtemp;
         }
-        return $number==1? $strtemp : $str;
+        return $number == 1 ? $strtemp : $str;
     }
 
     /**
@@ -398,7 +410,8 @@ class UtilString extends Util
      * @param string $str 需要截去的对象
      * @return void
      */
-    public static function delhtml($str) {
+    public static function delhtml($str)
+    {
         $st = -1; //开始
         $et = -1; //结束
         $stmp = array();
@@ -422,4 +435,3 @@ class UtilString extends Util
 }
 
 //print_r(UtilString::build_format_rand("#", 16));
-?>

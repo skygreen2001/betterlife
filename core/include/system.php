@@ -15,10 +15,10 @@
  */
 function load_module($moduleName, $module_dir, $excludes = null)
 {
-    $require_dirs = UtilFileSystem::getSubDirsInDirectory( $module_dir );
+    $require_dirs = UtilFileSystem::getSubDirsInDirectory($module_dir);
     ///需要包含本目录下的文件。
 
-    $tmps = UtilFileSystem::getFilesInDirectory( $module_dir );
+    $tmps = UtilFileSystem::getFilesInDirectory($module_dir);
     foreach ($tmps as $tmp) {
         Initializer::$moduleFiles[$moduleName][basename($tmp, ".php")] = $tmp;
     }
@@ -27,15 +27,15 @@ function load_module($moduleName, $module_dir, $excludes = null)
         if (is_array($excludes)) {
             foreach ($excludes as $exclude) {
                 if (array_key_exists($exclude, $require_dirs)) {
-                    unset ($require_dirs[$exclude]);
+                    unset($require_dirs[$exclude]);
                 }
             }
         } elseif (is_string($excludes)) {
-            unset ($require_dirs[$excludes]);
+            unset($require_dirs[$excludes]);
         }
     }
     foreach ($require_dirs as $dir) {
-        $tmps = UtilFileSystem::getAllFilesInDirectory( $dir );
+        $tmps = UtilFileSystem::getAllFilesInDirectory($dir);
         foreach ($tmps as $tmp) {
             Initializer::$moduleFiles[$moduleName][basename($tmp, ".php")] = $tmp;
         }
@@ -81,7 +81,7 @@ function ping_url($url, $data = null)
         $url['query'] = '?' . http_build_query($out);
     }
     $host = gethostbyname($url['host']);
-    $fp   = fsockopen($host, isset($url['port'])?$url['port']:80, $errno, $errstr, 2);
+    $fp   = fsockopen($host, isset($url['port']) ? $url['port'] : 80, $errno, $errstr, 2);
     if (!$fp) {
         return false;
     } else {
@@ -141,12 +141,13 @@ function alphatonumber($alphabet)
             return 0;
         }
         $count  = strlen($alphabet);
-        $result = 0;$base = 26;
+        $result = 0;
+        $base = 26;
         for ($j = 1; $j <= $count; $j++) {
             $number = 1;
-            $alphabet[$j-1] = strtoupper($alphabet[$j-1]);
+            $alphabet[$j - 1] = strtoupper($alphabet[$j - 1]);
             for ($i = 'A'; $i <= 'Z'; $i++) {
-                if ($alphabet[$j-1] == $i) {
+                if ($alphabet[$j - 1] == $i) {
                     break;
                 }
                 ++$number;
@@ -174,15 +175,17 @@ function is_server_windows()
 /**
  * 提示系统目录需要创建的信息
  */
-function system_dir_info($dir_name, $info_dir_name = "" )
+function system_dir_info($dir_name, $info_dir_name = "")
 {
-    if (!$info_dir_name ) $info_dir_name = $dir_name;
+    if (!$info_dir_name) {
+        $info_dir_name = $dir_name;
+    }
     if (!is_dir($dir_name)) {
-        $isMac   = ( contain( strtolower(php_uname()), "darwin")) ? true : false;
+        $isMac   = ( contain(strtolower(php_uname()), "darwin")) ? true : false;
         $os      = $isMac ? "MacOS" : "Linux";
         $info    = "<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>因为安全原因，需要手动在操作系统中创建的目录:" . $info_dir_name . "<br/>" .
-                   "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;",40) .
-                   "sudo mkdir -p " . $info_dir_name . "<br/>" . str_repeat("&nbsp;",40);
+                   "$os 系统需要执行指令:<br/>" . str_repeat("&nbsp;", 40) .
+                   "sudo mkdir -p " . $info_dir_name . "<br/>" . str_repeat("&nbsp;", 40);
         $info   .= "sudo chmod -R 0777 " . $info_dir_name . "</p>";
         // if (!$isMac) {
         //     $info .=
@@ -209,71 +212,58 @@ function getbrowser()
     $browser = '';
     $browser_ver = '';
 
-    if (preg_match('/OmniWeb\/(v*)([^\s|;]+)/i', $agent, $regs) )
-    {
+    if (preg_match('/OmniWeb\/(v*)([^\s|;]+)/i', $agent, $regs)) {
         $browser     = 'OmniWeb';
         $browser_ver = $regs[2];
     }
 
-    if (preg_match('/Netscape([\d]*)\/([^\s]+)/i', $agent, $regs) )
-    {
+    if (preg_match('/Netscape([\d]*)\/([^\s]+)/i', $agent, $regs)) {
         $browser     = 'Netscape';
         $browser_ver = $regs[2];
     }
 
-    if (preg_match('/safari\/([^\s]+)/i', $agent, $regs) )
-    {
+    if (preg_match('/safari\/([^\s]+)/i', $agent, $regs)) {
         $browser     = 'Safari';
         $browser_ver = $regs[1];
     }
 
-    if (preg_match('/MSIE\s([^\s|;]+)/i', $agent, $regs))
-    {
+    if (preg_match('/MSIE\s([^\s|;]+)/i', $agent, $regs)) {
         $browser     = 'Internet Explorer';
         $browser_ver = $regs[1];
     }
 
-    if (preg_match('/Opera[\s|\/]([^\s]+)/i', $agent, $regs))
-    {
+    if (preg_match('/Opera[\s|\/]([^\s]+)/i', $agent, $regs)) {
         $browser     = 'Opera';
         $browser_ver = $regs[1];
     }
 
-    if (preg_match('/NetCaptor\s([^\s|;]+)/i', $agent, $regs))
-    {
+    if (preg_match('/NetCaptor\s([^\s|;]+)/i', $agent, $regs)) {
         $browser     = '(Internet Explorer ' . $browser_ver . ') NetCaptor';
         $browser_ver = $regs[1];
     }
 
-    if (preg_match('/Maxthon/i', $agent, $regs))
-    {
+    if (preg_match('/Maxthon/i', $agent, $regs)) {
         $browser     = '(Internet Explorer ' . $browser_ver . ') Maxthon';
         $browser_ver = '';
     }
 
-    if (preg_match('/FireFox\/([^\s]+)/i', $agent, $regs))
-    {
+    if (preg_match('/FireFox\/([^\s]+)/i', $agent, $regs)) {
         $browser     = 'FireFox';
         $browser_ver = $regs[1];
     }
 
-    if (preg_match('/Lynx\/([^\s]+)/i', $agent, $regs))
-    {
+    if (preg_match('/Lynx\/([^\s]+)/i', $agent, $regs)) {
         $browser     = 'Lynx';
         $browser_ver = $regs[1];
     }
-    if (preg_match('/Chrome\/([^\s]+)/i', $agent, $regs))
-    {
+    if (preg_match('/Chrome\/([^\s]+)/i', $agent, $regs)) {
         $browser     = 'Chrome';
         $browser_ver = $regs[1];
     }
     //echo $agent."<br/>";
-    if ($browser != '')
-    {
+    if ($browser != '') {
         return $browser . ' ' . $browser_ver;
-    }
-    else
-    {
+    } else {
         return 'Unknow browser';
     }
 }
@@ -291,112 +281,59 @@ function client_os()
     $agent = $_SERVER['HTTP_USER_AGENT'];
     $os    = false;
 
-    if (mb_eregi('win', $agent) && strpos($agent, '95'))
-    {
+    if (mb_eregi('win', $agent) && strpos($agent, '95')) {
         $os = 'Windows 95';
-    }
-    elseif (mb_eregi('win 9x', $agent) && strpos($agent, '4.90'))
-    {
+    } elseif (mb_eregi('win 9x', $agent) && strpos($agent, '4.90')) {
         $os = 'Windows ME';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('98', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('98', $agent)) {
         $os = 'Windows 98';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('nt 6.0', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('nt 6.0', $agent)) {
         $os = 'Windows Vista';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('nt 6.1', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('nt 6.1', $agent)) {
         $os = 'Windows 7';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('nt 5.1', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('nt 5.1', $agent)) {
         $os = 'Windows XP';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('nt 5', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('nt 5', $agent)) {
         $os = 'Windows 2000';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('nt', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('nt', $agent)) {
         $os = 'Windows NT';
-    }
-    elseif (mb_eregi('win', $agent) && mb_eregi('32', $agent) )
-    {
+    } elseif (mb_eregi('win', $agent) && mb_eregi('32', $agent)) {
         $os = 'Windows 32';
-    }
-    elseif (mb_eregi('linux', $agent) )
-    {
+    } elseif (mb_eregi('linux', $agent)) {
         $os = 'Linux';
-    }
-    elseif (mb_eregi('unix', $agent) )
-    {
+    } elseif (mb_eregi('unix', $agent)) {
         $os = 'Unix';
-    }
-    elseif (mb_eregi('sun', $agent) && mb_eregi('os', $agent) )
-    {
+    } elseif (mb_eregi('sun', $agent) && mb_eregi('os', $agent)) {
         $os = 'SunOS';
-    }
-    elseif (mb_eregi('ibm', $agent) && mb_eregi('os', $agent) )
-    {
+    } elseif (mb_eregi('ibm', $agent) && mb_eregi('os', $agent)) {
         $os = 'IBM OS/2';
-    }
-    elseif (mb_eregi('Mac', $agent) && mb_eregi('PC', $agent) )
-    {
+    } elseif (mb_eregi('Mac', $agent) && mb_eregi('PC', $agent)) {
         $os = 'Macintosh';
-    }
-    elseif (mb_eregi('PowerPC', $agent) )
-    {
+    } elseif (mb_eregi('PowerPC', $agent)) {
         $os = 'PowerPC';
-    }
-    elseif (mb_eregi('AIX', $agent) )
-    {
+    } elseif (mb_eregi('AIX', $agent)) {
         $os = 'AIX';
-    }
-    elseif (mb_eregi('HPUX', $agent) )
-    {
+    } elseif (mb_eregi('HPUX', $agent)) {
         $os = 'HPUX';
-    }
-    elseif (mb_eregi('NetBSD', $agent) )
-    {
+    } elseif (mb_eregi('NetBSD', $agent)) {
         $os = 'NetBSD';
-    }
-    elseif (mb_eregi('BSD', $agent) )
-    {
+    } elseif (mb_eregi('BSD', $agent)) {
         $os = 'BSD';
-    }
-    elseif (mb_eregi('OSF1', $agent) )
-    {
+    } elseif (mb_eregi('OSF1', $agent)) {
         $os = 'OSF1';
-    }
-    elseif (mb_eregi('IRIX', $agent) )
-    {
+    } elseif (mb_eregi('IRIX', $agent)) {
         $os = 'IRIX';
-    }
-    elseif (mb_eregi('FreeBSD', $agent) )
-    {
+    } elseif (mb_eregi('FreeBSD', $agent)) {
         $os = 'FreeBSD';
-    }
-    elseif (mb_eregi('teleport', $agent) )
-    {
+    } elseif (mb_eregi('teleport', $agent)) {
         $os = 'teleport';
-    }
-    elseif (mb_eregi('flashget', $agent) )
-    {
+    } elseif (mb_eregi('flashget', $agent)) {
         $os = 'flashget';
-    }
-    elseif (mb_eregi('webzip', $agent) )
-    {
+    } elseif (mb_eregi('webzip', $agent)) {
         $os = 'webzip';
-    }
-    elseif (mb_eregi('offline', $agent) )
-    {
+    } elseif (mb_eregi('offline', $agent)) {
         $os = 'offline';
-    }
-    else
-    {
+    } else {
         $os = 'Unknown';
     }
     return $os;

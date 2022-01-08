@@ -8,7 +8,8 @@
  * @package core.lang
  * @author skygreen <skygreen2001@gmail.com>
  */
-class Wl {
+class Wl
+{
     const INFO_REDIRECT_PART1 = "系统将在";
     const INFO_REDIRECT_PART2 = "秒之后自动跳转到";
     const INFO_DB_CHARACTER   = "当前数据库客户端连接字符集是:";
@@ -42,4 +43,3 @@ class Wl {
     const EXCEPTION_REPORT_TRACKINFO = "跟踪信息";
     const EXCEPTION_REPORT_TYPE      = "异常类型";
 }
-?>

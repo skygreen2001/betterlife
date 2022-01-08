@@ -16,8 +16,8 @@
  * @subpackage sqlserver
  * @author skygreen
  */
-class Dao_Mssql extends Dao implements IDaoNormal{
-
+class Dao_Mssql extends Dao implements IDaoNormal
+{
     public static $fetchmode = MSSQL_ASSOC;
     //MSSQL_ASSOC, MSSQL_NUM, and the default value of MSSQL_BOTH.
 
@@ -34,7 +34,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mssql::connctionurl( $host, $port );
+        $connecturl = Config_Mssql::connctionurl($host, $port);
 
         if (!isset($username)) {
             $username = Config_Mssql::$username;
@@ -53,7 +53,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
 
         if (!$this->connection) {
             $errorinfo = "错误原因: " . mssql_get_last_message();
-            ExceptionDb::log( Wl::ERROR_INFO_CONNECT_FAIL . $errorinfo );
+            ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL . $errorinfo);
         }
         mssql_select_db($dbname, $this->connection);
     }
@@ -66,12 +66,12 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         if (!empty($this->sQuery)) {
             if (Config_Db::$debug_show_sql) {
-                LogMe::log( "SQL: " . $this->sQuery );
+                LogMe::log("SQL: " . $this->sQuery);
             }
             $this->result = mssql_query($this->sQuery);
             if (!$this->result) {
                 $errorinfo = "错误原因:" . mssql_get_last_message();
-                ExceptionDb::log( Wl::ERROR_INFO_DB_HANDLE . $errorinfo );
+                ExceptionDb::log(Wl::ERROR_INFO_DB_HANDLE . $errorinfo);
             }
         }
     }
@@ -85,13 +85,13 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = array();
         if (!mssql_num_rows($this->result)) {
-           return null;
+            return null;
         }
 
         while ($row = mssql_fetch_array($this->result, self::$fetchmode)) {
             if (!empty($object)) {
-                if ($this->validParameter( $object )) {
-                    $c        = UtilObject::array_to_object( $row, $this->classname );
+                if ($this->validParameter($object)) {
+                    $c        = UtilObject::array_to_object($row, $this->classname);
                     $result[] = $c;
                 }
             } else {
@@ -108,11 +108,11 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                 }
             }
         }
-        $result = $this->getValueIfOneValue( $result );
+        $result = $this->getValueIfOneValue($result);
         $sql_s  = preg_replace("/\s/", "", $sqlstring);
         $sql_s  = strtolower($sql_s);
         if (!is_array($result)) {
-            if (!( contain( $sql_s, "count(" ) || contain( $sql_s, "sum("))) {
+            if (!( contain($sql_s, "count(") || contain($sql_s, "sum("))) {
                 $tmp      = $result;
                 $result   = null;
                 $result[] = $tmp;
@@ -130,17 +130,19 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function save($object)
     {
         $autoId = -1;//新建对象插入数据库记录失败
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $autoId;
         }
         try {
             $_SQL = new Crud_Sql_Insert();
-            $object->setCommitTime( UtilDateTime::now( EnumDateTimeFormat::TIMESTAMP));
-            if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
-                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
-                $this->saParams = UtilObject::object_to_array( $object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK) );
+            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+            if (
+                Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )
+            ) {
+                $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
             } else {
-                $this->saParams = UtilObject::object_to_array( $object );
+                $this->saParams = UtilObject::object_to_array($object);
             }
             $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
             $this->executeSQL();
@@ -150,10 +152,10 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                 $autoId = $row["id"];
             }
         } catch (Exception $exc) {
-            ExceptionDb::log( $exc->getMessage() . "" . $exc->getTraceAsString() );
+            ExceptionDb::log($exc->getMessage() . "" . $exc->getTraceAsString());
         }
         if (!empty($object) && is_object($object)) {
-            $object->setId( $autoId );//当保存返回对象时使用
+            $object->setId($autoId);//当保存返回对象时使用
         }
         return $autoId;
     }
@@ -167,19 +169,19 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function delete($object)
     {
         $result = false;
-        if (!$this->validObjectParameter( $object )) {
+        if (!$this->validObjectParameter($object)) {
             return $result;
         }
         $id = $object->getId();
         if (!empty($id)) {
             try {
                 $_SQL         = new Crud_Sql_Delete();
-                $where        = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 $this->executeSQL();
                 $result       = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
             }
         }
         return $result;
@@ -203,29 +205,30 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             try {
                 $_SQL = new Crud_Sql_Update();
                 $_SQL->isPreparedStatement = false;
-                $object->setUpdateTime( UtilDateTime::now( EnumDateTimeFormat::STRING));
-                $object->setId( null );
-                if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && 
-                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
-                    $this->saParams = UtilObject::object_to_array( $object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK) );
+                $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
+                $object->setId(null);
+                if (
+                    Config_Db::$db == EnumDbSource::DB_SQLSERVER &&
+                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
+                ) {
+                    $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
                 } else {
-                    $this->saParams = UtilObject::object_to_array( $object );
+                    $this->saParams = UtilObject::object_to_array($object);
                 }
-                unset($this->saParams[DataObjectSpec::getRealIDColumnName( $object )]);
-                $this->saParams = $this->filterViewProperties( $this->saParams );
-                $where          = $this->sql_id( $object ) . self::EQUAL . $id;
+                unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
+                $this->saParams = $this->filterViewProperties($this->saParams);
+                $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
                 $this->executeSQL();
                 $result         = true;
             } catch (Exception $exc) {
-                ExceptionDb::log( $exc->getTraceAsString() );
+                ExceptionDb::log($exc->getTraceAsString());
                 $result = false;
             }
         } else {
-           x( Wl::ERROR_INFO_UPDATE_ID, $this );
+            x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
         return $result;
-
     }
 
     /**
@@ -237,9 +240,9 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $id = $dataobject->getId();
         if (isset($id)) {
-            $result = $this->update( $dataobject );
+            $result = $this->update($dataobject);
         } else {
-            $result = $this->save( $dataobject );
+            $result = $this->save($dataobject);
         }
         return $result;
     }
@@ -275,23 +278,23 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $filter_arr                = $_SQL->parseValidInputParam( $filter );
+            $filter_arr                = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             $this->executeSQL();
-            $result                    = $this->getResultToObjects( $object );
+            $result                    = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
@@ -321,28 +324,27 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
-            $result       = $this->getResultToObjects( $object );
+            $result       = $this->getResultToObjects($object);
             if (count($result) >= 1) {
                 $result = $result[0];
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
-
     }
 
     /**
@@ -355,24 +357,24 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return $result;
             }
 
             if (!empty($id) && is_scalar($id)) {
                 $_SQL  = new Crud_Sql_Select();
-                $where = $this->sql_id( $object ) . self::EQUAL . $id;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
-                $result         = $this->getResultToObjects( $object );
+                $result         = $this->getResultToObjects($object);
                 if (count($result) == 1) {
                     $result = $result[0];
                 }
                 return $result;
             }
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
@@ -392,8 +394,8 @@ class Dao_Mssql extends Dao implements IDaoNormal{
         $result = null;
         try {
             if (Config_Db::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
-                if (UtilString::is_utf8( $sqlstring )) {
-                    $sqlstring = UtilString::utf82gbk( $sqlstring );
+                if (UtilString::is_utf8($sqlstring)) {
+                    $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
             }
             $this->sQuery = $sqlstring;
@@ -403,10 +405,10 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
                 return true;
             } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
-                $tablename = Crud_Sql_Insert::tablename( $sqlstring );
+                $tablename = Crud_Sql_Insert::tablename($sqlstring);
                 if (isset($tablename)) {
-                    $object     = Config_Db::tom( $tablename );
-                    $realIdName = DataObjectSpec::getRealIDColumnName( new $object() );
+                    $object     = Config_Db::tom($tablename);
+                    $realIdName = DataObjectSpec::getRealIDColumnName(new $object());
                     $sql_maxid  = Crud_SQL::SQL_MAXID;
                     $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
                     $this->sQuery = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
@@ -415,13 +417,13 @@ class Dao_Mssql extends Dao implements IDaoNormal{
                     if (isset($row) && array_key_exists($realIdName, $row)) {
                         $autoId = $row[$realIdName];
                         if (!empty($object) && is_object($object)) {
-                            $object->setId( $autoId );//当保存返回对象时使用
+                            $object->setId($autoId);//当保存返回对象时使用
                         }
                     } else {
-                        $autoId=-1;
+                        $autoId = -1;
                     }
-                } else{
-                    $autoId=-1;
+                } else {
+                    $autoId = -1;
                 }
                 return $autoId;
             }
@@ -429,14 +431,14 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             $sql_s  = preg_replace("/\s/", "", $sqlstring);
             $sql_s  = strtolower($sql_s);
             if (!empty($result) && !is_array($result)) {
-                if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
+                if (!( contains($sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                     $tmp      = $result;
                     $result   = null;
                     $result[] = $tmp;
                 }
             }
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
         return $result;
     }
@@ -460,12 +462,12 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     {
         $result = null;
         try {
-            if (!$this->validParameter( $object )) {
+            if (!$this->validParameter($object)) {
                 return 0;
             }
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             $this->executeSQL();
@@ -478,7 +480,7 @@ class Dao_Mssql extends Dao implements IDaoNormal{
             }
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
@@ -511,26 +513,28 @@ class Dao_Mssql extends Dao implements IDaoNormal{
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) return null;
-            if (!$this->validParameter( $object)) return null;
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
+                return null;
+            }
+            if (!$this->validParameter($object)) {
+                return null;
+            }
 
             $_SQL = new Crud_Sql_Select();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam( $filter );
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
             if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
-                $realIdName = $this->sql_id( $object );
+                $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $tablename    = Config_Mssql::orm( $this->classname );
-            $whereclause  = SqlServer_Crud_Sql_Select::pageSql( $startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort );
+            $tablename    = Config_Mssql::orm($this->classname);
+            $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
             $this->sQuery = $_SQL->from($this->classname)->where($whereclause)->order($sort)->result();
-            $result       = $this->sqlExecute( $this->sQuery, $object );
+            $result       = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record( $exc->getTraceAsString() );
+            ExceptionDb::record($exc->getTraceAsString());
         }
-
     }
 }
-?>

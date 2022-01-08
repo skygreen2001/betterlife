@@ -39,7 +39,8 @@ class EnumCacheDriverType extends Enum
  * @author skygreen <skygreen2001@gmail.com>
  * @link https://www.doctrine-project.org/projects/cache.html
  */
-class BBCache {
+class BBCache
+{
     /**
      * 分布式缓存管理器唯一实例
      * @var BBCache
@@ -66,7 +67,8 @@ class BBCache {
      * 单例化
      * @return BBCache
      */
-    public static function singleton() {
+    public static function singleton()
+    {
         if (!isset(self::$instance)) {
             $c = __CLASS__;
             self::$instance = new $c();
@@ -74,20 +76,21 @@ class BBCache {
         return self::$instance;
     }
 
-    private function serverCache($cache_drive = EnumCacheDriverType::REDIS) {
+    private function serverCache($cache_drive = EnumCacheDriverType::REDIS)
+    {
         switch ($cache_drive) {
-           case EnumCacheDriverType::REDIS:
+            case EnumCacheDriverType::REDIS:
                 $cache = new Cache_Redis();
                 break;
-           case EnumCacheDriverType::MEMCACHE:
+            case EnumCacheDriverType::MEMCACHE:
                 $cache = new Cache_Memcache();
                 break;
-           case EnumCacheDriverType::PREDIS:
+            case EnumCacheDriverType::PREDIS:
                 // 安装: composer require predis/predis
                 $client = new Predis\Client();
                 $cache = new \Doctrine\Common\Cache\PredisCache($client);
                 break;
-           case EnumCacheDriverType::MEMCACHED:
+            case EnumCacheDriverType::MEMCACHED:
                 $cache = new Cache_Memcached();
                 break;
            // case EnumCacheDriverType::ARRAY:
@@ -97,7 +100,7 @@ class BBCache {
            //      $db = new SQLite3('mydatabase.db');
            //      $cache = new \Doctrine\Common\Cache\SQLite3Cache($db, 'table_name');
            //      break;
-           case EnumCacheDriverType::APC:
+            case EnumCacheDriverType::APC:
                 $cache = new Cache_Apc();
                 break;
            // case EnumCacheDriverType::WINCACHE:
@@ -145,7 +148,7 @@ class BBCache {
            // case EnumCacheDriverType::VOID:
            //      $cache = new \Doctrine\Common\Cache\VoidCache();
            //      break;
-           case EnumCacheDriverType::MEMCACHED_CLIENT:
+            case EnumCacheDriverType::MEMCACHED_CLIENT:
                 $cache = new Cache_Memcached_Client();
                 break;
         }
@@ -158,7 +161,8 @@ class BBCache {
      * @param mixed $cache_drive 处理缓存的方式的类型,默认采用Redis
      * @return 缓存服务器
      */
-    public function server($cache_drive = EnumCacheDriverType::REDIS) {
+    public function server($cache_drive = EnumCacheDriverType::REDIS)
+    {
         if ($this->cache == null) {
             $this->cache = $this->serverCache($cache_drive);
         }
@@ -173,7 +177,8 @@ class BBCache {
      * @param string $password
      * @return Redis缓存服务器
      */
-    public function redisServer($host = '', $port = '', $password = '') {
+    public function redisServer($host = '', $port = '', $password = '')
+    {
         if ($this->redisCache == null) {
             $this->redisCache = new Cache_Redis($host, $port, $password);
         }

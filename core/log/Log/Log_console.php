@@ -65,9 +65,12 @@ class Log_console extends Log
      * @param int    $level    Log messages up to and including this level.
      * @access public
      */
-    function __construct($name, $ident = '', $conf = array(),
-                         $level = PEAR_LOG_DEBUG)
-    {
+    function __construct(
+        $name,
+        $ident = '',
+        $conf = array(),
+        $level = PEAR_LOG_DEBUG
+    ) {
         $this->_id = md5(microtime());
         $this->_ident = $ident;
         $this->_mask = Log::UPTO($level);
@@ -81,9 +84,11 @@ class Log_console extends Log
         }
 
         if (!empty($conf['lineFormat'])) {
-            $this->_lineFormat = str_replace(array_keys($this->_formatMap),
-                                             array_values($this->_formatMap),
-                                             $conf['lineFormat']);
+            $this->_lineFormat = str_replace(
+                array_keys($this->_formatMap),
+                array_values($this->_formatMap),
+                $conf['lineFormat']
+            );
         }
 
         if (!empty($conf['timeFormat'])) {
@@ -150,7 +155,7 @@ class Log_console extends Log
             fwrite($this->_stream, $this->_buffer);
             $this->_buffer = '';
         }
- 
+
         if (is_resource($this->_stream)) {
             return fflush($this->_stream);
         }
@@ -186,9 +191,12 @@ class Log_console extends Log
         $message = $this->_extractMessage($message);
 
         /* Build the string containing the complete log line. */
-        $line = $this->_format($this->_lineFormat,
-                               strftime($this->_timeFormat),
-                               $priority, $message) . "\n";
+        $line = $this->_format(
+            $this->_lineFormat,
+            strftime($this->_timeFormat),
+            $priority,
+            $message
+        ) . "\n";
 
         /*
          * If buffering is enabled, append this line to the output buffer.
@@ -205,5 +213,4 @@ class Log_console extends Log
 
         return true;
     }
-
 }

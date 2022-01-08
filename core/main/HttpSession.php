@@ -16,8 +16,8 @@ class HttpSession
         // session_save_path("/tmp");
         if (!isset($_SESSION)) {
             session_start() or
-            die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>需要手动修改php.ini文件以下配置,并重启:<br/>".str_repeat("&nbsp;",8).
-                "session.save_path = \"/tmp\"<br/>".str_repeat("&nbsp;",8)) .
+            die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>需要手动修改php.ini文件以下配置,并重启:<br/>" . str_repeat("&nbsp;", 8) .
+                "session.save_path = \"/tmp\"<br/>" . str_repeat("&nbsp;", 8)) .
                 "请注意save_path路径，网站拥有者是否有权限可以访问!</p>";
         }
     }
@@ -43,12 +43,12 @@ class HttpSession
      * @param mixed $key
      * @param mixed $value
      */
-    public static function set($key,$value)
+    public static function set($key, $value)
     {
         if (!isset($_SESSION)) {
             self::init();
         }
-        $_SESSION[$key]= $value;
+        $_SESSION[$key] = $value;
     }
 
     /**
@@ -57,10 +57,9 @@ class HttpSession
      */
     public static function sets($key_values)
     {
-        if ($key_values && is_array($key_values) && (count($key_values) > 0))
-        {
-            foreach ($key_values as $key=>$value) {
-                self::set( $key, $value );
+        if ($key_values && is_array($key_values) && (count($key_values) > 0)) {
+            foreach ($key_values as $key => $value) {
+                self::set($key, $value);
             }
         }
     }
@@ -91,8 +90,7 @@ class HttpSession
     public static function gets($keys)
     {
         $result = array();
-        if ($keys && is_array($keys) && (count($keys) > 0))
-        {
+        if ($keys && is_array($keys) && (count($keys) > 0)) {
             foreach ($keys as $key) {
                 $result[$key] = self::get($key);
             }
@@ -125,8 +123,7 @@ class HttpSession
         if (!isset($_SESSION)) {
             self::init();
         }
-        if ($keys && is_array($keys) && (count($keys) > 0))
-        {
+        if ($keys && is_array($keys) && (count($keys) > 0)) {
             foreach ($keys as $key) {
                 unset($_SESSION[$key]);
             }
@@ -141,4 +138,3 @@ class HttpSession
         session_unset();
     }
 }
-?>

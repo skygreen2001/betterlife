@@ -12,7 +12,8 @@
  * @package core.db.object
  * @author skygreen
  */
-interface IDaoNormal {
+interface IDaoNormal
+{
     //<editor-fold defaultstate="collapsed" desc="需要实现的方法">
     /**
      * 保存新建对象
@@ -164,4 +165,3 @@ interface IDaoNormal {
     public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
     //</editor-fold>
 }
-?>

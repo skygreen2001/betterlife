@@ -7,7 +7,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Sqlite  extends Config_Db
+class Config_Sqlite extends Config_Db
 {
     /**
      * Sqlite 2 抓取数据的模式
@@ -21,7 +21,7 @@ class Config_Sqlite  extends Config_Db
     /**
      * Sqlite 3 抓取数据的模式
      * @link http://php.net/manual/en/sqlite3.constants.php
-     * @var enum 
+     * @var enum
      */
     public static $sqlite3_fetchmode = SQLITE3_ASSOC;
 }

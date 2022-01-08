@@ -7,37 +7,40 @@
  * @subpackage sqlserver
  * @author skygreen
  */
-class SqlServer_Crud_Sql_Select extends Crud_Sql_Select {
-
-    public static function pageSql($startPoint, $endPoint, &$_SQL, $tablename, $saParams, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+class SqlServer_Crud_Sql_Select extends Crud_Sql_Select
+{
+    public static function pageSql($startPoint, $endPoint, &$_SQL, $tablename, $saParams, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    {
         $pageSize     = $endPoint - $startPoint + 1;//每页的记录个数
         $currentNo    = ( $startPoint - 1 ) / $pageSize + 1;//当前页数
         $selectclause = "top $pageSize *";
-        $whereclause  = self::pageWhereSql( $_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo );
-        $_SQL->select( $selectclause );
+        $whereclause  = self::pageWhereSql($_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo);
+        $_SQL->select($selectclause);
         return $whereclause;
     }
 
     /**
      * 生成分页SQL语句
      */
-    public static function getSql(&$_SQL, $tablename, $saParams, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null) {
+    public static function getSql(&$_SQL, $tablename, $saParams, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    {
         $selectclause = "";
         $whereclause  = $saParams;
         if (!empty($limit)) {
             $pageOffset   = explode(",", $limit);
             $startPoint   = $pageOffset[0];
             $endPoint     = $pageOffset[1];
-            $pageSize     = $endPoint - $startPoint+1;//每页的记录个数
+            $pageSize     = $endPoint - $startPoint + 1;//每页的记录个数
             $currentNo    = ( $startPoint - 1 ) / $pageSize + 1;//当前页数
             $selectclause = "top $pageSize *";
-            $whereclause  = self::pageWhereSql( $_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo );
+            $whereclause  = self::pageWhereSql($_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo);
         }
-        $_SQL->select( $selectclause );
+        $_SQL->select($selectclause);
         return $whereclause;
     }
 
-    private static function pageWhereSql(&$_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo) {
+    private static function pageWhereSql(&$_SQL, $tablename, $saParams, $sort, $pageSize, $currentNo)
+    {
         if (empty($sort) || $sort == 'null') {
             $sortclause = "";
         } else {
@@ -56,4 +59,3 @@ class SqlServer_Crud_Sql_Select extends Crud_Sql_Select {
         return $whereclause;
     }
 }
-?>

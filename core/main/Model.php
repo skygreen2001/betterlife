@@ -6,10 +6,11 @@
  * @package core.main
  * @author skygreen
  */
-class Model {
+class Model
+{
     /**
      * 来自用户请求的用户数据
-     * @var array 
+     * @var array
      */
     private $data;
     /**
@@ -19,7 +20,7 @@ class Model {
     private $loaded = array();
     /**
      * 控制器
-     * @var Action 
+     * @var Action
      */
     private $action;
     /**
@@ -27,7 +28,8 @@ class Model {
      * @param string $model
      * @return 实体
      */
-    public function __get($model) {
+    public function __get($model)
+    {
         $isExistModel = false;
         foreach (Initializer::$moduleFiles as $moduleFile) {
             if (array_key_exists($model, $moduleFile)) {
@@ -41,34 +43,37 @@ class Model {
                     }
                 }
                 $modelobj = $this->loaded[$model];
-                UtilObject::array_to_object( $this->getData(), $modelobj );
+                UtilObject::array_to_object($this->getData(), $modelobj);
                 $isExistModel = true;
                 return $modelobj;
             }
         }
         if (!$isExistModel) {
-           x( Wl::ERROR_INFO_MODEL_EXISTS . " {$model}" );
+            x(Wl::ERROR_INFO_MODEL_EXISTS . " {$model}");
         }
     }
     /**
      * 设置控制器
-     * @param object $action 
-     */ 
-    public function setAction($action) {
+     * @param object $action
+     */
+    public function setAction($action)
+    {
         $this->action = $action;
     }
     /**
      * 返回控制器
-     * @return object 
+     * @return object
      */
-    public function getAction() {
+    public function getAction()
+    {
         return $this->action;
     }
     /**
      * 获取数据
-     * @return array 
+     * @return array
      */
-    private function getData() {
+    private function getData()
+    {
         if (empty($this->action)) {
             $this->data = array_merge($_POST, $_GET);
         } else {
@@ -77,4 +82,3 @@ class Model {
         return $this->data;
     }
 }
-?>

@@ -19,10 +19,12 @@ function sqlExecute($sqlstring, $object = null)
         return null;
     }
     if ($object) {
-        if (is_bool($object) )$object = null;
-        return Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
+        if (is_bool($object)) {
+            $object = null;
+        }
+        return Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
     } else {
-        $lists = Manager_Db::newInstance()->currentdao()->sqlExecute( $sqlstring, $object );
+        $lists = Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
         if ($lists) {
             if (is_array($lists)) {
                 if (count($lists) > 0) {
@@ -43,7 +45,7 @@ function sqlExecute($sqlstring, $object = null)
  */
 function e_me($exception)
 {
-    ExceptionMe::recordUncatchedException( $exception );
+    ExceptionMe::recordUncatchedException($exception);
     e_view();
 }
 
@@ -53,7 +55,7 @@ function e_me($exception)
 function e_view()
 {
     if (Gc::$dev_debug_on) {
-        echo ExceptionMe::showMessage( ExceptionMe::VIEW_TYPE_HTML_TABLE );
+        echo ExceptionMe::showMessage(ExceptionMe::VIEW_TYPE_HTML_TABLE);
     }
 }
 
@@ -66,7 +68,9 @@ function e_view()
  */
 function contain($subject, $needle, $is_strict = false)
 {
-    if (empty($subject) ) return false;
+    if (empty($subject)) {
+        return false;
+    }
     if ($is_strict) {
         if (strpos($subject, $needle) !== false) {
             return true;
@@ -188,22 +192,19 @@ function unescape($str)
 {
     $ret = '';
     $len = strlen($str);
-    for ($i = 0; $i < $len; $i++)
-    {
-        if ($str[$i] == '%' && $str[$i + 1] == 'u' )
-        {
+    for ($i = 0; $i < $len; $i++) {
+        if ($str[$i] == '%' && $str[$i + 1] == 'u') {
             $val = hexdec(substr($str, $i + 2, 4));
-            if ($val < 0x7f )
+            if ($val < 0x7f) {
                 $ret .= chr($val);
-            else
-                if ($val < 0x800 )
-                    $ret .= chr(0xc0|($val>>6)).chr(0x80|($val & 0x3f));
-                else
-                    $ret .= chr(0xe0|($val>>12)).chr(0x80|(($val >> 6) & 0x3f)).chr(0x80|($val&0x3f));
+            } elseif ($val < 0x800) {
+                    $ret .= chr(0xc0 | ($val >> 6)) . chr(0x80 | ($val & 0x3f));
+            } else {
+                $ret .= chr(0xe0 | ($val >> 12)) . chr(0x80 | (($val >> 6) & 0x3f)) . chr(0x80 | ($val & 0x3f));
+            }
             $i += 5;
         } else {
-            if ($str[$i] == '%' )
-            {
+            if ($str[$i] == '%') {
                 $ret .= urldecode(substr($str, $i, 3));
                 $i += 2;
             } else {
@@ -239,18 +240,20 @@ function flex_logme($var)
 /**
  * 是否直接显示出来
  * @param @mixed $s 复合类型
- * @param boolean $isEcho 是否直接显示打印出来 
+ * @param boolean $isEcho 是否直接显示打印出来
  * @param string $title 标题
  */
-function print_pre($s, $isEcho = false, $title="")
+function print_pre($s, $isEcho = false, $title = "")
 {
     if (!empty($title) && $isEcho) {
         echo $title . "<br/>";
     }
     if ($isEcho) {
-        print "<pre>"; print_r($s); print "</pre>";
+        print "<pre>";
+        print_r($s);
+        print "</pre>";
     } else {
-        return "<pre>" . var_export($s,true) . "</pre>";
+        return "<pre>" . var_export($s, true) . "</pre>";
     }
 }
 
@@ -261,9 +264,13 @@ function print_pre($s, $isEcho = false, $title="")
  */
 function unicode2utf8($str)
 {
-    if (!$str ) return $str;
+    if (!$str) {
+        return $str;
+    }
     $decode = json_decode($str);
-    if ($decode ) return $decode;
+    if ($decode) {
+        return $decode;
+    }
     $str    = '["' . $str . '"]';
     $decode = json_decode($str);
     if (count($decode) == 1) {
@@ -364,7 +371,7 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
 //     $val4 = '<style type="text/css">Some really nasty CSS here</style>';
 //     echo html2raw($val4); //Style tags are completely removed
 
-//     $val5 = '<script type="application/javascript">Some really nasty 
+//     $val5 = '<script type="application/javascript">Some really nasty
 //                                                     multiline javascript here</script>';
 //     echo html2raw($val5); //Multiline script tags are completely removed
 
@@ -372,10 +379,10 @@ function html2raw($data, $preserveLinks = false, $wordWrap = 0, $config = null)
 //     multiline CSS here</style>';
 //     echo html2raw($val6); //Multiline style tags are completely removed
 
-//     $val7 = '<p>That&#39;s absolutely correct</p>';   
+//     $val7 = '<p>That&#39;s absolutely correct</p>';
 //     echo html2raw($val7); //Single quotes are decoded correctly
 //     echo "<br/>";
-    
+
 //     $val8 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' . 'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ' . 'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ' . 'irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla ' . 'pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia ' . 'deserunt mollit anim id est laborum.';
 //     echo html2raw($val8); //Test long text is unwrapped
 //     echo "<br/>";

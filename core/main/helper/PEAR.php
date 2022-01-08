@@ -23,11 +23,11 @@
 /**#@+
  * ERROR constants
  */
-define('PEAR_ERROR_RETURN',     1);
-define('PEAR_ERROR_PRINT',      2);
-define('PEAR_ERROR_TRIGGER',    4);
-define('PEAR_ERROR_DIE',        8);
-define('PEAR_ERROR_CALLBACK',  16);
+define('PEAR_ERROR_RETURN', 1);
+define('PEAR_ERROR_PRINT', 2);
+define('PEAR_ERROR_TRIGGER', 4);
+define('PEAR_ERROR_DIE', 8);
+define('PEAR_ERROR_CALLBACK', 16);
 /**
  * WARNING: obsolete
  * @deprecated
@@ -39,12 +39,12 @@ define('PEAR_ZE2', (function_exists('version_compare') &&
 
 if (substr(PHP_OS, 0, 3) == 'WIN') {
     define('OS_WINDOWS', true);
-    define('OS_UNIX',    false);
-    define('PEAR_OS',    'Windows');
+    define('OS_UNIX', false);
+    define('PEAR_OS', 'Windows');
 } else {
     define('OS_WINDOWS', false);
-    define('OS_UNIX',    true);
-    define('PEAR_OS',    'Unix'); // blatant assumption
+    define('OS_UNIX', true);
+    define('PEAR_OS', 'Unix'); // blatant assumption
 }
 
 $GLOBALS['_PEAR_default_error_mode']     = PEAR_ERROR_RETURN;
@@ -186,7 +186,8 @@ class PEAR
      * @access public
      * @return void
      */
-    function _PEAR() {
+    function _PEAR()
+    {
         if ($this->_debug) {
             printf("PEAR destructor called, class=%s\n", strtolower(get_class($this)));
         }
@@ -471,14 +472,15 @@ class PEAR
      * @see PEAR::setErrorHandling
      * @since PHP 4.0.5
      */
-    function &raiseError($message = null,
-                         $code = null,
-                         $mode = null,
-                         $options = null,
-                         $userinfo = null,
-                         $error_class = null,
-                         $skipmsg = false)
-    {
+    function &raiseError(
+        $message = null,
+        $code = null,
+        $mode = null,
+        $options = null,
+        $userinfo = null,
+        $error_class = null,
+        $skipmsg = false
+    ) {
         // The error is yet a PEAR error object
         if (is_object($message)) {
             $code        = $message->getCode();
@@ -493,11 +495,12 @@ class PEAR
             isset($this->_expected_errors) &&
             count($this->_expected_errors) > 0 &&
             count($exp = end($this->_expected_errors))
-       ) {
-            if ($exp[0] == "*" ||
+        ) {
+            if (
+                $exp[0] == "*" ||
                 (is_int(reset($exp)) && in_array($code, $exp)) ||
                 (is_string(reset($exp)) && in_array($message, $exp))
-           ) {
+            ) {
                 $mode = PEAR_ERROR_RETURN;
             }
         }
@@ -708,7 +711,7 @@ class PEAR
             function_exists('dl') === false ||
             ini_get('enable_dl') != 1 ||
             ini_get('safe_mode') == 1
-       ) {
+        ) {
             return false;
         }
 
@@ -735,9 +738,10 @@ if (PEAR_ZE2) {
 function _PEAR_call_destructors()
 {
     global $_PEAR_destructor_object_list;
-    if (is_array($_PEAR_destructor_object_list) &&
-        sizeof($_PEAR_destructor_object_list))
-    {
+    if (
+        is_array($_PEAR_destructor_object_list) &&
+        sizeof($_PEAR_destructor_object_list)
+    ) {
         reset($_PEAR_destructor_object_list);
         if (PEAR_ZE2) {
             $destructLifoExists = PEAR5::getStaticProperty('PEAR', 'destructlifo');
@@ -771,7 +775,7 @@ function _PEAR_call_destructors()
         isset($GLOBALS['_PEAR_shutdown_funcs']) &&
         is_array($GLOBALS['_PEAR_shutdown_funcs']) &&
         !empty($GLOBALS['_PEAR_shutdown_funcs'])
-   ) {
+    ) {
         foreach ($GLOBALS['_PEAR_shutdown_funcs'] as $value) {
             call_user_func_array($value[0], $value[1]);
         }
@@ -826,9 +830,13 @@ class PEAR_Error
      * @access public
      *
      */
-    function PEAR_Error($message = 'unknown error', $code = null,
-                        $mode = null, $options = null, $userinfo = null)
-    {
+    function PEAR_Error(
+        $message = 'unknown error',
+        $code = null,
+        $mode = null,
+        $options = null,
+        $userinfo = null
+    ) {
         if ($mode === null) {
             $mode = PEAR_ERROR_RETURN;
         }
@@ -938,10 +946,10 @@ class PEAR_Error
      * @return int error code
      * @access public
      */
-     function getCode()
-     {
+    function getCode()
+    {
         return $this->code;
-     }
+    }
 
     /**
      * Get the name of this error/exception.
@@ -1030,11 +1038,16 @@ class PEAR_Error
             } else {
                 $callback = $this->callback;
             }
-            return sprintf('[%s: message="%s" code=%d mode=callback ' .
+            return sprintf(
+                '[%s: message="%s" code=%d mode=callback ' .
                            'callback=%s prefix="%s" info="%s"]',
-                           strtolower(get_class($this)), $this->message, $this->code,
-                           $callback, $this->error_message_prefix,
-                           $this->userinfo);
+                strtolower(get_class($this)),
+                $this->message,
+                $this->code,
+                $callback,
+                $this->error_message_prefix,
+                $this->userinfo
+            );
         }
         if ($this->mode & PEAR_ERROR_PRINT) {
             $modes[] = 'print';
@@ -1048,12 +1061,17 @@ class PEAR_Error
         if ($this->mode & PEAR_ERROR_RETURN) {
             $modes[] = 'return';
         }
-        return sprintf('[%s: message="%s" code=%d mode=%s level=%s ' .
+        return sprintf(
+            '[%s: message="%s" code=%d mode=%s level=%s ' .
                        'prefix="%s" info="%s"]',
-                       strtolower(get_class($this)), $this->message, $this->code,
-                       implode("|", $modes), $levels[$this->level],
-                       $this->error_message_prefix,
-                       $this->userinfo);
+            strtolower(get_class($this)),
+            $this->message,
+            $this->code,
+            implode("|", $modes),
+            $levels[$this->level],
+            $this->error_message_prefix,
+            $this->userinfo
+        );
     }
 }
 

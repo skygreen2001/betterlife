@@ -22,33 +22,33 @@ class Cache_Memcached extends Cache_Base
     {
         $value = "Hello World";
         for ($i = 0; $i < 100; $i++) {
-           $this->set( $i, $i . ":testrrrr" . $value );
+            $this->set($i, $i . ":testrrrr" . $value);
         }
 
         //$mem->save("key", $value);
-        $this->update( "key", "I'm a newbie!" );
-        $val = $this->get( "key" );
+        $this->update("key", "I'm a newbie!");
+        $val = $this->get("key");
         echo $val;
-        $this->update( "key", array("Home"=>$value,"Guest"=>"I'm a newbie!") );
-        $val = $this->get( "key" );
+        $this->update("key", array("Home" => $value,"Guest" => "I'm a newbie!"));
+        $val = $this->get("key");
         print_r($val);
-        $this->delete( "key" );
-        $val = $this->get( "key" );
+        $this->delete("key");
+        $val = $this->get("key");
         echo $val;
-        $member=new User();
+        $member = new User();
         $member->setName("skygreen2001");
         $member->setPassword("administrator");
         $member->setDepartmentId(3211);
-        $this->save( "Member1", $member );
-        $user=$this->get( "Member1" );
+        $this->save("Member1", $member);
+        $user = $this->get("Member1");
         echo $user;
-        $member=new User();
+        $member = new User();
         $member->setName("学必填");
         $member->setPassword("password");
         $member->setDepartmentId(3212);
-        $this->save( "Member2", $member );
+        $this->save("Member2", $member);
 
-        $users = $this->gets( Array('Member1', 'Member2') );
+        $users = $this->gets(array('Member1', 'Member2'));
         print_r($users);
         $this->clear();
         $this->close();
@@ -57,9 +57,9 @@ class Cache_Memcached extends Cache_Base
     public function Cache_Memcached()
     {
         if (!class_exists('Memcached')) {
-            LogMe::log( '请检查是否加载了LibMemcached,Memcached', EnumLogLevel::ERR );
+            LogMe::log('请检查是否加载了LibMemcached,Memcached', EnumLogLevel::ERR);
         }
-        $this->obj = new Memcached;
+        $this->obj = new Memcached();
         //加载所有的分布式服务器
         $this->obj->addServers($cache_server[0], $cache_server[1]);
     }
@@ -71,10 +71,10 @@ class Cache_Memcached extends Cache_Base
     public function contains($key)
     {
         if (isset($this->obj)) {
-            $tmp=$this->get( $key );
-           if (!empty($tmp)) {
-             return true;
-           }
+            $tmp = $this->get($key);
+            if (!empty($tmp)) {
+                return true;
+            }
         }
         return false;
     }
@@ -90,13 +90,13 @@ class Cache_Memcached extends Cache_Base
      */
     public function save($key, $value, $expired = 86400)
     {
-        return $this->obj->add($key, $value, Config_Memcache::$is_compressed,$expired);
+        return $this->obj->add($key, $value, Config_Memcache::$is_compressed, $expired);
     }
 
     /**
-     * 在缓存里保存指定$key的数据 
+     * 在缓存里保存指定$key的数据
      *
-     * 与save和update不同，无论何时都保存 
+     * 与save和update不同，无论何时都保存
      * @param string $key
      * @param string|array|object $value
      * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
@@ -197,5 +197,4 @@ class Cache_Memcached extends Cache_Base
     {
         $this->obj->close();
     }
-
 }

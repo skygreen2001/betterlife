@@ -111,9 +111,13 @@ class Log_sqlite extends Log
             }
 
             /* Attempt to connect to the database. */
-            if ($this->_db = $connectFunction($this->_options['filename'],
-                                              (int)$this->_options['mode'],
-                                              $error)) {
+            if (
+                $this->_db = $connectFunction(
+                    $this->_options['filename'],
+                    (int)$this->_options['mode'],
+                    $error
+                )
+            ) {
                 $this->_opened = true;
                 return $this->_createTable();
             }
@@ -179,13 +183,15 @@ class Log_sqlite extends Log
         $message = $this->_extractMessage($message);
 
         // Build the SQL query for this log entry insertion.
-        $q = sprintf('INSERT INTO [%s] (logtime, ident, priority, message) ' .
+        $q = sprintf(
+            'INSERT INTO [%s] (logtime, ident, priority, message) ' .
                      "VALUES ('%s', '%s', %d, '%s')",
-                     $this->_table,
-                     strftime('%Y-%m-%d %H:%M:%S', time()),
-                     sqlite_escape_string($this->_ident),
-                     $priority,
-                     sqlite_escape_string($message));
+            $this->_table,
+            strftime('%Y-%m-%d %H:%M:%S', time()),
+            sqlite_escape_string($this->_ident),
+            $priority,
+            sqlite_escape_string($message)
+        );
         if (!($res = @sqlite_unbuffered_query($this->_db, $q))) {
             return false;
         }
@@ -222,5 +228,4 @@ class Log_sqlite extends Log
 
         return true;
     }
-
 }

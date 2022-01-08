@@ -20,8 +20,8 @@ class Exception_Mysqli extends ExceptionDb
             if (mysqli_connect_errno()) {
                 $error_info = "连接数据库失败:" . mysqli_connect_error();
                 $category   = ExceptionDb::CATEGORY_MYSQL;
-                LogMe::log( $error_info, EnumLogLevel::ERR );
-                self::recordException( $error_info, $category, mysqli_connect_errno(), $extra );
+                LogMe::log($error_info, EnumLogLevel::ERR);
+                self::recordException($error_info, $category, mysqli_connect_errno(), $extra);
             } else {
                 $link = Manager_Db::newInstance()->currentdao()->getConnection();
             }
@@ -31,9 +31,8 @@ class Exception_Mysqli extends ExceptionDb
                 $category = ExceptionDb::CATEGORY_MYSQL;
             }
             $errorinfo = $link->error;
-            LogMe::log( "错误信息:" . $errorinfo, EnumLogLevel::ERR );
-            self::recordException( $errorinfo, $category, $link->errno, $extra );
+            LogMe::log("错误信息:" . $errorinfo, EnumLogLevel::ERR);
+            self::recordException($errorinfo, $category, $link->errno, $extra);
         }
     }
-
 }
