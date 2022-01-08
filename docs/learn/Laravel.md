@@ -630,4 +630,4 @@
 - [20 Best Laravel Tutorials](https://kinsta.com/blog/laravel-tutorial/) 
 - [Laravel Valet](https://laravel.com/docs/8.x/valet) 
   - [Valet中文文档](https://learnku.com/docs/laravel/8.5/valet/)
-- [Packalyst](https://packalyst.com/) 
+- [Packalyst](https://packalyst.com/)

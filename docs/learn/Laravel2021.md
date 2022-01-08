@@ -40,6 +40,15 @@
   - [Turing](https://turing.com)
     - [开发者求职](https://developers.turing.com/)
 
+### 精选资源大全
+
+- [awesome-laravel: 中文](https://github.com/nonfu/awesome-laravel)
+  - [Laravel 精选资源大全](https://laravelacademy.org/post/153.html)
+- [awesome-laravel](https://github.com/chiraggude/awesome-laravel)
+  - [awesome-php](https://github.com/ziadoz/awesome-php)
+- [Laravel 学院](https://laravelacademy.org/)
+- [Lumen](https://lumen.laravel.com/): Laravel微框架
+
 ## 如何学习Laravel
 
 ### 基本技能

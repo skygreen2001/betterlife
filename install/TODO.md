@@ -6,13 +6,22 @@
   - DB: find objects by List ids
   - 后台的export excel加筛选条件
   - Tag 超链接  onclick ' " 不能解析的问题
-  - Blade Template
+  - 表示层View整合Blade Templates
   - Trait 重构 DataObject 和 DataObjectFunc, php 5.2 -> php 5.4
+  - Flysystem adapter for betterlife framework(可以单独开一个工程)
   - 框架核心需加上命名空间, php 5.2 -> php 5.4
   - 级联删除图片，多对多表中的数据
+  - Api: 
+    - 类似spring boot、Laravel resource、Restful
+    - 提供给前端Ajax请求、axios使用
+    - 提供给jQuery、react、vuejs、angularjs、angular使用
+    - 需提供代码示例怎样使用
+    - 提供代码生成和api帮助手册(markdown格式): 提供给使用api的前端开发人员
+    - 学习参考: Laravel Sanctum 
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
     - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
-    - tools/tools/optimize/stresstest/README.md 压力测试  
+    - tools/tools/optimize/stresstest/README.md 压力测试
+    - 学习参考: Laravel Octane
   - 生成全静态网站(tools/tools/web/makehtml.php)
   - 自己算法生成站点地图(动态页面)
   - 数据库增加事务支持
@@ -33,7 +42,6 @@
 
 ## 模仿优秀
 
-  - 表示层View整合Blade Templates
   - 生成Api document by Doctum(https://github.com/code-lts/doctum)
   - 生成Api document by phpDocumentor(https://docs.phpdoc.org)
   - Laravel rate limiter 
