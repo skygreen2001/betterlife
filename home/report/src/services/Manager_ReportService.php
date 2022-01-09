@@ -1,7 +1,7 @@
 <?php
 
 /**
- * -----------| 服务类:所有Service的管理类 |-----------
+ * -----------| 服务类:所有报表Service的管理类 |-----------
  * @category report
  * @package services
  * @author skygreen skygreen2001@gmail.com

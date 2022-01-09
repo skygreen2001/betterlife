@@ -31,11 +31,11 @@ class CheckBOMTask
      * @var array
      */
     private static $exclude_check = array(
-        // "install/bower_components",
+        "install/bower_components",
         "install/node_modules",
         "install/vendor",
         "app/html5/bower_components",
-        // "app/html5/node_modules",
+        "app/html5/node_modules",
         "home/betterlife/view/default/tmp",
         "home/betterlife/view/bootstrap/tmp",
         "home/betterlife/view/twig/tmp",

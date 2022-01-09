@@ -10,35 +10,44 @@ class AutoCode extends BBObject
 {
     /**
      * 显示生成前结果
+     * @var string
      */
     public static $showPreviewReport;
     /**
      * 显示生成结果
+     * @var string
      */
     public static $showReport;
     /**
      * 是否还需要输出页面的css样式
+     * 
      * 确保css只生成一次
+     * @var boolean
      */
     public static $isOutputCss = true;
     /**
      * 开发者
+     * @var string
      */
     public static $author = "skygreen skygreen2001@gmail.com";
     /**
      * 生成Php文件保存的路径
+     * @var string
      */
     public static $save_dir;
     /**
      * 应用所在的路径
+     * @var string
      */
     public static $app_dir;
     /**
      * 生成源码[services|domain]所在目录名称
+     * @var string
      */
     public static $dir_src = "src";
     /**
-     *实体数据对象类文件所在的路径
+     * 实体数据对象类文件所在的路径
+     * @var string
      */
     public static $domain_dir = "domain";
     /**
@@ -77,11 +86,13 @@ class AutoCode extends BBObject
     public static $redundancy_table_fields;
     /**
      * 获取类和注释的说明
+     * @var string
      */
     public static $class_comments;
 
     /**
      * 初始化
+     * @return void
      */
     public static function init()
     {
@@ -152,6 +163,7 @@ class AutoCode extends BBObject
     /**
      * 根据类名获取表名
      * @param mixed $class
+     * @return string
      */
     protected static function getTablename($class)
     {
@@ -170,8 +182,9 @@ class AutoCode extends BBObject
      * @param array|string $table_names 表列表
      * 示例如下:
      *
-     *     1.array:array('bb_user_admin','bb_core_blog')
-     *     2.字符串:'bb_user_admin,bb_core_blog'
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
+     * @return array
      */
     protected static function fieldInfosByTable_names($table_names)
     {
@@ -199,8 +212,9 @@ class AutoCode extends BBObject
      * @param array|string $table_names 表列表
      * 示例如下:
      *
-     *     1.array:array('bb_user_admin','bb_core_blog')
-     *     2.字符串:'bb_user_admin,bb_core_blog'
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
+     * @return array
      */
     protected static function tableInfosByTable_names($table_names)
     {
@@ -229,6 +243,7 @@ class AutoCode extends BBObject
      *
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
+     * @return mixed
      */
     protected static function tableListByTable_names($table_names)
     {
@@ -264,6 +279,7 @@ class AutoCode extends BBObject
     /**
      * 表中列的类型定义
      * @param string $type
+     * @return mixed
      */
     protected static function column_type($type)
     {
@@ -278,6 +294,7 @@ class AutoCode extends BBObject
     /**
      * 将表中的类型定义转换成对象field的注释类型说明
      * @param string $type 类型定义
+     * @return string
      */
     protected static function comment_type($type)
     {
@@ -306,6 +323,7 @@ class AutoCode extends BBObject
     /**
      * 表中列的长度定义
      * @param string $type
+     * @return int
      */
     protected static function column_length($type)
     {
@@ -322,6 +340,7 @@ class AutoCode extends BBObject
      * @param string $dir 保存路径
      * @param string $filename 文件名称
      * @param string $definePhpFileContent 生成的代码
+     * @return string
      */
     protected static function saveDefineToDir($dir, $filename, $definePhpFileContent)
     {
@@ -335,6 +354,7 @@ class AutoCode extends BBObject
      * @param string $dir 保存路径
      * @param string $filename 文件名称
      * @param string $definePhpFileContent 生成的代码
+     * @return string
      */
     protected static function saveDefineToFile($filename, $definePhpFileContent)
     {
@@ -349,6 +369,7 @@ class AutoCode extends BBObject
      * @param $inputArr 输入用户需求的选项
      * @param $default_value 默认值
      * @param $more_content 更多个性化内容
+     * @return void
      */
     protected static function UserInput($title = "", $inputArr = null, $default_value = "", $more_content = "")
     {
@@ -361,6 +382,7 @@ class AutoCode extends BBObject
      * 根据表列枚举类型生成枚举类名称
      * @param string $columnname 枚举列名称
      * @param string $tablename 表名称
+     * @return string
      */
     protected static function enumClassName($columnname, $tablename = null)
     {
@@ -389,6 +411,7 @@ class AutoCode extends BBObject
      *    -1: 待确认-unknown
      *    默认男
      * @param mixed $fieldComment 表枚举类型列注释
+     * @return array
      */
     protected static function enumDefines($fieldComment)
     {
@@ -434,6 +457,7 @@ class AutoCode extends BBObject
      * 列是否大量文本输入应该TextArea输入
      * @param string $column_name 列名称
      * @param string $column_type 列类型
+     * @return boolean
      */
     protected static function columnIsTextArea($column_name, $column_type)
     {
@@ -458,6 +482,7 @@ class AutoCode extends BBObject
      * 列是否是图片路径
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
+     * @return boolean
      */
     protected static function columnIsImage($column_name, $column_comment = "")
     {
@@ -478,6 +503,7 @@ class AutoCode extends BBObject
      * 列是否是email
      * @param string $column_name 列名称
      * @param mixed $column_comment 列注释
+     * @return boolean
      */
     protected static function columnIsEmail($column_name, $column_comment)
     {
@@ -492,6 +518,7 @@ class AutoCode extends BBObject
      * 列是否是密码
      * @param string $tablename 表名称
      * @param string $column_name 列名称
+     * @return boolean
      */
     protected static function columnIsPassword($table_name, $column_name)
     {
@@ -509,6 +536,7 @@ class AutoCode extends BBObject
     /**
      * 是否默认的列关键字: id,committime,updateTime
      * @param string $fieldname 列名称
+     * @return boolean
      */
     protected static function isNotColumnKeywork($fieldname)
     {
@@ -523,6 +551,7 @@ class AutoCode extends BBObject
     /**
      * 获取数据对象的ID列名称
      * @param mixed $dataobject 数据对象实体|对象名称
+     * @return string
      */
     protected static function keyIDColumn($dataobject)
     {
@@ -532,6 +561,7 @@ class AutoCode extends BBObject
     /**
      * 获取表注释第一行关键词说明
      * @param string $tablename 表名称
+     * @return string
      */
     protected static function tableCommentKey($tablename)
     {
@@ -580,6 +610,7 @@ class AutoCode extends BBObject
      * 根据类名获取表代表列显示名称
      * @param string $classname 数据对象类名
      * @param bool $isReturnEmpty 是否没有就返回空
+     * @return string
      */
     protected static function getShowFieldNameByClassname($classname, $isReturnNull = false)
     {
@@ -607,6 +638,7 @@ class AutoCode extends BBObject
     /**
      * 根据类名和表信息获取表代表列显示名称
      * @param string $classname 数据对象类名
+     * @return string
      */
     protected static function getShowFieldName($classname)
     {
@@ -627,6 +659,7 @@ class AutoCode extends BBObject
     /**
      * 根据类名判断是不是多对多关系，存在中间表表名
      * @param string $classname 数据对象类名
+     * @return boolean
      */
     protected static function isMany2ManyByClassname($classname)
     {
@@ -653,6 +686,7 @@ class AutoCode extends BBObject
     /**
      * 根据类名判断是不是多对多关系，如果存在其他显示字段则需要在显示Tab中显示has_many
      * @param string $classname 数据对象类名
+     * @return boolean
      */
     protected static function isMany2ManyShowHasMany($classname)
     {

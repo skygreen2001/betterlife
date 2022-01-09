@@ -129,7 +129,7 @@ class AutoCodeDomain extends AutoCode
                         $comment = preg_split("/[\s,]+/", $comment);
                         $comment = $comment[0];
                     }
-                    $result = "<?php" . HH .
+                    $result = "<?php" . HH . HH .
                               "/**" . HH .
                               " * -----------| 枚举类型:$comment |-----------" . HH .
                               " * @category $category" . HH .
@@ -219,7 +219,7 @@ class AutoCodeDomain extends AutoCode
                         $result  .= "        return null;" . HH;
                     }
                     $result .= "    }" . HH . HH;
-                    $result .= "}" . HH . HH;
+                    $result .= "}" . HH;
                     self::$enumClass .= "生成导出完成:" . $tablename . "[" . $fieldname . "] => " . self::saveEnumDefineToDir($enumclassname, $result) . "!<br/>";
                 }
             }
@@ -233,7 +233,7 @@ class AutoCodeDomain extends AutoCode
      */
     private static function tableToDataObjectDefine($tablename, $fieldInfo)
     {
-        $result = "<?php" . HH;
+        $result = "<?php" . HH . HH ;
         if ((self::$tableInfoList != null) && (count(self::$tableInfoList) > 0) && (array_key_exists("$tablename", self::$tableInfoList))) {
             $table_comment = self::$tableInfoList[$tablename]["Comment"];
             $table_comment = str_replace("关系表", "", $table_comment);
@@ -356,7 +356,7 @@ class AutoCodeDomain extends AutoCode
         $result .= self::domainEnumShow($fieldInfo, $tablename);
         $result .= self::domainTreeLevelDefine($fieldInfo, $classname, $tablename);
         $result .= self::domainBitShow($fieldInfo, $tablename);
-        $result .= "}" . HH . HH;
+        $result .= "}" . HH;
         return $result;
     }
 

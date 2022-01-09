@@ -10,24 +10,30 @@ class AutoCodeService extends AutoCode
 {
     /**
      * Service类所在的目录
+     * @var string
      */
     public static $package = "services";
     /**
      * Service类所在的目录
+     * @var string
      */
     public static $service_dir = "services";
     /**
      * Ext js Service文件所在的路径
+     * @var string
      */
     public static $ext_dir = "ext";
     /**
-    * Service完整的保存路径
-    */
+     * Service完整的保存路径
+     * @var string
+     */
     public static $service_dir_full;
     /**
      * 服务类生成定义的方式
-     * 1.继承具有标准方法的Service。
-     * 2.生成标准方法的Service。
+     * 
+     *     1. 继承具有标准方法的Service。
+     *     2. 生成标准方法的Service。
+     * @var int
      */
     public static $type;
 
@@ -35,8 +41,10 @@ class AutoCodeService extends AutoCode
      * 自动生成代码-服务类
      * @param array|string $table_names
      * 示例如下:
-     *  1. array:array('bb_user_admin','bb_core_blog')
-     *  2.字符串:'bb_user_admin,bb_core_blog'
+     * 
+     *     1. array: array('bb_user_admin', 'bb_core_blog')
+     *     2. 字符串: 'bb_user_admin,bb_core_blog'
+     * @return void
      */
     public static function autoCode($table_names = "")
     {
@@ -93,7 +101,7 @@ class AutoCodeService extends AutoCode
         $result = self::createManageService($table_names);
         $section_define  = $result["section_define"];
         $section_content = $result["section_content"];
-        $e_result = "<?php" . HH .
+        $e_result = "<?php" . HH . HH .
                     "/**" . HH .
                     " * -----------| 服务类:所有Service的管理类 |-----------" . HH .
                     " * @category $category" . HH .
@@ -112,8 +120,9 @@ class AutoCodeService extends AutoCode
      * 创建前台管理服务类
      * @param array|string $table_names
      * 示例如下:
-     *  1. array:array('bb_user_admin','bb_core_blog')
-     *  2.字符串:'bb_user_admin,bb_core_blog'
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
+     * @return string
      */
     public static function createManageService($table_names = "")
     {
@@ -147,6 +156,7 @@ class AutoCodeService extends AutoCode
     /**
      * 用户输入需求
      * @param $default_value 默认值
+     * @return void
      */
     public static function UserInput($default_value = "", $title = "", $inputArr = null, $more_content = "")
     {
@@ -161,6 +171,7 @@ class AutoCodeService extends AutoCode
      * 将表列定义转换成数据对象Php文件定义的内容
      * @param string $tablename 表名
      * @param array $fieldInfos 表列信息列表
+     * @return string
      */
     private static function tableToServiceDefine($tablename)
     {
@@ -169,7 +180,7 @@ class AutoCodeService extends AutoCode
         } else {
             $fieldInfo = self::$fieldInfos;
         }
-        $result            = "<?php" . HH;
+        $result            = "<?php" . HH . HH;
         $classname         = self::getClassname($tablename);
         $instance_name     = self::getInstancename($tablename);
         $service_classname = self::getServiceClassname($tablename);
@@ -562,7 +573,7 @@ class AutoCodeService extends AutoCode
                 $result .= HH;
                 break;
         }
-        $result .= "}" . HH . HH;
+        $result .= "}" . HH;
         return $result;
     }
 
@@ -572,6 +583,7 @@ class AutoCodeService extends AutoCode
      * @param string $classname 数据对象类名
      * @param string $instance_name 实体变量
      * @param array $fieldInfo 表列信息列表
+     * @return string
      */
     private static function redundancy_table_fields($classname, $instance_name, $fieldInfo)
     {
@@ -600,6 +612,7 @@ class AutoCodeService extends AutoCode
      * @param mixed $instance_name 实体变量
      * @param mixed $classname 数据对象列名
      * @param mixed $fieldInfo 表列信息列表
+     * @return string
      */
     private static function relationFieldOutput($instance_name, $classname, $fieldInfo)
     {
@@ -736,6 +749,7 @@ class AutoCodeService extends AutoCode
      * @param array $fieldInfos 表列信息列表
      * @param string $tablename 表名称
      * @param string $blankPre 空白字符
+     * @return string
      */
     private static function enumComment2KeyInExtService($instance_name, $fieldInfo, $tablename, $blankPre = "")
     {
@@ -758,6 +772,7 @@ class AutoCodeService extends AutoCode
      * @param string $enumclassname 枚举类名称
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
+     * @return array
      */
     private static function enumKey2CommentInService($instance_name, $classname, $fieldInfo, $blankPre = "")
     {
@@ -787,6 +802,7 @@ class AutoCodeService extends AutoCode
      * @param string $instance_name 实体变量
      * @param array $fieldInfo 表列信息列表
      * @param bool $isImport 是否导入
+     * @return string
      */
     private static function dataTimeConvert($instance_name, $fieldInfo, $isImport = false)
     {
@@ -812,6 +828,7 @@ class AutoCodeService extends AutoCode
      * @param string $instance_name 实体变量
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
+     * @return string
      */
     private static function bitVal($instance_name, $fieldInfo, $blankPre = "")
     {
@@ -832,6 +849,7 @@ class AutoCodeService extends AutoCode
      * @param string $instance_name 实体变量
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
+     * @return string
      */
     private static function bitShow($instance_name, $fieldInfo, $blankPre = "")
     {
@@ -852,6 +870,7 @@ class AutoCodeService extends AutoCode
      * @param string $instance_name 实体变量
      * @param array $fieldInfos 表列信息列表
      * @param string $blankPre 空白字符
+     * @return string
      */
     private static function datetimeShow($instance_name, $fieldInfo, $blankPre = "")
     {
@@ -884,6 +903,7 @@ class AutoCodeService extends AutoCode
      * 保存生成的代码到指定命名规范的文件中
      * @param string $tablename 表名称
      * @param string $definePhpFileContent 生成的代码
+     * @return string
      */
     private static function saveServiceDefineToDir($tablename, $definePhpFileContent)
     {

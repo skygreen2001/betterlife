@@ -164,7 +164,7 @@ class AutoCodeAction extends AutoCode
      */
     private static function tableToActionDefine($tablename, $fieldInfo)
     {
-        $result        = "<?php" . HH;
+        $result        = "<?php" . HH . HH;
         $table_comment = self::tableCommentKey($tablename);
         $classname     = self::getClassname($tablename);
         $instancename  = self::getInstancename($tablename);
@@ -210,7 +210,7 @@ class AutoCodeAction extends AutoCode
                 break;
         }
 
-        $result .= "}" . HH . HH;
+        $result .= "}" . HH;
         return $result;
     }
 
