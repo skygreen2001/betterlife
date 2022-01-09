@@ -51,7 +51,7 @@ class TagPageService
      * @param count
      *            :记录总数
      */
-    function __construct($nowpage, $count, $pageSize = 10, $linkUrl = null)
+    public function __construct($nowpage, $count, $pageSize = 10, $linkUrl = null)
     {
         if (empty($linkUrl)) {
             $linkUrl = @$_SERVER['HOST'] . @$_SERVER['REQUEST_URI'];

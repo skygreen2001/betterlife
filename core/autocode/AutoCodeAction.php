@@ -248,11 +248,11 @@ class AutoCodeAction extends AutoCode
                                    "        }" . HH;
                 $editImgContent .= "            if (!empty(\$_FILES) && !empty(\$_FILES[\"$fieldname\"][\"name\"])) {" . HH .
                                    "                \$result = \$this->uploadImg(\$_FILES, \"$fieldname\", \"$fieldname\", \"$instancename\");" . HH .
-                                   "                if (\$result && (\$result['success'] == true )) {" . HH .
-                                   "                    if (array_key_exists('file_name', \$result) ) \$$instancename->$fieldname = \$result['file_name'];" . HH .
+                                   "                if (\$result && (\$result['success'] == true)) {" . HH .
+                                   "                    if (array_key_exists('file_name', \$result)) \$$instancename->$fieldname = \$result['file_name'];" . HH .
                                    "                } else {" . HH .
                                    "                    \$isRedirect = false;" . HH .
-                                   "                    \$this->view->set( \"message\", \$result[\"msg\"] );" . HH .
+                                   "                    \$this->view->set(\"message\", \$result[\"msg\"]);" . HH .
                                    "                }" . HH .
                                    "            }" . HH;
             }
@@ -260,7 +260,7 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
                 case 'bit':
-                    $editBitContent .= "            if (\${$instancename}->$fieldname == 'on' ) \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
+                    $editBitContent .= "            if (\${$instancename}->$fieldname == 'on') \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
                     break;
             }
         }
@@ -272,17 +272,16 @@ class AutoCodeAction extends AutoCode
                           "            }" . HH;
 
         if (count($text_area_fieldname) == 1) {
-            $editTextareaContent .= "        \$this->load_onlineditor( {$text_area_fieldname[0]} );" . HH;
+            $editTextareaContent .= "        \$this->load_onlineditor({$text_area_fieldname[0]});" . HH;
         } elseif (count($text_area_fieldname) > 1) {
             $fieldnames           = implode(", ", $text_area_fieldname);
-            $editTextareaContent .= "        \$this->load_onlineditor( array({$fieldnames}) );" . HH;
+            $editTextareaContent .= "        \$this->load_onlineditor(array({$fieldnames}));" . HH;
         }
         $result = "    /**" . HH .
                   "     * {$table_comment}列表" . HH .
                   "     */" . HH .
                   "    public function lists()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 查看{$table_comment}" . HH .
@@ -290,9 +289,9 @@ class AutoCodeAction extends AutoCode
                   "    public function view()" . HH .
                   "    {" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                  "        \${$instancename}   = $classname::getById( \${$instancename}Id );" . HH .
+                  "        \${$instancename}   = $classname::getById(\${$instancename}Id);" . HH .
                   $viewImgContent .
-                  "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
+                  "        \$this->view->set(\"$instancename\", \$$instancename);" . HH .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 编辑{$table_comment}" . HH .
@@ -307,13 +306,13 @@ class AutoCodeAction extends AutoCode
                   $editBitContent .
                   $rela_m2m_content .
                   "            if (\$isRedirect) {" . HH .
-                  "                \$this->redirect( \"$instancename\", \"view\", \"id=\$id\" );" . HH .
+                  "                \$this->redirect(\"$instancename\", \"view\", \"id=\$id\");" . HH .
                   "                exit;" . HH .
                   "            }" . HH .
                   "        }" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                  "        \${$instancename}   = $classname::getById( \${$instancename}Id );" . HH .
-                  "        \$this->view->set( \"$instancename\", \$$instancename );" . HH .
+                  "        \${$instancename}   = $classname::getById(\${$instancename}Id);" . HH .
+                  "        \$this->view->set(\"$instancename\", \$$instancename);" . HH .
                   $relation_content .
                   $editTextareaContent .
                   "    }" . HH .
@@ -323,7 +322,7 @@ class AutoCodeAction extends AutoCode
                   "    public function delete()" . HH .
                   "    {" . HH .
                   "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                  "        \$isDelete = $classname::deleteByID( \${$instancename}Id );" . HH .
+                  "        \$isDelete = $classname::deleteByID(\${$instancename}Id);" . HH .
                   "        return array(\"info\" => 200, \"data\" => \${$instancename}Id);" . HH .
                   "    }" . HH;
         $import = HH .
@@ -334,7 +333,7 @@ class AutoCodeAction extends AutoCode
                   "    public function import()" . HH .
                   "    {" . HH .
                   "        if (!empty(\$_FILES)) {" . HH .
-                  "            return ManagerService::{$instancename}Service()->import( \$_FILES );" . HH .
+                  "            return ManagerService::{$instancename}Service()->import(\$_FILES);" . HH .
                   "        }" . HH .
                   "        return array(\"error\" => 500,\"info\" => \"No Data\");" . HH .
                   "    }" . HH;
@@ -351,7 +350,7 @@ class AutoCodeAction extends AutoCode
                   "        if (!empty(\$filter_name) && !empty(\$this->data[\"query\"])) {" . HH .
                   "            \$filter = array(\$filter_name => \$this->data[\"query\"]);" . HH .
                   "        }" . HH .
-                  "        return ManagerService::{$instancename}Service()->export{$classname}( \$filter );" . HH .
+                  "        return ManagerService::{$instancename}Service()->export{$classname}(\$filter);" . HH .
                   "    }" . HH;
         $result .= $import . $export;
         return $result;
@@ -413,7 +412,7 @@ class AutoCodeAction extends AutoCode
                    "     */" . HH .
                    "    public function lists()" . HH .
                    "    {" . HH .
-                   "        if (\$this->isDataHave( TagPageService::\$linkUrl_pageFlag )) {" . HH .
+                   "        if (\$this->isDataHave(TagPageService::\$linkUrl_pageFlag)) {" . HH .
                    "            \$nowpage = \$this->data[TagPageService::\$linkUrl_pageFlag];" . HH .
                    "        } else {" . HH .
                    "            \$nowpage = 1;" . HH .
@@ -422,15 +421,15 @@ class AutoCodeAction extends AutoCode
                    "        \$this->view->count{$classname}s = \$count;" . HH .
                    "        \${$instancename}s = null;" . HH .
                    "        if (\$count > 0) {" . HH .
-                   "            \${$appname_alias}_page = TagPageService::init(\$nowpage,\$count);" . HH .
-                   "            \${$instancename}s = {$classname}::queryPage( \${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint() );" . HH .
+                   "            \${$appname_alias}_page = TagPageService::init(\$nowpage, \$count);" . HH .
+                   "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());" . HH .
                    "        }" . HH .
-                   "        \$this->view->set( \"{$instancename}s\", \${$instancename}s );" . HH .
+                   "        \$this->view->set(\"{$instancename}s\", \${$instancename}s);" . HH .
                    "    }" . HH;
 
         //如果是目录树【parent_id】,需要附加一个递归函数显示父目录[全]
-        // $relationFieldTreeRecursive = self::relationFieldTreeRecursive( $instancename, $classname, $fieldInfo );
-        // if ($relationFieldTreeRecursive ) $relationFieldTreeRecursive = HH . $relationFieldTreeRecursive;
+        // $relationFieldTreeRecursive = self::relationFieldTreeRecursive($instancename, $classname, $fieldInfo);
+        // if ($relationFieldTreeRecursive) $relationFieldTreeRecursive = HH . $relationFieldTreeRecursive;
         // $result .= $relationFieldTreeRecursive;
 
         $result .= "    /**" . HH .
@@ -439,9 +438,9 @@ class AutoCodeAction extends AutoCode
                    "    public function view()" . HH .
                    "    {" . HH .
                    "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                   "        \${$instancename}   = {$classname}::getById( \${$instancename}Id );" . HH .
+                   "        \${$instancename}   = {$classname}::getById(\${$instancename}Id);" . HH .
                   //  $relationField.
-                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
+                   "        \$this->view->set(\"{$instancename}\", \${$instancename});" . HH .
                    "    }" . HH;
 
 
@@ -459,7 +458,7 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
                 case 'bit':
-                    $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1' ) \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
+                    $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1') \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
                     break;
             }
         }
@@ -483,13 +482,13 @@ class AutoCodeAction extends AutoCode
                    $editContent .
                    $rela_m2m_content .
                    "            if (\$isRedirect) {" . HH .
-                   "                \$this->redirect( \"{$instancename}\", \"view\", \"id=\$id\" );" . HH .
+                   "                \$this->redirect(\"{$instancename}\", \"view\", \"id=\$id\");" . HH .
                    "                exit;" . HH .
                    "            }" . HH .
                    "        }" . HH .
                    "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                   "        \${$instancename}   = {$classname}::getById( \${$instancename}Id );" . HH .
-                   "        \$this->view->set( \"{$instancename}\", \${$instancename} );" . HH .
+                   "        \${$instancename}   = {$classname}::getById(\${$instancename}Id);" . HH .
+                   "        \$this->view->set(\"{$instancename}\", \${$instancename});" . HH .
                    $relation_content;
         $text_area_fieldname = array();
         foreach ($fieldInfo as $fieldname => $field) {
@@ -499,11 +498,11 @@ class AutoCodeAction extends AutoCode
         }
         if (count($text_area_fieldname) == 1) {
             $result .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。" . HH .
-                       "        \$this->load_onlineditor( {$text_area_fieldname[0]} );" . HH;
+                       "        \$this->load_onlineditor({$text_area_fieldname[0]});" . HH;
         } elseif (count($text_area_fieldname) > 1) {
             $fieldnames = implode(",", $text_area_fieldname);
             $result    .= "        //加载在线编辑器的语句要放在:\$this->view->viewObject[如果有这一句]之后。" . HH .
-                          "        \$this->load_onlineditor( array({$fieldnames}) );" . HH;
+                          "        \$this->load_onlineditor(array({$fieldnames}));" . HH;
         }
         $result .= "    }" . HH .
                    "    /**" . HH .
@@ -512,8 +511,8 @@ class AutoCodeAction extends AutoCode
                    "    public function delete()" . HH .
                    "    {" . HH .
                    "        \${$instancename}Id = \$this->data[\"id\"];" . HH .
-                   "        \$isDelete = {$classname}::deleteByID( \${$instancename}Id );" . HH .
-                   "        \$this->redirect( \"{$instancename}\", \"lists\", \$this->data );" . HH .
+                   "        \$isDelete = {$classname}::deleteByID(\${$instancename}Id);" . HH .
+                   "        \$this->redirect(\"{$instancename}\", \"lists\", \$this->data);" . HH .
                    "    }" . HH;
         return $result;
     }
@@ -532,8 +531,8 @@ class AutoCodeAction extends AutoCode
                 $belong_has_one        = $relationSpec["belong_has_one"];
                 foreach ($belong_has_one as $key => $value) {
                     $realId            = DataObjectSpec::getRealIDColumnName($key);
-                    $relation_content .= "        \${$value}s = {$key}::get( \"\", \"$realId asc\" );" . HH .
-                                         "        \$this->view->set( \"{$value}s\", \${$value}s );" . HH;
+                    $relation_content .= "        \${$value}s = {$key}::get(\"\", \"$realId asc\");" . HH .
+                                         "        \$this->view->set(\"{$value}s\", \${$value}s);" . HH;
                 }
             }
 
@@ -548,7 +547,7 @@ class AutoCodeAction extends AutoCode
                     $talname_rela      = self::getTablename($key);
                     $instancename_rela = self::getInstancename($talname_rela);
                     $rela_m2m_content .= "            \${$instancename}{$key} = \$this->data[\"$realId_m2m\"];" . HH .
-                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions( \"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key} );" . HH;
+                                         "            {$classname}{$instancename_rela}::saveDeleteRelateions(\"$realId\", \$id, \"$realId_m2m\", \${$instancename}{$key});" . HH;
                 }
             }
         }
@@ -566,7 +565,7 @@ class AutoCodeAction extends AutoCode
     // public static function relationFieldTreeRecursive($instance_name, $classname, $fieldInfo)
     // {
     //     $result = "";
-    //     if (is_array(self::$relation_viewfield) && (count( self::$relation_viewfield ) > 0))
+    //     if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0))
     //     {
     //         if (array_key_exists($classname, self::$relation_viewfield)) {
     //             $relationSpecs  = self::$relation_viewfield[$classname];
@@ -581,9 +580,9 @@ class AutoCodeAction extends AutoCode
     //                         if (!$isTreeLevelHad) {
     //                             if (array_key_exists("parent_id", $fieldInfo) && array_key_exists("level", $fieldInfo)) {
     //                                 // print_pre($relationSpecs, true);die();
-    //                                 $classNameField = self::getShowFieldName( $key );
+    //                                 $classNameField = self::getShowFieldName($key);
     //                                 $field_comment  = $field["Comment"];
-    //                                 $field_comment  = self::columnCommentKey( $field_comment, $fieldname );
+    //                                 $field_comment  = self::columnCommentKey($field_comment, $fieldname);
     //                                 $result .= "    /**" . HH .
     //                                            "     * 显示{$field_comment}[全]" . HH .
     //                                            "     * 注:采用了递归写法" . HH .
@@ -592,12 +591,12 @@ class AutoCodeAction extends AutoCode
     //                                            "     */" . HH .
     //                                            "    private function {$i_name}ShowAll(\$parent_id, \$level)" . HH .
     //                                            "    {" . HH .
-    //                                            "        \${$i_name}_p = $key::getById( \$parent_id );" . HH .
+    //                                            "        \${$i_name}_p = $key::getById(\$parent_id);" . HH .
     //                                            "        if (\$level == 1) {" . HH .
     //                                            "            \${$i_name}ShowAll = \${$i_name}_p->$classNameField;" . HH .
     //                                            "        } else {" . HH .
     //                                            "            \$parent_id = \${$i_name}_p->parent_id;" . HH .
-    //                                            "            \${$i_name}ShowAll = \$this->{$i_name}ShowAll( \$parent_id, \$level - 1 ) . \" -> \" . \${$i_name}_p -> $classNameField;" . HH .
+    //                                            "            \${$i_name}ShowAll = \$this->{$i_name}ShowAll(\$parent_id, \$level - 1) . \" -> \" . \${$i_name}_p -> $classNameField;" . HH .
     //                                            "        }" . HH .
     //                                            "        return \${$i_name}ShowAll;" . HH .
     //                                            "    }" . HH . HH;
@@ -639,13 +638,15 @@ class AutoCodeAction extends AutoCode
 
         if ($img_fieldname && count($img_fieldname) > 0) {
             foreach ($img_fieldname as $fieldname) {
-                $result .= "            if (!empty(\$_FILES)&&!empty(\$_FILES[\"{$fieldname}\"][\"name\"])) {" . HH .
-                           "                \$result = \$this->uploadImg( \$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\" );" . HH .
-                           "                if (\$result && (\$result['success'] == true )) {" . HH .
-                           "                    if (array_key_exists('file_name', \$result) ) \${$instancename}->$fieldname = \$result['file_name'];" . HH .
+                $result .= "            if (!empty(\$_FILES) && !empty(\$_FILES[\"{$fieldname}\"][\"name\"])) {" . HH .
+                           "                \$result = \$this->uploadImg(\$_FILES, \"{$fieldname}\", \"{$fieldname}\", \"$instancename\");" . HH .
+                           "                if (\$result && (\$result['success'] == true)) {" . HH .
+                           "                    if (array_key_exists('file_name', \$result)) {" . HH .
+                           "                        \${$instancename}->$fieldname = \$result['file_name'];" . HH .
+                           "                    }" . HH .
                            "                } else {" . HH .
                            "                    \$isRedirect = false;" . HH .
-                           "                    \$this->view->set( \"message\", \$result[\"msg\"] );" . HH .
+                           "                    \$this->view->set(\"message\", \$result[\"msg\"]);" . HH .
                            "                }" . HH .
                            "            }" . HH;
             }
@@ -668,7 +669,7 @@ class AutoCodeAction extends AutoCode
         if (self::$type == 1) {
             $action_parent = "ActionModel";
         }
-        $result = "<?php" . HH .
+        $result = "<?php" . HH . HH .
                   "/**" . HH .
                   " * -----------| 控制器:首页导航 |-----------" . HH .
                   " * @category $category" . HH .
@@ -682,7 +683,6 @@ class AutoCodeAction extends AutoCode
                   "     */" . HH .
                   "    public function index()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH .
                   "}" . HH . HH;
         self::saveDefineToDir(self::$action_dir_full, "Action_Index.php", $result);

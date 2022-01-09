@@ -31,17 +31,17 @@
 
    <exclude-pattern>/.git/</exclude-pattern>
    <exclude-pattern>/app/</exclude-pattern>
-   <exclude-pattern>/model/</exclude-pattern>
+   <!-- <exclude-pattern>/model/</exclude-pattern> -->
    <exclude-pattern>/install/</exclude-pattern>
    <exclude-pattern>/log/</exclude-pattern>
    <exclude-pattern>/upload/</exclude-pattern>
    <exclude-pattern>/docs/</exclude-pattern>
    <exclude-pattern>/home/betterlife/view/bootstrap/tmp/</exclude-pattern>
-   <exclude-pattern>/home/admin/view/default/tmp/</exclude-pattern>
    <exclude-pattern>/home/betterlife/view/default/tmp/</exclude-pattern>
    <exclude-pattern>/home/betterlife/view/twig/tmp/</exclude-pattern>
+   <exclude-pattern>/home/admin/view/default/tmp/</exclude-pattern>
    <exclude-pattern>/home/report/view/default/tmp/</exclude-pattern>
-   <exclude-pattern>/home/betterlife/view/bootstrap/tmp</exclude-pattern>
+   <exclude-pattern>/home/model/view/default/tmp/</exclude-pattern>
    <!-- <exclude-pattern></exclude-pattern> -->
 
 </ruleset>
