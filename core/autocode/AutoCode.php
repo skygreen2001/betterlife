@@ -20,7 +20,7 @@ class AutoCode extends BBObject
     public static $showReport;
     /**
      * 是否还需要输出页面的css样式
-     * 
+     *
      * 确保css只生成一次
      * @var boolean
      */

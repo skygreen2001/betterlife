@@ -15,7 +15,7 @@ class Manager_Service extends Manager
      */
     public static function userService()
     {
-        if (self::$userService == null) {
+        if (self::$userService == null ) {
             self::$userService = new ServiceUser();
         }
         return self::$userService;
@@ -26,7 +26,7 @@ class Manager_Service extends Manager
      */
     public static function blogService()
     {
-        if (self::$blogService == null) {
+        if (self::$blogService == null ) {
             self::$blogService = new ServiceBlog();
         }
         return self::$blogService;

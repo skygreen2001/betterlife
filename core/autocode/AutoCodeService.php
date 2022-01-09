@@ -30,7 +30,7 @@ class AutoCodeService extends AutoCode
     public static $service_dir_full;
     /**
      * 服务类生成定义的方式
-     * 
+     *
      *     1. 继承具有标准方法的Service。
      *     2. 生成标准方法的Service。
      * @var int
@@ -41,7 +41,7 @@ class AutoCodeService extends AutoCode
      * 自动生成代码-服务类
      * @param array|string $table_names
      * 示例如下:
-     * 
+     *
      *     1. array: array('bb_user_admin', 'bb_core_blog')
      *     2. 字符串: 'bb_user_admin,bb_core_blog'
      * @return void
@@ -151,6 +151,40 @@ class AutoCodeService extends AutoCode
         $result["section_define"]  = $section_define;
         $result["section_content"] = $section_content;
         return $result;
+    }
+
+    /**
+     * 创建服务管理类
+     * @param array|string $table_names
+     * 示例如下:
+     * 
+     *     1. array:array('bb_user_admin','bb_core_blog')
+     *     2. 字符串:'bb_user_admin,bb_core_blog'
+     */
+    public static function updateManageService($table_names = "")
+    {
+        $file_manage_service_file = Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
+        if (file_exists($file_manage_service_file)) {
+            $tableList = self::tableListByTable_names($table_names);
+            $content   = file_get_contents($file_manage_service_file);
+            foreach ($tableList as $tablename) {
+                $result          = AutoCodeService::createManageService($tablename);
+                $section_define  = $result["section_define"];
+                $section_content = $result["section_content"];
+
+                if (!contain($content, $section_define)) {
+                    $ctrl    = substr($content, 0, strpos($content, "     * 提供服务:") - 8);
+                    $ctrr    = substr($content, strpos($content, "     * 提供服务:") - 8);
+                    $content = $ctrl . $section_define . $ctrr;
+                    $content = trim($content);
+                    $ctrl    = substr($content, 0, strrpos($content, "}"));
+                    $ctrr    = substr($content, strrpos($content, "}"));
+                    $content = trim($ctrl) . "" . HH . HH . rtrim($section_content) . HH . $ctrr . HH;
+                }
+            }
+            $ffile_manage_service_file_model = self::$save_dir . AutoCodePreviewReport::$manage_service_file;
+            file_put_contents($ffile_manage_service_file_model, $content);
+        }
     }
 
     /**

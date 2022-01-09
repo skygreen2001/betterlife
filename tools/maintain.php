@@ -40,6 +40,6 @@ require_once("../init.php");
 // require_once("tools/db/db_countrows.php");
 
 // 导出数据到Excel
-$response = Manager_Service::blogService()->exportBlog();
-echo $response["data"];
-echo "<script>window.open('" . $response["data"] . "');</script>";
+// $response = Manager_Service::blogService()->exportBlog();
+// echo $response["data"];
+// echo "<script>window.open('" . $response["data"] . "');</script>";
