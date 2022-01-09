@@ -730,7 +730,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @return 查询列数组, 当只有一个值的时候如select count(表名_id), 自动从数组中转换出来值字符串
      */
-    public static function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public static function select($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         return DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, $limit);
     }
@@ -761,7 +761,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return 查询列数组, 自动从数组中转换出来值字符串,最后只返回一个值
      */
-    public static function select_one($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function select_one($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, "0,1");
         if (!empty($result) && (is_array($result) ) && (count($result) > 0 )) {
@@ -800,7 +800,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *
      * @return array 对象列表数组
      */
-    public static function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public static function get($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         return self::dao()->get(get_called_class(), $filter, $sort, $limit);
     }
@@ -826,7 +826,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return object 单个对象实体
      */
-    public static function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function getOne($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return self::dao()->getOne(get_called_class(), $filter, $sort);
     }
@@ -938,7 +938,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPage($startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return DataObjectFunc::queryPage(get_called_class(), $startPoint, $endPoint, $filter, $sort);
     }
@@ -975,7 +975,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        - pageCount: 符合条件的总页数
      *        - data     : 对象分页
      */
-    public static function queryPageByPageNo($pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPageByPageNo($pageNo, $filter = null, $pageSize = 10, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return DataObjectFunc::queryPageByPageNo(get_called_class(), $pageNo, $filter, $pageSize, $sort);
     }
@@ -1042,7 +1042,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function queryPageMultitable($startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPageMultitable($startPoint, $endPoint, $from, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return DataObjectFunc::queryPageMultitable(get_called_class(), $startPoint, $endPoint, $from, $filter, $sort);
     }
@@ -1079,7 +1079,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function getMultitable($from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function getMultitable($from, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return DataObjectFunc::getMultitable(get_called_class(), $from, $filter, $sort);
     }

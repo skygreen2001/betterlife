@@ -170,7 +170,7 @@ class DataObjectRelation extends BBObject
                     if ($isExist) {
                         if ($dataobject->getId()) {
                             $detail_class = $many_many[$property];
-                            $_SQL         = new Crud_Sql_Select();
+                            $_SQL         = new CrudSqlSelect();
                             $relation_tablename = self::getRealManyManyTable($dataobject, $dataobject->classname(), $detail_class);
                             $self_foreignId     = self::getRealForeignIDColumnName($dataobject, $dataobject->classname());
                             $relationObject_tablename = ConfigDb::orm($detail_class);
@@ -212,7 +212,7 @@ class DataObjectRelation extends BBObject
                     if ($isExist) {
                         if ($dataobject->getId()) {
                             $mainClass = $belong_to[$property];
-                            $_SQL      = new Crud_Sql_Select();
+                            $_SQL      = new CrudSqlSelect();
                             $self_foreignId     = self::getRealForeignIDColumnName($dataobject, $dataobject->classname());
                             $relation_tablename = self::getRealManyManyTable($dataobject, $mainClass, $dataobject->classname());
                             $relationObject_tablename = ConfigDb::orm($mainClass);
@@ -368,7 +368,7 @@ class DataObjectRelation extends BBObject
             }
             if (isset($classname_has) && isset($classname_belong)) {
                 $relation_table = self::getRealManyManyTable($dataobject, $classname_has, $classname_belong);
-                $_SQL           = new Crud_Sql_Insert();
+                $_SQL           = new CrudSqlInsert();
                 $_SQL->isPreparedStatement = false;
                 $array_properties = array();
                 $self_foreignId   = self::getRealForeignIDColumnName($dataobject, $dataobject->classname());

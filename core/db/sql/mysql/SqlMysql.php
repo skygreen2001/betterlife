@@ -7,7 +7,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class Sql_Mysql extends Sql implements ISqlNormal
+class SqlMysql extends Sql implements ISqlNormal
 {
     /**
      * @var mixed 数据库连接
@@ -45,7 +45,7 @@ class Sql_Mysql extends Sql implements ISqlNormal
      * @return int 返回插入数据的ID编号
      * @example 示例:
      * ```
-     *     $db     = new Sql_Mysql();
+     *     $db     = new SqlMysql();
      *     $data   = array("name"=>"skygreen","pass"=>md5("hello world"));
      *     $result = $this->Db->insertdata($data);
      *     其中 name, pass 是表列名，"skygreen", md5("hello world"))是列值，与列名一一对应。
@@ -55,7 +55,7 @@ class Sql_Mysql extends Sql implements ISqlNormal
     {
         $fields = join(",", array_keys($data));
         $values = "'" . join(",", array_values($data)) . "'";
-        $query  = Crud_SQL::SQL_INSERT . $tablename . " ({$fields})" . Crud_SQL::SQL_INSERT_VALUE . " ({$values})";
+        $query  = CrudSQL::SQL_INSERT . $tablename . " ({$fields})" . CrudSQL::SQL_INSERT_VALUE . " ({$values})";
         return mysql_query($query, $this->connection);
     }
 
@@ -72,14 +72,14 @@ class Sql_Mysql extends Sql implements ISqlNormal
      * @example 示例如下:
      * ```
      *     $tablename:
-     *         $db=new Sql_Mysql();
+     *         $db=new SqlMysql();
      *         $result =$db ->deleteData(1);
      * ```
      * @return boolean:是否删除成功
      */
     public function deleteData($tablename, $sql_id)
     {
-        $query = Crud_SQL::SQL_DELETE . Crud_SQL::SQL_FROM . $tablename . Crud_SQL::SQL_WHERE . $sql_id;
+        $query = CrudSQL::SQL_DELETE . CrudSQL::SQL_FROM . $tablename . CrudSQL::SQL_WHERE . $sql_id;
         return mysql_query($query, $this->connection);
     }
 
@@ -96,7 +96,7 @@ class Sql_Mysql extends Sql implements ISqlNormal
      * @return boolean:是否修改成功
      * @example 示例:
      * ```
-     *      $db=new Sql_Mysql();
+     *      $db=new SqlMysql();
      *      $data = array("name"=>"afif2","pass"=>md5("hello world"));
      *      $result = $db->updateData(1, $data);
      * ```
@@ -107,8 +107,8 @@ class Sql_Mysql extends Sql implements ISqlNormal
         foreach ($data as $key => $value) {
             $queryparts[] = "{$key} = '{$value}'";
         }
-        $query = Crud_SQL::SQL_UPDATE . $tablename . Crud_SQL::SQL_SET . join(",", $queryparts) .
-                 Crud_SQL::SQL_WHERE . $sql_id;
+        $query = CrudSQL::SQL_UPDATE . $tablename . CrudSQL::SQL_SET . join(",", $queryparts) .
+                 CrudSQL::SQL_WHERE . $sql_id;
         return mysql_query($query, $this->connection);
     }
 

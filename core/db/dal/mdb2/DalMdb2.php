@@ -9,7 +9,7 @@
  * @subpackage mdb2
  * @author skygreen
  */
-class Dal_Mdb2 extends Dal implements IDal
+class DalMdb2 extends Dal implements IDal
 {
     /**
      * @var enum 当前使用的数据类型
@@ -128,10 +128,10 @@ class Dal_Mdb2 extends Dal implements IDal
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $sql);
             }
-            if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
+            if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
                 $this->connection->exec($sql);
                 return true;
-            } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
+            } elseif (CrudSqlInsert::SQL_KEYWORD_INSERT == $type) {
                 $this->connection->exec($sql);
                 $autoId = $this->connection->lastInsertId();
                 return $autoId;
@@ -165,7 +165,7 @@ class Dal_Mdb2 extends Dal implements IDal
             return $autoId;
         }
         try {
-            $_SQL = new Crud_Sql_Insert();
+            $_SQL = new CrudSqlInsert();
             $_SQL->isPreparedStatement = true;
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             $this->saParams = UtilObject::object_to_array($object);
@@ -208,7 +208,7 @@ class Dal_Mdb2 extends Dal implements IDal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL  = new Crud_Sql_Delete();
+                $_SQL  = new CrudSqlDelete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (ConfigDb::$debug_show_sql) {
@@ -238,7 +238,7 @@ class Dal_Mdb2 extends Dal implements IDal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL = new Crud_Sql_Update();
+                $_SQL = new CrudSqlUpdate();
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 $this->saParams = UtilObject::object_to_array($object);
                 unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
@@ -310,17 +310,17 @@ class Dal_Mdb2 extends Dal implements IDal
      *
      * @return 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
-            $_SQL = new Crud_Sql_Select();
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $_SQL = new CrudSqlSelect();
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
@@ -356,20 +356,20 @@ class Dal_Mdb2 extends Dal implements IDal
      *
      * @return 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
@@ -398,7 +398,7 @@ class Dal_Mdb2 extends Dal implements IDal
             }
 
             if ($id != null && $id > 0) {
-                $_SQL = new Crud_Sql_Select();
+                $_SQL = new CrudSqlSelect();
                 $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
@@ -435,11 +435,11 @@ class Dal_Mdb2 extends Dal implements IDal
             if (!$this->validParameter($object)) {
                 return 0;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
+            $this->sQuery              = $_SQL->select(CrudSqlSelect::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
@@ -478,7 +478,7 @@ class Dal_Mdb2 extends Dal implements IDal
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
             if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
@@ -488,19 +488,19 @@ class Dal_Mdb2 extends Dal implements IDal
                 return null;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             if (ConfigDb::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             } elseif (ConfigDb::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
                 $tablename    = ConfigMdb2::orm($this->classname);
-                $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
+                $whereclause  = SqlServerCrudSqlSelect::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();

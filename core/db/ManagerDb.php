@@ -103,15 +103,15 @@ class ManagerDb extends Manager
     {
         if (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_MDB2) {
             if ($this->dao_static == null) {
-                $this->dao_static = new Dal_Mdb2();
+                $this->dao_static = new DalMdb2();
             }
         } elseif (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
             if ($this->dao_static == null) {
-                $this->dao_static = new Dal_Pdo();
+                $this->dao_static = new DalPdo();
             }
         } elseif ((ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
             if ($this->dao_static == null) {
-                $this->dao_static = new Dal_Adodb();
+                $this->dao_static = new DalAdodb();
             }
         } else {
             switch (ConfigDb::$db) {
@@ -119,18 +119,18 @@ class ManagerDb extends Manager
                     switch (ConfigDb::$engine) {
                         case EnumDbEngine::ENGINE_OBJECT_MYSQL_MYSQLI:
                             if ($this->dao_static == null) {
-                                $this->dao_static = new Dao_MysqlI5();
+                                $this->dao_static = new DaoMysqlI5();
                             }
                             break;
                         case EnumDbEngine::ENGINE_OBJECT_MYSQL_PHP:
                             if ($this->dao_static == null) {
-                                $this->dao_static = new Dao_Php5();
+                                $this->dao_static = new DaoPhp5();
                             }
                             break;
                         default:
                         //默认: ConfigMysql::ENGINE_MYSQL_PHP
                             if ($this->dao_static == null) {
-                                $this->dao_static = new Dao_Php5();
+                                $this->dao_static = new DaoPhp5();
                             }
                             break;
                     }
@@ -141,35 +141,35 @@ class ManagerDb extends Manager
                     switch (ConfigDb::$engine) {
                         case EnumDbEngine::ENGINE_OBJECT_ODBC:
                             if ($this->dao_static == null) {
-                                $this->dao_static = new Dao_Odbc();
+                                $this->dao_static = new DaoOdbc();
                             }
                             break;
                         case EnumDbEngine::ENGINE_OBJECT_MSSQLSERVER:
                             if ($this->dao_static == null) {
-                                $this->dao_static = new Dao_Mssql();
+                                $this->dao_static = new DaoMssql();
                             }
                             break;
                     }
                     break;
                 case EnumDbSource::DB_PGSQL:
                     if ($this->dao_static == null) {
-                        $this->dao_static = new Dao_Postgres();
+                        $this->dao_static = new DaoPostgres();
                     }
                     break;
                 case EnumDbSource::DB_SQLITE2:
                     if ($this->dao_static == null) {
-                        $this->dao_static = new Dao_Sqlite2();
+                        $this->dao_static = new DaoSqlite2();
                     }
                     break;
                 case EnumDbSource::DB_SQLITE3:
                     if ($this->dao_static == null) {
-                        $this->dao_static = new Dao_Sqlite3();
+                        $this->dao_static = new DaoSqlite3();
                     }
                     break;
                 default:
                 //默认: ConfigMysql::ENGINE_MYSQL_PHP
                     if ($this->dao_static == null) {
-                        $this->dao_static = new Dao_Php5();
+                        $this->dao_static = new DaoPhp5();
                     }
                     break;
             }
@@ -194,9 +194,9 @@ class ManagerDb extends Manager
     {
         if (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_PDO) {
             if (($this->dao_dynamic == null) || $forced) {
-                $this->dao_dynamic = new Dal_Pdo($host, $port, $username, $password, $dbname, $dbtype, $engine);
-            } elseif (!($this->dao_dynamic instanceof Dal_Pdo)) {
-                $this->dao_dynamic = new Dal_Pdo($host, $port, $username, $password, $dbname, $dbtype, $engine);
+                $this->dao_dynamic = new DalPdo($host, $port, $username, $password, $dbname, $dbtype, $engine);
+            } elseif (!($this->dao_dynamic instanceof DalPdo)) {
+                $this->dao_dynamic = new DalPdo($host, $port, $username, $password, $dbname, $dbtype, $engine);
             }
         }
         $this->currentdao = $this->dao_dynamic;
@@ -219,9 +219,9 @@ class ManagerDb extends Manager
     {
         if ((ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
             if (($this->dao_dynamic == null) || $forced) {
-                $this->dao_dynamic = new Dal_Mdb2($host, $port, $username, $password, $dbname, $dbtype, $engine);
-            } elseif (!($this->dao_dynamic instanceof Dal_AdoDb)) {
-                $this->dao_dynamic = new Dal_Mdb2($host, $port, $username, $password, $dbname, $dbtype, $engine);
+                $this->dao_dynamic = new DalMdb2($host, $port, $username, $password, $dbname, $dbtype, $engine);
+            } elseif (!($this->dao_dynamic instanceof DalAdoDb)) {
+                $this->dao_dynamic = new DalMdb2($host, $port, $username, $password, $dbname, $dbtype, $engine);
             }
         }
         $this->currentdao = $this->dao_dynamic;
@@ -244,9 +244,9 @@ class ManagerDb extends Manager
     {
         if (( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB ) || ( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO )) {
             if (($this->dao_dynamic == null) || $forced) {
-                $this->dao_dynamic = new Dal_Adodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
-            } elseif (!($this->dao_dynamic instanceof Dal_AdoDb)) {
-                $this->dao_dynamic = new Dal_Adodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
+                $this->dao_dynamic = new DalAdodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
+            } elseif (!($this->dao_dynamic instanceof DalAdoDb)) {
+                $this->dao_dynamic = new DalAdodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
             }
         }
         $this->currentdao = $this->dao_dynamic;
@@ -269,13 +269,13 @@ class ManagerDb extends Manager
         if (( $this->dbinfo_static  ==  null  ) || $forced) {
             switch (ConfigDb::$db) {
                 case EnumDbSource::DB_MYSQL:
-                    DbInfo_Mysql::$isUseDbInfoDatabase = $isUseDbInfoDatabase;
+                    DbInfoMysql::$isUseDbInfoDatabase = $isUseDbInfoDatabase;
                     if (function_exists('mysql_connect')) {
-                        $this->dbinfo_static = new DbInfo_Mysql($host, $port, $username, $password, $dbname, $engine);
+                        $this->dbinfo_static = new DbInfoMysql($host, $port, $username, $password, $dbname, $engine);
                     } else {
-                        $this->dbinfo_static = new DbInfo_Mysqli($host, $port, $username, $password, $dbname, $engine);
+                        $this->dbinfo_static = new DbInfoMysqli($host, $port, $username, $password, $dbname, $engine);
                     }
-                    DbInfo_Mysql::$isUseDbInfoDatabase = false;
+                    DbInfoMysql::$isUseDbInfoDatabase = false;
                     break;
             }
         }
@@ -295,7 +295,7 @@ class ManagerDb extends Manager
     public function object_ms_sqlserver($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Mssql($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoMssql($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -314,9 +314,9 @@ class ManagerDb extends Manager
     public function object_mysql_php5($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Php5($host, $port, $username, $password, $dbname);
-        } elseif (!($this->dao_dynamic instanceof Dao_Php5)) {
-            $this->dao_dynamic = new Dao_Php5($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoPhp5($host, $port, $username, $password, $dbname);
+        } elseif (!($this->dao_dynamic instanceof DaoPhp5)) {
+            $this->dao_dynamic = new DaoPhp5($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -335,9 +335,9 @@ class ManagerDb extends Manager
     public function object_mysql_mysqli($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_MysqlI5($host, $port, $username, $password, $dbname);
-        } elseif (!($this->dao_dynamic instanceof Dao_MysqlI5)) {
-            $this->dao_dynamic = new Dao_MysqlI5($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoMysqlI5($host, $port, $username, $password, $dbname);
+        } elseif (!($this->dao_dynamic instanceof DaoMysqlI5)) {
+            $this->dao_dynamic = new DaoMysqlI5($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -356,9 +356,9 @@ class ManagerDb extends Manager
     public function object_sqlite2($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Sqlite2($host, $port, $username, $password, $dbname);
-        } elseif (!($this->dao_dynamic instanceof Dao_Sqlite2)) {
-            $this->dao_dynamic = new Dao_Sqlite2($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoSqlite2($host, $port, $username, $password, $dbname);
+        } elseif (!($this->dao_dynamic instanceof DaoSqlite2)) {
+            $this->dao_dynamic = new DaoSqlite2($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -377,9 +377,9 @@ class ManagerDb extends Manager
     public function object_sqlite3($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Sqlite3($host, $port, $username, $password, $dbname);
-        } elseif (!($this->dao_dynamic instanceof Dao_Sqlite3)) {
-            $this->dao_dynamic = new Dao_Sqlite3($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoSqlite3($host, $port, $username, $password, $dbname);
+        } elseif (!($this->dao_dynamic instanceof DaoSqlite3)) {
+            $this->dao_dynamic = new DaoSqlite3($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -398,9 +398,9 @@ class ManagerDb extends Manager
     public function object_postgres($host = null, $port = null, $username = null, $password = null, $dbname = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Postgres($host, $port, $username, $password, $dbname);
-        } elseif (!($this->dao_dynamic instanceof Dao_Postgres)) {
-            $this->dao_dynamic = new Dao_Postgres($host, $port, $username, $password, $dbname);
+            $this->dao_dynamic = new DaoPostgres($host, $port, $username, $password, $dbname);
+        } elseif (!($this->dao_dynamic instanceof DaoPostgres)) {
+            $this->dao_dynamic = new DaoPostgres($host, $port, $username, $password, $dbname);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;
@@ -413,16 +413,16 @@ class ManagerDb extends Manager
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用DaoODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
      * @param bool $forced 是否强制重新连接数据库获取新的数据库连接对象实例
      * @return mixed 实时指定的Dao对象
      */
     public function object_odbc($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $forced = false)
     {
         if (($this->dao_dynamic == null) || $forced) {
-            $this->dao_dynamic = new Dao_Odbc($host, $port, $username, $password, $dbname, $dbtype);
-        } elseif (!($this->dao_dynamic instanceof Dao_Odbc)) {
-            $this->dao_dynamic = new Dao_Odbc($host, $port, $username, $password, $dbname, $dbtype);
+            $this->dao_dynamic = new DaoOdbc($host, $port, $username, $password, $dbname, $dbtype);
+        } elseif (!($this->dao_dynamic instanceof DaoOdbc)) {
+            $this->dao_dynamic = new DaoOdbc($host, $port, $username, $password, $dbname, $dbtype);
         }
         $this->currentdao = $this->dao_dynamic;
         return $this->dao_dynamic;

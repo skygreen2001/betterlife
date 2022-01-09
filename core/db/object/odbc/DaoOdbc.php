@@ -10,10 +10,10 @@
  * @subpackage odbc
  * @author skygreen
  */
-class Dao_Odbc extends Dao implements IDaoNormal
+class DaoOdbc extends Dao implements IDaoNormal
 {
     /**
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考:EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用DaoODBC引擎，需要定义该字段,该字段的值参考:EnumDbSource}
      */
     private $dbtype;
 
@@ -36,7 +36,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考:EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用DaoODBC引擎，需要定义该字段,该字段的值参考:EnumDbSource}
      * @return mixed 数据库连接
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
@@ -82,7 +82,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             return $autoId;
         }
         try {
-            $_SQL = new Crud_Sql_Insert();
+            $_SQL = new CrudSqlInsert();
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             if (
                 ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
@@ -107,11 +107,11 @@ class Dao_Odbc extends Dao implements IDaoNormal
             }
 
             $realIdName = DataObjectSpec::getRealIDColumnName($object);
-            $sql_maxid  = Crud_SQL::SQL_MAXID;
-            $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
+            $sql_maxid  = CrudSQL::SQL_MAXID;
+            $sql_maxid  = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
 
             $tablename  = ConfigOdbc::orm($this->classname);
-            $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
+            $autoIdSql  = CrudSQL::SQL_SELECT . $sql_maxid . CrudSQL::SQL_FROM . $tablename;
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $autoIdSql);
             }
@@ -141,7 +141,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL         = new Crud_Sql_Delete();
+                $_SQL         = new CrudSqlDelete();
                 $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (ConfigDb::$debug_show_sql) {
@@ -171,7 +171,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL = new Crud_Sql_Update();
+                $_SQL = new CrudSqlUpdate();
                 $_SQL->isPreparedStatement = false;
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 if (
@@ -292,17 +292,17 @@ class Dao_Odbc extends Dao implements IDaoNormal
      *
      * @return array 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
-            $_SQL = new Crud_Sql_Select();
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $_SQL = new CrudSqlSelect();
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
@@ -344,7 +344,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
      *
      * @return object 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -352,13 +352,13 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 return $result;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             if (ConfigDb::$debug_show_sql) {
@@ -393,7 +393,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             }
 
             if (!empty($id) && is_scalar($id)) {
-                $_SQL  = new Crud_Sql_Select();
+                $_SQL  = new CrudSqlSelect();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
@@ -434,16 +434,16 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $this->stmt = odbc_exec($this->connection, $sqlstring);
             $parts = explode(" ", trim($sqlstring));
             $type  = strtolower($parts[0]);
-            if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
+            if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
                 return true;
-            } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
-                $tablename = Crud_Sql_Insert::tablename($sqlstring);
+            } elseif (CrudSqlInsert::SQL_KEYWORD_INSERT == $type) {
+                $tablename = CrudSqlInsert::tablename($sqlstring);
                 if (isset($tablename)) {
                     $object     = ConfigDb::tom($tablename);
                     $realIdName = DataObjectSpec::getRealIDColumnName($object);
-                    $sql_maxid  = Crud_SQL::SQL_MAXID;
-                    $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
-                    $autoSql    = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
+                    $sql_maxid  = CrudSQL::SQL_MAXID;
+                    $sql_maxid  = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
+                    $autoSql    = CrudSQL::SQL_SELECT . $sql_maxid . CrudSQL::SQL_FROM . $tablename;
                     if (ConfigDb::$debug_show_sql) {
                         LogMe::log("SQL: " . $autoSql);
                     }
@@ -492,11 +492,11 @@ class Dao_Odbc extends Dao implements IDaoNormal
             if (!$this->validParameter($object)) {
                 return 0;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
+            $this->sQuery              = $_SQL->select(CrudSqlSelect::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
@@ -540,7 +540,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
             if (($startPoint > $endPoint ) || ( $endPoint == 0)) {
@@ -550,16 +550,16 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 return null;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $tablename    = ConfigOdbc::orm($this->classname);
-            $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
+            $whereclause  = SqlServerCrudSqlSelect::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
             $this->sQuery = $_SQL->from($this->classname)->where($whereclause)->order($sort)->result();
             $result       = $this->sqlExecute($this->sQuery, $object);
             return $result;

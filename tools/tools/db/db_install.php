@@ -19,4 +19,4 @@ $dest_db_config = array
     "script_filename" => Gc::$nav_root_path . "db\\mysql\\db_betterlife.sql"
 );
 //创建Betterlife后台所需的库。
-DbInfo_Mysql::run_script($dest_db_config);
+DbInfoMysql::run_script($dest_db_config);

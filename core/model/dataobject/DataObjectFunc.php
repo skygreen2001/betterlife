@@ -139,7 +139,7 @@ class DataObjectFunc
     public static function updateProperties($classname, $sql_ids, $array_properties)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Update();
+        $_SQL      = new CrudSqlUpdate();
         $_SQL->isPreparedStatement = false;
         if ($sql_ids && !contain($sql_ids, "=")) {
             if (is_string($classname)) {
@@ -196,7 +196,7 @@ class DataObjectFunc
     public static function updateBy($classname, $filter, $array_properties)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Update();
+        $_SQL      = new CrudSqlUpdate();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set($array_properties)->where($filter)->result();
         return DataObject::dao()->sqlExecute($sQuery);
@@ -223,7 +223,7 @@ class DataObjectFunc
     public static function increment($classname, $property_name, $incre_value = 1, $filter = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Update();
+        $_SQL      = new CrudSqlUpdate();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set("$property_name=$property_name+$incre_value")->where($filter)->result();
         return DataObject::dao()->sqlExecute($sQuery);
@@ -250,7 +250,7 @@ class DataObjectFunc
     public static function decrement($classname, $property_name, $decre_value = 1, $filter = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Update();
+        $_SQL      = new CrudSqlUpdate();
         $_SQL->isPreparedStatement = false;
         $sQuery = $_SQL->update($tablename)->set("$property_name=$property_name-$decre_value")->where($filter)->result();
         return DataObject::dao()->sqlExecute($sQuery);
@@ -290,14 +290,14 @@ class DataObjectFunc
      *
      * @return mixed 对象列表数组
      */
-    public static function showColumns($classname, $columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public static function showColumns($classname, $columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Select();
+        $_SQL      = new CrudSqlSelect();
 
-        if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+        if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
             $realIdName = DataObjectSpec::getRealIDColumnName($classname);
-            $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+            $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
         }
         $sQuery = $_SQL->select($columns)->from($tablename)->where($filter)->order($sort)->limit($limit)->result();
         return DataObject::dao()->sqlExecute($sQuery);//,$classname
@@ -314,7 +314,7 @@ class DataObjectFunc
     {
         if (is_numeric($id)) {
             $tablename = ConfigDb::orm($classname);
-            $_SQL      = new Crud_Sql_Delete();
+            $_SQL      = new CrudSqlDelete();
             $_SQL->isPreparedStatement = false;
             if (is_string($classname)) {
                 if (class_exists($classname)) {
@@ -347,7 +347,7 @@ class DataObjectFunc
         $data = false;
         if (!empty($ids)) {
             $tablename = ConfigDb::orm($classname);
-            $_SQL      = new Crud_Sql_Delete();
+            $_SQL      = new CrudSqlDelete();
             $_SQL->isPreparedStatement = false;
             if (is_string($classname)) {
                 if (class_exists($classname)) {
@@ -399,7 +399,7 @@ class DataObjectFunc
     {
         if (!empty($filter)) {
             $tablename = ConfigDb::orm($classname);
-            $_SQL      = new Crud_Sql_Delete();
+            $_SQL      = new CrudSqlDelete();
             $_SQL->isPreparedStatement = false;
             $sQuery = $_SQL->deletefrom($tablename)->where($filter)->result();
             return DataObject::dao()->sqlExecute($sQuery);
@@ -417,7 +417,7 @@ class DataObjectFunc
     public static function existByID($classname, $id)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Select();
+        $_SQL      = new CrudSqlSelect();
 
         if (is_string($classname)) {
             if (class_exists($classname)) {
@@ -460,7 +460,7 @@ class DataObjectFunc
     {
         if (!empty($filter)) {
             $tablename = ConfigDb::orm($classname);
-            $_SQL      = new Crud_Sql_Select();
+            $_SQL      = new CrudSqlSelect();
             $count_string = "count(1)";
             $sQuery       = $_SQL->select($count_string)->from($tablename)->where($filter)->result();
             $isExist      = DataObject::dao()->sqlExecute($sQuery);
@@ -484,7 +484,7 @@ class DataObjectFunc
     public static function max($classname, $column_name = null, $filter = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Select();
+        $_SQL      = new CrudSqlSelect();
         if (empty($column_name)) {
             if (is_string($classname)) {
                 if (class_exists($classname)) {
@@ -512,7 +512,7 @@ class DataObjectFunc
     public static function min($classname, $column_name = null, $filter = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Select();
+        $_SQL      = new CrudSqlSelect();
         if (empty($column_name)) {
             if (is_string($classname)) {
                 if (class_exists($classname)) {
@@ -540,7 +540,7 @@ class DataObjectFunc
     public static function sum($classname, $column_name, $filter = null)
     {
         $tablename = ConfigDb::orm($classname);
-        $_SQL      = new Crud_Sql_Select();
+        $_SQL      = new CrudSqlSelect();
         if (empty($column_name)) {
             if (is_string($classname)) {
                 if (class_exists($classname)) {
@@ -599,7 +599,7 @@ class DataObjectFunc
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function queryPage($classname, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPage($classname, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         if (is_string($filter)) {
             $filter = trim($filter);
@@ -638,7 +638,7 @@ class DataObjectFunc
      *        - pageCount: 符合条件的总页数
      *        - data     : 对象分页
      */
-    public static function queryPageByPageNo($classname, $pageNo, $filter = null, $pageSize = 10, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPageByPageNo($classname, $pageNo, $filter = null, $pageSize = 10, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         if (is_string($filter)) {
             $filter = trim($filter);
@@ -725,7 +725,7 @@ class DataObjectFunc
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function queryPageMultitable($classname, $startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function queryPageMultitable($classname, $startPoint, $endPoint, $from, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         if (is_string($filter)) {
             $filter = trim($filter);
@@ -765,7 +765,7 @@ class DataObjectFunc
      *        2. name desc;
      * @return mixed 对象分页
      */
-    public static function getMultitable($classname, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public static function getMultitable($classname, $from, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         if (is_string($filter)) {
             $filter = trim($filter);

@@ -12,7 +12,7 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Select extends Crud_SQL
+class CrudSqlSelect extends CrudSQL
 {
     /**
      * @var array 查询列
@@ -88,7 +88,7 @@ class Crud_Sql_Select extends Crud_SQL
     /**
      * 创建from Select语句子字符串
      * @param string $tableorclassNames 表名|类名[映射表]
-     * @return Crud_Sql_Select
+     * @return CrudSqlSelect
      */
     public function from($tableorclassNames)
     {
@@ -168,7 +168,7 @@ class Crud_Sql_Select extends Crud_SQL
      *
      *    1. order("id asc")
      *    2. order("name desc")
-     * @return Crud_Sql_Select
+     * @return CrudSqlSelect
      */
     public function order($order)
     {
@@ -193,7 +193,7 @@ class Crud_Sql_Select extends Crud_SQL
      *    10 (相当于第1-第10条)
      *
      * @param mixed $limit
-     * @return Crud_Sql_Select
+     * @return CrudSqlSelect
      */
     public function limit($limit)
     {

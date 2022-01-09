@@ -72,7 +72,7 @@ interface IDaoNormal
      *
      * @return array 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null);
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null);
 
     /**
      * 查询得到单个对象实体
@@ -95,7 +95,7 @@ interface IDaoNormal
      *     2. name desc;
      * @return object 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID);
 
     /**
      * 根据表ID主键获取指定的对象[ID对应的表列]
@@ -162,6 +162,6 @@ interface IDaoNormal
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID);
     //</editor-fold>
 }

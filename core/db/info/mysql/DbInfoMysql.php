@@ -7,7 +7,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class DbInfo_Mysql extends DbInfo implements IDbInfo
+class DbInfoMysql extends DbInfo implements IDbInfo
 {
     /**
     * Mysql的版本号
@@ -380,7 +380,7 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
      * @param stirng $sql 查询语句
      * @param enum $errorLevel 错误等级
      * @param bool $showqueries 是否显示profile信息
-     * @return Query_Mysql
+     * @return QueryMysql
      */
     private function query($sql, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
@@ -400,7 +400,7 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
             x("无法运行查询语句: $sql | " . mysql_error($this->connection), $this);
         }
         if ($handle) {
-            return new Query_Mysql($handle);
+            return new QueryMysql($handle);
         }
         return null;
     }

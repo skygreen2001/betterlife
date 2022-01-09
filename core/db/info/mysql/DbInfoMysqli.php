@@ -7,7 +7,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class DbInfo_Mysqli extends DbInfo implements IDbInfo
+class DbInfoMysqli extends DbInfo implements IDbInfo
 {
     /**
     * Mysql的版本号
@@ -77,7 +77,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         if (!isset($dbname)) {
             $dbname   = ConfigMysql::$dbname;
         }
-        // $dbinfo = new DbInfo_Mysqli();
+        // $dbinfo = new DbInfoMysqli();
         $connection = new mysqli($connecturl, $username, $password, $dbname);
         if (!$connection) {
             LogMe::log(
@@ -404,7 +404,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      * @param stirng $sql 查询语句
      * @param enum $errorLevel 错误等级
      * @param bool $showqueries 是否显示profile信息
-     * @return Query_Mysql
+     * @return mixed
      */
     private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
@@ -436,7 +436,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
 
     /**
      * 获取查询结果
-     * @return Query_Mysql 查询结果
+     * @return mixed 查询结果
      */
     private function getQueryResult()
     {

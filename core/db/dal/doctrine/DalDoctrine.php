@@ -9,7 +9,7 @@
  * @subpackage dbfacile
  * @author skygreen
  */
-class Dal_DbFacile extends Dal implements IDal
+class DalDbFacile extends Dal implements IDal
 {
     /**
      * 连接数据库
@@ -92,7 +92,7 @@ class Dal_DbFacile extends Dal implements IDal
      *    0,10
      * @return 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
     }
 
@@ -117,7 +117,7 @@ class Dal_DbFacile extends Dal implements IDal
      *
      * @return 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
     }
 
@@ -188,7 +188,7 @@ class Dal_DbFacile extends Dal implements IDal
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
     }
 }

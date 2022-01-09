@@ -46,7 +46,7 @@ abstract class Dao
      * @param string $username
      * @param string $password
      * @param string $dbname
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用DaoODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
      *                      需要在实现里重载 setdbType方法以传入数据库类型参数
      */
     public function __construct($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null)
@@ -71,7 +71,7 @@ abstract class Dao
 
     /**
      * 指定数据库类型
-     * @param enum $dbtype 指定数据库类型。{使用Dao_ODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
+     * @param enum $dbtype 指定数据库类型。{使用DaoODBC引擎，需要定义该字段,该字段的值参考: EnumDbSource}
      */
     protected function setdbType($dbtype)
     {

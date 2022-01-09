@@ -6,7 +6,7 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Insert extends Crud_SQL
+class CrudSqlInsert extends CrudSQL
 {
     /**
      * @var array 表所有列名数组
@@ -19,7 +19,7 @@ class Crud_Sql_Insert extends Crud_SQL
     /**
      * 创建Insert 表名字符串
      * @param string $tableorclassName 表名|类名[映射表]
-     * @return Crud_Sql_Insert
+     * @return CrudSqlInsert
      */
     public function insert($tableorclassName)
     {
@@ -46,7 +46,7 @@ class Crud_Sql_Insert extends Crud_SQL
      * 2. set(array("id"=>"1","name"=>"sky"))
      *
      * @param $type_rep 替代符的类型。1:$, 其他:?
-     * @return Crud_Sql_Insert 其中:values Insert语句子字符串
+     * @return CrudSqlInsert 其中:values Insert语句子字符串
      */
     public function values($values, $type_rep = null)
     {

@@ -222,7 +222,7 @@ class ServiceBasic extends Service implements IServiceBasic
      *
      * @return 对象列表数组
      */
-    public function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function select($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
@@ -260,7 +260,7 @@ class ServiceBasic extends Service implements IServiceBasic
      *
      * @return 对象列表数组
      */
-    public function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
@@ -290,7 +290,7 @@ class ServiceBasic extends Service implements IServiceBasic
      *      2. name desc;
      * @return 单个对象实体
      */
-    public function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {
@@ -365,7 +365,7 @@ class ServiceBasic extends Service implements IServiceBasic
      *      2. name desc;
      * @return mixed 数据对象分页查询列表
      */
-    public function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $dataobject_class = self::std($this->classname());
         if (class_exists($dataobject_class)) {

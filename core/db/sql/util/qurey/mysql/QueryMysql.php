@@ -7,7 +7,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class Query_Mysql extends Query
+class QueryMysql extends Query
 {
     /**
      * The internal MySQL handle that points to the result set.

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * -----------| PHP5自带的SQL数据库Sqlite |-----------
- *
+ * -----------| 使用PHP5自带的MySQL Extension |-----------
  * @category betterlife
  * @package core.db.object
- * @subpackage sqlite
+ * @subpackage mysql
  * @author skygreen
  */
-class Dao_Sqlite3 extends Dao implements IDaoNormal
+class DaoPhp5 extends Dao implements IDaoNormal
 {
+    public static $fetchmode = MYSQL_ASSOC;//MYSQL_ASSOC,MYSQL_NUM,MYSQL_BOTH
+
     /**
      * 连接数据库
      * @param string $host
@@ -21,55 +22,58 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
+        $connecturl = ConfigMysql::connctionurl($host, $port);
+
+        if (!isset($username)) {
+            $username = ConfigMysql::$username;
+        }
+        if (!isset($password)) {
+            $password = ConfigMysql::$password;
+        }
         if (!isset($dbname)) {
-            $dbname = ConfigDb::$dbname;
+            $dbname   = ConfigMysql::$dbname;
         }
-        $this->connection = new SQLite3(ConfigSqlite::$dbname);
-        if (!$this->connection) {
-            ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL);
+        if (ConfigMysql::$is_persistent) {
+            $this->connection = mysql_pconnect($connecturl, $username, $password);
+        } else {
+            $this->connection = mysql_connect($connecturl, $username, $password);
         }
+        if ($this->connection) {
+            mysql_select_db($dbname, $this->connection);
+        }
+        if (strpos($this->character_set(), ConfigC::CHARACTER_LATIN1) !== false || strpos($this->character_set(), ConfigC::CHARACTER_GBK) !== false) {
+            $this->change_character_set($character_code = ConfigDb::$character);
+        }
+
+        $this->change_character_set($character_code = ConfigDb::$character);
     }
 
     /**
      * 执行预编译SQL语句
+     *
      * 无法防止SQL注入黑客技术
-     * @return mixed
      */
     private function executeSQL()
     {
-        $result = null;
-        try {
-            if (ConfigDb::$debug_show_sql) {
-                LogMe::log("SQL: " . $this->sQuery);
-                if (!empty($this->saParams)) {
-                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
-                }
-            }
-            $this->stmt = $this->connection->prepare($this->sQuery);
-            $i          = 0;
-            if (!empty($this->saParams) && is_array($this->saParams) && (count($this->saParams) > 0 )) {
-                $type_saParams = self::getPreparedTypeString($this->saParams);
-                foreach ($this->saParams as $param) {
-                    $i++;
-                    $this->stmt->bindValue($i, $param, $type_saParams[$i - 1]);
-                }
-            }
-            $this->results = $this->stmt->execute();
-        } catch (Exception $ex) {
-            ExceptionDb::log($ex->getTraceAsString());
+        if (ConfigDb::$debug_show_sql) {
+            LogMe::log("SQL:" . $this->sQuery);
         }
-        return $result;
+        $this->result = mysql_query($this->sQuery, $this->connection);
+        if (!$this->result) {
+            ExceptionDb::log(Wl::ERROR_INFO_DB_HANDLE);
+        }
     }
 
     /**
      * 将查询结果转换成业务层所认知的对象
+     *
      * @param string $object 需要转换成的对象实体|类名称
-     * @return mixed 转换成的对象实体列表
+     * @return 转换成的对象实体列表
      */
     private function getResultToObjects($object)
     {
         $result = array();
-        while ($currentrow = $this->results->fetchArray(ConfigSqlite::$sqlite3_fetchmode)) {
+        while ($currentrow = mysql_fetch_array($this->result, self::$fetchmode)) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
                     $c        = UtilObject::array_to_object($currentrow, $this->classname);
@@ -93,49 +97,51 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
             $result = null;
         }
         $result = $this->getValueIfOneValue($result);
+        mysql_free_result($this->result);
         return $result;
     }
 
+
     /**
      * 新建对象
-     * @param object $object
+     *
+     * @param Object $object
      * @return int 保存对象记录的ID标识号
      */
     public function save($object)
     {
-        $autoId = -1;//新建对象插入数据库记录失败
+        $autoid = -1;//新建对象插入数据库记录失败
         if (!$this->validObjectParameter($object)) {
-            return $autoId;
+            return $autoid;
         }
-        try {
-            $_SQL = new Crud_Sql_Insert();
-            $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
-            $this->saParams = UtilObject::object_to_array($object);
-            $this->saParams = $this->filterViewProperties($this->saParams);
-            $this->sQuery   = $_SQL->insert($this->classname)->values($this->saParams)->result();
-            if (ConfigDb::$debug_show_sql) {
-                LogMe::log("SQL: " . $this->sQuery);
-                if (!empty($this->saParams)) {
-                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
-                }
+        $_SQL = new CrudSqlInsert();
+        $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
+        $this->saParams = UtilObject::object_to_array($object);
+        foreach ($this->saParams as $key => &$value) {
+            $value = $this->escape($value);
+        }
+        $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
+        if (ConfigDb::$debug_show_sql) {
+            LogMe::log("SQL:" . $this->sQuery);
+            if (!empty($this->saParams)) {
+                LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
             }
-            $this->connection->exec($this->sQuery);
-            $autoId = $this->connection->lastInsertRowID();
-        } catch (Exception $exc) {
-            ExceptionDb::log($exc->getTraceAsString());
         }
-        if (!empty($object) && is_object($object)) {
-            $object->setId($autoId);//当保存返回对象时使用
+        $result = mysql_query($this->sQuery);
+        if ($result) {
+            $autoid = @mysql_insert_id($this->connection);
+            if (!empty($object) && is_object($object)) {
+                $object->setId($autoId);//当保存返回对象时使用
+            }
         }
-        return $autoId;
+        return $autoid;
     }
-
 
     /**
      * 删除对象
      * @param string $classname
      * @param int $id
-     * @return boolean
+     * @return Object
      */
     public function delete($object)
     {
@@ -146,26 +152,26 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL         = new Crud_Sql_Delete();
-                $where        = $this->sql_id($object) . self::EQUAL . $id;
+                $_SQL  = new CrudSqlDelete();
+                $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
+                $this->sQuery = $this->escape($this->sQuery);
                 if (ConfigDb::$debug_show_sql) {
-                    LogMe::log("SQL: " . $this->sQuery);
+                    LogMe::log("SQL:" . $this->sQuery);
                 }
-                $this->connection->exec($this->sQuery);
-                $result = true;
+                $result = mysql_query($this->sQuery);
+                return $result;
             } catch (Exception $exc) {
-                ExceptionDb::log($exc->getTraceAsString());
+                ExceptionDb::record($exc->getTraceAsString());
             }
         }
-        return $result;
     }
 
     /**
      * 更新对象
      * @param int $id
-     * @param object $object
-     * @return boolean
+     * @param Object $object
+     * @return Object
      */
     public function update($object)
     {
@@ -177,24 +183,33 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL = new Crud_Sql_Update();
+                $_SQL = new CrudSqlUpdate();
+                $_SQL->isPreparedStatement = false;
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 $this->saParams = UtilObject::object_to_array($object);
                 unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
                 $this->saParams = $this->filterViewProperties($this->saParams);
-                $where          = $this->sql_id($object) . self::EQUAL . $id;
-                $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                $_SQL->isPreparedStatement = true;
-                $this->executeSQL();
-                $result = true;
+                $where = $this->sql_id($object) . self::EQUAL . $id;
+                foreach ($this->saParams as $key => &$value) {
+                    $value = $this->escape($value);
+                }
+                $this->sQuery = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
+                if (ConfigDb::$debug_show_sql) {
+                    LogMe::log("SQL:" . $this->sQuery);
+                    if (!empty($this->saParams)) {
+                        LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
+                    }
+                }
+                $result = mysql_query($this->sQuery);
+                return $result;
             } catch (Exception $exc) {
-                ExceptionDb::log($exc->getTraceAsString());
+                ExceptionDb::record($exc->getTraceAsString());
                 $result = false;
             }
         } else {
             x(Wl::ERROR_INFO_UPDATE_ID, $this);
         }
-        return $result;
+        return true;
     }
 
     /**
@@ -215,7 +230,6 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
 
     /**
      * 根据对象实体查询对象列表
-     *
      * @param string $object 需要查询的对象实体|类名称
      * @param string $filter 查询条件，在where后的条件
      * 示例如下:
@@ -233,44 +247,41 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      *     1. id asc;
      *     2. name desc;
      *
-     * @param string $join  关联表:同Mysql join语法
-     * @todo 将类名转换成表名
-     * 示例如下:
-     *
-     *    LEFT JOIN `Category` ON `Category`.ID = `Episode`.ID
-     *
      * @param string $limit 分页数目:同Mysql limit语法
      * 示例如下:
      *
-     *     0,10
+     *    0,10
      *
-     * @return array 对象列表数组
+     * @return 对象列表数组
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
-            $_SQL = new Crud_Sql_Select();
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $_SQL = new CrudSqlSelect();
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
-            $filter_arr = $_SQL->parseValidInputParam($filter);
-            if (is_array($filter_arr) && count($filter_arr) > 0) {
-                $this->saParams = $filter_arr;
-            } else {
-                $_SQL->isPreparedStatement = false;
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
+            $_SQL->isPreparedStatement = false;
+            $this->sQuery              = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($limit)->result();
+            $this->sQuery              = $this->escape($this->sQuery);
+            if (ConfigDb::$debug_show_sql) {
+                LogMe::log("SQL:" . $this->sQuery);
+                if (!empty($this->saParams)) {
+                    LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
+                }
             }
-            $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
-            $this->executeSQL();
+            $this->result = mysql_query($this->sQuery, $this->connection);
             $result = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::log($exc->getTraceAsString());
+            ExceptionDb::record($exc->getTraceAsString());
         }
     }
 
@@ -291,12 +302,11 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      * @param string $sort 排序条件
      * 示例如下:
      *
-     *     1. id asc;
-     *     2. name desc;
-     *
-     * @return object 单个对象实体
+     *     1.id asc;
+     *     2.name desc;
+     * @return 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -304,21 +314,17 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
                 return $result;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
-            $filter_arr = $_SQL->parseValidInputParam($filter);
-            if (is_array($filter_arr) && count($filter_arr) > 0) {
-                $this->saParams = $filter_arr;
-            } else {
-                $_SQL->isPreparedStatement = false;
-            }
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $this->saParams            = $_SQL->parseValidInputParam($filter);
+            $_SQL->isPreparedStatement = false;
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->result();
+            $this->sQuery   = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit("0,1")->result();
             $this->executeSQL();
-            $result       = $this->getResultToObjects($object);
+            $result         = $this->getResultToObjects($object);
             if (count($result) >= 1) {
                 $result = $result[0];
             }
@@ -332,7 +338,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      * 根据表ID主键获取指定的对象[ID对应的表列]
      * @param string $classname
      * @param string $id
-     * @return object 对象
+     * @return 对象
      */
     public function getById($object, $id)
     {
@@ -343,7 +349,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
             }
 
             if (!empty($id) && is_scalar($id)) {
-                $_SQL  = new Crud_Sql_Select();
+                $_SQL  = new CrudSqlSelect();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
@@ -360,7 +366,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
     }
 
     /**
-     * 直接执行SQL语句
+     *  直接执行SQL语句
      *
      * @param mixed $sql SQL查询语句
      * @param string|class $object 需要生成注入的对象实体|类名称
@@ -372,19 +378,20 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
         try {
             $this->sQuery = $sqlstring;
             $this->executeSQL();
-
             $parts = explode(" ", trim($sqlstring));
             $type  = strtolower($parts[0]);
-            if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type)) {
+            if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
+                mysql_free_result($this->result);
                 return true;
-            } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
-                $autoId = $this->connection->lastInsertRowID();
+            } elseif (CrudSqlInsert::SQL_KEYWORD_INSERT == $type) {
+                $autoId = @mysql_insert_id($this->connection);
+                mysql_free_result($this->result);
                 return $autoId;
             }
             $result = $this->getResultToObjects($object);
             $sql_s  = preg_replace("/\s/", "", $sqlstring);
             $sql_s  = strtolower($sql_s);
-            if (!empty($result) && !is_array($result)) {
+            if (( !empty($result) ) && (!is_array($result) )) {
                 if (!( contains($sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
                     $tmp      = $result;
                     $result   = null;
@@ -399,7 +406,6 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
 
     /**
      * 对象总计数
-     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param object|string|array $filter 查询条件，在where后的条件
      * 示例如下:
@@ -411,7 +417,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      *
      * 默认:SQL Where条件子语句。如:(id=1 and name='sky') or (name like 'sky')
      *
-     * @return int 对象总计数
+     * @return 对象总计数
      */
     public function count($object, $filter = null)
     {
@@ -420,27 +426,29 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
             if (!$this->validParameter($object)) {
                 return 0;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam($filter);
+            $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery              = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
-
+            $this->sQuery = $_SQL->select(CrudSqlSelect::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (ConfigDb::$debug_show_sql) {
-                LogMe::log("SQL: " . $this->sQuery);
+                LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
-                    LogMe::log("SQL PARAM: " . var_export($this->saParams, true));
+                    LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
                 }
             }
-            $result = $this->connection->querySingle($this->sQuery);
+            $object_arr = mysql_query($this->sQuery);
+            $row        = mysql_fetch_row($object_arr);
+            $result     = $row[0];
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record($exc->getTraceAsString());
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
     /**
      * 对象分页
+     *
      * @param string|class $object 需要查询的对象实体|类名称
      * @param int $startPoint  分页开始记录数
      * @param int $endPoint    分页结束记录数
@@ -456,77 +464,90 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
      *
      * @param string $sort 排序条件
      * 默认为 id desc
-     *
      * 示例如下:
      *
-     *      1.id asc;
-     *      2.name desc;
+     *     1. id asc;
+     *     2. name desc;
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
-            if (($startPoint > $endPoint ) || ( $endPoint == 0)) {
+            if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
                 return null;
             }
             if (!$this->validParameter($object)) {
                 return null;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
-            $this->saParams            = $_SQL->parseValidInputParam($filter);
+            $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ( $endPoint - $startPoint + 1 ))->result();
-            $result       = $this->sqlExecute($this->sQuery, $object);
+            $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
+            $result = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            ExceptionDb::record($exc->getTraceAsString());
+            ExceptionDb::log($exc->getTraceAsString());
         }
     }
 
-    /**
-     * 获取mysqli_stmt_bind_param所需的参数类型
-     *
-     * 格式如下:
-     *
-     *     1. i corresponding variable has type integer
-     *     2. d corresponding variable has type double
-     *     3. s corresponding variable has type string
-     *     4. b corresponding variable is a blob and will be sent in packets
-     *
-     * @todo第四种情况b;大多数情况下不需要；需要再进行特定的编码
-     *
-     * 参数类型参考Mysql 5:mysqli_bind_param
-     *
-     * @param pointer $saParams
-     * @return string
-     */
-    private static function getPreparedTypeString($saParams)
+    private function escape($sql)
     {
-        $result = null;
-        //if not an array, or empty.. return empty string
-        if (!is_array($saParams) || !count($saParams)) {
-            return $result;
+        if (function_exists('mysql_real_escape_string')) {
+            return mysql_real_escape_string($sql);
+        } elseif (function_exists('mysql_escape_string')) {
+            return mysql_escape_string($sql);
+        } else {
+            return addslashes($sql);
         }
-        $result = array();
-        //iterate the elements and figure out what they are, and append to result
-        foreach ($saParams as $Param) {
-            if (is_int($Param)) {
-                $result[] = SQLITE3_INTEGER;
-            } elseif (is_float($Param) || is_float($Param)) {
-                $result[] = SQLITE3_FLOAT;
-            } elseif (is_float($Param)) {
-                $result[] = SQLITE3_FLOAT;
-            } elseif (is_string($Param)) {
-                $result[] = SQLITE3_TEXT;
-            }
+    }
+
+    public function transBegin()
+    {
+        $this->execute('SET AUTOCOMMIT=0');
+        $this->execute('START TRANSACTION'); // can also be BEGIN or
+        // BEGIN WORK
+        return true;
+    }
+
+    public function transCommit()
+    {
+        $this->execute('COMMIT');
+        $this->execute('SET AUTOCOMMIT=1');
+        return true;
+    }
+
+    public function transRollback()
+    {
+        $this->execute('ROLLBACK');
+        $this->execute('SET AUTOCOMMIT=1');
+        return true;
+    }
+
+    /**
+     * 设置数据库字符集
+     * @param string $character_code 字符集
+     */
+    public function change_character_set($character_code = "utf8mb4")
+    {
+        mysql_set_charset($character_code, $this->connection);
+    }
+
+    /**
+     * 显示数据库的字符集
+     */
+    public function character_set()
+    {
+        $charset = ConfigC::CHARACTER_UTF8_MB4;
+        if ($this->connection) {
+            $charset = mysql_client_encoding($this->connection);
         }
-        return $result;
+        return $charset;
     }
 }

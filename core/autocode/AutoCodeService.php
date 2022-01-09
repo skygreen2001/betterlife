@@ -393,7 +393,7 @@ class AutoCodeService extends AutoCode
                            "     * " . HH .
                            "     * @return array 数据对象: {$object_desc}列表数组" . HH .
                            "     */" . HH;
-                $result .= "    public function select(\$columns, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
+                $result .= "    public function select(\$columns, \$filter = null, \$sort = CrudSQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
                            "    {" . HH .
                            "        return $classname::select( \$columns, \$filter, \$sort, \$limit );" . HH .
                            "    }" . HH . HH;
@@ -424,7 +424,7 @@ class AutoCodeService extends AutoCode
                            "     * " . HH .
                            "     * @return array 数据对象:{object_desc}列表数组" . HH .
                            "     */" . HH;
-                $result .= "    public function get(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
+                $result .= "    public function get(\$filter = null, \$sort = CrudSQL::SQL_ORDER_DEFAULT_ID, \$limit = null)" . HH .
                            "    {" . HH .
                            "        return $classname::get( \$filter, \$sort, \$limit );" . HH .
                            "    }" . HH . HH;
@@ -450,7 +450,7 @@ class AutoCodeService extends AutoCode
                            "     * " . HH .
                            "     * @return object 单个数据对象: {$object_desc}实体" . HH .
                            "     */" . HH;
-                $result .= "    public function getOne(\$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
+                $result .= "    public function getOne(\$filter = null, \$sort = CrudSQL::SQL_ORDER_DEFAULT_ID)" . HH .
                            "    {" . HH .
                            "        return $classname::getOne( \$filter, \$sort );" . HH .
                            "    }" . HH . HH;
@@ -510,7 +510,7 @@ class AutoCodeService extends AutoCode
                            "     * " . HH .
                            "     * @return mixed 数据对象: {$object_desc}分页查询列表" . HH .
                            "     */" . HH . HH;
-                $result .= "    public function queryPage(\$startPoint, \$endPoint, \$filter = null, \$sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)" . HH .
+                $result .= "    public function queryPage(\$startPoint, \$endPoint, \$filter = null, \$sort = CrudSQL::SQL_ORDER_DEFAULT_ID)" . HH .
                            "    {" . HH .
                            "        return $classname::queryPage( \$startPoint, \$endPoint, \$filter, \$sort );" . HH .
                            "    }" . HH . HH;

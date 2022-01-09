@@ -100,7 +100,7 @@ interface IServiceBasic
      *      - 10 (相当于第1-第10条)
      * @return 对象列表数组
      */
-    public function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null);
+    public function select($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null);
 
     /**
      * 查询当前对象列表
@@ -129,7 +129,7 @@ interface IServiceBasic
      *
      * @return 对象列表数组
      */
-    public function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null);
+    public function get($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null);
 
     /**
      * 查询得到单个对象实体
@@ -189,5 +189,5 @@ interface IServiceBasic
      *      2. name desc;
      * @return mixed 对象分页
      */
-    public function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID);
+    public function queryPage($startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID);
 }

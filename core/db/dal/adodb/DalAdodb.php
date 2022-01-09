@@ -15,7 +15,7 @@
  * @subpackage adodb
  * @author skygreen
  */
-class Dal_Adodb extends Dal implements IDal
+class DalAdodb extends Dal implements IDal
 {
     /**
      * @var enum 当前使用的数据类型
@@ -158,12 +158,12 @@ class Dal_Adodb extends Dal implements IDal
         try {
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             $this->saParams = UtilObject::object_to_array($object);
-//            $sql = Crud_SQL::SQL_SELECT . " * " . Crud_SQL::SQL_FROM . $tablename . Crud_SQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . "-1";
+//            $sql = CrudSQL::SQL_SELECT . " * " . CrudSQL::SQL_FROM . $tablename . CrudSQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . "-1";
 //            $rs  = $this->connection->Execute($sql); # Execute the query and get the empty recordset
 //            $this->sQuery = $this->connection->GetInsertSQL($rs,  $this->saParams);
 
             //对SQL Server会报异常,故不使用:SQL error: [Microsoft][ODBC SQL Server Driver][SQL Server]列名 '********' 无效。, SQL state S0022 in SQLExecDirect
-            $_SQL = new Crud_Sql_Insert();
+            $_SQL = new CrudSqlInsert();
             if (is_object($_SQL)) {
                 $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
                 if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
@@ -185,10 +185,10 @@ class Dal_Adodb extends Dal implements IDal
             $autoId = @$this->connection->Insert_ID();
             if (!$autoId) {
                 $realIdName = DataObjectSpec::getRealIDColumnName($object);
-                $sql_maxid  = Crud_SQL::SQL_MAXID;
-                $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
+                $sql_maxid  = CrudSQL::SQL_MAXID;
+                $sql_maxid  = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
                 $tablename  = ConfigAdodb::orm($this->classname);
-                $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
+                $autoIdSql  = CrudSQL::SQL_SELECT . $sql_maxid . CrudSQL::SQL_FROM . $tablename;
                 $this->stmt = $this->connection->Execute($autoIdSql);
                 if (!empty($this->stmt) && (count($this->stmt->fields) > 0 )) {
                     $autoId = @$this->stmt->fields[0];
@@ -222,7 +222,7 @@ class Dal_Adodb extends Dal implements IDal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL  = new Crud_Sql_Delete();
+                $_SQL  = new CrudSqlDelete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (ConfigDb::$debug_show_sql) {
@@ -257,7 +257,7 @@ class Dal_Adodb extends Dal implements IDal
                 $this->saParams = UtilObject::object_to_array($object);
                 unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
                 $this->saParams = $this->filterViewProperties($this->saParams);
-                $_SQL           = new Crud_Sql_Update();
+                $_SQL           = new CrudSqlUpdate();
                 $_SQL->isPreparedStatement = false;
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
@@ -273,7 +273,7 @@ class Dal_Adodb extends Dal implements IDal
                     }
                 }
 //                $tablename =ConfigAdodb::orm( $this->classname );
-//                $sql = Crud_SQL::SQL_SELECT . " * " . Crud_SQL::SQL_FROM . $tablename.Crud_SQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . $id;
+//                $sql = CrudSQL::SQL_SELECT . " * " . CrudSQL::SQL_FROM . $tablename.CrudSQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . $id;
 //                $rs  = $this->connection->Execute($sql); # Execute the query and get the empty recordset
 //                $this->sQuery = $this->connection->GetUpdateSQL($rs, $this->saParams);//对SQL Server会报异常,故不使用:SQL error:无法更新标识列
                 $this->connection->Execute($this->sQuery);
@@ -385,17 +385,17 @@ class Dal_Adodb extends Dal implements IDal
      *
      * 列表:查询被列表的对象
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
             if (!$this->validParameter($object)) {
                 return $result;
             }
-            $_SQL = new Crud_Sql_Select();
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $_SQL = new CrudSqlSelect();
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
 
             $_SQL->isPreparedStatement = true;
@@ -437,7 +437,7 @@ class Dal_Adodb extends Dal implements IDal
      *     2.name desc;
      * @return 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -445,13 +445,13 @@ class Dal_Adodb extends Dal implements IDal
                 return $result;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery   = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
 
@@ -487,7 +487,7 @@ class Dal_Adodb extends Dal implements IDal
             }
 
             if (!empty($id) && is_scalar($id)) {
-                $_SQL  = new Crud_Sql_Select();
+                $_SQL  = new CrudSqlSelect();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
@@ -529,21 +529,21 @@ class Dal_Adodb extends Dal implements IDal
             }
             $parts = explode(" ", trim($sqlstring));
             $type  = strtolower($parts[0]);
-            if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
+            if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
                 $this->stmt = $this->connection->Execute($sqlstring);
                 return true;
-            } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
+            } elseif (CrudSqlInsert::SQL_KEYWORD_INSERT == $type) {
                 $this->stmt = $this->connection->Execute($sqlstring);
                 $autoId     = $this->connection->Insert_ID();
                 if (!$autoId) {
-                    $tablename = Crud_Sql_Insert::tablename($sqlstring);
+                    $tablename = CrudSqlInsert::tablename($sqlstring);
                     if (isset($tablename)) {
                         $object     = ConfigDb::tom($tablename);
                         $realIdName = DataObjectSpec::getRealIDColumnName($object);
-                        $sql_maxid  = Crud_SQL::SQL_MAXID;
-                        $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
+                        $sql_maxid  = CrudSQL::SQL_MAXID;
+                        $sql_maxid  = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
 
-                        $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
+                        $autoIdSql  = CrudSQL::SQL_SELECT . $sql_maxid . CrudSQL::SQL_FROM . $tablename;
                         if (ConfigDb::$debug_show_sql) {
                             LogMe::log("SQL:" . $autoIdSql);
                         }
@@ -602,11 +602,11 @@ class Dal_Adodb extends Dal implements IDal
             if (!$this->validParameter($object)) {
                 return 0;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
+            $this->sQuery = $_SQL->select(CrudSqlSelect::SQL_COUNT)->from($this->classname)->where($this->saParams)->result();
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL:" . $this->sQuery);
                 if (!empty($this->saParams)) {
@@ -648,7 +648,7 @@ class Dal_Adodb extends Dal implements IDal
      *      1.id asc;
      *      2.name desc;
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
             if (( $startPoint > $endPoint ) || ( $endPoint == 0)) {
@@ -658,14 +658,14 @@ class Dal_Adodb extends Dal implements IDal
                 return null;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams            = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
 
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             if (ConfigDb::$debug_show_sql) {

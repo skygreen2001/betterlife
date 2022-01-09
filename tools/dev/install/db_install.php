@@ -20,4 +20,4 @@ $dest_db_config = array
     "script_filename" => Gc::$nav_root_path . "install" . DS . "data" . DS . "mysql" . DS . "db_betterlife.sql",
 );
 
-DbInfo_Mysqli::run_script($dest_db_config);
+DbInfoMysqli::run_script($dest_db_config);

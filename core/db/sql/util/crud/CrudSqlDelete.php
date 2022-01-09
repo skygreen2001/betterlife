@@ -6,12 +6,12 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Delete extends Crud_SQL
+class CrudSqlDelete extends CrudSQL
 {
     /**
      * 创建删除从表SQL子语句
      * @param string $tableorclassName 表名|类名[映射表]
-     * @return Crud_Sql_Delete
+     * @return CrudSqlDelete
      */
     public function deletefrom($tableorclassName)
     {

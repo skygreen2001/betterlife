@@ -9,7 +9,7 @@
  * @subpackage crud
  * @author skygreen
  */
-abstract class Crud_SQL
+abstract class CrudSQL
 {
     const SQL_KEYWORD_INSERT  = "insert";
     const SQL_KEYWORD_DELETE  = "delete";
@@ -83,7 +83,7 @@ abstract class Crud_SQL
      * select b.* from bb_user_re_userrole a,bb_user_role b where (a.userId=1 and b.id=a.roleId)
      *
      * @param bool $ignore_quotes
-     * @return Crud_SQL
+     * @return CrudSQL
      */
     public function ignoreQuotes($ignore_quotes)
     {

@@ -143,7 +143,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *
      * @return array 数据对象: 博客列表数组
      */
-    public function select($columns, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function select($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         return Blog::select( $columns, $filter, $sort, $limit );
     }
@@ -174,7 +174,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *
      * @return array 数据对象:{object_desc}列表数组
      */
-    public function get($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         return Blog::get( $filter, $sort, $limit );
     }
@@ -200,7 +200,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *
      * @return object 单个数据对象: 博客实体
      */
-    public function getOne($filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return Blog::getOne( $filter, $sort );
     }
@@ -261,7 +261,7 @@ class ServiceBlog extends Service implements IServiceBasic
      * @return mixed 数据对象: 博客分页查询列表
      */
 
-    public function queryPage($startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         return Blog::queryPage( $startPoint, $endPoint, $filter, $sort );
     }

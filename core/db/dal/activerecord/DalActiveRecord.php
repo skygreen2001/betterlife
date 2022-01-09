@@ -1,7 +1,7 @@
 <?php
 
 /**
- * -----------| 实现数据库访问的Dal_ActiveRecord |-----------
+ * -----------| 实现数据库访问的DalActiveRecord |-----------
  *
  * @link http://codeigniter.com/
  *
@@ -12,6 +12,6 @@
  * @author skygreen
  * @todo
  */
-class Dal_ActiveRecord //extends Dal implements IDal
+class DalActiveRecord //extends Dal implements IDal
 {
 }

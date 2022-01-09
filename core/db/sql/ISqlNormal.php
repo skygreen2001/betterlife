@@ -14,7 +14,7 @@ interface ISqlNormal
      * @return int 返回插入数据的ID编号
      * @example 示例:
      * ```
-     *     $db=new Sql_Mysql();
+     *     $db=new SqlMysql();
      *     $data = array("name"=>"skygreen","pass"=>md5("hello world"));
      *     $result = $this->Db->insertdata($data);
      *     其中 name,pass是表列名，"skygreen",md5("hello world"))是列值，与列名一一对应。
@@ -28,7 +28,7 @@ interface ISqlNormal
      * @return boolean:是否删除成功
      * @example 示例:
      * ```
-     *      $db=new Sql_Mysql();
+     *      $db=new SqlMysql();
      *      $result =$db ->deleteData(1);
      * ```
      */
@@ -41,7 +41,7 @@ interface ISqlNormal
      * @return boolean:是否修改成功
      * @example 示例:
      * ```
-     *      $db=new Sql_Mysql();
+     *      $db=new SqlMysql();
      *      $data = array("name"=>"afif2","pass"=>md5("hello world"));
      *      $result = $db->updateData(1, $data);
      * ```

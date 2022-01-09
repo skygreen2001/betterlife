@@ -6,7 +6,7 @@
  * @package core.db.sql.util.crud
  * @author skygreen
  */
-class Crud_Sql_Update extends Crud_SQL
+class CrudSqlUpdate extends CrudSQL
 {
     private $values;
     /**

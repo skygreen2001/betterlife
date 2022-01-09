@@ -12,7 +12,7 @@
  * @subpackage mysql
  * @author skygreen
  */
-class Dao_MysqlI5 extends Dao implements IDaoNormal
+class DaoMysqlI5 extends Dao implements IDaoNormal
 {
     /**
      * 连接数据库
@@ -131,11 +131,11 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
 
                 $parts = explode(" ", trim($sqlstring));
                 $type  = strtolower($parts[0]);
-                if (( Crud_Sql_Update::SQL_KEYWORD_UPDATE == $type ) || ( Crud_Sql_Delete::SQL_KEYWORD_DELETE == $type )) {
+                if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
                     $this->stmt->free_result();
                     $this->stmt->close();
                     return true;
-                } elseif (Crud_Sql_Insert::SQL_KEYWORD_INSERT == $type) {
+                } elseif (CrudSqlInsert::SQL_KEYWORD_INSERT == $type) {
                     $autoId = $this->stmt->insert_id;
                     $this->stmt->free_result();
                     $this->stmt->close();
@@ -211,11 +211,11 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             if (!$this->validParameter($object)) {
                 return 0;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            $this->sQuery = $_SQL->select(Crud_Sql_Select::SQL_COUNT)->from($from)->where($this->saParams)->result();
+            $this->sQuery = $_SQL->select(CrudSqlSelect::SQL_COUNT)->from($from)->where($this->saParams)->result();
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $this->sQuery);
                 if (!empty($this->saParams)) {
@@ -264,7 +264,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *
      * @return mixed 对象分页
      */
-    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPage($object, $startPoint, $endPoint, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         if (($startPoint > $endPoint) || ($endPoint == 0)) {
             return null;
@@ -310,19 +310,19 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *
      * @return mixed 对象分页
      */
-    public function queryPageMultitable($object, $startPoint, $endPoint, $from, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function queryPageMultitable($object, $startPoint, $endPoint, $from, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         try {
             if (!$this->validParameter($object)) {
                 return null;
             }
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $this->saParams = $_SQL->parseValidInputParam($filter);
             $_SQL->isPreparedStatement = false;
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($from)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             $result = $this->sqlExecute($this->sQuery, $object);
@@ -408,7 +408,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *
      * @return array 列表:查询被列表的对象
      */
-    public function get($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID, $limit = null)
+    public function get($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID, $limit = null)
     {
         $result = null;
         try {
@@ -416,10 +416,10 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 return $result;
             }
 
-            $_SQL = new Crud_Sql_Select();
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            $_SQL = new CrudSqlSelect();
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $_SQL->isPreparedStatement = true;
             $filter_arr = $_SQL->parseValidInputParam($filter);
@@ -458,7 +458,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      *     - 2. name desc;
      * @return object 单个对象实体
      */
-    public function getOne($object, $filter = null, $sort = Crud_SQL::SQL_ORDER_DEFAULT_ID)
+    public function getOne($object, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = null;
         try {
@@ -466,7 +466,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
                 return $result;
             }
 
-            $_SQL = new Crud_Sql_Select();
+            $_SQL = new CrudSqlSelect();
             $_SQL->isPreparedStatement = true;
             $filter_arr = $_SQL->parseValidInputParam($filter);
             $this->saParams = null;
@@ -475,9 +475,9 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             } else {
                 $_SQL->isPreparedStatement = false;
             }
-            if ($sort == Crud_SQL::SQL_ORDER_DEFAULT_ID) {
+            if ($sort == CrudSQL::SQL_ORDER_DEFAULT_ID) {
                 $realIdName = $this->sql_id($object);
-                $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
+                $sort       = str_replace(CrudSQL::SQL_FLAG_ID, $realIdName, $sort);
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit("0,1")->result();
             $this->executeSQL();
@@ -506,7 +506,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             }
 
             if (!empty($id) && is_scalar($id)) {
-                $_SQL  = new Crud_Sql_Select();
+                $_SQL  = new CrudSqlSelect();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->saParams = null;
                 $this->sQuery   = $_SQL->select()->from($this->classname)->where($where)->result();
@@ -534,7 +534,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
             return $autoId;
         }
         try {
-            $_SQL = new Crud_Sql_Insert();
+            $_SQL = new CrudSqlInsert();
             $_SQL->isPreparedStatement = true;
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             $object->setUpdateTime(UtilDateTime::now());
@@ -570,7 +570,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL  = new Crud_Sql_Delete();
+                $_SQL  = new CrudSqlDelete();
                 $where = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->deletefrom($this->classname)->where($where)->result();
                 if (ConfigDb::$debug_show_sql) {
@@ -603,7 +603,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
         $id = $object->getId();
         if (!empty($id)) {
             try {
-                $_SQL = new Crud_Sql_Update();
+                $_SQL = new CrudSqlUpdate();
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 $this->saParams = UtilObject::object_to_array($object);
                 unset($this->saParams[DataObjectSpec::getRealIDColumnName($object)]);
