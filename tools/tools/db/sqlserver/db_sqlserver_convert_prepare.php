@@ -14,10 +14,10 @@ if (isset($_REQUEST["isComment"]) && !empty($_REQUEST["isComment"])) {
     }
 }
 
-$tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
+$tableList  = ManagerDb::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
 foreach ($tableList as $tablename) {
-    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
+    $fieldInfoList = ManagerDb::newInstance()->dbinfo()->fieldInfoList($tablename);
     foreach ($fieldInfoList as $fieldname => $field) {
         $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
         $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -26,7 +26,7 @@ foreach ($tableList as $tablename) {
     }
 }
 
-$tableInfoList      = Manager_Db::newInstance()->dbinfo()->tableInfoList();
+$tableInfoList      = ManagerDb::newInstance()->dbinfo()->tableInfoList();
 $filterTableColumns = array();
 if ($isComment) {
     echo "1. 列名头字母大写<br/>";
@@ -123,7 +123,7 @@ foreach ($fieldInfos as $tablename => $fieldInfo) {
     $comments = str_replace("\r", "\\r", $comments);
     $comments = str_replace("\n", "\\n", $comments);
     echo "alter table $tablename change column $old_fieldname ID " . $fieldInfos[$tablename][$old_fieldname]["Type"] . " auto_increment COMMENT '" . $comments . "';<br/>";
-    // if (!Manager_Db::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) )) {
+    // if (!ManagerDb::newInstance()->dbinfo()->hasUnique( $tablename, array("ID", $old_fieldname) )) {
     //     echo "alter table $tablename add unique(ID);<br/>";
     // }
 }

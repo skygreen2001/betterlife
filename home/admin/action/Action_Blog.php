@@ -85,7 +85,7 @@ class Action_Blog extends ActionAdmin
     public function import()
     {
         if (!empty($_FILES)) {
-            return Manager_Service::blogService()->import( $_FILES );
+            return ManagerService::blogService()->import( $_FILES );
         }
         return array("error" => 500,"info" => "No Data");
     }
@@ -102,7 +102,7 @@ class Action_Blog extends ActionAdmin
         }
         // $filter = " blog_name like '%" . $this->data["query"] . "%' or blog_content like '%" . $this->data["query"] . "%'" ;
         // LogMe::log("filter:" . print_pre($filter));
-        return Manager_Service::blogService()->exportBlog( $filter );
+        return ManagerService::blogService()->exportBlog( $filter );
     }
 }
 

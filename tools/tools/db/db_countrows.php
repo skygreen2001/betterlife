@@ -11,7 +11,7 @@ if (file_exists("../../../init.php")) {
  */
 function db_countrows($limit = 0)
 {
-    $tableInfos = Manager_Db::newInstance()->dbinfo()->tableInfoList();
+    $tableInfos = ManagerDb::newInstance()->dbinfo()->tableInfoList();
     // print_pre($tableInfos, true);
     foreach ($tableInfos as $table) {
         $table_name  = $table["Name"];

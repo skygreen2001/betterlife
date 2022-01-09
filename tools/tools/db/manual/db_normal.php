@@ -1,10 +1,10 @@
 <?php
 require_once("../../../../init.php");
 
-$tableList  = Manager_Db::newInstance()->dbinfo()->tableList();
+$tableList  = ManagerDb::newInstance()->dbinfo()->tableList();
 $fieldInfos = array();
 foreach ($tableList as $tablename) {
-    $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
+    $fieldInfoList = ManagerDb::newInstance()->dbinfo()->fieldInfoList($tablename);
     foreach ($fieldInfoList as $fieldname => $field) {
         $fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
         $fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -19,7 +19,7 @@ foreach ($tableList as $tablename) {
         }
     }
 }
-$tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
+$tableInfoList = ManagerDb::newInstance()->dbinfo()->tableInfoList();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

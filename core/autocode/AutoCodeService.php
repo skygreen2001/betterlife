@@ -29,7 +29,7 @@ class AutoCodeService extends AutoCode
      */
     public static $service_dir_full;
     /**
-     * Manager_Service的文件路径
+     * ManagerService的文件路径
      * @var string
      */
     public static $manage_service_file = "";
@@ -93,9 +93,9 @@ class AutoCodeService extends AutoCode
         $package  = self::$package;
 
         /**
-         * 需要在管理类Manager_Service.php里添加的代码
+         * 需要在管理类ManagerService.php里添加的代码
          */
-        self::$showReport .= "<font color='#237319'>[需要在管理类Manager_Service里添加没有的代码]</font><br />";
+        self::$showReport .= "<font color='#237319'>[需要在管理类ManagerService里添加没有的代码]</font><br />";
 
         $file_manage_service_file = Gc::$nav_root_path . self::$manage_service_file;
         if (file_exists($file_manage_service_file)) {
@@ -115,13 +115,13 @@ class AutoCodeService extends AutoCode
                         " * @package $package" . HH .
                         " * @author $author" . HH .
                         " */" . HH .
-                        "class Manager_Service extends Manager" . HH .
+                        "class ManagerService extends Manager" . HH .
                         "{" . HH . $section_define . HH . $section_content . "}" . HH;
-            self::saveDefineToDir(self::$service_dir_full, "Manager_Service.php", $e_result);
+            self::saveDefineToDir(self::$service_dir_full, "ManagerService.php", $e_result);
         }
-        $link_service_manage_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full) . "Manager_Service.php";
-        self::$showReport .=  "新生成的Manager_Service文件路径:<br />" . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
-                              "<font color='#0000FF'style='word-break: break-all;'><a target='_blank' href='$link_service_manage_dir_href'>" . self::$service_dir_full . "Manager_Service.php</a></font><br />";
+        $link_service_manage_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full) . "ManagerService.php";
+        self::$showReport .=  "新生成的ManagerService文件路径:<br />" . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
+                              "<font color='#0000FF'style='word-break: break-all;'><a target='_blank' href='$link_service_manage_dir_href'>" . self::$service_dir_full . "ManagerService.php</a></font><br />";
     }
 
     /**
@@ -135,7 +135,7 @@ class AutoCodeService extends AutoCode
         // self::$service_dir_full    = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
         $service_relative_path     = Gc::$module_root . DS  . "admin" . DS . self::$dir_src . DS . self::$service_dir . DS;
         self::$service_dir_full    = self::$save_dir . $service_relative_path;
-        self::$manage_service_file = $service_relative_path . "Manager_Service.php";
+        self::$manage_service_file = $service_relative_path . "ManagerService.php";
     }
 
     /**

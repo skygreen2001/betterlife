@@ -30,7 +30,7 @@ require_once("../init.php");
 //     'password' => ''
 // );
 // ConfigDb::initGc();
-// Manager_Db::newInstance()->resetDao();
+// ManagerDb::newInstance()->resetDao();
 // $new_sql = "select * from bb_user_user;";
 // $user    = sqlExecute($new_sql);
 // print_pre($user, true);
@@ -40,6 +40,6 @@ require_once("../init.php");
 // require_once("tools/db/db_countrows.php");
 
 // 导出数据到Excel
-// $response = Manager_Service::blogService()->exportBlog();
+// $response = ManagerService::blogService()->exportBlog();
 // echo $response["data"];
 // echo "<script>window.open('" . $response["data"] . "');</script>";

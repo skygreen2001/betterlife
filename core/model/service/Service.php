@@ -16,7 +16,7 @@ class Service extends BBObject
     protected static function dao()
     {
         if (empty(self::$currentDao)) {
-            self::$currentDao = Manager_Db::newInstance()->dao();
+            self::$currentDao = ManagerDb::newInstance()->dao();
         }
         return self::$currentDao;
     }
@@ -29,7 +29,7 @@ class Service extends BBObject
      */
     public static function fieldsMean($tablename)
     {
-        return Manager_Db::newInstance()->dbinfo()->fieldMapNameList($tablename);
+        return ManagerDb::newInstance()->dbinfo()->fieldMapNameList($tablename);
     }
 
     /**

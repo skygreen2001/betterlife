@@ -334,7 +334,7 @@ class AutoCodeAction extends AutoCode
                   "    public function import()" . HH .
                   "    {" . HH .
                   "        if (!empty(\$_FILES)) {" . HH .
-                  "            return Manager_Service::{$instancename}Service()->import( \$_FILES );" . HH .
+                  "            return ManagerService::{$instancename}Service()->import( \$_FILES );" . HH .
                   "        }" . HH .
                   "        return array(\"error\" => 500,\"info\" => \"No Data\");" . HH .
                   "    }" . HH;
@@ -351,7 +351,7 @@ class AutoCodeAction extends AutoCode
                   "        if (!empty(\$filter_name) && !empty(\$this->data[\"query\"])) {" . HH .
                   "            \$filter = array(\$filter_name => \$this->data[\"query\"]);" . HH .
                   "        }" . HH .
-                  "        return Manager_Service::{$instancename}Service()->export{$classname}( \$filter );" . HH .
+                  "        return ManagerService::{$instancename}Service()->export{$classname}( \$filter );" . HH .
                   "    }" . HH;
         $result .= $import . $export;
         return $result;

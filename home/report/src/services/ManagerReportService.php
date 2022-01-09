@@ -6,7 +6,7 @@
  * @package services
  * @author skygreen skygreen2001@gmail.com
  */
-class Manager_ReportService extends Manager
+class ManagerReportService extends Manager
 {
     private static $reportoneService;
 

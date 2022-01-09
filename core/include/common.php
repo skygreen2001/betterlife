@@ -22,9 +22,9 @@ function sqlExecute($sqlstring, $object = null)
         if (is_bool($object)) {
             $object = null;
         }
-        return Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+        return ManagerDb::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
     } else {
-        $lists = Manager_Db::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
+        $lists = ManagerDb::newInstance()->currentdao()->sqlExecute($sqlstring, $object);
         if ($lists) {
             if (is_array($lists)) {
                 if (count($lists) > 0) {

@@ -124,7 +124,7 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        $this->connection = Manager_Db::newInstance()->object_mysql_php5($host, $port, $username, $password, $dbname)->getConnection();
+        $this->connection = ManagerDb::newInstance()->object_mysql_php5($host, $port, $username, $password, $dbname)->getConnection();
     }
 
     /**

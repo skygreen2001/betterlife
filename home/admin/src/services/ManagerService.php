@@ -6,7 +6,7 @@
  * @package services
  * @author skygreen skygreen2001@gmail.com
  */
-class Manager_Service extends Manager
+class ManagerService extends Manager
 {
     private static $userService;
     private static $blogService;

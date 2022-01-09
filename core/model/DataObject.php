@@ -81,7 +81,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
     public static function dao()
     {
         if (!isset(self::$currentDao)) {
-            self::$currentDao = Manager_Db::newInstance()->dao();
+            self::$currentDao = ManagerDb::newInstance()->dao();
         }
         return self::$currentDao;
     }

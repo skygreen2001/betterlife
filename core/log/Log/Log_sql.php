@@ -176,7 +176,7 @@ class Log_sql extends Log
     {
         if (!$this->_opened) {
             /* Use the DSN and options to create a database connection. */
-            $this->_db = Manager_Db::newInstance()->dao();
+            $this->_db = ManagerDb::newInstance()->dao();
 
             /* We now consider out connection open. */
             $this->_opened = true;

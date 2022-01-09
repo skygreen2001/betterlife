@@ -34,7 +34,7 @@ if (!isset($old_prefix) || !isset($old_prefix)) {
     echo "</body>";
     echo "</html>";
 } else {
-    $tableList      = Manager_Db::newInstance()->dbinfo()->tableList();
+    $tableList      = ManagerDb::newInstance()->dbinfo()->tableList();
     $symbol_connect = "_";
     if (empty($new_prefix)) {
         $symbol_connect_new = "";

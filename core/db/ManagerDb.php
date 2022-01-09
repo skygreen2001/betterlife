@@ -8,7 +8,7 @@
  * @package core.db
  * @author skygreen <skygreen2001@gmail.com>
  */
-class Manager_Db extends Manager
+class ManagerDb extends Manager
 {
     /**
      * @var IDao 默认Dao对象，采用默认配置
@@ -27,7 +27,7 @@ class Manager_Db extends Manager
      */
     private $dbinfo_static;
     /**
-     * @var Manager_Db 当前唯一实例化的Db管理类。
+     * @var ManagerDb 当前唯一实例化的Db管理类。
      */
     private static $instance;
 
@@ -45,7 +45,7 @@ class Manager_Db extends Manager
 
     /**
      * 单例化
-     * @return object Manager_Db
+     * @return object ManagerDb
      */
     public static function newInstance()
     {
@@ -83,7 +83,7 @@ class Manager_Db extends Manager
      *        'password' => ''
      *    );
      *    ConfigDb::initGc();
-     *    Manager_Db::newInstance()->resetDao();
+     *    ManagerDb::newInstance()->resetDao();
      *    $sql = "insert into blog(content) values ('test')"
      *    $id  = sqlExecute($sql);
      * ```

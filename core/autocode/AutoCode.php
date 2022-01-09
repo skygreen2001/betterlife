@@ -99,7 +99,7 @@ class AutoCode extends BBObject
         UtilFileSystem::createDir(self::$save_dir);
         system_dir_info(self::$save_dir);
         if (empty(self::$tableList)) {
-            self::$tableInfoList = Manager_Db::newInstance()->dbinfo()->tableInfoList();
+            self::$tableInfoList = ManagerDb::newInstance()->dbinfo()->tableInfoList();
             if (self::$tableInfoList) {
                 self::$tableList = array_keys(self::$tableInfoList);
             }
@@ -118,7 +118,7 @@ class AutoCode extends BBObject
                     $ignoreTables[] = $tablename;
                     continue;
                 }
-                $fieldInfoList = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);
+                $fieldInfoList = ManagerDb::newInstance()->dbinfo()->fieldInfoList($tablename);
                 foreach ($fieldInfoList as $fieldname => $field) {
                     self::$fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
                     self::$fieldInfos[$tablename][$fieldname]["Type"]    = $field["Type"];
@@ -167,7 +167,7 @@ class AutoCode extends BBObject
      */
     protected static function getTablename($class)
     {
-        $tableList = Manager_Db::newInstance()->dbinfo()->tableList();
+        $tableList = ManagerDb::newInstance()->dbinfo()->tableList();
         foreach ($tableList as $tablename) {
             $classname = self::getClassname($tablename);
             if ($class == $classname) {

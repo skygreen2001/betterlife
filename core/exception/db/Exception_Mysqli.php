@@ -23,7 +23,7 @@ class Exception_Mysqli extends ExceptionDb
                 LogMe::log($error_info, EnumLogLevel::ERR);
                 self::recordException($error_info, $category, mysqli_connect_errno(), $extra);
             } else {
-                $link = Manager_Db::newInstance()->currentdao()->getConnection();
+                $link = ManagerDb::newInstance()->currentdao()->getConnection();
             }
         }
         if ($link && is_object($link) && $link->error) {

@@ -138,7 +138,7 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        $this->connection = Manager_Db::newInstance()->object_mysql_mysqli($host, $port, $username, $password, $dbname)->getConnection();
+        $this->connection = ManagerDb::newInstance()->object_mysql_mysqli($host, $port, $username, $password, $dbname)->getConnection();
     }
 
     /**

@@ -251,7 +251,7 @@ require_once("init.php");
 // UtilZipfile::zip( $texFName, $outputFile, $img_dir, "images", "1234" );
 
 // // 导出数据到Excel
-// $response = Manager_Service::blogService()->exportBlog();
+// $response = ManagerService::blogService()->exportBlog();
 // echo $response["data"];
 // echo "<script>window.open('" . $response["data"] . "');</script>";
 

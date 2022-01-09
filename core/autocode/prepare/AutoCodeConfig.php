@@ -337,7 +337,7 @@ class AutoCodeConfig extends AutoCode
                                 $relation_tablename_key = self::$table_key_map[$relation_classname];
                                 $instance_name = $classname;
                                 $instance_name = lcfirst($instance_name);
-                                $isunique = Manager_Db::newInstance()->dbinfo()->hasUnique($tablename, $fieldname);
+                                $isunique = ManagerDb::newInstance()->dbinfo()->hasUnique($tablename, $fieldname);
                                 if ($isunique) {
                                     self::$config_classes["class"][$relation_tablename_key]
                                                          ["has_one"]["relationclass"][] = array(

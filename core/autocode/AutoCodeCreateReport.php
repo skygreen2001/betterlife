@@ -150,7 +150,7 @@ class AutoCodeCreateReport extends AutoCode
 
         //**向管理报表服务类的类中添加实例化方法
         $prod_root_path           = Gc::$nav_root_path . "home" . DS . "report" . DS;
-        $prod_manage_service_path = $prod_root_path . "src" . DS . "services" . DS . "Manager_ReportService.php";
+        $prod_manage_service_path = $prod_root_path . "src" . DS . "services" . DS . "ManagerReportService.php";
         $fileContent = file_get_contents($prod_manage_service_path);
         if (!empty($fileContent)) {
             $endPos = strrpos($fileContent, "}");
@@ -178,7 +178,7 @@ SERVICE;
             }
             $fileContent = $startContent . $endContent;
         }
-        $dest_manage_service_path = $dest_service_path . "Manager_ReportService.php";
+        $dest_manage_service_path = $dest_service_path . "ManagerReportService.php";
         self::saveDefineToFile($dest_manage_service_path, $fileContent);
     }
 

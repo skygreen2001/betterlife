@@ -129,7 +129,7 @@ class Action_Report$reportEname extends ActionReport
         \$startDate = \$_GET["startDate"];
         \$endDate   = \$_GET["endDate"];
         \$query     = \$_GET["query"];
-        return Manager_ReportService::service$reportEname()->export$reportEname( \$startDate, \$endDate, \$query );
+        return ManagerReportService::service$reportEname()->export$reportEname( \$startDate, \$endDate, \$query );
     }
 }
 ?>

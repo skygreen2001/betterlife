@@ -121,7 +121,7 @@ class HugeAmountDataPush
         if (contains($classname, array("Copy", "Copy1", "Copy2", "Copy3", "Copy4"))) {
             return -1;
         }
-        $fieldarr = Manager_Db::newInstance()->dbinfo()->fieldInfoList($tablename);//获取数据表字段
+        $fieldarr = ManagerDb::newInstance()->dbinfo()->fieldInfoList($tablename);//获取数据表字段
         /*将数据表字段名存入数组*/
         foreach ($fieldarr as $fieldname => $field) {
             self::$fieldInfos[$tablename][$fieldname]["Field"]   = $field["Field"];
@@ -182,7 +182,7 @@ class HugeAmountDataPush
      */
     public static function createDatabaseData()
     {
-        $tablelists = Manager_Db::newInstance()->dbinfo()->tableList();//获取数据库表列表
+        $tablelists = ManagerDb::newInstance()->dbinfo()->tableList();//获取数据库表列表
         if (self::$isShowReport) {
             echo "预计生成数据数量级: " . self::$num . "<br/>";
             echo "SQL脚本文件地址: " . self::$script_sql_path . "<br/>";
