@@ -12,17 +12,17 @@ class EnumMsgStatus extends Enum
     /**
      * 消息状态:未读
      */
-    const UNREAD='0';
+    const UNREAD = '0';
     /**
      * 消息状态:已读
      */
-    const READ='1';
+    const READ = '1';
 
     /**
-     * 显示消息状态 
-     * 枚举类型。 
-     * 0:未读-unread 
-     * 1:已读-read 
+     * 显示消息状态
+     * 枚举类型。
+     * 0:未读-unread
+     * 1:已读-read
      */
     public static function statusShow($status)
     {
@@ -36,7 +36,7 @@ class EnumMsgStatus extends Enum
     }
 
     /**
-     * 根据消息状态显示文字获取消息状态 
+     * 根据消息状态显示文字获取消息状态
      * @param mixed $statusShow 消息状态显示文字
      */
     public static function statusByShow($statusShow)
@@ -51,7 +51,7 @@ class EnumMsgStatus extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function statusEnumKey($status)
     {
@@ -63,6 +63,4 @@ class EnumMsgStatus extends Enum
         }
         return "UNREAD";
     }
-
 }
-

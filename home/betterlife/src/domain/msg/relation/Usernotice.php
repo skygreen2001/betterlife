@@ -36,6 +36,4 @@ class Usernotice extends DataObject
         "user" => "User",
         "notice" => "Notice"
     );
-
 }
-

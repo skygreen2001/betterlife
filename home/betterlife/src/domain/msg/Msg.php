@@ -67,7 +67,7 @@ class Msg extends DataObject
      */
     public function getStatusShow()
     {
-        return self::statusShow( $this->status );
+        return self::statusShow($this->status);
     }
 
     /**
@@ -78,8 +78,6 @@ class Msg extends DataObject
      */
     public static function statusShow($status)
     {
-        return EnumMsgStatus::statusShow( $status );
+        return EnumMsgStatus::statusShow($status);
     }
-
 }
-

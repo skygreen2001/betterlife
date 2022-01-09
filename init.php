@@ -1,10 +1,17 @@
 <?php
+
 header("Content-Type:text/html; charset=UTF-8");
 
-if (!defined('__DIR__') ) define('__DIR__', dirname(__FILE__));
-if (!defined('DS') ) define('DS', DIRECTORY_SEPARATOR);
+if (!defined('__DIR__')) {
+    define('__DIR__', dirname(__FILE__));
+}
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 // 当前平台中对于换行符的定义，HH是`换行`中文拼音huan hang的头字母缩写
-if (!defined('HH') ) define('HH', PHP_EOL);
+if (!defined('HH')) {
+    define('HH', PHP_EOL);
+}
 
 require_once 'Gc.php';//加载全局变量文件
 require_once 'core/main/Initializer.php';

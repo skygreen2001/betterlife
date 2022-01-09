@@ -8,15 +8,10 @@
  */
 class Action_Us extends Action
 {
-
     /**
      * 关于我们
      */
     public function index()
     {
-
     }
-
-
-
 }

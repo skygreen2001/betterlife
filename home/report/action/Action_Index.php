@@ -13,6 +13,5 @@ class Action_Index extends ActionReport
      */
     public function index()
     {
-
     }
 }

@@ -108,7 +108,7 @@ class Userdetail extends DataObject
      */
     public function getSexShow()
     {
-        return self::sexShow( $this->sex );
+        return self::sexShow($this->sex);
     }
 
     /**
@@ -120,8 +120,6 @@ class Userdetail extends DataObject
      */
     public static function sexShow($sex)
     {
-        return EnumSex::sexShow( $sex );
+        return EnumSex::sexShow($sex);
     }
-
 }
-

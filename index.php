@@ -1,4 +1,5 @@
 <?php
+
 require_once("init.php");
 date_default_timezone_set('Asia/Shanghai');
 /**
@@ -11,11 +12,11 @@ require_once("core/main/Application.php");
  * 1. 环境变量设置:Gc.php里的变量名及注释说明
  * 2. 数据库设置:core/config/config/ConfigDb.php里的变量名及注释说明
  */
-$application_env=array();
+$application_env = array();
 // $application_env=array(
 //     "dev_debug_on"   => false,
 //     "dev_profile_on" => false,
 // );
 
-$application = new Application( $application_env );
+$application = new Application($application_env);
 $application->run();

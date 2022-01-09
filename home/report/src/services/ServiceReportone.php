@@ -12,7 +12,8 @@ class ServiceReportone extends ServiceReport
      * 导出报表
      * @param string $rtype 报表类型
      */
-    public function export($rtype, $startDate, $endDate, $query) {
+    public function export($rtype, $startDate, $endDate, $query)
+    {
         require_once(Gc::$nav_root_path . "misc" . DS . "sql" . DS . "report.php");
         $sql_report = $sqlReport[$rtype];
         $sql_report = str_replace(";", "", $sql_report);
@@ -30,7 +31,7 @@ class ServiceReportone extends ServiceReport
         $diffpart   = date("YmdHis");
         $fileName   = $rtype . $diffpart;
         $outputFileName = Gc::$attachment_path . "export" . DS . "report" . DS . "$fileName.xls";
-        UtilExcel::arraytoExcel( $out_header, $data, $outputFileName );
+        UtilExcel::arraytoExcel($out_header, $data, $outputFileName);
         $downloadPath   = Gc::$attachment_url . "export/report/$fileName.xls";
         return array(
             'success' => true,
@@ -38,4 +39,3 @@ class ServiceReportone extends ServiceReport
         );
     }
 }
-?>

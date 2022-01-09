@@ -20,5 +20,4 @@ class ManagerReportService extends Manager
         }
         return self::$reportoneService;
     }
-
 }

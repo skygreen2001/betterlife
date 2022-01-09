@@ -46,10 +46,10 @@ class Blog extends DataObject
      */
     public $icon_url;
     /**
-     * 是否公开 
-     * 0: 不公开 
-     * 1: 公开 
-     * 默认为1: 公开 
+     * 是否公开
+     * 0: 不公开
+     * 1: 公开
+     * 默认为1: 公开
      *
      * @var bit
      * @access public
@@ -62,11 +62,11 @@ class Blog extends DataObject
      */
     public $blog_content;
     /**
-     * 状态 
-     * 0:待审核-pend 
-     * 1:进行中-run 
-     * 100:已结束-end 
-     * 400:已删除-del 
+     * 状态
+     * 0:待审核-pend
+     * 1:进行中-run
+     * 100:已结束-end
+     * 400:已删除-del
      *
      * @var enum
      * @access public
@@ -104,37 +104,37 @@ class Blog extends DataObject
     );
 
     /**
-     * 显示状态 
-     * 0:待审核-pend 
-     * 1:进行中-run 
-     * 100:已结束-end 
-     * 400:已删除-del 
+     * 显示状态
+     * 0:待审核-pend
+     * 1:进行中-run
+     * 100:已结束-end
+     * 400:已删除-del
      *
      */
     public function getStatusShow()
     {
-        return self::statusShow( $this->status );
+        return self::statusShow($this->status);
     }
 
     /**
-     * 显示状态 
-     * 0:待审核-pend 
-     * 1:进行中-run 
-     * 100:已结束-end 
-     * 400:已删除-del 
+     * 显示状态
+     * 0:待审核-pend
+     * 1:进行中-run
+     * 100:已结束-end
+     * 400:已删除-del
      *
      */
     public static function statusShow($status)
     {
-        return EnumBlogStatus::statusShow( $status );
+        return EnumBlogStatus::statusShow($status);
     }
 
 
     /**
-     * 是否公开 
-     * 0: 不公开 
-     * 1: 公开 
-     * 默认为1: 公开 
+     * 是否公开
+     * 0: 不公开
+     * 1: 公开
+     * 默认为1: 公开
      *
      */
     public function isPublicShow()
@@ -145,4 +145,3 @@ class Blog extends DataObject
         return "否";
     }
 }
-

@@ -28,11 +28,11 @@ class Region extends DataObject
      */
     public $region_name;
     /**
-     * 地区类型 
-     * 0:国家-country 
-     * 1:省-province 
-     * 2:市-city 
-     * 3:区-region 
+     * 地区类型
+     * 0:国家-country
+     * 1:省-province
+     * 2:市-city
+     * 3:区-region
      *
      * @var enum
      * @access public
@@ -73,29 +73,29 @@ class Region extends DataObject
     );
 
     /**
-     * 显示地区类型 
-     * 0:国家-country 
-     * 1:省-province 
-     * 2:市-city 
-     * 3:区-region 
+     * 显示地区类型
+     * 0:国家-country
+     * 1:省-province
+     * 2:市-city
+     * 3:区-region
      *
      */
     public function getRegion_typeShow()
     {
-        return self::region_typeShow( $this->region_type );
+        return self::region_typeShow($this->region_type);
     }
 
     /**
-     * 显示地区类型 
-     * 0:国家-country 
-     * 1:省-province 
-     * 2:市-city 
-     * 3:区-region 
+     * 显示地区类型
+     * 0:国家-country
+     * 1:省-province
+     * 2:市-city
+     * 3:区-region
      *
      */
     public static function region_typeShow($region_type)
     {
-        return EnumRegionType::region_typeShow( $region_type );
+        return EnumRegionType::region_typeShow($region_type);
     }
 
     /**
@@ -103,7 +103,7 @@ class Region extends DataObject
      */
     public static function maxlevel()
     {
-        return Region::select( "max(level)" );//return 3;
+        return Region::select("max(level)");//return 3;
     }
 
     /**
@@ -111,7 +111,7 @@ class Region extends DataObject
      */
     public function getRegionShowAll()
     {
-        return self::regionShowAll( $this->parent_id, $this->level );
+        return self::regionShowAll($this->parent_id, $this->level);
     }
 
     /**
@@ -122,15 +122,13 @@ class Region extends DataObject
      */
     public static function regionShowAll($parent_id, $level)
     {
-        $region_p = Region::getById( $parent_id );
+        $region_p = Region::getById($parent_id);
         if ($level == 1) {
              $regionShowAll = $region_p->region_name;
         } else {
              $parent_id     = $region_p->parent_id;
-             $regionShowAll = self::regionShowAll( $parent_id, $level - 1 ) . "->" . $region_p->region_name;
+             $regionShowAll = self::regionShowAll($parent_id, $level - 1) . "->" . $region_p->region_name;
         }
         return $regionShowAll;
     }
-
 }
-

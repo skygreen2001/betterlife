@@ -15,15 +15,15 @@ class Action_Comment extends Action
     {
         $blog_id = $this->data["blog_id"];
         if ($blog_id) {
-            $this->view->blog = Blog::getById( $blog_id );
+            $this->view->blog = Blog::getById($blog_id);
         } else {
-            $this->redirect( "blog", "display" );
+            $this->redirect("blog", "display");
             die();
         }
         if (count($_POST) > 0) {
             $comment = $this->model->Comment;
             $comment->blog_id = $blog_id;
-            $comment->user_id = HttpSession::get( 'user_id' );
+            $comment->user_id = HttpSession::get('user_id');
             if (!empty($comment->comment_id)) {
                 $comment->update();
                 $this->view->message = "评论修改成功";
@@ -35,13 +35,13 @@ class Action_Comment extends Action
         }
         $comment_id = $this->data["comment_id"];
         if ($comment_id) {
-            $comment = Comment::getById( $comment_id );
+            $comment = Comment::getById($comment_id);
             $this->view->comment_content = $comment->comment;
         }
         $canEdit = $this->view->blog->canEdit();
         if (!$canEdit) {
             $this->loadJs("js/edit.js");
-            $this->load_onlineditor( "comment" );
+            $this->load_onlineditor("comment");
         }
     }
     /**
@@ -51,12 +51,9 @@ class Action_Comment extends Action
     {
         $comment_id = $this->data["comment_id"];
         $comment    = new Comment();
-        $comment->setId( $comment_id );
+        $comment->setId($comment_id);
         $comment->delete();
         unset($this->data["comment_id"]);
-        $this->redirect( "comment", "comment", $this->data );
+        $this->redirect("comment", "comment", $this->data);
     }
-
-
 }
-?>

@@ -13,10 +13,5 @@ class Action_Featured extends Action
      */
     public function index()
     {
-
     }
-
 }
-
-
-?>

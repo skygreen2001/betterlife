@@ -12,51 +12,51 @@ class EnumPriority extends Enum
     /**
      * 优先级:严重错误
      */
-    const EMERG='0';
+    const EMERG = '0';
     /**
      * 优先级:警戒性错误
      */
-    const ALERT='1';
+    const ALERT = '1';
     /**
      * 优先级:临界值错误
      */
-    const CRIT='2';
+    const CRIT = '2';
     /**
      * 优先级:一般错误
      */
-    const ERR='3';
+    const ERR = '3';
     /**
      * 优先级:警告性错误
      */
-    const WARN='4';
+    const WARN = '4';
     /**
      * 优先级:通知
      */
-    const NOTICE='5';
+    const NOTICE = '5';
     /**
      * 优先级:信息
      */
-    const INFO='6';
+    const INFO = '6';
     /**
      * 优先级:调试
      */
-    const DEBUG='7';
+    const DEBUG = '7';
     /**
      * 优先级:SQL
      */
-    const SQL='8';
+    const SQL = '8';
 
     /**
-     * 显示优先级 
-     * 0:严重错误-EMERG 
-     * 1:警戒性错误-ALERT 
-     * 2:临界值错误-CRIT 
-     * 3:一般错误-ERR 
-     * 4:警告性错误-WARN 
-     * 5:通知-NOTICE 
-     * 6:信息-INFO 
-     * 7:调试-DEBUG 
-     * 8:SQL-SQL 
+     * 显示优先级
+     * 0:严重错误-EMERG
+     * 1:警戒性错误-ALERT
+     * 2:临界值错误-CRIT
+     * 3:一般错误-ERR
+     * 4:警告性错误-WARN
+     * 5:通知-NOTICE
+     * 6:信息-INFO
+     * 7:调试-DEBUG
+     * 8:SQL-SQL
      */
     public static function priorityShow($priority)
     {
@@ -84,7 +84,7 @@ class EnumPriority extends Enum
     }
 
     /**
-     * 根据优先级显示文字获取优先级 
+     * 根据优先级显示文字获取优先级
      * @param mixed $priorityShow 优先级显示文字
      */
     public static function priorityByShow($priorityShow)
@@ -113,7 +113,7 @@ class EnumPriority extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function priorityEnumKey($priority)
     {
@@ -139,6 +139,4 @@ class EnumPriority extends Enum
         }
         return "EMERG";
     }
-
 }
-

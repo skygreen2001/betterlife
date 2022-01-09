@@ -12,27 +12,27 @@ class EnumBlogStatus extends Enum
     /**
      * 状态:待审核
      */
-    const PEND='0';
+    const PEND = '0';
     /**
      * 状态:进行中
      */
-    const RUN='1';
+    const RUN = '1';
     /**
      * 状态:已结束
      */
-    const END='100';
+    const END = '100';
     /**
      * 状态:已删除
      */
-    const DEL='400';
+    const DEL = '400';
 
     /**
-     * 显示状态 
-     * 0:待审核-pend 
-     * 1:进行中-run 
-     * 100:已结束-end 
-     * 400:已删除-del 
-     *  
+     * 显示状态
+     * 0:待审核-pend
+     * 1:进行中-run
+     * 100:已结束-end
+     * 400:已删除-del
+     *
      */
     public static function statusShow($status)
     {
@@ -50,7 +50,7 @@ class EnumBlogStatus extends Enum
     }
 
     /**
-     * 根据状态显示文字获取状态 
+     * 根据状态显示文字获取状态
      * @param mixed $statusShow 状态显示文字
      */
     public static function statusByShow($statusShow)
@@ -69,7 +69,7 @@ class EnumBlogStatus extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function statusEnumKey($status)
     {
@@ -85,6 +85,4 @@ class EnumBlogStatus extends Enum
         }
         return "PEND";
     }
-
 }
-

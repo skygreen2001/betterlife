@@ -13,6 +13,5 @@ class Action_Index extends ActionAdmin
      */
     public function index()
     {
-
     }
 }

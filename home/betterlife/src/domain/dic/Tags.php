@@ -48,6 +48,4 @@ class Tags extends DataObject
     static $belongs_many_many = array(
         "blogs" => "Blog"
     );
-
 }
-

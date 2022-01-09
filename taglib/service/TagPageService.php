@@ -6,7 +6,8 @@
  * @package util.common
  * @author skygreen
  */
-class TagPageService {
+class TagPageService
+{
     /**
      * 在分页导航条里链接地址里带有的当前页数标识符
      *
@@ -33,8 +34,11 @@ class TagPageService {
     private $navig;// 导航条
     private $navigTo;// 导航条
 
-    public static function Init($nowpage, $count, $pageSize = null, $linkUrl = null) {
-        if (empty($pageSize) ) $pageSize = self::$default_pagesize;
+    public static function Init($nowpage, $count, $pageSize = null, $linkUrl = null)
+    {
+        if (empty($pageSize)) {
+            $pageSize = self::$default_pagesize;
+        }
         return new TagPageService($nowpage, $count, $pageSize, $linkUrl);
     }
 
@@ -61,7 +65,7 @@ class TagPageService {
         $this->nowpage  = $nowpage;
         // 总页数
         $this->allPageCount = floor(($this->count + $this->pageSize - 1) / $this->pageSize);
-        if ($this->nowpage>$this->allPageCount) {
+        if ($this->nowpage > $this->allPageCount) {
             $this->nowpage = $this->allPageCount;
         }
         if ($this->count > 0) {
@@ -80,7 +84,7 @@ class TagPageService {
 
         $this->linkUrl = $linkUrl;
         HttpSession::init();
-        HttpSession::set( TagPageClass::$tag_page_sessionname, $this );
+        HttpSession::set(TagPageClass::$tag_page_sessionname, $this);
         //$_SESSION[TagPageClass::$tag_page_sessionname]=$this;
     }
 
@@ -92,7 +96,7 @@ class TagPageService {
      */
     private function url_link_pageparam($pageNo)
     {
-        if (contain( $this->linkUrl, "?" )) {
+        if (contain($this->linkUrl, "?")) {
             $result = "<a href='$this->linkUrl&" . self::$linkUrl_pageFlag . "=$pageNo'>";
         } else {
             $result = "<a href='$this->linkUrl?" . self::$linkUrl_pageFlag . "=$pageNo'>";
@@ -131,7 +135,7 @@ class TagPageService {
             return "";
         }
 
-        if (!contain( $this->linkUrl, "?" )) {
+        if (!contain($this->linkUrl, "?")) {
             $this->linkUrl .= "?";
         }
 
@@ -150,7 +154,7 @@ class TagPageService {
 
             // 上一页
             if ($this->nowpage > 1) {
-                $stb .= $this->url_link_pageparam( $this->nowpage - 1 );
+                $stb .= $this->url_link_pageparam($this->nowpage - 1);
                 // $stb .= "上一页</a> ";
                 $stb .= "<</a> ";
             } else {
@@ -190,21 +194,23 @@ class TagPageService {
                     if ($i == $this->nowpage) {
                         // 当前页面号码数显示
                         // $stb .= $i . "&nbsp;";
-                        $stb .= '<span class="current_page">' . $i ."</span>&nbsp;";
+                        $stb .= '<span class="current_page">' . $i . "</span>&nbsp;";
                     } else {
                         $stb .= $this->url_link_pageparam($i);
-                        $stb .= $i."</a>&nbsp;";
+                        $stb .= $i . "</a>&nbsp;";
                     }
                 }
             }
 
-            if ($this->allPageCount > $showNo )
-                if ($this->nowpage < ( $this->allPageCount - floor($showNo / 2)))
+            if ($this->allPageCount > $showNo) {
+                if ($this->nowpage < ( $this->allPageCount - floor($showNo / 2))) {
                     $stb .= "..." . "&nbsp;";
+                }
+            }
 
             // 下一页
             if ($this->nowpage < floor(( $this->count + $this->pageSize - 1 ) / $this->pageSize)) {
-                $stb .= $this->url_link_pageparam( $this->nowpage + 1 );
+                $stb .= $this->url_link_pageparam($this->nowpage + 1);
                 // $stb .= "下一页</a>";
                 $stb .= "></a>";
             } else {
@@ -214,7 +220,7 @@ class TagPageService {
 
             // 末页
             if ($this->nowpage < floor(( $this->count + $this->pageSize - 1) / $this->pageSize)) {
-                $stb .= $this->url_link_pageparam( floor(($this->count + $this->pageSize - 1) / $this->pageSize) );
+                $stb .= $this->url_link_pageparam(floor(($this->count + $this->pageSize - 1) / $this->pageSize));
                 $stb .= "末页</a> "; // 共x页
             } else {
                 $stb .= '<span class="current_page">末</span>&nbsp;';
@@ -339,5 +345,4 @@ class TagPageService {
     {
         $this->navig = $navig;
     }
-
 }

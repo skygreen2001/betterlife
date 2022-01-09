@@ -12,21 +12,21 @@ class EnumUserType extends Enum
     /**
      * 类型:登录
      */
-    const LOGIN='1';
+    const LOGIN = '1';
     /**
      * 类型:写日志
      */
-    const BLOG='2';
+    const BLOG = '2';
     /**
      * 类型:写评论
      */
-    const COMMENT='3';
+    const COMMENT = '3';
 
     /**
-     * 显示类型 
-     * 1:登录-LOGIN 
-     * 2:写日志-BLOG 
-     * 3:写评论-COMMENT 
+     * 显示类型
+     * 1:登录-LOGIN
+     * 2:写日志-BLOG
+     * 3:写评论-COMMENT
      */
     public static function userTypeShow($userType)
     {
@@ -42,7 +42,7 @@ class EnumUserType extends Enum
     }
 
     /**
-     * 根据类型显示文字获取类型 
+     * 根据类型显示文字获取类型
      * @param mixed $userTypeShow 类型显示文字
      */
     public static function userTypeByShow($userTypeShow)
@@ -59,7 +59,7 @@ class EnumUserType extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function userTypeEnumKey($userType)
     {
@@ -73,6 +73,4 @@ class EnumUserType extends Enum
         }
         return "LOGIN";
     }
-
 }
-

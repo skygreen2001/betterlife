@@ -5,18 +5,20 @@
  *
  * @author skygreen <skygreen2001@gmail.com>
  */
-abstract class TagClass {
+abstract class TagClass
+{
     const PREFIX = "my";// tag prefix name
     protected $tagname;
     protected $attributesDesc;
     protected $content;
     protected $html;
 
-    function __construct($tagname, $attributesDesc, $content = null) {
+    function __construct($tagname, $attributesDesc, $content = null)
+    {
         $this->tagname = $tagname;
         $this->attributesDesc = $attributesDesc;
         if (!empty($content)) {
-          $this->content = $content;
+            $this->content = $content;
         }
         $this->setHtml();
     }
@@ -26,30 +28,37 @@ abstract class TagClass {
      */
     abstract function setHtml();
 
-    public function getHtml() {
+    public function getHtml()
+    {
         return $this->html;
     }
 
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
-    public function setContent($content) {
+    public function setContent($content)
+    {
         $this->content = $content;
     }
-    public function getTagName() {
+    public function getTagName()
+    {
         return $this->tagname;
     }
 
-    public function setTagName($tagname) {
+    public function setTagName($tagname)
+    {
         $this->tagname = $tagname;
     }
 
-    public function getAttributeDesc() {
+    public function getAttributeDesc()
+    {
         return $this->attributesDesc;
     }
 
-    public function setAttributeDesc($attributesDesc) {
+    public function setAttributeDesc($attributesDesc)
+    {
         $this->attributesDesc = $attributesDesc;
     }
 
@@ -58,7 +67,8 @@ abstract class TagClass {
      * @param $tagStr
      * @return array the attribute from tag
      */
-    final function getAttributesFormTag($tagStr) {
+    final function getAttributesFormTag($tagStr)
+    {
         $attributes = array();
         preg_match_all('/\b(\w+)\=(\\\\"([^\\\"]+)\\\"|\\\\\'([^\\\\\']+)\\\\\')/is', $tagStr, $split);
         //            preg_match_all('/\b(\w+)\=(\"([^\"]+)\"|\'([^\']+)\')/is',$tagStr,$split);
@@ -77,4 +87,3 @@ abstract class TagClass {
         return $attributes;
     }
 }
-?>

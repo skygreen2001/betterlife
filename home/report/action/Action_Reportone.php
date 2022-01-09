@@ -13,7 +13,6 @@ class Action_Reportone extends ActionReport
      */
     public function index()
     {
-
     }
 
     /**
@@ -27,6 +26,6 @@ class Action_Reportone extends ActionReport
         $startDate = $_GET["startDate"];
         $endDate   = $_GET["endDate"];
         $query     = $_GET["query"];
-        return ManagerReportService::serviceReportone()->export( $rtype, $startDate, $endDate, $query );
+        return ManagerReportService::serviceReportone()->export($rtype, $startDate, $endDate, $query);
     }
 }

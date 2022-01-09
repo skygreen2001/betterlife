@@ -73,6 +73,4 @@ class User extends DataObject
         "notices" => "Notice",
         "roles" => "Role"
     );
-
 }
-

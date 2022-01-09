@@ -42,6 +42,4 @@ class Comment extends DataObject
         "user" => "User",
         "blog" => "Blog"
     );
-
 }
-

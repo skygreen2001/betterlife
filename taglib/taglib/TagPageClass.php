@@ -13,19 +13,21 @@ class TagPageClass extends TagClass
 
     public function setHtml()
     {
-        $page = HttpSession::get( self::$tag_page_sessionname );
+        $page = HttpSession::get(self::$tag_page_sessionname);
         if ($page) {
             $this->html = "";
-            $attributes = TagClass::getAttributesFormTag( $this->getAttributeDesc() );
+            $attributes = TagClass::getAttributesFormTag($this->getAttributeDesc());
             if (array_key_exists("src", $attributes)) {
                 $this->src = $attributes["src"];
-                $page->setLinkUrl( $this->src );
+                $page->setLinkUrl($this->src);
             }
             if (array_key_exists("style", $attributes)) {
                 $this->style = $attributes["style"];
             }
-            if (empty($this->style) ) $this->style = 1;
-            switch ( $this->style) {
+            if (empty($this->style)) {
+                $this->style = 1;
+            }
+            switch ($this->style) {
                 case 2:
                     $this->html = $page->getNavig();
                     break;

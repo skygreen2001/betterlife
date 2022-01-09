@@ -3,6 +3,7 @@
 /**
  * Refer:http://bbs.blueidea.com/archiver/tid-2965257.html
  */
+
 ob_start("render_tag");
 /**
  * need handle the tags
@@ -22,7 +23,8 @@ ob_start("render_tag");
  * @param $buffer
  * @return need handle the tags,html written the html page later.
  */
-function render_tag($buffer) {
+function render_tag($buffer)
+{
     $result = $buffer;
     if (!empty($buffer)) {
         if (stristr($buffer, "<" . TagClass::PREFIX . ":")) {
@@ -30,14 +32,14 @@ function render_tag($buffer) {
 
     //        $repReg='/<' . TagClass::PREFIX . ':(\w+[-]?\w+)((\s+\w+=\\\"[^"]*\\\"|\s+\w+=\"[^"]*\"|\s+\w+=\\\\\'[^"]*\\\\\'|\s+\w+=\'[^"]*\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
             /**
-             * 处理自定义标签，如下形式: 
+             * 处理自定义标签，如下形式:
              * <my:page src="index.php?g=betterlife&m=blog&a=display">this is page 5</my:page>
              * @var mixed
              */
             $repReg = '/<' . TagClass::PREFIX . ':(\w+[-]?\w*)((\s+\w+=\\\"[^"\']*\\\"|\s+\w+=\"[^"\']*\"|\s+\w+=\\\\\'[^"\']*\\\\\'|\s+\w+=\'[^"\']*\')*)\s*>(.*)<\/' . TagClass::PREFIX . ':\1>/isU';
             $result = preg_replace_callback($repReg, 'parseTag', $buffer);
             /**
-             * 处理自定义标签，如下形式: 
+             * 处理自定义标签，如下形式:
              * <my:page src="index.php?g=betterlife&m=blog&a=display" />
              * @var mixed
              */
@@ -46,7 +48,7 @@ function render_tag($buffer) {
         }
     }
     if (Gc::$is_online_optimize) {
-        if (contain( $result, "<body" )) {
+        if (contain($result, "<body")) {
            /************************start:整个Html页面去除注释，换行，空格********************/
 //            $result=preg_replace("/<\!--(.*?)-->/","",$result);//去掉html里的注释
 //            $result = preg_replace("~>\s+\n~",">",$result);
@@ -62,9 +64,9 @@ function render_tag($buffer) {
             $r_arr[1] = preg_replace("~>\s+\r~", ">", $r_arr[1]);
             $r_arr[1] = preg_replace("~>\s+<~", "><", $r_arr[1]);
             $result   = implode("<body", $r_arr);
-            if (contain( $result, "</html>" )) {
+            if (contain($result, "</html>")) {
                 $result  = str_replace("</html>", "", $result);
-                $result .= HH ."</html>";
+                $result .= HH . "</html>";
             }
            /************************end  :Html页面body部分去除注释，换行，空格********************/
         }
@@ -80,7 +82,8 @@ function render_tag($buffer) {
  *        $matches[3]:the content in the tag
  * @return html written the html page.
  */
-function parseTag($matches) {
+function parseTag($matches)
+{
     $tagname = $matches[1];
     if (count($matches) >= 4) {
         switch ($tagname) {
@@ -104,4 +107,3 @@ function parseTag($matches) {
         return "";
     }
 }
-?>

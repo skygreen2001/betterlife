@@ -41,12 +41,10 @@ class Rolefunctions extends DataObject
      * 表中不存在的默认列定义:commitTime,updateTime
      * @var mixed
      */
-    public $field_spec=array(
+    public $field_spec = array(
         EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
         ),
     );
-
 }
-

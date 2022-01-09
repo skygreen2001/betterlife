@@ -1,4 +1,5 @@
 <?php
+
 require_once("init.php");
 // // 调用一对一
 // $user       = User::getById( 1 );
@@ -270,7 +271,7 @@ require_once("init.php");
 
 // // 可使用Laravel的Helper方法
 // // [dd()](https://laravel.com/docs/8.x/helpers#method-dd)
-// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置: 
+// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置:
 // // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
 // $value1 = "Hello";
 // $value2 = "World";
@@ -281,7 +282,7 @@ require_once("init.php");
 // VarDumper::dump($v);
 
 // // [可使用Laravel的Collections](https://laravel.com/docs/8.x/collections)
-// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置: 
+// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置:
 // // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
 // use Illuminate\Support\Collection;
 // use Illuminate\Support\Str;
@@ -294,6 +295,6 @@ require_once("init.php");
 // $upper = $collection->toUpper();
 // echo $upper;
 
-if (!array_key_exists('HTTP_HOST', $_SERVER) || contains( $_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") )) {
+if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test"))) {
     phpinfo();
 }

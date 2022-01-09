@@ -15,14 +15,14 @@ class TagHrefClass extends TagClass
 
     public function setHtml()
     {
-        $attributes = TagClass::getAttributesFormTag( $this->getAttributeDesc() );
+        $attributes = TagClass::getAttributesFormTag($this->getAttributeDesc());
 
         $this->html = "<a ";
         if ($attributes && (count($attributes) > 0 )) {
             if ($attributes["href"]) {
                 $href = $attributes["href"];
                 if (self::$isMcrypt) {
-                    if (contain( $href, Gc::$url_base . "index.php?" )) {
+                    if (contain($href, Gc::$url_base . "index.php?")) {
                         $params    = str_replace(Gc::$url_base . "index.php?", "", $href);
                         $crypttext = base64_encode($params);
                         $href      = Gc::$url_base . "index.php?" . $crypttext;
@@ -38,6 +38,4 @@ class TagHrefClass extends TagClass
 
         $this->html .= ">" . $this->getContent() . "</a>";
     }
-
 }
-?>

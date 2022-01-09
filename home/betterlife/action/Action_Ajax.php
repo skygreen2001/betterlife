@@ -16,4 +16,3 @@ class Action_Ajax extends Action
         echo "Hello world!";
     }
 }
-?>

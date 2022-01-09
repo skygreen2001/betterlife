@@ -16,4 +16,3 @@ class Action_Index extends Action
     {
     }
 }
-?>

@@ -53,6 +53,4 @@ class Category extends DataObject
     static $has_many = array(
         "blogs" => "Blog"
     );
-
 }
-

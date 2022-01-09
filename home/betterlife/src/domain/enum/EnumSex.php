@@ -12,22 +12,22 @@ class EnumSex extends Enum
     /**
      * 会员性别:女
      */
-    const FEMALE='0';
+    const FEMALE = '0';
     /**
      * 会员性别:男
      */
-    const MALE='1';
+    const MALE = '1';
     /**
      * 会员性别:待确认
      */
-    const UNKNOWN='-1';
+    const UNKNOWN = '-1';
 
     /**
-     * 显示会员性别 
-     * 0: 女-female 
-     * 1: 男-male 
-     * -1: 待确认-unknown 
-     * 默认男 
+     * 显示会员性别
+     * 0: 女-female
+     * 1: 男-male
+     * -1: 待确认-unknown
+     * 默认男
      */
     public static function sexShow($sex)
     {
@@ -43,7 +43,7 @@ class EnumSex extends Enum
     }
 
     /**
-     * 根据会员性别显示文字获取会员性别 
+     * 根据会员性别显示文字获取会员性别
      * @param mixed $sexShow 会员性别显示文字
      */
     public static function sexByShow($sexShow)
@@ -60,7 +60,7 @@ class EnumSex extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function sexEnumKey($sex)
     {
@@ -74,6 +74,4 @@ class EnumSex extends Enum
         }
         return "FEMALE";
     }
-
 }
-

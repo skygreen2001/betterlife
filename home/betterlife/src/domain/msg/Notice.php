@@ -48,6 +48,4 @@ class Notice extends DataObject
     static $belongs_many_many = array(
         "users" => "User"
     );
-
 }
-

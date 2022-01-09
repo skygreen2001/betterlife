@@ -20,8 +20,8 @@ class ActionAdmin extends ActionBasic
             "admin.auth.login"
         );
 
-        if (!in_array($this->data["go"], $globalPage) && !HttpSession::isHave( 'user_id' )) {
-            $this->redirect("auth","login");
+        if (!in_array($this->data["go"], $globalPage) && !HttpSession::isHave('user_id')) {
+            $this->redirect("auth", "login");
         }
     }
 

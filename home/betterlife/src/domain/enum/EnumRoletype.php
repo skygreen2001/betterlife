@@ -12,27 +12,27 @@ class EnumRoletype extends Enum
     /**
      * 扮演角色:超级管理员
      */
-    const SUPERADMIN='0';
+    const SUPERADMIN = '0';
     /**
      * 扮演角色:管理人员
      */
-    const MANAGER='1';
+    const MANAGER = '1';
     /**
      * 扮演角色:运维人员
      */
-    const NORMAL='2';
+    const NORMAL = '2';
     /**
      * 扮演角色:合作伙伴
      */
-    const PARTNER='3';
+    const PARTNER = '3';
 
     /**
-     * 显示扮演角色 
-     * 系统管理员扮演角色。 
-     * 0:超级管理员-superadmin 
-     * 1:管理人员-manager 
-     * 2:运维人员-normal 
-     * 3:合作伙伴-partner 
+     * 显示扮演角色
+     * 系统管理员扮演角色。
+     * 0:超级管理员-superadmin
+     * 1:管理人员-manager
+     * 2:运维人员-normal
+     * 3:合作伙伴-partner
      */
     public static function roletypeShow($roletype)
     {
@@ -50,7 +50,7 @@ class EnumRoletype extends Enum
     }
 
     /**
-     * 根据扮演角色显示文字获取扮演角色 
+     * 根据扮演角色显示文字获取扮演角色
      * @param mixed $roletypeShow 扮演角色显示文字
      */
     public static function roletypeByShow($roletypeShow)
@@ -69,7 +69,7 @@ class EnumRoletype extends Enum
     }
 
     /**
-     * 通过枚举值获取枚举键定义 
+     * 通过枚举值获取枚举键定义
      */
     public static function roletypeEnumKey($roletype)
     {
@@ -85,6 +85,4 @@ class EnumRoletype extends Enum
         }
         return "SUPERADMIN";
     }
-
 }
-

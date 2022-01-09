@@ -37,6 +37,4 @@ class Functions extends DataObject
     static $belongs_many_many = array(
         "roles" => "Role"
     );
-
 }
-

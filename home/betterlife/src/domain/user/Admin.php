@@ -83,7 +83,7 @@ class Admin extends DataObject
      */
     public function getRoletypeShow()
     {
-        return self::roletypeShow( $this->roletype );
+        return self::roletypeShow($this->roletype);
     }
 
     /**
@@ -93,7 +93,7 @@ class Admin extends DataObject
      */
     public function getSeescopeShow()
     {
-        return self::seescopeShow( $this->seescope );
+        return self::seescopeShow($this->seescope);
     }
 
     /**
@@ -106,7 +106,7 @@ class Admin extends DataObject
      */
     public static function roletypeShow($roletype)
     {
-        return EnumRoletype::roletypeShow( $roletype );
+        return EnumRoletype::roletypeShow($roletype);
     }
 
     /**
@@ -116,8 +116,6 @@ class Admin extends DataObject
      */
     public static function seescopeShow($seescope)
     {
-        return EnumSeescope::seescopeShow( $seescope );
+        return EnumSeescope::seescopeShow($seescope);
     }
-
 }
-
