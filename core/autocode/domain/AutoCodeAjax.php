@@ -133,7 +133,7 @@ class AutoCodeAjax extends AutoCodeView
         $classname     = self::getClassname($tablename);
         $instancename  = self::getInstancename($tablename);
         $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "list" . DS;
-        $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
+        $filename      = $instancename . ConfigF::SUFFIX_FILE_PHP;
         $relative_path = "api" . DS . "web" . DS . "list" . DS . $filename;
         AutoCodePreviewReport::$api_admin_files[$classname . $filename] = $relative_path;
         return self::saveDefineToDir($dir, $filename, $defineApiWebFileContent);
@@ -149,7 +149,7 @@ class AutoCodeAjax extends AutoCodeView
         $classname     = self::getClassname($tablename);
         $instancename  = self::getInstancename($tablename);
         $dir           = self::$save_dir . DS . "api" . DS . "web" . DS . "select" . DS;
-        $filename      = $instancename . Config_F::SUFFIX_FILE_PHP;
+        $filename      = $instancename . ConfigF::SUFFIX_FILE_PHP;
         $relative_path = "api" . DS . "web" . DS . "select" . DS . $filename;
         AutoCodePreviewReport::$api_select_files[$classname . $filename] = $relative_path;
         return self::saveDefineToDir($dir, $filename, $defineApiSelectFileContent);
@@ -165,7 +165,7 @@ class AutoCodeAjax extends AutoCodeView
     {
         $dir           = self::$save_dir . "api" . DS . "web" . DS . "data" . DS;
         $fieldname     = ucfirst($fieldname);
-        $filename      = $instantceName . $fieldname . Config_F::SUFFIX_FILE_JSON;
+        $filename      = $instantceName . $fieldname . ConfigF::SUFFIX_FILE_JSON;
         $relative_path = str_replace(self::$save_dir, "", $dir . $filename);
         AutoCodePreviewReport::$json_admin_files[$filename] = $relative_path;
         return self::saveDefineToDir($dir, $filename, $defineJsonFileContent);

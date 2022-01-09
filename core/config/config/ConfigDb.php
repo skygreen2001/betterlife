@@ -122,7 +122,7 @@ class EnumDbEngine extends Enum
      *
      * 当 $engine = self::ENGINE_OBJECT_MSSQLSERVER时；
      *
-     * 1. 它能和FreeTDS配合支持UTF-8字符集，FreeTDS本身支持Unix和Linux，但也有支持Windows的组件；详情请看Config_Mssql
+     * 1. 它能和FreeTDS配合支持UTF-8字符集，FreeTDS本身支持Unix和Linux，但也有支持Windows的组件；详情请看ConfigMssql
      * 2. 时间在表里设置为datetime;在页面上显示的时间格式不太适合中文阅读
      *
      * 解决办法如下:
@@ -229,7 +229,7 @@ class ConfigDb extends ConfigBB
      * @var string 数据库表字段字符集
      * @static
      */
-    public static $character = Config_C::CHARACTER_UTF8_MB4;
+    public static $character = ConfigC::CHARACTER_UTF8_MB4;
     /**
     * 协助调试: 打印SQL语句
     * @var bool
@@ -361,7 +361,7 @@ class ConfigDb extends ConfigBB
      */
     private static function ormByRule($classname)
     {
-        $class_root_dir = Config_F::DOMAIN_ROOT;
+        $class_root_dir = ConfigF::DOMAIN_ROOT;
         $class          = new ReflectionClass($classname);
         $filename       = strtolower(dirname($class->getFileName()));
         $subDirname     = substr($filename, strpos($filename, $class_root_dir) + strlen($class_root_dir) + 1);

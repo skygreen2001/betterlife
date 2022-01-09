@@ -184,7 +184,7 @@ class XmlObject extends BBObject implements ArrayAccess
      */
     public static function address()
     {
-        return Gc::$nav_root_path . basename(__FILE__, Config_F::SUFFIX_FILE_PHP) . Config_F::SUFFIX_FILE_XML;
+        return Gc::$nav_root_path . basename(__FILE__, ConfigF::SUFFIX_FILE_PHP) . ConfigF::SUFFIX_FILE_XML;
     }
 
     /**

@@ -40,7 +40,7 @@ if (isset($_REQUEST["save_dir"]) && !empty($_REQUEST["save_dir"])) {
         AutoCodeModel::autoCode($table_names);
     }
 
-    if (Config_AutoCode::SHOW_PREVIEW_REPORT) {
+    if (ConfigAutoCode::SHOW_PREVIEW_REPORT) {
         echo "<div style='width:80%;margin:0 auto;'>";
         echo "  <a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
         echo "  <div id='showPrepareWork' style='display: none;'>";

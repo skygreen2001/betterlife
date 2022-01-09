@@ -30,7 +30,6 @@ class AutoCodePreviewReport extends AutoCode
     public static $api_admin_files     = array();
     public static $admin_layout_menu   = array();
     public static $api_select_files    = array();
-    public static $manage_service_file = "";
     private static $url_base           = "";
 
     /**
@@ -38,7 +37,6 @@ class AutoCodePreviewReport extends AutoCode
      */
     public static function init()
     {
-        self::$manage_service_file = Gc::$module_root . DS . "admin" . DS . self::$dir_src . DS . AutoCodeService::$service_dir . DS . "Manager_Service.php";
     }
 
     /**
@@ -114,12 +112,12 @@ MODEL;
             $moreContent .= self::groupFileContentsStatus(self::$api_select_files, "ajax");
         }
 
-        if (Config_AutoCode::ONLY_DOMAIN) {
+        if (ConfigAutoCode::ONLY_DOMAIN) {
             $showResult = self::modelShowDetailReport($table_names, $moreContent);
             return $showResult;
         }
 
-        if (Config_AutoCode::SHOW_REPORT_FRONT) {
+        if (ConfigAutoCode::SHOW_REPORT_FRONT) {
             $title        = "<a href='$dir_autocode/db_all.php' target='_blank' style='color:white;'>[前台]</a>";
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "front", $moreContent);
@@ -140,7 +138,7 @@ MODEL;
             }
         }
 
-        if (Config_AutoCode::SHOW_REPORT_ADMIN) {
+        if (ConfigAutoCode::SHOW_REPORT_ADMIN) {
             $title        = "<a href='$dir_autocode/db_admin.php' target='_blank' style='color:white;'>[后台]</a>";
             $moreContent .= str_replace("[title]", $title, $module_model);
             $moreContent  = str_replace("[module_name]", "admin", $moreContent);
@@ -155,7 +153,7 @@ MODEL;
                 //生成服务管理器
                 $title             = "<a href='$layer_autocode/db_service.php?type=2' target='_blank'>服务管理类</a>";
                 $moreContent      .= str_replace("[title]", $title, $title_model);
-                $moreContent      .= self::groupFileContentsStatus(array(self::$manage_service_file), "admin");
+                $moreContent      .= self::groupFileContentsStatus(array(AutoCodeService::$manage_service_file), "admin");
             }
 
             // 生成后台Action，继承基本Action
@@ -207,7 +205,7 @@ MODEL;
             //生成首页
             $title             = "<a href='$layer_autocode/view/db_view_default.php?type=1' target='_blank'>模板首页</a>";
             $moreContent      .= str_replace("[title]", $title, $title_model);
-            $model_index_file  = Gc::$module_root . DS . self::$m_model . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . Config_F::VIEW_CORE . DS . "index" . DS . "index" . Config_F::SUFFIX_FILE_TPL;
+            $model_index_file  = Gc::$module_root . DS . self::$m_model . DS . ConfigF::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . ConfigF::VIEW_CORE . DS . "index" . DS . "index" . ConfigF::SUFFIX_FILE_TPL;
             $moreContent      .= self::groupFileContentsStatus(array($model_index_file), "model");
 
             // 生成标准的增删改查模板表示层页面

@@ -42,27 +42,27 @@ class Dao_Odbc extends Dao implements IDaoNormal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
         if (!isset($host)) {
-            $host     = Config_Odbc::$host;
+            $host     = ConfigOdbc::$host;
         }
         if (!isset($username)) {
-            $username = Config_Odbc::$username;
+            $username = ConfigOdbc::$username;
         }
         if (!isset($password)) {
-            $password = Config_Odbc::$password;
+            $password = ConfigOdbc::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Odbc::$dbname;
+            $dbname   = ConfigOdbc::$dbname;
         }
         if (!isset($this->dbtype)) {
-            $dbtype    = Config_Odbc::$db;
+            $dbtype    = ConfigOdbc::$db;
         }
         if (ConfigDb::$is_dsn_set) {
-            $this->connection = odbc_connect(Config_Odbc::dsn($dbname), $username, $password);
+            $this->connection = odbc_connect(ConfigOdbc::dsn($dbname), $username, $password);
         } else {
-            if (Config_Odbc::$is_persistent) {
-                $this->connection = odbc_pconnect(Config_Odbc::dsn_less($host, $dbname, $dbtype), $username, $password);
+            if (ConfigOdbc::$is_persistent) {
+                $this->connection = odbc_pconnect(ConfigOdbc::dsn_less($host, $dbname, $dbtype), $username, $password);
             } else {
-                $this->connection = odbc_connect(Config_Odbc::dsn_less($host, $dbname, $dbtype), $username, $password);
+                $this->connection = odbc_connect(ConfigOdbc::dsn_less($host, $dbname, $dbtype), $username, $password);
             }
         }
         if (!$this->connection) {
@@ -86,9 +86,9 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             if (
                 ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
-                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
+                    ( ( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))
             ) {
-                $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
+                $this->saParams = UtilObject::object_to_array($object, false, array(ConfigC::CHARACTER_UTF_8 => ConfigC::CHARACTER_GBK));
             } else {
                 $this->saParams = UtilObject::object_to_array($object);
             }
@@ -110,7 +110,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
             $sql_maxid  = Crud_SQL::SQL_MAXID;
             $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
 
-            $tablename  = Config_Odbc::orm($this->classname);
+            $tablename  = ConfigOdbc::orm($this->classname);
             $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
             if (ConfigDb::$debug_show_sql) {
                 LogMe::log("SQL: " . $autoIdSql);
@@ -176,9 +176,9 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $object->setUpdateTime(UtilDateTime::now(EnumDateTimeFormat::STRING));
                 if (
                     ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
-                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
+                        ( ( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))
                 ) {
-                    $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
+                    $this->saParams = UtilObject::object_to_array($object, false, array(ConfigC::CHARACTER_UTF_8 => ConfigC::CHARACTER_GBK));
                 } else {
                     $this->saParams = UtilObject::object_to_array($object);
                 }
@@ -423,7 +423,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
                 if (UtilString::is_utf8($sqlstring)) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
@@ -558,7 +558,7 @@ class Dao_Odbc extends Dao implements IDaoNormal
                 $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $tablename    = Config_Odbc::orm($this->classname);
+            $tablename    = ConfigOdbc::orm($this->classname);
             $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
             $this->sQuery = $_SQL->from($this->classname)->where($whereclause)->order($sort)->result();
             $result       = $this->sqlExecute($this->sQuery, $object);

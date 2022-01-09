@@ -37,7 +37,7 @@ abstract class ExceptionMe extends Exception
     public static function recordException($errorInfo, $object = null, $code = 0, $extra = null)
     {
         if (Gc::$dev_debug_on) {
-            if (Config_Exception::EXCEPTION_WAY != 0) {
+            if (ConfigException::EXCEPTION_WAY != 0) {
                 throw new Exception($errorInfo);
             }
         }

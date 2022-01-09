@@ -55,7 +55,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $icon_class = self::ADMIN_SIDEBAR_MENU_ICONS[0];
             }
             $icon_class = "fa " . $icon_class;
-            if ($group == Config_AutoCode::GROUP_ADMIN_MENU_CORE) {
+            if ($group == ConfigAutoCode::GROUP_ADMIN_MENU_CORE) {
                 foreach ($tables as $tablename) {
                     $table_comment  = self::tableCommentKey($tablename);
                     $instancename   = self::getInstancename($tablename);
@@ -80,7 +80,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                  "            <a href=\"{\$url_base}index.php?go=admin.$instancename.lists\"><i class=\"$icon_class\"></i> <span>$table_comment</span></a>" . HH .
                                  "          </li>" . HH;
             } else {
-                $gts = Config_AutoCode::GROUP_ADMIN_MENU_TEXT;
+                $gts = ConfigAutoCode::GROUP_ADMIN_MENU_TEXT;
                 $gvn = $group;
                 if (array_key_exists($group, $gts)) {
                     $gvn = $gts[$group];
@@ -113,13 +113,13 @@ class AutoCodeViewAdmin extends AutoCodeView
         include("template" . DS . "admin.php");
 
         $dir           = dirname(self::$view_dir_full) . DS . "layout" . DS . "normal" . DS;
-        $filename      = "navbar" . Config_F::SUFFIX_FILE_TPL;
+        $filename      = "navbar" . ConfigF::SUFFIX_FILE_TPL;
         $relative_path = str_replace(self::$save_dir, "", $dir . $filename);
         AutoCodePreviewReport::$admin_layout_menu[$filename] = $relative_path;
         self::saveDefineToDir($dir, $filename, $navbar_template);
 
         $dir           = dirname(self::$view_dir_full) . DS . "layout" . DS . "normal" . DS;
-        $filename      = "sidebar" . Config_F::SUFFIX_FILE_TPL;
+        $filename      = "sidebar" . ConfigF::SUFFIX_FILE_TPL;
         $relative_path = str_replace(self::$save_dir, "", $dir . $filename);
         AutoCodePreviewReport::$admin_layout_menu[$filename] = $relative_path;
         self::saveDefineToDir($dir, $filename, $sidebar_template);
@@ -440,7 +440,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                                       "                          </div>" . HH;
                 } else {
                     $datatype = self::comment_type($field["Type"]);
-                    if (in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN)) {
+                    if (in_array($fieldname, ConfigAutoCode::IS_NOT_EDIT_COLUMN)) {
                         $edit_contents .= "                      </div>" . HH;
                         continue;
                     }

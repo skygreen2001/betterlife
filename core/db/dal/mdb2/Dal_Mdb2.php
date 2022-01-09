@@ -30,20 +30,20 @@ class Dal_Mdb2 extends Dal implements IDal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
     {
         if (!isset($username)) {
-            $username = Config_Mdb2::$username;
+            $username = ConfigMdb2::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mdb2::$password;
+            $password = ConfigMdb2::$password;
         }
         if (!isset($dbname)) {
-            $dbname = Config_Mdb2::$dbname;
+            $dbname = ConfigMdb2::$dbname;
         }
         if (!isset($dbtype)) {
-            $dbtype = Config_Mdb2::$db;
+            $dbtype = ConfigMdb2::$db;
         }
         $this->dbtype = $dbtype;
         try {
-            $this->connection = &MDB2::connect(Config_Mdb2::dsn($host, $port, $username, $password, $dbname, $dbtype), Config_Mdb2::$options);
+            $this->connection = &MDB2::connect(ConfigMdb2::dsn($host, $port, $username, $password, $dbname, $dbtype), ConfigMdb2::$options);
             if (PEAR::isError($this->connection)) {
                 die($this->connection->getMessage());
             }
@@ -84,7 +84,7 @@ class Dal_Mdb2 extends Dal implements IDal
     private function getResultToObjects($object)
     {
         $result = null;
-        $rows   = $this->stmt->fetchAll(Config_Mdb2::$fetchmode);
+        $rows   = $this->stmt->fetchAll(ConfigMdb2::$fetchmode);
         foreach ($rows as $row) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
@@ -373,7 +373,7 @@ class Dal_Mdb2 extends Dal implements IDal
             }
             $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->result();
             $this->executeSQL();
-            $row = $this->stmt->fetchRow(Config_Mdb2::$fetchmode);
+            $row = $this->stmt->fetchRow(ConfigMdb2::$fetchmode);
             if (isset($row)) {
                 $result = UtilObject::array_to_object($row, $this->classname);
             }
@@ -402,7 +402,7 @@ class Dal_Mdb2 extends Dal implements IDal
                 $where        = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($where)->result();
                 $this->executeSQL();
-                $row          = $this->stmt->fetchRow(Config_Mdb2::$fetchmode);
+                $row          = $this->stmt->fetchRow(ConfigMdb2::$fetchmode);
                 if (isset($row)) {
                     $result = UtilObject::array_to_object($row, $this->classname);
                 }
@@ -499,7 +499,7 @@ class Dal_Mdb2 extends Dal implements IDal
             if (ConfigDb::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             } elseif (ConfigDb::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Mdb2::orm($this->classname);
+                $tablename    = ConfigMdb2::orm($this->classname);
                 $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {

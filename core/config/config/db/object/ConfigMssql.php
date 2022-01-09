@@ -26,7 +26,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Mssql extends ConfigDb
+class ConfigMssql extends ConfigDb
 {
     /**
      * 返回数据库连接地址

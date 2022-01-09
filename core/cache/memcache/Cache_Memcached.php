@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @todo
  * 使用memcached作为系统缓存。
  *
  * 基于libmemcached的客户端叫memcached，据说性能更好，功能也更多。
  *
  * 暂未提供实现，该组件需要在Linux系统上方能使用。
  *
- * @link php的memcached客户端memcached:http://www.9enjoy.com/php-memcached/
+ * @link php的memcached客户端memcached: http://www.9enjoy.com/php-memcached/
+ * @todo
  * @category betterlife
  * @package core.cache
  * @author skygreen
@@ -90,7 +90,7 @@ class Cache_Memcached extends CacheBase
      */
     public function save($key, $value, $expired = 86400)
     {
-        return $this->obj->add($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->add($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**
@@ -104,7 +104,7 @@ class Cache_Memcached extends CacheBase
      */
     public function set($key, $value, $expired = 86400)
     {
-        return $this->obj->set($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->set($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**
@@ -118,7 +118,7 @@ class Cache_Memcached extends CacheBase
     public function update($key, $value, $expired = 86400)
     {
         //替换数据
-        return $this->obj->replace($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->replace($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**

@@ -6,7 +6,7 @@
  * @package core.config.common
  * @author skygreen
  */
-class Config_C extends ConfigBB
+class ConfigC extends ConfigBB
 {
     const LANGUAGE_WORLD     = "Wl";
     const LANGUAGE_ZH_CN     = "Zh_Cn";

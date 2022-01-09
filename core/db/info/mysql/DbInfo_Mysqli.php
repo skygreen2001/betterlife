@@ -66,16 +66,16 @@ class DbInfo_Mysqli extends DbInfo implements IDbInfo
         }
 
         // Test connecting to the database.
-        $connecturl = Config_Mysql::connctionurl($host, $port);
+        $connecturl = ConfigMysql::connctionurl($host, $port);
 
         if (!isset($username)) {
-            $username = Config_Mysql::$username;
+            $username = ConfigMysql::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mysql::$password;
+            $password = ConfigMysql::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Mysql::$dbname;
+            $dbname   = ConfigMysql::$dbname;
         }
         // $dbinfo = new DbInfo_Mysqli();
         $connection = new mysqli($connecturl, $username, $password, $dbname);

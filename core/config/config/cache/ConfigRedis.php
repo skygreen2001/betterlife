@@ -19,7 +19,7 @@
  * @subpackage cache
  * @author skygreen
  */
-class Config_Redis extends ConfigBB
+class ConfigRedis extends ConfigBB
 {
     /**
      * 主机地址

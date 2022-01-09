@@ -16,7 +16,7 @@ class AutoCodeOneKey extends AutoCode
         $dest_directory = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";
         AutoCodeValidate::run();
-        if (Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) {
+        if (ConfigAutoCode::ALWAYS_AUTOCODE_XML_NEW) {
             AutoCodeConfig::run();
         }
         if (!file_exists($filename)) {
@@ -58,7 +58,7 @@ class AutoCodeOneKey extends AutoCode
         AutoCodeView::autoCode($table_names);
         self::$showReport      .= AutoCodeFoldHelper::foldafterviewdefault();
 
-        if (Config_AutoCode::SHOW_PREVIEW_REPORT) {
+        if (ConfigAutoCode::SHOW_PREVIEW_REPORT) {
             echo "<div style='width: 1000px; margin-left: 24px;'>";
             echo "  <a href='javascript:' style='cursor:pointer;' onclick=\"(document.getElementById('showPrepareWork').style.display=(document.getElementById('showPrepareWork').style.display=='none')?'':'none')\">预备工作</a>";
             echo "  <div id='showPrepareWork' style='display: none;'>";

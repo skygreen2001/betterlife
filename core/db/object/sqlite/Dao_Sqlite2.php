@@ -22,10 +22,10 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
         if (!isset($dbname)) {
-            $dbname = Config_Sqlite::$dbname;
+            $dbname = ConfigSqlite::$dbname;
         }
 
-        if (Config_Sqlite::$is_persistent) {
+        if (ConfigSqlite::$is_persistent) {
             $this->connection = sqlite_popen($dbname, 0666, $errormessage);
         } else {
             $this->connection = sqlite_open($dbname, 0666, $errormessage);
@@ -57,7 +57,7 @@ class Dao_Sqlite2 extends Dao implements IDaoNormal
     private function getResultToObjects($object)
     {
         $result = null;
-        while ($currentrow = sqlite_fetch_array($this->stmt, Config_Sqlite::$sqlite2_fetchmode)) {
+        while ($currentrow = sqlite_fetch_array($this->stmt, ConfigSqlite::$sqlite2_fetchmode)) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
                     $c        = UtilObject::array_to_object($currentrow, $this->classname);

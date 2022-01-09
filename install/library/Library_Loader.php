@@ -81,7 +81,7 @@ class Library_Loader
      */
     private static function dir_library()
     {
-        return Gc::$nav_root_path . Config_F::ROOT_INSTALL . DS . Config_F::ROOT_LIBRARY . DS;
+        return Gc::$nav_root_path . ConfigF::ROOT_INSTALL . DS . ConfigF::ROOT_LIBRARY . DS;
     }
 
     /**
@@ -94,8 +94,8 @@ class Library_Loader
         $communication_root_dir = self::dir_library() . "communication" . DS;
         echo "load communication: 加载通信模块, 路径: " . $communication_root_dir; 
         // //加载模块里所有的文件
-        // load_module( Config_F::ROOT_LIBRARY, $communication_root_dir, "webservice" );
-        // load_module( Config_F::ROOT_LIBRARY, $communication_root_dir . "webservice" . DS, "nusoap" );
+        // load_module( ConfigF::ROOT_LIBRARY, $communication_root_dir, "webservice" );
+        // load_module( ConfigF::ROOT_LIBRARY, $communication_root_dir . "webservice" . DS, "nusoap" );
         die();
     }
 
@@ -111,7 +111,7 @@ class Library_Loader
         // require_once(self::dir_library() . "barcode" . DS . "UtilBarCode.php");
         // $barcode_root_dir .= "class" . DS;
         // //加载模块里所有的文件
-        // load_module( Config_F::ROOT_LIBRARY, $barcode_root_dir ); 
+        // load_module( ConfigF::ROOT_LIBRARY, $barcode_root_dir ); 
         die();
     }
 }

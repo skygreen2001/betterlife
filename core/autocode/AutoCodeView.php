@@ -57,7 +57,7 @@ class AutoCodeView extends AutoCode
                 self::$appName = "admin";
                 break;
         }
-        self::$view_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . Config_F::VIEW_CORE . DS;
+        self::$view_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . ConfigF::VIEW_VIEW . DS . Gc::$self_theme_dir . DS . ConfigF::VIEW_CORE . DS;
     }
 
     /**
@@ -103,17 +103,17 @@ class AutoCodeView extends AutoCode
                 $fieldInfos = self::fieldInfosByTable_names($table_names);
                 foreach ($fieldInfos as $tablename => $fieldInfo) {
                     $tpl_listsContent = AutoCodeViewModel::tpl_lists($tablename, $fieldInfo);
-                    $filename         = "lists" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "lists" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_listsContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
                     $tpl_viewContent  = AutoCodeViewModel::tpl_view($tablename, $fieldInfo);
-                    $filename         = "view" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "view" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_viewContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
                     $tpl_editContent  = AutoCodeViewModel::tpl_edit($tablename, $fieldInfo);
-                    $filename         = "edit" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "edit" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_editContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
                 }
@@ -130,17 +130,17 @@ class AutoCodeView extends AutoCode
                 $fieldInfos = self::fieldInfosByTable_names($table_names);
                 foreach ($fieldInfos as $tablename => $fieldInfo) {
                     $tpl_listsContent = AutoCodeViewAdmin::tpl_lists($tablename, $fieldInfo);
-                    $filename         = "lists" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "lists" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_listsContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
                     $tpl_viewContent  = AutoCodeViewAdmin::tpl_view($tablename, $fieldInfo);
-                    $filename         = "view" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "view" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_viewContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
                     $tpl_editContent  = AutoCodeViewAdmin::tpl_edit($tablename, $fieldInfo);
-                    $filename         = "edit" . Config_F::SUFFIX_FILE_TPL;
+                    $filename         = "edit" . ConfigF::SUFFIX_FILE_TPL;
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_editContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
@@ -209,18 +209,18 @@ class AutoCodeView extends AutoCode
             $link          = "    <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.view\">查看</my:a>|<my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.edit\">修改</my:a>";
             $back_index    = "    <my:a href='{\$url_base}index.php?go={$appname}.index.index'>返回首页</my:a></div>";
             $tpl_content   = self::tableToViewTplDefine("    <div><h1>" . $table_comment . "列表</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}");
-            $filename      = "lists" . Config_F::SUFFIX_FILE_TPL;
+            $filename      = "lists" . ConfigF::SUFFIX_FILE_TPL;
             $tplName       = self::saveTplDefineToDir($tablename, $tpl_content, $filename);
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
             $link        = "     <div align=\"center\"><my:a href=\"{\$url_base}index.php?go={$appname}.{$instancename}.lists\">返回列表</my:a>";
             $tpl_content = self::tableToViewTplDefine("    <div><h1>查看" . $table_comment . "</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}");
-            $filename    = "view" . Config_F::SUFFIX_FILE_TPL;
+            $filename    = "view" . ConfigF::SUFFIX_FILE_TPL;
             $tplName     = self::saveTplDefineToDir($tablename, $tpl_content, $filename);
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
 
             $tpl_content = self::tableToViewTplDefine("    <div><h1>编辑" . $table_comment . "</h1></div><br/>" . HH . "{$link}<br/>" . HH . "{$back_index}");
-            $filename    = "edit" . Config_F::SUFFIX_FILE_TPL;
+            $filename    = "edit" . ConfigF::SUFFIX_FILE_TPL;
             $tplName     = self::saveTplDefineToDir($tablename, $tpl_content, $filename);
             self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
         }
@@ -262,7 +262,7 @@ class AutoCodeView extends AutoCode
     {
         $dir           = dirname(self::$view_dir_full) . DS . "js" . DS . "core" . DS;
         $classname     = self::getClassname($tablename);
-        $filename      = self::getInstancename($tablename) . Config_F::SUFFIX_FILE_JS;
+        $filename      = self::getInstancename($tablename) . ConfigF::SUFFIX_FILE_JS;
         $relative_path = str_replace(self::$save_dir, "", $dir . $filename);
         AutoCodePreviewReport::$js_admin_files[$classname . $filename] = $relative_path;
         return self::saveDefineToDir($dir, $filename, $defineJsFileContent);

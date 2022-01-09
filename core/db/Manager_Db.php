@@ -128,7 +128,7 @@ class Manager_Db extends Manager
                             }
                             break;
                         default:
-                        //默认: Config_Mysql::ENGINE_MYSQL_PHP
+                        //默认: ConfigMysql::ENGINE_MYSQL_PHP
                             if ($this->dao_static == null) {
                                 $this->dao_static = new Dao_Php5();
                             }
@@ -167,7 +167,7 @@ class Manager_Db extends Manager
                     }
                     break;
                 default:
-                //默认: Config_Mysql::ENGINE_MYSQL_PHP
+                //默认: ConfigMysql::ENGINE_MYSQL_PHP
                     if ($this->dao_static == null) {
                         $this->dao_static = new Dao_Php5();
                     }

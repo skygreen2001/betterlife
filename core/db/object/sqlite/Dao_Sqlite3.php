@@ -24,7 +24,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
         if (!isset($dbname)) {
             $dbname = ConfigDb::$dbname;
         }
-        $this->connection = new SQLite3(Config_Sqlite::$dbname);
+        $this->connection = new SQLite3(ConfigSqlite::$dbname);
         if (!$this->connection) {
             ExceptionDb::log(Wl::ERROR_INFO_CONNECT_FAIL);
         }
@@ -69,7 +69,7 @@ class Dao_Sqlite3 extends Dao implements IDaoNormal
     private function getResultToObjects($object)
     {
         $result = array();
-        while ($currentrow = $this->results->fetchArray(Config_Sqlite::$sqlite3_fetchmode)) {
+        while ($currentrow = $this->results->fetchArray(ConfigSqlite::$sqlite3_fetchmode)) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
                     $c        = UtilObject::array_to_object($currentrow, $this->classname);

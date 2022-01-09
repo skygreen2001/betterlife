@@ -29,6 +29,11 @@ class AutoCodeService extends AutoCode
      */
     public static $service_dir_full;
     /**
+     * Manager_Service的文件路径
+     * @var string
+     */
+    public static $manage_service_file = "";
+    /**
      * 服务类生成定义的方式
      *
      *     1. 继承具有标准方法的Service。
@@ -49,12 +54,7 @@ class AutoCodeService extends AutoCode
     public static function autoCode($table_names = "")
     {
         self::$app_dir = Gc::$appName;
-        if (!UtilString::is_utf8(self::$service_dir_full)) {
-            self::$service_dir_full = UtilString::gbk2utf8(self::$service_dir_full);
-        }
-        // self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
-        self::$service_dir_full = self::$save_dir . Gc::$module_root . DS  . "admin" . DS . self::$dir_src . DS . self::$service_dir . DS;
-
+        self::initServicePath();
         self::init();
 
         if (self::$isOutputCss) {
@@ -97,23 +97,45 @@ class AutoCodeService extends AutoCode
          */
         self::$showReport .= "<font color='#237319'>[需要在管理类Manager_Service里添加没有的代码]</font><br />";
 
-        // 创建后台管理服务类
-        $result = self::createManageService($table_names);
-        $section_define  = $result["section_define"];
-        $section_content = $result["section_content"];
-        $e_result = "<?php" . HH . HH .
-                    "/**" . HH .
-                    " * -----------| 服务类:所有Service的管理类 |-----------" . HH .
-                    " * @category $category" . HH .
-                    " * @package $package" . HH .
-                    " * @author $author" . HH .
-                    " */" . HH .
-                    "class Manager_Service extends Manager" . HH .
-                    "{" . HH . $section_define . HH . $section_content . "}" . HH;
-        self::saveDefineToDir(self::$service_dir_full, "Manager_Service.php", $e_result);
+        $file_manage_service_file = Gc::$nav_root_path . self::$manage_service_file;
+        if (file_exists($file_manage_service_file)) {
+            // 更新后台管理服务类
+            // 将新添加的内容放置在文件最后作为可覆盖的内容
+            $content = file_get_contents($file_manage_service_file);
+            self::updateManageService($table_names, $content);
+        } else {
+            // 创建后台管理服务类
+            $result = self::createManageService($table_names);
+            $section_define  = $result["section_define"];
+            $section_content = $result["section_content"];
+            $e_result = "<?php" . HH . HH .
+                        "/**" . HH .
+                        " * -----------| 服务类:所有Service的管理类 |-----------" . HH .
+                        " * @category $category" . HH .
+                        " * @package $package" . HH .
+                        " * @author $author" . HH .
+                        " */" . HH .
+                        "class Manager_Service extends Manager" . HH .
+                        "{" . HH . $section_define . HH . $section_content . "}" . HH;
+            self::saveDefineToDir(self::$service_dir_full, "Manager_Service.php", $e_result);
+        }
         $link_service_manage_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full) . "Manager_Service.php";
         self::$showReport .=  "新生成的Manager_Service文件路径:<br />" . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
                               "<font color='#0000FF'style='word-break: break-all;'><a target='_blank' href='$link_service_manage_dir_href'>" . self::$service_dir_full . "Manager_Service.php</a></font><br />";
+    }
+
+    /**
+     * 初始化管理文件的路径
+     */
+    public static function initServicePath() 
+    {
+        if (!UtilString::is_utf8(self::$service_dir_full)) {
+            self::$service_dir_full = UtilString::gbk2utf8(self::$service_dir_full);
+        }
+        // self::$service_dir_full    = self::$save_dir . Gc::$module_root . DS  . self::$app_dir . DS . self::$dir_src . DS . self::$service_dir . DS;
+        $service_relative_path     = Gc::$module_root . DS  . "admin" . DS . self::$dir_src . DS . self::$service_dir . DS;
+        self::$service_dir_full    = self::$save_dir . $service_relative_path;
+        self::$manage_service_file = $service_relative_path . "Manager_Service.php";
     }
 
     /**
@@ -154,37 +176,35 @@ class AutoCodeService extends AutoCode
     }
 
     /**
-     * 创建服务管理类
+     * 更新服务管理类
+     * 
+     * 将新添加的内容放置在文件最后作为可覆盖的内容
      * @param array|string $table_names
      * 示例如下:
      * 
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      */
-    public static function updateManageService($table_names = "")
+    public static function updateManageService($table_names = "", $content = "")
     {
-        $file_manage_service_file = Gc::$nav_root_path . AutoCodePreviewReport::$manage_service_file;
-        if (file_exists($file_manage_service_file)) {
-            $tableList = self::tableListByTable_names($table_names);
-            $content   = file_get_contents($file_manage_service_file);
-            foreach ($tableList as $tablename) {
-                $result          = AutoCodeService::createManageService($tablename);
-                $section_define  = $result["section_define"];
-                $section_content = $result["section_content"];
+        $tableList = self::tableListByTable_names($table_names);
+        foreach ($tableList as $tablename) {
+            $result          = AutoCodeService::createManageService($tablename);
+            $section_define  = $result["section_define"];
+            $section_content = $result["section_content"];
 
-                if (!contain($content, $section_define)) {
-                    $ctrl    = substr($content, 0, strpos($content, "     * 提供服务:") - 8);
-                    $ctrr    = substr($content, strpos($content, "     * 提供服务:") - 8);
-                    $content = $ctrl . $section_define . $ctrr;
-                    $content = trim($content);
-                    $ctrl    = substr($content, 0, strrpos($content, "}"));
-                    $ctrr    = substr($content, strrpos($content, "}"));
-                    $content = trim($ctrl) . "" . HH . HH . rtrim($section_content) . HH . $ctrr . HH;
-                }
+            if (!contain($content, $section_define)) {
+                $ctrl    = substr($content, 0, strpos($content, "     * 提供服务:") - 8);
+                $ctrr    = substr($content, strpos($content, "     * 提供服务:") - 8);
+                $content = $ctrl . $section_define . $ctrr;
+                $content = trim($content);
+                $ctrl    = substr($content, 0, strrpos($content, "}"));
+                $ctrr    = substr($content, strrpos($content, "}"));
+                $content = trim($ctrl) . "" . HH . HH . rtrim($section_content) . HH . $ctrr . HH;
             }
-            $ffile_manage_service_file_model = self::$save_dir . AutoCodePreviewReport::$manage_service_file;
-            file_put_contents($ffile_manage_service_file_model, $content);
         }
+        $ffile_manage_service_file_model = self::$save_dir . self::$manage_service_file;
+        file_put_contents($ffile_manage_service_file_model, $content);
     }
 
     /**

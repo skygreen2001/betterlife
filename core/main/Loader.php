@@ -32,7 +32,7 @@ class Loader
             if (Gc::$dev_debug_on) {
                 ExceptionMe::backtrace();
             }
-            if (Gc::$language == Config_C::LANGUAGE_EN_US) {
+            if (Gc::$language == ConfigC::LANGUAGE_EN_US) {
                 $error_info = "Not a valid object '{$object}' to load!";
             } else {
                 $error_info = "不是有效的可以加载的 '{$object}'!";

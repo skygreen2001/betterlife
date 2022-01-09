@@ -146,7 +146,7 @@ class AutoCode extends BBObject
      */
     protected static function getClassname($tablename)
     {
-        if (Config_AutoCode::DB_TABLE_DOMAIN_EQUAL) {
+        if (ConfigAutoCode::DB_TABLE_DOMAIN_EQUAL) {
             $classname = ucfirst($tablename);
             return $classname;
         }

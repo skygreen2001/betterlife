@@ -25,15 +25,15 @@ class Sql_Mysql extends Sql implements ISqlNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mysql::connctionurl($host, $port);
+        $connecturl = ConfigMysql::connctionurl($host, $port);
         if (!isset($username)) {
-            $username = Config_Mysql::$username;
+            $username = ConfigMysql::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mysql::$password;
+            $password = ConfigMysql::$password;
         }
         if (!isset($dbname)) {
-            $dbname = Config_Mysql::$dbname;
+            $dbname = ConfigMysql::$dbname;
         }
         $this->connection = mysql_connect($connecturl, $username, $password);
         mysql_select_db($dbname, $this->connection);

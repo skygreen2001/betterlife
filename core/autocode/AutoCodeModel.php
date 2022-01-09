@@ -20,7 +20,7 @@ class AutoCodeModel extends AutoCode
         $dest_directory = Gc::$nav_root_path . "tools" . DS . "tools" . DS . "autocode" . DS;
         $filename       = $dest_directory . "autocode.config.xml";
         AutoCodeValidate::run($table_names);
-        if (Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) {
+        if (ConfigAutoCode::ALWAYS_AUTOCODE_XML_NEW) {
             AutoCodeConfig::run();
         }
         if (!file_exists($filename)) {
@@ -35,11 +35,11 @@ class AutoCodeModel extends AutoCode
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
-        if (Config_AutoCode::ONLY_DOMAIN) {
+        if (ConfigAutoCode::ONLY_DOMAIN) {
             self::$showReport .= "</div>";
 
             //将新添加的内容放置在文件最后作为可覆盖的内容
-            AutoCodePreviewReport::init();
+            
             return;
         }
         //生成提供服务类[前端Service类]
@@ -70,12 +70,10 @@ class AutoCodeModel extends AutoCode
         AutoCodeView::autoCode($table_names);
         self::$showReport       .= AutoCodeFoldHelper::foldafterviewdefault();
 
-        // //将新添加的内容放置在文件最后作为可覆盖的内容
-        // AutoCodePreviewReport::init();
+        //将新添加的内容放置在文件最后作为可覆盖的内容
 
-        // //后台服务管理类
-        // AutoCodeService::updateManageService($table_names);
-        // self::$showReport .= "</div>";
+
+        self::$showReport .= "</div>";
     }
 
     /**

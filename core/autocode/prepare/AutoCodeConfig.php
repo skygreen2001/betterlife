@@ -55,7 +55,7 @@ class AutoCodeConfig extends AutoCode
     public static function run($table_names = "")
     {
         $filename = self::$filename_config_xml;
-        if ((!Config_AutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename)) {
+        if ((!ConfigAutoCode::ALWAYS_AUTOCODE_XML_NEW) && file_exists($filename)) {
             $filename = dirname($filename) . DS . "autocode_create.config.xml";
             self::$filename_config_xml = $filename;
             self::$url_config_xml = Gc::$url_base . "tools/tools/autocode/autocode_create.config.xml";
@@ -349,7 +349,7 @@ class AutoCodeConfig extends AutoCode
                                 } else {
                                     $instance_name    .= "s";
                                     $is_create_hasmany = true;
-                                    if (( !Config_AutoCode::AUTOCONFIG_CREATE_FULL ) && (self::isMany2ManyByClassname($classname))) {
+                                    if (( !ConfigAutoCode::AUTOCONFIG_CREATE_FULL ) && (self::isMany2ManyByClassname($classname))) {
                                         $is_create_hasmany = false;
                                     }
                                     if ($is_create_hasmany) {

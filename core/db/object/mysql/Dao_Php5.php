@@ -22,18 +22,18 @@ class Dao_Php5 extends Dao implements IDaoNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mysql::connctionurl($host, $port);
+        $connecturl = ConfigMysql::connctionurl($host, $port);
 
         if (!isset($username)) {
-            $username = Config_Mysql::$username;
+            $username = ConfigMysql::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mysql::$password;
+            $password = ConfigMysql::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Mysql::$dbname;
+            $dbname   = ConfigMysql::$dbname;
         }
-        if (Config_Mysql::$is_persistent) {
+        if (ConfigMysql::$is_persistent) {
             $this->connection = mysql_pconnect($connecturl, $username, $password);
         } else {
             $this->connection = mysql_connect($connecturl, $username, $password);
@@ -41,7 +41,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
         if ($this->connection) {
             mysql_select_db($dbname, $this->connection);
         }
-        if (strpos($this->character_set(), Config_C::CHARACTER_LATIN1) !== false || strpos($this->character_set(), Config_C::CHARACTER_GBK) !== false) {
+        if (strpos($this->character_set(), ConfigC::CHARACTER_LATIN1) !== false || strpos($this->character_set(), ConfigC::CHARACTER_GBK) !== false) {
             $this->change_character_set($character_code = ConfigDb::$character);
         }
 
@@ -544,7 +544,7 @@ class Dao_Php5 extends Dao implements IDaoNormal
      */
     public function character_set()
     {
-        $charset = Config_C::CHARACTER_UTF8_MB4;
+        $charset = ConfigC::CHARACTER_UTF8_MB4;
         if ($this->connection) {
             $charset = mysql_client_encoding($this->connection);
         }

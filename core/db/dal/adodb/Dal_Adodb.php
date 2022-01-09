@@ -36,20 +36,20 @@ class Dal_Adodb extends Dal implements IDal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
     {
         if (!isset($username)) {
-            $username = Config_Adodb::$username;
+            $username = ConfigAdodb::$username;
         }
         if (!isset($password)) {
-            $password = Config_Adodb::$password;
+            $password = ConfigAdodb::$password;
         }
         if (!isset($dbname)) {
-            $dbname = Config_Adodb::$dbname;
+            $dbname = ConfigAdodb::$dbname;
         }
         if (!isset($dbtype)) {
-            $dbtype = Config_Adodb::$db;
+            $dbtype = ConfigAdodb::$db;
         }
         $this->dbtype = $dbtype;
         if (!isset($engine)) {
-            $engine = Config_Adodb::$engine;
+            $engine = ConfigAdodb::$engine;
         }
 
         try {
@@ -57,7 +57,7 @@ class Dal_Adodb extends Dal implements IDal
                 case EnumDbSource::DB_SQLSERVER:
                 case EnumDbSource::DB_MICROSOFT_ACCESS:
                 case EnumDbSource::DB_DB2:
-                    Config_Adodb::$is_dsn_set = false;//当数据库为Sql Server,Microsoft Access,DB2时，Adodb只支持Dsn less
+                    ConfigAdodb::$is_dsn_set = false;//当数据库为Sql Server,Microsoft Access,DB2时，Adodb只支持Dsn less
                     break;
             }
             global $ADODB_FETCH_MODE;
@@ -65,13 +65,13 @@ class Dal_Adodb extends Dal implements IDal
             if ($engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO) {
                 $this->connection = ADONewConnection("pdo");
             }
-            if (Config_Adodb::$is_dsn_set) {
+            if (ConfigAdodb::$is_dsn_set) {
                 $conn_vars = array();
-                if (Config_Adodb::$is_persistent) {
+                if (ConfigAdodb::$is_persistent) {
                     $conn_vars[] = "persist";
                 }
-                if (!empty(Config_Adodb::$dialect)) {
-                    $conn_vars[] = "dialect=" . Config_Adodb::$dialect;
+                if (!empty(ConfigAdodb::$dialect)) {
+                    $conn_vars[] = "dialect=" . ConfigAdodb::$dialect;
                 }
                 $conn_str = "";
                 if (count($conn_vars) > 0) {
@@ -81,53 +81,53 @@ class Dal_Adodb extends Dal implements IDal
                     case EnumDbSource::DB_MICROSOFT_ACCESS:
                     case EnumDbSource::DB_DB2:
                         if ($engine == EnumDbEngine::ENGINE_DAL_ADODB) {
-                            $this->connection = ADONewConnection(Config_Adodb::driver($dbtype));
+                            $this->connection = ADONewConnection(ConfigAdodb::driver($dbtype));
                         }
-                        $this->connection->Connect(Config_Adodb::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine));
+                        $this->connection->Connect(ConfigAdodb::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine));
                         break;
                     default:
                         if ($engine == EnumDbEngine::ENGINE_DAL_ADODB) {
-                            $this->connection = ADONewConnection(Config_Adodb::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine) . $conn_str);
+                            $this->connection = ADONewConnection(ConfigAdodb::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine) . $conn_str);
                         }
                         break;
                 }
             } else {
                 if ($engine == EnumDbEngine::ENGINE_DAL_ADODB) {
-                    $this->connection = ADONewConnection(Config_Adodb::driver($dbtype));
+                    $this->connection = ADONewConnection(ConfigAdodb::driver($dbtype));
                 }
                 if ($dbtype == EnumDbSource::DB_ORACLE) {
                     $this->connection->connectSID = true;
                 }
                 switch ($dbtype) {
                     case EnumDbSource::DB_SQLSERVER:
-                        $this->connection = ADONewConnection(Config_Adodb::driver($dbtype));
-                        if (( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8 )) {
-                            $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
+                        $this->connection = ADONewConnection(ConfigAdodb::driver($dbtype));
+                        if (( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF_8 )) {
+                            $this->connection->Connect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
                         } else {
-                            $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
+                            $this->connection->Connect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
                         }
                         break;
                     case EnumDbSource::DB_FIREBIRD:
                     case EnumDbSource::DB_INTERBASE:
                         if (ConfigDb::$is_persistent) {
-                            $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
+                            $this->connection->PConnect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
                         } else {
-                            $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
+                            $this->connection->Connect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
                         }
                         break;
                     case EnumDbSource::DB_SQLITE2:
                     case EnumDbSource::DB_SQLITE3:
                         if (ConfigDb::$is_persistent) {
-                            $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
+                            $this->connection->PConnect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
                         } else {
-                            $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
+                            $this->connection->Connect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine));
                         }
                         break;
                     default:
                         if (ConfigDb::$is_persistent) {
-                            $this->connection->PConnect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
+                            $this->connection->PConnect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
                         } else {
-                            $this->connection->Connect(Config_Adodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
+                            $this->connection->Connect(ConfigAdodb::dsn_less($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password, $dbname);
                         }
                         break;
                 }
@@ -166,8 +166,8 @@ class Dal_Adodb extends Dal implements IDal
             $_SQL = new Crud_Sql_Insert();
             if (is_object($_SQL)) {
                 $this->sQuery = $_SQL->insert($this->classname)->values($this->saParams)->result();
-                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
-                    if (UtilString::is_utf8($this->sQuery) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
+                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
+                    if (UtilString::is_utf8($this->sQuery) && ConfigAdodb::driver($this->dbtype) != ConfigAdodb::DRIVER_MSSQL_UTF8) {
                         $this->sQuery = UtilString::utf82gbk($this->sQuery);
                     }
                 }
@@ -187,7 +187,7 @@ class Dal_Adodb extends Dal implements IDal
                 $realIdName = DataObjectSpec::getRealIDColumnName($object);
                 $sql_maxid  = Crud_SQL::SQL_MAXID;
                 $sql_maxid  = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sql_maxid);
-                $tablename  = Config_Adodb::orm($this->classname);
+                $tablename  = ConfigAdodb::orm($this->classname);
                 $autoIdSql  = Crud_SQL::SQL_SELECT . $sql_maxid . Crud_SQL::SQL_FROM . $tablename;
                 $this->stmt = $this->connection->Execute($autoIdSql);
                 if (!empty($this->stmt) && (count($this->stmt->fields) > 0 )) {
@@ -261,8 +261,8 @@ class Dal_Adodb extends Dal implements IDal
                 $_SQL->isPreparedStatement = false;
                 $where          = $this->sql_id($object) . self::EQUAL . $id;
                 $this->sQuery   = $_SQL->update($this->classname)->set($this->saParams)->where($where)->result();
-                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
-                    if (UtilString::is_utf8($this->sQuery) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
+                if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
+                    if (UtilString::is_utf8($this->sQuery) && ConfigAdodb::driver($this->dbtype) != ConfigAdodb::DRIVER_MSSQL_UTF8) {
                         $this->sQuery = UtilString::utf82gbk($this->sQuery);
                     }
                 }
@@ -272,7 +272,7 @@ class Dal_Adodb extends Dal implements IDal
                         LogMe::log("SQL PARAM:" . var_export($this->saParams, true));
                     }
                 }
-//                $tablename =Config_Adodb::orm( $this->classname );
+//                $tablename =ConfigAdodb::orm( $this->classname );
 //                $sql = Crud_SQL::SQL_SELECT . " * " . Crud_SQL::SQL_FROM . $tablename.Crud_SQL::SQL_WHERE . $this->sql_id($object) . self::EQUAL . $id;
 //                $rs  = $this->connection->Execute($sql); # Execute the query and get the empty recordset
 //                $this->sQuery = $this->connection->GetUpdateSQL($rs, $this->saParams);//对SQL Server会报异常,故不使用:SQL error:无法更新标识列
@@ -519,8 +519,8 @@ class Dal_Adodb extends Dal implements IDal
     {
         $result = null;
         try {
-            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
-                if (UtilString::is_utf8($sqlstring) && Config_Adodb::driver($this->dbtype) != Config_Adodb::DRIVER_MSSQL_UTF8) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
+                if (UtilString::is_utf8($sqlstring) && ConfigAdodb::driver($this->dbtype) != ConfigAdodb::DRIVER_MSSQL_UTF8) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
             }

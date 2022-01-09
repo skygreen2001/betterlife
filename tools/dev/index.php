@@ -157,11 +157,11 @@ class Project_Refactor
         if (is_dir($toDeleteDir)) {
             UtilFileSystem::deleteDir($toDeleteDir);
         }
-        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Mssql.php";
+        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "ConfigMssql.php";
         if (file_exists($toDeleteFile)) {
             unlink($toDeleteFile);
         }
-        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "Config_Odbc.php";
+        $toDeleteFile = $ignore_config_db_dir . "object" . DS . "ConfigOdbc.php";
         if (file_exists($toDeleteFile)) {
             unlink($toDeleteFile);
         }
@@ -343,8 +343,8 @@ class Project_Refactor
 
             self::IgnoreAllDbEngineExceptMysql();
 
-            //修改Config_AutoCode.php配置文件
-            $config_autocode_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "Config_AutoCode.php";
+            //修改ConfigAutoCode.php配置文件
+            $config_autocode_file = self::$save_dir . "core" . DS . "config" . DS . "config" . DS . "ConfigAutoCode.php";
             $content = file_get_contents($config_autocode_file);
             $content = str_replace("const ONLY_DOMAIN=false;", "const ONLY_DOMAIN=true;", $content);
             file_put_contents($config_autocode_file, $content);
@@ -546,7 +546,7 @@ class Project_Refactor
         $ignore_files      = UtilFileSystem::getFilesInDirectory($admin_action_path);
 
         foreach ($ignore_files as $ignore_file) {
-            $compare_name = basename($ignore_file, Config_F::SUFFIX_FILE_PHP);
+            $compare_name = basename($ignore_file, ConfigF::SUFFIX_FILE_PHP);
             if (!in_array($compare_name, $action_needs)) {
                 unlink($ignore_file);
             }

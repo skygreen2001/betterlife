@@ -276,7 +276,7 @@ class View
         if (empty($template_mode)) {
             $template_mode = Gc::$template_mode;
         }
-        $this->template_dir = $this->getTemplateViewDir($this->moduleName) . Config_F::VIEW_CORE . DS;
+        $this->template_dir = $this->getTemplateViewDir($this->moduleName) . ConfigF::VIEW_CORE . DS;
         $template_tmp_dir   = $this->getTemplateViewDir($this->moduleName) . "tmp" . DS;
 
         if (isset(Gc::$template_file_suffix_every) && array_key_exists($this->moduleName, Gc::$template_file_suffix_every)) {
@@ -416,7 +416,7 @@ class View
                     $this->set($name_viewObject, $this->viewObject);
                     // print_r($this->viewObject);
                 }
-                $tplFilePath = Config_F::VIEW_CORE . DS . $templateFilePath;
+                $tplFilePath = ConfigF::VIEW_CORE . DS . $templateFilePath;
                 echo $this->template->render($tplFilePath, $this->vars);
 
                 break;

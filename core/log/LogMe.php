@@ -39,20 +39,20 @@ class LogMe extends BBObject
     public static function logPath($destination)
     {
         if (empty(Gc::$log_config["logpath"])) {
-            Gc::$log_config["logpath"] = Gc::$nav_root_path . Config_F::LOG_ROOT . DS;
+            Gc::$log_config["logpath"] = Gc::$nav_root_path . ConfigF::LOG_ROOT . DS;
         }
         if (!endWith(Gc::$log_config["logpath"], DS)) {
             Gc::$log_config["logpath"] .= DS;
         }
         if (empty($destination)) {
-            $destination = Gc::$log_config["logpath"] . Gc::$appName . date('Y_m_d') . Config_F::SUFFIX_FILE_LOG;
+            $destination = Gc::$log_config["logpath"] . Gc::$appName . date('Y_m_d') . ConfigF::SUFFIX_FILE_LOG;
         } else {
-            $destination = Gc::$log_config["logpath"] . $destination . date('Y_m_d') . Config_F::SUFFIX_FILE_LOG;
+            $destination = Gc::$log_config["logpath"] . $destination . date('Y_m_d') . ConfigF::SUFFIX_FILE_LOG;
         }
 
         //检测日志文件大小，超过配置大小则备份日志文件重新生成
         if (is_file($destination) && (Gc::$log_config["logFile_size"] <= filesize($destination) )) {
-            rename($destination, dirname($destination) . DS . basename($destination, Config_F::SUFFIX_FILE_LOG) . '-' . time() . Config_F::SUFFIX_FILE_LOG);
+            rename($destination, dirname($destination) . DS . basename($destination, ConfigF::SUFFIX_FILE_LOG) . '-' . time() . ConfigF::SUFFIX_FILE_LOG);
         }
         if (isset($destination)) {
             UtilFileSystem::createDir(dirname($destination));
@@ -156,7 +156,7 @@ class LogMe extends BBObject
     {
         UtilDateTime::ChinaTime();
         $conf = array('timeFormat' => Gc::$log_config["timeFormat"]);
-        $conf = array('dsn' => Config_Mdb2::dsn());
+        $conf = array('dsn' => ConfigMdb2::dsn());
         Log::singleton('sql', Gc::$log_config["log_table"], $category, $conf)->log($message, $level);
     }
 

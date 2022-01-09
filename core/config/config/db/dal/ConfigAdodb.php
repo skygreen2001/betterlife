@@ -17,7 +17,7 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Adodb extends ConfigDb
+class ConfigAdodb extends ConfigDb
 {
     /**
      * Ms SqlServer Utf8 驱动
@@ -59,7 +59,7 @@ class Config_Adodb extends ConfigDb
             case EnumDbSource::DB_MICROSOFT_ACCESS:
                 return "access";
             case EnumDbSource::DB_SQLSERVER:
-                if (( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8))) {
+                if (( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF8 ) || ( ( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF_8))) {
                     return self::DRIVER_MSSQL_UTF8;
                 } else {
                     return "odbc_mssql";
@@ -112,7 +112,7 @@ class Config_Adodb extends ConfigDb
         $dsn_less = "";
         switch ($dbtype) {
             case EnumDbSource::DB_SQLSERVER:
-                if (!( ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == Config_C::CHARACTER_UTF_8))) {
+                if (!( ( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF8 ) || ( strtoupper(Gc::$encoding) == ConfigC::CHARACTER_UTF_8))) {
                     $dsn_less = "Driver={SQL Server Native Client 10.0};Server=" . $connecturl . ";Database=" . $dbname . ";";
                 } else {
                     $dsn_less = $connecturl;

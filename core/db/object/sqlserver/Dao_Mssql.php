@@ -34,18 +34,18 @@ class Dao_Mssql extends Dao implements IDaoNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mssql::connctionurl($host, $port);
+        $connecturl = ConfigMssql::connctionurl($host, $port);
 
         if (!isset($username)) {
-            $username = Config_Mssql::$username;
+            $username = ConfigMssql::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mssql::$password;
+            $password = ConfigMssql::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Mssql::$dbname;
+            $dbname   = ConfigMssql::$dbname;
         }
-        if (Config_Odbc::$is_persistent) {
+        if (ConfigOdbc::$is_persistent) {
             $this->connection = mssql_pconnect($connecturl, $username, $password);
         } else {
             $this->connection = mssql_connect($connecturl, $username, $password);
@@ -138,9 +138,9 @@ class Dao_Mssql extends Dao implements IDaoNormal
             $object->setCommitTime(UtilDateTime::now(EnumDateTimeFormat::TIMESTAMP));
             if (
                 ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
-                    ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )
+                    ( ( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8) )
             ) {
-                $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
+                $this->saParams = UtilObject::object_to_array($object, false, array(ConfigC::CHARACTER_UTF_8 => ConfigC::CHARACTER_GBK));
             } else {
                 $this->saParams = UtilObject::object_to_array($object);
             }
@@ -209,9 +209,9 @@ class Dao_Mssql extends Dao implements IDaoNormal
                 $object->setId(null);
                 if (
                     ConfigDb::$db == EnumDbSource::DB_SQLSERVER &&
-                        ( ( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))
+                        ( ( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))
                 ) {
-                    $this->saParams = UtilObject::object_to_array($object, false, array(Config_C::CHARACTER_UTF_8 => Config_C::CHARACTER_GBK));
+                    $this->saParams = UtilObject::object_to_array($object, false, array(ConfigC::CHARACTER_UTF_8 => ConfigC::CHARACTER_GBK));
                 } else {
                     $this->saParams = UtilObject::object_to_array($object);
                 }
@@ -393,7 +393,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
     {
         $result = null;
         try {
-            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8) )) {
+            if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8) )) {
                 if (UtilString::is_utf8($sqlstring)) {
                     $sqlstring = UtilString::utf82gbk($sqlstring);
                 }
@@ -528,7 +528,7 @@ class Dao_Mssql extends Dao implements IDaoNormal
                 $realIdName = $this->sql_id($object);
                 $sort       = str_replace(Crud_SQL::SQL_FLAG_ID, $realIdName, $sort);
             }
-            $tablename    = Config_Mssql::orm($this->classname);
+            $tablename    = ConfigMssql::orm($this->classname);
             $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
             $this->sQuery = $_SQL->from($this->classname)->where($whereclause)->order($sort)->result();
             $result       = $this->sqlExecute($this->sQuery, $object);

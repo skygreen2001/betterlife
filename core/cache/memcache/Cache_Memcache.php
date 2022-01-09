@@ -62,7 +62,7 @@ class Cache_Memcache extends CacheBase
         }
         $this->obj = new Memcache();
         //加载所有的分布式服务器
-        foreach (Config_Memcache::$cache_servers as $cache_server) {
+        foreach (ConfigMemcache::$cache_servers as $cache_server) {
             $this->obj->addServer($cache_server[0], $cache_server[1]);
         }
 //        if (!$this->obj->connect($host, $port)) {
@@ -96,7 +96,7 @@ class Cache_Memcache extends CacheBase
      */
     public function save($key, $value, $expired = 86400)
     {
-        return $this->obj->add($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->add($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**
@@ -110,7 +110,7 @@ class Cache_Memcache extends CacheBase
      */
     public function set($key, $value, $expired = 86400)
     {
-        return $this->obj->set($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->set($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**
@@ -124,7 +124,7 @@ class Cache_Memcache extends CacheBase
     public function update($key, $value, $expired = 86400)
     {
         //替换数据
-        return $this->obj->replace($key, $value, Config_Memcache::$is_compressed, $expired);
+        return $this->obj->replace($key, $value, ConfigMemcache::$is_compressed, $expired);
     }
 
     /**

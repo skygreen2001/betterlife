@@ -56,15 +56,15 @@ class Cache_Memcached_Client extends CacheBase
         $servers = array();
         $config = array();
         //加载所有的分布式服务器
-        foreach (Config_Memcache::$cache_servers as $cache_server) {
+        foreach (ConfigMemcache::$cache_servers as $cache_server) {
             $servers[] = $cache_server[0] . ":" . $cache_server[1];
         }
         $config['servers'] = $servers;
-        if (Config_Memcache::$is_compressed) {
+        if (ConfigMemcache::$is_compressed) {
             $config['compress_threshold'] = 10240;
         }
         $config['debug'] = Gc::$dev_debug_on;
-        $config['persistant'] = Config_Memcache::$is_persistant;
+        $config['persistant'] = ConfigMemcache::$is_persistant;
         $this->obj = new Memcached_Client($config);
 //        if (!$this->obj->connect($host, $port)) {
 //            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port , EnumLogLevel::ERR );

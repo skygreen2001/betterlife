@@ -7,7 +7,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Odbc extends ConfigDb
+class ConfigOdbc extends ConfigDb
 {
     /**
      * 返回ODBC所需的dsn_less字符串

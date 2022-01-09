@@ -39,7 +39,7 @@ class AutoCodeViewModel extends AutoCodeView
                         $result .
                         "    </table>";
         $tpl_content  = self::tableToViewTplDefine($tpl_content);
-        $filename     = "index" . Config_F::SUFFIX_FILE_TPL;
+        $filename     = "index" . ConfigF::SUFFIX_FILE_TPL;
         $dir          = self::$view_dir_full . "index" . DS;
         return self::saveDefineToDir($dir, $filename, $tpl_content);
     }
@@ -301,7 +301,7 @@ class AutoCodeViewModel extends AutoCodeView
                     $editMulSelColumn .= "        \$.edit.select2('#{$fieldname}', \"\", select_" . $belong_has_ones[$fieldname]["i"] . ");" . HH;
                 } else {
                     $datatype = self::comment_type($field["Type"]);
-                    if (in_array($fieldname, Config_AutoCode::IS_NOT_EDIT_COLUMN)) {
+                    if (in_array($fieldname, ConfigAutoCode::IS_NOT_EDIT_COLUMN)) {
                         continue;
                     }
                     switch ($datatype) {

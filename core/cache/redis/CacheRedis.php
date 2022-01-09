@@ -3,9 +3,9 @@
 /**
  * -----------| 使用Redis作为系统缓存 |-----------
  *
- * 使用方法: 添加以下内容到Config_Memcache中
+ * 使用方法: 添加以下内容到ConfigRedis中
  *
- *     所有的缓存服务器Memcache 主机IP地址和端口配置
+ *     所有的缓存服务器Redis 主机IP地址和端口配置
  *
  *     保存数据是否需要压缩。
  *
@@ -37,7 +37,7 @@ class CacheRedis extends CacheBase
      */
     public function TestRun()
     {
-        // $this->testData();
+        $this->testData();
         $this->redis->hSet('h', 'key1', 'hello');
 
         $dbInfos = $this->dbInfos();
@@ -89,26 +89,26 @@ class CacheRedis extends CacheBase
     public function __construct($host = '', $port = '', $password = '')
     {
         if (empty($host)) {
-            $host = Config_Redis::$host;
+            $host = ConfigRedis::$host;
         }
         if (empty($port)) {
-            $port = Config_Redis::$port;
+            $port = ConfigRedis::$port;
         }
         $this->redis = new Redis();
-        if (Config_Redis::$is_persistent) {
+        if (ConfigRedis::$is_persistent) {
             $this->redis->pconnect($host, $port);
         } else {
             $this->redis->connect($host, $port);
         }
         ob_clean();
         if (empty($password)) {
-            $password = Config_Redis::$password;
+            $password = ConfigRedis::$password;
         }
         if (!empty($password)) {
             $this->redis->auth($password);
         }
-        if (!empty(Config_Redis::$prefix_key)) {
-            $this->redis->setOption(Redis::OPT_PREFIX, Config_Redis::$prefix_key);
+        if (!empty(ConfigRedis::$prefix_key)) {
+            $this->redis->setOption(Redis::OPT_PREFIX, ConfigRedis::$prefix_key);
         }
     }
 

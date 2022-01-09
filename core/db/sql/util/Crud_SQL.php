@@ -216,12 +216,12 @@ abstract class Crud_SQL
                                             $quotes = '\'';
                                         }
                                     }
-                                    if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == Config_C::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == Config_C::CHARACTER_UTF8))) {
+                                    if (ConfigDb::$db == EnumDbSource::DB_SQLSERVER && (( trim(strtoupper(Gc::$encoding)) == ConfigC::CHARACTER_UTF_8 ) || ( trim(strtolower(Gc::$encoding)) == ConfigC::CHARACTER_UTF8))) {
                                         if (contains($value, array('>', "<", "=", ">=", "<=")) || ( contains(strtolower($value), array("like ", "between ")) )) {
                                             $asWhereClause[$key] = $key . " " . $value . " ";
                                         } else {
                                             $asWhereClause[$key] = $key . "=" . $quotes;
-                                            if (UtilString::is_utf8($value) && Config_Adodb::driver() != Config_Adodb::DRIVER_MSSQL_UTF8) {
+                                            if (UtilString::is_utf8($value) && ConfigAdodb::driver() != ConfigAdodb::DRIVER_MSSQL_UTF8) {
                                                 $asWhereClause[$key] .= UtilString::utf82gbk($value) . $quotes;
                                             } else {
                                                 $asWhereClause[$key] .= $value . $quotes;

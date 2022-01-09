@@ -25,16 +25,16 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      */
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
-        $connecturl = Config_Mysql::connctionurl($host, $port);
+        $connecturl = ConfigMysql::connctionurl($host, $port);
 
         if (!isset($username)) {
-            $username = Config_Mysql::$username;
+            $username = ConfigMysql::$username;
         }
         if (!isset($password)) {
-            $password = Config_Mysql::$password;
+            $password = ConfigMysql::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Mysql::$dbname;
+            $dbname   = ConfigMysql::$dbname;
         }
         $this->connection = new mysqli($connecturl, $username, $password, $dbname);
 
@@ -720,7 +720,7 @@ class Dao_MysqlI5 extends Dao implements IDaoNormal
      */
     public function character_set()
     {
-        $charset = Config_C::CHARACTER_UTF8_MB4;
+        $charset = ConfigC::CHARACTER_UTF8_MB4;
         if ($this->connection) {
             $charset = $this->connection->character_set_name();
         }

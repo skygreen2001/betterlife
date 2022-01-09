@@ -28,23 +28,23 @@ class Dal_Pdo extends Dal implements IDal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null)
     {
         if (!isset($username)) {
-            $username = Config_Pdo::$username;
+            $username = ConfigPdo::$username;
         }
         if (!isset($password)) {
-            $password = Config_Pdo::$password;
+            $password = ConfigPdo::$password;
         }
         if (!isset($dbtype)) {
-            $dbtype   = Config_Pdo::$db;
+            $dbtype   = ConfigPdo::$db;
         }
         if (!isset($engine)) {
-            $engine   = Config_Adodb::$engine;
+            $engine   = ConfigAdodb::$engine;
         }
 
         try {
             if ($dbtype == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $this->connection = new PDO(Config_Pdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine));
+                $this->connection = new PDO(ConfigPdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine));
             } else {
-                $this->connection = new PDO(Config_Pdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
+                $this->connection = new PDO(ConfigPdo::dsn($host, $port, $username, $password, $dbname, $dbtype, $engine), $username, $password);
             }
             if ($dbtype == EnumDbSource::DB_MYSQL) {
                 $this->change_character_set($character_code = ConfigDb::$character);
@@ -92,7 +92,7 @@ class Dal_Pdo extends Dal implements IDal
     private function getResultToObjects($object)
     {
         $result = null;
-        $rows   = $this->stmt->fetchAll(Config_Pdo::$fetchmode);
+        $rows   = $this->stmt->fetchAll(ConfigPdo::$fetchmode);
         foreach ($rows as $row) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
@@ -246,7 +246,7 @@ class Dal_Pdo extends Dal implements IDal
             if (ConfigDb::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($this->saParams)->order($sort)->limit($startPoint . "," . ($endPoint - $startPoint + 1))->result();
             } elseif (ConfigDb::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Pdo::orm($this->classname);
+                $tablename    = ConfigPdo::orm($this->classname);
                 $whereclause  = SqlServer_Crud_Sql_Select::pageSql($startPoint, $endPoint, $_SQL, $tablename, $this->saParams, $sort);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {
@@ -415,7 +415,7 @@ class Dal_Pdo extends Dal implements IDal
             if (ConfigDb::$db == EnumDbSource::DB_MYSQL) {
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($filter_arr)->order($sort)->limit($limit)->result();
             } elseif (ConfigDb::$db == EnumDbSource::DB_MICROSOFT_ACCESS) {
-                $tablename    = Config_Pdo::orm($this->classname);
+                $tablename    = ConfigPdo::orm($this->classname);
                 $whereclause  = SqlServer_Crud_Sql_Select::getSql($_SQL, $tablename, $filter_arr, $sort, $limit);
                 $this->sQuery = $_SQL->select()->from($this->classname)->where($whereclause)->order($sort)->result();
             } else {

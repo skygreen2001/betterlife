@@ -8,7 +8,7 @@
  * @subpackage dal
  * @author skygreen
  */
-class Config_Pdo extends ConfigDb
+class ConfigPdo extends ConfigDb
 {
     /**
      * @var enum 获取数据的模式
@@ -74,7 +74,7 @@ class Config_Pdo extends ConfigDb
                 //connect to an informix database cataloged as InformixDB in odbc.ini: $dbh = new PDO("informix:DSN=InformixDB", "username", "password");
                 break;
             case EnumDbSource::DB_ORACLE:
-                $dsn = "OCI:dbname=" . $dbname . ";charset=" . Config_C::CHARACTER_UTF8;
+                $dsn = "OCI:dbname=" . $dbname . ";charset=" . ConfigC::CHARACTER_UTF8;
                 break;
             case EnumDbSource::DB_MICROSOFT_ACCESS:
                 $dsn = "odbc:Driver={Microsoft Access Driver (*.mdb)};Dbq=" . $dbname . ";Uid=" . $username . ";Pwd=" . $password;

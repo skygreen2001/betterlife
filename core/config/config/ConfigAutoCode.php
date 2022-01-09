@@ -6,7 +6,7 @@
  * @package core.config.common
  * @author skygreen
  */
-class Config_AutoCode extends ConfigBB
+class ConfigAutoCode extends ConfigBB
 {
     /**
      * 每次生成实体类和数据表一致

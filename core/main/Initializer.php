@@ -293,7 +293,7 @@ class Initializer
      */
     public static function loadCommonFunctionLibrarys()
     {
-        $dir_include_function = self::$NAV_CORE_PATH . Config_F::ROOT_INCLUDE_FUNCTION . DS;
+        $dir_include_function = self::$NAV_CORE_PATH . ConfigF::ROOT_INCLUDE_FUNCTION . DS;
         $files = UtilFileSystem::getAllFilesInDirectory($dir_include_function);
         if (!class_exists("PEAR")) {
             require_once("helper/PEAR.php");
@@ -372,7 +372,7 @@ class Initializer
         }
 
         foreach ($files as $file) {
-            self::$coreFiles[Config_F::ROOT_CORE][basename($file, self::SUFFIX_FILE_PHP)] = $file;
+            self::$coreFiles[ConfigF::ROOT_CORE][basename($file, self::SUFFIX_FILE_PHP)] = $file;
         }
     }
 
@@ -397,19 +397,19 @@ class Initializer
     public static function loadException()
     {
         if (Gc::$dev_debug_on) {
-            switch (Config_Exception::EXCEPTION_WAY) {
-                case Config_Exception::EW_WHOOPS:
+            switch (ConfigException::EXCEPTION_WAY) {
+                case ConfigException::EW_WHOOPS:
                     $run     = new Whoops\Run();
                     $handler = new Whoops\Handler\PrettyPageHandler();
                     // 设置异常网页的head title
                     $handler->setPageTitle(Gc::$site_name);
                     $handler->setApplicationPaths(["/"]);
                     // [Open Files In An Editor](https://github.com/filp/whoops/blob/master/docs/Open%20Files%20In%20An%20Editor.md)
-                    $handler->setEditor(Config_Exception::WHOOPS_EDITOR);
+                    $handler->setEditor(ConfigException::WHOOPS_EDITOR);
                     $run->pushHandler($handler);
                     $run->register();
                     break;
-                case Config_Exception::EW_SYMFONY:
+                case ConfigException::EW_SYMFONY:
                     // Symfony ErrorHandler Component
                     Symfony\Component\ErrorHandler\Debug::enable();
                     break;
@@ -428,7 +428,7 @@ class Initializer
      */
     public static function loadLibrary()
     {
-        $dir_library = Gc::$nav_root_path . Config_F::ROOT_INSTALL . DS . Config_F::ROOT_LIBRARY . DS;
+        $dir_library = Gc::$nav_root_path . ConfigF::ROOT_INSTALL . DS . ConfigF::ROOT_LIBRARY . DS;
         /**
          * 加载自定义模块库
          */

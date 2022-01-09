@@ -3,12 +3,12 @@
 /**
  * -----------| 本网站框架需调用定义的文件夹名 |-----------
  *
- * 原定义为Config_File，因为与Smarty框架里面的Config_File.class.php有冲突，故更名为此
+ * 原定义为ConfigFile，因为与Smarty框架里面的ConfigFile.class.php有冲突，故更名为此
  * @category betterlife
  * @package core.config.common
  * @author skygreen
  */
-class Config_F extends ConfigBB
+class ConfigF extends ConfigBB
 {
     //************************** 显示层文件夹定义**************************/
     const VIEW_THEME    = "theme";

@@ -6,7 +6,7 @@
  * @package core.config
  * @author skygreen
  */
-class Config_Mobile extends ConfigBB
+class ConfigMobile extends ConfigBB
 {
     /**
      * 接口中分页每页记录数

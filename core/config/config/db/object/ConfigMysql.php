@@ -9,7 +9,7 @@
  * @subpackage object
  * @author skygreen
  */
-class Config_Mysql extends ConfigDb
+class ConfigMysql extends ConfigDb
 {
     /**
      * 返回数据库连接地址

@@ -82,7 +82,7 @@ class DbInfo_Mysql extends DbInfo implements IDbInfo
                 return false;
             }
         }
-        $isSetcharset = mysql_set_charset(Config_C::CHARACTER_UTF8, $connection);
+        $isSetcharset = mysql_set_charset(ConfigC::CHARACTER_UTF8, $connection);
         if (!$isSetcharset) {
             $error = mysql_error();
             LogMe::log('执行字符集操作命令发生错误脚本: ' . $v

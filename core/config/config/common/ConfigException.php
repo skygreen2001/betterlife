@@ -6,7 +6,7 @@
  * @package core.config.common
  * @author skygreen
  */
-class Config_Exception extends ConfigBB
+class ConfigException extends ConfigBB
 {
     /**
      * 异常处理方式

@@ -27,14 +27,14 @@ class Dispatcher
         $isValidRequet = false;
         $controller    = $router->getController();
         if ($controller == Router::URL_DEFAULT_CONTROLLER) {
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
             return;
         }
         $moduleName = $router->getModule();
         if ($moduleName && array_key_exists($moduleName, Initializer::$moduleFiles)) {
             $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
             return;
         }
         $action_controller = ActionBasic::ROUTINE_CLASS_PREFIX . ucfirst($controller);
@@ -65,7 +65,7 @@ class Dispatcher
                 die();
             }
 
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
             return;
         }
         if (!$isValidRequet) {
@@ -135,7 +135,7 @@ class Dispatcher
                 die();
             }
         } else {
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . Config_F::SUFFIX_FILE_PHP);
+            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
             return;
         }
         UnitTest::tearDown();

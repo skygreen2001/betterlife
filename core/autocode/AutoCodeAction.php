@@ -90,7 +90,7 @@ class AutoCodeAction extends AutoCode
                 break;
         }
         self::$action_dir_full = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . self::$action_dir . DS;
-        $view_dir_full         = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . Config_F::VIEW_VIEW . DS . Gc::$self_theme_dir . DS;
+        $view_dir_full         = self::$save_dir . Gc::$module_root . DS . self::$app_dir . DS . ConfigF::VIEW_VIEW . DS . Gc::$self_theme_dir . DS;
 
         if (!UtilString::is_utf8(self::$action_dir_full)) {
             self::$action_dir_full = UtilString::gbk2utf8(self::$action_dir_full);

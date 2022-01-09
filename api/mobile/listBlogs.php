@@ -16,7 +16,7 @@ $data["description"] = "";
 $where_clause = " ";
 $orderDes     = " blog_id desc ";
 $total        = 1;
-$page_size    = Config_Mobile::$api_page_size;
+$page_size    = ConfigMobile::$api_page_size;
 
 $pageBlogs = Blog::queryPageByPageNo( $page, $where_clause, $page_size, $orderDes );
 if ($pageBlogs) {

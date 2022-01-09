@@ -23,22 +23,22 @@ class Dao_Postgres extends Dao implements IDaoNormal
     public function connect($host = null, $port = null, $username = null, $password = null, $dbname = null)
     {
         if (!isset($host)) {
-            $host     = Config_Postgres::$host;
+            $host     = ConfigPostgres::$host;
         }
         if (!isset($port)) {
-            $port     = Config_Postgres::$port;
+            $port     = ConfigPostgres::$port;
         }
         if (!isset($username)) {
-            $username = Config_Postgres::$username;
+            $username = ConfigPostgres::$username;
         }
         if (!isset($password)) {
-            $password = Config_Postgres::$password;
+            $password = ConfigPostgres::$password;
         }
         if (!isset($dbname)) {
-            $dbname   = Config_Postgres::$dbname;
+            $dbname   = ConfigPostgres::$dbname;
         }
 
-        if (Config_Postgres::$is_persistent) {
+        if (ConfigPostgres::$is_persistent) {
             $this->connection = pg_pconnect("host=" . $host . " port=" . $port . " dbname=" . $dbname . " user=" . $username . " password=" . $password);
         } else {
             $this->connection = pg_connect("host=" . $host . " port=" . $port . " dbname=" . $dbname . " user=" . $username . " password=" . $password);
@@ -74,7 +74,7 @@ class Dao_Postgres extends Dao implements IDaoNormal
     private function getResultToObjects($object)
     {
         $result = array();
-        while ($currentrow = pg_fetch_array($this->result, null, Config_Postgres::$fetchmode)) {
+        while ($currentrow = pg_fetch_array($this->result, null, ConfigPostgres::$fetchmode)) {
             if (!empty($object)) {
                 if ($this->validParameter($object)) {
                     $c        = UtilObject::array_to_object($currentrow, $this->classname);
