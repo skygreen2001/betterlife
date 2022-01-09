@@ -89,7 +89,7 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
 
         // Test selecting the database.
         if (mysqli_connect_errno()) {
-            Exception_Mysqli::record();
+            ExceptionMysqli::record();
             return false;
         }
 
@@ -111,7 +111,7 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
 
                     if (mysqli_connect_errno()) {
                         LogMe::log('数据库服务器执行命令发生错误脚本: ' . $v . '<br/> MySQL报告错误信息:' . $error);
-                        Exception_Mysqli::record();
+                        ExceptionMysqli::record();
                         return false;
                     }
                 }
@@ -417,7 +417,7 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
             if ($this->stmt) {
                 $this->stmt->execute();
                 $result = $this->getQueryResult();
-                Exception_Mysqli::record();
+                ExceptionMysqli::record();
             }
         }
 

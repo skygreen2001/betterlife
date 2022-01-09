@@ -6,7 +6,7 @@
  * @package core.exception.db
  * @author zhouyuepu
  */
-class Exception_Mysqli extends ExceptionDb
+class ExceptionMysqli extends ExceptionDb
 {
     /**
      * MysqlI 异常记录: 记录Myql的异常信息

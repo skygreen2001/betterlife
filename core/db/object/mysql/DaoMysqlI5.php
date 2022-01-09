@@ -39,7 +39,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
         $this->connection = new mysqli($connecturl, $username, $password, $dbname);
 
         if (mysqli_connect_errno()) {
-            Exception_Mysqli::record();
+            ExceptionMysqli::record();
             $this->connection = null;
         }
 
@@ -67,7 +67,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             }
 
             $this->stmt = $this->connection->prepare($this->sQuery);
-            Exception_Mysqli::record();
+            ExceptionMysqli::record();
             if (!empty($this->saParams) && is_array($this->saParams)) {
                 /*****************************************************************************
                  * START:执行预编译生成SQL语句
@@ -91,7 +91,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                         if (is_object($bind_params[0])) {
                             call_user_func_array('mysqli_stmt_bind_param', $bind_params);
                         } else {
-                            Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
+                            ExceptionMysqli::record(Wl::ERROR_INFO_DB_HANDLE);
                         }
                     }
                 }
@@ -99,10 +99,10 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             if ($this->stmt) {
                 $this->stmt->execute();
             }
-            Exception_Mysqli::record();
+            ExceptionMysqli::record();
             /*END:执行预编译生成SQL语句******************************************************/
         } catch (Exception $ex) {
-            Exception_Mysqli::record($ex->getTraceAsString());
+            ExceptionMysqli::record($ex->getTraceAsString());
         }
     }
 
@@ -124,10 +124,10 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 LogMe::log("SQL: " . $sqlstring);
             }
             $this->stmt = $this->connection->prepare($sqlstring);
-            Exception_Mysqli::record();
+            ExceptionMysqli::record();
             if ($this->stmt) {
                 $this->stmt->execute();
-                Exception_Mysqli::record();
+                ExceptionMysqli::record();
 
                 $parts = explode(" ", trim($sqlstring));
                 $type  = strtolower($parts[0]);
@@ -152,10 +152,10 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 //     }
                 // }
             } else {
-                Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
+                ExceptionMysqli::record(Wl::ERROR_INFO_DB_HANDLE);
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
         }
         return $result;
     }
@@ -234,7 +234,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
             return 0;
         }
     }
@@ -328,7 +328,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             $result = $this->sqlExecute($this->sQuery, $object);
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
             return null;
         }
     }
@@ -434,7 +434,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             $result = $this->getResultToObjects($object);
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -487,7 +487,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
             }
             return $result;
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -518,7 +518,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 return $result;
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
         }
     }
 
@@ -548,10 +548,10 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 $this->stmt->free_result();
                 $this->stmt->close();
             } else {
-                 Exception_Mysqli::record(Wl::ERROR_INFO_DB_HANDLE);
+                 ExceptionMysqli::record(Wl::ERROR_INFO_DB_HANDLE);
             }
         } catch (Exception $exc) {
-            Exception_Mysqli::record($exc->getTraceAsString());
+            ExceptionMysqli::record($exc->getTraceAsString());
         }
         return $autoId;
     }
@@ -582,7 +582,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 $this->stmt->close();
                 $result = true;
             } catch (Exception $exc) {
-                Exception_Mysqli::record($exc->getTraceAsString());
+                ExceptionMysqli::record($exc->getTraceAsString());
             }
         }
         return $result;
@@ -619,7 +619,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                     $result = false;
                 }
             } catch (Exception $exc) {
-                Exception_Mysqli::record($exc->getTraceAsString());
+                ExceptionMysqli::record($exc->getTraceAsString());
                 $result = false;
             }
         } else {

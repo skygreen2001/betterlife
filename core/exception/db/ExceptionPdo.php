@@ -6,7 +6,7 @@
  * @package core.exception.db
  * @author zhouyuepu
  */
-class Exception_Pdo extends ExceptionDb
+class ExceptionPdo extends ExceptionDb
 {
     /**
      * PDO 异常记录: 记录PDO的异常信息
