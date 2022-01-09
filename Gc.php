@@ -1,4 +1,5 @@
 <?php
+
 //加载枚举类型定义
 class_exists('Enum') || require(__DIR__ . '/core/Enum.php');
 
@@ -6,7 +7,8 @@ class_exists('Enum') || require(__DIR__ . '/core/Enum.php');
  * -----------| 定义全局使用变量 |-----------
  * @access public
  */
-class Gc {
+class Gc
+{
     //<editor-fold desc='网站使用设置'>
     /**
      * 数据库配置
@@ -25,7 +27,7 @@ class Gc {
         'prefix'   => 'bb_',//数据库表名前缀
         'debug'    => true//记录日志:数据库sql查询语句
     );
-    
+
     /**
      * 是否打开Debug模式
      * @var bool
@@ -63,11 +65,11 @@ class Gc {
      */
     public static $nav_root_path;//='C:\\wamp\\www\\betterlife\\';
     /**
-     * 框架文件所在的路径 
+     * 框架文件所在的路径
      * 有两种策略可以部署
-     * 1.框架和应用整合在一起；则路径同$nav_root_path   
+     * 1.框架和应用整合在一起；则路径同$nav_root_path
      * 2.框架和应用分开，在php.ini里设置include_path='';添加框架所在的路径
-     *                   则可以直接通过  
+     *                   则可以直接通过
      * @var string
      * @static
      */
@@ -383,27 +385,45 @@ class Gc {
     public static $is_port = true;
     public static function init()
     {
-        if (empty(Gc::$nav_root_path) ) Gc::$nav_root_path = __DIR__ . DS;
-        if (empty(Gc::$nav_framework_path) ) Gc::$nav_framework_path = __DIR__ . DS;
-        if (empty(Gc::$upload_path) ) Gc::$upload_path = Gc::$nav_root_path . 'upload' . DS;
-        if (empty(Gc::$attachment_path) ) Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
+        if (empty(Gc::$nav_root_path)) {
+            Gc::$nav_root_path = __DIR__ . DS;
+        }
+        if (empty(Gc::$nav_framework_path)) {
+            Gc::$nav_framework_path = __DIR__ . DS;
+        }
+        if (empty(Gc::$upload_path)) {
+            Gc::$upload_path = Gc::$nav_root_path . 'upload' . DS;
+        }
+        if (empty(Gc::$attachment_path)) {
+            Gc::$attachment_path = Gc::$upload_path . 'attachment' . DS;
+        }
         if (empty(Gc::$url_base)) {
             $baseurl = '';
-            if (empty($_SERVER['SERVER_NAME']) ) $_SERVER['SERVER_NAME'] = "localhost";
-            if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS']=='on')) {
+            if (empty($_SERVER['SERVER_NAME'])) {
+                $_SERVER['SERVER_NAME'] = "localhost";
+            }
+            if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
                 $baseurl = 'https://' . $_SERVER['SERVER_NAME'];
-                if (self::$is_port && ($_SERVER['SERVER_PORT'] != 443)) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                if (self::$is_port && ($_SERVER['SERVER_PORT'] != 443)) {
+                    $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                }
             } else {
-                if (array_key_exists('SERVER_NAME', $_SERVER) ) $baseurl = 'http://' . $_SERVER['SERVER_NAME'];
+                if (array_key_exists('SERVER_NAME', $_SERVER)) {
+                    $baseurl = 'http://' . $_SERVER['SERVER_NAME'];
+                }
                 if (array_key_exists('SERVER_PORT', $_SERVER)) {
                     if (strpos($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']) !== false) {
-                        if (self::$is_port && $_SERVER['SERVER_PORT'] != 80 ) $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                        if (self::$is_port && $_SERVER['SERVER_PORT'] != 80) {
+                            $baseurl .= ':' . $_SERVER['SERVER_PORT'];
+                        }
                     }
                 }
             }
             $baseDir = dirname($_SERVER['SCRIPT_NAME']);
             $baseurl .= ($baseDir == '\\' ? '' : $baseDir);
-            if (strpos(strrev($baseurl), "/") !== 0 ) $baseurl .= '/';
+            if (strpos(strrev($baseurl), "/") !== 0) {
+                $baseurl .= '/';
+            }
             $file_sub_dir = str_replace(Gc::$nav_root_path, "", getcwd() . DS);
             $file_sub_dir = str_replace(DS, "/", $file_sub_dir);
             Gc::$url_base = str_replace(strtolower($file_sub_dir), "", strtolower($baseurl));
@@ -413,20 +433,28 @@ class Gc {
             $same_part = explode(DS, Gc::$nav_root_path);
             if ($same_part && (count($same_part) > 2)) {
                 $same_part = $same_part[count($same_part) - 2];
-                if (strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part)."/") !== false) {
+                if (strpos(strtolower(Gc::$upload_url), "/" . strtolower($same_part) . "/") !== false) {
                     Gc::$upload_url = substr(Gc::$upload_url, 0, (strrpos(Gc::$upload_url, $same_part . "/") + strlen($same_part) + 1)) . "upload/";
                 } else {
                     $parse_url = parse_url(Gc::$upload_url);
                     if (array_key_exists("scheme", $parse_url)) {
-                        if ($parse_url ) Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
-                        if ( self::$is_port && !empty($parse_url["port"]) ) Gc::$upload_url .= ":" . $parse_url["port"];
+                        if ($parse_url) {
+                            Gc::$upload_url = $parse_url["scheme"] . "://" . $parse_url["host"];
+                        }
+                        if (self::$is_port && !empty($parse_url["port"])) {
+                            Gc::$upload_url .= ":" . $parse_url["port"];
+                        }
                     }
                     Gc::$upload_url .= "/upload/";
                 }
             }
         }
-        if (empty(Gc::$attachment_url) ) Gc::$attachment_url = Gc::$upload_url . 'attachment/';
-        if (empty(Gc::$uploadImg_url) ) Gc::$uploadImg_url = Gc::$upload_url . 'images/';
+        if (empty(Gc::$attachment_url)) {
+            Gc::$attachment_url = Gc::$upload_url . 'attachment/';
+        }
+        if (empty(Gc::$uploadImg_url)) {
+            Gc::$uploadImg_url = Gc::$upload_url . 'images/';
+        }
     }
     //</editor-fold>
 }

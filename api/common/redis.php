@@ -294,8 +294,8 @@ if (!empty($step)) {
         $data = $result["data"];
         $rd   = array();
         foreach ($result["data"] as $key => $value) {
-            $key = utf8_encode($key);
-            $value = utf8_encode($value);
+            $key      = utf8_encode($key);
+            $value    = utf8_encode($value);
             $rd[$key] = $value;
         }
         $result["data"] = $rd;

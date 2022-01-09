@@ -6,6 +6,7 @@
  * Date: 14-04-09
  * Time: 上午10:17
  */
+
 include "Uploader.class.php";
 
 /* 判断类型 */
@@ -74,8 +75,12 @@ return $result;
  */
 function getfiles($path, $allowFiles, &$files = array())
 {
-    if (!is_dir($path) ) return null;
-    if (substr($path, strlen($path) - 1) != '/' ) $path .= '/';
+    if (!is_dir($path)) {
+        return null;
+    }
+    if (substr($path, strlen($path) - 1) != '/') {
+        $path .= '/';
+    }
     $handle    = opendir($path);
     //modify by skygreen
     $real_path = str_replace(DS, "/", Gc::$nav_root_path);
