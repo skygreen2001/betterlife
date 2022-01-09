@@ -39,7 +39,7 @@ class AutoCodeModel extends AutoCode
             self::$showReport .= "</div>";
 
             //将新添加的内容放置在文件最后作为可覆盖的内容
-            
+
             return;
         }
         //生成提供服务类[前端Service类]

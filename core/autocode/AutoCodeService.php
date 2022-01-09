@@ -127,7 +127,7 @@ class AutoCodeService extends AutoCode
     /**
      * 初始化管理文件的路径
      */
-    public static function initServicePath() 
+    public static function initServicePath()
     {
         if (!UtilString::is_utf8(self::$service_dir_full)) {
             self::$service_dir_full = UtilString::gbk2utf8(self::$service_dir_full);
@@ -177,11 +177,11 @@ class AutoCodeService extends AutoCode
 
     /**
      * 更新服务管理类
-     * 
+     *
      * 将新添加的内容放置在文件最后作为可覆盖的内容
      * @param array|string $table_names
      * 示例如下:
-     * 
+     *
      *     1. array:array('bb_user_admin','bb_core_blog')
      *     2. 字符串:'bb_user_admin,bb_core_blog'
      */

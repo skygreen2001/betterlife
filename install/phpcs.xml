@@ -22,7 +22,7 @@
    <exclude-pattern>/tools/file/Text/</exclude-pattern>
    <exclude-pattern>/core/log/Log.php</exclude-pattern>
    <exclude-pattern>/core/util/email/UtilEmailSmtp.php</exclude-pattern>
-   <exclude-pattern>/core/cache/memcache/memcached/Memcached_Client.php</exclude-pattern>
+   <exclude-pattern>/core/cache/memcache/memcached/MemcachedClient.php</exclude-pattern>
    <!-- <exclude-pattern></exclude-pattern> -->
 
 </ruleset>
