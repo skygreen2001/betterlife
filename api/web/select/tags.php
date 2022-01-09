@@ -1,15 +1,16 @@
 <?php
+
 // error_reporting(0);
 require_once("../../../init.php");
 $query        = "";
 if (array_key_exists("term", $_GET)) {
-  $query = @$_GET["term"];
+    $query = @$_GET["term"];
 }
 $where_clause = "";
 if (!empty($query)) {
     $where_clause = "(";
     $search_atom = explode(" ", trim($query));
-    array_walk($search_atom, function(&$value, $key) {
+    array_walk($search_atom, function (&$value, $key) {
         $value = " ( title LIKE '%" . $value . "%' ) ";
     });
     $where_clause .= implode(" and ", $search_atom);

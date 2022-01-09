@@ -1,4 +1,5 @@
 <?php
+
 // error_reporting(0);
 require_once("../../../init.php");
 
@@ -13,7 +14,7 @@ $orderDes     = "blog_id desc";
 if (!empty($query)) {
     $where_clause = "(";
     $search_atom  = explode(" ", trim($query));
-    array_walk($search_atom, function(&$value, $key) {
+    array_walk($search_atom, function (&$value, $key) {
         $value = " ( blog_name LIKE '%" . $value . "%' ) ";
     });
     $where_clause .= implode(" and ", $search_atom);
@@ -30,17 +31,21 @@ foreach ($columns as $key => $column) {
     }
 }
 
-$pageBlogs = Blog::queryPageByPageNo( $page, $where_clause, $page_size, $orderDes );
+$pageBlogs = Blog::queryPageByPageNo($page, $where_clause, $page_size, $orderDes);
 $data      = $pageBlogs["data"];
 if ($data) {
     foreach ($data as $key => $blog) {
         if (!empty($blog->user_id)) {
             $user_i = User::getById($blog->user_id);
-            if ($user_i ) $blog->username = $user_i->username;
+            if ($user_i) {
+                $blog->username = $user_i->username;
+            }
         }
         if (!empty($blog->category_id)) {
             $category_i = Category::getById($blog->category_id);
-            if ($category_i ) $blog->category_name = $category_i->name;
+            if ($category_i) {
+                $blog->category_name = $category_i->name;
+            }
         }
 
         if (!empty($blog->icon_url)) {

@@ -1,4 +1,5 @@
 <?php
+
 $url = $_GET['url'];
 require_once("../../init.php");
 /**
@@ -6,27 +7,30 @@ require_once("../../init.php");
  *
  * 微信JS-SDK文档: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1
  *
- * 附录6-DEMO页面和示例代码: http://demo.open.weixin.qq.com/jssdk 
+ * 附录6-DEMO页面和示例代码: http://demo.open.weixin.qq.com/jssdk
  *
  * 示例代码: http://demo.open.weixin.qq.com/jssdk/sample.zip
  *
  * 备注:链接中包含php、java、nodejs以及python的示例代码供第三方参考，第三方切记要对获取的accesstoken以及jsapi_ticket进行缓存以确保不会触发频率限制。
  *
  * 本地示例: api/common/wechat/wxjdk/
- */ 
-class WxJsSDK {
+ */
+class WxJsSDK
+{
     const APPID     = "公众号第三方用户唯一凭证 appid";
     const APPSECRET = "第三方用户唯一凭证密钥，即appsecret";
     private $appId;
     private $appSecret;
     private $url;
-    public function __construct($appId, $appSecret, $url) {
+    public function __construct($appId, $appSecret, $url)
+    {
         $this->appId     = $appId;
         $this->appSecret = $appSecret;
         $this->url       = $url;
     }
 
-    public function getSignPackage() {
+    public function getSignPackage()
+    {
         $jsapiTicket = $this->getJsApiTicket();
         // $protocol    = ( !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? "https://" : "http://";
         // $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -50,7 +54,8 @@ class WxJsSDK {
         return $signPackage;
     }
 
-    private function createNonceStr($length = 16) {
+    private function createNonceStr($length = 16)
+    {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $str   = "";
         for ($i = 0; $i < $length; $i++) {
@@ -59,7 +64,8 @@ class WxJsSDK {
         return $str;
     }
 
-    public function getJsApiTicket() {
+    public function getJsApiTicket()
+    {
         // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
         $is_valid = true;
         $data     = null;
@@ -73,14 +79,16 @@ class WxJsSDK {
             $is_valid = false;
         }
         if ($is_valid) {
-            if ($data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "jsapi_ticket.json"));
+            if ($data == null) {
+                $data = json_decode(file_get_contents(Gc::$upload_url . "jsapi_ticket.json"));
+            }
             $ticket = $data->jsapi_ticket;
         } else {
             $accessToken = $this->getAccessToken();
             // 如果是企业号用以下 URL 获取 ticket
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
             $url    = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
-            $res    = json_decode($this->httpGet( $url ));
+            $res    = json_decode($this->httpGet($url));
             $ticket = $res->ticket;
             if ($ticket) {
                 $data->expire_time  = time() + 7000;
@@ -93,7 +101,8 @@ class WxJsSDK {
         return $ticket;
     }
 
-    private function getAccessToken() {
+    private function getAccessToken()
+    {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
         $is_valid = true;
         $data     = null;
@@ -107,18 +116,20 @@ class WxJsSDK {
             $is_valid = false;
         }
         if ($is_valid) {
-            if ($data == null ) $data = json_decode(file_get_contents(Gc::$upload_url . "access_token.json"));
+            if ($data == null) {
+                $data = json_decode(file_get_contents(Gc::$upload_url . "access_token.json"));
+            }
             $access_token = $data->access_token;
         } else {
             // 如果是企业号用以下URL获取access_token
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
             $url          = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
-            $res          = json_decode($this->httpGet( $url ));
+            $res          = json_decode($this->httpGet($url));
             $access_token = $res->access_token;
             if ($access_token) {
                 $data->expire_time  = time() + 7000;
                 $data->access_token = $access_token;
-                $fp = fopen(Gc::$upload_url."access_token.json", "w");
+                $fp = fopen(Gc::$upload_url . "access_token.json", "w");
                 fwrite($fp, json_encode($data));
                 fclose($fp);
             }
@@ -126,23 +137,24 @@ class WxJsSDK {
         return $access_token;
     }
 
-    private function httpGet($url) {
-      $curl = curl_init();
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-      curl_setopt($curl, CURLOPT_URL, $url);
-      $res = curl_exec($curl);
-      curl_close($curl);
-      return $res;
+    private function httpGet($url)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        $res = curl_exec($curl);
+        curl_close($curl);
+        return $res;
     }
 }
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type:application/json;charset=UTF-8');
 
-$jssdk = new WxJsSDK( WxJsSDK::APPID, WxJsSDK::APPSECRET, $url );
+$jssdk = new WxJsSDK(WxJsSDK::APPID, WxJsSDK::APPSECRET, $url);
 // wx.config 所有必需需要的参数
 // $signPackage = $jssdk->GetSignPackage();
 // $tmp         = json_encode(array('appId' => $signPackage["appId"], 'timestamp' => $signPackage["timestamp"], 'nonceStr' => $signPackage["nonceStr"], 'signature' => $signPackage["signature"], 'url' => $signPackage["url"]));
@@ -155,4 +167,3 @@ $tmp    = json_encode(array('ticket' => $ticket));
 echo $tmp;
 
 exit;
-?>

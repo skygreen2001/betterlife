@@ -1,7 +1,7 @@
 <?php
+
 require_once("../../../init.php");
 include_once "wxBizDataCrypt.php";
-
 $appid         = "微信小程序APPID";
 $code          = $_GET['code'];
 $encryptedData = $_GET['encryptedData'];
@@ -9,32 +9,34 @@ $iv            = $_GET['iv'];
 // $sessionKey    = $_GET['session_key'];
 
 // 微信小程序APPID和APPSECRET
-class WxLogin {
-  const APPID = "微信小程序APPID";
-  const APPSECRET = "微信小程序APPSECRET";
+class WxLogin
+{
+    const APPID = "微信小程序APPID";
+    const APPSECRET = "微信小程序APPSECRET";
 
-  public static function open_id($code) {
-    $appId = self::APPID;
-    $appSecret = self::APPSECRET;
+    public static function open_id($code)
+    {
+        $appId = self::APPID;
+        $appSecret = self::APPSECRET;
+        $url  = "https://api.weixin.qq.com/sns/jscode2session?appid=$appId&secret=$appSecret&js_code=$code&grant_type=authorization_code";
+// echo $url;
+        $result = self::httpGet($url);
+// print_r($result);
+        return $result;
+    }
 
-    $url  = "https://api.weixin.qq.com/sns/jscode2session?appid=$appId&secret=$appSecret&js_code=$code&grant_type=authorization_code";
-    // echo $url;
-    $result = self::httpGet($url);
-    // print_r($result);
-    return $result;
-  }
-
-  private static function httpGet($url) {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    $res = curl_exec($curl);
-    curl_close($curl);
-    return $res;
-  }
+    private static function httpGet($url)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        $res = curl_exec($curl);
+        curl_close($curl);
+        return $res;
+    }
 }
 
 $wx_userinfo = WxLogin::open_id($code);
@@ -44,8 +46,8 @@ $wx_userinfo_obj = json_decode($wx_userinfo);
 $sessionKey  = $wx_userinfo_obj->{'session_key'};
 $unionid     = $wx_userinfo_obj->{'unionid'};
 if ($unionid) {
-  print ($wx_userinfo. "\n");
-  die();
+    print ($wx_userinfo . "\n");
+    die();
 }
 
 // echo $encryptedData."<br/>";
@@ -54,7 +56,6 @@ if ($unionid) {
 
 $encryptedData = urldecode($encryptedData);
 $iv            = urldecode($iv);
-
 // echo $encryptedData."<br/>";
 // echo $iv."<br/>";
 // echo $sessionKey."<br/>";
@@ -83,8 +84,7 @@ $iv            = urldecode($iv);
 // $iv = 'r7BXXKkLb8qrSNn05n0qiA==';
 
 $pc = new WXBizDataCrypt($appid, $sessionKey);
-$errCode = $pc->decryptData($encryptedData, $iv, $data );
-
+$errCode = $pc->decryptData($encryptedData, $iv, $data);
 if ($errCode == 0) {
     print($data . "\n");
 } else {

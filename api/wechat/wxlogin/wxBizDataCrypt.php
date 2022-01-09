@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 1998-2014 Tencent Inc.
  */
 
-
 include_once "errorCode.php";
 
 
@@ -50,19 +49,16 @@ class WXBizDataCrypt
 
         $aesCipher = base64_decode($encryptedData);
 
-        $result    = openssl_decrypt( $aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+        $result    = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
 
         $dataObj   = json_decode($result);
-        if ($dataObj  == NULL )
-        {
+        if ($dataObj  == null) {
             return ErrorCode::$IllegalBuffer;
         }
-        if ($dataObj->watermark->appid != $this->appid )
-        {
+        if ($dataObj->watermark->appid != $this->appid) {
             return ErrorCode::$IllegalBuffer;
         }
         $data = $result;
         return ErrorCode::$OK;
     }
-
 }

@@ -14,6 +14,4 @@
 /install/package-lock.json
 .DS_Store
 /misc/js/onlineditor/ueditor
-home/betterlife/view/twig/tmp
-home/report/view/default/tmp/templates_c
 composer.lock

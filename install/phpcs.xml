@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Betterlife Standard">
-   <description>Betterlife Coding Standards enforcement rule set for PHP_CodeSniffer</description> 
+   <description>Betterlife Coding Standards enforcement rule set for PHP_CodeSniffer</description>
    <rule ref="PSR12">
       <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
       <exclude name="PSR1.Classes.ClassDeclaration.MultipleClasses" />
@@ -23,6 +23,20 @@
    <exclude-pattern>/core/log/Log.php</exclude-pattern>
    <exclude-pattern>/core/util/email/UtilEmailSmtp.php</exclude-pattern>
    <exclude-pattern>/core/cache/memcache/memcached/MemcachedClient.php</exclude-pattern>
+
+   <exclude-pattern>/.git/</exclude-pattern>
+   <exclude-pattern>/app/</exclude-pattern>
+   <exclude-pattern>/model/</exclude-pattern>
+   <exclude-pattern>/install/</exclude-pattern>
+   <exclude-pattern>/log/</exclude-pattern>
+   <exclude-pattern>/upload/</exclude-pattern>
+   <exclude-pattern>/docs/</exclude-pattern>
+   <exclude-pattern>/home/betterlife/view/bootstrap/tmp/</exclude-pattern>
+   <exclude-pattern>/home/admin/view/default/tmp/</exclude-pattern>
+   <exclude-pattern>/home/betterlife/view/default/tmp/</exclude-pattern>
+   <exclude-pattern>/home/betterlife/view/twig/tmp/</exclude-pattern>
+   <exclude-pattern>/home/report/view/default/tmp/</exclude-pattern>
+   <exclude-pattern>/home/betterlife/view/bootstrap/tmp</exclude-pattern>
    <!-- <exclude-pattern></exclude-pattern> -->
 
 </ruleset>
