@@ -13,7 +13,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Memcached extends CacheBase
+class CacheMemcached extends CacheBase
 {
     /**
      * 测试体验MemCache
@@ -54,7 +54,7 @@ class Cache_Memcached extends CacheBase
         $this->close();
     }
 
-    public function Cache_Memcached()
+    public function CacheMemcached()
     {
         if (!class_exists('Memcached')) {
             LogMe::log('请检查是否加载了LibMemcached,Memcached', EnumLogLevel::ERR);

@@ -94,7 +94,7 @@ define("COMPRESSION_SAVINGS", 0.20);
  * @author  Ryan T. Dean <rtdean@cytherianage.net>
  * @package memcached-client
  */
-class Memcached_Client
+class MemcachedClient
 {
    // {{{ properties
    // {{{ public
@@ -220,7 +220,7 @@ class Memcached_Client
     * @return  mixed
     * @access  public
     */
-    function Memcached_Client($args)
+    function MemcachedClient($args)
     {
         $this->set_servers($args['servers']);
         $this->_debug = $args['debug'];

@@ -83,7 +83,7 @@ class BBCache
                 $cache = new CacheRedis();
                 break;
             case EnumCacheDriverType::MEMCACHE:
-                $cache = new Cache_Memcache();
+                $cache = new CacheMemcache();
                 break;
             case EnumCacheDriverType::PREDIS:
                 // 安装: composer require predis/predis
@@ -91,7 +91,7 @@ class BBCache
                 $cache = new \Doctrine\Common\Cache\PredisCache($client);
                 break;
             case EnumCacheDriverType::MEMCACHED:
-                $cache = new Cache_Memcached();
+                $cache = new CacheMemcached();
                 break;
            // case EnumCacheDriverType::ARRAY:
            //      $cache = new ArrayCache();
@@ -149,7 +149,7 @@ class BBCache
            //      $cache = new \Doctrine\Common\Cache\VoidCache();
            //      break;
             case EnumCacheDriverType::MEMCACHED_CLIENT:
-                $cache = new Cache_Memcached_Client();
+                $cache = new CacheMemcachedClient();
                 break;
         }
         $this->cache = $cache;

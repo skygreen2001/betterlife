@@ -10,7 +10,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Memcache extends CacheBase
+class CacheMemcache extends CacheBase
 {
     public static $name = 'Memcache';
     public static $desc = 'Memcache module provides handy procedural and object oriented interface to memcached, highly effective caching daemon, which was especially designed to decrease database load in dynamic web applications.';
@@ -55,7 +55,7 @@ class Cache_Memcache extends CacheBase
         $this->close();
     }
 
-    public function Cache_Memcache()
+    public function CacheMemcache()
     {
         if (!class_exists('Memcache')) {
             LogMe::log('请检查是否启动了Php Extensions:php_memcache', EnumLogLevel::ERR);

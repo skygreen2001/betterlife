@@ -7,7 +7,7 @@
  * @package core.cache
  * @author skygreen
  */
-class Cache_Memcached_Client extends CacheBase
+class CacheMemcachedClient extends CacheBase
 {
     /**
      * 测试体验MemCache
@@ -48,9 +48,9 @@ class Cache_Memcached_Client extends CacheBase
         $this->close();
     }
 
-    public function Cache_Memcached_Client()
+    public function CacheMemcachedClient()
     {
-        if (!class_exists('Memcached_Client')) {
+        if (!class_exists('MemcachedClient')) {
             LogMe::log('请检查是否加载Memcached', EnumLogLevel::ERR);
         }
         $servers = array();
@@ -65,7 +65,7 @@ class Cache_Memcached_Client extends CacheBase
         }
         $config['debug'] = Gc::$dev_debug_on;
         $config['persistant'] = ConfigMemcache::$is_persistant;
-        $this->obj = new Memcached_Client($config);
+        $this->obj = new MemcachedClient($config);
 //        if (!$this->obj->connect($host, $port)) {
 //            LogMe::log( '不能连接上memcached服务器; Host:' . self::$host . ",Port:" . self::$port , EnumLogLevel::ERR );
 //        }
