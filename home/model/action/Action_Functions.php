@@ -13,7 +13,7 @@ class Action_Functions extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Functions extends ActionModel
         $this->view->countFunctionss = $count;
         $functionss = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $functionss = Functions::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $functionss = Functions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "functionss", $functionss );
+        $this->view->set("functionss", $functionss);
     }
     /**
      * 查看功能信息
@@ -33,8 +33,8 @@ class Action_Functions extends ActionModel
     public function view()
     {
         $functionsId = $this->data["id"];
-        $functions   = Functions::getById( $functionsId );
-        $this->view->set( "functions", $functions );
+        $functions   = Functions::getById($functionsId);
+        $this->view->set("functions", $functions);
     }
     /**
      * 编辑功能信息
@@ -51,13 +51,13 @@ class Action_Functions extends ActionModel
                 $id = $functions->save();
             }
             if ($isRedirect) {
-                $this->redirect( "functions", "view", "id=$id" );
+                $this->redirect("functions", "view", "id=$id");
                 exit;
             }
         }
         $functionsId = $this->data["id"];
-        $functions   = Functions::getById( $functionsId );
-        $this->view->set( "functions", $functions );
+        $functions   = Functions::getById($functionsId);
+        $this->view->set("functions", $functions);
     }
     /**
      * 删除功能信息
@@ -65,8 +65,7 @@ class Action_Functions extends ActionModel
     public function delete()
     {
         $functionsId = $this->data["id"];
-        $isDelete = Functions::deleteByID( $functionsId );
-        $this->redirect( "functions", "lists", $this->data );
+        $isDelete = Functions::deleteByID($functionsId);
+        $this->redirect("functions", "lists", $this->data);
     }
 }
-

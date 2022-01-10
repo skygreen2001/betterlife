@@ -13,7 +13,7 @@ class Action_Tags extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Tags extends ActionModel
         $this->view->countTagss = $count;
         $tagss = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $tagss = Tags::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $tagss = Tags::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "tagss", $tagss );
+        $this->view->set("tagss", $tagss);
     }
     /**
      * 查看标签
@@ -33,8 +33,8 @@ class Action_Tags extends ActionModel
     public function view()
     {
         $tagsId = $this->data["id"];
-        $tags   = Tags::getById( $tagsId );
-        $this->view->set( "tags", $tags );
+        $tags   = Tags::getById($tagsId);
+        $this->view->set("tags", $tags);
     }
     /**
      * 编辑标签
@@ -51,13 +51,13 @@ class Action_Tags extends ActionModel
                 $id = $tags->save();
             }
             if ($isRedirect) {
-                $this->redirect( "tags", "view", "id=$id" );
+                $this->redirect("tags", "view", "id=$id");
                 exit;
             }
         }
         $tagsId = $this->data["id"];
-        $tags   = Tags::getById( $tagsId );
-        $this->view->set( "tags", $tags );
+        $tags   = Tags::getById($tagsId);
+        $this->view->set("tags", $tags);
     }
     /**
      * 删除标签
@@ -65,8 +65,7 @@ class Action_Tags extends ActionModel
     public function delete()
     {
         $tagsId = $this->data["id"];
-        $isDelete = Tags::deleteByID( $tagsId );
-        $this->redirect( "tags", "lists", $this->data );
+        $isDelete = Tags::deleteByID($tagsId);
+        $this->redirect("tags", "lists", $this->data);
     }
 }
-

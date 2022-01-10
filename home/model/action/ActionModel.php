@@ -23,5 +23,4 @@ class ActionModel extends ActionBasic
     {
         parent::afterAction();
     }
-    
 }

@@ -13,7 +13,7 @@ class Action_Msg extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Msg extends ActionModel
         $this->view->countMsgs = $count;
         $msgs = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $msgs = Msg::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $msgs = Msg::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "msgs", $msgs );
+        $this->view->set("msgs", $msgs);
     }
     /**
      * 查看消息
@@ -33,8 +33,8 @@ class Action_Msg extends ActionModel
     public function view()
     {
         $msgId = $this->data["id"];
-        $msg   = Msg::getById( $msgId );
-        $this->view->set( "msg", $msg );
+        $msg   = Msg::getById($msgId);
+        $this->view->set("msg", $msg);
     }
     /**
      * 编辑消息
@@ -51,15 +51,15 @@ class Action_Msg extends ActionModel
                 $id = $msg->save();
             }
             if ($isRedirect) {
-                $this->redirect( "msg", "view", "id=$id" );
+                $this->redirect("msg", "view", "id=$id");
                 exit;
             }
         }
         $msgId = $this->data["id"];
-        $msg   = Msg::getById( $msgId );
-        $this->view->set( "msg", $msg );
+        $msg   = Msg::getById($msgId);
+        $this->view->set("msg", $msg);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor( 'content' );
+        $this->load_onlineditor('content');
     }
     /**
      * 删除消息
@@ -67,8 +67,7 @@ class Action_Msg extends ActionModel
     public function delete()
     {
         $msgId = $this->data["id"];
-        $isDelete = Msg::deleteByID( $msgId );
-        $this->redirect( "msg", "lists", $this->data );
+        $isDelete = Msg::deleteByID($msgId);
+        $this->redirect("msg", "lists", $this->data);
     }
 }
-

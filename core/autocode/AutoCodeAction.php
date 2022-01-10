@@ -249,7 +249,9 @@ class AutoCodeAction extends AutoCode
                 $editImgContent .= "            if (!empty(\$_FILES) && !empty(\$_FILES[\"$fieldname\"][\"name\"])) {" . HH .
                                    "                \$result = \$this->uploadImg(\$_FILES, \"$fieldname\", \"$fieldname\", \"$instancename\");" . HH .
                                    "                if (\$result && (\$result['success'] == true)) {" . HH .
-                                   "                    if (array_key_exists('file_name', \$result)) \$$instancename->$fieldname = \$result['file_name'];" . HH .
+                                   "                    if (array_key_exists('file_name', \$result)) {" . HH .
+                                   "                        \$$instancename->$fieldname = \$result['file_name'];" . HH .
+                                   "                    }" . HH .
                                    "                } else {" . HH .
                                    "                    \$isRedirect = false;" . HH .
                                    "                    \$this->view->set(\"message\", \$result[\"msg\"]);" . HH .
@@ -260,7 +262,11 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
                 case 'bit':
-                    $editBitContent .= "            if (\${$instancename}->$fieldname == 'on') \$$instancename->$fieldname = 1; else \$$instancename->$fieldname = 0;" . HH;
+                    $editBitContent .= "            if (\${$instancename}->$fieldname == 'on') {" . HH .
+                                       "                \$$instancename->$fieldname = 1;" . HH .
+                                       "            } else {" . HH .
+                                       "                \$$instancename->$fieldname = 0;" . HH .
+                                       "            }" . HH;
                     break;
             }
         }
@@ -370,28 +376,24 @@ class AutoCodeAction extends AutoCode
                   "     */" . HH .
                   "    public function lists()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 查看{$table_comment}" . HH .
                   "     */" . HH .
                   "    public function view()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 编辑{$table_comment}" . HH .
                   "     */" . HH .
                   "    public function edit()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH .
                   "    /**" . HH .
                   "     * 删除{$table_comment}" . HH .
                   "     */" . HH .
                   "    public function delete()" . HH .
                   "    {" . HH .
-                  "        " . HH .
                   "    }" . HH;
         return $result;
     }
@@ -458,7 +460,11 @@ class AutoCodeAction extends AutoCode
             $datatype = self::comment_type($field["Type"]);
             switch ($datatype) {
                 case 'bit':
-                    $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1') \${$instancename}->{$fieldname} = 1; else \${$instancename}->isPublic = 0;" . HH;
+                    $editBitContent .= "            if (\${$instancename}->{$fieldname} == '1') {" . HH .
+                                       "                \${$instancename}->{$fieldname} = 1;" . HH .
+                                       "            } else {" . HH .
+                                       "                \${$instancename}->isPublic = 0;" . HH .
+                                       "            }" . HH;
                     break;
             }
         }
@@ -684,7 +690,7 @@ class AutoCodeAction extends AutoCode
                   "    public function index()" . HH .
                   "    {" . HH .
                   "    }" . HH .
-                  "}" . HH . HH;
+                  "}" . HH;
         self::saveDefineToDir(self::$action_dir_full, "Action_Index.php", $result);
     }
 

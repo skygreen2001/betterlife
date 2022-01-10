@@ -39,3 +39,7 @@
 ## Symfony库
 
 - [Symfony Mailer](https://symfony.com/doc/current/mailer.html): 发送电子邮件
+
+## 好酷的工具网站
+
+- [Install any command on any operating system](https://command-not-found.com/)

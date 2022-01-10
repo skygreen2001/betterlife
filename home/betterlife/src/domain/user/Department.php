@@ -58,7 +58,7 @@ class Department extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many = array(
+    public static $has_many = array(
         "admins" => "Admin"
     );
 }

@@ -13,7 +13,7 @@ class Action_Loguser extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Loguser extends ActionModel
         $this->view->countLogusers = $count;
         $logusers = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $logusers = Loguser::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "logusers", $logusers );
+        $this->view->set("logusers", $logusers);
     }
     /**
      * 查看用户日志
@@ -33,8 +33,8 @@ class Action_Loguser extends ActionModel
     public function view()
     {
         $loguserId = $this->data["id"];
-        $loguser   = Loguser::getById( $loguserId );
-        $this->view->set( "loguser", $loguser );
+        $loguser   = Loguser::getById($loguserId);
+        $this->view->set("loguser", $loguser);
     }
     /**
      * 编辑用户日志
@@ -51,17 +51,17 @@ class Action_Loguser extends ActionModel
                 $id = $loguser->save();
             }
             if ($isRedirect) {
-                $this->redirect( "loguser", "view", "id=$id" );
+                $this->redirect("loguser", "view", "id=$id");
                 exit;
             }
         }
         $loguserId = $this->data["id"];
-        $loguser   = Loguser::getById( $loguserId );
-        $this->view->set( "loguser", $loguser );
-        $users = User::get( "", "user_id asc" );
-        $this->view->set( "users", $users );
+        $loguser   = Loguser::getById($loguserId);
+        $this->view->set("loguser", $loguser);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor( 'log_content' );
+        $this->load_onlineditor('log_content');
     }
     /**
      * 删除用户日志
@@ -69,8 +69,7 @@ class Action_Loguser extends ActionModel
     public function delete()
     {
         $loguserId = $this->data["id"];
-        $isDelete = Loguser::deleteByID( $loguserId );
-        $this->redirect( "loguser", "lists", $this->data );
+        $isDelete = Loguser::deleteByID($loguserId);
+        $this->redirect("loguser", "lists", $this->data);
     }
 }
-

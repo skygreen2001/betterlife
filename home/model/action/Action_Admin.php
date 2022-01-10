@@ -13,7 +13,7 @@ class Action_Admin extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Admin extends ActionModel
         $this->view->countAdmins = $count;
         $admins = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $admins = Admin::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $admins = Admin::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "admins", $admins );
+        $this->view->set("admins", $admins);
     }
     /**
      * 查看系统管理人员
@@ -33,8 +33,8 @@ class Action_Admin extends ActionModel
     public function view()
     {
         $adminId = $this->data["id"];
-        $admin   = Admin::getById( $adminId );
-        $this->view->set( "admin", $admin );
+        $admin   = Admin::getById($adminId);
+        $this->view->set("admin", $admin);
     }
     /**
      * 编辑系统管理人员
@@ -51,15 +51,15 @@ class Action_Admin extends ActionModel
                 $id = $admin->save();
             }
             if ($isRedirect) {
-                $this->redirect( "admin", "view", "id=$id" );
+                $this->redirect("admin", "view", "id=$id");
                 exit;
             }
         }
         $adminId = $this->data["id"];
-        $admin   = Admin::getById( $adminId );
-        $this->view->set( "admin", $admin );
-        $departments = Department::get( "", "department_id asc" );
-        $this->view->set( "departments", $departments );
+        $admin   = Admin::getById($adminId);
+        $this->view->set("admin", $admin);
+        $departments = Department::get("", "department_id asc");
+        $this->view->set("departments", $departments);
     }
     /**
      * 删除系统管理人员
@@ -67,8 +67,7 @@ class Action_Admin extends ActionModel
     public function delete()
     {
         $adminId = $this->data["id"];
-        $isDelete = Admin::deleteByID( $adminId );
-        $this->redirect( "admin", "lists", $this->data );
+        $isDelete = Admin::deleteByID($adminId);
+        $this->redirect("admin", "lists", $this->data);
     }
 }
-

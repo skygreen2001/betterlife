@@ -13,7 +13,7 @@ abstract class TagClass
     protected $content;
     protected $html;
 
-    function __construct($tagname, $attributesDesc, $content = null)
+    public function __construct($tagname, $attributesDesc, $content = null)
     {
         $this->tagname = $tagname;
         $this->attributesDesc = $attributesDesc;
@@ -26,7 +26,7 @@ abstract class TagClass
     /**
      * Return the replace content by the assigned tag define.
      */
-    abstract function setHtml();
+    abstract public function setHtml();
 
     public function getHtml()
     {
@@ -63,11 +63,11 @@ abstract class TagClass
     }
 
     /**
-     *
+     * 获取Tag的属性
      * @param $tagStr
      * @return array the attribute from tag
      */
-    final function getAttributesFormTag($tagStr)
+    final public function getAttributesFormTag($tagStr)
     {
         $attributes = array();
         preg_match_all('/\b(\w+)\=(\\\\"([^\\\"]+)\\\"|\\\\\'([^\\\\\']+)\\\\\')/is', $tagStr, $split);

@@ -111,8 +111,10 @@ class AutoCodeAjax extends AutoCodeView
                             $i_name = lcfirst($i_name);
                             if (!array_key_exists("$show_fieldname", $fieldInfo)) {
                                 $result .= "        if (!empty(\${$instance_name}->$fieldname)) {" . HH .
-                                           "            \${$i_name}_i = $key::getById( \${$instance_name}->$fieldname );" . HH .
-                                           "            if (\${$i_name}_i ) \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;" . HH .
+                                           "            \${$i_name}_i = $key::getById(\${$instance_name}->$fieldname);" . HH .
+                                           "            if (\${$i_name}_i) {" . HH .
+                                           "                \${$instance_name}->$show_fieldname = \${$i_name}_i->$value;" . HH .
+                                           "            }" . HH .
                                            "        }" . HH;
                             }
                         }

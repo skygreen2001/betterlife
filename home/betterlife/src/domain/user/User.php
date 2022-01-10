@@ -50,14 +50,14 @@ class User extends DataObject
     /**
      * 一对一关系
      */
-    static $has_one = array(
+    public static $has_one = array(
         "userdetail" => "Userdetail"
     );
 
     /**
      * 一对多关系
      */
-    static $has_many = array(
+    public static $has_many = array(
         "blogs" => "Blog",
         "comments" => "Comment",
         "logusers" => "Loguser",
@@ -69,7 +69,7 @@ class User extends DataObject
     /**
      * 多对多关系
      */
-    static $many_many = array(
+    public static $many_many = array(
         "notices" => "Notice",
         "roles" => "Role"
     );

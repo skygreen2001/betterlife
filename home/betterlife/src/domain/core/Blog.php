@@ -2,9 +2,9 @@
 
 /**
  * -----------| 博客 |-----------
- * @category betterlife
- * @package core
- * @author skygreen skygreen2001@gmail.com
+ * @category Betterlife
+ * @package Core
+ * @author "skygreen skygreen2001@gmail.com"
  */
 class Blog extends DataObject
 {
@@ -83,7 +83,7 @@ class Blog extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one = array(
+    public static $belong_has_one = array(
         "user" => "User",
         "category" => "Category"
     );
@@ -91,7 +91,7 @@ class Blog extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many = array(
+    public static $has_many = array(
         "comments" => "Comment",
         "blogtagss" => "Blogtags"
     );
@@ -99,7 +99,7 @@ class Blog extends DataObject
     /**
      * 多对多关系
      */
-    static $many_many = array(
+    public static $many_many = array(
         "tagss" => "Tags"
     );
 

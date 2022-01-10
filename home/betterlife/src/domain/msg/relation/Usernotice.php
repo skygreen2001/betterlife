@@ -32,7 +32,7 @@ class Usernotice extends DataObject
     /**
      * 从属一对一关系
      */
-    static $belong_has_one = array(
+    public static $belong_has_one = array(
         "user" => "User",
         "notice" => "Notice"
     );

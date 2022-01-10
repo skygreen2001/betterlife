@@ -15,6 +15,7 @@ $class_relaField   = isset($class_relaField) ? $class_relaField : "";
 
 $api_web_template = <<<API_WEB
 <?php
+
 // error_reporting(0);
 require_once("../../../init.php");
 
@@ -29,7 +30,7 @@ require_once("../../../init.php");
 if (!empty(\$query)) {
     \$where_clause = "(";
     \$search_atom  = explode(" ", trim(\$query));
-    array_walk(\$search_atom, function(&\$value, \$key) {
+    array_walk(\$search_atom, function (&\$value, \$key) {
         \$value = " ( $classNameField LIKE '%" . \$value . "%' ) ";
     });
     \$where_clause .= implode(" and ", \$search_atom);
@@ -46,7 +47,7 @@ foreach (\$columns as \$key => \$column) {
     }
 }
 
-\$page{$classname}s = {$classname}::queryPageByPageNo( \$page, \$where_clause, \$page_size, \$orderDes );
+\$page{$classname}s = {$classname}::queryPageByPageNo(\$page, \$where_clause, \$page_size, \$orderDes);
 \$data = \$page{$classname}s["data"];
 if (\$data) {
     foreach (\$data as \$key => \${$instancename}) {
@@ -76,6 +77,7 @@ API_WEB;
 
 $select_web_template = <<<SELECT_WEB
 <?php
+
 // error_reporting(0);
 require_once("../../../init.php");
 
@@ -87,7 +89,7 @@ if (array_key_exists("term", \$_GET)) {
 if (!empty(\$query)) {
     \$where_clause = "(";
     \$search_atom = explode(" ", trim(\$query));
-    array_walk(\$search_atom, function(&\$value, \$key) {
+    array_walk(\$search_atom, function (&\$value, \$key) {
         \$value = " ( $class_relaField LIKE '%" . \$value . "%' ) ";
     });
     \$where_clause .= implode(" and ", \$search_atom);

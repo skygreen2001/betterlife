@@ -158,7 +158,7 @@ class AutoCodeDomain extends AutoCode
                     $scomment = str_replace("<br/>", "", $scomment);
                     $result  .= "    /**" . HH .
                                 "     * 显示" . $scomment . HH .
-                                "     * @return string " . HH .
+                                "     * @return string" . HH .
                                 "     */" . HH .
                                 "    public static function {$fieldname}Show(\${$fieldname})" . HH .
                                 "    {" . HH .
@@ -179,7 +179,7 @@ class AutoCodeDomain extends AutoCode
                     $result .= "    /**" . HH .
                                "     * 根据{$comment}显示文字获取{$comment}" . HH .
                                "     * @param mixed \${$fieldname}Show {$comment}显示文字" . HH .
-                               "     * @return string " . HH .
+                               "     * @return string" . HH .
                                "     */" . HH .
                                "    public static function {$fieldname}ByShow(\${$fieldname}Show)" . HH .
                                "    {" . HH .
@@ -191,7 +191,7 @@ class AutoCodeDomain extends AutoCode
                                        "                return self::{$enumname};" . HH;
                     }
                     $result .= "        }" . HH;
-                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0 )) {
+                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0)) {
                         $enumname  = strtoupper($enum_columnDefine[0]['name']);
                         $result   .= "        return self::{$enumname};" . HH;
                     } else {
@@ -200,7 +200,7 @@ class AutoCodeDomain extends AutoCode
                     $result .= "    }" . HH . HH;
                     $result .= "    /**" . HH .
                                "     * 通过枚举值获取枚举键定义" . HH .
-                               "     * @return string " . HH .
+                               "     * @return string" . HH .
                                "     */" . HH .
                                "    public static function {$fieldname}EnumKey(\${$fieldname})" . HH .
                                "    {" . HH .
@@ -212,13 +212,13 @@ class AutoCodeDomain extends AutoCode
                                      "                return \"{$enumname}\";" . HH;
                     }
                     $result .= "        }" . HH;
-                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0 )) {
+                    if (!empty($enum_columnDefine) && (count($enum_columnDefine) > 0)) {
                         $enumname = strtoupper($enum_columnDefine[0]['name']);
                         $result  .= "        return \"{$enumname}\";" . HH;
                     } else {
                         $result  .= "        return null;" . HH;
                     }
-                    $result .= "    }" . HH . HH;
+                    $result .= "    }" . HH;
                     $result .= "}" . HH;
                     self::$enumClass .= "生成导出完成:" . $tablename . "[" . $fieldname . "] => " . self::saveEnumDefineToDir($enumclassname, $result) . "!<br/>";
                 }
@@ -279,7 +279,7 @@ class AutoCodeDomain extends AutoCode
                             $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
                             $comment  = str_replace("* ", "* - ", $comment);
                         } else {
-                            $comment  = str_replace("     * ", "" . HH . "     * " . HH . "     * ", $comment);
+                            $comment  = str_replace("     * ", "" . HH . "     *" . HH . "     * ", $comment);
                         }
 
                         $result  .=
@@ -356,6 +356,9 @@ class AutoCodeDomain extends AutoCode
         $result .= self::domainEnumShow($fieldInfo, $tablename);
         $result .= self::domainTreeLevelDefine($fieldInfo, $classname, $tablename);
         $result .= self::domainBitShow($fieldInfo, $tablename);
+        if (endWith($result, HH)) {
+            $result = substr($result, 0, strlen($result) - strlen(HH));
+        }
         $result .= "}" . HH;
         return $result;
     }
@@ -380,7 +383,7 @@ class AutoCodeDomain extends AutoCode
         if (array_key_exists($classname, self::$relation_all)) {
             $relationSpec = self::$relation_all[$classname];
         }
-        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0 )) {
+        if (isset($relationSpec) && is_array($relationSpec) && (count($relationSpec) > 0)) {
             //导出一对一关系规范定义(如果存在)
             if (array_key_exists("has_one", $relationSpec)) {
                 $has_one        = $relationSpec["has_one"];
@@ -396,7 +399,7 @@ class AutoCodeDomain extends AutoCode
                            "     * 一对一关系" . HH .
                            "     * @var array" . HH .
                            "     */" . HH .
-                           "    static \$has_one = array(" . HH .
+                           "    public static \$has_one = array(" . HH .
                            $has_one_effect . HH .
                            "    );" . HH;
             }
@@ -415,7 +418,7 @@ class AutoCodeDomain extends AutoCode
                            "     * 从属一对一关系" . HH .
                            "     * @var array" . HH .
                            "     */" . HH .
-                           "    static \$belong_has_one = array(" . HH .
+                           "    public static \$belong_has_one = array(" . HH .
                            $belong_has_one_effect . HH .
                            "    );" . HH;
                 $classname_lc = $classname;
@@ -444,7 +447,7 @@ class AutoCodeDomain extends AutoCode
                            "     * 一对多关系" . HH .
                            "     * @var array" . HH .
                            "     */" . HH .
-                           "    static \$has_many = array(" . HH .
+                           "    public static \$has_many = array(" . HH .
                            $has_many_effect . HH .
                            "    );" . HH;
             }
@@ -463,7 +466,7 @@ class AutoCodeDomain extends AutoCode
                            "     * 多对多关系" . HH .
                            "     * @var array" . HH .
                            "     */" . HH .
-                           "    static \$many_many = array(" . HH .
+                           "    public static \$many_many = array(" . HH .
                            $many_many_effect . HH .
                            "    );" . HH;
             }
@@ -482,7 +485,7 @@ class AutoCodeDomain extends AutoCode
                            "     * 从属于多对多关系" . HH .
                            "     * @var array" . HH .
                            "     */" . HH .
-                           "    static \$belongs_many_many = array(" . HH .
+                           "    public static \$belongs_many_many = array(" . HH .
                            $belongs_many_many_effect . HH .
                            "    );" . HH;
             }
@@ -552,7 +555,7 @@ class AutoCodeDomain extends AutoCode
                     $enumclassname = self::enumClassName($fieldname, $tablename);
                     $result .= "    public static function {$fieldname}Show(\${$fieldname})" . HH .
                                "    {" . HH .
-                               "        return {$enumclassname}::{$fieldname}Show( \${$fieldname} );" . HH .
+                               "        return {$enumclassname}::{$fieldname}Show(\${$fieldname});" . HH .
                                "    }" . HH;
                 }
             }
@@ -588,7 +591,7 @@ class AutoCodeDomain extends AutoCode
                     $fieldname_up  = ucfirst($fieldname);
                     $result  .= "    public function get{$fieldname_up}Show()" . HH .
                                 "    {" . HH .
-                                "        return self::{$fieldname}Show( \$this->{$fieldname} );" . HH .
+                                "        return self::{$fieldname}Show(\$this->{$fieldname});" . HH .
                                 "    }" . HH;
                 }
             }
@@ -626,7 +629,7 @@ class AutoCodeDomain extends AutoCode
                               "            return \"是\";" . HH .
                               "        }" . HH .
                               "        return \"否\";" . HH .
-                              "    }" . HH;
+                              "    }" . HH . HH;
                 }
             }
         }
@@ -651,19 +654,19 @@ class AutoCodeDomain extends AutoCode
                            "    {" . HH .
                            "        \$max_id = $classname::max();" . HH .
                            "        for (\$i = 1;\$i <= \$max_id;\$i++) {" . HH .
-                           "            \$countChild = $classname::select( \"count(*)\", \"parent_id=\" . \$i );" . HH .
-                           "            $classname::updateBy( \"$realId=\" . \$i, \"countChild=\" . \$countChild );" . HH .
+                           "            \$countChild = $classname::select(\"count(*)\", \"parent_id=\" . \$i);" . HH .
+                           "            $classname::updateBy(\"$realId=\" . \$i, \"countChild=\" . \$countChild);" . HH .
                            "        }" . HH .
                            "    }" . HH . HH;
             }
             if (array_key_exists("level", $fieldInfo)) {
                 $result .= "    /**" . HH .
                            "     * 最高的层次，默认为3" . HH .
-                           "     * @return int " . HH .
+                           "     * @return int" . HH .
                            "     */" . HH .
                            "    public static function maxlevel()" . HH .
                            "    {" . HH .
-                           "        return $classname::select( \"max(level)\" );//return 3;" . HH .
+                           "        return $classname::select(\"max(level)\");//return 3;" . HH .
                            "    }" . HH . HH;
                 $instance_name = self::getInstancename($tablename);
                 if (is_array(self::$relation_viewfield) && (count(self::$relation_viewfield) > 0)) {
@@ -684,7 +687,7 @@ class AutoCodeDomain extends AutoCode
                                 "     */" . HH .
                                 "    public function get{$classname}ShowAll()" . HH .
                                 "    {" . HH .
-                                "        return self::{$instance_name}ShowAll( \$this->parent_id, \$this->level );" . HH .
+                                "        return self::{$instance_name}ShowAll(\$this->parent_id, \$this->level);" . HH .
                                 "    }" . HH . HH;
 
                                 $result .= "    /**" . HH .
@@ -696,12 +699,12 @@ class AutoCodeDomain extends AutoCode
                                 "     */" . HH .
                                 "    public static function {$instance_name}ShowAll(\$parent_id, \$level)" . HH .
                                 "    {" . HH .
-                                "        \${$instance_name}_p = $classname::getById( \$parent_id );" . HH .
+                                "        \${$instance_name}_p = $classname::getById(\$parent_id);" . HH .
                                 "        if (\$level == 1) {" . HH .
                                 "             \${$instance_name}ShowAll = \${$instance_name}_p->$classNameField;" . HH .
                                 "        } else {" . HH .
                                 "             \$parent_id     = \${$instance_name}_p->parent_id;" . HH .
-                                "             \${$instance_name}ShowAll = self::{$instance_name}ShowAll( \$parent_id, \$level - 1 ) . \"->\" . \${$instance_name}_p->$classNameField;" . HH .
+                                "             \${$instance_name}ShowAll = self::{$instance_name}ShowAll(\$parent_id, \$level - 1) . \"->\" . \${$instance_name}_p->$classNameField;" . HH .
                                 "        }" . HH .
                                 "        return \${$instance_name}ShowAll;" . HH .
                                 "    }" . HH . HH;

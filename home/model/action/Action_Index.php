@@ -13,7 +13,5 @@ class Action_Index extends ActionModel
      */
     public function index()
     {
-        
     }
 }
-

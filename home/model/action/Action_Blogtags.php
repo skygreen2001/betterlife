@@ -13,7 +13,7 @@ class Action_Blogtags extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Blogtags extends ActionModel
         $this->view->countBlogtagss = $count;
         $blogtagss = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $blogtagss = Blogtags::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $blogtagss = Blogtags::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "blogtagss", $blogtagss );
+        $this->view->set("blogtagss", $blogtagss);
     }
     /**
      * 查看博客标签
@@ -33,8 +33,8 @@ class Action_Blogtags extends ActionModel
     public function view()
     {
         $blogtagsId = $this->data["id"];
-        $blogtags   = Blogtags::getById( $blogtagsId );
-        $this->view->set( "blogtags", $blogtags );
+        $blogtags   = Blogtags::getById($blogtagsId);
+        $this->view->set("blogtags", $blogtags);
     }
     /**
      * 编辑博客标签
@@ -51,17 +51,17 @@ class Action_Blogtags extends ActionModel
                 $id = $blogtags->save();
             }
             if ($isRedirect) {
-                $this->redirect( "blogtags", "view", "id=$id" );
+                $this->redirect("blogtags", "view", "id=$id");
                 exit;
             }
         }
         $blogtagsId = $this->data["id"];
-        $blogtags   = Blogtags::getById( $blogtagsId );
-        $this->view->set( "blogtags", $blogtags );
-        $blogs = Blog::get( "", "blog_id asc" );
-        $this->view->set( "blogs", $blogs );
-        $tagss = Tags::get( "", "tags_id asc" );
-        $this->view->set( "tagss", $tagss );
+        $blogtags   = Blogtags::getById($blogtagsId);
+        $this->view->set("blogtags", $blogtags);
+        $blogs = Blog::get("", "blog_id asc");
+        $this->view->set("blogs", $blogs);
+        $tagss = Tags::get("", "tags_id asc");
+        $this->view->set("tagss", $tagss);
     }
     /**
      * 删除博客标签
@@ -69,8 +69,7 @@ class Action_Blogtags extends ActionModel
     public function delete()
     {
         $blogtagsId = $this->data["id"];
-        $isDelete = Blogtags::deleteByID( $blogtagsId );
-        $this->redirect( "blogtags", "lists", $this->data );
+        $isDelete = Blogtags::deleteByID($blogtagsId);
+        $this->redirect("blogtags", "lists", $this->data);
     }
 }
-

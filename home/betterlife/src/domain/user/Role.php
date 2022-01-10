@@ -26,7 +26,7 @@ class Role extends DataObject
     /**
      * 一对多关系
      */
-    static $has_many = array(
+    public static $has_many = array(
         "rolefunctionss" => "Rolefunctions",
         "userroles" => "Userrole"
     );
@@ -34,14 +34,14 @@ class Role extends DataObject
     /**
      * 多对多关系
      */
-    static $many_many = array(
+    public static $many_many = array(
         "functionss" => "Functions"
     );
 
     /**
      * 从属于多对多关系
      */
-    static $belongs_many_many = array(
+    public static $belongs_many_many = array(
         "users" => "User"
     );
 }

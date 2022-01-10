@@ -7,7 +7,7 @@
  */
 class TagDemoClass extends TagClass
 {
-    function setHtml()
+    public function setHtml()
     {
         $this->html = "<a href='http://www.baidu.com'>I like search In baidu</a><br/>";
         $attributes = TagClass::getAttributesFormTag($this->getAttributeDesc());

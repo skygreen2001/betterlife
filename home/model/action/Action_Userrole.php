@@ -13,7 +13,7 @@ class Action_Userrole extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Userrole extends ActionModel
         $this->view->countUserroles = $count;
         $userroles = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $userroles = Userrole::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $userroles = Userrole::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "userroles", $userroles );
+        $this->view->set("userroles", $userroles);
     }
     /**
      * 查看用户角色
@@ -33,8 +33,8 @@ class Action_Userrole extends ActionModel
     public function view()
     {
         $userroleId = $this->data["id"];
-        $userrole   = Userrole::getById( $userroleId );
-        $this->view->set( "userrole", $userrole );
+        $userrole   = Userrole::getById($userroleId);
+        $this->view->set("userrole", $userrole);
     }
     /**
      * 编辑用户角色
@@ -51,17 +51,17 @@ class Action_Userrole extends ActionModel
                 $id = $userrole->save();
             }
             if ($isRedirect) {
-                $this->redirect( "userrole", "view", "id=$id" );
+                $this->redirect("userrole", "view", "id=$id");
                 exit;
             }
         }
         $userroleId = $this->data["id"];
-        $userrole   = Userrole::getById( $userroleId );
-        $this->view->set( "userrole", $userrole );
-        $users = User::get( "", "user_id asc" );
-        $this->view->set( "users", $users );
-        $roles = Role::get( "", "role_id asc" );
-        $this->view->set( "roles", $roles );
+        $userrole   = Userrole::getById($userroleId);
+        $this->view->set("userrole", $userrole);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
+        $roles = Role::get("", "role_id asc");
+        $this->view->set("roles", $roles);
     }
     /**
      * 删除用户角色
@@ -69,8 +69,7 @@ class Action_Userrole extends ActionModel
     public function delete()
     {
         $userroleId = $this->data["id"];
-        $isDelete = Userrole::deleteByID( $userroleId );
-        $this->redirect( "userrole", "lists", $this->data );
+        $isDelete = Userrole::deleteByID($userroleId);
+        $this->redirect("userrole", "lists", $this->data);
     }
 }
-

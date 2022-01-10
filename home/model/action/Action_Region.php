@@ -13,7 +13,7 @@ class Action_Region extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Region extends ActionModel
         $this->view->countRegions = $count;
         $regions = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $regions = Region::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $regions = Region::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "regions", $regions );
+        $this->view->set("regions", $regions);
     }
     /**
      * 查看地区
@@ -33,8 +33,8 @@ class Action_Region extends ActionModel
     public function view()
     {
         $regionId = $this->data["id"];
-        $region   = Region::getById( $regionId );
-        $this->view->set( "region", $region );
+        $region   = Region::getById($regionId);
+        $this->view->set("region", $region);
     }
     /**
      * 编辑地区
@@ -51,15 +51,15 @@ class Action_Region extends ActionModel
                 $id = $region->save();
             }
             if ($isRedirect) {
-                $this->redirect( "region", "view", "id=$id" );
+                $this->redirect("region", "view", "id=$id");
                 exit;
             }
         }
         $regionId = $this->data["id"];
-        $region   = Region::getById( $regionId );
-        $this->view->set( "region", $region );
-        $region_ps = Region::get( "", "region_id asc" );
-        $this->view->set( "region_ps", $region_ps );
+        $region   = Region::getById($regionId);
+        $this->view->set("region", $region);
+        $region_ps = Region::get("", "region_id asc");
+        $this->view->set("region_ps", $region_ps);
     }
     /**
      * 删除地区
@@ -67,8 +67,7 @@ class Action_Region extends ActionModel
     public function delete()
     {
         $regionId = $this->data["id"];
-        $isDelete = Region::deleteByID( $regionId );
-        $this->redirect( "region", "lists", $this->data );
+        $isDelete = Region::deleteByID($regionId);
+        $this->redirect("region", "lists", $this->data);
     }
 }
-

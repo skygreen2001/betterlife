@@ -13,7 +13,7 @@ class Action_Rolefunctions extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Rolefunctions extends ActionModel
         $this->view->countRolefunctionss = $count;
         $rolefunctionss = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $rolefunctionss = Rolefunctions::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $rolefunctionss = Rolefunctions::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "rolefunctionss", $rolefunctionss );
+        $this->view->set("rolefunctionss", $rolefunctionss);
     }
     /**
      * 查看角色拥有功能
@@ -33,8 +33,8 @@ class Action_Rolefunctions extends ActionModel
     public function view()
     {
         $rolefunctionsId = $this->data["id"];
-        $rolefunctions   = Rolefunctions::getById( $rolefunctionsId );
-        $this->view->set( "rolefunctions", $rolefunctions );
+        $rolefunctions   = Rolefunctions::getById($rolefunctionsId);
+        $this->view->set("rolefunctions", $rolefunctions);
     }
     /**
      * 编辑角色拥有功能
@@ -51,17 +51,17 @@ class Action_Rolefunctions extends ActionModel
                 $id = $rolefunctions->save();
             }
             if ($isRedirect) {
-                $this->redirect( "rolefunctions", "view", "id=$id" );
+                $this->redirect("rolefunctions", "view", "id=$id");
                 exit;
             }
         }
         $rolefunctionsId = $this->data["id"];
-        $rolefunctions   = Rolefunctions::getById( $rolefunctionsId );
-        $this->view->set( "rolefunctions", $rolefunctions );
-        $roles = Role::get( "", "role_id asc" );
-        $this->view->set( "roles", $roles );
-        $functionss = Functions::get( "", "functions_id asc" );
-        $this->view->set( "functionss", $functionss );
+        $rolefunctions   = Rolefunctions::getById($rolefunctionsId);
+        $this->view->set("rolefunctions", $rolefunctions);
+        $roles = Role::get("", "role_id asc");
+        $this->view->set("roles", $roles);
+        $functionss = Functions::get("", "functions_id asc");
+        $this->view->set("functionss", $functionss);
     }
     /**
      * 删除角色拥有功能
@@ -69,8 +69,7 @@ class Action_Rolefunctions extends ActionModel
     public function delete()
     {
         $rolefunctionsId = $this->data["id"];
-        $isDelete = Rolefunctions::deleteByID( $rolefunctionsId );
-        $this->redirect( "rolefunctions", "lists", $this->data );
+        $isDelete = Rolefunctions::deleteByID($rolefunctionsId);
+        $this->redirect("rolefunctions", "lists", $this->data);
     }
 }
-

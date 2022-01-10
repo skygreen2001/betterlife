@@ -13,7 +13,7 @@ class Action_Role extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Role extends ActionModel
         $this->view->countRoles = $count;
         $roles = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $roles = Role::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $roles = Role::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "roles", $roles );
+        $this->view->set("roles", $roles);
     }
     /**
      * 查看角色
@@ -33,8 +33,8 @@ class Action_Role extends ActionModel
     public function view()
     {
         $roleId = $this->data["id"];
-        $role   = Role::getById( $roleId );
-        $this->view->set( "role", $role );
+        $role   = Role::getById($roleId);
+        $this->view->set("role", $role);
     }
     /**
      * 编辑角色
@@ -51,15 +51,15 @@ class Action_Role extends ActionModel
                 $id = $role->save();
             }
             $roleFunctions = $this->data["functions_id"];
-            Rolefunctions::saveDeleteRelateions( "role_id", $id, "functions_id", $roleFunctions );
+            Rolefunctions::saveDeleteRelateions("role_id", $id, "functions_id", $roleFunctions);
             if ($isRedirect) {
-                $this->redirect( "role", "view", "id=$id" );
+                $this->redirect("role", "view", "id=$id");
                 exit;
             }
         }
         $roleId = $this->data["id"];
-        $role   = Role::getById( $roleId );
-        $this->view->set( "role", $role );
+        $role   = Role::getById($roleId);
+        $this->view->set("role", $role);
     }
     /**
      * 删除角色
@@ -67,8 +67,7 @@ class Action_Role extends ActionModel
     public function delete()
     {
         $roleId = $this->data["id"];
-        $isDelete = Role::deleteByID( $roleId );
-        $this->redirect( "role", "lists", $this->data );
+        $isDelete = Role::deleteByID($roleId);
+        $this->redirect("role", "lists", $this->data);
     }
 }
-

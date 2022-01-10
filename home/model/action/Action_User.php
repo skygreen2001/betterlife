@@ -13,7 +13,7 @@ class Action_User extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_User extends ActionModel
         $this->view->countUsers = $count;
         $users = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $users = User::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $users = User::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "users", $users );
+        $this->view->set("users", $users);
     }
     /**
      * 查看用户
@@ -33,8 +33,8 @@ class Action_User extends ActionModel
     public function view()
     {
         $userId = $this->data["id"];
-        $user   = User::getById( $userId );
-        $this->view->set( "user", $user );
+        $user   = User::getById($userId);
+        $this->view->set("user", $user);
     }
     /**
      * 编辑用户
@@ -51,17 +51,17 @@ class Action_User extends ActionModel
                 $id = $user->save();
             }
             $userNotice = $this->data["notice_id"];
-            Usernotice::saveDeleteRelateions( "user_id", $id, "notice_id", $userNotice );
+            Usernotice::saveDeleteRelateions("user_id", $id, "notice_id", $userNotice);
             $userRole = $this->data["role_id"];
-            Userrole::saveDeleteRelateions( "user_id", $id, "role_id", $userRole );
+            Userrole::saveDeleteRelateions("user_id", $id, "role_id", $userRole);
             if ($isRedirect) {
-                $this->redirect( "user", "view", "id=$id" );
+                $this->redirect("user", "view", "id=$id");
                 exit;
             }
         }
         $userId = $this->data["id"];
-        $user   = User::getById( $userId );
-        $this->view->set( "user", $user );
+        $user   = User::getById($userId);
+        $this->view->set("user", $user);
     }
     /**
      * 删除用户
@@ -69,8 +69,7 @@ class Action_User extends ActionModel
     public function delete()
     {
         $userId = $this->data["id"];
-        $isDelete = User::deleteByID( $userId );
-        $this->redirect( "user", "lists", $this->data );
+        $isDelete = User::deleteByID($userId);
+        $this->redirect("user", "lists", $this->data);
     }
 }
-

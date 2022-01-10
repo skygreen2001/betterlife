@@ -69,7 +69,8 @@
   "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project.",
   "_install-script" : {
     "config" : "composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/",
-    "install": "composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist"
+    "install": "composer install --ignore-platform-reqs --no-interaction --no-plugins --no-scripts --prefer-dist",
+    "phpcs"  : "composer global require squizlabs/php_codesniffer"
   },
   "_repositories": {
     "packagist": {

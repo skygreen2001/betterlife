@@ -13,7 +13,7 @@ class Action_Comment extends ActionModel
      */
     public function lists()
     {
-        if ($this->isDataHave( TagPageService::$linkUrl_pageFlag )) {
+        if ($this->isDataHave(TagPageService::$linkUrl_pageFlag)) {
             $nowpage = $this->data[TagPageService::$linkUrl_pageFlag];
         } else {
             $nowpage = 1;
@@ -22,10 +22,10 @@ class Action_Comment extends ActionModel
         $this->view->countComments = $count;
         $comments = null;
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage,$count);
-            $comments = Comment::queryPage( $bb_page->getStartPoint(), $bb_page->getEndPoint() );
+            $bb_page = TagPageService::init($nowpage, $count);
+            $comments = Comment::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
-        $this->view->set( "comments", $comments );
+        $this->view->set("comments", $comments);
     }
     /**
      * 查看评论
@@ -33,8 +33,8 @@ class Action_Comment extends ActionModel
     public function view()
     {
         $commentId = $this->data["id"];
-        $comment   = Comment::getById( $commentId );
-        $this->view->set( "comment", $comment );
+        $comment   = Comment::getById($commentId);
+        $this->view->set("comment", $comment);
     }
     /**
      * 编辑评论
@@ -51,19 +51,19 @@ class Action_Comment extends ActionModel
                 $id = $comment->save();
             }
             if ($isRedirect) {
-                $this->redirect( "comment", "view", "id=$id" );
+                $this->redirect("comment", "view", "id=$id");
                 exit;
             }
         }
         $commentId = $this->data["id"];
-        $comment   = Comment::getById( $commentId );
-        $this->view->set( "comment", $comment );
-        $users = User::get( "", "user_id asc" );
-        $this->view->set( "users", $users );
-        $blogs = Blog::get( "", "blog_id asc" );
-        $this->view->set( "blogs", $blogs );
+        $comment   = Comment::getById($commentId);
+        $this->view->set("comment", $comment);
+        $users = User::get("", "user_id asc");
+        $this->view->set("users", $users);
+        $blogs = Blog::get("", "blog_id asc");
+        $this->view->set("blogs", $blogs);
         //加载在线编辑器的语句要放在:$this->view->viewObject[如果有这一句]之后。
-        $this->load_onlineditor( 'comment' );
+        $this->load_onlineditor('comment');
     }
     /**
      * 删除评论
@@ -71,8 +71,7 @@ class Action_Comment extends ActionModel
     public function delete()
     {
         $commentId = $this->data["id"];
-        $isDelete = Comment::deleteByID( $commentId );
-        $this->redirect( "comment", "lists", $this->data );
+        $isDelete = Comment::deleteByID($commentId);
+        $this->redirect("comment", "lists", $this->data);
     }
 }
-

@@ -51,7 +51,7 @@ class Region extends DataObject
      *
      * @var array
      */
-    static $belong_has_one = array(
+    public static $belong_has_one = array(
         "region_p" => "Region"
     );
     /**

@@ -10,9 +10,11 @@
       <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
       <exclude name="PSR1.Classes.ClassDeclaration.MultipleClasses" />
       <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
+      <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
       <exclude name="PSR1.Methods.CamelCapsMethodName" />
       <exclude name="PSR1.Files.SideEffects" />
       <exclude name="Generic.Files.LineLength"/>
+      
    </rule>
    <!-- [PHP_CodeSniffer Advanced Usage](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage) -->
    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
