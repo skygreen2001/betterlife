@@ -2,10 +2,10 @@
 
 /**
  * -----------| 所有数据库，表，列信息的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db
  * @subpackage info
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class DbInfo extends BBObject
 {

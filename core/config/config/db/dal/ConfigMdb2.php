@@ -5,10 +5,10 @@
  * @link http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
  * @link http://pear.php.net/manual/en/package.database.mdb2.intro-connect.php
  * @link http://pear.php.net/package/DB/docs
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigMdb2 extends ConfigDb
 {

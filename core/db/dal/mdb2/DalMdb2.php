@@ -4,10 +4,10 @@
  * -----------| 实现mdb2通用的DAL访问方式 |-----------
  *
  * @link http://pear.php.net/package/MDB2
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage mdb2
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DalMdb2 extends Dal implements IDal
 {

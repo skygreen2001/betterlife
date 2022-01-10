@@ -23,9 +23,9 @@
  *      @link Reference Method: http://code.google.com/p/phpredis/wiki/referencemethods
  *      @link php-redis: http://code.google.com/p/php-redis/
  *      @link PHP-redis中文说明: http://hi.baidu.com/%B4%AB%CB%B5%D6%D0%B5%C4%C8%CC%D5%DF%C3%A8/blog/item/c9ff4ac1898afa4fb219a8c7.html
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheRedis extends CacheBase
 {

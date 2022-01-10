@@ -39,10 +39,10 @@
  *
  *    Memcached深度分析(原创):http://blog.developers.api.sina.com.cn/?p=124
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.config
  * @subpackage cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Config_Memcache extends ConfigBB
 {

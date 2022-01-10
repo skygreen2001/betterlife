@@ -10,10 +10,10 @@
  * @link http://phplens.com/lens/adodb/docs-adodb.htm#intro
  * @link http://adodb.sourceforge.net/
  * @link http://www.tsingfeng.com/?p=256
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage adodb
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DalAdodb extends Dal implements IDal
 {

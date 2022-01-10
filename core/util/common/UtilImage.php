@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:处理图形图像相关的事宜方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilImage
 {

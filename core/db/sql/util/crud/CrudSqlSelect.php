@@ -8,9 +8,9 @@
  *   $sql= new SQL_Select();
  *   $sql->select("id","name")->from("users")->where("id=1")->limit(1)->result();
  * ```
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.crud
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CrudSqlSelect extends CrudSQL
 {

@@ -3,9 +3,9 @@
 /**
  * -----------| 在这里实现自定义模块库的加载 |-----------
  * @TODO 现无自定义模块库
- * @category betterlife
+ * @category Betterlife
  * @package library
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Library_Loader
 {

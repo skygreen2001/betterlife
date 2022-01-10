@@ -2,10 +2,10 @@
 
 /**
  * -----------| 比较直观可看的专用于SqlServer的SQL查询构造器 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.crud.select
  * @subpackage sqlserver
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class SqlServerCrudSqlSelect extends CrudSqlSelect
 {

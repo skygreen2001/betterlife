@@ -34,9 +34,9 @@ class EnumCacheDriverType extends Enum
  *
  * 安装: composer require doctrine/cache
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * @link https://www.doctrine-project.org/projects/cache.html
  */
 class BBCache

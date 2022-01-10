@@ -6,9 +6,9 @@
  * 参考java.util.ArrayList的方法命名定义
  *
  * 改造成为对象列表容器。
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DataObjectList extends ArrayObject implements IteratorAggregate
 {

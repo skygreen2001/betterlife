@@ -21,10 +21,10 @@
  *  b. 如果没办法修改php.ini文件，可以在你的php配置（比喻数据库连接文件）文件里加上一句:
  *
  *    ini_set ("mssql.datetimeconvert","0"); //设置数据库格式.
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigMssql extends ConfigDb
 {

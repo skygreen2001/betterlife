@@ -4,9 +4,9 @@
  * -----------| 数据库操作管理 |-----------
  *
  * 所有的数据库都通过这里进行访问
- * @category betterlife
+ * @category Betterlife
  * @package core.db
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ManagerDb extends Manager
 {

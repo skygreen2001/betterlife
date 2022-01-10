@@ -2,9 +2,9 @@
 
 /**
  * -----------| 负责WEB URL的转发 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Dispatcher
 {

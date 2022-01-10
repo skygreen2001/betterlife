@@ -8,9 +8,9 @@
  * These days every browser supports gzip compression for faster loading of any object.
  *
  * built-in support for ****jQuery, mootoos, prototype and script.aculo.us*****.
- * @category betterlife
+ * @category Betterlife
  * @package util.view
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilJavascript extends Util
 {

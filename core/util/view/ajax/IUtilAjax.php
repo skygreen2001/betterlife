@@ -2,9 +2,9 @@
 
 /**
  * -----------| 接口:Javascript Ajax 框架的工具类实现接口 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view.ajax
- * @author zhouyuepu
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface IUtilAjax
 {

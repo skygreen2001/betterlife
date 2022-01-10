@@ -4,9 +4,9 @@
  * -----------| 负责WEB URL的解析 |-----------
  *
  * 从用户请求的URL里获取Controller,Action和Parameter。
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Router
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 批量生成代码的配置 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigAutoCode extends ConfigBB
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:将多个文件压缩成zip文件的工具类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilZipfile
 {

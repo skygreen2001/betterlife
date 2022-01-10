@@ -2,9 +2,9 @@
 
 /**
  * -----------| 接口: 通过SQL查询的类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface ISqlNormal
 {

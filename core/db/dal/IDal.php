@@ -3,10 +3,10 @@
 /**
  * -----------| 所有DAL(Data Access Layers)的接口定义 |-----------
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.db
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface IDal
 {

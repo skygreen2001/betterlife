@@ -4,10 +4,10 @@
  * -----------| 比较直观可看的SQL构造器 |-----------
  *
  * 是所有SQL构造器的父类
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql
  * @subpackage crud
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class CrudSQL
 {

@@ -2,10 +2,10 @@
 
 /**
  * -----------| A result-set from a MySQL database. |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.query
  * @subpackage mysql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class QueryMysql extends Query
 {

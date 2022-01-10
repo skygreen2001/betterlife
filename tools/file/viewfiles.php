@@ -3,7 +3,7 @@
 /**
  * 显示所有的核心源码文件信息
  * @todo 按行数排序
- * @author zhouyuepu
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 require_once("../../init.php");

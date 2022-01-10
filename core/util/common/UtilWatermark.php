@@ -30,9 +30,9 @@
  *
  * -- Transparency Dither: Diffusion Transparency Dither, 100%
  *
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilWatermark
 {

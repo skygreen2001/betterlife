@@ -2,10 +2,10 @@
 
 /**
  * -----------| 控制器:首页 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package  web.front
  * @subpackage auth
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Action_Index extends Action
 {

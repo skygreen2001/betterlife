@@ -2,9 +2,9 @@
 
 /**
  * -----------| 表示层对象，需要框架支持Flexy|Smarty |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ViewObject extends stdClass
 {

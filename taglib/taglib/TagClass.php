@@ -3,7 +3,7 @@
 /**
  * The Parent Class of all tags
  *
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class TagClass
 {

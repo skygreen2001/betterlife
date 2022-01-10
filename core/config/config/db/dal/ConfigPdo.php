@@ -3,10 +3,10 @@
 /**
  * -----------| Pdo的配置类 |-----------
  * @link http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigPdo extends ConfigDb
 {

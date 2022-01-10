@@ -9,9 +9,9 @@
  *
  * @link php的memcached客户端memcached: http://www.9enjoy.com/php-memcached/
  * @todo
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheMemcached extends CacheBase
 {

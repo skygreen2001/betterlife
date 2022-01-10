@@ -2,10 +2,10 @@
 
 /**
  * 提供业务方法服务的接口
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage service
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface IServiceBasic
 {

@@ -8,9 +8,9 @@
  *    - 单个对象【单张表】的增删改查
  *    - 列表对象的查询
  *    - 统计函数的执行
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface IDaoNormal
 {

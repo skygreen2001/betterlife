@@ -6,10 +6,10 @@
  * @link http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html
  * @link http://www.leapsoul.cn/?p=651
  * @todo 实现PDO通用的DAL访问方式
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage pdo
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DalPdo extends Dal implements IDal
 {

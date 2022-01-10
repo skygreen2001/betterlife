@@ -52,9 +52,9 @@
  * @link 在Windows里安装APC: http://docs.moodle.org/20/en/Installing_APC_in_Windows
  * @link Problems with APC setup and apache2 errors: http://serverfault.com/questions/278530/problems-with-apc-setup-and-apache2-errors
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheApc extends CacheBase
 {

@@ -40,10 +40,10 @@ class EnumDateTimeShow extends Enum
 
 /**
  * -----------| 功能:处理通用的日期时间方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
  * @subpackage datetime
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilDateTime extends Util
 {

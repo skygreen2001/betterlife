@@ -32,7 +32,7 @@
  * @author Andy Prevost
  * @author Marcus Bointon
  * @author Jim Jagielski
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * @copyright 2010 - 2012 Jim Jagielski
  * @copyright 2004 - 2009 Andy Prevost
  * @version $Id: class.phpmailer.php 450 2010-06-23 16:46:33Z coolbru $

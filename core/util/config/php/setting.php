@@ -2,10 +2,10 @@
 
 /**
  * -----------| Php 配置文档 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.config
  * @subpackage php
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
  $db = array();

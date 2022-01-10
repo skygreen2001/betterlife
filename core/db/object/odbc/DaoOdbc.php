@@ -5,10 +5,10 @@
  *
  * 主要适用于Microsoft Accesss
  * @link http://www.w3schools.com/php/php_db_odbc.asp
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
  * @subpackage odbc
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DaoOdbc extends Dao implements IDaoNormal
 {

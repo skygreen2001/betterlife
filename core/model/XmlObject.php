@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有Xml格式数据实体类的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class XmlObject extends BBObject implements ArrayAccess
 {

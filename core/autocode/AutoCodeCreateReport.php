@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类:自动生成代码-一键生成前后台报表模板 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 class AutoCodeCreateReport extends AutoCode

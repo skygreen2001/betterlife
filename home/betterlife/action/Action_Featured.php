@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:发现 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.front.action
  * @author skygreen skygreen2001@gmail.com
  */

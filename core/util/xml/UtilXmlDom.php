@@ -4,9 +4,9 @@
  * -----------| 采用Dom方式处理Xml |-----------
  *
  * 可采用其处理Html格式的文档内容
- * @category betterlife
+ * @category Betterlife
  * @package util.xml
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilXmlDom extends Util
 {

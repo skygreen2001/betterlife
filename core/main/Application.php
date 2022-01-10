@@ -1,10 +1,12 @@
 <?php
 
+use Symfony\Component\ErrorHandler\Debug;
+
 /**
  * -----------| BetterLife框架应用开始 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Application
 {
@@ -56,9 +58,11 @@ class Application
     {
         header("Content-Type:text/html; charset=\"" . Gc::$encoding . "\"");
         $router = new Router();
+        DebugMe::start();
         Dispatcher::dispatch($router);
         ob_end_flush();
         $router = null;
+        DebugMe::end();
         LogMe::showLogs();
         e_view();//Debug模式下打印异常
     }

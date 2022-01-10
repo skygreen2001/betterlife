@@ -2,9 +2,9 @@
 
 /**
  * -----------| 框架常用系统函数 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package include
- * @author skygreen2001
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 /**

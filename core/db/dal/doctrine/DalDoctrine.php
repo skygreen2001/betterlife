@@ -4,10 +4,10 @@
  * -----------| @todo 实现doctrine通用的DAL访问方式 |-----------
  *
  * @link http://www.doctrine-project.org/
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage dbfacile
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DalDbFacile extends Dal implements IDal
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 框架异常处理的父类 |-----------
- * @category betterlife
- * @package core.exception
- * @author zhouyuepu
+ * @category Betterlife
+ * @package core.system.exception
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class ExceptionMe extends Exception
 {

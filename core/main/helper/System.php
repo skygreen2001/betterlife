@@ -5,7 +5,7 @@
  *
  * PHP versions 4 and 5
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
  * @author     Tomas V.V.Cox <cox@idecnet.com>
@@ -48,7 +48,7 @@ $GLOBALS['_System_temp_files'] = array();
 *
 * System::rm(array('-r', $file1, $dir1));
 *
-* @category betterlife
+* @category Betterlife
 * @package core.main
 * @subpackage helper
 * @author     Tomas V.V. Cox <cox@idecnet.com>

@@ -2,10 +2,10 @@
 
 /**
  * -----------| 使用PHP5自带的MySQL Extension |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
  * @subpackage mysql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DaoPhp5 extends Dao implements IDaoNormal
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:处理字符串的工具类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilString extends Util
 {

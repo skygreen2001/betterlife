@@ -6,10 +6,10 @@
  * （在Windows服务器上）本工具类只通用到2038年1月
  *
  * 因为它使用比较的函数mktime只有效期到2038年1月；主要是因为32bit的Int类型支持位数只能到timestamp这个数值
- * @category betterlife
+ * @category Betterlife
  * @package util.common
  * @subpackage datetime
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilDateLunar
 {

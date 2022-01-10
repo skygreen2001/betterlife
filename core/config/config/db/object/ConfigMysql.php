@@ -4,10 +4,10 @@
  * -----------| MYSQL的配置类 |-----------
  *
  * 应根据项目的需要修改相应的配置
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigMysql extends ConfigDb
 {

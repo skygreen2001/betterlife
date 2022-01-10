@@ -4,7 +4,7 @@
  * -----------| 功能:处理手机信息相关的工具类 |-----------
  * @category inesa
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilMobile extends Util
 {

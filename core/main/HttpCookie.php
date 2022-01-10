@@ -2,9 +2,9 @@
 
 /**
  * -----------| Http Cookie 管理类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class HttpCookie
 {

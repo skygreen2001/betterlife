@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类: Prototype[Javascript Ajax 框架] |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view.ajax
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilAjaxPrototype extends UtilAjax implements IUtilAjax
 {

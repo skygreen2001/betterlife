@@ -2,7 +2,7 @@
 
 /**
  * -----------| 博客标签博客标签 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.relation
  * @author skygreen skygreen2001@gmail.com
  */

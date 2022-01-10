@@ -55,9 +55,9 @@ class EnumDataObjectDefaultKeyword extends Enum
  * 数据对象间关系对应表关系定义，有以下关系:
  *
  * 一对一，一对多，多对多
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumTableRelation extends Enum
 {
@@ -85,9 +85,9 @@ class EnumTableRelation extends Enum
 
 /**
  * -----------| 枚举类型: ID名称定义的策略 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumIDNameStrategy extends Enum
 {
@@ -117,9 +117,9 @@ class EnumIDNameStrategy extends Enum
 
 /**
  * -----------| 枚举类型: 默认外键ID名称定义的策略 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumForeignIDNameStrategy extends Enum
 {
@@ -139,9 +139,9 @@ class EnumForeignIDNameStrategy extends Enum
 
 /**
  * -----------| 枚举类型: 数据对象列规格默认列定义 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumDataSpec extends Enum
 {
@@ -218,10 +218,10 @@ class EnumDataSpec extends Enum
  *
  *      数据对象定义需定义字段: public $field_spec，它定义了当前数据对象的列规格说明。
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage dataobject
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DataObjectSpec
 {

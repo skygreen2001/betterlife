@@ -23,9 +23,9 @@
  *         $mailinfo = "发送不成功";
  *     }
  * ```
- * @category betterlife
+ * @category Betterlife
  * @package util.email
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilEmailSmtp extends Util
 {

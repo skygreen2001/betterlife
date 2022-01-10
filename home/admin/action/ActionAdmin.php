@@ -2,9 +2,9 @@
 
 /**
  * -----------| 后台管理所有控制器的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.admin
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ActionAdmin extends ActionBasic
 {

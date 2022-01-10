@@ -2,10 +2,10 @@
 
 /**
  * -----------| Microsoft ODBC方案 的配置类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigOdbc extends ConfigDb
 {

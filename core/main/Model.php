@@ -2,9 +2,9 @@
 
 /**
  * -----------| 用于MVC框架中单例实例化一个对象并对其进行管理 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Model
 {

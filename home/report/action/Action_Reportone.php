@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:所有报表可以通过一个控制器处理 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.admin.action
  * @author skygreen skygreen2001@gmail.com
  */

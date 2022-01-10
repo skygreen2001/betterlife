@@ -2,9 +2,9 @@
 
 /**
  * -----------| MysqlI异常处理类 |-----------
- * @category betterlife
- * @package core.exception.db
- * @author zhouyuepu
+ * @category Betterlife
+ * @package core.system.exception.db
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ExceptionMysqli extends ExceptionDb
 {

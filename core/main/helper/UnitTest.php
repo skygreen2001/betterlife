@@ -4,10 +4,10 @@
  * -----------| 运行期对Action的单元测试 |-----------
  *
  * 暂时未应用
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UnitTest
 {

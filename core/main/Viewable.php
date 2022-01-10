@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有显示工具类的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.back
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Viewable extends BBObject implements ArrayAccess
 {

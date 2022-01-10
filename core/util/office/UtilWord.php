@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:处理Office Word:doc,docx相关的事宜方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilWord extends Util
 {

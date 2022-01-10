@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:处理Excel相关的事宜方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * NOTICE: composer.json 需要安装: "phpoffice/phpexcel" : "^1.8", 老版本支持Php5.2以上
  */
 class UtilExcelOld extends Util

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有自动生成代码工具的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class AutoCode extends BBObject
 {

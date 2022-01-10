@@ -4,9 +4,9 @@
  * -----------| 工具类: YUI[Javascript Ajax 框架] |-----------
  *
  * Yahoo! User Interface Library (YUI)
- * @category betterlife
+ * @category Betterlife
  * @package util.view.ajax
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilAjaxYui extends UtilAjax implements IUtilAjax
 {

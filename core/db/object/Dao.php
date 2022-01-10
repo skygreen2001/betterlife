@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有数据库访问对象的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class Dao
 {

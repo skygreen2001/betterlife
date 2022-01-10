@@ -21,9 +21,9 @@ DataObjectSpec::init();
  * - committime: 数据创建的时间, 当没有updateTime时, 其亦代表数据最后更新的时间
  *
  * - updateTime: 数据最后更新的时间。
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class DataObject extends BBObject implements ArrayAccess
 {

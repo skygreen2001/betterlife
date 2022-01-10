@@ -2,9 +2,9 @@
 
 /**
  * -----------| 手机Mobile的配置 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigMobile extends ConfigBB
 {

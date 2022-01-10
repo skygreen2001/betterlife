@@ -2,7 +2,7 @@
 
 /**
  * -----------| 工具类:自动生成代码-生成单张表或者对应类的前后台所有模板文件 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
  */

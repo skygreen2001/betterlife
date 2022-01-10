@@ -2,10 +2,10 @@
 
 /**
  * -----------| 所有Service的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage service
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Service extends BBObject
 {

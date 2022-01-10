@@ -7,10 +7,10 @@
  *
  *     - PHP 5
  *     - Mysql 4.1.3以上版本
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
  * @subpackage mysql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DaoMysqlI5 extends Dao implements IDaoNormal
 {

@@ -4,10 +4,10 @@
  * -----------| Description of DaoPostgres |-----------
  *
  * 使用PHP5的Postgres Extension:php_pgsql
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
  * @subpackage postgres
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DaoPostgres extends Dao implements IDaoNormal
 {

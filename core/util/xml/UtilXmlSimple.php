@@ -2,9 +2,9 @@
 
 /**
  * -----------| 采用SimpleXML处理Xml |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.xml
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilXmlSimple extends Util
 {

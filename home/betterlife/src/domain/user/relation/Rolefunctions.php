@@ -2,7 +2,7 @@
 
 /**
  * -----------| 角色拥有功能角色拥有功能 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package user.relation
  * @author skygreen skygreen2001@gmail.com
  */

@@ -2,10 +2,10 @@
 
 /**
  * -----------| Sqlite的配置类 * Postgres的配置类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigSqlite extends ConfigDb
 {

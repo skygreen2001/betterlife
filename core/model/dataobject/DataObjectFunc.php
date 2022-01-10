@@ -2,10 +2,10 @@
 
 /**
  * -----------| 数据对象常用的一些方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage dataobject
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DataObjectFunc
 {

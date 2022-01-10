@@ -6,7 +6,7 @@
  * PEAR class and PEAR_Error class
  *
  * PHP versions 4 and 5
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
  * @author     Sterling Hughes <sterling@php.net>
@@ -72,7 +72,7 @@ $GLOBALS['_PEAR_error_handler_stack']    = array();
  * IMPORTANT! To use the emulated destructors you need to create the
  * objects by reference: $obj =& new PEAR_child;
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
  * @author     Stig Bakken <ssb@php.net>
@@ -787,7 +787,7 @@ function _PEAR_call_destructors()
  *
  * This class is supserseded by {@link PEAR_Exception} in PHP 5
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
  * @author     Stig Bakken <ssb@php.net>

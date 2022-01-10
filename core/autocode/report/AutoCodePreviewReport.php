@@ -2,7 +2,7 @@
 
 /**
  * -----------| 辅助工具类:预览生成代码的报告列表 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
  */

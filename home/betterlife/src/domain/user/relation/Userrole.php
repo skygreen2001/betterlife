@@ -2,7 +2,7 @@
 
 /**
  * -----------| 用户角色用户角色 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package user.relation
  * @author skygreen skygreen2001@gmail.com
  */

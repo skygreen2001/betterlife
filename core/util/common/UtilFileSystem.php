@@ -3,9 +3,9 @@
 /**
  * -----------| 功能:处理文件目录相关的事宜方法 |-----------
  *
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilFileSystem extends Util
 {

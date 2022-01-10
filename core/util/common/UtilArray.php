@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类: 数组 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilArray extends Util
 {

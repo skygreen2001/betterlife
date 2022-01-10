@@ -2,7 +2,7 @@
 
 /**
  * -----------| 枚举类型:视野 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package domain
  * @subpackage enum
  * @author skygreen skygreen2001@gmail.com

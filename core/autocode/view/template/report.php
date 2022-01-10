@@ -2,9 +2,9 @@
 
 /**
  * -----------| 生成报表[模板文件] |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 $reportCname = isset($reportCname) ? $reportCname : "";

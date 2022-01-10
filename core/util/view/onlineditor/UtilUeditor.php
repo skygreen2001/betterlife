@@ -2,10 +2,10 @@
 
 /**
  * -----------| 定义 UEditor 在线编辑器 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view
  * @subpackage onlinediotr
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * @link http://fex.baidu.com/ueditor/ [ueditor API 文档]
  * @link http://www.comsharp.com/GetKnowledge/zh-CN/It_News_k1067.aspx [百度 UEditor Web 编辑器同 CMS 集成全攻略]
  */

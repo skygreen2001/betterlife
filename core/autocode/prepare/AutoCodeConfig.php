@@ -2,7 +2,7 @@
 
 /**
  * -----------| 工具类:自动生成配置文件 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
  */

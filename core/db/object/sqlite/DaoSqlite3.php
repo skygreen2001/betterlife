@@ -3,10 +3,10 @@
 /**
  * -----------| PHP5自带的SQL数据库Sqlite |-----------
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.db.object
  * @subpackage sqlite
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DaoSqlite3 extends Dao implements IDaoNormal
 {

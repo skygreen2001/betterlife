@@ -2,9 +2,9 @@
 
 /**
  * -----------| 自定义打印异常对象 |-----------
- * @category betterlife
- * @package core.exception.base
- * @author zhouyuepu
+ * @category Betterlife
+ * @package core.system.exception.base
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ExceptionCustomize extends Exception
 {

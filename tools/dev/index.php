@@ -56,7 +56,7 @@ class EnumReusePjType extends Enum
  *        4. 清除mysql|sqlite|postgres以外的其他数据库引擎
  *        5. 清除common大部分工程无需的文件
  *
- * @author skygreen2001@gmail.com
+ * @author skygreen2001 <skygreen2001@gmail.com>@gmail.com
  */
 class Project_Refactor
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 功能:处理数字计算的工具类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilNumber extends Util
 {

@@ -4,7 +4,7 @@
  * -----------| XML class: utility class to be used with PHP's XML handling functions |-----------
  *
  * XML和Array的转换
- * @category betterlife
+ * @category Betterlife
  * @package util.xml
  * @author Keith Devens
  */

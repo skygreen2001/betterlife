@@ -2,10 +2,10 @@
 
 /**
  * -----------| 工具类: 读取php配置文件类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.caonfig
  * @subpackage php
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilConfigPhp extends UtilConfig
 {

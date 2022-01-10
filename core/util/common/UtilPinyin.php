@@ -3,9 +3,9 @@
 /**
  * -----------| 功能:中文转换成拼音工具类 |-----------
  * @link http://www.oschina.net/code/snippet_115552_4975[PHP汉字转拼音函数]
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilPinyin
 {

@@ -2,10 +2,10 @@
 
 /**
  * -----------| 枚举类型: 数据对象默认列定义 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage dataobject
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumColumnNameDefault extends Enum
 {

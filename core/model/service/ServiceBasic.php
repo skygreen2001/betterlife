@@ -17,7 +17,7 @@
  *     - 根据数据对象的计数
  *     - 分页获取数据对象
  *     - 对属性进行递增递减
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage service
  * @author skygreen skygreen2001@gmail.com

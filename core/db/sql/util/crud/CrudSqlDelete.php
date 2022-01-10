@@ -2,9 +2,9 @@
 
 /**
  * -----------| Delete 删除记录SQL语句 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.crud
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CrudSqlDelete extends CrudSQL
 {

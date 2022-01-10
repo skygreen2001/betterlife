@@ -12,10 +12,10 @@
  *       - http://blog.chinaunix.net/u/12228/showart_2089621.html
  *       - http://www.im502.com/2009/12/16/php-adodb-mssql-utf8-native/
  * - 当发生异常的时候，可在底层【library/adodb5】库通过print_r( sqlsrv_errors());查看错误原因
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigAdodb extends ConfigDb
 {

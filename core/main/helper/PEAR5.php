@@ -4,10 +4,10 @@
  * This is only meant for PHP 5 to get rid of certain strict warning
  *
  * that doesn't get hidden since it's in the shutdown function
- * @category betterlife
+ * @category Betterlife
  * @package core.main.helper
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class PEAR5
 {

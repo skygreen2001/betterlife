@@ -2,7 +2,7 @@
 
 /**
  * -----------| 博客分类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package dic
  * @author skygreen skygreen2001@gmail.com
  */

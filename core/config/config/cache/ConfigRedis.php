@@ -14,10 +14,10 @@
  * Redis: http://wenhui.ncu.me/category/webserver/redis
  *
  * Rediska: http://rediska.geometria-lab.net/
- * @category betterlife
+ * @category Betterlife
  * @package core.config
  * @subpackage cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigRedis extends ConfigBB
 {

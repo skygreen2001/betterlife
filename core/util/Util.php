@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有工具类的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util
- * @author zhouyuepu
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Util extends BBObject
 {

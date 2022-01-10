@@ -6,10 +6,10 @@
  * @link http://codeigniter.com/
  *
  *      ActiveRecord library from CodeIgniter framework
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage activerecord
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * @todo
  */
 class DalActiveRecord //extends Dal implements IDal

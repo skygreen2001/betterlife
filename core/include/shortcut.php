@@ -2,9 +2,9 @@
 
 /**
  * -----------| 定义一些缩写函数快速调用的方法 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package include
- * @author skygreen2001
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 /**

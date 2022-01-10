@@ -10,10 +10,10 @@
 
 /**
  * -----------| Execution time profiler |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
  * @subpackage helper
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Profiler
 {

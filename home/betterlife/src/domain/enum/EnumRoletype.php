@@ -2,7 +2,7 @@
 
 /**
  * -----------| 枚举类型:扮演角色 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package domain
  * @subpackage enum
  * @author skygreen skygreen2001@gmail.com

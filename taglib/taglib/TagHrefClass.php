@@ -3,7 +3,7 @@
 /**
  * 自定义标签:超链接
  * @link http://www.w3schools.com/tags/tag_a.asp
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class TagHrefClass extends TagClass
 {

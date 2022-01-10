@@ -3,7 +3,7 @@
 /**
  * 自定义标签:分页
  *
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class TagPageClass extends TagClass
 {

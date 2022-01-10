@@ -2,10 +2,10 @@
 
 /**
  * -----------| 所有DAL(Data Access Layers)的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db
  * @subpackage dal
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class Dal
 {

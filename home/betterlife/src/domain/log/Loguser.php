@@ -2,7 +2,7 @@
 
 /**
  * -----------| 用户日志 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package log
  * @author skygreen skygreen2001@gmail.com
  */

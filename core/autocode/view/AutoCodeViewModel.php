@@ -2,7 +2,7 @@
 
 /**
  * -----------| 工具类:自动生成代码-通用模版的表示层 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode.view
  * @author skygreen skygreen2001@gmail.com
  */

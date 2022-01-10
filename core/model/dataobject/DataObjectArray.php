@@ -4,10 +4,10 @@
  * -----------| 数组对象 |-----------
  *
  * 可以以数组的方式访问数据对象
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage dataobject
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DataObjectArray extends BBObject implements ArrayAccess
 {

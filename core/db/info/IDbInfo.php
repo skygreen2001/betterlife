@@ -2,10 +2,10 @@
 
 /**
  * -----------| 所有数据库，表，列信息的总接口 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db
  * @subpackage info
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 interface IDbInfo
 {

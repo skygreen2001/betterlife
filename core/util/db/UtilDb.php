@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类: 数据库 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilDb extends Util
 {

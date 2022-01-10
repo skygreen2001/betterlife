@@ -9,9 +9,9 @@
  *
  * 以便在显示层页面里任意访问使用变量varname
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class View
 {

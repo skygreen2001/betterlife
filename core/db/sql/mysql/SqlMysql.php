@@ -2,10 +2,10 @@
 
 /**
  * -----------| 使用PHP5自带的MySQL Extension |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql
  * @subpackage mysql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class SqlMysql extends Sql implements ISqlNormal
 {

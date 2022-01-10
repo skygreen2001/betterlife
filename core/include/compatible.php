@@ -2,9 +2,9 @@
 
 /**
  * -----------| Pollfill 函数, 兼容老版本 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package include
- * @author skygreen2001
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 
 /**

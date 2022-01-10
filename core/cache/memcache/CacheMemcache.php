@@ -6,9 +6,9 @@
  * memcached客户端是memcache
  * @link php memcached(windows linux) 的安装及应用:http://hi.baidu.com/jqxw4444/blog/item/67e0f68693461b2867096ef4.html
  * @link About Installing memcache on Windows for PHP :http://pureform.wordpress.com/2008/01/10/installing-memcache-on-windows-for-php/
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheMemcache extends CacheBase
 {

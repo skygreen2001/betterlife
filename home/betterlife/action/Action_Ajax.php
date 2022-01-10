@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:Ajax请求服务 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package  web.front
  * @author skygreen skygreen2001@gmail.com
  */

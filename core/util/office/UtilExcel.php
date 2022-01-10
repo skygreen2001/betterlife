@@ -6,9 +6,9 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
  * -----------| 功能:处理Excel相关的事宜方法 |-----------
  *
  * PhpSpreadsheet's documentation: https://phpspreadsheet.readthedocs.io
- * @category betterlife
+ * @category Betterlife
  * @package util.common
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilExcel extends Util
 {

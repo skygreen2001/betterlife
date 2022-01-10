@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:系统日志 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.model.action
  * @author skygreen skygreen2001@gmail.com
  */

@@ -4,9 +4,9 @@
  * -----------| 加载网站内的类【在系统里只需动态加载一次的对象】 |-----------
  *
  * 采用Singleton模式
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Loader
 {

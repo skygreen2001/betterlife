@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类: 网络 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.net
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilNet extends Util
 {

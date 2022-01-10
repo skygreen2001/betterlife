@@ -2,9 +2,9 @@
 
 /**
  * -----------| 所有缓冲策略的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheBase
 {

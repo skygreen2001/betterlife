@@ -3,7 +3,7 @@
 /**
  * 自定义标签:用于测试
  *
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class TagDemoClass extends TagClass
 {

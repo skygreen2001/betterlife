@@ -9,9 +9,9 @@
  *
  * and {@link seek()}
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.query
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class Query implements Iterator
 {

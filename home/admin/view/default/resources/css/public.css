@@ -7,3 +7,7 @@
 .view dd img, .view dd video {
     width: 90%;
 }
+
+table {
+    font-size: 13px;
+}

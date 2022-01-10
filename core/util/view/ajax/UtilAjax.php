@@ -58,9 +58,9 @@ class EnumHttpMethod extends Enum
 
 /**
  * -----------| 所有Javascript Ajax 框架的工具类的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view.ajax
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilAjax extends Util
 {

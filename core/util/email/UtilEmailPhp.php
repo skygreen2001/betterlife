@@ -28,7 +28,7 @@
  * @link http://www.silverstripe.com
  *
  * class: Mailer | Email
- * @category betterlife
+ * @category Betterlife
  * @package util.email
  * @author silverstripe
  */

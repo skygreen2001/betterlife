@@ -17,9 +17,9 @@ class EnumReturnType extends Enum
 
 /**
  * -----------| 所有对象的基类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class BBObject
 {

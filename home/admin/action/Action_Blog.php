@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:博客 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.back.admin
  * @author skygreen skygreen2001@gmail.com
  */

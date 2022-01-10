@@ -2,9 +2,9 @@
 
 /**
  * -----------| 初始化工作 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.main
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Initializer
 {

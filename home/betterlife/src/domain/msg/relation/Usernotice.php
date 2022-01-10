@@ -2,7 +2,7 @@
 
 /**
  * -----------| 用户收到通知用户收到通知 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package msg.relation
  * @author skygreen skygreen2001@gmail.com
  */

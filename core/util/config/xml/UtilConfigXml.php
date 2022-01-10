@@ -2,10 +2,10 @@
 
 /**
  * -----------| 工具类: 读取xml配置文件类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.config
  * @subpackage xml
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilConfigXml extends UtilConfig
 {

@@ -6,9 +6,9 @@
  * 读取以下文件类型配置信息,
  *
  * 现支持php,ini,xml.yaml
- * @category betterlife
+ * @category Betterlife
  * @package util.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilConfig extends Util
 {

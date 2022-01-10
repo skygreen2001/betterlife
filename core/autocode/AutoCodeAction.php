@@ -2,9 +2,9 @@
 
 /**
  * -----------| 枚举类型: 表示层生成类型定义 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumAutoCodeViewType extends Enum
 {
@@ -24,7 +24,7 @@ class EnumAutoCodeViewType extends Enum
 
 /**
  * -----------| 工具类:自动生成代码-控制器 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.autocode
  * @author skygreen skygreen2001@gmail.com
  */

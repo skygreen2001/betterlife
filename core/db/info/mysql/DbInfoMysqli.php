@@ -2,10 +2,10 @@
 
 /**
  * -----------| 获取Mysql数据库信息 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.info
  * @subpackage mysql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DbInfoMysqli extends DbInfo implements IDbInfo
 {

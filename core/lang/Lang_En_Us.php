@@ -2,9 +2,9 @@
 
 /**
  * -----------| english text display |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.lang
- * @author skygreen <skygreen2001@gmail.com>
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class Lang_En_Us
 {

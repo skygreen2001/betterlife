@@ -2,7 +2,7 @@
 
 /**
  * -----------| 通知 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package msg
  * @author skygreen skygreen2001@gmail.com
  */

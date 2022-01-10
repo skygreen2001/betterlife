@@ -7,9 +7,9 @@
  *
  * 除非明确指明用logConsole,logFile,logDb,logFirebug方式输出。
  *
- * @category betterlife
- * @package log
- * @author skygreen <skygreen2001@gmail.com>
+ * @category Betterlife
+ * @package core.system.log
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class LogMe extends BBObject
 {
@@ -51,7 +51,7 @@ class LogMe extends BBObject
         }
 
         //检测日志文件大小，超过配置大小则备份日志文件重新生成
-        if (is_file($destination) && (Gc::$log_config["logFile_size"] <= filesize($destination) )) {
+        if (is_file($destination) && (Gc::$log_config["logFile_size"] <= filesize($destination))) {
             rename($destination, dirname($destination) . DS . basename($destination, ConfigF::SUFFIX_FILE_LOG) . '-' . time() . ConfigF::SUFFIX_FILE_LOG);
         }
         if (isset($destination)) {

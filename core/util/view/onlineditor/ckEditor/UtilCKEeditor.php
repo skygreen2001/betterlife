@@ -2,10 +2,10 @@
 
 /**
  * -----------| 定义 CKEeditor 在线编辑器 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view
  * @subpackage onlinediotr
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilCKEeditor extends Util
 {

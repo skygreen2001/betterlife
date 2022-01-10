@@ -2,10 +2,10 @@
 
 /**
  * -----------| 工具类: 读取Ini配置文件类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.config
  * @subpackage ini
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilConfigIni extends UtilConfig
 {

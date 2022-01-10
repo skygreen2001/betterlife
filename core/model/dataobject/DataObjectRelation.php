@@ -2,10 +2,10 @@
 
 /**
  * -----------| 数据对象间关系处理 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
  * @subpackage dataobject
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class DataObjectRelation extends BBObject
 {

@@ -4,10 +4,10 @@
  * -----------| Postgres的配置类 |-----------
  * @link http://blogs.techrepublic.com.com/howdoi/?p=110
  * @link http://neilconway.org/docs/sequences/
- * @category betterlife
+ * @category Betterlife
  * @package core.config.db
  * @subpackage object
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigPostgres extends ConfigDb
 {

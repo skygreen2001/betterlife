@@ -2,7 +2,7 @@
 
 /**
  * -----------| 控制器:访问授权 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package web.admin.action
  * @author skygreen skygreen2001@gmail.com
  */

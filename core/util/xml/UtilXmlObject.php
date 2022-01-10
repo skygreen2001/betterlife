@@ -26,9 +26,9 @@
  *    <roles>
  * ```
  *
- * @category betterlife
+ * @category Betterlife
  * @package util.xml
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilXmlObject extends Util
 {

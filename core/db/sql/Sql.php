@@ -2,9 +2,9 @@
 
 /**
  * -----------|所有SQL查询的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 abstract class Sql
 {

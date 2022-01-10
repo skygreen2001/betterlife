@@ -3,10 +3,10 @@
 /**
  * -----------| @todo 实现dbFacile通用的DAL访问方式 |-----------
  * @link https://github.com/alanszlosek/dbFacile
- * @category betterlife
+ * @category Betterlife
  * @package core.db.dal
  * @subpackage dbfacile
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * @todo
  */
 class DalDbFacile extends Dal implements IDal

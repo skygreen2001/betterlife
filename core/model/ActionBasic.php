@@ -17,9 +17,9 @@ class EnumOnlineEditorType extends Enum
 
 /**
  * -----------| 所有控制器的父类 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.model
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  * > class_alias("ActionBasic", "Controller");
  */
 class ActionBasic extends BBObject

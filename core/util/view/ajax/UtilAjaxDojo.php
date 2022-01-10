@@ -2,9 +2,9 @@
 
 /**
  * -----------| 工具类: Dojo[Javascript Ajax 框架] |-----------
- * @category betterlife
+ * @category Betterlife
  * @package util.view.ajax
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class UtilAjaxDojo extends UtilAjax implements IUtilAjax
 {

@@ -2,9 +2,9 @@
 
 /**
  * -----------| 比较直观可看的SQL修改构造器 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.db.sql.util.crud
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CrudSqlUpdate extends CrudSQL
 {

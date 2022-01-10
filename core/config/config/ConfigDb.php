@@ -3,9 +3,9 @@
 /**
  * -----------| 枚举类型: 数据库方式类别|数据源定义 |-----------
  *
- * @category betterlife
+ * @category Betterlife
  * @package core.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumDbSource extends Enum
 {
@@ -99,9 +99,9 @@ class EnumDbSource extends Enum
 
 /**
  * -----------| 枚举类型: 数据源操作方式引擎定义 |-----------
- * @category betterlife
+ * @category Betterlife
  * @package core.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class EnumDbEngine extends Enum
 {
@@ -170,9 +170,9 @@ class EnumDbEngine extends Enum
  *        Sql Server 第三方方案: http://www.easysoft.com/developer/languages/php/sql_server_unix_tutorial.html#driver
  *
  * 说明:  目前可使用PHP自带的ODBC方案使用Sql Server；通过配置ConfigDb::$db = DB_SQLSERVER和ConfigDb::$engine = ENGINE_OBJECT_ODBC即可
- * @category betterlife
+ * @category Betterlife
  * @package core.config
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class ConfigDb extends ConfigBB
 {

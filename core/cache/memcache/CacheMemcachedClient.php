@@ -3,9 +3,9 @@
 /**
  * -----------| 使用memcached作为系统缓存 |-----------
  * @see PHP & memcached:http://www.nioxiao.com/php-memcached
- * @category betterlife
+ * @category Betterlife
  * @package core.cache
- * @author skygreen
+ * @author skygreen2001 <skygreen2001@gmail.com>
  */
 class CacheMemcachedClient extends CacheBase
 {
