@@ -12,6 +12,75 @@
   - /usr/sbin/nginx -t   [判断Nginx配置是否正确]
   - /usr/sbin/nginx -s reload
 
+## nginx 常用配置
+
+  - Nginx 的 Location 配置指令块:
+    - Location 配置项在http > server 里面
+    - 基本语法形式是: location [=|~|~*|^~|@] pattern { … }
+    - [=|~|~*|^~|@] 被称作 location modifier 
+    - 关于 location modifier:
+      - =
+        - 这会完全匹配指定的 pattern, 且这里的 pattern 被限制成简单的字符串, 也就是说这里不能使用正则表达式。
+        - 匹配情况:
+          - http://website.com/abcd # 正好完全匹配
+          - http://website.com/ABCD # 如果运行 Nginx server 的系统本身对大小写不敏感, 比如 Windows,  那么也匹配
+          - http://website.com/abcd?param1¶m2 # 忽略查询串参数（query string arguments）, 这里就是 /abcd 后面的 ?param1¶m2
+          - http://website.com/abcd/ # 不匹配, 因为末尾存在反斜杠（trailing slash）, Nginx 不认为这种情况是完全匹配
+          - http://website.com/abcde # 不匹配, 因为不是完全匹配
+      - (None)
+        - 可以不写 location modifier, Nginx 仍然能去匹配 pattern。这种情况下, 匹配那些以指定的 patern 开头的 URI, 注意这里的 URI 只能是普通字符串, 不能使用正则表达式。
+        - 匹配情况:
+          - http://website.com/abcd # 正好完全匹配
+          - http://website.com/ABCD # 如果运行 Nginx server 的系统本身对大小写不敏感, 比如 Windows,  那么也匹配
+          - http://website.com/abcd?param1¶m2 # 忽略查询串参数（query string arguments）, 这里就是 /abcd 后面的 ?param1¶m2
+          - http://website.com/abcd/ # 末尾存在反斜杠（trailing slash）也属于匹配范围内
+          - http://website.com/abcde # 仍然匹配, 因为 URI 是以 pattern 开头的
+      - ~
+        - 这个 location modifier 对大小写敏感, 且 pattern 须是正则表达式
+        - 匹配情况:
+          - http://website.com/abcd # 完全匹配
+          - http://website.com/ABCD # 不匹配, ~ 对大小写是敏感的
+          - http://website.com/abcd?param1¶m2 # 忽略查询串参数（query string arguments）, 这里就是 /abcd 后面的 ?param1¶m2
+          - http://website.com/abcd/ # 不匹配, 因为末尾存在反斜杠（trailing slash）, 并不匹配正则表达式 ^/abcd$
+          - http://website.com/abcde # 不匹配正则表达式 ^/abcd$
+      - ~*
+        - 与 ~ 类似, 但这个 location modifier 不区分大小写, pattern 须是正则表达式
+        - 匹配情况:
+          - http://website.com/abcd # 完全匹配
+          - http://website.com/ABCD # 匹配, 这就是它不区分大小写的特性
+          - http://website.com/abcd?param1¶m2 # 忽略查询串参数（query string arguments）, 这里就是 /abcd 后面的 ?param1¶m2
+          - http://website.com/abcd/ # 不匹配, 因为末尾存在反斜杠（trailing slash）, 并不匹配正则表达式 ^/abcd$
+          - http://website.com/abcde # 不匹配正则表达式 ^/abcd$
+      - ^~
+        - 匹配情况类似 2. (None) 的情况, 以指定匹配模式开头的 URI 被匹配, 不同的是, 一旦匹配成功, 那么 Nginx 就停止去寻找其他的 Location 块进行匹配了（与 Location 匹配顺序有关）
+      - @
+        - 用于定义一个 Location 块, 且该块不能被外部 Client 所访问, 只能被 Nginx 内部配置指令所访问, 比如 try_files or error_page
+    - 搜索顺序以及生效优先级:
+      - 因为可以定义多个 Location 块, 每个 Location 块可以有各自的 pattern。因此就需要明白（不管是 Nginx 还是你）, 当 Nginx 收到一个请求时, 它是如何去匹配 URI 并找到合适的 Location 的。
+      - 要注意的是, 写在配置文件中每个 Server 块中的 Location 块的次序是不重要的, Nginx 会按 location modifier 的优先级来依次用 URI 去匹配 pattern,  顺序如下:
+        - 1、 =
+        - 2、 (None) 如果 pattern 完全匹配 URI（不是只匹配 URI 的头部）
+        - 3、 ^~
+        - 4、 ~ 或 ~*
+        - 5、 (None) pattern 匹配 URI 的头部
+
+  - 返回设置
+    - 返回文本格式
+      ```
+      location ~ ^/get_text {
+        default_type text/html;
+        add_header Content-Type 'text/html; charset=utf-8';
+        return 200 '您好, 支持中文字体!'; 
+      }
+      ```
+    - 返回json格式
+      ```
+      location ~ ^/get_json { 
+        default_type application/json; 
+        return 200 '{"status":"success","result":"hello world!"}'; 
+      }
+      ```
+
 ## 安装 Php with Nginx
 
 ### 安装php-fpm
@@ -107,12 +176,11 @@
   - php -m 列表已加载的组件
   ```
 
-
 ## FAQ
 
-  由于nginx与php-fpm之间的一个小bug，会导致这样的现象: 网站中的静态页面 \*.html 都能正常访问，而 \*.php 文件虽然会返回200状态码， 但实际输出给浏览器的页面内容却是空白。
+  由于nginx与php-fpm之间的一个小bug, 会导致这样的现象: 网站中的静态页面 \*.html 都能正常访问, 而 \*.php 文件虽然会返回200状态码,  但实际输出给浏览器的页面内容却是空白。
 
-  简而言之，原因是nginx无法正确的将 \*.php 文件的地址传递给php-fpm去解析， 相当于php-fpm接受到了请求，但这请求却指向一个不存在的文件，于是返回空结果。 为了解决这个问题，需要改动nginx默认的fastcgiparams配置文件:
+  简而言之, 原因是nginx无法正确的将 \*.php 文件的地址传递给php-fpm去解析,  相当于php-fpm接受到了请求, 但这请求却指向一个不存在的文件, 于是返回空结果。 为了解决这个问题, 需要改动nginx默认的fastcgiparams配置文件:
 
   - vi /etc/nginx/fastcgi_params 在文件的最后增加两行:
 
@@ -127,3 +195,5 @@
   * [nginx install](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-14-04-lts)
   * [How To Install Linux, Nginx, MySQL, PHP (LEMP stack) in Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04)
   * [How To Install Linux, Nginx, MySQL, PHP (LEMP) stack on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+  * [NGINX Docs](https://docs.nginx.com/)
+  * [Nginx开发从入门到精通](https://github.com/taobao/nginx-book)
