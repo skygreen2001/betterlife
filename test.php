@@ -1,6 +1,12 @@
 <?php
 
 require_once("init.php");
+
+// $介绍自己 = "我是betterlife的功能测试，无需安装任何依赖，只需引入init.php。";
+// $介绍作者 = "我是中国人，我来自上海，我喜欢新疆；我最喜欢的语言是PHP，我最喜欢用的框架是: betterlife。";
+// $欢迎祝辞 = "我很高兴您能认识我，betterlife；美好生活，只为更好。";
+// echo $介绍自己 . BR . $介绍作者 . BR . $欢迎祝辞 . BR;
+
 // // 调用一对一
 // $user       = User::getById( 1 );
 // $userdetail = $user->userdetail;
@@ -263,11 +269,6 @@ require_once("init.php");
 // echo $faker->email();
 // echo $faker->text();
 
-// // 支持中文编程
-// $小爱的钱 = "18元";
-// $小明的钱 = "32元";
-// $所有人的钱 = $小爱的钱 + $小明的钱;
-// echo $所有人的钱;
 
 // // 可使用Laravel的Helper方法
 // // [dd()](https://laravel.com/docs/8.x/helpers#method-dd)

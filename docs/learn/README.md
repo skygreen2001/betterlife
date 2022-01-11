@@ -1,5 +1,13 @@
 # 学习与收集
 
+- PHP
+  - [官方手册](https://www.php.net/)
+  - [W3Schools](https://www.w3schools.com/php/)
+  - [PHP 社区 Wiki](https://learnku.com/php/wikis)
+  - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
+  - [TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)
+  - [PHP Apprentice](https://phpapprentice.com/)
+  - [PHP Tutorials](https://www.geeksforgeeks.org/php-tutorials/)
 - [第三方库](APP.md)
 - [Laravel: 从入门到实践](Laravel.md) 
   - The PHP Framework For Web Artisans
