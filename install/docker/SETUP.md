@@ -44,7 +44,10 @@
 ## 本地开发调试应用
 
   - 使用调试工具: Xdebug
+  - 主要用于在本地无法安装Xdebug的情况
+  - 需要安装Docker工具
   - 使用开发工具: Visual Studio Code
+    - 调试配置文件: .vscode/launch.json
   - 修改配置文件: install/docker/Dockerfile
     - 取消调试注释部分: debug with xdebug 
   - 在 Visual Studio Code 里开启调试模式

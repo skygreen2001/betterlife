@@ -27,15 +27,19 @@ class Dispatcher
         $isValidRequet = false;
         $controller    = $router->getController();
         if ($controller == Router::URL_DEFAULT_CONTROLLER) {
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
-            return;
+            // include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
+            // return;
+            header("location:" . Gc::$url_base . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
+            die();
         }
         $moduleName = $router->getModule();
         if ($moduleName && array_key_exists($moduleName, Initializer::$moduleFiles)) {
             $moduleFile = Initializer::$moduleFiles[$moduleName];
         } else {
-            include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
-            return;
+            // include_once(Gc::$nav_root_path . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
+            // return;
+            header("location:" . Gc::$url_base . Router::URL_DEFAULT_CONTROLLER . ConfigF::SUFFIX_FILE_PHP);
+            die();
         }
         $action_controller = ActionBasic::ROUTINE_CLASS_PREFIX . ucfirst($controller);
         if (array_key_exists($action_controller, $moduleFile)) {
@@ -48,7 +52,7 @@ class Dispatcher
             $view = self::modelBindView($moduleName, $router, $current_action);
             if ($current_action->isRedirected) {
                 $isValidRequet = true;
-                //break;
+            //break;
             } else {
                 $output = self::output($moduleName, $router, $current_action);
                 if (self::$isOutputStatic) {
@@ -104,7 +108,7 @@ class Dispatcher
         $view         = Loader::load(Loader::CLASS_VIEW, $moduleName, $templateFile);
 
         if (self::$isOutputStatic) {
-            if (($view != null ) && ($view->viewObject != null )) {
+            if (($view != null) && ($view->viewObject != null)) {
                 $view->viewObject->css_ready = "";
                 $view->viewObject->js_ready  = "";
             }
