@@ -53,13 +53,13 @@
               <ul class="dropdown-menu" aria-labelledby="dLabel">
                 <li><a href="{$url_base}admin/index.php"><span class="glyphicon glyphicon-edit"></span>后台管理</a></li>
                 <li><a href="{$url_base}admin/todo.php"><span class="glyphicon glyphicon-edit"></span>修改密码</a></li>
-                <li><a href="{$url_base}index.php?go=index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
+                <li><a href="{$url_base}index.php?go=admin.auth.logout"><span class="glyphicon glyphicon-off"></span>退出</a></li>
               </ul>
             </li>
             {/if}
             <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
               <a>
-                <span><span class="menu-search-text">搜索</span><span class="fa fa-search" style="line-height: 50px;" aria-hidden="true"></span></span>
+                <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>
               </a>
             </li>
             <li><a id="btn-layout-small"><i class="glyphicon glyphicon-resize-small"></i></a></li>

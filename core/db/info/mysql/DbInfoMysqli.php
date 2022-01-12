@@ -110,7 +110,7 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
                     }
 
                     if (mysqli_connect_errno()) {
-                        LogMe::log('数据库服务器执行命令发生错误脚本: ' . $v . '<br/> MySQL报告错误信息:' . $error);
+                        LogMe::log('数据库服务器执行命令发生错误脚本: ' . $v . BR . ', MySQL报告错误信息:' . $connection->connect_errno);
                         ExceptionMysqli::record();
                         return false;
                     }
@@ -159,16 +159,16 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
         $sql    = "SHOW VARIABLES LIKE '%character%'";
         $result = $this->connection->query($sql);
         if (!$result) {
-            echo "ERROR : " . mysqli_error($this->connection) . "<br>";
+            echo "ERROR : " . mysqli_error($this->connection) . BR;
             return;
         } else {
             UtilCss::report_info();
-            echo "SQL> {$sql}; <br>";
+            echo "SQL> {$sql}; " . BR;
             echo "<table class='" . UtilCss::CSS_REPORT_TABLE . "' border=1><thead><tr><th> Variable_name</th>" . "<th> Value</th></tr></thead>";
             while ($row = $result->fetch_row()) {
                 echo "<tr><td>{$row['Variable_name']}</td><td>{$row['Value']}</td></tr>";
             }
-            echo "</table><br>";
+            echo "</table>" . BR;
         }
     }
 
@@ -336,13 +336,13 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
     public function hasUnique($table, $Column_names)
     {
         if (is_array($Column_names)) {
-             $conditions = array();
+            $conditions = array();
             foreach ($Column_names as $Column_name) {
                 $conditions[] = "Column_name='$Column_name'";
             }
-             $condition = implode(" or ", $conditions);
+            $condition = implode(" or ", $conditions);
         } else {
-             $condition = "Column_name='$Column_names'";
+            $condition = "Column_name='$Column_names'";
         }
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
         LogMe::log($sqlUnique);
@@ -408,7 +408,6 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
      */
     private function query($sqlstring, $errorLevel = E_USER_ERROR, $showqueries = false)
     {
-
         if (ConfigDb::$debug_show_sql) {
             $starttime = microtime(true);
         }

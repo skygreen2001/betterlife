@@ -184,7 +184,7 @@ abstract class ExceptionMe extends Exception
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                 $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_DETAIL . '</td>';
-                $errorInfo .= "          <td><br/>" . str_replace("\n", "<br/>", $value['detail']) . "<br/></td>";
+                $errorInfo .= "          <td><br/>" . str_replace("\n", BR, $value['detail']) . BR . "</td>";
                 $errorInfo .= '       </tr>';
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
@@ -194,7 +194,7 @@ abstract class ExceptionMe extends Exception
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
                 $errorInfo .= '          <td>' . Wl::EXCEPTION_REPORT_TRACKINFO . '</td>';
-                $errorInfo .= '          <td>' . "<br/>" . str_replace("\n", "<br/>", $value['trace']) . "<br/>" . "</td>";
+                $errorInfo .= '          <td>' . BR . str_replace("\n", BR, $value['trace']) . BR . "</td>";
                 $errorInfo .= '       </tr>';
                 $errorInfo .= '       <tr>';
                 $errorInfo .= '          <td>&nbsp; &nbsp;</td>';
@@ -207,7 +207,7 @@ abstract class ExceptionMe extends Exception
             }
             $errorInfo .= '</table>';
             $errorInfo .= '</div>';
-            $errorInfo .= '<br><br><br><br><br><br><br><br><br><br>';
+            $errorInfo .= str_repeat(BR, 10);
             return $errorInfo;
         }
     }

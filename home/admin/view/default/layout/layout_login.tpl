@@ -4,8 +4,15 @@
     {include file="$template_dir/layout/normal/header.tpl"}
     <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/public.css" />
+    {if $is_dev}
+      
+    <link rel="stylesheet" href="{$template_url}resources/css/common.css">
+    <script src="{$template_url}js/common/base.js"></script>
+    {else}
+
     <link rel="stylesheet" href="{$template_url}resources/css/common.min.css">
     <script src="{$template_url}js/common/base.min.js"></script>
+    {/if}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

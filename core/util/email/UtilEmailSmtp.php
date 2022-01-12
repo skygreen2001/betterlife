@@ -29,7 +29,7 @@
  */
 class UtilEmailSmtp extends Util
 {
-   //private static  $auth=false;
+    //private static  $auth=false;
 
     /* Private static Variables */
     private static $smtp_port  = 25;
@@ -46,7 +46,7 @@ class UtilEmailSmtp extends Util
     public $sock;
 
     /* Constractor */
-    function __construct()
+    public function __construct()
     {
         $this->sock = false;
     }
@@ -97,7 +97,7 @@ class UtilEmailSmtp extends Util
         $later       .= "Date: " . date("r") . HH;
         $later       .= "X-Mailer:By Redhat (PHP/" . phpversion() . ")" . HH;
         list($msec, $sec) = explode(" ", microtime());
-        $later       .= "Message-ID: <" . date("YmdHis", $sec) . "." . ( $msec * 1000000 ) . "." . $mail_from . ">" . HH;
+        $later       .= "Message-ID: <" . date("YmdHis", $sec) . "." . ($msec * 1000000) . "." . $mail_from . ">" . HH;
         $header      .= $later;
         $header_echo .= $later;
         $TO           = explode(",", $this->strip_comment($toaddress));
@@ -128,7 +128,7 @@ class UtilEmailSmtp extends Util
             fclose($this->sock);
             $this->log_write("Disconnected from remote host");
         }
-        echo "<br>";
+        echo  BR;
         echo $header_echo;
         return $sent;
     }
@@ -191,7 +191,7 @@ class UtilEmailSmtp extends Util
     {
         $this->log_write("Trying to " . self::$relay_host . ":" . self::$smtp_port);
         $this->sock = @fsockopen(self::$relay_host, self::$smtp_port, $errno, $errstr, self::$time_out);
-        if (!( $this->sock && $this->smtp_ok() )) {
+        if (!($this->sock && $this->smtp_ok())) {
             $this->log_write("Error: Cannot connenct to relay host " . self::$relay_host);
             $this->log_write("Error: " . $errstr . " (" . $errno . ")");
             return false;
@@ -302,13 +302,12 @@ class UtilEmailSmtp extends Util
     public function smtp_debug($message)
     {
         if ($this->debug) {
-            echo $message . "<br>";
+            echo $message . BR;
         }
     }
 
     public function get_attach_type($image_tag)
     {
-
         $filedata = array();
 
         $img_file_con = fopen($image_tag, "r");

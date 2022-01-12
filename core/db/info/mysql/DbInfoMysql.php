@@ -145,16 +145,16 @@ class DbInfoMysql extends DbInfo implements IDbInfo
         $sql    = "SHOW VARIABLES LIKE '%character%'";
         $result =  mysql_query($sql, $this->connection);
         if (!$result) {
-            echo "ERROR : " . mysql_error($this->connection) . "<br>";
+            echo "ERROR : " . mysql_error($this->connection) . BR;
             return;
         } else {
             UtilCss::report_info();
-            echo "SQL> {$sql}; <br>";
+            echo "SQL> {$sql};" . BR;
             echo "<table class='" . UtilCss::CSS_REPORT_TABLE . "' border=1><thead><tr><th> Variable_name</th>" . "<th> Value</th></tr></thead>";
             while ($row = mysql_fetch_assoc($result)) {
                 echo "<tr><td>{$row['Variable_name']}</td><td>{$row['Value']}</td></tr>";
             }
-            echo "</table><br>";
+            echo "</table>" . BR;
         }
     }
 
@@ -315,13 +315,13 @@ class DbInfoMysql extends DbInfo implements IDbInfo
     public function hasUnique($table, $Column_names)
     {
         if (is_array($Column_names)) {
-             $conditions = array();
+            $conditions = array();
             foreach ($Column_names as $Column_name) {
                 $conditions[] = "Column_name='$Column_name'";
             }
-             $condition = implode(" or ", $conditions);
+            $condition = implode(" or ", $conditions);
         } else {
-             $condition = "Column_name='$Column_names'";
+            $condition = "Column_name='$Column_names'";
         }
         $sqlUnique = "show index from $table where Key_name!='PRIMARY' and Non_unique=0 and ($condition);";
         LogMe::log($sqlUnique);

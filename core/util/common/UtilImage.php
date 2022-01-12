@@ -205,7 +205,7 @@ class UtilImage
             $interlace = $interlace ? 1 : 0;
             unset($info);
 
-            if (( $actualType != $type && $actualType != "jpeg" ) || ( $actualType == "jpeg" && $type != "jpg" && $type != "jpeg" )) {
+            if (($actualType != $type && $actualType != "jpeg") || ($actualType == "jpeg" && $type != "jpg" && $type != "jpeg")) {
                 LogMe::log("图片文件:" . $image . ",实际图片类型:" . $actualType);
             }
 
@@ -410,7 +410,7 @@ class UtilImage
         $stringColor = imagecolorallocate($im, 255, 255, 255);
         // 干扰
         for ($i = 0; $i < $length; $i++) {
-            imagestring($im, 9, $i * 10 + 9, mt_rand(1, 8), $randval{$i}, $stringColor);
+            imagestring($im, 9, $i * 10 + 9, mt_rand(1, 8), $randval[$i], $stringColor);
         }
         self::output($im, $type);
     }
@@ -443,8 +443,8 @@ class UtilImage
         $key = mt_rand(0, 3);
 
         $backColor   = imagecolorallocate($im, $r[$key], $g[$key], $b[$key]);    //背景色（随机）
-        $borderColor = imagecolorallocate($im, 100, 100, 100);                    //边框色
-        $pointColor  = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));                 //点颜色
+        $borderColor = imagecolorallocate($im, 100, 100, 100);                   //边框色
+        $pointColor  = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255)); //点颜色
 
         @imagefilledrectangle($im, 0, 0, $width - 1, $height - 1, $backColor);
         @imagerectangle($im, 0, 0, $width - 1, $height - 1, $borderColor);
@@ -459,9 +459,9 @@ class UtilImage
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $pointColor);
         }
         for ($i = 0; $i < $length; $i++) {
-            imagestring($im, 5, $i * 10 + 5, mt_rand(1, 8), $randval{$i}, $stringColor);
+            imagestring($im, 5, $i * 10 + 5, mt_rand(1, 8), $randval[$i], $stringColor);
         }
-//        @imagestring($im, 5, 5, 3, $randval, $stringColor);
+        //    @imagestring($im, 5, 5, 3, $randval, $stringColor);
         self::output($im, $type);
     }
 
@@ -482,7 +482,7 @@ class UtilImage
         $width = ($length * 45) > $width ? $length * 45 : $width;
         $_SESSION[$verifyName] = md5($code);
         $im = imagecreatetruecolor($width, $height);
-        $borderColor = imagecolorallocate($im, 100, 100, 100);                    //边框色
+        $borderColor = imagecolorallocate($im, 100, 100, 100); //边框色
         $bkcolor = imagecolorallocate($im, 250, 250, 250);
         imagefill($im, 0, 0, $bkcolor);
         @imagerectangle($im, 0, 0, $width - 1, $height - 1, $borderColor);
@@ -535,7 +535,7 @@ class UtilImage
                     $str = empty($string) ? '*' : $string[$i++];
                     $out .= sprintf('<span style="margin:0px;color:#%02x%02x%02x">' . $str . '</span>', $rgb['red'], $rgb['green'], $rgb['blue']);
                 }
-                $out .= "<br>\n";
+                $out .= BR . "\n";
             }
             $out .=  '</span>';
             imagedestroy($im);

@@ -20,7 +20,6 @@ function x($errorInfo, $object = null, $code = 0, $extra = null)
     ExceptionMe::recordException($errorInfo, $object, $code, $extra);
 }
 
-
 /**
  * 记录日志
  * @param string $message 日志记录的内容
@@ -31,4 +30,27 @@ function x($errorInfo, $object = null, $code = 0, $extra = null)
 function logme($message, $level = EnumLogLevel::INFO, $category = '')
 {
     LogMe::log($message, $level, $category);
+}
+
+/**
+ * 记录日志, 是logme的中文名快捷方式
+ * @param string $message 日志记录的内容
+ * @param enum $level 日志记录级别
+ * @param string $category 日志内容业务分类
+ * @return void
+ */
+function rz($message, $level = EnumLogLevel::INFO, $category = '')
+{
+    logme($message, $level, $category);
+}
+
+/**
+ * 记录调试信息
+ * @param string $message 调试信息的内容
+ * @param int $level 调试信息级别, 1: info, 2: warning, 3: error
+ * @return void
+ */
+function ts($message, $level = 1)
+{
+    DebugMe::info($message, $level);
 }

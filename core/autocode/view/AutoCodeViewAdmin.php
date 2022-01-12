@@ -288,7 +288,7 @@ class AutoCodeViewAdmin extends AutoCodeView
         $isImage = false;
         foreach ($fieldInfo as $fieldname => $field) {
             $field_comment = $field["Comment"];
-            if (( $realId != $fieldname ) && self::isNotColumnKeywork($fieldname, $field_comment)) {
+            if (($realId != $fieldname) && self::isNotColumnKeywork($fieldname, $field_comment)) {
                 $field_comment = $field["Comment"];
                 if (contain($field_comment, "\r") || contain($field_comment, "\n")) {
                     $field_comment = preg_split("/[\s,]+/", $field_comment);
@@ -403,7 +403,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                 $field_comment = $field_comment[0];
             }
             $realId = DataObjectSpec::getRealIDColumnName($classname);
-            if (( $realId != $fieldname ) && self::isNotColumnKeywork($fieldname, $field_comment)) {
+            if (($realId != $fieldname) && self::isNotColumnKeywork($fieldname, $field_comment)) {
                 $isImage = self::columnIsImage($fieldname, $field_comment);
                 $edit_contents .= "                      <div class=\"form-group\">" . HH;
                 if (self::columnIsTextArea($fieldname, $field["Type"])) {
@@ -502,7 +502,7 @@ class AutoCodeViewAdmin extends AutoCodeView
 //         });
 //         </script>
 //     {/if}
-// EDIT;
+            // EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == "UEditor")}
         <script>
@@ -614,7 +614,7 @@ UETC;
                     if (empty($classNameField)) {
                         $classNameField = $realId;
                     }
-                    $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$classNameField}\" /></a></span><br>" . HH;
+                    $showColumns .= "                        <span><a href=\"{\$$instancename.$showColName}\" target=\"_blank\"><img class=\"img-thumbnail\" src=\"{\$$instancename.$showColName}\" alt=\"{\$$instancename.$classNameField}\" /></a></span>" . BR . HH;
                     $showColumns .= "                        <span>存储路径:</span><br><span>{\$$instancename.$showColName}</span>" . HH;
                     $showColumns .= "                        {else}" . HH;
                     $showColumns .= "                        <span></span>" . HH;

@@ -204,7 +204,7 @@ class ActionBasic extends BBObject
     public function isDataHave($param)
     {
         if ($this->data && is_array($this->data) && array_key_exists($param, $this->data)) {
-             return true;
+            return true;
         }
         return false;
     }
@@ -294,7 +294,7 @@ class ActionBasic extends BBObject
                 $querystring_tmp = "";
                 foreach ($querystring as $key => $value) {
                     if ($key == Router::VAR_DISPATCH) {
-                         $querystring_tmp .= $key . "=" . $this->modulename . "." . $action . "." . $method . Router::URL_CONNECTOR;
+                        $querystring_tmp .= $key . "=" . $this->modulename . "." . $action . "." . $method . Router::URL_CONNECTOR;
                     } else {
                         if ($value == "undefined") {
                             $value = 0;
@@ -321,8 +321,8 @@ class ActionBasic extends BBObject
             }
         }
         if ($urlMode == Router::URL_REWRITE) {
-             $querystring = str_replace(Router::URL_CONNECTOR, Router::URL_SLASH, $querystring);
-             $querystring = str_replace(Router::URL_EQUAL, Router::URL_SLASH, $querystring);
+            $querystring = str_replace(Router::URL_CONNECTOR, Router::URL_SLASH, $querystring);
+            $querystring = str_replace(Router::URL_EQUAL, Router::URL_SLASH, $querystring);
             if (Router::URL_PATHINFO_MODEL == Router::URL_PATHINFO_NORMAL) {
                 header($Header_Location . Gc::$url_base . Router::VAR_GROUP . $CONNECTOR . $this->modulename . $CONNECTOR . Router::VAR_MODULE . $CONNECTOR . $action . $CONNECTOR .
                    Router::VAR_ACTION . $CONNECTOR . $method . $CONNECTOR_LAST . $extraUrlInfo . $querystring);
@@ -381,7 +381,7 @@ class ActionBasic extends BBObject
                     }
                     UtilJavascript::loadJsReady($this->view->viewObject, "misc/js/onlineditor/ueditor/lang/zh-cn/zh-cn.js");
                 }
-                if (is_array($textarea_ids) && (count($textarea_ids) > 0 )) {
+                if (is_array($textarea_ids) && (count($textarea_ids) > 0)) {
                     for ($i = 0; $i < count($textarea_ids); $i++) {
                         UtilUeditor::loadJsFunction($textarea_ids[$i], $this->view->viewObject, null);
                     }
@@ -428,7 +428,7 @@ class ActionBasic extends BBObject
     {
         $result = array();
         if (!empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"])) {
-            if (( is_array($files[$uploadFlag]["name"]) ) && count($files[$uploadFlag]["name"]) > 0) {
+            if ((is_array($files[$uploadFlag]["name"])) && count($files[$uploadFlag]["name"]) > 0) {
                 /**
                  *  允许同名name:$uploadFlag的多个文件上传,其上传的文件格式如下
                  *  Array
@@ -477,7 +477,7 @@ class ActionBasic extends BBObject
                             }
                             $files_single[$uploadFlag] = $file_single;
                             $result_one = $this->uploadImg($files_single, $uploadFlag, $upload_dir, $defaultId, $file_permit_upload_size);
-                            if ($result_one && ($result_one['success'] == true )) {
+                            if ($result_one && ($result_one['success'] == true)) {
                                 $result["success"] = true;
                                 $result['file_name'][] = $result_one['file_name'];
                             } else {
@@ -554,7 +554,7 @@ class ActionBasic extends BBObject
             }
             // print_pre($file_name, true);
             $result = UtilFileSystem::uploadFile($files, $uploadPath, $uploadFlag, $is_permit_same_filename, $file_permit_upload_size);
-            if ($result && ($result['success'] == true )) {
+            if ($result && ($result['success'] == true)) {
                 $result['file_name'] = $file_name;
             } else {
                 return $result;

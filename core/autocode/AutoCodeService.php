@@ -86,7 +86,7 @@ class AutoCodeService extends AutoCode
                 self::$showReport .= $definePhpFileContent . "";
             }
         }
-        self::$showReport .= '</div><br>';
+        self::$showReport .= '</div>' . BR;
 
         $category = Gc::$appName;
         $author   = self::$author;

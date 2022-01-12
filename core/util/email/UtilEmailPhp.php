@@ -132,7 +132,7 @@ class UtilEmailPhp extends Util
     private static function htmlEmail($to, $from, $subject, $htmlContent, $attachedFiles = false, $customheaders = false, $plainContent = false, $inlineImages = false)
     {
         if ($customheaders && is_array($customheaders) == false) {
-            echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
+            echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:" . BR;
             // dieprintr($customheaders);
             print_r($customheaders);
             die();
@@ -210,7 +210,7 @@ class UtilEmailPhp extends Util
             // We further wrap all of this into another multipart block
             list($fullBody, $headers) = self::encodeMultipart($messageParts, "multipart/mixed");
 
-            // Messages without attachments do not require such treatment
+        // Messages without attachments do not require such treatment
         } else {
             $headers  = $messageHeaders;
             $fullBody = $messageBody;
@@ -218,7 +218,9 @@ class UtilEmailPhp extends Util
 
         // Email headers
         $headers["From"] = self::validEmailAddr($from);
-
+        if (!defined('BOUNCE_EMAIL')) {
+            define('BOUNCE_EMAIL', "?");
+        }
         // Messages with the X-SilverStripeMessageID header can be tracked
         if (isset($customheaders["X-SilverStripeMessageID"]) && defined('BOUNCE_EMAIL')) {
             $bounceAddress = BOUNCE_EMAIL;
@@ -231,6 +233,9 @@ class UtilEmailPhp extends Util
             $bounceAddress = $parts[2];
         }
 
+        if (!defined('X_MAILER')) {
+            define('X_MAILER', "?");
+        }
         // $headers["Sender"]         = $from;
         $headers["X-Mailer"] = X_MAILER;
         if (!isset($customheaders["X-Priority"])) {
@@ -265,7 +270,7 @@ class UtilEmailPhp extends Util
         $to      = self::validEmailAddr($to);
 
         // Try it without the -f option if it fails
-        if (!( $result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress") )) {
+        if (!($result = @mail($to, $subject, $fullBody, $headers, "-f$bounceAddress"))) {
             $result = mail($to, $subject, $fullBody, $headers);
         }
 
@@ -281,7 +286,7 @@ class UtilEmailPhp extends Util
         $plainEncoding    = false; // Not ensurely where this is supposed to be set, but defined it false for now to remove php notices
 
         if ($customheaders && is_array($customheaders) == false) {
-            echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:<BR>";
+            echo "htmlEmail($to, $from, $subject, ...) could not send mail: improper \$customheaders passed:" . BR;
             print_r($customheaders);
             die();
         }
@@ -321,7 +326,7 @@ class UtilEmailPhp extends Util
             // We further wrap all of this into another multipart block
             list($fullBody, $headers) = self::encodeMultipart($messageParts, "multipart/mixed");
 
-            // Messages without attachments do not require such treatment
+        // Messages without attachments do not require such treatment
         } else {
             $fullBody = $plainContent;
         }
@@ -598,7 +603,7 @@ class UtilEmailPhp extends Util
         $mimetypePathGeneric = Gc::$nav_root_path . '/sapphire/email/mime.types';
         $mimeTypes           = file_exists($mimetypePathGeneric) ?  file($mimetypePathGeneric) : file($mimetypePathCustom);
         foreach ($mimeTypes as $typeSpec) {
-            if (($typeSpec = trim($typeSpec) ) && substr($typeSpec, 0, 1) != "#") {
+            if (($typeSpec = trim($typeSpec)) && substr($typeSpec, 0, 1) != "#") {
                 $parts = preg_split("/[ \t\r\n]+/", $typeSpec);
                 if (sizeof($parts) > 1) {
                     $mimeType = array_shift($parts);

@@ -89,7 +89,7 @@ class AutoCodeView extends AutoCode
 
                 AutoCodeViewModel::createModelIndexFile($table_names);
                 self::createFrontModelPages($table_names);
-                self::$showReport .= "</div><br>";
+                self::$showReport .= "</div>" . BR;
                 break;
             case EnumAutoCodeViewType::MODEL:
                 self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_42");
@@ -117,7 +117,7 @@ class AutoCodeView extends AutoCode
                     $tplName          = self::saveTplDefineToDir($tablename, $tpl_editContent, $filename);
                     self::$showReport .= "生成导出完成:$tablename => $tplName!<br/>";
                 }
-                self::$showReport .= "</div><br>";
+                self::$showReport .= "</div>" . BR;
                 break;
             case EnumAutoCodeViewType::ADMIN:
                 self::$showReport .= AutoCodeFoldHelper::foldEffectCommon("Content_43");
@@ -154,7 +154,7 @@ class AutoCodeView extends AutoCode
                     AutoCodeViewAdmin::save_layout();
                     AutoCodeAjax::save_select_web_admin($tablename);
                 }
-                self::$showReport .= "</div><br>";
+                self::$showReport .= "</div>" . BR;
                 break;
         }
     }

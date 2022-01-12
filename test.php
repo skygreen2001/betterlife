@@ -5,7 +5,10 @@ require_once("init.php");
 // $介绍自己 = "我是betterlife的功能测试，无需安装任何依赖，只需引入init.php。";
 // $介绍作者 = "我是中国人，我来自上海，我喜欢新疆；我最喜欢的语言是PHP，我最喜欢用的框架是: betterlife。";
 // $欢迎祝辞 = "我很高兴您能认识我，betterlife；美好生活，只为更好。";
-// echo $介绍自己 . BR . $介绍作者 . BR . $欢迎祝辞 . BR;
+// $只为更好 = $介绍自己 . BR . $介绍作者 . BR . $欢迎祝辞 . BR;
+// echo $只为更好;
+// $美好生活 = HH . $介绍自己 . HH . $介绍作者 . HH . $欢迎祝辞 . HH;
+// rz($美好生活);
 
 // // 调用一对一
 // $user       = User::getById( 1 );
@@ -89,7 +92,7 @@ require_once("init.php");
 //     $user->setPassword( "123456" );
 //     $user_id = $user->save();
 //     if ($user_id ) echo("新增用户标识:" . $user_id); else echo("新增用户失败!");
-//     echo "<br/>";
+//     echo BR;
 // }
 // // 删除指定标识的用户
 // $isDelete = User::deleteByID( 4 );
@@ -299,3 +302,9 @@ require_once("init.php");
 if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test"))) {
     phpinfo();
 }
+
+// 调试，MVC框架自带有该功能，非MVC PHP文件需如下所示加载DebugMe
+DebugMe::start();
+ts("调试很重要，记录下调试信息。");
+// 下面这一句一定要放在最后一行，切记
+DebugMe::end();

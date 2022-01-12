@@ -52,7 +52,7 @@
 
             <li id="searchbar-li" class="search-toggle collapsed" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
               <a>
-                <span><span class="menu-search-text">搜索</span><span class="fa fa-search" style="line-height: 50px;" aria-hidden="true"></span></span>
+                <span><span class="menu-search-text">搜索</span><span class="fa fa-search" aria-hidden="true"></span></span>
               </a>
             </li>
             <li><a id="btn-layout-small"><i class="glyphicon glyphicon-resize-small"></i></a></li>
