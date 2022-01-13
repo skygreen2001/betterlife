@@ -108,7 +108,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
 
     /**
      * 直接执行SQL语句
-     * @param mixed $sql   SQL查询|更新|删除语句
+     * @param mixed        $sql    SQL查询|更新|删除语句
      * @param string|class $object 需要生成注入的对象实体|类名称
      * @return array
      * 返回
@@ -131,7 +131,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
 
                 $parts = explode(" ", trim($sqlstring));
                 $type  = strtolower($parts[0]);
-                if (( CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type ) || ( CrudSqlDelete::SQL_KEYWORD_DELETE == $type )) {
+                if ((CrudSqlUpdate::SQL_KEYWORD_UPDATE == $type) || (CrudSqlDelete::SQL_KEYWORD_DELETE == $type)) {
                     $this->stmt->free_result();
                     $this->stmt->close();
                     return true;
@@ -142,7 +142,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                     return $autoId;
                 }
                 $result = $this->getResultToObjects($object);
-                // $sql_s  = preg_replace("/\s/","",$sqlstring);
+            // $sql_s  = preg_replace("/\s/","",$sqlstring);
                 // $sql_s  = strtolower($sql_s);
                 // if (( !empty($result) ) && (!is_array($result) )) {
                 //     if (!( contains( $sql_s, array("count(", "sum(", "max(", "min(", "sum(")))) {
@@ -548,7 +548,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
                 $this->stmt->free_result();
                 $this->stmt->close();
             } else {
-                 ExceptionMysqli::record(Wl::ERROR_INFO_DB_HANDLE);
+                ExceptionMysqli::record(Wl::ERROR_INFO_DB_HANDLE);
             }
         } catch (Exception $exc) {
             ExceptionMysqli::record($exc->getTraceAsString());
@@ -656,7 +656,7 @@ class DaoMysqlI5 extends Dao implements IDaoNormal
         $sRetval = $sQuery;
         foreach ($saParams as $x_Key => $Param) {
             //if we find no more ?'s we're done then
-            if (( $nPos = strpos($sRetval, '?', $nPos + 1) ) === false) {
+            if (($nPos = strpos($sRetval, '?', $nPos + 1)) === false) {
                 break;
             }
 
