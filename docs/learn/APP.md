@@ -40,6 +40,10 @@
 
 - [Symfony Mailer](https://symfony.com/doc/current/mailer.html): 发送电子邮件
 
+## 其它
+
+- [Guzzle](https://github.com/guzzle/guzzle): PHP HTTP client
+
 ## 好酷的工具网站
 
 - [Install any command on any operating system](https://command-not-found.com/)
