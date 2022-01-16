@@ -1,8 +1,8 @@
 # 欢迎来到 betterlife 框架
 
 * [开源下载地址](https://github.com/skygreen2001/betterlife)
-* [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
-* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
+* [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
+* [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
 
 支持IT开发者快速开发、易于维护、实用于项目和产品开发的框架，它的原则通用于Php、Java、C#；集成通用的增删改查导入导出模式、提供了一对一、一对多、多对多关系表示层的通用实现；
 

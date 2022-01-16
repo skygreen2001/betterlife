@@ -600,7 +600,7 @@ class Project_Refactor
             $default_dir   = $pj_name_en;
             $dbname        = ConfigDb::$dbname;
             $table_prefix  = ConfigDb::$table_prefix;
-            $git_name      = "https://skygreen2001.github.io/betterlife.gitbook/";
+            $git_name      = "https://skygreen2001.github.io/betterlife.book/";
         } else {
             $reuse_type    = self::$reuse_type;
             $pj_name_cn    = self::$pj_name_cn;

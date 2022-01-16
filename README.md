@@ -131,8 +131,8 @@
 ## 帮助文档
 
 * [新手上路](docs/README.md)
-* [帮助说明文档](https://skygreen2001.github.io/betterlife.gitbook/)
-* [帮助文档源码](https://github.com/skygreen2001/betterlife.gitbook)
+* [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
+* [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
 
 ## 框架目录定义
 

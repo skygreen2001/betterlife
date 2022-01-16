@@ -201,7 +201,7 @@ if (!contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.",
           <p id="current-time"></p>
         </div>
     </div>
-    <footer><?php $help_url = "https://skygreen2001.github.io/betterlife.gitbook/" ?>
+    <footer><?php $help_url = "https://skygreen2001.github.io/betterlife.book/" ?>
         <div>
             <a href="<?php echo Gc::$url_base?>tools/dev/index.php" target="_blank">工程重用</a> | <a href="<?php echo Gc::$url_base?>tools/tools/db/manual/db_normal.php" target="_blank">数据库说明书</a> |
             <a href="<?php echo Gc::$url_base?>tools/tools/autocode/db_onekey.php" target="_blank">代码生成器</a> | <a href="<?php echo Gc::$url_base?>tools/tools/autocode/report_onekey.php" target="_blank">报表生成器</a> |
