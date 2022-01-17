@@ -131,7 +131,7 @@ require_once("init.php");
 // print_r($blog_names);
 
 // // 查看一个博客名称
-// $blog_name = Blog::select_one( "blog_name" );
+// $blog_name = Blog::selectOne( "blog_name" );
 // print_r($blog_name);
 
 // // 查看博客列表

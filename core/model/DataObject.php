@@ -739,7 +739,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      * 查询当前对象单个需显示的属性
      * @example 示例如下
      *
-     *        $blog_name = Blog::select_one( "blog_name" );
+     *        $blog_name = Blog::selectOne( "blog_name" );
      * @param string 指定的显示属性, 同SQL语句中的Select部分。
      * 示例如下:
      *
@@ -761,7 +761,7 @@ abstract class DataObject extends BBObject implements ArrayAccess
      *        2. name desc;
      * @return 查询列数组, 自动从数组中转换出来值字符串,最后只返回一个值
      */
-    public static function select_one($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
+    public static function selectOne($columns, $filter = null, $sort = CrudSQL::SQL_ORDER_DEFAULT_ID)
     {
         $result = DataObjectFunc::showColumns(get_called_class(), $columns, $filter, $sort, "0,1");
         if (!empty($result) && (is_array($result) ) && (count($result) > 0 )) {

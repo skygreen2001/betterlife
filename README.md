@@ -20,12 +20,19 @@
   - 下载betterlife 
 
       ```
+      > git clone https://gitee.com/skygreen2015/betterlife
+      或
       > git clone https://github.com/skygreen2001/betterlife.git
       或
       > git clone https://github.com.cnpmjs.org/skygreen2001/betterlife
-      或
-      > git clone https://gitee.com/skygreen2015/betterlife
       ```
+
+  - 安装Git客户端工具
+
+    - [sourcetree](http://www.sourcetreeapp.com)
+    - [GitKraken](https://www.gitkraken.com/)
+    - [GitHub Desktop](https://desktop.github.com/)
+    - [tortoiseGit](http://baoku.360.cn/soft/show/appid/102345451)
 
 * **Docker安装**
 
@@ -33,11 +40,11 @@
   - 下载betterlife
 
     ```
+    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://gitee.com/skygreen2015/betterlife
+    或
     > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife.git
     或
     > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com.cnpmjs.org/skygreen2001/betterlife
-    或
-    > docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://gitee.com/skygreen2015/betterlife
     ```
 
 * **Composer安装**
@@ -58,6 +65,10 @@
 
     可以直接在它上面下载安装(Wamp|Lamp|Mamp)
 
+  - [Xampp](https://www.apachefriends.org/zh_cn/index.html)
+
+    XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
+
   - [Wamp](http://www.wampserver.com/en/)
 
     Windows下的Apache + Mysql + PHP
@@ -72,13 +83,12 @@
 
     Mac环境下搭建 Apache/Nginx、MySQL、Perl/PHP/Python 平台。
 
-  - [Xampp](https://www.apachefriends.org/zh_cn/index.html)
-
-    XAMPP是完全免费且易于安装的Apache发行版，其中包含MariaDB、PHP和Perl。
+  - [Laravel Valet](https://laravel.com/docs/8.x/valet) 
+    - [Valet中文文档](https://learnku.com/docs/laravel/8.5/valet/)
 
   - [宝塔](https://www.bt.cn/)
 
-  - [PhpStud](https://www.xp.cn/)
+  - [PhpStudy](https://www.xp.cn/)
 
   - 本地运行PHP server: php -S localhost:80
 
