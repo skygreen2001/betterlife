@@ -192,8 +192,8 @@
 
 ## 参考
 
-  * [nginx install](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-14-04-lts)
-  * [How To Install Linux, Nginx, MySQL, PHP (LEMP stack) in Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04)
-  * [How To Install Linux, Nginx, MySQL, PHP (LEMP) stack on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+  * [Nginx 入门教程](https://xuexb.github.io/learn-nginx/)
+    * [Github地址](https://github.com/xuexb/learn-nginx)
   * [NGINX Docs](https://docs.nginx.com/)
   * [Nginx开发从入门到精通](https://github.com/taobao/nginx-book)
+  * [OpenResty® 是一款基于 NGINX 和 LuaJIT 的 Web 平台](https://openresty.org) 

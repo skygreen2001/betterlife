@@ -23,6 +23,9 @@
     - tools/tools/optimize/stresstest/README.md 压力测试
     - 学习参考: Laravel Octane
   - 生成全静态网站(tools/tools/web/makehtml.php)
+    - netlify config:https://docs.netlify.com/configure-builds/common-configurations/
+    - Material for MkDocs: https://squidfunk.github.io/mkdocs-material/
+      - Alternatives: https://squidfunk.github.io/mkdocs-material/alternatives/
   - 自己算法生成站点地图(动态页面)
   - 数据库增加事务支持
   - 数据库生成导出pdf文档
