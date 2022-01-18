@@ -6,9 +6,14 @@
 
 它自定义了一套快速开发报表的工具、Redis管理工具、数据库运维工具以协助快速开发。
 
+## 帮助文档
+
+  * [学习手册](https://skygreen2001.netlify.app)
+  * [快速上手](docs/README.md)
+
 ## 下载源码
 
-下载地址: https://github.com/skygreen2001/betterlife
+* 下载地址: https://github.com/skygreen2001/betterlife
 
 * **Git安装**
 
@@ -138,12 +143,6 @@
   - [Heroku](https://devcenter.heroku.com/categories/php)
   - [vagrant](https://app.vagrantup.com/laravel/boxes/homestead-7): https://segmentfault.com/a/1190000000264347
 
-## 帮助文档
-
-* [新手上路](docs/README.md)
-* [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
-* [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
-
 ## 框架目录定义
 
   - core   : 框架核心支持文件
@@ -188,8 +187,10 @@
 
 ## 参考资料
 
+- [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
+- [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
 - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
-- [学习与收集](docs/learn/README.md)
 - [Search PHP code examples](https://hotexamples.com/)
+- [学习与收集](docs/learn/README.md)
 - [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
