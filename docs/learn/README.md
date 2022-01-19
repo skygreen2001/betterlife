@@ -1,27 +1,38 @@
 # 学习与收集
 
-- PHP
-  - [官方手册](https://www.php.net/)
-  - [W3Schools](https://www.w3schools.com/php/)
-  - [PHP 社区 Wiki](https://learnku.com/php/wikis)
+## 基础
+
+  - PHP
+    - [官方手册](https://www.php.net/)
+    - [W3Schools](https://www.w3schools.com/php/)
+    - [PHP 社区 Wiki](https://learnku.com/php/wikis)
+    - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
+    - [TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)
+    - [PHP Apprentice](https://phpapprentice.com/)
+    - [PHP Tutorials](https://www.geeksforgeeks.org/php-tutorials/)
+  - [第三方库](APP.md)
+  - [Laravel: 从入门到实践](Laravel.md) 
+    - The PHP Framework For Web Artisans
+    - [2021年最好的Laravel教程](Laravel2021.md)
+  - [Symfony: 从入门到实践](SYMFONY.md)
+    - High Performance PHP Framework for Web Development 
+  - [CodeIgniter](https://codeigniter.com/user_guide/)
+    - CodeIgniter is an Application Development Framework - a toolkit - build web sites using PHP.
+  - [PHP的标准化组织](https://www.php-fig.org)
+    - [PHP-FIG](https://github.com/php-fig/fig-standards)
+
+## 酷而实用
+
   - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
-  - [TutorialsPoint PHP Tutorial](https://www.tutorialspoint.com/php/index.htm)
-  - [PHP Apprentice](https://phpapprentice.com/)
-  - [PHP Tutorials](https://www.geeksforgeeks.org/php-tutorials/)
-- [第三方库](APP.md)
-- [Laravel: 从入门到实践](Laravel.md) 
-  - The PHP Framework For Web Artisans
-  - [2021年最好的Laravel教程](Laravel2021.md)
-- [Symfony: 从入门到实践](SYMFONY.md)
-  - High Performance PHP Framework for Web Development 
-- [CodeIgniter](https://codeigniter.com/user_guide/)
-  - CodeIgniter is an Application Development Framework - a toolkit - build web sites using PHP.
-- [PHP的标准化组织](https://www.php-fig.org)
-  - [PHP-FIG](https://github.com/php-fig/fig-standards)
-- [VuePress](https://vuepress.vuejs.org/zh/): Vue 驱动的静态网站生成器 
-- [Grav](https://getgrav.org/) 
-  - Grav is a Fast, Simple, and Flexible file-based Web-platform.
-  - [Grav docs](https://learn.getgrav.org/)
-- [HUGO](https://gohugo.io/)
-  - The world’s fastest framework for building websites
-- [A5源码下载](https://www.a5xiazai.com/) 
+  - [Search PHP code examples](https://hotexamples.com/)
+  - [run code in 300+ PHP versions simultaneously](https://3v4l.org/)
+  - [Install any command on any operating system](https://command-not-found.com/)
+
+## 其它
+  - [VuePress](https://vuepress.vuejs.org/zh/): Vue 驱动的静态网站生成器 
+  - [Grav](https://getgrav.org/) 
+    - Grav is a Fast, Simple, and Flexible file-based Web-platform.
+    - [Grav docs](https://learn.getgrav.org/)
+  - [HUGO](https://gohugo.io/)
+    - The world’s fastest framework for building websites
+  - [A5源码下载](https://www.a5xiazai.com/) 

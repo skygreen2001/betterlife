@@ -3,14 +3,21 @@
 ## 基础
   
   - betterlife 从入门到实践
+  - 路由器升级
+    - 按规则生成的路由，隐藏或改写.php后缀名为.html
+    - 路由定制
   - DB: find objects by List ids
+  - 异常显示不要显示从ExceptionMe::recordException，而是从调用的地方开始
+  - input checkbox on off 在Action和Service中自动转换成 1 0 参考 blog 的 edit
   - 后台的export excel加筛选条件
   - Tag 超链接  onclick ' " 不能解析的问题
   - 表示层View整合Blade Templates
-  - Trait 重构 DataObject 和 DataObjectFunc, php 5.2 -> php 5.4
   - Flysystem adapter for betterlife framework(可以单独开一个工程)
-  - 框架核心需加上命名空间, php 5.2 -> php 5.4
   - 级联删除图片，多对多表中的数据
+  - markdown 编辑和解析
+    - [LEAGUE/COMMONMARK](https://commonmark.thephpleague.com/): Markdown parser
+      - [CommonMark Spec](https://spec.commonmark.org/)
+      - [GitHub Flavored Markdown Spec](https://github.github.com/gfm/)
   - Api: 
     - 类似spring boot、Laravel resource、Restful
     - 提供给前端Ajax请求、axios使用
@@ -36,10 +43,16 @@
   - tools 里的editarea ：codemirror  http://codemirror.net/
   - github + composer: 框架核心 core 作为一个composer library: betterlife.framework
   - php7 and namespace（遵循规范psr）
+  - 代码规范
+    - php注释需遵循代码规范
+    - php注释参考phpdoc要求(https://www.phpdoc.org/)
+    - 查看是否有类似phpcs相关的工具
   - [ok]后台的import和export excel
   - [ok]TWIG PHPTEMPLATE
   - [ok]换行符替换成HH = PHP_EOL
   - [ok][使用composer]创建yarn、node和npm的betterlife初始化
+  - [KO]Trait 重构 DataObject 和 DataObjectFunc, php 5.2 -> php 5.4
+  - [KO]框架核心需加上命名空间, php 5.2 -> php 5.4
   - [KO][通过excel桥接数据到各数据库][生成各种数据库的sql脚本]各种数据库可以备份和导出导入互通
   - [KO][通过命令行和docker解决了下载覆盖UEditor的问题]bower 下载文件后再修改覆盖文件(grunt | gulf)
 

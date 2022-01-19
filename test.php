@@ -303,8 +303,8 @@ if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], 
     phpinfo();
 }
 
-// 调试，MVC框架自带有该功能，非MVC PHP文件需如下所示加载DebugMe
-DebugMe::start();
-ts("调试很重要，记录下调试信息。");
-// 下面这一句一定要放在最后一行，切记
-DebugMe::end();
+// // 调试，MVC框架自带有该功能，非MVC PHP文件需如下所示加载DebugMe
+// DebugMe::start();
+// ts("调试很重要，记录下调试信息。");
+// // 下面这一句一定要放在最后一行，切记
+// DebugMe::end();

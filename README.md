@@ -190,7 +190,5 @@
 - [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
 - [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
-- [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
-- [Search PHP code examples](https://hotexamples.com/)
 - [学习与收集](docs/learn/README.md)
 - [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
