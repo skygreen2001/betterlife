@@ -6,6 +6,10 @@
   - 路由器升级
     - 按规则生成的路由，隐藏或改写.php后缀名为.html
     - 路由定制
+      - url改写
+      - 整合Laravel的路由
+      - 学习Symfony、CodeIgniter、ThinkPHP、WordPress的路由规则解决方案
+  - 整合Laravel的config 
   - DB: find objects by List ids
   - 异常显示不要显示从ExceptionMe::recordException，而是从调用的地方开始
   - input checkbox on off 在Action和Service中自动转换成 1 0 参考 blog 的 edit

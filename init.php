@@ -8,6 +8,8 @@ define('DS', DIRECTORY_SEPARATOR);
 define('HH', PHP_EOL);
 // 框架中对于浏览器中网页换行的定义
 define('BR', "<br/>");
+// 本地服务器常用关键词
+define('LS', array("127.0.0.1", "localhost", "192.168.", '.test'));
 
 require_once 'Gc.php';//加载全局变量文件
 require_once 'core/main/Initializer.php';

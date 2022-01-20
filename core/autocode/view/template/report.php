@@ -79,7 +79,7 @@ if (\$totalCount > 0) {
     'recordsTotal'    => \$totalCount
 );
 
-if (contains( \$_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test") ) || Gc::\$dev_debug_on) {
+if (contains(\$_SERVER['HTTP_HOST'], LS) || Gc::\$dev_debug_on) {
     //调试使用的信息
     \$result["debug"] = array(
         'param' => array(

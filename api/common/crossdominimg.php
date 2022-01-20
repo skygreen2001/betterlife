@@ -35,7 +35,7 @@ $res = curl_exec($ch);
 //Check for errors.
 if (curl_errno($ch)) {
     // [PHP - curl localhost connection refused](https://pretagteam.com/question/php-curl-localhost-connection-refused)
-    if (contains($img_src, array("127.0.0.1", "localhost", "192.168.", '.test'))) {
+    if (contains($img_src, LS)) {
         curl_setopt($ch, CURLOPT_PROXY, $_SERVER['SERVER_ADDR'] . ':' . $_SERVER['SERVER_PORT']);
         $res = curl_exec($ch);
     }

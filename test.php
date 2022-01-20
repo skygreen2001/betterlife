@@ -299,7 +299,7 @@ require_once("init.php");
 // $upper = $collection->toUpper();
 // echo $upper;
 
-if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test"))) {
+if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], LS)) {
     phpinfo();
 }
 

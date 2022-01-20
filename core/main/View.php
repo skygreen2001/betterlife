@@ -74,7 +74,7 @@ class View
             "template_dir"  => Gc::$nav_root_path . $this->getTemplateViewDir($this->moduleName)
         );
 
-        if (contains($_SERVER['HTTP_HOST'], array("127.0.0.1", "localhost", "192.168.", ".test"))) {
+        if (contains($_SERVER['HTTP_HOST'], LS)) {
             self::$view_global["is_dev"] = true;
         }
     }
@@ -158,13 +158,13 @@ class View
     {
         if (property_exists($this, $property)) {
             if (
-                ( !empty($property) ) && ($property == 'viewObject' ) &&
+                (!empty($property)) && ($property == 'viewObject') &&
                 !empty($this->viewObject->js_ready) && array_key_exists('js_ready', $value)
             ) {
                 $value->js_ready = $this->viewObject->js_ready . $value->js_ready;
             }
             if (
-                ( !empty($property) ) && ($property == 'viewObject' ) &&
+                (!empty($property)) && ($property == 'viewObject') &&
                 !empty($this->viewObject->css_ready) && array_key_exists('css_ready', $value)
             ) {
                 $value->css_ready = $this->viewObject->css_ready . $value->css_ready;

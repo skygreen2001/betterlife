@@ -1,6 +1,18 @@
 <?php
 
+require_once("core/include/common.php");
+
+$uri = urldecode(
+    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+);
+if ($uri == '/') {
+    if (contains($_SERVER['HTTP_HOST'], LS)) {
+        require_once __DIR__.'/welcome.php';
+    }
+}
+
 require_once("init.php");
+
 date_default_timezone_set('Asia/Shanghai');
 /**
  * 这个文件是BetterLife CMS 的Bootstrap

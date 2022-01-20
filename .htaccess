@@ -35,11 +35,11 @@ RewriteRule .* index.php [L]
 
 ## Begin - Security
 # Block all direct access for these folders
-RewriteRule ^(\.git|install|logs|tests)/(.*) error [F]
+RewriteRule ^(\.git|install\/vendor|log|tests)/(.*) error [F]
 # Block access to specific file types for these system folders
-RewriteRule ^(system|vendor)/(.*)\.(txt|xml|md|html|yaml|yml|php|pl|py|cgi|twig|sh|bat)$ error [F]
+RewriteRule ^(core|install\/vendor)/(.*)\.(txt|xml|md|html|yaml|yml|php|pl|py|cgi|twig|sh|bat)$ error [F]
 # Block access to specific file types for these user folders
-RewriteRule ^(user)/(.*)\.(txt|md|yaml|yml|php|pl|py|cgi|twig|sh|bat)$ error [F]
+RewriteRule ^(home)/(.*)\.(txt|md|yaml|yml|php|pl|py|cgi|twig|sh|bat)$ error [F]
 # Block all direct access to .md files:
 RewriteRule \.md$ error [F]
 # Block all direct access to files and folders beginning with a dot
@@ -49,7 +49,7 @@ RewriteRule ^(LICENSE\.txt|composer\.lock|composer\.json|\.htaccess)$ error [F]
 ## End - Security
 
 <IfModule mod_rewrite.c>
-#   RewriteEngine On
+#    RewriteEngine On
     RewriteCond $1 !^(index\.php|public|robots\.txt)
     RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
