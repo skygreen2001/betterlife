@@ -2,8 +2,7 @@
 
 require_once("Gc.php");
 if (!contains($_SERVER['HTTP_HOST'], LS)) {
-    header("location:" . Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index");
-    die();
+    header_index();
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

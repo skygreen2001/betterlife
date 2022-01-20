@@ -9,6 +9,8 @@ if ($uri == '/') {
     if (contains($_SERVER['HTTP_HOST'], LS)) {
         require_once __DIR__ . '/welcome.php';
         die();
+    } else {
+        header_index();
     }
 }
 
