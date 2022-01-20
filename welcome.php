@@ -1,7 +1,6 @@
 <?php
-require_once("init.php");
-// require_once("Gc.php");
-// require_once("core/include/common.php");
+
+require_once("Gc.php");
 if (!contains($_SERVER['HTTP_HOST'], LS)) {
     header("location:" . Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index");
     die();

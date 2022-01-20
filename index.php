@@ -1,13 +1,14 @@
 <?php
 
-require_once("core/include/common.php");
+require_once("Gc.php");
 
 $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
 );
 if ($uri == '/') {
     if (contains($_SERVER['HTTP_HOST'], LS)) {
-        require_once __DIR__.'/welcome.php';
+        require_once __DIR__ . '/welcome.php';
+        die();
     }
 }
 
