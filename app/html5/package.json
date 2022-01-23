@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "bower": "^1.8.2",
-    "cordova-android": "6.3.0",
+    "cordova-android": "6.4.0",
     "cordova-ios": "4.5.3",
     "cordova-plugin-battery-status": "~1.2.4",
     "cordova-plugin-camera": "~2.4.1",
