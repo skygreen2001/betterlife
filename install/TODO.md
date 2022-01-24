@@ -22,6 +22,7 @@
     - [LEAGUE/COMMONMARK](https://commonmark.thephpleague.com/): Markdown parser
       - [CommonMark Spec](https://spec.commonmark.org/)
       - [GitHub Flavored Markdown Spec](https://github.github.com/gfm/)
+    - [Markdown Alternatives](https://alternativeto.net/software/markdown/)
   - Api: 
     - 类似spring boot、Laravel resource、Restful
     - 提供给前端Ajax请求、axios使用
