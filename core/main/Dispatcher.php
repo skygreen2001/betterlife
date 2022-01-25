@@ -126,12 +126,17 @@ class Dispatcher
                 $current_action->afterAction();
             }
             if (get_class($current_action) == "Action_Ajax") {
-                die();
+                // 原设计是MVC的方式，只在这个类下面放Ajax请求
             }
             // ajax请求 返回json数据对象
-            if ($response && is_string($response) && json_decode($response)) {
-                echo $response;
-                die();
+            if ($response && is_string($response)) {
+                if (json_decode($response)) {
+                    echo $response;
+                    die();
+                } else {
+                    echo $response;
+                    die();
+                }
             }
             // ajax请求 返回数组
             if (is_array($response) || is_object($response)) {
@@ -158,6 +163,8 @@ class Dispatcher
         $action     = $router->getAction();
         if (!empty($view->getAtPageDir())) {
             $renderTemplateFile  = $view->getAtPageDir();
+            $renderTemplateFile  = trim($renderTemplateFile, "\\/.");
+            $renderTemplateFile  = str_replace([".", "\\", "/"], DS, $renderTemplateFile);
             $renderTemplateFile .= DS;
             if (!empty($view->getAtPageFile())) {
                 $renderTemplateFile .= $view->getAtPageFile();
