@@ -3,7 +3,7 @@
 /**
  * -----------| 通知 |-----------
  * @category Betterlife
- * @package msg
+ * @package domain.msg
  * @author skygreen skygreen2001@gmail.com
  */
 class Notice extends DataObject
@@ -37,6 +37,7 @@ class Notice extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "usernotices" => "Usernotice"
@@ -44,6 +45,7 @@ class Notice extends DataObject
 
     /**
      * 从属于多对多关系
+     * @var array
      */
     public static $belongs_many_many = array(
         "users" => "User"

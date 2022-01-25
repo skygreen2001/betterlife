@@ -3,7 +3,7 @@
 /**
  * -----------| 用户 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class User extends DataObject
@@ -49,6 +49,7 @@ class User extends DataObject
 
     /**
      * 一对一关系
+     * @var array
      */
     public static $has_one = array(
         "userdetail" => "Userdetail"
@@ -56,6 +57,7 @@ class User extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "blogs" => "Blog",
@@ -68,6 +70,7 @@ class User extends DataObject
 
     /**
      * 多对多关系
+     * @var array
      */
     public static $many_many = array(
         "notices" => "Notice",

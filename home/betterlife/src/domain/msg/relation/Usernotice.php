@@ -3,7 +3,7 @@
 /**
  * -----------| 用户收到通知用户收到通知 |-----------
  * @category Betterlife
- * @package msg.relation
+ * @package domain.msg.relation
  * @author skygreen skygreen2001@gmail.com
  */
 class Usernotice extends DataObject
@@ -31,6 +31,7 @@ class Usernotice extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "user" => "User",

@@ -3,7 +3,7 @@
 /**
  * -----------| 角色拥有功能角色拥有功能 |-----------
  * @category Betterlife
- * @package user.relation
+ * @package domain.user.relation
  * @author skygreen skygreen2001@gmail.com
  */
 class Rolefunctions extends DataObject
@@ -31,6 +31,7 @@ class Rolefunctions extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "role" => "Role",
@@ -38,7 +39,9 @@ class Rolefunctions extends DataObject
     );
     /**
      * 规格说明
-     * 表中不存在的默认列定义:commitTime,updateTime
+     *
+     * 表中不存在的默认列定义: commitTime, updateTime
+     *
      * @var mixed
      */
     public $field_spec = array(

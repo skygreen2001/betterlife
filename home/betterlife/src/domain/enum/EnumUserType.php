@@ -24,9 +24,10 @@ class EnumUserType extends Enum
 
     /**
      * 显示类型
-     * 1:登录-LOGIN
-     * 2:写日志-BLOG
-     * 3:写评论-COMMENT
+     * - 1:登录-LOGIN
+     * - 2:写日志-BLOG
+     * - 3:写评论-COMMENT
+     * @return string
      */
     public static function userTypeShow($userType)
     {
@@ -44,6 +45,7 @@ class EnumUserType extends Enum
     /**
      * 根据类型显示文字获取类型
      * @param mixed $userTypeShow 类型显示文字
+     * @return string
      */
     public static function userTypeByShow($userTypeShow)
     {
@@ -60,6 +62,7 @@ class EnumUserType extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function userTypeEnumKey($userType)
     {

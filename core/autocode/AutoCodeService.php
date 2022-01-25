@@ -88,7 +88,7 @@ class AutoCodeService extends AutoCode
         }
         self::$showReport .= '</div>' . BR;
 
-        $category = Gc::$appName;
+        $category = ucfirst(Gc::$appName);
         $author   = self::$author;
         $package  = self::$package;
 
@@ -110,7 +110,7 @@ class AutoCodeService extends AutoCode
             $section_content = $result["section_content"];
             $e_result = "<?php" . HH . HH .
                         "/**" . HH .
-                        " * -----------| 服务类:所有Service的管理类 |-----------" . HH .
+                        " * -----------| 服务类: 所有Service的管理类 |-----------" . HH .
                         " * @category $category" . HH .
                         " * @package $package" . HH .
                         " * @author $author" . HH .
@@ -241,11 +241,11 @@ class AutoCodeService extends AutoCode
         $object_desc       = "";
         $object_desc       = self::tableCommentKey($tablename);
         if (self::$tableInfoList != null && count(self::$tableInfoList) > 0 && array_key_exists("$tablename", self::$tableInfoList)) {
-            $table_comment = "服务类:" . $object_desc;
+            $table_comment = "服务类: " . $object_desc;
         } else {
             $table_comment = "关于服务类{$classname}的描述";
         }
-        $category = Gc::$appName;
+        $category = ucfirst(Gc::$appName);
         $author   = self::$author;
         $package  = self::$package;
         $result  .= "/**" . HH .

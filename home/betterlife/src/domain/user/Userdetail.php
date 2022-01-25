@@ -3,7 +3,7 @@
 /**
  * -----------| 用户详细信息 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class Userdetail extends DataObject
@@ -29,6 +29,7 @@ class Userdetail extends DataObject
     public $realname;
     /**
      * 头像
+     *
      * 头像图片路径
      * @var string
      * @access public
@@ -36,6 +37,7 @@ class Userdetail extends DataObject
     public $profile;
     /**
      * 国家
+     *
      * 参考region表的region_id字段
      * @var int
      * @access public
@@ -43,6 +45,7 @@ class Userdetail extends DataObject
     public $country;
     /**
      * 省
+     *
      * 参考region表的region_id字段
      * @var int
      * @access public
@@ -50,6 +53,7 @@ class Userdetail extends DataObject
     public $province;
     /**
      * 市
+     *
      * 参考region表的region_id字段
      * @var int
      * @access public
@@ -57,6 +61,7 @@ class Userdetail extends DataObject
     public $city;
     /**
      * 区
+     *
      * 参考region表的region_id字段
      * @var int
      * @access public
@@ -76,10 +81,10 @@ class Userdetail extends DataObject
     public $qq;
     /**
      * 会员性别
-     * 0: 女-female
-     * 1: 男-male
-     * -1: 待确认-unknown
-     * 默认男
+     * - 0：女-female
+     * - 1：男-male
+     * - -1：待确认-unknown
+     * - 默认男
      * @var enum
      * @access public
      */
@@ -94,6 +99,7 @@ class Userdetail extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "user" => "User"
@@ -101,10 +107,11 @@ class Userdetail extends DataObject
 
     /**
      * 显示会员性别
-     * 0: 女-female
-     * 1: 男-male
-     * -1: 待确认-unknown
-     * 默认男
+     * - 0：女-female
+     * - 1：男-male
+     * - -1：待确认-unknown
+     * - 默认男
+     * @return string
      */
     public function getSexShow()
     {
@@ -113,10 +120,11 @@ class Userdetail extends DataObject
 
     /**
      * 显示会员性别
-     * 0: 女-female
-     * 1: 男-male
-     * -1: 待确认-unknown
-     * 默认男
+     * - 0：女-female
+     * - 1：男-male
+     * - -1：待确认-unknown
+     * - 默认男
+     * @return string
      */
     public static function sexShow($sex)
     {

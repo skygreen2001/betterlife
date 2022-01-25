@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $comment}编辑{else}新增{/if}评论</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="commentForm" method="post"><input type="hidden" name="comment_id" value="{$comment.comment_id}"/>
+        <form name="commentForm" method="post"><input type="hidden" name="comment_id" value="{$comment.comment_id|default:''}"/>
         <table class="viewdoblock">
             {if $comment}<tr class="entry"><th class="head">标识</th><td class="content">{$comment.comment_id}</td></tr>{/if}
             <tr class="entry">
@@ -39,7 +39,7 @@
                         {/foreach}
                     </select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -58,11 +58,11 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
                 pageInit_ue_comment();
 
                 // 在线编辑器设置默认样式
-                ue_comment.ready(function(){
+                ue_comment.ready(function() {
                     UE.dom.domUtils.setStyles(ue_comment.body, {
                         'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                     });

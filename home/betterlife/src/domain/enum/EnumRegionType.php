@@ -28,11 +28,11 @@ class EnumRegionType extends Enum
 
     /**
      * 显示地区类型
-     * 0:国家-country
-     * 1:省-province
-     * 2:市-city
-     * 3:区-region
-     *
+     * - 0:国家-country
+     * - 1:省-province
+     * - 2:市-city
+     * - 3:区-region
+     * @return string
      */
     public static function region_typeShow($region_type)
     {
@@ -52,6 +52,7 @@ class EnumRegionType extends Enum
     /**
      * 根据地区类型显示文字获取地区类型
      * @param mixed $region_typeShow 地区类型显示文字
+     * @return string
      */
     public static function region_typeByShow($region_typeShow)
     {
@@ -70,6 +71,7 @@ class EnumRegionType extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function region_typeEnumKey($region_type)
     {

@@ -3,7 +3,7 @@
 /**
  * -----------| 系统日志 |-----------
  * @category Betterlife
- * @package log
+ * @package domain.log
  * @author skygreen skygreen2001@gmail.com
  */
 class Logsystem extends DataObject
@@ -22,7 +22,7 @@ class Logsystem extends DataObject
      */
     public $logtime;
     /**
-     * 分类 
+     * 分类
      *
      * 标志或者分类
      * @var string
@@ -30,18 +30,16 @@ class Logsystem extends DataObject
      */
     public $ident;
     /**
-     * 优先级 
-     *
-     * - 0: 严重错误-EMERG 
-     * - 1: 警戒性错误-ALERT 
-     * - 2: 临界值错误-CRIT 
-     * - 3: 一般错误-ERR 
-     * - 4: 警告性错误-WARN 
-     * - 5: 通知-NOTICE 
-     * - 6: 信息-INFO 
-     * - 7: 调试-DEBUG 
-     * - 8: SQL-SQL
-     *
+     * 优先级
+     * - 0:严重错误-EMERG
+     * - 1:警戒性错误-ALERT
+     * - 2:临界值错误-CRIT
+     * - 3:一般错误-ERR
+     * - 4:警告性错误-WARN
+     * - 5:通知-NOTICE
+     * - 6:信息-INFO
+     * - 7:调试-DEBUG
+     * - 8:SQL-SQL
      * @var enum
      * @access public
      */
@@ -55,10 +53,12 @@ class Logsystem extends DataObject
     //</editor-fold>
     /**
      * 规格说明
-     * 表中不存在的默认列定义:commitTime,updateTime
+     *
+     * 表中不存在的默认列定义: commitTime, updateTime
+     *
      * @var mixed
      */
-    public $field_spec=array(
+    public $field_spec = array(
         EnumDataSpec::REMOVE => array(
             'commitTime',
             'updateTime'
@@ -66,38 +66,38 @@ class Logsystem extends DataObject
     );
 
     /**
-     * 显示优先级 
-     * - 0: 严重错误-EMERG 
-     * - 1: 警戒性错误-ALERT 
-     * - 2: 临界值错误-CRIT 
-     * - 3: 一般错误-ERR 
-     * - 4: 警告性错误-WARN 
-     * - 5: 通知-NOTICE 
-     * - 6: 信息-INFO 
-     * - 7: 调试-DEBUG 
-     * - 8: SQL-SQL
+     * 显示优先级
+     * - 0:严重错误-EMERG
+     * - 1:警戒性错误-ALERT
+     * - 2:临界值错误-CRIT
+     * - 3:一般错误-ERR
+     * - 4:警告性错误-WARN
+     * - 5:通知-NOTICE
+     * - 6:信息-INFO
+     * - 7:调试-DEBUG
+     * - 8:SQL-SQL
+     * @return string
      */
     public function getPriorityShow()
     {
-        return self::priorityShow( $this->priority );
+        return self::priorityShow($this->priority);
     }
 
     /**
-     * 显示优先级 
-     * 0:严重错误-EMERG 
-     * 1:警戒性错误-ALERT 
-     * 2:临界值错误-CRIT 
-     * 3:一般错误-ERR 
-     * 4:警告性错误-WARN 
-     * 5:通知-NOTICE 
-     * 6:信息-INFO 
-     * 7:调试-DEBUG 
-     * 8:SQL-SQL
+     * 显示优先级
+     * - 0:严重错误-EMERG
+     * - 1:警戒性错误-ALERT
+     * - 2:临界值错误-CRIT
+     * - 3:一般错误-ERR
+     * - 4:警告性错误-WARN
+     * - 5:通知-NOTICE
+     * - 6:信息-INFO
+     * - 7:调试-DEBUG
+     * - 8:SQL-SQL
+     * @return string
      */
     public static function priorityShow($priority)
     {
-        return EnumPriority::priorityShow( $priority );
+        return EnumPriority::priorityShow($priority);
     }
-
 }
-

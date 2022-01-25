@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $department}编辑{else}新增{/if}用户所属部门</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="departmentForm" method="post"><input type="hidden" name="department_id" value="{$department.department_id}"/>
+        <form name="departmentForm" method="post"><input type="hidden" name="department_id" value="{$department.department_id|default:''}"/>
         <table class="viewdoblock">
             {if $department}<tr class="entry"><th class="head">编号</th><td class="content">{$department.department_id}</td></tr>{/if}
             <tr class="entry"><th class="head">部门名称</th><td class="content"><input type="text" class="edit" name="department_name" value="{$department.department_name|default:''}"/></td></tr>
@@ -16,7 +16,7 @@
             <tr class="entry"><th class="head">预算</th><td class="content"><input type="number" class="edit" name="budget" value="{$department.budget|default:100}"/></td></tr>
             <tr class="entry"><th class="head">实际开销</th><td class="content"><input type="number" class="edit" name="actualexpenses" value="{$department.actualexpenses|default:100}"/></td></tr>
             <tr class="entry"><th class="head">预估平均工资</th><td class="content"><input type="number" class="edit" name="estsalary" value="{$department.estsalary|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">实际工资</th><td class="content"><input type="number" class="edit" name="actualsalary" value="{$department.actualsalary|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">实际工资</th><td class="content"><input type="number" class="edit" name="actualsalary" value="{$department.actualsalary|default:100}"/></td></tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

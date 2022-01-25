@@ -3,7 +3,7 @@
 /**
  * -----------| 评论 |-----------
  * @category Betterlife
- * @package core
+ * @package domain.core
  * @author skygreen skygreen2001@gmail.com
  */
 class Comment extends DataObject
@@ -37,6 +37,7 @@ class Comment extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "user" => "User",

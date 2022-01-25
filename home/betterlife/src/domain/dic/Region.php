@@ -3,7 +3,7 @@
 /**
  * -----------| 地区 |-----------
  * @category Betterlife
- * @package dic
+ * @package domain.dic
  * @author skygreen skygreen2001@gmail.com
  */
 class Region extends DataObject
@@ -29,11 +29,10 @@ class Region extends DataObject
     public $region_name;
     /**
      * 地区类型
-     * 0:国家-country
-     * 1:省-province
-     * 2:市-city
-     * 3:区-region
-     *
+     * - 0:国家-country
+     * - 1:省-province
+     * - 2:市-city
+     * - 3:区-region
      * @var enum
      * @access public
      */
@@ -48,7 +47,6 @@ class Region extends DataObject
 
     /**
      * 从属一对一关系
-     *
      * @var array
      */
     public static $belong_has_one = array(
@@ -57,7 +55,7 @@ class Region extends DataObject
     /**
      * 规格说明
      *
-     * 表中不存在的默认列定义:commitTime,updateTime
+     * 表中不存在的默认列定义: commitTime, updateTime
      *
      * 外键特殊定义声明: FOREIGN_ID
      * @var mixed
@@ -74,11 +72,11 @@ class Region extends DataObject
 
     /**
      * 显示地区类型
-     * 0:国家-country
-     * 1:省-province
-     * 2:市-city
-     * 3:区-region
-     *
+     * - 0:国家-country
+     * - 1:省-province
+     * - 2:市-city
+     * - 3:区-region
+     * @return string
      */
     public function getRegion_typeShow()
     {
@@ -87,11 +85,11 @@ class Region extends DataObject
 
     /**
      * 显示地区类型
-     * 0:国家-country
-     * 1:省-province
-     * 2:市-city
-     * 3:区-region
-     *
+     * - 0:国家-country
+     * - 1:省-province
+     * - 2:市-city
+     * - 3:区-region
+     * @return string
      */
     public static function region_typeShow($region_type)
     {
@@ -100,6 +98,7 @@ class Region extends DataObject
 
     /**
      * 最高的层次，默认为3
+     * @return int
      */
     public static function maxlevel()
     {
@@ -108,6 +107,7 @@ class Region extends DataObject
 
     /**
      * 显示父地区[全]
+     * @return string
      */
     public function getRegionShowAll()
     {
@@ -119,6 +119,7 @@ class Region extends DataObject
      * 注:采用了递归写法
      * @param int $parent_id 父地区标识
      * @param int $level 目录层级
+     * @return string
      */
     public static function regionShowAll($parent_id, $level)
     {

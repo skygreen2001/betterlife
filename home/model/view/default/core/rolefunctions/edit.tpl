@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $rolefunctions}编辑{else}新增{/if}角色拥有功能</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="rolefunctionsForm" method="post"><input type="hidden" name="rolefunctions_id" value="{$rolefunctions.rolefunctions_id}"/>
+        <form name="rolefunctionsForm" method="post"><input type="hidden" name="rolefunctions_id" value="{$rolefunctions.rolefunctions_id|default:''}"/>
         <table class="viewdoblock">
             {if $rolefunctions}<tr class="entry"><th class="head">标识</th><td class="content">{$rolefunctions.rolefunctions_id}</td></tr>{/if}
             <tr class="entry">
@@ -32,7 +32,7 @@
                         {/foreach}
                     </select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

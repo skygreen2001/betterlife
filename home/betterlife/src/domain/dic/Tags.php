@@ -3,7 +3,7 @@
 /**
  * -----------| 标签 |-----------
  * @category Betterlife
- * @package dic
+ * @package domain.dic
  * @author skygreen skygreen2001@gmail.com
  */
 class Tags extends DataObject
@@ -37,6 +37,7 @@ class Tags extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "blogtagss" => "Blogtags"
@@ -44,6 +45,7 @@ class Tags extends DataObject
 
     /**
      * 从属于多对多关系
+     * @var array
      */
     public static $belongs_many_many = array(
         "blogs" => "Blog"

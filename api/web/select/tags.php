@@ -2,6 +2,7 @@
 
 // error_reporting(0);
 require_once("../../../init.php");
+
 $query        = "";
 if (array_key_exists("term", $_GET)) {
     $query = @$_GET["term"];
@@ -26,7 +27,7 @@ if ($pageTags) {
         $data[]        = $tagsv;
     }
 }
-$result   = array(
+$result = array(
     'code' => 1,
     'description' => "",
     'data' => $data

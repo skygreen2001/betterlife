@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $msg}编辑{else}新增{/if}消息</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="msgForm" method="post"><input type="hidden" name="msg_id" value="{$msg.msg_id}"/>
+        <form name="msgForm" method="post"><input type="hidden" name="msg_id" value="{$msg.msg_id|default:''}"/>
         <table class="viewdoblock">
             {if $msg}<tr class="entry"><th class="head">标识</th><td class="content">{$msg.msg_id}</td></tr>{/if}
             <tr class="entry"><th class="head">发送者</th><td class="content"><input type="number" class="edit" name="senderId" value="{$msg.senderId|default:100}"/></td></tr>
@@ -21,7 +21,7 @@
                 <td class="content">
                     <textarea id="content" name="content" rows="6" cols="60" placeholder="发送内容">{$msg.content|default:''}</textarea>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -40,11 +40,11 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
                 pageInit_ue_content();
 
                 // 在线编辑器设置默认样式
-                ue_content.ready(function(){
+                ue_content.ready(function() {
                     UE.dom.domUtils.setStyles(ue_content.body, {
                         'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                     });

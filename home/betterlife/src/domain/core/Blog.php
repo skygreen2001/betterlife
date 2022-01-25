@@ -3,8 +3,8 @@
 /**
  * -----------| 博客 |-----------
  * @category Betterlife
- * @package Core
- * @author "skygreen skygreen2001@gmail.com"
+ * @package domain.core
+ * @author skygreen skygreen2001@gmail.com
  */
 class Blog extends DataObject
 {
@@ -47,10 +47,9 @@ class Blog extends DataObject
     public $icon_url;
     /**
      * 是否公开
-     * 0: 不公开
-     * 1: 公开
-     * 默认为1: 公开
-     *
+     * - 0: 不公开
+     * - 1: 公开
+     * - 默认为1: 公开
      * @var bit
      * @access public
      */
@@ -63,11 +62,10 @@ class Blog extends DataObject
     public $blog_content;
     /**
      * 状态
-     * 0:待审核-pend
-     * 1:进行中-run
-     * 100:已结束-end
-     * 400:已删除-del
-     *
+     * - 0:待审核-pend
+     * - 1:进行中-run
+     * - 100:已结束-end
+     * - 400:已删除-del
      * @var enum
      * @access public
      */
@@ -82,6 +80,7 @@ class Blog extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "user" => "User",
@@ -90,6 +89,7 @@ class Blog extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "comments" => "Comment",
@@ -98,6 +98,7 @@ class Blog extends DataObject
 
     /**
      * 多对多关系
+     * @var array
      */
     public static $many_many = array(
         "tagss" => "Tags"
@@ -105,11 +106,11 @@ class Blog extends DataObject
 
     /**
      * 显示状态
-     * 0:待审核-pend
-     * 1:进行中-run
-     * 100:已结束-end
-     * 400:已删除-del
-     *
+     * - 0:待审核-pend
+     * - 1:进行中-run
+     * - 100:已结束-end
+     * - 400:已删除-del
+     * @return string
      */
     public function getStatusShow()
     {
@@ -118,11 +119,11 @@ class Blog extends DataObject
 
     /**
      * 显示状态
-     * 0:待审核-pend
-     * 1:进行中-run
-     * 100:已结束-end
-     * 400:已删除-del
-     *
+     * - 0:待审核-pend
+     * - 1:进行中-run
+     * - 100:已结束-end
+     * - 400:已删除-del
+     * @return string
      */
     public static function statusShow($status)
     {
@@ -132,10 +133,10 @@ class Blog extends DataObject
 
     /**
      * 是否公开
-     * 0: 不公开
-     * 1: 公开
-     * 默认为1: 公开
-     *
+     * - 0: 不公开
+     * - 1: 公开
+     * - 默认为1: 公开
+     * @return string
      */
     public function isPublicShow()
     {

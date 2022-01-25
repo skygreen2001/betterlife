@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $user}编辑{else}新增{/if}用户</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="userForm" method="post"><input type="hidden" name="user_id" value="{$user.user_id}"/>
+        <form name="userForm" method="post"><input type="hidden" name="user_id" value="{$user.user_id|default:''}"/>
         <table class="viewdoblock">
             {if $user}<tr class="entry"><th class="head">用户标识</th><td class="content">{$user.user_id}</td></tr>{/if}
             <tr class="entry"><th class="head">用户名</th><td class="content"><input type="text" class="edit" name="username" value="{$user.username|default:''}"/></td></tr>
@@ -27,7 +27,7 @@
                 <td class="content select">
                     <select id="role_id" name="role_id[]" class="form-control" multiple ></select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

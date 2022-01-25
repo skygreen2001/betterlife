@@ -28,11 +28,11 @@ class EnumBlogStatus extends Enum
 
     /**
      * 显示状态
-     * 0:待审核-pend
-     * 1:进行中-run
-     * 100:已结束-end
-     * 400:已删除-del
-     *
+     * - 0:待审核-pend
+     * - 1:进行中-run
+     * - 100:已结束-end
+     * - 400:已删除-del
+     * @return string
      */
     public static function statusShow($status)
     {
@@ -52,6 +52,7 @@ class EnumBlogStatus extends Enum
     /**
      * 根据状态显示文字获取状态
      * @param mixed $statusShow 状态显示文字
+     * @return string
      */
     public static function statusByShow($statusShow)
     {
@@ -70,6 +71,7 @@ class EnumBlogStatus extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function statusEnumKey($status)
     {

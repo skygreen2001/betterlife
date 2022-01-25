@@ -47,7 +47,7 @@ class Action_Category extends ActionModel
             $isRedirect = true;
             if (!empty($_FILES) && !empty($_FILES["icon_url"]["name"])) {
                 $result = $this->uploadImg($_FILES, "icon_url", "icon_url", "category");
-                if ($result && ($result['success'] == true )) {
+                if ($result && ($result['success'] == true)) {
                     if (array_key_exists('file_name', $result)) {
                         $category->icon_url = $result['file_name'];
                     }

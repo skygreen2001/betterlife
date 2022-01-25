@@ -28,11 +28,12 @@ class EnumRoletype extends Enum
 
     /**
      * 显示扮演角色
-     * 系统管理员扮演角色。
-     * 0:超级管理员-superadmin
-     * 1:管理人员-manager
-     * 2:运维人员-normal
-     * 3:合作伙伴-partner
+     * - 系统管理员扮演角色。
+     * - 0:超级管理员-superadmin
+     * - 1:管理人员-manager
+     * - 2:运维人员-normal
+     * - 3:合作伙伴-partner
+     * @return string
      */
     public static function roletypeShow($roletype)
     {
@@ -52,6 +53,7 @@ class EnumRoletype extends Enum
     /**
      * 根据扮演角色显示文字获取扮演角色
      * @param mixed $roletypeShow 扮演角色显示文字
+     * @return string
      */
     public static function roletypeByShow($roletypeShow)
     {
@@ -70,6 +72,7 @@ class EnumRoletype extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function roletypeEnumKey($roletype)
     {

@@ -20,8 +20,9 @@ class EnumSeescope extends Enum
 
     /**
      * 显示视野
-     * 0:只能查看自己的信息-self
-     * 1:查看所有的信息-all
+     * - 0:只能查看自己的信息-self
+     * - 1:查看所有的信息-all
+     * @return string
      */
     public static function seescopeShow($seescope)
     {
@@ -37,6 +38,7 @@ class EnumSeescope extends Enum
     /**
      * 根据视野显示文字获取视野
      * @param mixed $seescopeShow 视野显示文字
+     * @return string
      */
     public static function seescopeByShow($seescopeShow)
     {
@@ -51,6 +53,7 @@ class EnumSeescope extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function seescopeEnumKey($seescope)
     {

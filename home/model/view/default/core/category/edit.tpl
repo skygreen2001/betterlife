@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $category}编辑{else}新增{/if}博客分类</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category.category_id}"/>
+        <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category.category_id|default:''}"/>
         <table class="viewdoblock">
             {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category.category_id}</td></tr>{/if}
             <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no|default:100}"/></td></tr>
@@ -29,7 +29,7 @@
                 <td class="content">
                     <textarea id="intro" name="intro" rows="6" cols="60" placeholder="说明">{$category.intro|default:''}</textarea>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -48,11 +48,11 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
                 pageInit_ue_intro();
 
                 // 在线编辑器设置默认样式
-                ue_intro.ready(function(){
+                ue_intro.ready(function() {
                     UE.dom.domUtils.setStyles(ue_intro.body, {
                         'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                     });

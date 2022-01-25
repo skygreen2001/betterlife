@@ -40,7 +40,7 @@ $edit_template = <<<EDIT
     <link rel="stylesheet" type="text/css" href="{\$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if \${$instancename}}编辑{else}新增{/if}{$table_comment}</h1><p><font color="red">{\$message|default:''}</font></p></div>
-        <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName}"/>
+        <form name="{$instancename}Form" method="post"$hasImgFormFlag><input type="hidden" name="$idColumnName" value="{\${$instancename}.$idColumnName|default:''}"/>
         <table class="viewdoblock">
 $edit_contents
             <tr class="entry">

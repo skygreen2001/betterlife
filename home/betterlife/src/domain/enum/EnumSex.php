@@ -24,10 +24,11 @@ class EnumSex extends Enum
 
     /**
      * 显示会员性别
-     * 0: 女-female
-     * 1: 男-male
-     * -1: 待确认-unknown
-     * 默认男
+     * - 0：女-female
+     * - 1：男-male
+     * - -1：待确认-unknown
+     * - 默认男
+     * @return string
      */
     public static function sexShow($sex)
     {
@@ -45,6 +46,7 @@ class EnumSex extends Enum
     /**
      * 根据会员性别显示文字获取会员性别
      * @param mixed $sexShow 会员性别显示文字
+     * @return string
      */
     public static function sexByShow($sexShow)
     {
@@ -61,6 +63,7 @@ class EnumSex extends Enum
 
     /**
      * 通过枚举值获取枚举键定义
+     * @return string
      */
     public static function sexEnumKey($sex)
     {

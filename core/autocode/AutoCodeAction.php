@@ -169,7 +169,7 @@ class AutoCodeAction extends AutoCode
         $classname     = self::getClassname($tablename);
         $instancename  = self::getInstancename($tablename);
 
-        $category      = Gc::$appName;
+        $category      = ucfirst(Gc::$appName);
         $package       = self::$package_front;
         $author        = self::$author;
 
@@ -665,7 +665,7 @@ class AutoCodeAction extends AutoCode
      */
     private static function createModelIndexFile()
     {
-        $category      = Gc::$appName;
+        $category      = ucfirst(Gc::$appName);
         $package       = self::$package_front;
         $author        = self::$author;
         $action_parent = "Action";

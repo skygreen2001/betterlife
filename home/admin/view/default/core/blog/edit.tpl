@@ -114,7 +114,7 @@
                       </div>
 
                       <div class="space-4"></div>
-                      <input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
+                      <input type="hidden" name="blog_id" value="{$blog.blog_id|default:''}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div  class="btn-group" role="group">

@@ -3,7 +3,7 @@
 /**
  * -----------| 博客标签博客标签 |-----------
  * @category Betterlife
- * @package core.relation
+ * @package domain.core.relation
  * @author skygreen skygreen2001@gmail.com
  */
 class Blogtags extends DataObject
@@ -31,6 +31,7 @@ class Blogtags extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "blog" => "Blog",
@@ -38,7 +39,9 @@ class Blogtags extends DataObject
     );
     /**
      * 规格说明
-     * 表中不存在的默认列定义:commitTime,updateTime
+     *
+     * 表中不存在的默认列定义: commitTime, updateTime
+     *
      * @var mixed
      */
     public $field_spec = array(

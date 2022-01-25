@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $notice}编辑{else}新增{/if}通知</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="noticeForm" method="post"><input type="hidden" name="notice_id" value="{$notice.notice_id}"/>
+        <form name="noticeForm" method="post"><input type="hidden" name="notice_id" value="{$notice.notice_id|default:''}"/>
         <table class="viewdoblock">
             {if $notice}<tr class="entry"><th class="head">编号</th><td class="content">{$notice.notice_id}</td></tr>{/if}
             <tr class="entry"><th class="head">通知分类</th><td class="content"><input type="number" class="edit" name="noticeType" value="{$notice.noticeType|default:100}"/></td></tr>
@@ -19,7 +19,7 @@
                 <td class="content">
                     <textarea id="notice_content" name="notice_content" rows="6" cols="60" placeholder="通知内容">{$notice.notice_content|default:''}</textarea>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -38,11 +38,11 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
                 pageInit_ue_notice_content();
 
                 // 在线编辑器设置默认样式
-                ue_notice_content.ready(function(){
+                ue_notice_content.ready(function() {
                     UE.dom.domUtils.setStyles(ue_notice_content.body, {
                         'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                     });

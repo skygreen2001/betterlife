@@ -109,8 +109,8 @@ class AutoCodeDomainJava extends AutoCode
      */
     private static function tableToEnumClass($tablename, $fieldInfo)
     {
-        $category  = Gc::$appName;
-        $author    = self::$author;
+        $category = ucfirst(Gc::$appName);
+        $author   = self::$author;
         foreach ($fieldInfo as $fieldname => $field) {
             $datatype = self::comment_type($field["Type"]);
             if ($datatype == 'char') {
@@ -249,7 +249,7 @@ class AutoCodeDomainJava extends AutoCode
         } else {
             $table_comment = "关于 $tablename 的描述";
         }
-        $category  = Gc::$appName;
+        $category  = ucfirst(Gc::$appName);
         $author    = self::$author;
         $classname = self::getClassname($tablename);
         self::$importPackage   = "";
@@ -291,12 +291,12 @@ class AutoCodeDomainJava extends AutoCode
                 $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">' . HH;
                 foreach ($fieldInfo as $fieldname => $field) {
                     if (self::isNotColumnKeywork($fieldname)) {
-                         $datatype = self::comment_type($field["Type"]);
-                         $comment  = str_replace(HH, "     * ", $field["Comment"]);
-                         $comment  = str_replace("\r", "     * ", $comment);
-                         $comment  = str_replace("\n", "     * ", $comment);
-                         $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
-                         $result  .=
+                        $datatype = self::comment_type($field["Type"]);
+                        $comment  = str_replace(HH, "     * ", $field["Comment"]);
+                        $comment  = str_replace("\r", "     * ", $comment);
+                        $comment  = str_replace("\n", "     * ", $comment);
+                        $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
+                        $result  .=
                                 "    /**" . HH .
                                 "     * " . $comment . HH .
                                 "     * @var $datatype" . HH .
@@ -347,7 +347,7 @@ class AutoCodeDomainJava extends AutoCode
         if (!empty($package)) {
             $package = "." . $package;
         }
-        if (( !self::$isHadImportList ) && $isImportList) {
+        if ((!self::$isHadImportList) && $isImportList) {
             self::$importPackage  .= "import java.util.List;" . HH;
             self::$isHadImportList = true;
         }

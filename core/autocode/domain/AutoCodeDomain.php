@@ -58,8 +58,8 @@ class AutoCodeDomain extends AutoCode
 
         $fieldInfos = self::fieldInfosByTable_names($table_names);
         foreach ($fieldInfos as $tablename => $fieldInfo) {
-           //print_r($fieldInfo);
-           //self::$showReport.="<br/>";
+            //print_r($fieldInfo);
+            //self::$showReport.="<br/>";
             $definePhpFileContent = self::tableToDataObjectDefine($tablename, $fieldInfo);
             if (isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent)) {
                 $classname         = self::saveDataObjectDefineToDir($tablename, $definePhpFileContent);
@@ -116,7 +116,7 @@ class AutoCodeDomain extends AutoCode
      */
     private static function tableToEnumClass($tablename, $fieldInfo)
     {
-        $category  = Gc::$appName;
+        $category  = ucfirst(Gc::$appName);
         $author    = self::$author;
         foreach ($fieldInfo as $fieldname => $field) {
             $datatype = self::comment_type($field["Type"]);
@@ -149,10 +149,12 @@ class AutoCodeDomain extends AutoCode
                                        "    const $enumname = '$enumvalue';" . HH;
                     }
                     $result  .= HH;
-                    $comment  = str_replace(HH, "     * ", $field["Comment"]);
+                    // $comment  = str_replace(HH, "     * ", $field["Comment"]);
+                    $comment  = $field["Comment"];
                     $comment  = trim($comment);
                     $comment  = str_replace("\r", "     * ", $comment);
                     $comment  = str_replace("\n", "     * ", $comment);
+                    $scomment = str_replace("     * ", "" . HH . "     * ", $comment);
                     $comment  = str_replace("     * ", "<br/>" . HH . "     * ", $comment);
                     $scomment = str_replace("* ", "* - ", $comment);
                     $scomment = str_replace("<br/>", "", $scomment);
@@ -249,9 +251,9 @@ class AutoCodeDomain extends AutoCode
         } else {
             $table_comment = "关于 $tablename 的描述";
         }
-        $category  = Gc::$appName;
+        $category  = ucfirst(Gc::$appName);
         $author    = self::$author;
-        $package   = self::getPackage($tablename);
+        $package   = "domain." . self::getPackage($tablename);
         $classname = self::getClassname($tablename);
         $result   .= "/**" . HH .
                      " * -----------| $table_comment |-----------" . HH .
@@ -297,12 +299,12 @@ class AutoCodeDomain extends AutoCode
                 $result .= '    //<editor-fold defaultstate="collapsed" desc="定义部分">' . HH;
                 foreach ($fieldInfo as $fieldname => $field) {
                     if (self::isNotColumnKeywork($fieldname)) {
-                         $datatype = self::comment_type($field["Type"]);
-                         $comment  = str_replace(HH, "     * ", $field["Comment"]);
-                         $comment  = str_replace("\r", "     * ", $comment);
-                         $comment  = str_replace("\n", "     * ", $comment);
-                         $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
-                         $result  .=
+                        $datatype = self::comment_type($field["Type"]);
+                        $comment  = str_replace(HH, "     * ", $field["Comment"]);
+                        $comment  = str_replace("\r", "     * ", $comment);
+                        $comment  = str_replace("\n", "     * ", $comment);
+                        $comment  = str_replace("     * ", "" . HH . "     * ", $comment);
+                        $result  .=
                                 "    /**" . HH .
                                 "     * " . $comment . HH .
                                 "     * @var $datatype" . HH .

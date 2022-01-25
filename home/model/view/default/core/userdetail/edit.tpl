@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $userdetail}编辑{else}新增{/if}用户详细信息</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="userdetailForm" method="post" enctype="multipart/form-data"><input type="hidden" name="userdetail_id" value="{$userdetail.userdetail_id}"/>
+        <form name="userdetailForm" method="post" enctype="multipart/form-data"><input type="hidden" name="userdetail_id" value="{$userdetail.userdetail_id|default:''}"/>
         <table class="viewdoblock">
             {if $userdetail}<tr class="entry"><th class="head">标识</th><td class="content">{$userdetail.userdetail_id}</td></tr>{/if}
             <tr class="entry">
@@ -45,7 +45,7 @@
                     <select id="sex" name="sex" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="birthday" value="{$userdetail.birthday|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">生日</th><td class="content"><input type="text" placeholder="yyyy-mm-dd" class="edit" name="birthday" value="{$userdetail.birthday|default:''}"/></td></tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

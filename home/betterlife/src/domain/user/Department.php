@@ -3,7 +3,7 @@
 /**
  * -----------| 用户所属部门 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class Department extends DataObject
@@ -41,6 +41,7 @@ class Department extends DataObject
     public $actualexpenses;
     /**
      * 预估平均工资
+     *
      * 部门人员预估平均工资
      * @var int
      * @access public
@@ -48,6 +49,7 @@ class Department extends DataObject
     public $estsalary;
     /**
      * 实际工资
+     *
      * 部门人员实际平均工资
      * @var int
      * @access public
@@ -57,6 +59,7 @@ class Department extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "admins" => "Admin"

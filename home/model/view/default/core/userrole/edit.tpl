@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $userrole}编辑{else}新增{/if}用户角色</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="userroleForm" method="post"><input type="hidden" name="userrole_id" value="{$userrole.userrole_id}"/>
+        <form name="userroleForm" method="post"><input type="hidden" name="userrole_id" value="{$userrole.userrole_id|default:''}"/>
         <table class="viewdoblock">
             {if $userrole}<tr class="entry"><th class="head">标识</th><td class="content">{$userrole.userrole_id}</td></tr>{/if}
             <tr class="entry">
@@ -32,7 +32,7 @@
                         {/foreach}
                     </select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

@@ -3,7 +3,7 @@
 /**
  * -----------| 用户日志 |-----------
  * @category Betterlife
- * @package log
+ * @package domain.log
  * @author skygreen skygreen2001@gmail.com
  */
 class Loguser extends DataObject
@@ -23,15 +23,16 @@ class Loguser extends DataObject
     public $user_id;
     /**
      * 类型
-     * 1:登录-LOGIN
-     * 2:写日志-BLOG
-     * 3:写评论-COMMENT
+     * - 1:登录-LOGIN
+     * - 2:写日志-BLOG
+     * - 3:写评论-COMMENT
      * @var enum
      * @access public
      */
     public $userType;
     /**
      * 日志详情
+     *
      * 一般日志类型决定了内容；这一栏一般没有内容
      * @var string
      * @access public
@@ -41,16 +42,19 @@ class Loguser extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
-    static $belong_has_one = array(
+    public static $belong_has_one = array(
         "user" => "User"
     );
     /**
      * 规格说明
-     * 表中不存在的默认列定义:updateTime
+     *
+     * 表中不存在的默认列定义: updateTime
+     *
      * @var mixed
      */
-    public $field_spec=array(
+    public $field_spec = array(
         EnumDataSpec::REMOVE => array(
             'updateTime'
         ),
@@ -58,25 +62,25 @@ class Loguser extends DataObject
 
     /**
      * 显示类型
-     * 1:登录-LOGIN
-     * 2:写日志-BLOG
-     * 3:写评论-COMMENT
+     * - 1:登录-LOGIN
+     * - 2:写日志-BLOG
+     * - 3:写评论-COMMENT
+     * @return string
      */
     public function getUserTypeShow()
     {
-        return self::userTypeShow( $this->userType );
+        return self::userTypeShow($this->userType);
     }
 
     /**
      * 显示类型
-     * 1:登录-LOGIN
-     * 2:写日志-BLOG
-     * 3:写评论-COMMENT
+     * - 1:登录-LOGIN
+     * - 2:写日志-BLOG
+     * - 3:写评论-COMMENT
+     * @return string
      */
     public static function userTypeShow($userType)
     {
-        return EnumUserType::userTypeShow( $userType );
+        return EnumUserType::userTypeShow($userType);
     }
-
 }
-

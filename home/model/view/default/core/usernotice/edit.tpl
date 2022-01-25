@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $usernotice}编辑{else}新增{/if}用户收到通知</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="usernoticeForm" method="post"><input type="hidden" name="usernotice_id" value="{$usernotice.usernotice_id}"/>
+        <form name="usernoticeForm" method="post"><input type="hidden" name="usernotice_id" value="{$usernotice.usernotice_id|default:''}"/>
         <table class="viewdoblock">
             {if $usernotice}<tr class="entry"><th class="head">标识</th><td class="content">{$usernotice.usernotice_id}</td></tr>{/if}
             <tr class="entry">
@@ -32,7 +32,7 @@
                         {/foreach}
                     </select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

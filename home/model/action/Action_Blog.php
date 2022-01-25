@@ -47,7 +47,7 @@ class Action_Blog extends ActionModel
             $isRedirect = true;
             if (!empty($_FILES) && !empty($_FILES["icon_url"]["name"])) {
                 $result = $this->uploadImg($_FILES, "icon_url", "icon_url", "blog");
-                if ($result && ($result['success'] == true )) {
+                if ($result && ($result['success'] == true)) {
                     if (array_key_exists('file_name', $result)) {
                         $blog->icon_url = $result['file_name'];
                     }

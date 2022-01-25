@@ -3,7 +3,7 @@
 /**
  * -----------| 博客分类 |-----------
  * @category Betterlife
- * @package dic
+ * @package domain.dic
  * @author skygreen skygreen2001@gmail.com
  */
 class Category extends DataObject
@@ -49,6 +49,7 @@ class Category extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "blogs" => "Blog"

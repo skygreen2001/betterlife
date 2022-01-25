@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $blog}编辑{else}新增{/if}博客</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="blogForm" method="post" enctype="multipart/form-data"><input type="hidden" name="blog_id" value="{$blog.blog_id}"/>
+        <form name="blogForm" method="post" enctype="multipart/form-data"><input type="hidden" name="blog_id" value="{$blog.blog_id|default:''}"/>
         <table class="viewdoblock">
             {if $blog}<tr class="entry"><th class="head">标识</th><td class="content">{$blog.blog_id}</td></tr>{/if}
             <tr class="entry">
@@ -65,7 +65,7 @@
                 <td class="content select">
                     <select id="tags_id" name="tags_id[]" class="form-control" multiple ></select>
                 </td>
-            </tr>
+            </tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />
@@ -84,11 +84,11 @@
     {if ($online_editor == 'UEditor')}
         <script>
         $(function() {
-            if ( typeof UE != 'undefined' ) {
+            if (typeof UE != 'undefined') {
                 pageInit_ue_blog_content();
 
                 // 在线编辑器设置默认样式
-                ue_blog_content.ready(function(){
+                ue_blog_content.ready(function() {
                     UE.dom.domUtils.setStyles(ue_blog_content.body, {
                         'background-color': '#4caf50','color': '#fff','font-family' : "'Microsoft Yahei','Helvetica Neue', Helvetica, STHeiTi, Arial, sans-serif", 'font-size' : '16px'
                     });

@@ -81,7 +81,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $property_name 属性名称
      * @param int $incre_value 递增数
@@ -103,7 +103,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $property_name 属性名称
      * @param int $decre_value 递减数
@@ -128,7 +128,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $sort 排序条件
      * 示例如下:
@@ -159,7 +159,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $sort 排序条件
      * 示例如下:
@@ -190,7 +190,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $sort 排序条件
      * 示例如下:
@@ -227,7 +227,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @return int 数据对象: 博客总计数
      */
@@ -249,7 +249,7 @@ class ServiceBlog extends Service implements IServiceBasic
      *     2. array("id" => "1", "name" => "sky")
      *     3. 允许对象如new User(id = "1", name = "green");
      *
-     * 默认:SQL Where条件子语句。如: "( id = 1 and name = 'sky' ) or ( name like '%sky%' )"
+     * 默认:SQL Where条件子语句。如: "(id = 1 and name = 'sky') or (name like '%sky%')"
      *
      * @param string $sort 排序条件
      * 默认为 id desc
@@ -361,7 +361,7 @@ class ServiceBlog extends Service implements IServiceBasic
             }
         }
         $data = Blog::get($filter);
-        if (( !empty($data) ) && (count($data) > 0)) {
+        if ((!empty($data)) && (count($data) > 0)) {
             Blog::propertyShow($data, array('status'));
         }
         $arr_output_header = self::fieldsMean(Blog::tablename());

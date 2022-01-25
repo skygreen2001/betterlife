@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $admin}编辑{else}新增{/if}系统管理人员</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="adminForm" method="post"><input type="hidden" name="admin_id" value="{$admin.admin_id}"/>
+        <form name="adminForm" method="post"><input type="hidden" name="admin_id" value="{$admin.admin_id|default:''}"/>
         <table class="viewdoblock">
             {if $admin}<tr class="entry"><th class="head">管理员标识</th><td class="content">{$admin.admin_id}</td></tr>{/if}
             <tr class="entry">
@@ -37,7 +37,7 @@
                     <select id="seescope" name="seescope" class="form-control"></select>
                 </td>
             </tr>
-            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$admin.loginTimes|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">登录次数</th><td class="content"><input type="number" class="edit" name="loginTimes" value="{$admin.loginTimes|default:100}"/></td></tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

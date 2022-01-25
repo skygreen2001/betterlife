@@ -509,7 +509,7 @@ $edit_template = <<<EDIT_TPL
                       {/if}
 $edit_contents
                       <div class="space-4"></div>
-                      <input type="hidden" name="$realId" value="{\${$instancename}.$realId}"/>
+                      <input type="hidden" name="$realId" value="{\${$instancename}.$realId|default:''}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div class="btn-group" role="group">

@@ -32,7 +32,7 @@ foreach ($columns as $key => $column) {
 }
 
 $pageBlogs = Blog::queryPageByPageNo($page, $where_clause, $page_size, $orderDes);
-$data      = $pageBlogs["data"];
+$data = $pageBlogs["data"];
 if ($data) {
     foreach ($data as $key => $blog) {
         if (!empty($blog->user_id)) {
@@ -51,6 +51,7 @@ if ($data) {
         if (!empty($blog->icon_url)) {
             $blog->icon_url = Gc::$upload_url . "images/" . $blog->icon_url;
         }
+
     }
 }
 $recordsFiltered = $pageBlogs["count"];
@@ -59,7 +60,7 @@ $result = array(
     'data' => $data,
     'draw' => $draw,
     'recordsFiltered' => $recordsFiltered,
-    'recordsTotal' => $recordsTotal
+    'recordsTotal'    => $recordsTotal
 );
 
 //调试使用的信息

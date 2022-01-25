@@ -100,7 +100,7 @@ class AutoCodeViewModel extends AutoCodeView
                                     $realId = $key;
                                 }
                                 $show_fieldname = "";
-                                if (( !array_key_exists($value_r, $fieldInfo) ) || ( $classname == $key_r )) {
+                                if ((!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r)) {
                                     $show_fieldname = $value_r;
                                     if ($realId != $key) {
                                         if (contain($key, "_id")) {
@@ -146,11 +146,11 @@ class AutoCodeViewModel extends AutoCodeView
                     }
                 }
                 // if ($is_no_relation) {
-                    $headers      .= "            <th class=\"header\">$value</th>" . HH;
+                $headers      .= "            <th class=\"header\">$value</th>" . HH;
 
-                if (( count($enumColumns) > 0 ) && (in_array($key, $enumColumns) )) {
+                if ((count($enumColumns) > 0) && (in_array($key, $enumColumns))) {
                     $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>" . HH;
-                } elseif (( count($bitColumns) > 0 ) && (in_array($key, $bitColumns) )) {
+                } elseif ((count($bitColumns) > 0) && (in_array($key, $bitColumns))) {
                     $contents .= "            <td class=\"content\">{\${$instancename}.{$key}Show}</td>" . HH;
                 } else {
                     $contents .= "            <td class=\"content\">{\${$instancename}.$key}</td>" . HH;
@@ -159,9 +159,9 @@ class AutoCodeViewModel extends AutoCodeView
             }
         }
 
-        if (!empty($headers) && (strlen($headers) > 2 )) {
-            $headers  = substr($headers, 0, strlen($headers) - 2);
-            $contents = substr($contents, 0, strlen($contents) - 2);
+        if (!empty($headers) && (strlen($headers) > strlen(HH))) {
+            $headers  = substr($headers, 0, strlen($headers) - strlen(HH));
+            $contents = substr($contents, 0, strlen($contents) - strlen(HH));
         }
         $realId = DataObjectSpec::getRealIDColumnName($classname);
         include("template" . DS . "default.php");
@@ -373,7 +373,7 @@ class AutoCodeViewModel extends AutoCodeView
 //         });
 //         </script>
 //     {/if}
-// EDIT;
+            // EDIT;
             $ueTextareacontents = <<<UETC
     {if (\$online_editor == 'UEditor')}
         <script>
@@ -397,7 +397,7 @@ UETC;
                               "    });" . HH .
                               "    </script>" . HH;
         }
-        if (!empty($edit_contents) && (strlen($edit_contents) > 2 )) {
+        if (!empty($edit_contents) && (strlen($edit_contents) > 2)) {
             $edit_contents = substr($edit_contents, 0, strlen($edit_contents) - 2);
         }
         include("template" . DS . "default.php");
@@ -475,7 +475,7 @@ UETC;
                                     $realId = $key;
                                 }
                                 $show_fieldname = "";
-                                if (( !array_key_exists($value_r, $fieldInfo) ) || ( $classname == $key_r )) {
+                                if ((!array_key_exists($value_r, $fieldInfo)) || ($classname == $key_r)) {
                                     $show_fieldname = $value_r;
                                     if ($realId != $key) {
                                         $key_m = $key;
@@ -519,9 +519,9 @@ UETC;
                     }
                 }
 
-                if (( count($enumColumns) > 0 ) && (in_array($key, $enumColumns))) {
+                if ((count($enumColumns) > 0) && (in_array($key, $enumColumns))) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>" . HH;
-                } elseif (( count($bitColumns) > 0 ) && (in_array($key, $bitColumns) )) {
+                } elseif ((count($bitColumns) > 0) && (in_array($key, $bitColumns))) {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.{$key}Show}</td></tr>" . HH;
                 } else {
                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">$value</th><td class=\"content\">{\$$instancename.$key}</td></tr>" . HH;
@@ -562,8 +562,8 @@ UETC;
                 $view_contents .= "        <tr class=\"entry\"><th class=\"head\">" . $comment . "</th><td class=\"content\">{\$$instancename.$fieldname}</td></tr>" . HH;
             }
         }
-        if (!empty($view_contents) && (strlen($view_contents) > 2 )) {
-            $view_contents = substr($view_contents, 0, strlen($view_contents) - 2);
+        if (!empty($view_contents) && (strlen($view_contents) > strlen(HH))) {
+            $view_contents = substr($view_contents, 0, strlen($view_contents) - strlen(HH));
         }
         $realId = DataObjectSpec::getRealIDColumnName($classname);
         include("template" . DS . "default.php");

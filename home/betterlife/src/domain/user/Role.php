@@ -3,7 +3,7 @@
 /**
  * -----------| 角色 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class Role extends DataObject
@@ -25,6 +25,7 @@ class Role extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "rolefunctionss" => "Rolefunctions",
@@ -33,6 +34,7 @@ class Role extends DataObject
 
     /**
      * 多对多关系
+     * @var array
      */
     public static $many_many = array(
         "functionss" => "Functions"
@@ -40,6 +42,7 @@ class Role extends DataObject
 
     /**
      * 从属于多对多关系
+     * @var array
      */
     public static $belongs_many_many = array(
         "users" => "User"

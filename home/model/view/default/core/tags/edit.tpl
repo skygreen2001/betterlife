@@ -8,11 +8,11 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $tags}编辑{else}新增{/if}标签</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="tagsForm" method="post"><input type="hidden" name="tags_id" value="{$tags.tags_id}"/>
+        <form name="tagsForm" method="post"><input type="hidden" name="tags_id" value="{$tags.tags_id|default:''}"/>
         <table class="viewdoblock">
             {if $tags}<tr class="entry"><th class="head">标识</th><td class="content">{$tags.tags_id}</td></tr>{/if}
             <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$tags.sequence_no|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="title" value="{$tags.title|default:''}"/></td></tr>
+            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="title" value="{$tags.title|default:''}"/></td></tr
             <tr class="entry">
               <td class="content" colspan="2" align="center">
                 <input type="submit" value="提交" class="btnSubmit" />

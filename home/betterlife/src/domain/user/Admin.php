@@ -3,7 +3,7 @@
 /**
  * -----------| 系统管理人员 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class Admin extends DataObject
@@ -41,19 +41,19 @@ class Admin extends DataObject
     public $password;
     /**
      * 扮演角色
-     * 系统管理员扮演角色。
-     * 0:超级管理员-superadmin
-     * 1:管理人员-manager
-     * 2:运维人员-normal
-     * 3:合作伙伴-partner
+     * - 系统管理员扮演角色。
+     * - 0:超级管理员-superadmin
+     * - 1:管理人员-manager
+     * - 2:运维人员-normal
+     * - 3:合作伙伴-partner
      * @var enum
      * @access public
      */
     public $roletype;
     /**
      * 视野
-     * 0:只能查看自己的信息-self
-     * 1:查看所有的信息-all
+     * - 0:只能查看自己的信息-self
+     * - 1:查看所有的信息-all
      * @var enum
      * @access public
      */
@@ -68,6 +68,7 @@ class Admin extends DataObject
 
     /**
      * 从属一对一关系
+     * @var array
      */
     public static $belong_has_one = array(
         "department" => "Department"
@@ -75,11 +76,12 @@ class Admin extends DataObject
 
     /**
      * 显示扮演角色
-     * 系统管理员扮演角色。
-     * 0:超级管理员-superadmin
-     * 1:管理人员-manager
-     * 2:运维人员-normal
-     * 3:合作伙伴-partner
+     * - 系统管理员扮演角色。
+     * - 0:超级管理员-superadmin
+     * - 1:管理人员-manager
+     * - 2:运维人员-normal
+     * - 3:合作伙伴-partner
+     * @return string
      */
     public function getRoletypeShow()
     {
@@ -88,8 +90,9 @@ class Admin extends DataObject
 
     /**
      * 显示视野
-     * 0:只能查看自己的信息-self
-     * 1:查看所有的信息-all
+     * - 0:只能查看自己的信息-self
+     * - 1:查看所有的信息-all
+     * @return string
      */
     public function getSeescopeShow()
     {
@@ -98,11 +101,12 @@ class Admin extends DataObject
 
     /**
      * 显示扮演角色
-     * 系统管理员扮演角色。
-     * 0:超级管理员-superadmin
-     * 1:管理人员-manager
-     * 2:运维人员-normal
-     * 3:合作伙伴-partner
+     * - 系统管理员扮演角色。
+     * - 0:超级管理员-superadmin
+     * - 1:管理人员-manager
+     * - 2:运维人员-normal
+     * - 3:合作伙伴-partner
+     * @return string
      */
     public static function roletypeShow($roletype)
     {
@@ -111,8 +115,9 @@ class Admin extends DataObject
 
     /**
      * 显示视野
-     * 0:只能查看自己的信息-self
-     * 1:查看所有的信息-all
+     * - 0:只能查看自己的信息-self
+     * - 1:查看所有的信息-all
+     * @return string
      */
     public static function seescopeShow($seescope)
     {

@@ -3,7 +3,7 @@
 /**
  * -----------| 功能信息 |-----------
  * @category Betterlife
- * @package user
+ * @package domain.user
  * @author skygreen skygreen2001@gmail.com
  */
 class Functions extends DataObject
@@ -11,6 +11,7 @@ class Functions extends DataObject
     //<editor-fold defaultstate="collapsed" desc="定义部分">
     /**
      * 标识
+     *
      * 权限编号
      * @var int
      * @access public
@@ -26,6 +27,7 @@ class Functions extends DataObject
 
     /**
      * 一对多关系
+     * @var array
      */
     public static $has_many = array(
         "rolefunctionss" => "Rolefunctions"
@@ -33,6 +35,7 @@ class Functions extends DataObject
 
     /**
      * 从属于多对多关系
+     * @var array
      */
     public static $belongs_many_many = array(
         "roles" => "Role"
