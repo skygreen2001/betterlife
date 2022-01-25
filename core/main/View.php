@@ -20,12 +20,21 @@ class View
      */
     const VIEW_DIR_VIEW = "view";
     /**
-     * 模板模式
+     * 模板模式: 无
      */
     const TEMPLATE_MODE_NONE        = 0;
+    /**
+     * 模板模式: Smarty
+     *
+     * 默认已安装
+     */
     const TEMPLATE_MODE_SMARTY      = 1;
+    /**
+     * 模板模式: Twig
+     *
+     * 需在 composer.json 配置安装
+     */
     const TEMPLATE_MODE_TWIG        = 2;
-    const TEMPLATE_MODE_PHPTEMPLATE = 3;
 
     /**
      * 变量
@@ -35,7 +44,7 @@ class View
     /**
      * 显示页面上使用的变量存储对象
      *
-     * 目前需模版是
+     * 目前模版是
      *
      *     Smarty:TEMPLATE_MODE_SMARTY
      */
@@ -45,8 +54,14 @@ class View
      * @var string
      */
     private $moduleName;
-    private $template;//模板
-    private $templateMode;//模板模式
+    /**
+     * 模板对象本身
+     */
+    private $template;
+    /**
+     * 模板模式
+     */
+    private $templateMode;
     /**
      * @var string 模板规范要求所在的目录
      */
@@ -55,7 +70,16 @@ class View
      * @var string 模板文件规范要求的文件后缀名称
      */
     private $template_suffix_name;
-
+    /**
+     * 指定页面目录路径
+     * @var string
+     */
+    private $atPageDir;
+    /**
+     * 指定页面文件, 默认为action的方法名
+     * @var string
+     */
+    private $atPageFile;
     /**
      * @param array 显示层需要使用的全局变量
      */
@@ -116,6 +140,40 @@ class View
         } else {
             return $this->vars->$key;
         }
+    }
+
+    /**
+     * 获取指定页面文件目录
+     * @return string
+     */
+    public function getAtPageDir()
+    {
+        return $this->atPageDir;
+    }
+
+    /**
+     * 获取指定页面文件目录
+     * @return
+     */
+    public function getAtPageFile()
+    {
+        return $this->atPageFile;
+    }
+
+    /**
+     * 自定义模版文件所在目录路径
+     *
+     * 指定页面目录路径
+     *
+     * @param string $dirPath 模版文件所在模版目录下的相对路径
+     * @param string $filename 文件名, 不需要文件名后缀名
+     *                         如果没有传递该参数，则为`action`名称
+     * @return void
+     */
+    public function atPage($dirPath, $filename = "")
+    {
+        $this->atPageDir  = $dirPath;
+        $this->atPageFile = $filename;
     }
 
     /***********************************魔术方法**************************************************/
@@ -337,10 +395,6 @@ class View
                 $this->template->temp_dir = $template_tmp_dir . "temp" . DS;
                 $this->template->cache_dir = $template_tmp_dir . "cache" . DS;
                 break;
-            case self::TEMPLATE_MODE_PHPTEMPLATE:
-                $this->templateMode = self::TEMPLATE_MODE_PHPTEMPLATE;
-                $this->template = new template($tpl_set);
-                break;
             default:
                 $this->templateMode = self::TEMPLATE_MODE_NONE;
                 break;
@@ -365,7 +419,6 @@ class View
             case self::TEMPLATE_MODE_TWIG:
                 break;
             case self::TEMPLATE_MODE_SMARTY:
-            case self::TEMPLATE_MODE_PHPTEMPLATE:
                 $this->template->assign($key, $value);
                 break;
         }
@@ -419,13 +472,6 @@ class View
                 $tplFilePath = ConfigF::VIEW_CORE . DS . $templateFilePath;
                 echo $this->template->render($tplFilePath, $this->vars);
 
-                break;
-            case self::TEMPLATE_MODE_PHPTEMPLATE:
-                $filename_dir = explode(DS, $templateFilePath);
-                if (!empty($sub_dir)) {
-                    $filename_dir = $sub_dir[0];
-                }
-                $this->template->set_file(basename($filename_dir[1], $this->template_suffix_name), $filename_dir[0]);
                 break;
             default:
                 $viewvars = $this->getVars();

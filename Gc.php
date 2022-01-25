@@ -186,11 +186,10 @@ class Gc
     /**
      * 模板模式
      *
-     * 本框架自带四种开源模板支持
+     * 本框架自带两种开源模板支持
      *
-     * - 1: Smarty
-     * - 2: Twig
-     * - 3: PHPTemplate
+     * - 1: Smarty, composer 默认已安装
+     * - 2: Twig 需在 composer.json 配置安装
      * - 0: 不支持任何模板
      *
      * 默认在这里指定支持其中一种；

@@ -108,7 +108,7 @@ class UnitTest
         self::saveResult(
             "Array has a key named '{$key}'",
             "Array has not a key named '{$key}'",
-            $result
+            // $result
         );
     }
     public static function assertArrayNotHasKey($key, array $array, $message = '')
@@ -128,7 +128,7 @@ class UnitTest
         self::saveResult(
             "Array has not a key named '{$key}'",
             "Array has a key named '{$key}'",
-            $result
+            // $result
         );
     }
 
@@ -149,7 +149,7 @@ class UnitTest
         self::saveResult(
             "Array has a needle named '{$needle}'",
             "Array has not a needle named '{$needle}'",
-            $result
+            // $result
         );
     }
 }

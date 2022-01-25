@@ -54,7 +54,7 @@ class Dispatcher
                 $isValidRequet = true;
             //break;
             } else {
-                $output = self::output($moduleName, $router, $current_action);
+                $output = self::output($router, $current_action);
                 if (self::$isOutputStatic) {
                     $output = render_tag($output);
                     return $output;
@@ -150,25 +150,37 @@ class Dispatcher
      * 管理视图: 输出结果
      * @var View $view 视图
      */
-    public static function output($moduleName, $router, $current_action)
+    public static function output($router, $current_action)
     {
         ob_start();
         $view       = $current_action->getView();
         $controller = $router->getController();
         $action     = $router->getAction();
-        $templateFile    = $controller . DS . $action;//模板文件路径名称
-        $controller_path = $router->getControllerPath();
-        if (!empty($controller_path)) {
-            if (endWith($controller_path, DS)) {
-                $templateFile = $controller_path . $templateFile;
+        if (!empty($view->getAtPageDir())) {
+            $renderTemplateFile  = $view->getAtPageDir();
+            $renderTemplateFile .= DS;
+            if (!empty($view->getAtPageFile())) {
+                $renderTemplateFile .= $view->getAtPageFile();
             } else {
-                $templateFile = $controller_path . DS . $templateFile;
+                $renderTemplateFile .= $action;
             }
+        } else {
+            $templateFile    = $controller . DS . $action;//模板文件路径名称
+            $controller_path = $router->getControllerPath();
+            if (!empty($controller_path)) {
+                if (endWith($controller_path, DS)) {
+                    $templateFile = $controller_path . $templateFile;
+                } else {
+                    $templateFile = $controller_path . DS . $templateFile;
+                }
+            }
+            $renderTemplateFile = $templateFile;
         }
-        if (!file_exists(Gc::$nav_root_path . $view->templateDir() . $templateFile . $view->templateSuffixName())) {
-            throw new Exception(" view/{$controller}" . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $action . $view->templateSuffixName() . "'");
+        // die($renderTemplateFile);
+        if (!file_exists(Gc::$nav_root_path . $view->templateDir() . $renderTemplateFile . $view->templateSuffixName())) {
+            throw new Exception($view->template_dir . Wl::ERROR_INFO_VIEW_UNKNOWN . " '" . $renderTemplateFile . $view->templateSuffixName() . "'");
         }
-        $view->output($templateFile, $view->templateMode(), $current_action);
+        $view->output($renderTemplateFile, $view->templateMode(), $current_action);
         $output = ob_get_clean();
         return $output;
     }

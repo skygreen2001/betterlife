@@ -47,11 +47,13 @@
   - 一对多／多对多／等可通过约束条件获得
   - tools 里的editarea ：codemirror  http://codemirror.net/
   - github + composer: 框架核心 core 作为一个composer library: betterlife.framework
-  - php7 and namespace（遵循规范psr）
+  - php7 and namespace
   - 代码规范
     - php注释需遵循代码规范
     - php注释参考phpdoc要求(https://www.phpdoc.org/)
     - 查看是否有类似phpcs相关的工具
+  - [ok](表示层页面层级可超过1层，不推荐，但支持) 
+  - [ok]遵循规范psr
   - [ok]后台的import和export excel
   - [ok]TWIG PHPTEMPLATE
   - [ok]换行符替换成HH = PHP_EOL
