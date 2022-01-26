@@ -73,6 +73,7 @@
   - Symfony Console: 打造命令行工具
     - 代码生成
       - 生成 Api Resource
+    - [nunomaduro/collision](https://github.com/nunomaduro/collision): Collision is a beautiful error reporting tool for command-line applications 
   - composer create project script: post-root-package-install 或 post-create-project-cmd 脚本安装ueditor
     - Composer脚本: https://docs.phpcomposer.com/articles/scripts.html
   - CodeIgnitor 4的开发模式显示debug 条

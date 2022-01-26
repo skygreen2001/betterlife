@@ -198,28 +198,6 @@
   )
   ```
 
-## 代码生成
-
-  **代码生成侧重于对新增功能模块、数据库表和代码的快速上手使用**
-
-  在新生成的项目里:bettercity
-
-  * 如果新项目的业务逻辑和主流程大致相同, 那么可以考虑重用现有的数据库, 使用[数据库定义的小工具](../core/database/databasetools.md)里的工具[修改数据库表前缀名]
-
-    - 访问地址:http://127.0.0.1/bettercity/tools/tools/db/rename_db_prefix.php
-
-  * 如果新项目的业务逻辑和原项目的主流程不同, 可以按照[2.数据库原型设计规范]定义数据库
-
-  * 在完成了新项目的数据库设计之后, 就可以使用代码生成工具生成新项目的通用代码。
-
-  * 代码生成可通过访问框架本地首页地址: http://127.0.0.1/bettercity/
-
-  * 下方应有以下文字链接: 工程重用 | 数据库说明书 | 代码生成器 | 报表生成器 | 工具箱 | 帮助;
-  * 点击其中的文字链接: 代码生成器 
-
-  * 一键生成链接地址:http://127.0.0.1/bettercity/tools/tools/autocode/db_onekey.php
-
-
 ## 工程重用
 
   **项目重用侧重于对已有功能模块、数据库表和代码的重用**
@@ -258,7 +236,48 @@
     * 帮助地址           :默认的值,不变
     * 重用类型           :通用版
 
+## 代码生成
+
+  **代码生成侧重于对新增功能模块、数据库表和代码的快速上手使用**
+
+  在新生成的项目里:bettercity
+
+  * 如果新项目的业务逻辑和主流程大致相同, 那么可以考虑重用现有的数据库, 使用[数据库定义的小工具](../core/database/databasetools.md)里的工具[修改数据库表前缀名]
+
+    - 访问地址:http://127.0.0.1/bettercity/tools/tools/db/rename_db_prefix.php
+
+  * 如果新项目的业务逻辑和原项目的主流程不同, 可以按照[2.数据库原型设计规范]定义数据库
+
+  * 在完成了新项目的数据库设计之后, 就可以使用代码生成工具生成新项目的通用代码。
+
+  * 代码生成可通过访问框架本地首页地址: http://127.0.0.1/bettercity/
+
+  * 下方应有以下文字链接: 工程重用 | 数据库说明书 | 代码生成器 | 报表生成器 | 工具箱 | 帮助;
+  * 点击其中的文字链接: 代码生成器 
+
+  * 一键生成链接地址:http://127.0.0.1/bettercity/tools/tools/autocode/db_onekey.php
+
+## 工作流定义
+
+### 1. 工具定义
+
+  * 数据库原型设计: MysqlWorkBench
+  * 代码原型     : Betterlife框架的代码生成工具
+
+  * 页面原型设计    : Axure      [Visio]
+  * 设计图到静态页面 : Dreamweaver | Visual Studio Code | Sublime | Atom
+
+  * 中间件服务器: nginx | Apache
+  * 部署工具   : Wamp ｜ Lamp ｜ Mamp | ampps | Xampp
+  * 开发语言   : Php
+  * 数据库     : Mysql
+
+### 2. 流程定义
+
+  1. 数据层: MysqlWorkBench -> Mysql -> Betterlife框架的代码生成工具 -> 生成前端和后台代码
+  2. 表示层: Axure -> Dreamweaver | Visual Studio Code | Sublime | Atom -> 静态标准Html页面
+  3. 逻辑层: 整合数据层 <=> 表示层[模板：Smarty | twig]
+
 ## 参考资料
 
-  - [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
   - [帮助文档源码](https://github.com/skygreen2001/betterlife.book)

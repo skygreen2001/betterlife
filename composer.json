@@ -37,13 +37,14 @@
     "mustangostang/spyc" : "^0.6.2",
     "fusonic/linq"       : "^2.0",
     "adodb/adodb-php"    : ">=5.19",
-    "nelexa/zip"         : ">=3.1",
+    "nelexa/zip"         : ">=3.1"
+  },
+  "require-dev": {
+    "twig/twig"          : "^2.0",
     "fakerphp/faker"     : "^1.17",
     "laravel/framework"  : "^8.65",
     "maximebf/debugbar"  : ">=1.0.0",
-    "filp/whoops"        : "2.*"
-  },
-  "require-dev": {
+    "filp/whoops"        : "2.*",
     "pagon/composer-packer": "0.1.x"
   },
   "scripts": {
@@ -54,17 +55,22 @@
     "symfony/symfony": "*"
   },
   "_suggest": {
+    "production install" : "composer install --no-dev",
     "smarty/smarty"      : ">=3.1.39",
     "phpoffice/phpspreadsheet": ">=1.16.0",
     "adodb/adodb-php"    : ">=5.20.12",
     "nelexa/zip"         : ">=3.3.3",
 
-    "twig/twig"          : "^2.0",
     "phpoffice/phpword"  : "^0.13.0",
     "phpoffice/phpexcel" : "^1.8",
     "symfony/flex"       : "^1.4",
     "symfony/yaml"       : ">=2.0.4",
-    "doctrine/cache"     : "^1.8"
+    "doctrine/cache"     : "^1.8",
+    "_require-dev": {
+      "nunomaduro/collision": "^5.10",
+      "phpunit/phpunit": "^9.5.10",
+      "mockery/mockery": "^1.4.4"
+    }
   },
   "_comment": "pagon/composer-packer: Packer to build tar.gz for composer project.",
   "_install-script" : {
