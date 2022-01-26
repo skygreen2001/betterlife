@@ -9,6 +9,8 @@
 ## 帮助文档
 
   * [学习手册](https://skygreen2001.github.io)
+    * [学习手册: 在Netlify](https://skygreen2001.netlify.app)
+    * [学习手册: 在Vercel](https://skygreen2001.vercel.app/)
   * [快速上手](docs/README.md)
 
 ## 下载源码
@@ -187,7 +189,6 @@
 
 ## 参考资料
 
-- [帮助说明文档](https://skygreen2001.github.io/betterlife.book/)
 - [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
 - [学习与收集](docs/learn/README.md)
