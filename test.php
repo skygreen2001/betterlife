@@ -272,33 +272,6 @@ require_once("init.php");
 // echo $faker->email();
 // echo $faker->text();
 
-
-// // 可使用Laravel的Helper方法
-// // [dd()](https://laravel.com/docs/8.x/helpers#method-dd)
-// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置:
-// // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
-// $value1 = "Hello";
-// $value2 = "World";
-// $value3 = "Skygreen";
-// dd($value1, $value2, $value3);
-// $v = [$value1, $value2, $value3];
-// use Symfony\Component\VarDumper\VarDumper;
-// VarDumper::dump($v);
-
-// // [可使用Laravel的Collections](https://laravel.com/docs/8.x/collections)
-// // 在Visual Studio Code编辑器里如果函数语法提示错误，需修改Visual Studio Code配置:
-// // - "intelephense.files.associations": ["*.php", "*.phtml", "*.inc", "*.module", "*.install", "*.theme", ".engine", ".profile", ".info", ".test"]
-// use Illuminate\Support\Collection;
-// use Illuminate\Support\Str;
-// Collection::macro('toUpper', function () {
-//     return $this->map(function ($value) {
-//         return Str::upper($value);
-//     });
-// });
-// $collection = collect(['first', 'second']);
-// $upper = $collection->toUpper();
-// echo $upper;
-
 if (!array_key_exists('HTTP_HOST', $_SERVER) || contains($_SERVER['HTTP_HOST'], LS)) {
     phpinfo();
 }

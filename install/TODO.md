@@ -7,10 +7,7 @@
     - 按规则生成的路由，隐藏或改写.php后缀名为.html
     - 路由定制
       - url改写
-      - 整合Laravel的路由
       - 学习Symfony、CodeIgniter、ThinkPHP、WordPress的路由规则解决方案
-  - 整合Laravel的config
-    - [Using illuminate/config v5 outside of Laravel](https://madewithlove.com/blog/software-engineering/illuminate-config-v5/)
   - DB: find objects by List ids
   - 异常显示不要显示从ExceptionMe::recordException，而是从调用的地方开始
   - input checkbox on off 在Action和Service中自动转换成 1 0 参考 blog 的 edit
@@ -30,7 +27,8 @@
     - 提供给jQuery、react、vuejs、angularjs、angular使用
     - 需提供代码示例怎样使用
     - 提供代码生成和api帮助手册(markdown格式): 提供给使用api的前端开发人员
-    - 学习参考: Laravel Sanctum 
+    - [Lumen](https://lumen.laravel.com/): Laravel微框架
+    - 学习参考: Laravel Sanctum
   - HugeAmountDataPush 结合FakerPHP 伪造数据进行测试和压力测试
     - tools/tools/optimize/stresstest/HugeAmountDataPush.php: 辅助压力测试的工具: 注入海量数据
     - tools/tools/optimize/stresstest/README.md 压力测试
