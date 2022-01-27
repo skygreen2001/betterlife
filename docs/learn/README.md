@@ -35,6 +35,11 @@
 
 ## 开发资源
 
+### 书
+  
+  * [SaltTiger](https://salttiger.com/): 英文原版技术书
+  * [free-programming-books](https://ebookfoundation.github.io/free-programming-books/books/free-programming-books-zh.html)
+
 ### BAT
 
   * 腾讯 AlloyTeam: https://github.com/AlloyTeam/
@@ -55,13 +60,29 @@
 
 ### 汇总集合
 
-  * Web application frameworks: https://github.com/showcases/web-application-frameworks
+  * [最优Github库](https://github.com/search?o=desc&q=stars%3A%3E100000&s=stars&type=Repositories)
   * [中国独立开发者项目列表](https://github.com/1c7/chinese-independent-developer): 中国独立开发者项目列表
+  * [Web application frameworks](https://github.com/showcases/web-application-frameworks)
   * [Front-end-tutorial](https://github.com/nicejade/Front-end-tutorial): 前端资源教程
+  * [design-resources-for-developers](https://github.com/bradtraversy/design-resources-for-developers): 开发人员的设计资源
 
+### 在线编辑器
+
+  * [Write PHP Online](https://www.writephponline.com/)
+  * [Online Vscode](https://github.dev/skygreen2001/betterlife)
 
 ## 其它
-  - [VuePress](https://vuepress.vuejs.org/zh/): Vue 驱动的静态网站生成器 
+  - [VuePress](https://vuepress.vuejs.org/zh/): Vue 驱动的静态网站生成器)
+  - [每个开发人员都应该知道的 10 个 GitHub 仓库](https://segmentfault.com/a/1190000040055173code)
+    - [Developer Roadmap](https://github.com/kamranahmedse/developer-roadmap): Roadmap to becoming a develope
+      - [roadmap.sh](https://roadmap.sh/)
+      - [Stargazers](https://github.com/kamranahmedse/developer-roadmap/stargazers)
+    - [System Design Primer](https://github.com/donnemartin/system-design-primer): 系统设计入门
+    - [Awesome Repos](https://github.com/pawelborkar/awesome-repos): 将丰富资源集中在一个仓库里
+    - [sindresorhus/awesome](https://github.com/sindresorhus/awesome): Awesome lists about all kinds of interesting topics
+    - [Build your own X](https://github.com/danistefanovic/build-your-own-x
+    - [Public APIs](https://github.com/public-apis/public-apis): A collective list of free APIs for use in software and web development
+    - [Tech Interview Handbook](https://github.com/yangshun/tech-interview-handbook): 技术面试手册
   - [Grav](https://getgrav.org/) 
     - Grav is a Fast, Simple, and Flexible file-based Web-platform.
     - [Grav docs](https://learn.getgrav.org/)
@@ -69,3 +90,4 @@
     - The world’s fastest framework for building websites
   - [A5源码下载](https://www.a5xiazai.com/)
   - [Betterlife Github Api](https://api.github.com/repos/skygreen2001/betterlife/commits?per_page=10&sha=master)
+  - [Betterlife Book Github Api](https://api.github.com/repos/skygreen2001/betterlife.book/commits?per_page=10&sha=master)

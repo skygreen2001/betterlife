@@ -45,6 +45,7 @@
   - 数据库之间可以互通
   - 一对多／多对多／等可通过约束条件获得
   - tools 里的editarea ：codemirror  http://codemirror.net/
+    - [搭建个人在线IDE —— vscode online](https://blog.kelu.org/tech/2021/04/02/vscode-online-env.html)
   - github + composer: 框架核心 core 作为一个composer library: betterlife.framework
   - php7 and namespace
   - 代码规范
