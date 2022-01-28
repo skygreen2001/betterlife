@@ -14,11 +14,12 @@
   - 需新开分支: lb
   - 使用Laravel除MVC之外的其它所有功能
   - [mattstauffer/Torch](https://github.com/mattstauffer/Torch): Examples of using each Illuminate component in non-Laravel applications
+  - 整合Blade Template
   - 路由定制
     - 整合Laravel的路由
   - 整合Laravel的config
     - [Using illuminate/config v5 outside of Laravel](https://madewithlove.com/blog/software-engineering/illuminate-config-v5/)
-  - Api: 
+  - Api:
     - 类似spring boot、Laravel resource、Restful
     - [Lumen](https://lumen.laravel.com/): Laravel微框架
     - 学习参考: Laravel Sanctum
