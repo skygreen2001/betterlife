@@ -30,6 +30,7 @@
   - [Learn X in Y minutes](https://learnxinyminutes.com/docs/php/)
   - [Search PHP code examples](https://hotexamples.com/)
   - [run code in 300+ PHP versions simultaneously](https://3v4l.org/)
+  - [Open Source Libraries](https://opensourcelibs.com/)
   - [Install any command on any operating system](https://command-not-found.com/)
   - [At the heart of your business](https://madewithlove.com/): 查找和php相关的比较专业深入的技术框架文章
 
