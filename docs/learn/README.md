@@ -65,6 +65,7 @@
 ### 汇总集合
 
   * [最优Github库](https://github.com/search?o=desc&q=stars%3A%3E100000&s=stars&type=Repositories)
+  * [Clone Wars](https://github.com/GorvGoyl/Clone-Wars): Open source clones of popular sites
   * [中国独立开发者项目列表](https://github.com/1c7/chinese-independent-developer): 中国独立开发者项目列表
   * [Web application frameworks](https://github.com/showcases/web-application-frameworks)
   * [Front-end-tutorial](https://github.com/nicejade/Front-end-tutorial): 前端资源教程
