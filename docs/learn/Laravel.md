@@ -176,9 +176,10 @@
       - Netx.js实现: https://github.com/laravel/breeze-next
 
 - 创建权限认证: Laravel Jetstream
-  - Jetstream 官方文档:
+  - Jetstream 官方文档: https://jetstream.laravel.com/2.x/introduction.html
   - 安装Jetstream: composer require laravel/jetstream
   - Jetstream 使用 Tailwind CSS 设计样式，并提供 Livewire 或 Inertia.js 驱动的前端脚手架技术栈。
+  - [Tailwind CSS](https://tailwindcss.com/)
   - Livewire + Blade
     ```
       php artisan jetstream:install livewire

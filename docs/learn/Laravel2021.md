@@ -32,6 +32,8 @@
   - 求职头衔: ‘Backend Laravel Developer’
   - 求职头衔: [‘Full-Stack PHP Developer‘](https://kinsta.com/blog/php-developer-salary/), Laravel经常和前端框架Vue.js结合
   - 求职头衔: ‘TALL Stack Developer’(TALL是头字母缩写: Tailwind CSS, Alpine.js, Laravel 和 Livewire) 
+    - [Tailwind CSS](https://tailwindcss.com/)
+    - [Alpine.js](https://alpinejs.dev/)
 - [Monster](https://www.monster.com/)
 - [LinkedIn](https://www.linkedin.cn/)
 - 远程办公
