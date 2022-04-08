@@ -60,8 +60,7 @@
 * 代码原型       : betterlife框架的代码生成工具
 * 页面原型设计    : Axure[推荐]
 * 设计图到静态页面 : Html5 + Css3 + Javascript
-* 部署工具       : 
-                  Wamp(Windows) ｜ Mamp(Mac) ｜ Lamp(Linux) | XAMPP ｜ AMPPS
+* 部署工具       : Wamp(Windows) ｜ Mamp(Mac) ｜ Lamp(Linux) | XAMPP ｜ AMPPS
 * 中间件服务器    : Apache
 * 开发语言       : Php
 * 数据库         : Mysql
@@ -115,7 +114,7 @@
 
   * 工程重用
   * 数据库说明书
-  * 代码生成器(前期:前台、手机、通用模版代码生成)
+  * 代码生成器(前期:后台、前台、手机、通用模版代码生成)
   * 报表生成器(后期:报表代码生成)
   * 工具箱
 

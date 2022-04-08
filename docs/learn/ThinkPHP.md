@@ -26,9 +26,10 @@
 - 复制根路径下 .example.env 文件为 .env
 - 可以修改.env文件里的环境变量APP_DEBUG开启调试模式
 
-
-
 ## 学习资料
 
 - [ThinkPHP 框架](https://www.thinkphp.cn/)
 - [ThinkPHP6.0完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0)
+- [Laytp Admin](https://www.laytp.com/): 基于ThinkPHP6+LayUI的极速后台开发框架
+- [phpEnv](http://www.phpenv.cn/): phpEnv是Windows系统上一款专业优雅强大的集成开发环境
+
