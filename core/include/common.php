@@ -172,7 +172,11 @@ function e_view()
  */
 function header_index()
 {
-    header("location:" . Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index");
+    $base_url = Gc::$url_base . "index.php?go=" . Gc::$appName . ".index.index";
+    // header("location:" . $base_url); //修改成了复杂的url，这里不推荐
+
+    $index_page = file_get_contents($base_url);
+    print($index_page);
     die();
 }
 
