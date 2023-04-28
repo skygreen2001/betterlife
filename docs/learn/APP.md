@@ -33,6 +33,8 @@
 
 - [PsySH](https://psysh.org/): PHP交互式控制台
   - [PsySH——PHP交互式控制台](http://vergil.cn/archives/psysh)
+- [reliese/laravel](https://github.com/reliese/laravel): Laravel Model Generator,数据库生成代码
+- [bennett-treptow/laravel-migration-generator](https://github.com/bennett-treptow/laravel-migration-generator):Generate migrations from existing database structures
 - [Ignition](https://flareapp.io/ignition): Error Page for Laravel
 - [Lumen](https://lumen.laravel.com/): Laravel微框架
 
