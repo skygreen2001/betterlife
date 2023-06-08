@@ -2,7 +2,7 @@
 
 require_once("../../../init.php");
 include_once "wxBizDataCrypt.php";
-$appid         = "微信小程序APPID";
+
 $code          = $_GET['code'];
 $encryptedData = $_GET['encryptedData'];
 $iv            = $_GET['iv'];
@@ -11,17 +11,17 @@ $iv            = $_GET['iv'];
 // 微信小程序APPID和APPSECRET
 class WxLogin
 {
-    const APPID = "微信小程序APPID";
-    const APPSECRET = "微信小程序APPSECRET";
+    public static $appId = "微信小程序APPID";
+    public static $appSecret = "微信小程序APPSECRET";
 
     public static function open_id($code)
     {
-        $appId = self::APPID;
-        $appSecret = self::APPSECRET;
+        $appId = self::$appId;
+        $appSecret = self::$appSecret;
         $url  = "https://api.weixin.qq.com/sns/jscode2session?appid=$appId&secret=$appSecret&js_code=$code&grant_type=authorization_code";
-// echo $url;
+        // echo $url;
         $result = self::httpGet($url);
-// print_r($result);
+        // print_r($result);
         return $result;
     }
 
@@ -43,10 +43,12 @@ $wx_userinfo = WxLogin::open_id($code);
 $wx_userinfo_obj = json_decode($wx_userinfo);
 // print_r($wx_userinfo);
 // echo gettype($wx_userinfo);
-$sessionKey  = $wx_userinfo_obj->{'session_key'};
-$unionid     = $wx_userinfo_obj->{'unionid'};
+$sessionKey  = @$wx_userinfo_obj->{'session_key'};
+$unionid     = @$wx_userinfo_obj->{'unionid'};
 if ($unionid) {
-    print ($wx_userinfo . "\n");
+    unset($wx_userinfo_obj->{'session_key'});
+    print(json_encode($wx_userinfo_obj) . "\n");
+    // print($wx_userinfo. "\n");
     die();
 }
 
@@ -54,8 +56,8 @@ if ($unionid) {
 // echo $iv."<br/>";
 // echo $sessionKey."<br/>";
 
-$encryptedData = urldecode($encryptedData);
-$iv            = urldecode($iv);
+$encryptedData = @urldecode($encryptedData);
+$iv            = @urldecode($iv);
 // echo $encryptedData."<br/>";
 // echo $iv."<br/>";
 // echo $sessionKey."<br/>";
@@ -83,10 +85,13 @@ $iv            = urldecode($iv);
 //                 Db/XcxxmK01EpqOyuxINew==";
 // $iv = 'r7BXXKkLb8qrSNn05n0qiA==';
 
-$pc = new WXBizDataCrypt($appid, $sessionKey);
+$pc = new WXBizDataCrypt(WxLogin::$appId, $sessionKey);
 $errCode = $pc->decryptData($encryptedData, $iv, $data);
 if ($errCode == 0) {
-    print($data . "\n");
+    $data_obj = json_decode($data);
+    unset($data_obj->{'session_key'});
+    print(json_encode($data_obj) . "\n");
+    // print($data . "\n");
 } else {
     print($errCode . "\n");
 }
