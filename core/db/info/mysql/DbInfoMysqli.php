@@ -203,7 +203,7 @@ class DbInfoMysqli extends DbInfo implements IDbInfo
         }
         $tables = array();
         foreach (self::$showtables as $record) {
-            if ($record) {
+            if ($record && is_array($record)) {
                 $table = @reset($record);
             }
             if (empty($table)) {
