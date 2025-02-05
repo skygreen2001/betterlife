@@ -74,12 +74,14 @@ class UtilExcel extends Util
                         if ($isExcel2007) {
                             $record_value = $record[$key];
                         } else {
+                            // 解决emoji字符导出乱码的bug
                             $record_value = preg_replace("/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F700}-\x{1F77F}\x{1F780}-\x{1F7FF}\x{1F800}-\x{1F8FF}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u", "*", $record[$key]);//替换成*
                         }
                     } else {
                         if ($isExcel2007) {
                             $record_value = $record->$key;
                         } else {
+                            // 解决emoji字符导出乱码的bug
                             $record_value = preg_replace("/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F700}-\x{1F77F}\x{1F780}-\x{1F7FF}\x{1F800}-\x{1F8FF}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u", "*", $record->$key);//替换成*
                         }
                     }
