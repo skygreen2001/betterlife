@@ -32,7 +32,7 @@ class UtilExcel extends Util
             die();
         }
         UtilFileSystem::createDir(dirname($outputFileName));
-        $objActSheet = array ();
+        $objActSheet = array();
         $objExcel    = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         self::addSuffixInfo($objExcel);
 
@@ -71,15 +71,20 @@ class UtilExcel extends Util
                 $column = 'A';
                 foreach ($arr_output_header as $key => $value) {
                     if (is_array($record)) {
-                        // $objActsheet->setCellValue($column . $i, $record[$key]);
-                        // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也以文本格式导出。
-                        $objActsheet->setCellValueExplicit($column . $i, $record[$key], DataType::TYPE_STRING);
+                        if ($isExcel2007) {
+                            $record_value = $record[$key];
+                        } else {
+                            $record_value = preg_replace("/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F700}-\x{1F77F}\x{1F780}-\x{1F7FF}\x{1F800}-\x{1F8FF}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u", "*", $record[$key]);//替换成*
+                        }
                     } else {
-                        // $objActsheet->setCellValue($column . $i, $record->$key);
-                        // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也以文本格式导出。
-                        $objActsheet->setCellValueExplicit($column . $i, $record->$key, DataType::TYPE_STRING);
-                        // $objActsheet->getStyle($column . $i)->getNumberFormat()->setFormatCode("@");
+                        if ($isExcel2007) {
+                            $record_value = $record->$key;
+                        } else {
+                            $record_value = preg_replace("/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F700}-\x{1F77F}\x{1F780}-\x{1F7FF}\x{1F800}-\x{1F8FF}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u", "*", $record->$key);//替换成*
+                        }
                     }
+                    // 列以文本格式导出，如身份证号、银行卡号即使全部是数字，也以文本格式导出。
+                    $objActsheet->setCellValueExplicit($column . $i, $record_value, DataType::TYPE_STRING);
                     // $objActsheet->getStyle($column . $i)->getNumberFormat()->setFormatCode("@");
 
                     $column++;
@@ -351,7 +356,7 @@ class UtilExcel extends Util
         foreach ($excelarr as $key => $row) {
             $num++;
 
-             //刷新一下输出buffer，防止由于数据过多造成问题
+            //刷新一下输出buffer，防止由于数据过多造成问题
             if ($limit == $num) {
                 ob_flush();
                 flush();

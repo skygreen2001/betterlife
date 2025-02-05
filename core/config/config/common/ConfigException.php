@@ -17,23 +17,23 @@ class ConfigException extends ConfigBB
      *
      * @var int
      */
-    const EXCEPTION_WAY = 1;
+    public const EXCEPTION_WAY = 0;
 
     /**
      * 异常处理方式: 自定义
      * @var int
      */
-    const EW_CUSTOMIZE  = 0;
+    public const EW_CUSTOMIZE  = 0;
     /**
      * 异常处理方式: filp/whoops
      * @var int
      */
-    const EW_WHOOPS     = 1;
+    public const EW_WHOOPS     = 1;
     /**
      * 异常处理方式: symfony/error-handler (包含在包laravel/framework里)
      * @var int
      */
-    const EW_SYMFONY    = 2;
+    public const EW_SYMFONY    = 2;
 
     /**
      * filp/whoops配置: 异常文件打开编辑器
@@ -57,5 +57,5 @@ class ConfigException extends ConfigBB
      *
      * @var string
      */
-    const WHOOPS_EDITOR = "vscode";
+    public const WHOOPS_EDITOR = "vscode";
 }
