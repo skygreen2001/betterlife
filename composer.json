@@ -42,7 +42,6 @@
   "require-dev": {
     "twig/twig"          : "^2.0",
     "fakerphp/faker"     : "^1.17",
-    "laravel/framework"  : "^8.65",
     "maximebf/debugbar"  : ">=1.0.0",
     "filp/whoops"        : "2.*",
     "pagon/composer-packer": "0.1.x"
@@ -56,6 +55,7 @@
   },
   "_suggest": {
     "production install" : "composer install --no-dev",
+    "laravel/framework"  : "^8.65",
     "smarty/smarty"      : ">=3.1.39",
     "phpoffice/phpspreadsheet": ">=1.16.0",
     "adodb/adodb-php"    : ">=5.20.12",
