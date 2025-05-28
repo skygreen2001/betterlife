@@ -26,7 +26,7 @@
   - 现状
     - 在Betterlife框架里暂不考虑融入Laravel
     - 喜欢擅长使用Laravel的开发者可自己在开发中使用Laravel
-    - 在生产线上发布部署可无需使用Composer 安装 Laravel包
+    - 在composer.json里添加Laravel 配置，我放置在composer.json文件里[_suggest]下了
     - 框架唯一一处使用到的是Laravel框架里包含的 `Symfony: polyfill-php81` 注解: #[\ReturnTypeWillChange]
     - 可在Betterlife里直接使用的代码如下
       ```php

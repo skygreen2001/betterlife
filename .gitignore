@@ -16,3 +16,4 @@
 /misc/js/onlineditor/ueditor
 composer.lock
 .history
+package-lock.json
