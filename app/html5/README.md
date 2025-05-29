@@ -1,6 +1,6 @@
 # 欢迎来到 Betterlife.Front 框架
 
-下载地址：https://github.com/skygreen2001/betterlife.front
+下载地址：https://gitee.com/skygreen2015/betterlife.front
 
 ## 简介说明
 
@@ -14,10 +14,10 @@
 
 * **通过Github官网下载**
 
-  官网地址: https://github.com/skygreen2001/betterlife.front
+  官网地址: https://gitee.com/skygreen2015/betterlife.front
   ```
-  > git clone https://github.com/skygreen2001/betterlife.front
-  > git clone git@github.com:skygreen2001/betterlife.front.git
+  > git clone https://gitee.com/skygreen2015/betterlife.front
+  > git clone git@gitee.com:skygreen2015/betterlife.front.git
   ```
 
 * **安装NodeJs**

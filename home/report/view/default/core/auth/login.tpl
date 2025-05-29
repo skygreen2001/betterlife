@@ -63,7 +63,7 @@
       <!--footer begin-->
       <footer>
         <div id="footer-inner" class="container clr">
-          <div id="copyright" class="clr" role="contentinfo">© 2017-2020 Betterlife - All Rights Reserved.&nbsp;<a title="License" href="https://github.com/skygreen2001/betterlife.core/blob/master/LICENSE" target="_blank">License</a>&nbsp;| <a title="Help" href="https://github.com/skygreen2001/betterlife.core" target="_blank">Help</a></div>
+          <div id="copyright" class="clr" role="contentinfo">© 2017-2020 Betterlife - All Rights Reserved.&nbsp;<a title="License" href="https://gitee.com/skygreen2015/betterlife/blob/master/LICENSE" target="_blank">License</a>&nbsp;| <a title="Help" href="https://gitee.com/skygreen2015/betterlife.book" target="_blank">Help</a></div>
         </div>
       </footer>
       <!--footer end-->

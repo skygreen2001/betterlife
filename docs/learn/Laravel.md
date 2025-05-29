@@ -576,7 +576,7 @@
 
 ## 在本框架中使用Laravel
 
-- 本框架[skygreen2001/betterlife](https://github.com/skygreen2001/betterlife.git)
+- 本框架[skygreen2001/betterlife](https://gitee.com/skygreen2015/betterlife)
 - Laravel 框架中底层使用了Symfony框架
   - 如 dd() 实现使用了Symfony 的 VarDumper::dump 方法
 - Composer类似Java中的Maven专为解决第三方库的依赖安装使用

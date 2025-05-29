@@ -22,7 +22,7 @@
                         <section class="section container-fluid">
                           <h1 class="page-header">{$site_name}</h1>
                           <h2>👌 报表管理，责无旁贷</h2>
-                          <h3><a href="https://github.com/skygreen2001/betterlife.core" target="_blank">进一步了解 > </a></h3>
+                          <h3><a href="https://gitee.com/skygreen2015/betterlife" target="_blank">进一步了解 > </a></h3>
                         </section>
                       </div>
                     </div>

@@ -6,7 +6,7 @@
           <div class="bb-lead-core">
             <span class="bb-icon">BB</span>
             <p class="lead">Betterlife is the most popular CMS framework for developing responsive, web first projects on the web browser.</p>
-            <p class="lead"><a href="https://github.com/skygreen2001/betterlife/archive/master.zip" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Framework</a></p>
+            <p class="lead"><a href="https://gitee.com/skygreen2015/betterlife" target="_blank" class="btn btn-outline-inverse btn-lg">下载 Betterlife Framework</a></p>
             <p class="version">版本 v1.0.0</p>
           </div>
         </div>

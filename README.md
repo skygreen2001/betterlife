@@ -15,7 +15,7 @@
 
 ## 下载源码
 
-* 下载地址: https://github.com/skygreen2001/betterlife
+* 下载地址: https://gitee.com/skygreen2015/betterlife
 
 * **Git安装**
 
@@ -189,7 +189,7 @@
 
 ## 参考资料
 
-- [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
+- [帮助文档源码](https://gitee.com/skygreen2015/betterlife.book)
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
 - [学习与收集](docs/learn/README.md)
 - [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)

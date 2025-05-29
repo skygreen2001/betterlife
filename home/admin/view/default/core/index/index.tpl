@@ -22,7 +22,7 @@
                         <section class="section container-fluid">
                           <h1 class="page-header">{$site_name}</h1>
                           <h2>👌 后台管理，责无旁贷</h2>
-                          <a href="https://github.com/skygreen2001/betterlife.core" target="_blank">
+                          <a href="https://gitee.com/skygreen2015/betterlife" target="_blank">
                             <div class="load-more col-xs-12 col-sm-12 col-md-12 col-lg-12">
                               <h3 class="see-more">
                                 <span class="plus"><div class="plus"></div></span>

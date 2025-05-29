@@ -24,7 +24,7 @@
 
 ## 下载源码
 
-  * [下载地址](https://github.com/skygreen2001/betterlife)
+  * [下载地址](https://gitee.com/skygreen2015/betterlife)
 
 ## 体验框架
 
@@ -279,4 +279,4 @@
 
 ## 参考资料
 
-  - [帮助文档源码](https://github.com/skygreen2001/betterlife.book)
+  - [帮助文档源码](https://gitee.com/skygreen2015/betterlife.book)

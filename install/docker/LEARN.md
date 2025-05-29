@@ -129,7 +129,7 @@
   - 从Docker Hub拉取bb, bb_nginx镜像并运行
 
     ```
-      docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/skygreen2001/betterlife
+      docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://gitee.com/skygreen2015/betterlife
 
       cd betterlife/
 

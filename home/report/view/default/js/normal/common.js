@@ -28,7 +28,7 @@ var commonLibrary = {
         }
     },
     //跨域名图片显示问题的解决，如果不是https的跨域图片是不能正常显示的，可使用该方案正常显示图片
-    //服务端实现参考: https://github.com/skygreen2001/betterlife.core
+    //服务端实现参考: https://gitee.com/skygreen2015/betterlife
     remoteImgShow: function(imgContainer){
         var ctrl = this;
         $(imgContainer+" img").each(function(){

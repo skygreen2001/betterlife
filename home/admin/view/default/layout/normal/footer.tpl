@@ -3,7 +3,7 @@
         <div id="footer-inner" class="container clr">
             <div id="copyright" class="clr" role="contentinfo">
               © 2017-2035 Betterlife - All Rights Reserved.&nbsp;
-              <div id="link" class="clr" role="linkinfo"><a title="License" href="https://github.com/skygreen2001/betterlife/blob/master/LICENSE" target="_blank">License</a>&nbsp;| <a title="Help" href="https://github.com/skygreen2001/betterlife" target="_blank">Help</a></div>
+              <div id="link" class="clr" role="linkinfo"><a title="License" href="https://gitee.com/skygreen2015/betterlife/blob/master/LICENSE" target="_blank">License</a>&nbsp;| <a title="Help" href="https://gitee.com/skygreen2015/betterlife" target="_blank">Help</a></div>
             </div>
         </div>
     </footer>
