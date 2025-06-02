@@ -1,6 +1,6 @@
 <?php
 
-// 线路详情列表
+// 博客列表
 require_once("../../init.php");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: x-requested-with,content-type");

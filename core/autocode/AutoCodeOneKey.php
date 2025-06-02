@@ -27,14 +27,14 @@ class AutoCodeOneKey extends AutoCode
         //生成实体数据对象类
         AutoCodeDomain::$type     = 2;
         self::$showReport        .= AutoCodeFoldHelper::foldbeforedomain();
-        AutoCodeDomain::autoCode();
+        AutoCodeDomain::autoCode($table_names);
         self::$showReport        .= AutoCodeFoldHelper::foldafterdomain();
         AutoCode::$isOutputCss    = false;
 
         //生成提供服务类[后台Service类]
         self::$showReport         .= AutoCodeFoldHelper::foldbeforeservice();
         AutoCodeService::$type     = 2;
-        AutoCodeService::autoCode();
+        AutoCodeService::autoCode($table_names);
         self::$showReport         .= AutoCodeFoldHelper::foldafterservice();
 
         //生成Action类[前端、后台和通用模版]

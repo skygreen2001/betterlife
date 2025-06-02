@@ -189,7 +189,13 @@ class DbInfoMysql extends DbInfo implements IDbInfo
         }
         $tables = array();
         foreach (self::$showtables as $record) {
-            $table = reset($record);
+            $table = $record;
+            if ($record && is_array($record)) {
+                $table = @reset($record);
+            }
+            if (empty($table)) {
+                $table = $record;
+            }
             $tables[strtolower($table)] = $table;
         }
         return $tables;

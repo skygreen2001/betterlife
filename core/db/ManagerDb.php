@@ -78,7 +78,7 @@ class ManagerDb extends Manager
      *   Gc::$database_config  = array(
      *        'host'     => '127.0.0.1',
      *        'port'     => '',
-     *        'database' => 'itt_task_user_3',
+     *        'database' => 'betterlife',
      *        'username' => 'root',
      *        'password' => ''
      *    );
@@ -128,7 +128,7 @@ class ManagerDb extends Manager
                             }
                             break;
                         default:
-                        //默认: ConfigMysql::ENGINE_MYSQL_PHP
+                            //默认: ConfigMysql::ENGINE_MYSQL_PHP
                             if ($this->dao_static == null) {
                                 $this->dao_static = new DaoPhp5();
                             }
@@ -167,7 +167,7 @@ class ManagerDb extends Manager
                     }
                     break;
                 default:
-                //默认: ConfigMysql::ENGINE_MYSQL_PHP
+                    //默认: ConfigMysql::ENGINE_MYSQL_PHP
                     if ($this->dao_static == null) {
                         $this->dao_static = new DaoPhp5();
                     }
@@ -242,7 +242,7 @@ class ManagerDb extends Manager
      */
     public function dal_adodb($host = null, $port = null, $username = null, $password = null, $dbname = null, $dbtype = null, $engine = null, $forced = false)
     {
-        if (( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB ) || ( ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO )) {
+        if ((ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB) || (ConfigDb::$engine == EnumDbEngine::ENGINE_DAL_ADODB_PDO)) {
             if (($this->dao_dynamic == null) || $forced) {
                 $this->dao_dynamic = new DalAdodb($host, $port, $username, $password, $dbname, $dbtype, $engine);
             } elseif (!($this->dao_dynamic instanceof DalAdoDb)) {
@@ -266,7 +266,7 @@ class ManagerDb extends Manager
      */
     public function dbinfo($isUseDbInfoDatabase = false, $forced = false, $host = null, $port = null, $username = null, $password = null, $dbname = null, $engine = null)
     {
-        if (( $this->dbinfo_static  ==  null  ) || $forced) {
+        if (($this->dbinfo_static  ==  null) || $forced) {
             switch (ConfigDb::$db) {
                 case EnumDbSource::DB_MYSQL:
                     DbInfoMysql::$isUseDbInfoDatabase = $isUseDbInfoDatabase;

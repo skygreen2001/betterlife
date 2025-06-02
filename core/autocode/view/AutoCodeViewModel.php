@@ -137,7 +137,7 @@ class AutoCodeViewModel extends AutoCodeView
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename($key_r)];
                                 $key_r = lcfirst($key_r);
-                                if (array_key_exists("parent_id", $fieldInfo_relationshow)) {
+                                if (!empty($fieldInfo_relationshow) && array_key_exists("parent_id", $fieldInfo_relationshow)) {
                                     $headers  .= "            <th class=\"header\">{$field_comment}[全]</th>" . HH;
                                     $contents .= "            <td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td>" . HH;
                                 }
@@ -511,7 +511,7 @@ UETC;
 
                                 $fieldInfo_relationshow = self::$fieldInfos[self::getTablename($key_r)];
                                 $key_r = lcfirst($key_r);
-                                if (array_key_exists("parent_id", $fieldInfo_relationshow)) {
+                                if (!empty($fieldInfo_relationshow) && array_key_exists("parent_id", $fieldInfo_relationshow)) {
                                     $view_contents .= "        <tr class=\"entry\"><th class=\"head\">{$field_comment}[全]</th><td class=\"content\">{\${$instancename}.{$key_r}ShowAll}</td></tr>" . HH;
                                 }
                             }

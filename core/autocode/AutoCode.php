@@ -614,16 +614,18 @@ class AutoCode extends BBObject
     protected static function getShowFieldNameByClassname($classname, $isReturnNull = false)
     {
         $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
-        $fieldNames = array_keys($fieldInfo);
-        foreach ($fieldNames as $fieldname) {
-            $fieldname_filter = strtolower($fieldname);
-            if (!contain($fieldname_filter, "id")) {
-                if (contains($fieldname_filter, array("name", "title"))) {
-                    return $fieldname;
-                }
-                $classname_filter = strtolower($classname);
-                if (contain($fieldname_filter, $classname_filter)) {
-                    return $fieldname;
+        if (!empty($fieldInfo)) {
+            $fieldNames = array_keys($fieldInfo);
+            foreach ($fieldNames as $fieldname) {
+                $fieldname_filter = strtolower($fieldname);
+                if (!contain($fieldname_filter, "id")) {
+                    if (contains($fieldname_filter, array("name", "title"))) {
+                        return $fieldname;
+                    }
+                    $classname_filter = strtolower($classname);
+                    if (contain($fieldname_filter, $classname_filter)) {
+                        return $fieldname;
+                    }
                 }
             }
         }
@@ -644,12 +646,14 @@ class AutoCode extends BBObject
         $classNameField = self::getShowFieldNameByClassname($classname, true);
         if (empty($classNameField)) {
             $fieldInfo  = self::$fieldInfos[self::getTablename($classname)];
-            $fieldNames = array_keys($fieldInfo);
-            foreach ($fieldNames as $fieldname) {
-                if (!contain($fieldname, "id")) {
-                    $classNameField = $fieldname;
-                    break;
-                }
+            if (!empty($fieldInfo)) {
+                $fieldNames = array_keys($fieldInfo);
+                foreach ($fieldNames as $fieldname) {
+                    if (!contain($fieldname, "id")) {
+                        $classNameField = $fieldname;
+                        break;
+                    }
+                }   
             }
         }
         return $classNameField;

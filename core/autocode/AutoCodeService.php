@@ -74,14 +74,14 @@ class AutoCodeService extends AutoCode
                 break;
         }
         $link_service_dir_href = "file:///" . str_replace("\\", "/", self::$service_dir_full);
-        self::$showReport     .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_service_dir_href . "'>" . self::$service_dir_full . "</a></font>";
+        self::$showReport     .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_service_dir_href . "'>" . self::$service_dir_full . "</a></font><br/><br/>";
 
         $tableList = self::tableListByTable_names($table_names);
         foreach ($tableList as $tablename) {
             $definePhpFileContent = self::tableToServiceDefine($tablename);
             if (isset($definePhpFileContent) && (!empty($definePhpFileContent))) {
                 $classname = self::saveServiceDefineToDir($tablename, $definePhpFileContent);
-                self::$showReport .= "生成导出完成:$tablename => $classname!";
+                self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
             } else {
                 self::$showReport .= $definePhpFileContent . "";
             }
@@ -700,7 +700,7 @@ class AutoCodeService extends AutoCode
                             }
                             $fieldInfos = self::$fieldInfos[self::getTablename($key)];
                             if (!$isTreeLevelHad) {
-                                if (array_key_exists("parent_id", $fieldInfos) && array_key_exists("level", $fieldInfos)) {
+                                if (!empty($fieldInfos) && array_key_exists("parent_id", $fieldInfos) && array_key_exists("level", $fieldInfos)) {
                                     // $classNameField = self::getShowFieldName($key);
                                     $field_comment  = $field["Comment"];
                                     $field_comment  = self::columnCommentKey($field_comment, $fieldname);
@@ -743,7 +743,7 @@ class AutoCodeService extends AutoCode
                             $show_fieldname = self::getShowFieldName($key);
                             $i_name         = lcfirst($i_name);
                             $fieldInfo_relation = self::$fieldInfos[self::getTablename($key)];
-                            if (array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation)) {
+                            if (!empty($fieldInfo_relation) && array_key_exists("parent_id", $fieldInfo_relation) && array_key_exists("level", $fieldInfo_relation)) {
                                 if (!$isTreeLevelHad) {
                                     $classNameField = self::getShowFieldName($key);
                                     $field_comment  = $field["Comment"];

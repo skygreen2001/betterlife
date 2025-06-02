@@ -42,7 +42,7 @@ class AutoCodeModel extends AutoCode
 
             return;
         }
-        //生成提供服务类[前端Service类]
+        //生成提供服务类[后台Service类]
         self::$showReport         .= AutoCodeFoldHelper::foldbeforeservice();
         AutoCodeService::$type     = 2;
         AutoCodeService::autoCode($table_names);

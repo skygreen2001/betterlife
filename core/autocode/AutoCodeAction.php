@@ -113,7 +113,7 @@ class AutoCodeAction extends AutoCode
                 break;
         }
         $link_action_dir_href = "file:///" . str_replace("\\", "/", self::$action_dir_full);
-        self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_action_dir_href . "'>" . self::$action_dir_full . "</a></font>";
+        self::$showReport    .= "<font color='#AAA'>存储路径:<a target='_blank' href='" . $link_action_dir_href . "'>" . self::$action_dir_full . "</a></font><br/><br/>";
 
         $fieldInfos = self::fieldInfosByTable_names($table_names);
         foreach ($fieldInfos as $tablename => $fieldInfo) {
@@ -127,14 +127,14 @@ class AutoCodeAction extends AutoCode
             if (!empty($definePhpFileContent)) {
                 if (isset(self::$save_dir) && !empty(self::$save_dir) && isset($definePhpFileContent)) {
                     $classname         = self::saveActionDefineToDir($tablename, $definePhpFileContent);
-                    self::$showReport .= "生成导出完成:$tablename => $classname!";
+                    self::$showReport .= "生成导出完成:$tablename => $classname!<br/>";
                 } else {
                     self::$showReport .= $definePhpFileContent . "";
                 }
             }
         }
 
-        self::$showReport .= '</div>';
+        self::$showReport .= '</div>' . BR;
         $category_cap = Gc::$appName;
         $category_cap = ucfirst($category_cap);
         /**
