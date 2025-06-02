@@ -44,7 +44,8 @@
     "fakerphp/faker"     : "^1.17",
     "maximebf/debugbar"  : ">=1.0.0",
     "filp/whoops"        : "2.*",
-    "pagon/composer-packer": "0.1.x"
+    "pagon/composer-packer": "0.1.x",
+    "lolli42/finediff": ">=0.0.1"
   },
   "scripts": {
     "check-style": "phpcs -p --standard=install/phpcs.xml .",

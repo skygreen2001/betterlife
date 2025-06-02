@@ -1,9 +1,9 @@
 <?php
 
 require_once("../../init.php");
-require_once("Text/Text_Diff.php");
-require_once("Text/Diff/Text_Diff_Renderer.php");
-require_once("Text/Diff/Renderer/Text_Diff_Renderer_inline.php");
+
+use cogpowered\FineDiff\Diff;
+use cogpowered\FineDiff\Granularity\Paragraph;
 
 $old_file = $_GET["old_file"];
 if (file_exists($old_file)) {
@@ -18,18 +18,28 @@ if (file_exists($new_file)) {
     die("新文件不存在!");
 }
 
-if (is_string($old_content)) {
-    $old_content = explode("\n", $old_content);
+if (version_compare(phpversion(), 7.0, '<')) {
+    require_once("Text/Text_Diff.php");
+    require_once("Text/Diff/Text_Diff_Renderer.php");
+    require_once("Text/Diff/Renderer/Text_Diff_Renderer_inline.php");
+    if (is_string($old_content)) {
+        $old_content = explode("\n", $old_content);
+    }
+    if (is_string($new_content)) {
+        $new_content = explode("\n", $new_content);
+    }
+    $diff     = new Text_Diff('auto', array($old_content, $new_content));
+    $renderer = new Text_Diff_Renderer_inline();
+    $contents = $renderer->render($diff);
+} else {
+    $granularity = new Paragraph();  // 使用段落粒度
+    $contents = (new Diff($granularity))->render($old_content, $new_content);
 }
-if (is_string($new_content)) {
-    $new_content = explode("\n", $new_content);
-}
-$diff     = new Text_Diff('auto', array($old_content, $new_content));
-$renderer = new Text_Diff_Renderer_inline();
-$contents = $renderer->render($diff);
+
 if (empty($contents)) {
     $contents = htmlspecialchars(file_get_contents($new_file));
 }
+
 $show = <<<COF
     <style type="text/css">
         del {
