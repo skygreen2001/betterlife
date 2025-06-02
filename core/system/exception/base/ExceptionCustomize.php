@@ -87,8 +87,12 @@ class ExceptionCustomize extends Exception
             }
             $this->class    = $trace[$current]['class'];
             $this->function = $trace[$current]['function'];
-            $this->file = $trace[$current]['file'];
-            $this->line = $trace[$current]['line'];
+            if (!empty($trace[$current]['file'])) {
+                $this->file = $trace[$current]['file'];
+            }
+            if (!empty($trace[$current]['line'])) {
+                $this->line = $trace[$current]['line'];
+            }
             $file       = file($this->file);
             $traceInfo  = '';
             $time = date("y-m-d H:i:m");
