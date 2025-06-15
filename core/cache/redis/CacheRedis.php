@@ -101,9 +101,9 @@ class CacheRedis extends CacheBase
             $this->redis->connect($host, $port);
         }
         ob_clean();
-        if (empty($password)) {
-            $password = ConfigRedis::$password;
-        }
+        // if (empty($password)) {
+        //     $password = ConfigRedis::$password;
+        // }
         if (!empty($password)) {
             $this->redis->auth($password);
         }

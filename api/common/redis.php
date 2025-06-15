@@ -41,7 +41,10 @@ if (!empty($step)) {
         $port     = @$_GET["port"];
         $password = @$_GET["password"];
     }
-    $serverCache = BBCache::singleton()->redisServer($server, $port, $password);
+
+    if (!empty($server)) {
+        $serverCache = BBCache::singleton()->redisServer($server, $port, $password);
+    }
 
     $result = '';
     switch ($step) {
