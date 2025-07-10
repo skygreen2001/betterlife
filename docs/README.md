@@ -20,7 +20,9 @@
 
 ## 帮助文档
 
-  * [学习手册](https://skygreen2001.github.io)
+  * [学习手册](https://gitee.com/skygreen2015/betterlife.book)
+    * [学习手册: 在Surge](https://skygreen2001.surge.sh/)
+    * [学习手册: 在Netlify](https://skygreen2001.netlify.app)
 
 ## 下载源码
 
