@@ -8,6 +8,7 @@ var app = new Vue({
             isConfigLocal: true, // 服务器配置是否保存在本地浏览器 Local Storage 里
             apiUrl       : '../../api/common/redis.php',
             server: '', // 选中的服务器
+            isReadOnly: true, // DB是否只读
             db    : '', // 选中的db
             key   : '', // 选中的key
             sel_server: '', // 选中服务器显示[标题栏]
@@ -71,6 +72,10 @@ var app = new Vue({
                         slot : 'password'
                     },
                     {
+                        title: '只读',
+                        slot : 'isReadOnly'
+                    },
+                    {
                         title: '操作',
                         slot : 'action',
                         width: 180,
@@ -84,6 +89,7 @@ var app = new Vue({
                         editServer: '',  // 第三列输入框
                         editPort  : '',  // 第四列输入框
                         editPasswd: '',  // 第五列输入框
+                        isReadOnly  : true,  // 第六列多选框
                     },
                     ruleValidate: {
                         editId: [
@@ -104,6 +110,7 @@ var app = new Vue({
                     editServer: '',  // 第三列输入框
                     editPort  : '',  // 第四列输入框
                     editPasswd: '',  // 第五列输入框
+                    isReadOnly  : true,  // 第六列多选框
                 },
                 deleteOne : -1,  // 被删除的行数
             },
@@ -131,6 +138,7 @@ var app = new Vue({
                 this.server     = name
                 let index       = this.serves.findIndex(e => e.id == name);
                 this.sel_server = this.serves[index].text;
+                this.isReadOnly = this.serves[index].isReadOnly;
                 this.sel_db     = "";
                 this.sel_key    = "";
                 this.countKeys  = 0;
@@ -167,7 +175,8 @@ var app = new Vue({
                         let text = config.name + "(" + config.id + ")";
                         let server = {
                             id: config.id,
-                            text: text
+                            text: text,
+                            isReadOnly: config.isReadOnly
                         };
                         ctrl.serves.push(server);
                     });
@@ -246,6 +255,7 @@ var app = new Vue({
             this.configs.editConfig.editPort   = row.port;
             this.configs.editConfig.editPasswd = row.password;
             this.configs.editConfig.editIndex  = index;
+            this.configs.editConfig.isReadOnly = row.isReadOnly;
         },
         onAddConfig() {
             this.addserverModel = true;
@@ -254,6 +264,7 @@ var app = new Vue({
             this.configs.addConfigForm.configsForm.editServer = "";
             this.configs.addConfigForm.configsForm.editPort   = "";
             this.configs.addConfigForm.configsForm.editPasswd = "";
+            this.configs.addConfigForm.configsForm.isReadOnly = true;
         },
         onCancelAddConfig: function() {
             this.addserverModel = false;
@@ -265,7 +276,8 @@ var app = new Vue({
                 name    : this.configs.addConfigForm.configsForm.editName.trim(),
                 server  : this.configs.addConfigForm.configsForm.editServer.trim(),
                 port    : this.configs.addConfigForm.configsForm.editPort.trim(),
-                password: this.configs.addConfigForm.configsForm.editPasswd.trim()
+                password: this.configs.addConfigForm.configsForm.editPasswd.trim(),
+                isReadOnly: this.configs.addConfigForm.configsForm.isReadOnly
             };
             if ( !params.id || !params.name || !params.server ) {
                 this.$Modal.error({
@@ -307,6 +319,7 @@ var app = new Vue({
             this.configs.addConfigForm.configsForm.editServer = "";
             this.configs.addConfigForm.configsForm.editPort   = "";
             this.configs.addConfigForm.configsForm.editPasswd = "";
+            this.configs.addConfigForm.configsForm.isReadOnly = true;
             this.addserverModel = false;
         },
         onSaveEditConfig: function(index) {
@@ -320,7 +333,8 @@ var app = new Vue({
                 name    : this.configs.editConfig.editName.trim(),
                 server  : this.configs.editConfig.editServer.trim(),
                 port    : this.configs.editConfig.editPort.trim(),
-                password: this.configs.editConfig.editPasswd.trim()
+                password: this.configs.editConfig.editPasswd.trim(),
+                isReadOnly: this.configs.editConfig.isReadOnly
             };
             if ( !params.id || !params.name || !params.server ) {
                 this.$Modal.error({
@@ -363,6 +377,7 @@ var app = new Vue({
             this.configs.data[index].server   = this.configs.editConfig.editServer;
             this.configs.data[index].port     = this.configs.editConfig.editPort;
             this.configs.data[index].password = this.configs.editConfig.editPasswd;
+            this.configs.data[index].isReadOnly = this.configs.editConfig.isReadOnly;
 
             this.configs.editConfig.editIndex  = -1;
             this.configs.editConfig.editId     = "";
@@ -370,6 +385,7 @@ var app = new Vue({
             this.configs.editConfig.editServer = "";
             this.configs.editConfig.editPort   = "";
             this.configs.editConfig.editPasswd = "";
+            this.configs.editConfig.isReadOnly = true;
         },
         onDeleteConfig:function(row, index) {
             this.actionInfo        = "删除后将不能恢复，确认要删除" + row.name + "[" + row.id + "]?";
@@ -422,6 +438,7 @@ var app = new Vue({
                             params.server   = serverConfig.server;
                             params.port     = serverConfig.port;
                             params.password = serverConfig.password;
+                            params.isReadOnly = serverConfig.isReadOnly;
                         } else {
                             this.configModel = true;
                         }

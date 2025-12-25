@@ -56,10 +56,10 @@
                                 <menu-item v-for="item in dbs" :key="item" :name="item">
                                     <Icon type="md-arrow-dropright"></Icon><span>{{ item }}</span>
                                 </menu-item>
-                                <menu-item name="10">
+                                <menu-item name="10" v-if="!isReadOnly">
                                     <Icon type="md-add"></Icon><span>新增DB</span>
                                 </menu-item>
-                                <menu-item name="11">
+                                <menu-item name="11" v-if="!isReadOnly">
                                     <Icon type="md-close"></Icon><span>删除DB</span>
                                 </menu-item>
                             </Submenu>
@@ -165,6 +165,13 @@
                       <span v-else>{{ row.password }}</span>
                     </template>
 
+                    <template slot-scope="{ row, index }" slot="isReadOnly">
+                      <Checkbox v-model="configs.editConfig.isReadOnly" v-if="configs.editConfig.editIndex === index"></Checkbox>
+                      <div v-else>
+                        <span v-if="row.isReadOnly">是</span><span v-else>否</span>
+                      </div>
+                    </template>
+
                     <template slot-scope="{ row, index }" slot="action">
                       <div v-if="configs.editConfig.editIndex === index">
                         <i-button type="success" size="small" icon="md-checkmark-circle" style="margin-right: 5px" @click="onSaveEditConfig(index)">保存</i-button>
@@ -197,6 +204,9 @@
                     </form-item>
                     <form-item prop="editPasswd">
                         <i-input class="input-add" v-model="configs.addConfigForm.configsForm.editPasswd"><span slot="prepend">密&nbsp;&nbsp;&nbsp;码</span></i-input>
+                    </form-item>
+                    <form-item prop="isReadOnly">
+                        <Checkbox v-model="configs.addConfigForm.configsForm.isReadOnly">只读</Checkbox>
                     </form-item>
                 </i-form>
             </div>
