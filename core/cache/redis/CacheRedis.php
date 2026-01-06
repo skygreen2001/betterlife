@@ -373,20 +373,20 @@ class CacheRedis extends CacheBase
         $this->redis->expireAt($key, $now + $expired);
     }
 
-   /**
-    * 在缓存里保存指定$key的数据
-    *
-    * 与save和update不同，无论何时都保存
-    * @param string $key
-    * @param string|array|object $value
-    *        - 如果redis键值类型为string: 直接保存
-    *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
-    *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
-    * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
-    * @return bool
-    */
+    /**
+     * 在缓存里保存指定$key的数据
+     *
+     * 与save和update不同，无论何时都保存
+     * @param string $key
+     * @param string|array|object $value
+     *        - 如果redis键值类型为string: 直接保存
+     *        - 如果redis键值类型为set   : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为list  : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为zset  : 字符串每个元素之间以 ｜ 分割
+     *        - 如果redis键值类型为hash  : 数组; array(hashKey, val); hashKey和Val之间以: 隔开; 字符串每个元素之间以 ｜ 分割
+     * @param int $expired 过期时间，默认是1天；最高设置不能超过2592000(30天)
+     * @return bool
+     */
     public function set($key, $value, $type = Redis::REDIS_NOT_FOUND, $expired = 86400)
     {
         if (empty($key)) {
@@ -483,24 +483,24 @@ class CacheRedis extends CacheBase
         }
     }
 
-   /**
-    * 在缓存里更新指定key的数据
-    *
-    * 仅当存储空间中存在键相同的数据时才保存
-    * @param string $key
-    * @param string|array|object $value
-    * @return bool
-    */
+    /**
+     * 在缓存里更新指定key的数据
+     *
+     * 仅当存储空间中存在键相同的数据时才保存
+     * @param string $key
+     * @param string|array|object $value
+     * @return bool
+     */
     public function update($key, $value, $type = Redis::REDIS_STRING, $expired = 86400)
     {
         $this->set($key, $value, $type, $expired);
     }
 
-   /**
-    * 在缓存里删除所有指定$key的数据
-    * @param string|array $key
-    * @return bool
-    */
+    /**
+     * 在缓存里删除所有指定$key的数据
+     * @param string|array $key
+     * @return bool
+     */
     public function delete($key)
     {
         $this->redis->delete($key);
@@ -547,8 +547,12 @@ class CacheRedis extends CacheBase
                 break;
         }
 
-        if (@unserialize($data)) {
-            $data = unserialize($data);
+        if (is_array($data) || is_object($data)) {
+            return $data;
+        } else {
+            if (@unserialize($data)) {
+                $data = unserialize($data);
+            }
         }
         return $data;
     }
