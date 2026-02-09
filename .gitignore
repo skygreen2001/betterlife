@@ -17,3 +17,4 @@
 composer.lock
 .history
 package-lock.json
+.trae

@@ -44,6 +44,7 @@
 
 ### BAT
 
+  * [字节跳动](https://github.com/bytedance): 主要开源组织，拥有 399+ 仓库
   * [AntV team](https://github.com/antvis): 蚂蚁金服 - 数据可视化
   * [Alibaba Cloud](https://github.com/aliyun)
   * Taobao, Inc.  : https://github.com/taobao
