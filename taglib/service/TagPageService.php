@@ -34,7 +34,7 @@ class TagPageService
     private $navig;// 导航条
     private $navigTo;// 导航条
 
-    public static function Init($nowpage, $count, $pageSize = null, $linkUrl = null)
+    public static function init($nowpage, $count, $pageSize = null, $linkUrl = null)
     {
         if (empty($pageSize)) {
             $pageSize = self::$default_pagesize;
@@ -44,11 +44,11 @@ class TagPageService
 
     /**
      *
-     * @param pageSize
+     * @param $pageSize
      *            :每页显示记录数
-     * @param nowpage
+     * @param $nowpage
      *            :当前页数
-     * @param count
+     * @param $count
      *            :记录总数
      */
     public function __construct($nowpage, $count, $pageSize = 10, $linkUrl = null)
@@ -125,7 +125,6 @@ class TagPageService
     /**
      * 生成导航条供页面使用
      *
-     * @param somedo
      * @return
      */
     public function createBaseNavi()

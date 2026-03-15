@@ -25,6 +25,17 @@ class Text_Diff_Engine_xdiff {
         array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
         array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
 
+        /* 检查xdiff_string_diff函数是否存在 */
+        if (!function_exists('xdiff_string_diff')) {
+            function xdiff_string_diff($old_string, $new_string, $context_lines) {
+                return "";
+            }
+            // 如果xdiff扩展不存在，使用native引擎
+            require_once dirname(__FILE__) . '/native.php';
+            $native_engine = new Text_Diff_Engine_native();
+            return $native_engine->diff($from_lines, $to_lines);
+        }
+
         /* Convert the two input arrays into strings for xdiff processing. */
         $from_string = implode("\n", $from_lines);
         $to_string = implode("\n", $to_lines);
@@ -48,15 +59,15 @@ class Text_Diff_Engine_xdiff {
             }
             switch ($line[0]) {
             case ' ':
-                $edits[] = &new Text_Diff_Op_copy(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_copy(array(substr($line, 1)));
                 break;
 
             case '+':
-                $edits[] = &new Text_Diff_Op_add(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_add(array(substr($line, 1)));
                 break;
 
             case '-':
-                $edits[] = &new Text_Diff_Op_delete(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_delete(array(substr($line, 1)));
                 break;
             }
         }

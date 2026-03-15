@@ -38,23 +38,43 @@ class Text_Diff {
      */
     function Text_Diff($engine, $params)
     {
+        echo "DEBUG: Text_Diff constructor called\n";
+        echo "DEBUG: Engine: $engine\n";
+        echo "DEBUG: Params: " . print_r($params, true) . "\n";
+        
         // Backward compatibility workaround.
         if (!is_string($engine)) {
+            echo "DEBUG: Engine is not a string, using backward compatibility\n";
             $params = array($engine, $params);
             $engine = 'auto';
         }
 
         if ($engine == 'auto') {
+            echo "DEBUG: Using auto engine selection\n";
             $engine = extension_loaded('xdiff') ? 'xdiff' : 'native';
         } else {
             $engine = basename($engine);
         }
+        echo "DEBUG: Selected engine: $engine\n";
 
-        require_once 'Text/Diff/Engine/' . $engine . '.php';
+        require_once dirname(__FILE__) . '/Diff/Engine/' . $engine . '.php';
+        echo "DEBUG: Loaded engine file\n";
+        
         $class = 'Text_Diff_Engine_' . $engine;
+        echo "DEBUG: Engine class: $class\n";
+        
         $diff_engine = new $class();
+        echo "DEBUG: Created engine instance\n";
 
+        echo "DEBUG: Calling diff method\n";
         $this->_edits = call_user_func_array(array($diff_engine, 'diff'), $params);
+        echo "DEBUG: diff() result: " . print_r($this->_edits, true) . "\n";
+        
+        if (is_array($this->_edits)) {
+            echo "DEBUG: Edits is an array, count: " . count($this->_edits) . "\n";
+        } else {
+            echo "DEBUG: Edits is not an array: " . gettype($this->_edits) . "\n";
+        }
     }
 
     /**

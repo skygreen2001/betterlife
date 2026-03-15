@@ -39,14 +39,23 @@ class Loader
             }
             x($error_info, new Loader());
         }
-        if (empty(self::$loaded[$object])) {
-            if (empty($param1)) {
-                self::$loaded[$object] = new $object();
-            } else {
-                self::$loaded[$object] = new $object($param1, $param2);
+        // 为View对象创建唯一键，避免不同模块共用同一个View实例
+        if ($object === self::CLASS_VIEW) {
+            $key = $object . '_' . $param1 . '_' . $param2;
+            if (empty(self::$loaded[$key])) {
+                self::$loaded[$key] = new $object($param1, $param2);
             }
+            return self::$loaded[$key];
+        } else {
+            if (empty(self::$loaded[$object])) {
+                if (empty($param1)) {
+                    self::$loaded[$object] = new $object();
+                } else {
+                    self::$loaded[$object] = new $object($param1, $param2);
+                }
+            }
+            return self::$loaded[$object];
         }
-        return self::$loaded[$object];
     }
 
     /**

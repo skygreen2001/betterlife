@@ -203,8 +203,20 @@ class ActionBasic extends BBObject
      */
     public function isDataHave($param)
     {
-        if ($this->data && is_array($this->data) && array_key_exists($param, $this->data)) {
-            return true;
+        if ($this->data) {
+            // 支持数组和DataObjectArray对象
+            if (is_array($this->data) && array_key_exists($param, $this->data)) {
+                return true;
+            } elseif (is_object($this->data)) {
+                // 检查对象是否有该属性或方法
+                if (property_exists($this->data, $param) || method_exists($this->data, $param)) {
+                    return true;
+                }
+                // 检查对象是否实现了ArrayAccess接口
+                if ($this->data instanceof ArrayAccess && isset($this->data[$param])) {
+                    return true;
+                }
+            }
         }
         return false;
     }
