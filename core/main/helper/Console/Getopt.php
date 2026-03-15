@@ -27,7 +27,7 @@ require_once 'PEAR.php';
  * @package core.main.helper
  * @author Andrei Zmievski <andrei@php.net>
  */
-class Console_Getopt
+class Console_Getopt extends PEAR
 {
     /**
      * Parses the command-line options.
@@ -151,16 +151,16 @@ class Console_Getopt
     function _parseShortOption($arg, $short_options, &$opts, &$args)
     {
         for ($i = 0; $i < strlen($arg); $i++) {
-            $opt = $arg{$i};
+            $opt = $arg[$i];
             $opt_arg = null;
 
             /* Try to find the short option in the specifier string. */
-            if (($spec = strstr($short_options, $opt)) === false || $arg{$i} == ':') {
+            if (($spec = strstr($short_options, $opt)) === false || $arg[$i] == ':') {
                 return PEAR::raiseError("Console_Getopt: unrecognized option -- $opt");
             }
 
-            if (strlen($spec) > 1 && $spec{1} == ':') {
-                if (strlen($spec) > 2 && $spec{2} == ':') {
+            if (strlen($spec) > 1 && $spec[1] == ':') {
+                if (strlen($spec) > 2 && $spec[2] == ':') {
                     if ($i + 1 < strlen($arg)) {
                         /* Option takes an optional argument. Use the remainder of
                            the arg string if there is anything left. */
@@ -174,7 +174,7 @@ class Console_Getopt
                         $opts[] = array($opt,  substr($arg, $i + 1));
                         break;
                     } elseif (list(, $opt_arg) = each($args)) {
-                        /* Else use the next argument. */;
+                        /* Else use the next argument. */
                         if (Console_Getopt::_isShortOpt($opt_arg) || Console_Getopt::_isLongOpt($opt_arg)) {
                             return PEAR::raiseError("Console_Getopt: option requires an argument -- $opt");
                         }

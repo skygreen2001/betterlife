@@ -310,15 +310,16 @@ class View
     * 获取模板文件完整的路径
     *
     */
-    private function getTemplateViewDir()
+    private function getTemplateViewDir($moduleName = null)
     {
+        $module = $moduleName ?? $this->moduleName;
         $result = "";
         if (strlen(Gc::$module_root) > 0) {
             $result .= Gc::$module_root . DS;
         }
-        $result .= $this->moduleName . DS . self::VIEW_DIR_VIEW . DS;
-        if (isset(Gc::$self_theme_dir_every) && array_key_exists($this->moduleName, Gc::$self_theme_dir_every)) {
-            $result .= Gc::$self_theme_dir_every[$this->moduleName] . DS;
+        $result .= $module . DS . self::VIEW_DIR_VIEW . DS;
+        if (isset(Gc::$self_theme_dir_every) && array_key_exists($module, Gc::$self_theme_dir_every)) {
+            $result .= Gc::$self_theme_dir_every[$module] . DS;
         } else {
             $result .= Gc::$self_theme_dir . DS;
         }
@@ -350,9 +351,6 @@ class View
                     die("<p style='font: 15px/1.5em Arial;margin:15px;line-height:2em;'>没有安装Smarty,请通知管理员在服务器上按: install/README.md  文件中说明执行。</p>");
                 }
                 $this->template = new Smarty();
-                if (Smarty::SMARTY_VERSION >= 3.1 && class_exists("SmartyBC")) {
-                    $this->template = new SmartyBC();
-                }
                 $this->template->template_dir  = Gc::$nav_root_path . $this->template_dir;
                 $this->template->compile_dir   = Gc::$nav_root_path . $template_tmp_dir . "templates_c" . DS;
                 $this->template->config_dir    = Gc::$nav_root_path . $template_tmp_dir . "configs" . DS;
@@ -365,8 +363,7 @@ class View
                     $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplateViewDir($this->moduleName);
                     $my_security_policy->allow_php_tag = true;
                     $my_security_policy->php_functions = array();
-                    $my_security_policy->php_handling = Smarty::PHP_PASSTHRU;
-                    $my_security_policy->php_modifier = array();
+                    $my_security_policy->php_modifiers = array();
                     $my_security_policy->modifiers = array();
                     $this->template->enableSecurity($my_security_policy);
                 }
@@ -383,17 +380,16 @@ class View
                 break;
             case self::TEMPLATE_MODE_TWIG:
                 $this->templateMode = self::TEMPLATE_MODE_TWIG;
-                $this->template->template_dir = Gc::$nav_root_path . $this->template_dir;
-                $this->template->cache_dir = $template_tmp_dir . "cache" . DS;
-                UtilFileSystem::createDir($this->template->cache_dir);
-                system_dir_info($this->template->cache_dir);
-                $twig_loader = new \Twig\Loader\FilesystemLoader(dirname($this->template->template_dir));
+                $full_template_dir = Gc::$nav_root_path . $this->template_dir;
+                $cache_dir = $template_tmp_dir . "cache" . DS;
+                UtilFileSystem::createDir($cache_dir);
+                system_dir_info($cache_dir);
+                // Twig使用FilesystemLoader来管理模板目录，不需要直接设置template_dir属性
+                $twig_loader = new \Twig\Loader\FilesystemLoader($full_template_dir);
                 $this->template = new \Twig\Environment($twig_loader, [
-                    'cache' => $this->template->cache_dir,
+                    'cache' => $cache_dir,
                 ]);
-                $this->template->template_dir = Gc::$nav_root_path . $this->template_dir;
-                $this->template->temp_dir = $template_tmp_dir . "temp" . DS;
-                $this->template->cache_dir = $template_tmp_dir . "cache" . DS;
+                // 不再直接给Twig Environment对象添加属性，而是使用Twig的原生API
                 break;
             default:
                 $this->templateMode = self::TEMPLATE_MODE_NONE;

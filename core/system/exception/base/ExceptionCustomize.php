@@ -29,6 +29,16 @@ class ExceptionCustomize extends Exception
      * @var array
      */
     private $errorInfo;
+    /**
+     * 类名
+     * @var string
+     */
+    private $class;
+    /**
+     * 函数名
+     * @var string
+     */
+    private $function;
 
     /**
      * 架构函数
@@ -66,7 +76,29 @@ class ExceptionCustomize extends Exception
      * @access public
      * @return array
      */
-    public function __toString()
+
+    /**
+     * Safely implode an array, handling objects appropriately
+     *
+     * @param array $array
+     * @return string
+     */
+    private function implodeSafe(array $array)
+    {
+        $safeArray = array();
+        foreach ($array as $item) {
+            if (is_object($item)) {
+                $safeArray[] = get_class($item);
+            } else if (is_array($item)) {
+                $safeArray[] = 'Array';
+            } else {
+                $safeArray[] = $item;
+            }
+        }
+        return implode(',', $safeArray);
+    }
+
+    public function __toString(): string
     {
         $trace = $this->trace;
         if ($this->extra) {
@@ -85,8 +117,8 @@ class ExceptionCustomize extends Exception
                     $current += 1;
                 }
             }
-            $this->class    = $trace[$current]['class'];
-            $this->function = $trace[$current]['function'];
+            $this->class = $trace[$current]['class'] ?? '';
+            $this->function = $trace[$current]['function'] ?? '';
             if (!empty($trace[$current]['file'])) {
                 $this->file = $trace[$current]['file'];
             }
@@ -120,10 +152,14 @@ class ExceptionCustomize extends Exception
                     if (count($args) == 1) {
                         $args = $args[0];
                         if (is_array($args)) {
-                            $traceInfo .= implode(',', $args);
+                            $traceInfo .= $this->implodeSafe($args);
+                        } else if (is_object($args)) {
+                            $traceInfo .= get_class($args);
+                        } else {
+                            $traceInfo .= $args;
                         }
                     } else {
-                        $traceInfo .= implode(',', $args);
+                        $traceInfo .= $this->implodeSafe($args);
                     }
                 }
                 $traceInfo .= ")\n";
