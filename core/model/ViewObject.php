@@ -59,4 +59,14 @@ class ViewObject extends stdClass
     {
         return get_class();
     }
+
+    /**
+     * 刷新输出缓冲区
+     * @return string
+     */
+    public function flush()
+    {
+        flush();
+        return '';
+    }
 }

@@ -356,7 +356,6 @@ class View
                 $this->template->config_dir    = Gc::$nav_root_path . $template_tmp_dir . "configs" . DS;
                 $this->template->cache_dir     = Gc::$nav_root_path . $template_tmp_dir . "cache" . DS;
                 $this->template->compile_check = true;
-                $this->template->allow_php_templates = true;
                 // 开启自定义安全机制
                 if (class_exists("Smarty_Security")) {
                     $my_security_policy = new Smarty_Security($this->template);
@@ -375,6 +374,12 @@ class View
                 $this->template->force_compile = false;
                 $this->template->caching = Gc::$is_online_optimize;
                 $this->template->cache_lifetime = 86400;//缓存一周
+
+                // 请注意，启用 allow_php_tag 并关闭安全策略会带来潜在的安全风险，因此建议尽量避免这种方式。
+                // // Enable PHP tags in templates
+                // $this->template->security_policy = false; // 关闭安全策略
+                // $this->template->allow_php_tag = true;
+
                 UtilFileSystem::createDir($this->template->compile_dir);
                 system_dir_info($this->template->compile_dir);
                 break;

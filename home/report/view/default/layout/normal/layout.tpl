@@ -15,9 +15,7 @@
     <![endif]-->
     {$viewObject->css_ready|default:""}
   </head>
-  {php}
-     flush();
-  {/php}
+  {$viewObject->flush()}
   <body>
     {include file="$template_dir/layout/normal/navbar.tpl"}
     {block name=body}{/block}

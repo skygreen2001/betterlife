@@ -9,9 +9,7 @@
     <!-- Latest compiled and minified CSS -->
     {$viewObject->js_ready|default:""}
   </head>
-  {php}
-     flush();
-  {/php}
+  {$viewObject->flush()}
   <body>
     {block name=body}{/block}
   </body>

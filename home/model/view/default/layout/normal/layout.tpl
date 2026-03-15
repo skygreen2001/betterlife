@@ -10,9 +10,7 @@
     <script type="text/javascript" src="{$template_url}js/public.js"></script>
     {$viewObject->css_ready|default:""}
   </head>
-  {php}
-     flush();
-  {/php}
+  {$viewObject->flush()}
   <body>
     {block name=body}{/block}
     {$viewObject->js_ready|default:""}

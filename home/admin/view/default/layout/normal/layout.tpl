@@ -22,7 +22,7 @@
     <![endif]-->
     {$viewObject->css_ready|default:""}
   </head>
-
+  {$viewObject->flush()}
   
   <body>
     {include file="$template_dir/layout/normal/navbar.tpl"}
