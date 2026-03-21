@@ -21,8 +21,8 @@ class Action_Userrole extends ActionModel
         $count = Userrole::count();
         $this->view->countUserroles = $count;
         $userroles = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $userroles = Userrole::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("userroles", $userroles);

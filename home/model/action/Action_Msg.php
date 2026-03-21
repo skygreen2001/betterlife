@@ -21,8 +21,8 @@ class Action_Msg extends ActionModel
         $count = Msg::count();
         $this->view->countMsgs = $count;
         $msgs = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $msgs = Msg::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("msgs", $msgs);

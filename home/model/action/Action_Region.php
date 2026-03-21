@@ -21,8 +21,8 @@ class Action_Region extends ActionModel
         $count = Region::count();
         $this->view->countRegions = $count;
         $regions = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $regions = Region::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("regions", $regions);

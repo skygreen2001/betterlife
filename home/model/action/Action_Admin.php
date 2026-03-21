@@ -21,8 +21,8 @@ class Action_Admin extends ActionModel
         $count = Admin::count();
         $this->view->countAdmins = $count;
         $admins = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $admins = Admin::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("admins", $admins);

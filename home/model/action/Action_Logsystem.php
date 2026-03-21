@@ -21,8 +21,8 @@ class Action_Logsystem extends ActionModel
         $count = Logsystem::count();
         $this->view->countLogsystems = $count;
         $logsystems = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $logsystems = Logsystem::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("logsystems", $logsystems);

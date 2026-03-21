@@ -422,8 +422,8 @@ class AutoCodeAction extends AutoCode
                    "        \$count = {$classname}::count();" . HH .
                    "        \$this->view->count{$classname}s = \$count;" . HH .
                    "        \${$instancename}s = null;" . HH .
+                   "        \${$appname_alias}_page = TagPageService::init(\$nowpage, \$count);" . HH .
                    "        if (\$count > 0) {" . HH .
-                   "            \${$appname_alias}_page = TagPageService::init(\$nowpage, \$count);" . HH .
                    "            \${$instancename}s = {$classname}::queryPage(\${$appname_alias}_page->getStartPoint(), \${$appname_alias}_page->getEndPoint());" . HH .
                    "        }" . HH .
                    "        \$this->view->set(\"{$instancename}s\", \${$instancename}s);" . HH .
