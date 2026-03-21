@@ -21,8 +21,8 @@ class Action_Department extends ActionModel
         $count = Department::count();
         $this->view->countDepartments = $count;
         $departments = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $departments = Department::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("departments", $departments);

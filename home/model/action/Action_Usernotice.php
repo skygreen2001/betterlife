@@ -21,8 +21,8 @@ class Action_Usernotice extends ActionModel
         $count = Usernotice::count();
         $this->view->countUsernotices = $count;
         $usernotices = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $usernotices = Usernotice::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("usernotices", $usernotices);

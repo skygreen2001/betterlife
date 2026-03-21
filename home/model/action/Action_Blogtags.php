@@ -21,8 +21,8 @@ class Action_Blogtags extends ActionModel
         $count = Blogtags::count();
         $this->view->countBlogtagss = $count;
         $blogtagss = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $blogtagss = Blogtags::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("blogtagss", $blogtagss);

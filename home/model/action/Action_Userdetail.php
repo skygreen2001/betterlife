@@ -21,8 +21,8 @@ class Action_Userdetail extends ActionModel
         $count = Userdetail::count();
         $this->view->countUserdetails = $count;
         $userdetails = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $userdetails = Userdetail::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("userdetails", $userdetails);

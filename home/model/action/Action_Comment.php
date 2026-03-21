@@ -21,8 +21,8 @@ class Action_Comment extends ActionModel
         $count = Comment::count();
         $this->view->countComments = $count;
         $comments = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $comments = Comment::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("comments", $comments);

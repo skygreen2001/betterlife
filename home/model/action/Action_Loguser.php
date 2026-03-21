@@ -21,8 +21,8 @@ class Action_Loguser extends ActionModel
         $count = Loguser::count();
         $this->view->countLogusers = $count;
         $logusers = null;
+        $bb_page = TagPageService::init($nowpage, $count);
         if ($count > 0) {
-            $bb_page = TagPageService::init($nowpage, $count);
             $logusers = Loguser::queryPage($bb_page->getStartPoint(), $bb_page->getEndPoint());
         }
         $this->view->set("logusers", $logusers);
