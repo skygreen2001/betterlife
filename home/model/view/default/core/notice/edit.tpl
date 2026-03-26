@@ -9,15 +9,15 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $notice}编辑{else}新增{/if}通知</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="noticeForm" method="post"><input type="hidden" name="notice_id" value="{$notice.notice_id|default:''}"/>
+        <form name="noticeForm" method="post"><input type="hidden" name="notice_id" value="{$notice->notice_id|default:''}"/>
         <table class="viewdoblock">
-            {if $notice}<tr class="entry"><th class="head">编号</th><td class="content">{$notice.notice_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">通知分类</th><td class="content"><input type="number" class="edit" name="noticeType" value="{$notice.noticeType|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">标题</th><td class="content"><input type="text" class="edit" name="title" value="{$notice.title|default:''}"/></td></tr>
+            {if $notice}<tr class="entry"><th class="head">编号</th><td class="content">{$notice->notice_id}</td></tr>{/if}
+            <tr class="entry"><th class="head">通知分类</th><td class="content"><input type="number" class="edit" name="noticeType" value="{$notice->noticeType|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">标题</th><td class="content"><input type="text" class="edit" name="title" value="{$notice->title|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">通知内容</th>
                 <td class="content">
-                    <textarea id="notice_content" name="notice_content" rows="6" cols="60" placeholder="通知内容">{$notice.notice_content|default:''}</textarea>
+                    <textarea id="notice_content" name="notice_content" rows="6" cols="60" placeholder="通知内容">{$notice->notice_content|default:''}</textarea>
                 </td>
             </tr
             <tr class="entry">
@@ -31,7 +31,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.notice.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $notice}
-            <my:a href='{$url_base}index.php?go=model.notice.view&amp;id={$notice.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看通知</my:a>
+            <my:a href='{$url_base}index.php?go=model.notice.view&amp;id={$notice->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看通知</my:a>
             {/if}
         </div>
     </div>

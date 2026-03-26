@@ -8,10 +8,10 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $role}编辑{else}新增{/if}角色</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="roleForm" method="post"><input type="hidden" name="role_id" value="{$role.role_id|default:''}"/>
+        <form name="roleForm" method="post"><input type="hidden" name="role_id" value="{$role->role_id|default:''}"/>
         <table class="viewdoblock">
-            {if $role}<tr class="entry"><th class="head">角色标识</th><td class="content">{$role.role_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">角色名称</th><td class="content"><input type="text" class="edit" name="role_name" value="{$role.role_name|default:''}"/></td></tr>
+            {if $role}<tr class="entry"><th class="head">角色标识</th><td class="content">{$role->role_id}</td></tr>{/if}
+            <tr class="entry"><th class="head">角色名称</th><td class="content"><input type="text" class="edit" name="role_name" value="{$role->role_name|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">功能信息</th>
                 <td class="content select">
@@ -29,7 +29,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.role.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $role}
-            <my:a href='{$url_base}index.php?go=model.role.view&amp;id={$role.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色</my:a>
+            <my:a href='{$url_base}index.php?go=model.role.view&amp;id={$role->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色</my:a>
             {/if}
         </div>
     </div>
@@ -37,13 +37,13 @@
     <script type="text/javascript">
     $(function() {
         var select_functions = new Array();
-        {if $role && $role.functionss}
+        {if $role && $role->functionss}
         var select_functions = new Array({count($role.functionss)});
         {foreach $role.functionss as $functions}
 
         var functions       = {};
-        functions.id        = "{$functions.functions_id}";
-        functions.text      = "{$functions.url}";
+        functions.id        = "{$functions->functions_id}";
+        functions.text      = "{$functions->url}";
         select_functions[{$functions@index}] = functions;
         {/foreach}
         {/if}

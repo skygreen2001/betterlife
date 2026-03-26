@@ -34,7 +34,7 @@
                       {if $blog}
                       <div class="form-group">
                         <label class="col-sm-2 control-label">标识</label>
-                        <div class="col-sm-9 edit-view">{$blog.blog_id}</div>
+                        <div class="col-sm-9 edit-view">{$blog->blog_id}</div>
                       </div>
                       {/if}
                       <div class="form-group">
@@ -51,7 +51,7 @@
                           <label for="blog_name" class="col-sm-2 control-label">标题</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="blog_name" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog.blog_name|default:''}"/>
+                              <input id="blog_name" name="blog_name" placeholder="标题" class="form-control" type="text" value="{$blog->blog_name|default:''}"/>
                             </div>
                           </div>
                       </div>
@@ -59,7 +59,7 @@
                           <label for="sequenceNo" class="col-sm-2 control-label">序号</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog.sequenceNo|default:100}"/>
+                              <input id="sequenceNo" name="sequenceNo" placeholder="序号" class="form-control" type="number" value="{$blog->sequenceNo|default:100}"/>
                             </div>
                           </div>
                       </div>
@@ -84,7 +84,7 @@
                           <label for="blog_content" class="col-sm-2 control-label">内容</label>
                           <div class="col-sm-9">
                             <div class="clearfix">
-                              <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog.blog_content|default:''}</textarea>
+                              <textarea class="form-control" id="blog_content" name="blog_content" rows="6" cols="60" placeholder="内容">{$blog->blog_content|default:''}</textarea>
                             </div>
                           </div>
                       </div>
@@ -92,7 +92,7 @@
                           <label for="isPublic" class="col-sm-2 control-label">公开</label>
                           <div class="col-sm-9">
                               <input class="form-control" id="isPublic" type="checkbox" name="isPublic" 
-                                {if $blog && $blog.isPublic} checked {/if}
+                                {if $blog && $blog->isPublic} checked {/if}
                                 data-on-text="是" data-off-text="否" />
                               
                           </div>
@@ -101,7 +101,7 @@
                           <label for="publish_dateStr" class="col-sm-2 control-label">发布日期</label>
                           <div class="col-sm-9">
                               <div class="input-group col-sm-9 datetimeStyle" id="publish_date">
-                                  <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog.publish_date|default:''}"/>
+                                  <input id="publish_dateStr" name="publish_date" class="form-control date-picker" type="text" value="{$blog->publish_date|default:''}"/>
                                   <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
                               </div>
                           </div>
@@ -114,7 +114,7 @@
                       </div>
 
                       <div class="space-4"></div>
-                      <input type="hidden" name="blog_id" value="{$blog.blog_id|default:''}"/>
+                      <input type="hidden" name="blog_id" value="{$blog->blog_id|default:''}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div  class="btn-group" role="group">
@@ -139,28 +139,28 @@
     {include file="$template_dir/layout/normal/footer.tpl"}
     <script type="text/javascript">
         var select_category = {};
-        {if $blog && $blog.category}
-        select_category.id   = "{$blog.category.category_id}";
-        select_category.text = "{$blog.category.name}";
+        {if $blog && $blog->category}
+        select_category.id   = "{$blog->category->category_id}";
+        select_category.text = "{$blog->category->name}";
         select_category = new Array(select_category);
         {/if}
 
         var select_tags = new Array();
-        {if $blog && $blog.tagss}
-        select_tags = new Array({count($blog.tagss)});
-        {foreach $blog.tagss as $tags}
+        {if $blog && $blog->tagss}
+        select_tags = new Array({count($blog->tagss)});
+        {foreach $blog->tagss as $tags}
 
         var tags       = {};
-        tags.id        = "{$tags.tags_id}";
-        tags.text      = "{$tags.title}";
+        tags.id        = "{$tags->tags_id}";
+        tags.text      = "{$tags->title}";
         select_tags[{$tags@index}] = tags;
         {/foreach}
         {/if}
 
         var select_status = {};
-        {if $blog && $blog.status}
-        select_status.id   = "{$blog.status}";
-        select_status.text = "{$blog.statusShow}";
+        {if $blog && $blog->status}
+        select_status.id   = "{$blog->status}";
+        select_status.text = "{$blog->statusShow}";
         select_status = new Array(select_status);
         {/if}
     </script>

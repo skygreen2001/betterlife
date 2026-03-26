@@ -8,16 +8,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $usernotice}编辑{else}新增{/if}用户收到通知</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="usernoticeForm" method="post"><input type="hidden" name="usernotice_id" value="{$usernotice.usernotice_id|default:''}"/>
+        <form name="usernoticeForm" method="post"><input type="hidden" name="usernotice_id" value="{$usernotice->usernotice_id|default:''}"/>
         <table class="viewdoblock">
-            {if $usernotice}<tr class="entry"><th class="head">标识</th><td class="content">{$usernotice.usernotice_id}</td></tr>{/if}
+            {if $usernotice}<tr class="entry"><th class="head">标识</th><td class="content">{$usernotice->usernotice_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">用户</th>
                 <td class="content select">
                     <select id="user_id" name="user_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=user from=$users}
-                        <option value="{$user.user_id}">{$user.username}</option>
+                        <option value="{$user->user_id}">{$user->username}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -28,7 +28,7 @@
                     <select id="notice_id" name="notice_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=notice from=$notices}
-                        <option value="{$notice.notice_id}">{$notice.noticeType}</option>
+                        <option value="{$notice->notice_id}">{$notice->noticeType}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -44,7 +44,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.usernotice.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $usernotice}
-            <my:a href='{$url_base}index.php?go=model.usernotice.view&amp;id={$usernotice.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户收到通知</my:a>
+            <my:a href='{$url_base}index.php?go=model.usernotice.view&amp;id={$usernotice->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户收到通知</my:a>
             {/if}
         </div>
     </div>
@@ -52,16 +52,16 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $usernotice && $usernotice.user}
-        select_user.id   = "{$usernotice.user.user_id}";
-        select_user.text = "{$usernotice.user.username}";
+        {if $usernotice && $usernotice->user}
+        select_user.id   = "{$usernotice->user->user_id}";
+        select_user.text = "{$usernotice->user->username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_notice = {};
-        {if $usernotice && $usernotice.notice}
-        select_notice.id   = "{$usernotice.notice.notice_id}";
-        select_notice.text = "{$usernotice.notice.noticeType}";
+        {if $usernotice && $usernotice->notice}
+        select_notice.id   = "{$usernotice->notice->notice_id}";
+        select_notice.text = "{$usernotice->notice->noticeType}";
         select_notice = new Array(select_notice);
         {/if}
 

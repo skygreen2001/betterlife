@@ -8,16 +8,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $rolefunctions}编辑{else}新增{/if}角色拥有功能</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="rolefunctionsForm" method="post"><input type="hidden" name="rolefunctions_id" value="{$rolefunctions.rolefunctions_id|default:''}"/>
+        <form name="rolefunctionsForm" method="post"><input type="hidden" name="rolefunctions_id" value="{$rolefunctions->rolefunctions_id|default:''}"/>
         <table class="viewdoblock">
-            {if $rolefunctions}<tr class="entry"><th class="head">标识</th><td class="content">{$rolefunctions.rolefunctions_id}</td></tr>{/if}
+            {if $rolefunctions}<tr class="entry"><th class="head">标识</th><td class="content">{$rolefunctions->rolefunctions_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">角色</th>
                 <td class="content select">
                     <select id="role_id" name="role_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=role from=$roles}
-                        <option value="{$role.role_id}">{$role.role_name}</option>
+                        <option value="{$role->role_id}">{$role->role_name}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -28,7 +28,7 @@
                     <select id="functions_id" name="functions_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=functions from=$functionss}
-                        <option value="{$functions.functions_id}">{$functions.url}</option>
+                        <option value="{$functions->functions_id}">{$functions->url}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -44,7 +44,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.rolefunctions.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $rolefunctions}
-            <my:a href='{$url_base}index.php?go=model.rolefunctions.view&amp;id={$rolefunctions.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色拥有功能</my:a>
+            <my:a href='{$url_base}index.php?go=model.rolefunctions.view&amp;id={$rolefunctions->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看角色拥有功能</my:a>
             {/if}
         </div>
     </div>
@@ -52,16 +52,16 @@
     <script type="text/javascript">
     $(function() {
         var select_role = {};
-        {if $rolefunctions && $rolefunctions.role}
-        select_role.id   = "{$rolefunctions.role.role_id}";
-        select_role.text = "{$rolefunctions.role.role_name}";
+        {if $rolefunctions && $rolefunctions->role}
+        select_role.id   = "{$rolefunctions->role->role_id}";
+        select_role.text = "{$rolefunctions->role->role_name}";
         select_role = new Array(select_role);
         {/if}
 
         var select_functions = {};
-        {if $rolefunctions && $rolefunctions.functions}
-        select_functions.id   = "{$rolefunctions.functions.functions_id}";
-        select_functions.text = "{$rolefunctions.functions.url}";
+        {if $rolefunctions && $rolefunctions->functions}
+        select_functions.id   = "{$rolefunctions->functions->functions_id}";
+        select_functions.text = "{$rolefunctions->functions->url}";
         select_functions = new Array(select_functions);
         {/if}
 

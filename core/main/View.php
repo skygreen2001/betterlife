@@ -360,21 +360,17 @@ class View
                 if (class_exists("Smarty_Security")) {
                     $my_security_policy = new Smarty_Security($this->template);
                     $my_security_policy->secure_dir[] = Gc::$nav_root_path . $this->getTemplateViewDir($this->moduleName);
-                    $my_security_policy->allow_php_tag = true;
                     $my_security_policy->php_functions = array();
                     $my_security_policy->php_modifiers = array();
-                    $my_security_policy->modifiers = array();
                     $this->template->enableSecurity($my_security_policy);
                 }
 
-                // $my_security_policy = new Smarty_Security($this->template);
-                // $my_security_policy->allow_php_tag = true;
-                // $this->template->enableSecurity($my_security_policy);
                 $this->template->debugging = Gc::$dev_smarty_on;
                 $this->template->force_compile = false;
                 $this->template->caching = Gc::$is_online_optimize;
+                // $this->template->caching = Smarty::CACHING_OFF;
                 $this->template->cache_lifetime = 86400;//缓存一周
-
+                
                 // 请注意，启用 allow_php_tag 并关闭安全策略会带来潜在的安全风险，因此建议尽量避免这种方式。
                 // // Enable PHP tags in templates
                 // $this->template->security_policy = false; // 关闭安全策略

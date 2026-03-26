@@ -8,16 +8,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $blogtags}编辑{else}新增{/if}博客标签</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="blogtagsForm" method="post"><input type="hidden" name="blogtags_id" value="{$blogtags.blogtags_id|default:''}"/>
+        <form name="blogtagsForm" method="post"><input type="hidden" name="blogtags_id" value="{$blogtags->blogtags_id|default:''}"/>
         <table class="viewdoblock">
-            {if $blogtags}<tr class="entry"><th class="head">标识</th><td class="content">{$blogtags.blogtags_id}</td></tr>{/if}
+            {if $blogtags}<tr class="entry"><th class="head">标识</th><td class="content">{$blogtags->blogtags_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">博客</th>
                 <td class="content select">
                     <select id="blog_id" name="blog_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=blog from=$blogs}
-                        <option value="{$blog.blog_id}">{$blog.blog_name}</option>
+                        <option value="{$blog->blog_id}">{$blog->blog_name}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -28,7 +28,7 @@
                     <select id="tags_id" name="tags_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=tags from=$tagss}
-                        <option value="{$tags.tags_id}">{$tags.title}</option>
+                        <option value="{$tags->tags_id}">{$tags->title}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -44,7 +44,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.blogtags.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $blogtags}
-            <my:a href='{$url_base}index.php?go=model.blogtags.view&amp;id={$blogtags.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客标签</my:a>
+            <my:a href='{$url_base}index.php?go=model.blogtags.view&amp;id={$blogtags->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客标签</my:a>
             {/if}
         </div>
     </div>
@@ -52,16 +52,16 @@
     <script type="text/javascript">
     $(function() {
         var select_blog = {};
-        {if $blogtags && $blogtags.blog}
-        select_blog.id   = "{$blogtags.blog.blog_id}";
-        select_blog.text = "{$blogtags.blog.blog_name}";
+        {if $blogtags && $blogtags->blog}
+        select_blog.id   = "{$blogtags->blog->blog_id}";
+        select_blog.text = "{$blogtags->blog->blog_name}";
         select_blog = new Array(select_blog);
         {/if}
 
         var select_tags = {};
-        {if $blogtags && $blogtags.tags}
-        select_tags.id   = "{$blogtags.tags.tags_id}";
-        select_tags.text = "{$blogtags.tags.title}";
+        {if $blogtags && $blogtags->tags}
+        select_tags.id   = "{$blogtags->tags->tags_id}";
+        select_tags.text = "{$blogtags->tags->title}";
         select_tags = new Array(select_tags);
         {/if}
 

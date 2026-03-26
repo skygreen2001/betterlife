@@ -9,16 +9,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $loguser}编辑{else}新增{/if}用户日志</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="loguserForm" method="post"><input type="hidden" name="loguser_id" value="{$loguser.loguser_id|default:''}"/>
+        <form name="loguserForm" method="post"><input type="hidden" name="loguser_id" value="{$loguser->loguser_id|default:''}"/>
         <table class="viewdoblock">
-            {if $loguser}<tr class="entry"><th class="head">标识</th><td class="content">{$loguser.loguser_id}</td></tr>{/if}
+            {if $loguser}<tr class="entry"><th class="head">标识</th><td class="content">{$loguser->loguser_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">用户</th>
                 <td class="content select">
                     <select id="user_id" name="user_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=user from=$users}
-                        <option value="{$user.user_id}">{$user.username}</option>
+                        <option value="{$user->user_id}">{$user->username}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -32,7 +32,7 @@
             <tr class="entry">
                 <th class="head">日志详情</th>
                 <td class="content">
-                    <textarea id="log_content" name="log_content" rows="6" cols="60" placeholder="日志详情">{$loguser.log_content|default:''}</textarea>
+                    <textarea id="log_content" name="log_content" rows="6" cols="60" placeholder="日志详情">{$loguser->log_content|default:''}</textarea>
                 </td>
             </tr
             <tr class="entry">
@@ -46,7 +46,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.loguser.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $loguser}
-            <my:a href='{$url_base}index.php?go=model.loguser.view&amp;id={$loguser.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户日志</my:a>
+            <my:a href='{$url_base}index.php?go=model.loguser.view&amp;id={$loguser->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户日志</my:a>
             {/if}
         </div>
     </div>
@@ -70,16 +70,16 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $loguser && $loguser.user}
-        select_user.id   = "{$loguser.user.user_id}";
-        select_user.text = "{$loguser.user.username}";
+        {if $loguser && $loguser->user}
+        select_user.id   = "{$loguser->user->user_id}";
+        select_user.text = "{$loguser->user->username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_userType = {};
-        {if $loguser && $loguser.userType}
-        select_userType.id   = "{$loguser.userType}";
-        select_userType.text = "{$loguser.userTypeShow}";
+        {if $loguser && $loguser->userType}
+        select_userType.id   = "{$loguser->userType}";
+        select_userType.text = "{$loguser->userTypeShow}";
         select_userType = new Array(select_userType);
         {/if}
 

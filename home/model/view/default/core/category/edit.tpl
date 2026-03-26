@@ -9,11 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $category}编辑{else}新增{/if}博客分类</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category.category_id|default:''}"/>
+        <form name="categoryForm" method="post" enctype="multipart/form-data"><input type="hidden" name="category_id" value="{$category->category_id|default:''}"/>
         <table class="viewdoblock">
-            {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category.category_id}</td></tr>{/if}
-            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category.sequence_no|default:100}"/></td></tr>
-            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category.name|default:''}"/></td></tr>
+            {if $category}<tr class="entry"><th class="head">标识</th><td class="content">{$category->category_id}</td></tr>{/if}
+            <tr class="entry"><th class="head">序号</th><td class="content"><input type="number" class="edit" name="sequence_no" value="{$category->sequence_no|default:100}"/></td></tr>
+            <tr class="entry"><th class="head">名称</th><td class="content"><input type="text" class="edit" name="name" value="{$category->name|default:''}"/></td></tr>
             <tr class="entry">
                 <th class="head">图标</th>
                 <td class="content">
@@ -27,7 +27,7 @@
             <tr class="entry">
                 <th class="head">说明</th>
                 <td class="content">
-                    <textarea id="intro" name="intro" rows="6" cols="60" placeholder="说明">{$category.intro|default:''}</textarea>
+                    <textarea id="intro" name="intro" rows="6" cols="60" placeholder="说明">{$category->intro|default:''}</textarea>
                 </td>
             </tr
             <tr class="entry">
@@ -41,7 +41,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.category.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $category}
-            <my:a href='{$url_base}index.php?go=model.category.view&amp;id={$category.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客分类</my:a>
+            <my:a href='{$url_base}index.php?go=model.category.view&amp;id={$category->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看博客分类</my:a>
             {/if}
         </div>
     </div>

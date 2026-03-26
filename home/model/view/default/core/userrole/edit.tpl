@@ -8,16 +8,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $userrole}编辑{else}新增{/if}用户角色</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="userroleForm" method="post"><input type="hidden" name="userrole_id" value="{$userrole.userrole_id|default:''}"/>
+        <form name="userroleForm" method="post"><input type="hidden" name="userrole_id" value="{$userrole->userrole_id|default:''}"/>
         <table class="viewdoblock">
-            {if $userrole}<tr class="entry"><th class="head">标识</th><td class="content">{$userrole.userrole_id}</td></tr>{/if}
+            {if $userrole}<tr class="entry"><th class="head">标识</th><td class="content">{$userrole->userrole_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">用户</th>
                 <td class="content select">
                     <select id="user_id" name="user_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=user from=$users}
-                        <option value="{$user.user_id}">{$user.username}</option>
+                        <option value="{$user->user_id}">{$user->username}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -28,7 +28,7 @@
                     <select id="role_id" name="role_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=role from=$roles}
-                        <option value="{$role.role_id}">{$role.role_name}</option>
+                        <option value="{$role->role_id}">{$role->role_name}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -44,7 +44,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.userrole.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $userrole}
-            <my:a href='{$url_base}index.php?go=model.userrole.view&amp;id={$userrole.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户角色</my:a>
+            <my:a href='{$url_base}index.php?go=model.userrole.view&amp;id={$userrole->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看用户角色</my:a>
             {/if}
         </div>
     </div>
@@ -52,16 +52,16 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $userrole && $userrole.user}
-        select_user.id   = "{$userrole.user.user_id}";
-        select_user.text = "{$userrole.user.username}";
+        {if $userrole && $userrole->user}
+        select_user.id   = "{$userrole->user->user_id}";
+        select_user.text = "{$userrole->user->username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_role = {};
-        {if $userrole && $userrole.role}
-        select_role.id   = "{$userrole.role.role_id}";
-        select_role.text = "{$userrole.role.role_name}";
+        {if $userrole && $userrole->role}
+        select_role.id   = "{$userrole->role->role_id}";
+        select_role.text = "{$userrole->role->role_name}";
         select_role = new Array(select_role);
         {/if}
 

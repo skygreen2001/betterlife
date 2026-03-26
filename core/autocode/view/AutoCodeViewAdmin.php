@@ -353,13 +353,13 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $relation_content = "                              <select id=\"$realId\" name=\"$realId\" class=\"form-control\">" . HH .
                                         "                                  <option value=\"-10000\">请选择</option>" . HH .
                                         "                                  {foreach item=$value from=\${$value}s}" . HH .
-                                        "                                  <option value=\"{\${$value}.$realId}\">{\${$value}.{$classNameField}}</option>" . HH .
+                                        "                                  <option value=\"{\${$value}->$realId}\">{\${$value}->$classNameField}}</option>" . HH .
                                         "                                  {/foreach}" . HH .
                                         "                              </select>" . HH;
                     $rela_js_content .= "        var select_{$value} = {};" . HH .
-                                        "        {if \${$instancename} && \${$instancename}.{$value}}" . HH .
-                                        "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$realId}}\";" . HH .
-                                        "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";" . HH .
+                                        "        {if \${$instancename} && \${$instancename}->{$value}}" . HH .
+                                        "        select_{$value}.id   = \"{\${$instancename}->{$value}->{$realId}}\";" . HH .
+                                        "        select_{$value}.text = \"{\${$instancename}->{$value}->{$classNameField}}\";" . HH .
                                         "        select_{$value} = new Array(select_{$value});" . HH .
                                         "        {/if}" . HH . HH;
                     $belong_has_ones[$realId] = $relation_content;
@@ -377,12 +377,12 @@ class AutoCodeViewAdmin extends AutoCodeView
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName($key);
                     $rela_js_content  .= "        var select_{$instancename_rela} = new Array();" . HH .
-                                         "        {if \${$instancename} && \${$instancename}.{$value}}" . HH .
-                                         "        select_{$instancename_rela} = new Array({count(\${$instancename}.{$value})});" . HH .
-                                         "        {foreach \${$instancename}.{$value} as \$$instancename_rela}" . HH . HH .
+                                         "        {if \${$instancename} && \${$instancename}->{$value}}" . HH .
+                                         "        select_{$instancename_rela} = new Array({count(\${$instancename}->{$value})});" . HH .
+                                         "        {foreach \${$instancename}->{$value} as \$$instancename_rela}" . HH . HH .
                                          "        var $instancename_rela       = {};" . HH .
-                                         "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";" . HH .
-                                         "        $instancename_rela.text      = \"{\$$instancename_rela.$classNameField}\";" . HH .
+                                         "        $instancename_rela.id        = \"{\$$instancename_rela->$realId_m2m}\";" . HH .
+                                         "        $instancename_rela.text      = \"{\$$instancename_rela->$classNameField}\";" . HH .
                                          "        select_{$instancename_rela}[{\${$instancename_rela}@index}] = $instancename_rela;" . HH .
                                          "        {/foreach}" . HH .
                                          "        {/if}" . HH . HH;
@@ -450,7 +450,7 @@ class AutoCodeViewAdmin extends AutoCodeView
                     switch ($datatype) {
                         case "bit":
                             $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"checkbox\" " . HH .
-                                            "                                         {if \$" . $instancename . " && \$" . $instancename . "." . $fieldname . "} checked {/if} " . HH .
+                                            "                                         {if \$" . $instancename . " && \$" . $instancename . "->" . $fieldname . "} checked {/if} " . HH .
                                             "                                         data-on-text=\"是\" data-off-text=\"否\" />" . HH;
                             break;
                         case "enum":
@@ -459,23 +459,23 @@ class AutoCodeViewAdmin extends AutoCodeView
                                             "        var select_{$fieldname} = {};" . HH .
                                             "        {if \${$instancename} && isset(\${$instancename}->{$fieldname})}" . HH .
                                             "        select_{$fieldname}.id   = \"{\$" . $instancename . "->" . $fieldname . "}\";" . HH .
-                                            "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";" . HH .
+                                            "        select_{$fieldname}.text = \"{\$" . $instancename . "->" . $fieldname . "Show}\";" . HH .
                                             "        select_{$fieldname} = new Array(select_{$fieldname});" . HH .
                                             "        {/if}" . HH .
                                             "    </script>" . HH;
                             break;
                         case "date":
                             $edit_contents .= "                                  <div class=\"input-group col-sm-9 datetimeStyle\" id=\"" . $fieldname . "\">" . HH .
-                                            "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "|default:''}\"/>" . HH .
+                                            "                                      <input id=\"" . $fieldname . "Str\" name=\"" . $fieldname . "\" class=\"form-control date-picker\" type=\"text\" value=\"{\$" . $instancename . "->" . $fieldname . "|default:''}\"/>" . HH .
                                             "                                      <span class=\"input-group-addon\"><i class=\"fa fa-calendar bigger-110\"></i></span>" . HH .
                                             "                                  </div>" . HH;
                             break;
                         case "int":
                         case "bigint":
-                            $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "." . $fieldname . "|default:100}\"/>" . HH;
+                            $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"number\" value=\"{\$" . $instancename . "->" . $fieldname . "|default:100}\"/>" . HH;
                             break;
                         default:
-                            $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "." . $fieldname . "|default:''}\"/>" . HH;
+                            $edit_contents .= "                                  <input id=\"" . $fieldname . "\" name=\"" . $fieldname . "\" placeholder=\"" . $field_comment . "\" class=\"form-control\" type=\"text\" value=\"{\$" . $instancename . "->" . $fieldname . "|default:''}\"/>" . HH;
                             break;
                     }
                     $edit_contents .= "                              </div>" . HH .

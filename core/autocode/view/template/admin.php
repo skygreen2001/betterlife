@@ -504,12 +504,12 @@ $edit_template = <<<EDIT_TPL
                       {if \${$instancename}}
                       <div class="form-group">
                         <label class="col-sm-2 control-label">标识</label>
-                        <div class="col-sm-9 edit-view">{\${$instancename}.$realId}</div>
+                        <div class="col-sm-9 edit-view">{\${$instancename}->$realId}</div>
                       </div>
                       {/if}
 $edit_contents
                       <div class="space-4"></div>
-                      <input type="hidden" name="$realId" value="{\${$instancename}.$realId|default:''}"/>
+                      <input type="hidden" name="$realId" value="{\${$instancename}->$realId|default:''}"/>
                       <div class="form-actions col-md-12">
                           <button type="submit" class="btn btn-success">确认</button>
                           <div class="btn-group" role="group">

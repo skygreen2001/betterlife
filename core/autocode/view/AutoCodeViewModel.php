@@ -203,13 +203,13 @@ class AutoCodeViewModel extends AutoCodeView
                     $relation_content  = "                    <select id=\"$re_realId\" name=\"$re_realId\" class=\"form-control\">" . HH .
                                          "                        <option value=\"-1\">请选择</option>" . HH .
                                          "                        {foreach item=$value from=\${$value}s}" . HH .
-                                         "                        <option value=\"{\${$value}.$re_realId}\">{\${$value}.{$classNameField}}</option>" . HH .
+                                         "                        <option value=\"{\${$value}->$re_realId}\">{\${$value}->{$classNameField}}</option>" . HH .
                                          "                        {/foreach}" . HH .
                                          "                    </select>" . HH;
                     $rela_js_content .= "        var select_{$value} = {};" . HH .
-                                        "        {if \${$instancename} && \${$instancename}.{$value}}" . HH .
-                                        "        select_{$value}.id   = \"{\${$instancename}.{$value}.{$re_realId}}\";" . HH .
-                                        "        select_{$value}.text = \"{\${$instancename}.{$value}.{$classNameField}}\";" . HH .
+                                        "        {if \${$instancename} && \${$instancename}->{$value}}" . HH .
+                                        "        select_{$value}.id   = \"{\${$instancename}->{$value}->{$re_realId}}\";" . HH .
+                                        "        select_{$value}.text = \"{\${$instancename}->{$value}->{$classNameField}}\";" . HH .
                                         "        select_{$value} = new Array(select_{$value});" . HH .
                                         "        {/if}" . HH . HH;
                     $belong_has_ones[$re_realId]["i"] = $value;
@@ -227,12 +227,12 @@ class AutoCodeViewModel extends AutoCodeView
                     $m2m_table_comment = self::tableCommentKey($talname_rela);
                     $classNameField    = self::getShowFieldName($key);
                     $rela_js_content  .= "        var select_{$instancename_rela} = new Array();" . HH .
-                                         "        {if \${$instancename} && \${$instancename}.{$value}}" . HH .
-                                         "        var select_{$instancename_rela} = new Array({count(\${$instancename}.{$value})});" . HH .
-                                         "        {foreach \${$instancename}.{$value} as \$$instancename_rela}" . HH . HH .
+                                         "        {if \${$instancename} && \${$instancename}->{$value}}" . HH .
+                                         "        var select_{$instancename_rela} = new Array({count(\${$instancename}->{$value})});" . HH .
+                                         "        {foreach \${$instancename}->{$value} as \$$instancename_rela}" . HH . HH .
                                          "        var $instancename_rela       = {};" . HH .
-                                         "        $instancename_rela.id        = \"{\$$instancename_rela.$realId_m2m}\";" . HH .
-                                         "        $instancename_rela.text      = \"{\$$instancename_rela.$classNameField}\";" . HH .
+                                         "        $instancename_rela.id        = \"{\$$instancename_rela->$realId_m2m}\";" . HH .
+                                         "        $instancename_rela.text      = \"{\$$instancename_rela->$classNameField}\";" . HH .
                                          "        select_{$instancename_rela}[{\${$instancename_rela}@index}] = $instancename_rela;" . HH .
                                          "        {/foreach}" . HH .
                                          "        {/if}" . HH . HH;
@@ -267,12 +267,12 @@ class AutoCodeViewModel extends AutoCodeView
                 $isImage = self::columnIsImage($fieldname, $field_comment);
                 // $isImage = self::columnIsImage( $fieldname, $field_comment );
                 if ($idColumnName == $fieldname) {
-                    $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}.$fieldname}</td></tr>{/if}" . HH;
+                    $edit_contents .= "            {if \${$instancename}}<tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\">{\${$instancename}->$fieldname}</td></tr>{/if}" . HH;
                 } elseif (self::columnIsTextArea($fieldname, $field["Type"])) {
                     $edit_contents .= "            <tr class=\"entry\">" . HH .
                                       "                <th class=\"head\">$field_comment</th>" . HH .
                                       "                <td class=\"content\">" . HH .
-                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment . "\">{\${$instancename}.$fieldname|default:''}</textarea>" . HH .
+                                      "                    <textarea id=\"$fieldname\" name=\"$fieldname\" rows=\"6\" cols=\"60\" placeholder=\"" . $field_comment . "\">{\${$instancename}->$fieldname|default:''}</textarea>" . HH .
                                       "                </td>" . HH .
                                       "            </tr>" . HH;
                 } elseif ($isImage) {
@@ -309,13 +309,13 @@ class AutoCodeViewModel extends AutoCodeView
                             $edit_contents .= "            <tr class=\"entry\">" . HH .
                                             "                <th class=\"head\">$field_comment</th>" . HH .
                                             "                <td class=\"content\">" . HH .
-                                            "                    <input type=\"radio\" id=\"{$fieldname}1\" name=\"{$fieldname}\" value=\"1\" {if \${$instancename} && \${$instancename}.{$fieldname}} checked {/if} /><label for=\"{$fieldname}1\" class=\"radio_label\">是</label>" . HH .
-                                            "                    <input type=\"radio\" id=\"{$fieldname}0\" name=\"{$fieldname}\" value=\"0\" {if \${$instancename} && !\${$instancename}.{$fieldname}} checked {/if}/><label for=\"{$fieldname}0\" class=\"radio_label\">否</label>" . HH .
+                                            "                    <input type=\"radio\" id=\"{$fieldname}1\" name=\"{$fieldname}\" value=\"1\" {if \${$instancename} && \${$instancename}->$fieldname}} checked {/if} /><label for=\"{$fieldname}1\" class=\"radio_label\">是</label>" . HH .
+                                            "                    <input type=\"radio\" id=\"{$fieldname}0\" name=\"{$fieldname}\" value=\"0\" {if \${$instancename} && !\${$instancename}->$fieldname}} checked {/if}/><label for=\"{$fieldname}0\" class=\"radio_label\">否</label>" . HH .
                                             "                </td>" . HH .
                                             "            </tr>" . HH;
                             break;
                         case "date":
-                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" placeholder=\"yyyy-mm-dd\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:''}\"/></td></tr>" . HH;
+                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" placeholder=\"yyyy-mm-dd\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}->$fieldname|default:''}\"/></td></tr>" . HH;
                             break;
                         case "enum":
                             $edit_contents .= "            <tr class=\"entry\">" . HH .
@@ -330,17 +330,17 @@ class AutoCodeViewModel extends AutoCodeView
                             break;
                         case "int":
                         case "bigint":
-                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:100}\"/></td></tr>" . HH;
+                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"number\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}->$fieldname|default:100}\"/></td></tr>" . HH;
                             break;
                         default:
-                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}.$fieldname|default:''}\"/></td></tr>" . HH;
+                            $edit_contents .= "            <tr class=\"entry\"><th class=\"head\">$field_comment</th><td class=\"content\"><input type=\"text\" class=\"edit\" name=\"$fieldname\" value=\"{\${$instancename}->$fieldname|default:''}\"/></td></tr>" . HH;
                             break;
                     }
                     if (contain($datatype, 'enum')) {
                         $enumJsContent .= "        var select_{$fieldname} = {};" . HH .
-                                          "        {if \${$instancename} && \${$instancename}.{$fieldname}}" . HH .
-                                          "        select_{$fieldname}.id   = \"{\$" . $instancename . "." . $fieldname . "}\";" . HH .
-                                          "        select_{$fieldname}.text = \"{\$" . $instancename . "." . $fieldname . "Show}\";" . HH .
+                                          "        {if \${$instancename} && \${$instancename}->$fieldname}}" . HH .
+                                          "        select_{$fieldname}.id   = \"{\$" . $instancename . "->" . $fieldname . "}\";" . HH .
+                                          "        select_{$fieldname}.text = \"{\$" . $instancename . "->" . $fieldname . "Show}\";" . HH .
                                           "        select_{$fieldname} = new Array(select_{$fieldname});" . HH .
                                           "        {/if}" . HH;
                     }
@@ -400,6 +400,7 @@ UETC;
         if (!empty($edit_contents) && (strlen($edit_contents) > 2)) {
             $edit_contents = substr($edit_contents, 0, strlen($edit_contents) - 2);
         }
+        $realId = DataObjectSpec::getRealIDColumnName($classname);
         include("template" . DS . "default.php");
         $result = $edit_template;
         if (count($text_area_fieldname) >= 1) {

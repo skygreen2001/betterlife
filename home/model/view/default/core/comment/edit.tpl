@@ -9,16 +9,16 @@
     <link rel="stylesheet" type="text/css" href="{$template_url}resources/css/edit.css" />
     <div class="block">
         <div><h1>{if $comment}编辑{else}新增{/if}评论</h1><p><font color="red">{$message|default:''}</font></p></div>
-        <form name="commentForm" method="post"><input type="hidden" name="comment_id" value="{$comment.comment_id|default:''}"/>
+        <form name="commentForm" method="post"><input type="hidden" name="comment_id" value="{$comment->comment_id|default:''}"/>
         <table class="viewdoblock">
-            {if $comment}<tr class="entry"><th class="head">标识</th><td class="content">{$comment.comment_id}</td></tr>{/if}
+            {if $comment}<tr class="entry"><th class="head">标识</th><td class="content">{$comment->comment_id}</td></tr>{/if}
             <tr class="entry">
                 <th class="head">评论者</th>
                 <td class="content select">
                     <select id="user_id" name="user_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=user from=$users}
-                        <option value="{$user.user_id}">{$user.username}</option>
+                        <option value="{$user->user_id}">{$user->username}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -26,7 +26,7 @@
             <tr class="entry">
                 <th class="head">评论</th>
                 <td class="content">
-                    <textarea id="comment" name="comment" rows="6" cols="60" placeholder="评论">{$comment.comment|default:''}</textarea>
+                    <textarea id="comment" name="comment" rows="6" cols="60" placeholder="评论">{$comment->comment|default:''}</textarea>
                 </td>
             </tr>
             <tr class="entry">
@@ -35,7 +35,7 @@
                     <select id="blog_id" name="blog_id" class="form-control">
                         <option value="-1">请选择</option>
                         {foreach item=blog from=$blogs}
-                        <option value="{$blog.blog_id}">{$blog.blog_name}</option>
+                        <option value="{$blog->blog_id}">{$blog->blog_name}</option>
                         {/foreach}
                     </select>
                 </td>
@@ -51,7 +51,7 @@
         <div class="footer" align="center">
             <my:a href='{$url_base}index.php?go=model.comment.lists&amp;pageNo={$smarty.get.pageNo|default:"1"}'>返回列表</my:a>
             {if $comment}
-            <my:a href='{$url_base}index.php?go=model.comment.view&amp;id={$comment.id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看评论</my:a>
+            <my:a href='{$url_base}index.php?go=model.comment.view&amp;id={$comment->id}&amp;pageNo={$smarty.get.pageNo|default:"1"}'>查看评论</my:a>
             {/if}
         </div>
     </div>
@@ -75,16 +75,16 @@
     <script type="text/javascript">
     $(function() {
         var select_user = {};
-        {if $comment && $comment.user}
-        select_user.id   = "{$comment.user.user_id}";
-        select_user.text = "{$comment.user.username}";
+        {if $comment && $comment->user}
+        select_user.id   = "{$comment->user->user_id}";
+        select_user.text = "{$comment->user->username}";
         select_user = new Array(select_user);
         {/if}
 
         var select_blog = {};
-        {if $comment && $comment.blog}
-        select_blog.id   = "{$comment.blog.blog_id}";
-        select_blog.text = "{$comment.blog.blog_name}";
+        {if $comment && $comment->blog}
+        select_blog.id   = "{$comment->blog->blog_id}";
+        select_blog.text = "{$comment->blog->blog_name}";
         select_blog = new Array(select_blog);
         {/if}
 
