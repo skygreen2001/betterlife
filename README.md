@@ -12,6 +12,7 @@
     * [学习手册: 在Surge](https://skygreen2001.surge.sh/)
     * [学习手册: 在Netlify](https://skygreen2001.netlify.app)
   * [快速上手](docs/README.md)
+  * [Zread](https://zread.ai/skygreen2001/betterlife)
 
 ## 下载源码
 
@@ -182,6 +183,7 @@
 
 ## 开发工具
 
+* [TRAE SOLO CN](https://trae.cn/)
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Atom](https://atom.io)
 * [Atom IDE](https://ide.atom.io/)
