@@ -125,7 +125,7 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 WORKDIR ${BB_PATH}
 EXPOSE 9000
 
-FROM nginx:alpine as nginx
+FROM nginx:1.20-alpine as nginx
 ARG BB_PATH=/var/www/html/betterlife/
 COPY install/docker/nginx/nginx.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/conf.d/default.conf
