@@ -12,10 +12,10 @@ foreach ($tableList as $tablename) {
         $fieldInfos[$tablename][$fieldname]["Key"]     = "";
         $fieldInfos[$tablename][$fieldname]["Null"]    = "";
         if ($field["Key"] == "PRI") {
-            $fieldInfos[$tablename][$fieldname]["Key"]  = "√";
+            $fieldInfos[$tablename][$fieldname]["Key"]  = "✅";
         }
         if ($field["Null"] == "NO") {
-            $fieldInfos[$tablename][$fieldname]["Null"] = "√";
+            $fieldInfos[$tablename][$fieldname]["Null"] = "✅";
         }
     }
 }
