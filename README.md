@@ -248,3 +248,14 @@ comment_language: zh-CN  # CEC default
 - [PHP The Right Way](https://laravel-china.github.io/php-the-right-way/)
 - [学习与收集](docs/learn/README.md)
 - [本框架早期帮助文档](http://skygreen2001.gitbooks.io/betterlife-cms-framework/content/index.html)
+
+## 其他
+
+- 在VSCode开发工具里，Git提交中英文注释生成模版配置如下:
+  ```
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "file": ".trae/rules/git-commit-message.md"
+        }
+    ]
+  ```
