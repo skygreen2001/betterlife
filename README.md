@@ -69,7 +69,8 @@ comment_language: zh-CN  # CEC default
 
 ## 下载源码
 
-* 下载地址: https://gitee.com/skygreen2015/betterlife
+* 下载地址[Gitee]: https://gitee.com/skygreen2015/betterlife
+* 下载地址[CNB]: https://cnb.cool/skygreen2001/betterlife
 
 * **Git安装**
 
