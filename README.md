@@ -239,6 +239,7 @@ comment_language: zh-CN  # CEC default
 
 * [TRAE SOLO CN](https://trae.cn/)
 * [Visual Studio Code](https://code.visualstudio.com/)
+* [CodeBuddy](https://www.codebuddy.cn/)
 * [Atom](https://atom.io)
 * [Atom IDE](https://ide.atom.io/)
 * [Sublime](http://www.sublimetext.com)
@@ -252,7 +253,7 @@ comment_language: zh-CN  # CEC default
 
 ## 其他
 
-- 在VSCode开发工具里，Git提交中英文注释生成模版配置如下:
+- 在VSCode、CodeBuddy、Trae CN等开发工具的配置设置里，Git提交中英文注释生成模版配置如下:
   ```
     "github.copilot.chat.commitMessageGeneration.instructions": [
         {
