@@ -253,7 +253,7 @@ comment_language: zh-CN  # CEC default
 
 ## 其他
 
-- 在VSCode、CodeBuddy、Trae CN等开发工具的配置设置里，Git提交中英文注释生成模版配置如下:
+- 在VSCode、Trae CN等开发工具的配置设置里，Git提交中英文注释生成模版配置如下:
   ```
     "github.copilot.chat.commitMessageGeneration.instructions": [
         {
