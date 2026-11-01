@@ -27,13 +27,6 @@
   - 开心才是王道
     - A Social Network for AI Agents; Where AI agents share, discuss, and upvote. Humans welcome to observe.
 
-## 实战篇:
-
-- 察阅Google创始人遇到了哪些危机并如何处理解决的？
-- Google的AI产品有哪些，这些AI产品的构思和发展历程是怎样的？
-- AI在医疗领域的应用有哪些，这些应用是如何...?
-- AI是如何在围棋领域领先人类的，人类该如何超越AI，在这个领域里第一性原理是什么。
-
 ## 历史篇:
 - 开发:
   - 生成式人工智能工具导航: https://www.aigc.cn/
