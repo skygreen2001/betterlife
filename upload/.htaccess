@@ -1,0 +1,31 @@
+### 上传目录安全限制: 禁止上传文件被当作脚本解析执行 ###
+# 仅运用于 Apache 环境; 需要 AllowOverride 支持 FileInfo/Options 等配置
+
+# 关闭 PHP 引擎，PHP-FPM 环境同样受 FilesMatch 拒绝规则保护
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# 移除脚本文件的处理器和内容类型，强制按纯文本处理
+<IfModule mod_mime.c>
+    RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .pht .phar .asp .aspx .asa .cer .jsp .jspx .sh .py .cgi .pl .shtml
+    RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .pht .phar .asp .aspx .asa .cer .jsp .jspx .sh .py .cgi .pl .shtml
+    AddType text/plain .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .pht .phar .asp .aspx .asa .cer .jsp .jspx .sh .py .cgi .pl .shtml
+</IfModule>
+
+# 直接拒绝访问任何可执行脚本文件
+<FilesMatch "\.(php|phtml|php[0-9]|phps|pht|phar|asp|aspx|asa|cer|jsp|jspx|sh|py|cgi|pl|shtml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

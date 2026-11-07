@@ -456,6 +456,10 @@ class ServiceBasic extends Service implements IServiceBasic
             if (!$check_result['success']) {
                 return array('success' => false, 'data' => $check_result['msg']);
             }
+            $check_result = UtilFileSystem::checkUploadFileMimeType($files[$upload_field_name]["tmp_name"]);
+            if (!$check_result['success']) {
+                return array('success' => false, 'data' => $check_result['msg']);
+            }
             UtilFileSystem::createDir($upload_zip_dir);
             $IsUploadSucc = move_uploaded_file($files[$upload_field_name]["tmp_name"], $uploadPath);
             $zip = new ZipArchive();

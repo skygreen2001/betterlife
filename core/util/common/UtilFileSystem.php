@@ -216,6 +216,29 @@ class UtilFileSystem extends Util
     private static $denied_upload_extensions = array("phtml", "php", "asp", "php5", "jsp", "sh", "py");
 
     /**
+     * 不允许上传的文件MIME类型黑名单，防止脚本文件改名绕过后缀名校验
+     * @var array
+     */
+    private static $denied_upload_mime_types = array(
+        "text/x-php",
+        "application/x-php",
+        "application/x-httpd-php",
+        "application/x-httpd-php-source",
+        "application/x-httpd-php3",
+        "text/x-python",
+        "application/x-python",
+        "text/x-shellscript",
+        "application/x-shellscript",
+        "application/x-sh",
+        "application/x-csh",
+        "text/x-perl",
+        "application/x-perl",
+        "application/x-ruby",
+        "text/x-ruby",
+        "application/x-jsp",
+    );
+
+    /**
      * 校验上传文件的扩展名是否允许上传
      *
      * 文件名中的所有后缀都会逐一校验，避免 shell.php.jpg 这类多后缀绕过
@@ -231,6 +254,32 @@ class UtilFileSystem extends Util
             if (in_array($extension, self::$denied_upload_extensions)) {
                 return array('success' => false, 'msg' => '不允许上传该类型的文件[' . $extension . ']!');
             }
+        }
+        return array('success' => true);
+    }
+
+    /**
+     * 校验上传文件的内容MIME类型是否允许上传
+     *
+     * 通过读取文件的真实MIME类型，拦截改名为 .jpg 等后缀的脚本文件
+     * @param string $tmp_name 上传文件的临时文件名
+     * @return array 校验结果: success是否通过, msg错误信息
+     */
+    public static function checkUploadFileMimeType($tmp_name)
+    {
+        if (empty($tmp_name) || !file_exists($tmp_name)) {
+            return array('success' => false, 'msg' => '上传文件不存在!');
+        }
+        $mime_type = "";
+        if (class_exists("finfo")) {
+            $finfo     = new finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($tmp_name);
+        } elseif (function_exists("mime_content_type")) {
+            $mime_type = mime_content_type($tmp_name);
+        }
+        $mime_type = strtolower(trim($mime_type));
+        if (!empty($mime_type) && in_array($mime_type, self::$denied_upload_mime_types)) {
+            return array('success' => false, 'msg' => '不允许上传该类型的文件[' . $mime_type . ']!');
         }
         return array('success' => true);
     }
@@ -252,6 +301,13 @@ class UtilFileSystem extends Util
         $check_result = self::checkUploadFileExtension($files[$uploadFieldName]["name"]);
         if (!$check_result['success']) {
             return $check_result;
+        }
+        // 仅在文件成功上传成功时校验内容类型，避免覆盖原有的上传错误提示
+        if (empty($files[$uploadFieldName]["error"])) {
+            $check_result = self::checkUploadFileMimeType($files[$uploadFieldName]["tmp_name"]);
+            if (!$check_result['success']) {
+                return $check_result;
+            }
         }
         if ($files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000) {
             if ($files[$uploadFieldName]["error"] > 0) {
