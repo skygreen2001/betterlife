@@ -210,6 +210,32 @@ class UtilFileSystem extends Util
     }
 
     /**
+     * 不允许上传的文件扩展名黑名单，防止上传可执行脚本文件
+     * @var array
+     */
+    private static $denied_upload_extensions = array("phtml", "php", "asp", "php5", "jsp", "sh", "py");
+
+    /**
+     * 校验上传文件的扩展名是否允许上传
+     *
+     * 文件名中的所有后缀都会逐一校验，避免 shell.php.jpg 这类多后缀绕过
+     * @param string $filename 上传文件的原始文件名
+     * @return array 校验结果: success是否通过, msg错误信息
+     */
+    public static function checkUploadFileExtension($filename)
+    {
+        $file_parts = explode(".", strtolower(trim($filename)));
+        // 第一段为文件名主体，从第二段开始才是后缀名
+        for ($i = 1; $i < count($file_parts); $i++) {
+            $extension = trim($file_parts[$i]);
+            if (in_array($extension, self::$denied_upload_extensions)) {
+                return array('success' => false, 'msg' => '不允许上传该类型的文件[' . $extension . ']!');
+            }
+        }
+        return array('success' => true);
+    }
+
+    /**
      * 服务器上传文件
      *
      * 需要调整php.ini的配置项:post_max_size|upload_max_filesize
@@ -223,6 +249,10 @@ class UtilFileSystem extends Util
      */
     public static function uploadFile($files, $uploadPath, $uploadFieldName = "upload_file", $is_permit_same_filename = false, $file_permit_upload_size = 2)
     {
+        $check_result = self::checkUploadFileExtension($files[$uploadFieldName]["name"]);
+        if (!$check_result['success']) {
+            return $check_result;
+        }
         if ($files[$uploadFieldName]["size"] < $file_permit_upload_size * 1024000) {
             if ($files[$uploadFieldName]["error"] > 0) {
                 switch ($files[$uploadFieldName]['error']) {

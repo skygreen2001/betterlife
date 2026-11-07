@@ -409,9 +409,9 @@ class ServiceBasic extends Service implements IServiceBasic
     /**
      * 上传图片文件
      * @param array $files 上传的文件对象
-     * @param array $uploadFlag 上传标识,上传文件的input组件的名称
-     * @param array $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
-     * @param array $categoryId 上传文件所在的目录标识，一般为类实例名称
+     * @param string $uploadFlag 上传标识,上传文件的input组件的名称
+     * @param string $upload_dir 上传文件存储的所在目录[最后一级目录，一般对应图片列名称]
+     * @param string $categoryId 上传文件所在的目录标识，一般为类实例名称
      * @return array 反馈信息
      */
     public function uploadImage($files, $uploadFlag, $upload_dir, $categoryId = "default")
@@ -419,7 +419,8 @@ class ServiceBasic extends Service implements IServiceBasic
         $diffpart = date("YmdHis");
         $result   = "";
         if (!empty($files[$uploadFlag]) && !empty($files[$uploadFlag]["name"])) {
-            $tmptail    = end(explode('.', $files[$uploadFlag]["name"]));
+            $file_parts = explode('.', $files[$uploadFlag]["name"]);
+            $tmptail    = end($file_parts);
             $uploadPath = GC::$upload_path . "images" . DS . $categoryId . DS . $upload_dir . DS . $diffpart . "." . $tmptail;
             $result     = UtilFileSystem::uploadFile($files, $uploadPath, $uploadFlag);
             if ($result && ($result['success'] == true )) {
@@ -448,8 +449,13 @@ class ServiceBasic extends Service implements IServiceBasic
             $filename   = date("YmdHis");
             $upload_dir = GC::$upload_path . "images" . DS . $instance_name . DS;
             $upload_zip_dir = $upload_dir . "zip" . DS;
-            $tmptail    = end(explode('.', $files[$upload_field_name]["name"]));
+            $file_parts = explode('.', $files[$upload_field_name]["name"]);
+            $tmptail    = end($file_parts);
             $uploadPath = $upload_zip_dir . $filename . "." . $tmptail;
+            $check_result = UtilFileSystem::checkUploadFileExtension($files[$upload_field_name]["name"]);
+            if (!$check_result['success']) {
+                return array('success' => false, 'data' => $check_result['msg']);
+            }
             UtilFileSystem::createDir($upload_zip_dir);
             $IsUploadSucc = move_uploaded_file($files[$upload_field_name]["tmp_name"], $uploadPath);
             $zip = new ZipArchive();
