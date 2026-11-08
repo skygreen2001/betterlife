@@ -37,6 +37,9 @@
 
   * [使用 nginx](nginx.md)
 
+  * Nginx 部署时需在 server 块中禁止 `upload`、`log` 目录执行脚本（命中直接返回 403），
+    配置与 `nginx -t`、curl 验证步骤见 [nginx.md](nginx.md) 的「上传目录与日志目录脚本执行防护」一节。
+
 ## 本地运行服务器
 
 * **本地运行服务器[静态Html网页]**

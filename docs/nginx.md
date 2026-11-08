@@ -81,6 +81,37 @@
       }
       ```
 
+## 上传目录与日志目录脚本执行防护
+
+  为避免上传文件或日志目录中的脚本被 Nginx 交给 PHP-FPM 解析执行，需在 server 块中配置拦截规则，命中后直接返回 403 Forbidden。
+
+  - 配置示例（放在 server 块内，且必须位于 `location ~ .*\.php(\/.*)*$` 之前）:
+
+    ```
+    # 禁止 upload、log 目录下的可执行脚本被解析执行
+    # 正则 location(~*)优先级高于普通前缀 location(/); 同为正则时按配置顺序匹配
+    location ~* ^/(upload|log)/.*\.(php|phtml|php[0-9]|phps|pht|phar|asp|aspx|asa|cer|jsp|jspx|sh|py|cgi|pl|shtml)$ {
+        return 403;
+    }
+    ```
+
+  - 说明:
+    - 匹配范围: 仅限 `/upload`、`/log` 两个目录下指定后缀的文件，其他目录和静态资源不受影响
+    - 优先级: 正则 location 优先于普通前缀 location(`/`)，因此拦截逻辑优先生效
+    - 配置顺序: 多个正则 location 按配置出现顺序匹配，该规则必须写在 PHP 解析规则之前，否则脚本会先被交给 PHP-FPM
+    - Apache 环境已在 `upload/.htaccess` 中配置同类限制（关闭 PHP 引擎并拒绝脚本访问）
+
+  - 生效与验证:
+
+    ```
+    nginx -t          # 检查配置语法
+    nginx -s reload   # 重载配置生效
+
+    curl -I http://站点地址/upload/test.php   # 期望 HTTP 403
+    curl -I http://站点地址/log/test.jsp      # 期望 HTTP 403
+    curl -I http://站点地址/upload/logo.jpg   # 期望 HTTP 200
+    ```
+
 ## 安装 Php with Nginx
 
 ### 安装php-fpm
