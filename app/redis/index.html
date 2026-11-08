@@ -263,6 +263,7 @@
                   name="upload_file"
                   accept="application/vnd.ms-excel,application/msexcel,.xls"
                   :action="apiUrl + '?action=uploadfile'"
+                  :headers="{ 'X-CSRF-Token': csrfToken }"
                   :before-upload="beforeUpload"
                   :on-success="uploadFileFinish">
                   <div style="padding: 20px 0">

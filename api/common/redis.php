@@ -2,29 +2,67 @@
 
 require_once("../../init.php");
 
-header('Access-Control-Allow-Origin: *');
 header("Referrer-Policy: no-referrer");
 header('Content-Type:application/json;charset=UTF-8');
 
-/****************************************  初始化: 是否安装必备  ***********************************/
-$isPhpRedis = @$_GET["isPhpRedis"];
-if (!empty($isPhpRedis)) {
-    if (class_exists("Redis")) {
-        echo true;
-    } else {
-        echo false;
+// 统一读取请求参数（GET 与 POST 合并），后续写操作会强制要求 POST 方法
+$redis_request = array_merge($_GET, $_POST);
+
+/****************************************  安全防护: 网络来源限制  ***********************************/
+// 仅允许回环地址与内网地址访问，避免 Redis 管理接口暴露到公网
+if (!redis_is_trusted_ip(redis_client_ip())) {
+    redis_json_error("访问被拒绝：仅限内网访问", 403);
+}
+
+/****************************************  安全防护: 跨域来源收紧  ***********************************/
+// 不再使用 Access-Control-Allow-Origin: *，仅允许与当前 Host 同源的跨域请求
+if (!empty($_SERVER['HTTP_ORIGIN'])) {
+    $redis_host        = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+    $redis_origin_host = parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST);
+    if (!empty($redis_host) && !empty($redis_origin_host) && $redis_origin_host === $redis_host) {
+        header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Allow-Headers: X-CSRF-Token, Content-Type');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Vary: Origin');
     }
+    // 处理 CORS 预检请求
+    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(204);
+        return;
+    }
+}
+
+/****************************************  安全防护: 管理员身份校验  ***********************************/
+// isPhpRedis 仅检查扩展是否安装，无需登录；其余操作均要求管理员已登录后台
+$isPhpRedis = @$redis_request["isPhpRedis"];
+if (!empty($isPhpRedis)) {
+    echo class_exists("Redis") ? "true" : "false";
+    return;
+}
+if (!HttpSession::isHave('user_id')) {
+    redis_json_error("未登录或登录已过期，请先登录后台", 401);
+}
+
+/****************************************  安全防护: CSRF Token 获取  ***********************************/
+// 前端在初始化时通过该入口获取 CSRF Token，所有写操作必须携带
+if (isset($_GET['csrf'])) {
+    echo json_encode(array('csrf_token' => redis_csrf_token()));
     return;
 }
 
 /****************************************  菜单操作: 核心逻辑  ***********************************/
-$step = @$_GET["step"];     // 菜单操作
+$step = @$redis_request["step"];     // 菜单操作
 if (!empty($step)) {
-    $isRemote  = @$_GET["isConfigRemote"];
-    $server_id = @$_GET["server_id"];
-    $db        = @$_GET["db"];
-    $key       = @$_GET["key"];
-    $val       = @$_GET["result"];
+    // 写操作必须使用 POST 并携带 CSRF Token
+    if (in_array((int)$step, array(101, 102, 4, 6, 7, 9), true)) {
+        redis_require_post_csrf();
+    }
+    $isRemote  = @$redis_request["isConfigRemote"];
+    $server_id = @$redis_request["server_id"];
+    $db        = @$redis_request["db"];
+    $key       = @$redis_request["key"];
+    $val       = @$redis_request["result"];
 
     if (isset($isRemote) && $isRemote == true) {
         if (!empty($server_id)) {
@@ -37,9 +75,9 @@ if (!empty($step)) {
             }
         }
     } else {
-        $server   = @$_GET["server"];
-        $port     = @$_GET["port"];
-        $password = @$_GET["password"];
+        $server   = @$redis_request["server"];
+        $port     = @$redis_request["port"];
+        $password = @$redis_request["password"];
     }
 
     if (!empty($server)) {
@@ -112,12 +150,12 @@ if (!empty($step)) {
             $countAll = $serverCache->size();
             $data     = $serverCache->keys();
             sort($data, SORT_STRING);
-            $pageSize = @$_GET["pageSize"];
+            $pageSize = @$redis_request["pageSize"];
             if (!$pageSize) {
                 $pageSize = 1000;
             }
             if ($countAll > $pageSize) {
-                $page   = @$_GET["page"];
+                $page   = @$redis_request["page"];
                 if (!$page) {
                     $page = 1;
                 }
@@ -146,7 +184,7 @@ if (!empty($step)) {
             break;
       // 修改指定key的value
         case 4:
-            $valType = @$_GET["valType"];
+            $valType = @$redis_request["valType"];
             $dbIndex = (int) str_replace("db", "", $db);
             $serverCache->select($dbIndex);
             $serverCache->delete($key);
@@ -157,18 +195,18 @@ if (!empty($step)) {
             break;
       // 模糊查询指定关键词的所有key
         case 5:
-            $queryKey = @$_GET["queryKey"];
+            $queryKey = @$redis_request["queryKey"];
             $dbIndex  = (int) str_replace("db", "", $db);
             $serverCache->select($dbIndex);
             $data   = $serverCache->keys("*" . $queryKey . "*");
             $countAll = count($data);
             sort($data, SORT_STRING);
-            $pageSize = @$_GET["pageSize"];
+            $pageSize = @$redis_request["pageSize"];
             if (!$pageSize) {
                 $pageSize = 1000;
             }
             if ($countAll > $pageSize) {
-                $page   = @$_GET["page"];
+                $page   = @$redis_request["page"];
                 if (!$page) {
                     $page = 1;
                 }
@@ -188,9 +226,9 @@ if (!empty($step)) {
             break;
       // 新增key和value
         case 6:
-            $addNewType  = @$_GET["addNewType"];
-            $addNewKey   = @$_GET["addNewKey"];
-            $addNewValue = @$_GET["addNewValue"];
+            $addNewType  = @$redis_request["addNewType"];
+            $addNewKey   = @$redis_request["addNewKey"];
+            $addNewValue = @$redis_request["addNewValue"];
             $dbIndex     = (int) str_replace("db", "", $db);
             $serverCache->select($dbIndex);
             if (!empty($addNewType)) {
@@ -209,7 +247,7 @@ if (!empty($step)) {
             break;
       // 导出
         case 8:
-            $queryKey = @$_GET["queryKey"];
+            $queryKey = @$redis_request["queryKey"];
             $dbIndex = (int) str_replace("db", "", $db);
             $serverCache->select($dbIndex);
             if (!empty($queryKey)) {
@@ -246,7 +284,7 @@ if (!empty($step)) {
             break;
       // 导入
         case 9:
-            $ufile      = @$_GET["ufile"];
+            $ufile      = @$redis_request["ufile"];
             $uploadPath = GC::$upload_path . "redis" . DS . "import" . DS . $ufile;
             $arr_import_header = array("key" => "key", "value" => "value", "type" => "type");
             $data    = UtilExcel::exceltoArray($uploadPath, $arr_import_header);
@@ -267,14 +305,12 @@ if (!empty($step)) {
                         $addNewType = $row["type"];
                     }
                     if (!empty($addNewKey) && !empty($addNewValue)) {
+                        // 先根据类型显示名判断是否为集合/列表/有序集合/哈希，避免直接引用 Redis 扩展的类常量
+                        $typeShow     = strtoupper(trim($addNewType));
+                        $isComplexType = in_array($typeShow, array("SETS", "LISTS", "ZSETS", "SORTED SETS", "HASHES"));
                         if (!empty($addNewType)) {
                             $addNewType = $serverCache->getKeyTypeByShow($addNewType);
-                            if (
-                                $addNewType == Redis::REDIS_SET ||
-                                $addNewType == Redis::REDIS_LIST ||
-                                $addNewType == Redis::REDIS_ZSET ||
-                                $addNewType == Redis::REDIS_HASH
-                            ) {
+                            if ($isComplexType) {
                                 $addNewValue = json_decode($addNewValue, JSON_OBJECT_AS_ARRAY);
                                 $addNewValue = implode("<(||)>", $addNewValue);
                             }
@@ -310,8 +346,12 @@ if (!empty($step)) {
 }
 
 /****************************************  设置服务器  ***********************************/
-$action = @$_GET["ca"];  // 设置操作
+$action = @$redis_request["ca"];  // 设置操作
 if ($action) {
+    // 配置的新增/修改/删除均为写操作，必须使用 POST 并携带 CSRF Token
+    if (in_array((int)$action, array(1, 2, 3), true)) {
+        redis_require_post_csrf();
+    }
     $configs = server_configs();
     $result  = $configs["data"];
     switch ($action) {
@@ -322,11 +362,11 @@ if ($action) {
         break;
       // 新增Redis服务器设置
         case 1:
-            $id       = @$_GET["id"];
-            $name     = @$_GET["name"];
-            $server   = @$_GET["server"];
-            $port     = @$_GET["port"];
-            $password = @$_GET["password"];
+            $id       = @$redis_request["id"];
+            $name     = @$redis_request["name"];
+            $server   = @$redis_request["server"];
+            $port     = @$redis_request["port"];
+            $password = @$redis_request["password"];
             $record   = array(
             "id"       => $id,
             "name"     => $name,
@@ -344,12 +384,12 @@ if ($action) {
         break;
       // 修改Redis服务器设置
         case 2:
-            $id       = @$_GET["id"];
-            $oid      = @$_GET["oid"];
-            $name     = @$_GET["name"];
-            $server   = @$_GET["server"];
-            $port     = @$_GET["port"];
-            $password = @$_GET["password"];
+            $id       = @$redis_request["id"];
+            $oid      = @$redis_request["oid"];
+            $name     = @$redis_request["name"];
+            $server   = @$redis_request["server"];
+            $port     = @$redis_request["port"];
+            $password = @$redis_request["password"];
             if (!empty($oid)) {
                 $qid = $oid;
             } else {
@@ -373,7 +413,7 @@ if ($action) {
         break;
       // 删除Redis服务器设置
         case 3:
-            $id     = @$_GET["id"];
+            $id     = @$redis_request["id"];
             $id_key = array_search($id, array_column($result, 'id'));
             array_splice($result, $id_key, 1);
             if ($result) {
@@ -387,8 +427,10 @@ if ($action) {
 }
 
 /****************************************  上传文件  ***********************************/
-$action = @$_GET["action"];  // 是否上传文件
+$action = @$redis_request["action"];  // 是否上传文件
 if (!empty($action)) {
+    // 文件上传属于写操作，必须使用 POST 并携带 CSRF Token
+    redis_require_post_csrf();
     $result = '';
     $files = $_FILES;
     if (!empty($files["upload_file"])) {
@@ -404,6 +446,91 @@ if (!empty($action)) {
 }
 
 /****************************************  自定义函数  ***********************************/
+/**
+ * 获取客户端 IP（仅信任 REMOTE_ADDR，不读取可伪造的 X-Forwarded-For）
+ */
+function redis_client_ip()
+{
+    return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+}
+
+/**
+ * 判断客户端 IP 是否为可信任的内网地址（回环、RFC1918 私有地址段）
+ */
+function redis_is_trusted_ip($ip)
+{
+    if (empty($ip)) {
+        return false;
+    }
+    // 回环地址
+    if ($ip === '127.0.0.1' || $ip === '::1' || $ip === 'localhost') {
+        return true;
+    }
+    // 10.0.0.0/8
+    if (strpos($ip, '10.') === 0) {
+        return true;
+    }
+    // 192.168.0.0/16
+    if (strpos($ip, '192.168.') === 0) {
+        return true;
+    }
+    // 172.16.0.0/12
+    if (preg_match('/^172\.(1[6-9]|2\d|3[01])\./', $ip)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 输出 JSON 错误响应并终止执行
+ */
+function redis_json_error($message, $status_code = 400)
+{
+    http_response_code($status_code);
+    echo json_encode(array(
+        'success' => false,
+        'message' => $message,
+    ), JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+/**
+ * 获取（首次生成）当前会话的 CSRF Token
+ */
+function redis_csrf_token()
+{
+    if (empty($_SESSION['redis_csrf_token'])) {
+        $_SESSION['redis_csrf_token'] = bin2hex(function_exists('random_bytes') ? random_bytes(32) : openssl_random_pseudo_bytes(32));
+    }
+    return $_SESSION['redis_csrf_token'];
+}
+
+/**
+ * 校验请求携带的 CSRF Token 是否与会话中的一致
+ */
+function redis_verify_csrf($token)
+{
+    if (empty($token) || empty($_SESSION['redis_csrf_token'])) {
+        return false;
+    }
+    return hash_equals($_SESSION['redis_csrf_token'], $token);
+}
+
+/**
+ * 强制要求写操作使用 POST 方法并通过 CSRF 校验
+ */
+function redis_require_post_csrf()
+{
+    if (!isset($_SERVER['REQUEST_METHOD']) || strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
+        redis_json_error("写操作必须使用 POST 方法", 405);
+    }
+    $csrf_token = isset($_POST['csrf_token']) ? $_POST['csrf_token']
+        : (isset($_SERVER['HTTP_X_CSRF_TOKEN']) ? $_SERVER['HTTP_X_CSRF_TOKEN'] : '');
+    if (!redis_verify_csrf($csrf_token)) {
+        redis_json_error("CSRF 校验失败，请刷新页面后重试", 419);
+    }
+}
+
 /**
  * 获取配置文件路径
  * 首先检查upload目录下是否有该配置文件，如果没有，就从api默认文件复制到upload路径下

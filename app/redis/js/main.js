@@ -115,12 +115,38 @@ var app = new Vue({
                 deleteOne : -1,  // 被删除的行数
             },
             actionInfo : "",   // 确认操作窗口内容
+            csrfToken  : "",   // 写操作所需的 CSRF Token
         }
     },
     created: function() {
         this.getServers();
+        this.fetchCsrfToken();
     },
     methods: {
+        // 获取后端下发的 CSRF Token，所有写操作必须携带
+        fetchCsrfToken: function() {
+            var ctrl = this;
+            axios.get(this.apiUrl, { params: { csrf: 1 } })
+                .then(function (response) {
+                    if (response.data && response.data.csrf_token) {
+                        ctrl.csrfToken = response.data.csrf_token;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        // 写操作统一通过 POST 提交，并在请求体中携带 CSRF Token
+        postRequest: function(params) {
+            var body = new URLSearchParams();
+            Object.keys(params || {}).forEach(function(k) {
+                body.append(k, params[k]);
+            });
+            body.append('csrf_token', this.csrfToken);
+            return axios.post(this.apiUrl, body.toString(), {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+        },
         menuSelect: function(name) {
             // console.log(name);
             switch (name) {
@@ -299,9 +325,7 @@ var app = new Vue({
                 localStorage.configs = JSON.stringify(data);
                 this.getServers();
             } else {
-                axios.get(this.apiUrl, {
-                          params: params
-                       })
+                this.postRequest(params)
                      .then(function (response) {
                          // console.log(response);
                      })
@@ -361,9 +385,7 @@ var app = new Vue({
                 localStorage.configs = JSON.stringify(data);
                 this.getServers();
             } else {
-                axios.get(this.apiUrl, {
-                          params: params
-                       })
+                this.postRequest(params)
                      .then(function (response) {
                          // console.log(response);
                      })
@@ -407,12 +429,10 @@ var app = new Vue({
                 localStorage.configs = JSON.stringify(data);
                 this.getServers();
             } else {
-                axios.get(this.apiUrl, {
-                          params: {
-                              ca: 3,
-                              id: id
-                          }
-                       })
+                this.postRequest({
+                    ca: 3,
+                    id: id
+                })
                      .then(function (response) {
                          // console.log(response);
                      })
@@ -491,9 +511,7 @@ var app = new Vue({
             this.dbs = [];
             this.initKeys();
             this.isLoadingShow = true;
-            axios.get(this.apiUrl, {
-                      params: params
-                   })
+            this.postRequest(params)
                  .then(function (response) {
                      if ( Array.isArray(response.data) ) {
                          ctrl.dbs = response.data;
@@ -527,9 +545,7 @@ var app = new Vue({
             params.db  = this.deleteOne;
             this.dbs   = [];
             this.isLoadingShow = true;
-            axios.get(this.apiUrl, {
-                      params: params
-                   })
+            this.postRequest(params)
                  .then(function (response) {
                      if ( Array.isArray(response.data) ) {
                          ctrl.dbs = response.data;
@@ -695,9 +711,7 @@ var app = new Vue({
             params.valType = this.valType;
             params.result  = result;
             this.isLoadingShow = true;
-            axios.get(this.apiUrl, {
-                      params: params
-                   })
+            this.postRequest(params)
                  .then(function (response) {
                      var data = response.data;
                      var result = "";
@@ -756,9 +770,7 @@ var app = new Vue({
             params.addNewKey   = this.addNewKey;
             params.addNewValue = addNewValue;
             this.isLoadingShow = true;
-            axios.get(this.apiUrl, {
-                      params: params
-                   })
+            this.postRequest(params)
                  .then(function (response) {
                     //  var data  = response.data;
                      ctrl.keys = response.data;
@@ -782,9 +794,7 @@ var app = new Vue({
           params.key  = this.sel_key;
           this.isLoadingShow = true;
           let del_key = this.sel_key;
-          axios.get(this.apiUrl, {
-                    params: params
-                 })
+          this.postRequest(params)
                .then(function (response) {
                    var data = response.data;
                    ctrl.getKeys(ctrl.db);
@@ -818,9 +828,7 @@ var app = new Vue({
             params.db    = this.db;
             params.ufile = this.upload_file;
             this.isLoadingShow = true;
-            axios.get(this.apiUrl, {
-                      params: params
-                   })
+            this.postRequest(params)
                  .then(function (response) {
                      if ( response && response.data ) {
                         ctrl.keys = response.data;
