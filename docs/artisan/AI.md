@@ -68,6 +68,7 @@
   - 国外:
     - deepwiki(devin): https://deepwiki.com/ (类似Zread，英文)
 
+    - The agentic development environment(paseo): https://paseo.sh/
     - 现代 AI 终端工具 Warp: https://www.warp.dev/
     - OpenCode: https://opencode.ai/ (SST（Serverless Stack）团队) [OpenCode 是为“爱用命令行的开发者”量身打造的开源 AI 助手，它让你可以在不离开终端的情况下，利用强大的 AI 能力来提升编码效率],
       - 安装oh-my-opencode插件
@@ -150,6 +151,10 @@
 - chatbox: https://chatboxai.app/zh
 
 - n1n: https://api.n1n.ai/pricing (比价, OpenRouter)
+- OpenRouter: https://openrouter.ai/
+  - 全球规模最大的大模型 API 聚合网关（俗称“大模型中介”），由 Alex Atallah 等人于 2023 年创立。该平台已于 2026年11月11日正式宣布并入 Stripe。
+  - 本地离线、免登录、聚合50+ AI模型的聊天界面 => GODMOD3: https://godmod3.ai/ (Open-source, privacy-respecting, liberated AI chat;)
+
 
 - Latent Box: AI、创意和艺术领域的精选合集，来自 Latent Cat: https://latentbox.com/zh
 - Open Design: https://open-design.ai/zh/ (Claude Design最佳开源平替)
@@ -163,9 +168,9 @@
   - 智谱AI: https://zhipuai.cn/
     - GLM-4-Flash: https://bigmodel.cn/
   - 推荐 8 个 AI 图片转视频工具: https://zhuanlan.zhihu.com/p/666701593
-
-  - https://www.baidu.com/s?wd=AI%20%E5%9B%BE%E7%89%87%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91&rsv_spt=1&rsv_iqid=0xe858223800513348&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=cn&tn=baiduhome_pg&rsv_dl=tb&rsv_enter=1&oq=AI%2520%25E5%259B%25BE%25E7%2589%2587%25E7%2594%259F%25E6%2588%2590%25E5%258A%25A8%25E7%2594%25BB&rsv_btype=t&inputT=3096&rsv_t=ecf5SloaSKUouvdJfch9zdYDUaig1lYR01qFU%2F5myNTOvOsL4GKZ%2BLYfuFkNnYvE%2BJCU&rsv_pq=d8d41430004fff6a&rsv_sug3=46&rsv_sug1=3&rsv_sug7=100&rsv_sug2=0&rsv_sug4=3791&rsv_sug=1
-    - 百度关键词: AI 图片生成视频
+  - 百度关键词: AI 图片生成视频
+  - Compositor: https://github.com/robbietilton/Compositor
+    - Compositor 是一款免费开源的图像编辑软件，被誉为 Photoshop 的平替。它由前苹果设计师 Robbie Tilton 开发，初衷是不想每年支付 Adobe 的高额订阅费。项目在 GitHub 上已获得超过 10k Star，安装包仅约 12MB（相比之下 Photoshop 约 6GB），却内置了暗角、辉光、镜头校正、一键去背等常用功能，近期还新增了文字图层支持。
 
 - 视频
   - 字节跳动 seedream: https://seed.bytedance.com/zh/seedream4_0
