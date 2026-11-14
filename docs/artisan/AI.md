@@ -33,11 +33,13 @@
   - AI大侠: https://aidaxia.net/
   - 国内
     - Zread(智谱旗下): https://zread.ai/ (快速了解Github库)
-
+    - [阿里]夸克浏览器: https://www.quark.cn/
     - [字节跳动]Trae AI: https://www.trae.cn/
-    - [腾讯]Codebuddy: https://www.codebuddy.cn/home/
-      - WorkBuddy: https://www.codebuddy.cn/work
-      - 开发帮手: https://www.codebuddy.cn/agents
+    - [腾讯]WorkBuddy: https://www.workbuddy.cn/
+      - Codebuddy: https://www.codebuddy.cn/home/
+      - Miora: https://miora.design/ (是 WorkBuddy 的同源产品，专注多模态的图片、视频、3D、互动影视、游戏等创意内容产出。)
+
+
     - [超级AI工作站]cherry studio: https://www.cherry-ai.com/
     - Fitten Code: https://code.fittentech.com/
     - CodeGeex(智谱旗下): https://codegeex.cn/  (免费开源：个人用户可永久免费使用，无付费墙。)
@@ -154,8 +156,7 @@
 - OpenRouter: https://openrouter.ai/
   - 全球规模最大的大模型 API 聚合网关（俗称“大模型中介”），由 Alex Atallah 等人于 2023 年创立。该平台已于 2026年11月11日正式宣布并入 Stripe。
   - 本地离线、免登录、聚合50+ AI模型的聊天界面 => GODMOD3: https://godmod3.ai/ (Open-source, privacy-respecting, liberated AI chat;)
-
-
+  
 - Latent Box: AI、创意和艺术领域的精选合集，来自 Latent Cat: https://latentbox.com/zh
 - Open Design: https://open-design.ai/zh/ (Claude Design最佳开源平替)
 - 图形
@@ -172,6 +173,32 @@
   - Compositor: https://github.com/robbietilton/Compositor
     - Compositor 是一款免费开源的图像编辑软件，被誉为 Photoshop 的平替。它由前苹果设计师 Robbie Tilton 开发，初衷是不想每年支付 Adobe 的高额订阅费。项目在 GitHub 上已获得超过 10k Star，安装包仅约 12MB（相比之下 Photoshop 约 6GB），却内置了暗角、辉光、镜头校正、一键去背等常用功能，近期还新增了文字图层支持。
 
+  - Figma: https://www.figma.com/ (The full-stack creative canvas)
+  - OpenPencil: https://op.zseven.cn/ (从提示词到可编辑的产品界面。)
+  - OpenDesign: https://open-design.ai/zh/ (首个可协作的设计Agent空间)
+  - screenshot-to-code: https://github.com/abi/screenshot-to-code (一个开源的 AI 驱动工具，能够将界面截图、设计稿、Figma 文件甚至屏幕录制视频自动转换为可编辑的前端代码。该项目由开发者 abi 维护，是目前该领域最受关注的开源项目之一。)
+  - penpot: https://penpot.app/(Think and build digital products. Together.)
+  - 按你的诉求挑：要类Figma 画布选 OpenPencil；要 agent 工作流选 OpenDesign；要截图出代码选 screenshot-to-code；要团队设计系统选 Penpot。
+  - pen.dev: https://www.pen.dev/
+    ```
+    神级工具分享pen.dev 不用再扒代码了！
+    硅谷设计老炮、Adobe XD 联合创始人 Tom Krcha 推出的 pen.dev，至今依旧是颠覆前端工作流的最强黑科技。
+    它直接根治了设计师和开发者最大的痛点：设计还原偏差、反复返工、双向内耗。
+    平时做前端、改页面的人都懂：
+    看中好看的网页，要么F12苦扒代码资源，要么长篇prompt让AI瞎猜样式，最后永远是「设计落不了地、代码改不出效果」。
+    而 pen.dev 直接把流程彻底颠覆：
+    ✅ 全网网页一键逆向成可编辑画布
+    任意页面一键导入，排版、字体、图层、素材完整还原，不用手动拆解。
+    ✅ Figma级可视化AI改页
+    WebGL丝滑画布，支持手动精修，还能联动 Cursor、Claude、GPT。
+    框选区域一句话指令，AI 直接改布局、调样式、做图标。
+    ✅ 行业绝杀：设计直接回写真实代码
+    这是它的核心代差！
+    不再输出垃圾静态代码，所有视觉改动，直接生成规范可维护的前端组件，同步本地代码库。
+    真正实现：设计等于代码，所见即所得
+    彻底删掉设计与开发中间所有的沟通、翻译、返工成本。  
+    ```
+  
 - 视频
   - 字节跳动 seedream: https://seed.bytedance.com/zh/seedream4_0
   - 即梦 AI APP: 图片生成视频
